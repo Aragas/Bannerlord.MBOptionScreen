@@ -4,14 +4,15 @@ using System;
 using System.Reflection;
 using TaleWorlds.Library;
 
-namespace ModLib.GUI.v1.ViewModels
+namespace ModLib.GUI.v1a.ViewModels
 {
     public class SettingProperty : ViewModel
     {
         private float _floatValue = 0f;
         private int _intValue = 0;
-        private bool initialising = false;
+        private bool initializing = false;
 
+        public ModSettingsScreenVM MainView { get; private set; }
         public SettingPropertyDefinition SettingPropertyDefinition { get; }
         public SettingPropertyAttribute SettingAttribute => SettingPropertyDefinition.SettingAttribute;
         public PropertyInfo Property => SettingPropertyDefinition.Property;
@@ -20,18 +21,7 @@ namespace ModLib.GUI.v1.ViewModels
         public SettingType SettingType => SettingPropertyDefinition.SettingType;
         public SettingPropertyGroup Group { get; set; }
         public UndoRedoStack URS { get; private set; }
-        public ModSettingsScreenVM ScreenVM { get; private set; }
         public string HintText { get; private set; }
-        public bool SatisfiesSearch
-        {
-            get
-            {
-                if (ScreenVM == null || ScreenVM.SearchText == "")
-                    return true;
-
-                return Name.ToLower().Contains(ScreenVM.SearchText.ToLower());
-            }
-        }
 
         [DataSourceProperty]
         public string Name => SettingAttribute.DisplayName;
@@ -57,13 +47,9 @@ namespace ModLib.GUI.v1.ViewModels
         {
             get
             {
-                if (Group != null && GroupAttribute != null && GroupAttribute.IsMainToggle)
+                if (Group != null && GroupAttribute?.IsMainToggle == true)
                     return false;
-                else if (!Group.GroupToggle)
-                    return false;
-                else if (!Group.IsExpanded)
-                    return false;
-                else if (!SatisfiesSearch)
+                else if (Group?.GroupToggle == false)
                     return false;
                 else
                     return true;
@@ -73,10 +59,7 @@ namespace ModLib.GUI.v1.ViewModels
         [DataSourceProperty]
         public float FloatValue
         {
-            get
-            {
-                return _floatValue;
-            }
+            get => _floatValue;
             set
             {
                 if (SettingType == SettingType.Float && _floatValue != value)
@@ -90,10 +73,7 @@ namespace ModLib.GUI.v1.ViewModels
         [DataSourceProperty]
         public int IntValue
         {
-            get
-            {
-                return _intValue;
-            }
+            get => _intValue;
             set
             {
                 if (SettingType == SettingType.Int)
@@ -105,24 +85,24 @@ namespace ModLib.GUI.v1.ViewModels
             }
         }
         [DataSourceProperty]
-        public float FinalisedFloatValue
+        public float FinalizedFloatValue
         {
             get => 0;
             set
             {
-                if ((float)Property.GetValue(SettingsInstance) != value && !initialising)
+                if (Property.GetValue(SettingsInstance) is float val && val != value && !initializing)
                 {
-                    URS.Do(new SetValueAction<float>(new Ref(Property, SettingsInstance), (float)Math.Round((double)value, 2, MidpointRounding.ToEven)));
+                    URS.Do(new SetValueAction<float>(new Ref(Property, SettingsInstance), (float) Math.Round(value, 2, MidpointRounding.ToEven)));
                 }
             }
         }
         [DataSourceProperty]
-        public int FinalisedIntValue
+        public int FinalizedIntValue
         {
             get => 0;
             set
             {
-                if ((int)Property.GetValue(SettingsInstance) != value && !initialising)
+                if (Property.GetValue(SettingsInstance) is int val && val != value && !initializing)
                 {
                     URS.Do(new SetValueAction<int>(new Ref(Property, SettingsInstance), value));
                 }
@@ -131,13 +111,7 @@ namespace ModLib.GUI.v1.ViewModels
         [DataSourceProperty]
         public bool BoolValue
         {
-            get
-            {
-                if (SettingType == SettingType.Bool)
-                    return (bool)Property.GetValue(SettingsInstance);
-                else
-                    return false;
-            }
+            get => SettingType == SettingType.Bool && Property.GetValue(SettingsInstance) is bool val && val;
             set
             {
                 if (SettingType == SettingType.Bool)
@@ -145,7 +119,8 @@ namespace ModLib.GUI.v1.ViewModels
                     if (BoolValue != value)
                     {
                         URS.Do(new SetValueAction<bool>(new Ref(Property, SettingsInstance), value));
-                        OnPropertyChanged();
+                        //Property.SetValue(SettingsInstance, value);
+                        OnPropertyChanged(nameof(BoolValue));
                     }
                 }
             }
@@ -155,21 +130,16 @@ namespace ModLib.GUI.v1.ViewModels
         [DataSourceProperty]
         public float MinValue => SettingAttribute.MinValue;
         [DataSourceProperty]
-        public string ValueString
+        public string ValueString => SettingType switch
         {
-            get
-            {
-                if (SettingType == SettingType.Int)
-                    return IntValue.ToString();
-                else if (SettingType == SettingType.Float)
-                    return FloatValue.ToString("0.00");
-                else
-                    return "";
-            }
-        }
+            SettingType.Int => IntValue.ToString(),
+            SettingType.Float => FloatValue.ToString("0.00"),
+            _ => ""
+        };
 
-        public SettingProperty(SettingPropertyDefinition definition)
+        public SettingProperty(SettingPropertyDefinition definition, ModSettingsScreenVM mainView)
         {
+            MainView = mainView;
             SettingPropertyDefinition = definition;
 
             RefreshValues();
@@ -178,7 +148,7 @@ namespace ModLib.GUI.v1.ViewModels
         public override void RefreshValues()
         {
             base.RefreshValues();
-            initialising = true;
+            initializing = true;
             if (!string.IsNullOrWhiteSpace(SettingAttribute.HintText))
                 HintText = $"{Name}: {SettingAttribute.HintText}";
 
@@ -186,34 +156,24 @@ namespace ModLib.GUI.v1.ViewModels
                 FloatValue = (float)Property.GetValue(SettingsInstance);
             else if (SettingType == SettingType.Int)
                 IntValue = (int)Property.GetValue(SettingsInstance);
-            initialising = false;
+            initializing = false;
         }
 
-        public void AssignUndoRedoStack(UndoRedoStack urs)
+        internal void AssignUndoRedoStack(UndoRedoStack urs)
         {
             URS = urs;
         }
 
-        public void SetScreenVM(ModSettingsScreenVM screenVM)
+        public void OnHover()
         {
-            ScreenVM = screenVM;
+            if (MainView != null)
+                MainView.HintText = HintText;
         }
 
-        private void OnHover()
+        public void OnHoverEnd()
         {
-            if (ScreenVM != null)
-                ScreenVM.HintText = HintText;
-        }
-
-        private void OnHoverEnd()
-        {
-            if (ScreenVM != null)
-                ScreenVM.HintText = "";
-        }
-
-        public override string ToString()
-        {
-            return Name;
+            if (MainView != null)
+                MainView.HintText = "";
         }
     }
 }

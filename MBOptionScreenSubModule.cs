@@ -109,15 +109,11 @@ namespace MBOptionScreen
         {
             if (!SharedStateObject.HasInitialized)
             {
-                SharedStateObject.ResourceInjector.InjectBrush(BrushLoader.DividerBrushes_v1());
-                SharedStateObject.ResourceInjector.InjectBrush(BrushLoader.ModSettingsItem_v1Brush_v1());
-                SharedStateObject.ResourceInjector.InjectBrush(BrushLoader.ResetButtonBrush_v1());
-                SharedStateObject.ResourceInjector.InjectBrush(BrushLoader.TextBrushes_v1());
+                BrushLoaderV1.Inject(SharedStateObject.ResourceInjector);
+                BrushLoaderV1a.Inject(SharedStateObject.ResourceInjector);
 
-                SharedStateObject.ResourceInjector.InjectPrefab("ModSettingsItem_v1", PrefabsLoader.ModSettingsItem_v1());
-                SharedStateObject.ResourceInjector.InjectPrefab("SettingPropertyGroupView_v1", PrefabsLoader.SettingPropertyGroupView_v1());
-                SharedStateObject.ResourceInjector.InjectPrefab("SettingPropertyView_v1", PrefabsLoader.SettingPropertyView_v1());
-                SharedStateObject.ResourceInjector.InjectPrefab("SettingsView_v1", PrefabsLoader.SettingsView_v1());
+                PrefabsLoaderV1.Inject(SharedStateObject.ResourceInjector);
+                PrefabsLoaderV1a.Inject(SharedStateObject.ResourceInjector);
 
                 SharedStateObject.HasInitialized = true;
             }

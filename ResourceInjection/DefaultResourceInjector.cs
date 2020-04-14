@@ -71,7 +71,12 @@ namespace MBOptionScreen.ResourceInjection
         {
             if (movie == "ModOptionsScreen_v1")
             {
-                return PrefabsLoader.LoadModOptionsScreen_v1();
+                return PrefabsLoaderV1.LoadModOptionsScreen();
+            }
+
+            if (movie == "ModOptionsScreen_v1a")
+            {
+                return PrefabsLoaderV1a.LoadModOptionsScreen();
             }
 
             return null;

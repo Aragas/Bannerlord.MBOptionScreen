@@ -1,5 +1,5 @@
 ﻿using MBOptionScreen.Attributes;
-using ModLib.GUI.ViewModels;
+using ModLib.GUI.v1.ViewModels;
 using TaleWorlds.Engine.GauntletUI;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.GauntletUI.Data;
@@ -7,7 +7,7 @@ using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
 using TaleWorlds.TwoDimension;
 
-namespace ModLib.GUI.GauntletUI
+namespace ModLib.GUI.v1.GauntletUI
 {
     [ModuleOptionVersion("e1.0.0",  1)]
     [ModuleOptionVersion("e1.0.1",  1)]

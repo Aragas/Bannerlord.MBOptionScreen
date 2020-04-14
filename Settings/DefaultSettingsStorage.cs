@@ -1,7 +1,6 @@
 ﻿using MBOptionScreen.Attributes;
 
 using ModLib;
-using ModLib.GUI.ViewModels;
 using ModLib.Interfaces;
 
 using System;
@@ -10,6 +9,17 @@ using System.Linq;
 
 namespace MBOptionScreen
 {
+    public class ModSettingsDefinition
+    {
+        public SettingsBase SettingsInstance { get; set; }
+        public string ModName => SettingsInstance.ModName;
+
+        public ModSettingsDefinition(SettingsBase settings)
+        {
+            SettingsInstance = settings;
+        }
+    }
+
     [SettingsStorageVersion("e1.0.0",  1)]
     [SettingsStorageVersion("e1.0.1",  1)]
     [SettingsStorageVersion("e1.0.2",  1)]
@@ -29,7 +39,7 @@ namespace MBOptionScreen
 
         public List<SettingsBase> AllSettings => AllSettingsDict.Values.ToList();
         public int SettingsCount => AllSettingsDict.Values.Count;
-        public List<ModSettingsVM> ModSettingsVMs => GetModSettingsVMs().ToList();
+        public List<ModSettingsDefinition> ModSettingsVMs => GetModSettingsVMs().ToList();
 
         public DefaultSettingsStorage()
         {
@@ -63,18 +73,18 @@ namespace MBOptionScreen
             FileDatabase.SaveToFile(settingsInstance.ModuleFolderName, settingsInstance, Location.Configs);
         }
 
-        public IEnumerable<ModSettingsVM> GetModSettingsVMs()
+        public IEnumerable<ModSettingsDefinition> GetModSettingsVMs()
         {
             try
             {
                 return AllSettings
-                    .Select(settings => new ModSettingsVM(settings))
+                    .Select(settings => new ModSettingsDefinition(settings))
                     .OrderByDescending(a => a.ModName != MBOptionScreenSettings.Instance!.ID)
                     .ThenBy(a => a.ModName);
             }
             catch (Exception ex)
             {
-                return new List<ModSettingsVM>();
+                return new List<ModSettingsDefinition>();
                 // TODO
                 //ModDebug.ShowError("An error occurred while creating the ViewModels for all mod settings", "Error Occurred", ex);
             }

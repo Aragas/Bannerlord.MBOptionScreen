@@ -1,5 +1,4 @@
-﻿using ModLib.GUI.ViewModels;
-using System;
+﻿using System;
 
 namespace ModLib.Attributes
 {
@@ -15,6 +14,6 @@ namespace ModLib.Attributes
             IsMainToggle = isMainToggle;
         }
 
-        public static SettingPropertyGroupAttribute Default => new SettingPropertyGroupAttribute(SettingPropertyGroup.DefaultGroupName, false);
+        public static SettingPropertyGroupAttribute Default => new SettingPropertyGroupAttribute(SettingPropertyGroupDefinition.DefaultGroupName, false);
     }
 }

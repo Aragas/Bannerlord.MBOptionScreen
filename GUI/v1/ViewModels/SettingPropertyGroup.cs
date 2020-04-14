@@ -3,15 +3,22 @@ using System;
 using System.Linq;
 using TaleWorlds.Library;
 
-namespace ModLib.GUI.ViewModels
+namespace ModLib.GUI.v1.ViewModels
 {
     public class SettingPropertyGroup : ViewModel
     {
-        private string groupNameOverride = "";
         private bool _isExpanded = true;
         public const string DefaultGroupName = "Misc";
+
+        public SettingPropertyGroupDefinition SettingPropertyGroupDefinition { get; }
+        public string GroupName => SettingPropertyGroupDefinition.GroupName;
+        public SettingPropertyGroupAttribute Attribute
+        {
+            get => SettingPropertyGroupDefinition.Attribute;
+            set => SettingPropertyGroupDefinition.Attribute = value;
+        }
+
         public SettingProperty GroupToggleSettingProperty { get; private set; } = null;
-        public SettingPropertyGroupAttribute Attribute { get; private set; }
         public UndoRedoStack URS { get; private set; }
         public ModSettingsScreenVM ScreenVM { get; private set; }
         public SettingPropertyGroup ParentGroup { get; set; } = null;
@@ -40,17 +47,6 @@ namespace ModLib.GUI.ViewModels
             get
             {
                 return SettingProperties.Any((x) => x.SatisfiesSearch) || SettingPropertyGroups.Any((x) => x.SatisfiesSearch);
-            }
-        }
-
-        public string GroupName
-        {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(groupNameOverride))
-                    return Attribute.GroupName;
-                else
-                    return groupNameOverride;
             }
         }
 
@@ -139,10 +135,13 @@ namespace ModLib.GUI.ViewModels
             }
         }
 
-        public SettingPropertyGroup(SettingPropertyGroupAttribute attribute, string groupNameOverride = "")
+        public SettingPropertyGroup(SettingPropertyGroupDefinition definition)
         {
-            Attribute = attribute;
-            this.groupNameOverride = groupNameOverride;
+            SettingPropertyGroupDefinition = definition;
+            //SettingPropertyGroupDefinition.OnAdd += Add;
+            foreach (var settingPropertyDefinition in SettingPropertyGroupDefinition.SettingProperties)
+                Add(settingPropertyDefinition);
+
         }
 
         public override void RefreshValues()
@@ -154,8 +153,9 @@ namespace ModLib.GUI.ViewModels
             OnPropertyChanged("GroupNameDisplay");
         }
 
-        public void Add(SettingProperty sp)
+        private void Add(SettingPropertyDefinition definition)
         {
+            var sp = new SettingProperty(definition);
             SettingProperties.Add(sp);
             sp.Group = this;
 

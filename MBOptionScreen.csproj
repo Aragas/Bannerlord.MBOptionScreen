@@ -59,6 +59,16 @@
     <EmbeddedResource Include="GUI\v1\Views\SettingPropertyGroupView.xml" />
     <EmbeddedResource Include="GUI\v1\Views\SettingPropertyView.xml" />
     <EmbeddedResource Include="GUI\v1\Views\SettingsView.xml" />
+
+    <EmbeddedResource Include="GUI\v1a\Brushes\DividerBrushes.xml" />
+    <EmbeddedResource Include="GUI\v1a\Brushes\ModSettingsItemBrush.xml" />
+    <EmbeddedResource Include="GUI\v1a\Brushes\ResetButtonBrush.xml" />
+    <EmbeddedResource Include="GUI\v1a\Brushes\TextBrushes.xml" />
+    <EmbeddedResource Include="GUI\v1a\Views\ModOptionsScreen.xml" />
+    <EmbeddedResource Include="GUI\v1a\Views\ModSettingsItem.xml" />
+    <EmbeddedResource Include="GUI\v1a\Views\SettingPropertyGroupView.xml" />
+    <EmbeddedResource Include="GUI\v1a\Views\SettingPropertyView.xml" />
+    <EmbeddedResource Include="GUI\v1a\Views\SettingsView.xml" />
   </ItemGroup>
 
   <ItemGroup>

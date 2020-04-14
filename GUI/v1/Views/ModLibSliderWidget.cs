@@ -1,6 +1,6 @@
 ﻿using TaleWorlds.GauntletUI;
 
-namespace ModLib.GUI.Views
+namespace ModLib.GUI.v1.Views
 {
     public class ModLibSliderWidget_v1 : SliderWidget
     {

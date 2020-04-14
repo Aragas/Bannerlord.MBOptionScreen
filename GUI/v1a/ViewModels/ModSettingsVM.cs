@@ -3,22 +3,17 @@ using System.Linq;
 using MBOptionScreen;
 using TaleWorlds.Library;
 
-namespace ModLib.GUI.v1.ViewModels
+namespace ModLib.GUI.v1a.ViewModels
 {
     public class ModSettingsVM : ViewModel
     {
         private bool _isSelected;
         private Action<ModSettingsVM> _executeSelect = null;
         private MBBindingList<SettingPropertyGroup> _settingPropertyGroups;
-        public ModSettingsScreenVM Parent { get; private set; } = null;
+        public ModSettingsScreenVM MainView { get; }
 
         public ModSettingsDefinition ModSettingsDefinition { get; }
-        public SettingsBase SettingsInstance
-        {
-            get => ModSettingsDefinition.SettingsInstance;
-            set => ModSettingsDefinition.SettingsInstance = value;
-        }
-
+        public SettingsBase SettingsInstance => ModSettingsDefinition.SettingsInstance;
         public UndoRedoStack URS { get; } = new UndoRedoStack();
 
         [DataSourceProperty]
@@ -30,7 +25,7 @@ namespace ModLib.GUI.v1.ViewModels
             set
             {
                 _isSelected = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(IsSelected));
             }
         }
         [DataSourceProperty]
@@ -42,22 +37,22 @@ namespace ModLib.GUI.v1.ViewModels
                 if (_settingPropertyGroups != value)
                 {
                     _settingPropertyGroups = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(SettingPropertyGroups));
                 }
             }
         }
 
-        public ModSettingsVM(ModSettingsDefinition definition)
+        public ModSettingsVM(ModSettingsDefinition definition, ModSettingsScreenVM mainView)
         {
             ModSettingsDefinition = definition;
+            MainView = mainView;
 
             SettingPropertyGroups = new MBBindingList<SettingPropertyGroup>();
-            foreach (var settingPropertyGroup in SettingsInstance.GetSettingPropertyGroups().Select(d => new SettingPropertyGroup(d)))
+            foreach (var settingPropertyGroup in SettingsInstance.GetSettingPropertyGroups().Select(d => new SettingPropertyGroup(d, MainView)))
             {
                 settingPropertyGroup.AssignUndoRedoStack(URS);
                 SettingPropertyGroups.Add(settingPropertyGroup);
             }
-
 
             RefreshValues();
         }
@@ -65,15 +60,11 @@ namespace ModLib.GUI.v1.ViewModels
         public override void RefreshValues()
         {
             base.RefreshValues();
-
-            foreach (var settingGroup in SettingPropertyGroups)
-                settingGroup.AssignUndoRedoStack(URS);
-
             foreach (var group in SettingPropertyGroups)
                 group.RefreshValues();
-            OnPropertyChanged("IsSelected");
-            OnPropertyChanged("ModName");
-            OnPropertyChanged("SettingPropertyGroups");
+            OnPropertyChanged(nameof(IsSelected));
+            OnPropertyChanged(nameof(ModName));
+            OnPropertyChanged(nameof(SettingPropertyGroups));
         }
 
         public void AddSelectCommand(Action<ModSettingsVM> command)
@@ -81,17 +72,9 @@ namespace ModLib.GUI.v1.ViewModels
             _executeSelect = command;
         }
 
-        public void SetParent(ModSettingsScreenVM parent)
-        {
-            Parent = parent;
-            foreach (var group in SettingPropertyGroups)
-                group.SetScreenVM(Parent);
-        }
-
         private void ExecuteSelect()
         {
             _executeSelect?.Invoke(this);
         }
-
     }
 }

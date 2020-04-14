@@ -6,7 +6,7 @@ using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
 
-namespace ModLib.GUI.ViewModels
+namespace ModLib.GUI.v1.ViewModels
 {
     public class ModSettingsScreenVM : ViewModel
     {
@@ -124,24 +124,27 @@ namespace ModLib.GUI.ViewModels
 
         public ModSettingsScreenVM()
         {
+            TitleLabel = "Mod Options";
+            DoneButtonText = new TextObject("{=WiNRdfsm}Done", null).ToString();
+            CancelButtonText = new TextObject("{=3CpNUnVl}Cancel", null).ToString();
+
+            foreach (var msvm in SettingsDatabase.ModSettingsVMs.Select(d => new ModSettingsVM(d)))
+            {
+                msvm.AddSelectCommand(ExecuteSelect);
+                ModSettingsList.Add(msvm);
+                msvm.RefreshValues();
+            }
+
             RefreshValues();
         }
 
         public override void RefreshValues()
         {
             base.RefreshValues();
-            TitleLabel = "Mod Options";
-            DoneButtonText = new TextObject("{=WiNRdfsm}Done", null).ToString();
-            CancelButtonText = new TextObject("{=3CpNUnVl}Cancel", null).ToString();
 
-            ModSettingsList.Clear();
-            foreach (var msvm in SettingsDatabase.ModSettingsVMs)
-            {
-                msvm.AddSelectCommand(ExecuteSelect);
-                ModSettingsList.Add(msvm);
-                msvm.SetParent(this);
+            foreach (var msvm in ModSettingsList)
                 msvm.RefreshValues();
-            }
+
             OnPropertyChanged("SelectedMod");
         }
 
