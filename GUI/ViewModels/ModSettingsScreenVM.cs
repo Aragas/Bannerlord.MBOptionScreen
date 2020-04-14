@@ -1,5 +1,6 @@
-﻿using System.Linq;
-using System.Windows.Forms;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using TaleWorlds.Core;
 using TaleWorlds.Engine;
 using TaleWorlds.Engine.Screens;
@@ -180,6 +181,42 @@ namespace ModLib.GUI.ViewModels
                 ScreenManager.PopScreen();
         }
 
+        private void ExecuteRevert()
+        {
+            if (SelectedMod != null)
+            {
+                InformationManager.ShowInquiry(new InquiryData("Revert mod settings to defaults",
+                    $"Are you sure you wish to revert all settings for {SelectedMod.ModName} to their default values?",
+                    true, true, "Yes", "No",
+                    () =>
+                    {
+                        SelectedMod.URS.Do(new ComplexAction<KeyValuePair<ModSettingsVM, SettingsBase>>(new KeyValuePair<ModSettingsVM, SettingsBase>(SelectedMod, SelectedMod.SettingsInstance),
+                            (KeyValuePair<ModSettingsVM, SettingsBase> kvp) =>
+                            {
+                                //Do action
+                                SettingsBase newObj = SettingsDatabase.ResetSettingsInstance(SelectedMod.SettingsInstance);
+                                kvp.Key.SettingsInstance = newObj;
+                                kvp.Key.RefreshValues();
+                                ExecuteSelect(null);
+                                ExecuteSelect(kvp.Key);
+                            },
+                            (KeyValuePair<ModSettingsVM, SettingsBase> kvp) =>
+                            {
+                                //Undo action
+                                SettingsDatabase.OverrideSettingsWithID(kvp.Value, kvp.Value.ID);
+                                kvp.Key.SettingsInstance = kvp.Value;
+                                kvp.Key.RefreshValues();
+                                if (SelectedMod == kvp.Key)
+                                {
+                                    ExecuteSelect(null);
+                                    ExecuteSelect(kvp.Key);
+                                }
+                            }));
+
+                    }, null));
+            }
+        }
+
         public void AssignParent(bool remove = false)
         {
             foreach (var msvm in ModSettingsList)
@@ -199,7 +236,6 @@ namespace ModLib.GUI.ViewModels
                 if (SelectedMod != null)
                 {
                     SelectedMod.IsSelected = true;
-                    //TODO:: Update the settings view
                 }
             }
         }

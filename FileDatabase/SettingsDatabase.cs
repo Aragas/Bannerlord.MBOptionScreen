@@ -46,6 +46,16 @@ namespace ModLib
             }
         }
 
+        internal static bool OverrideSettingsWithID(SettingsBase settings, string ID)
+        {
+            if (AllSettingsDict.ContainsKey(ID))
+            {
+                AllSettingsDict[ID] = settings;
+                return true;
+            }
+            return false;
+        }
+
         /// <summary>
         /// Retrieves the Settings instance from the SettingsDatabase with the given ID.
         /// </summary>
@@ -69,6 +79,20 @@ namespace ModLib
         public static bool SaveSettings(SettingsBase settingsInstance)
         {
             return FileDatabase.SaveToFile(settingsInstance.ModuleFolderName, settingsInstance, FileDatabase.Location.Configs);
+        }
+
+        /// <summary>
+        /// Resets the settings instance to the default values for that instance.
+        /// </summary>
+        /// <param name="settingsInstance">The instance of the object to be reset</param>
+        /// <returns>Returns the instance of the new object with default values.</returns>
+        public static SettingsBase ResetSettingsInstance(SettingsBase settingsInstance)
+        {
+            string id = settingsInstance.ID;
+            SettingsBase newObj = (SettingsBase)Activator.CreateInstance(settingsInstance.GetType());
+            newObj.ID = id;
+            AllSettingsDict[id] = newObj;
+            return newObj;
         }
 
         internal static void BuildModSettingsVMs()

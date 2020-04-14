@@ -30,6 +30,11 @@ namespace ModLib
         /// </summary>
         public virtual string SubFolder => "";
 
+        public SettingsBase()
+        {
+
+        }
+
         internal List<SettingPropertyGroup> GetSettingPropertyGroups()
         {
             var groups = new List<SettingPropertyGroup>();

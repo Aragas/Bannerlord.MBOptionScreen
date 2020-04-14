@@ -144,7 +144,6 @@ namespace ModLib.GUI.ViewModels
                     if (BoolValue != value)
                     {
                         URS.Do(new SetValueAction<bool>(new Ref(Property, SettingsInstance), value));
-                        //Property.SetValue(SettingsInstance, value);
                         OnPropertyChanged();
                     }
                 }

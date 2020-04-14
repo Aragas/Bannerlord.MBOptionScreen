@@ -185,6 +185,15 @@
         <!-- Top Banner -->
         <Standard.TopPanel Parameter.Title="@TitleLabel"/>
 
+        <!-- Revert to default button -->
+        <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!CancelButton.Width"
+                      SuggestedHeight="!CancelButton.Height" Brush="Popup.Delete.Button" Command.Click="ExecuteRevert" IsVisible="@SomethingSelected" 
+                      HorizontalAlignment="Right" VerticalAlignment="Top" MarginTop="75" MarginRight="40">
+          <Children>
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="Revert to defaults" />
+          </Children>
+        </ButtonWidget>
+
       </Children>
     </Widget>
   </Window>

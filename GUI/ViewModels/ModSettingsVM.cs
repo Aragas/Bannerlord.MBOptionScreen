@@ -10,7 +10,7 @@ namespace ModLib.GUI.ViewModels
         private MBBindingList<SettingPropertyGroup> _settingPropertyGroups;
         public ModSettingsScreenVM Parent { get; private set; } = null;
 
-        public SettingsBase SettingsInstance { get; private set; }
+        public SettingsBase SettingsInstance { get; internal set; }
         public UndoRedoStack URS { get; } = new UndoRedoStack();
 
         [DataSourceProperty]
@@ -43,18 +43,19 @@ namespace ModLib.GUI.ViewModels
         {
             SettingsInstance = settingsInstance;
 
-            SettingPropertyGroups = new MBBindingList<SettingPropertyGroup>();
-            SettingPropertyGroups.AddRange(settingsInstance.GetSettingPropertyGroups());
-
-            foreach (var settingGroup in SettingPropertyGroups)
-                settingGroup.AssignUndoRedoStack(URS);
-
             RefreshValues();
         }
 
         public override void RefreshValues()
         {
             base.RefreshValues();
+
+            SettingPropertyGroups = new MBBindingList<SettingPropertyGroup>();
+            SettingPropertyGroups.AddRange(SettingsInstance.GetSettingPropertyGroups());
+
+            foreach (var settingGroup in SettingPropertyGroups)
+                settingGroup.AssignUndoRedoStack(URS);
+
             foreach (var group in SettingPropertyGroups)
                 group.RefreshValues();
             OnPropertyChanged("IsSelected");
