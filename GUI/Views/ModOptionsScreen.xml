@@ -102,9 +102,30 @@
 
                 <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" LayoutImp.LayoutMethod="VerticalBottomToTop">
                   <Children>
-                    <!-- Title -->
-                    <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="80" Brush="ModSettings.Title.Text" Text="@SelectedModName"
-                                    HorizontalAlignment="Center" VerticalAlignment="Top" />
+                    <!-- Title Section -->
+                    <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="80" LayoutImp.LayoutMethod="HorizontalLeftToRight"
+                               HorizontalAlignment="Center" VerticalAlignment="Top">
+                      <Children>
+                        <!-- Title -->
+                        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="80" Brush="ModSettings.Title.Text"
+                                        Text="@SelectedModName" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                        <!-- Search box -->
+                        <Widget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="200" VerticalAlignment="Center" SuggestedHeight="40"
+                                HorizontalAlignment="Right" MarginLeft="40" MarginRight="20" ClipContents="true" Sprite="SaveLoad\load_tuple_selected" Brush.ColorFactor="0.2">
+                          <Children>
+                            <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" MarginLeft="10" MarginRight="10"
+                                                VerticalAlignment="Center" Brush="Encyclopedia.Search.TextBox" RealText="@SearchText" IsObfuscationEnabled="false"/>
+                            
+                            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="25" SuggestedHeight="24" Sprite="Encyclopedia\icon_search"
+                                    VerticalAlignment="Center" HorizontalAlignment="Right" IsDisabled="true" MarginRight="5"/>
+                          </Children>
+                        </Widget>
+
+                      </Children>
+                    </ListPanel>
+                    <!-- Separator -->
                     <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="Divider.Yellow"
                             MarginLeft="15" MarginRight="15"/>
 
@@ -163,7 +184,7 @@
 
         <!-- Top Banner -->
         <Standard.TopPanel Parameter.Title="@TitleLabel"/>
-        
+
       </Children>
     </Widget>
   </Window>

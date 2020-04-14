@@ -1,6 +1,7 @@
 ﻿using ModLib.Attributes;
 using System;
 using TaleWorlds.Library;
+using System.Linq;
 
 namespace ModLib.GUI.ViewModels
 {
@@ -23,6 +24,22 @@ namespace ModLib.GUI.ViewModels
                     return $"{GroupToggleSettingProperty.HintText}";
                 }
                 return "";
+            }
+        }
+        public bool SatisfiesSearch
+        {
+            get
+            {
+                if (ScreenVM == null || ScreenVM.SearchText == "")
+                    return true;
+                return GroupName.ToLower().Contains(ScreenVM.SearchText.ToLower()) || AnyChildSettingSatisfiesSearch;
+            }
+        }
+        public bool AnyChildSettingSatisfiesSearch
+        {
+            get
+            {
+                return SettingProperties.Any((x) => x.SatisfiesSearch) || SettingPropertyGroups.Any((x) => x.SatisfiesSearch);
             }
         }
 
@@ -90,10 +107,12 @@ namespace ModLib.GUI.ViewModels
         {
             get
             {
-                if (ParentGroup != null)
+                if (!SatisfiesSearch && !AnyChildSettingSatisfiesSearch)
+                    return false;
+                else if (ParentGroup != null)
                     return ParentGroup.IsExpanded && ParentGroup.GroupToggle;
-
-                return true;
+                else
+                    return true;
             }
         }
         [DataSourceProperty]
@@ -180,6 +199,21 @@ namespace ModLib.GUI.ViewModels
             {
                 foreach (var subGroup in SettingPropertyGroups)
                     subGroup.SetParentGroup(this);
+            }
+        }
+
+        public void NotifySearchChanged()
+        {
+            OnPropertyChanged("IsGroupVisible");
+            if (SettingPropertyGroups.Count > 0)
+            {
+                foreach (var group in SettingPropertyGroups)
+                    group.NotifySearchChanged();
+            }
+            if (SettingProperties.Count > 0)
+            {
+                foreach (var prop in SettingProperties)
+                    prop.OnPropertyChanged("IsSettingVisible");
             }
         }
 

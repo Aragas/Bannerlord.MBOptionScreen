@@ -24,6 +24,10 @@ namespace ModLib.GUI.GauntletUI
         protected override void OnInitialize()
         {
             base.OnInitialize();
+            SpriteData spriteData = UIResourceManager.SpriteData;
+            TwoDimensionEngineResourceContext resourceContext = UIResourceManager.ResourceContext;
+            ResourceDepot uiresourceDepot = UIResourceManager.UIResourceDepot;
+            spriteData.SpriteCategories["ui_encyclopedia"].Load(resourceContext, uiresourceDepot);
             gauntletLayer = new GauntletLayer(1);
             gauntletLayer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);
             gauntletLayer.Input.RegisterHotKeyCategory(HotKeyManager.GetCategory("GenericCampaignPanelsGameKeyCategory"));
@@ -37,7 +41,8 @@ namespace ModLib.GUI.GauntletUI
         protected override void OnFrameTick(float dt)
         {
             base.OnFrameTick(dt);
-            if (gauntletLayer.Input.IsHotKeyReleased("Exit") || gauntletLayer.Input.IsGameKeyReleased(34))
+            // || gauntletLayer.Input.IsGameKeyReleased(34)
+            if (gauntletLayer.Input.IsHotKeyReleased("Exit"))
             {
                 vm.ExecuteCancel();
             }

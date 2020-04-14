@@ -21,6 +21,16 @@ namespace ModLib.GUI.ViewModels
         public UndoRedoStack URS { get; private set; }
         public ModSettingsScreenVM ScreenVM { get; private set; }
         public string HintText { get; private set; }
+        public bool SatisfiesSearch
+        {
+            get
+            {
+                if (ScreenVM == null || ScreenVM.SearchText == "")
+                    return true;
+
+                return Name.ToLower().Contains(ScreenVM.SearchText.ToLower());
+            }
+        }
 
         [DataSourceProperty]
         public string Name => SettingAttribute.DisplayName;
@@ -51,6 +61,8 @@ namespace ModLib.GUI.ViewModels
                 else if (!Group.GroupToggle)
                     return false;
                 else if (!Group.IsExpanded)
+                    return false;
+                else if (!SatisfiesSearch)
                     return false;
                 else
                     return true;

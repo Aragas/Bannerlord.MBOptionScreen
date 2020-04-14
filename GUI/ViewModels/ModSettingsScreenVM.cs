@@ -16,6 +16,7 @@ namespace ModLib.GUI.ViewModels
         private ModSettingsVM _selectedMod;
         private MBBindingList<ModSettingsVM> _modSettingsList = new MBBindingList<ModSettingsVM>();
         private string _hintText;
+        private string _searchText = "";
 
         [DataSourceProperty]
         public string TitleLabel
@@ -100,7 +101,26 @@ namespace ModLib.GUI.ViewModels
                 }
             }
         }
+        [DataSourceProperty]
         public bool IsHintVisible => !string.IsNullOrWhiteSpace(HintText);
+        [DataSourceProperty]
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                if (_searchText != value)
+                {
+                    _searchText = value;
+                    OnPropertyChanged();
+                    if (SelectedMod != null && SelectedMod.SettingPropertyGroups.Count > 0)
+                    {
+                        foreach (var group in SelectedMod.SettingPropertyGroups)
+                            group.NotifySearchChanged();
+                    }
+                }
+            }
+        }
 
         public ModSettingsScreenVM()
         {
@@ -174,6 +194,7 @@ namespace ModLib.GUI.ViewModels
                     SelectedMod.IsSelected = false;
 
                 SelectedMod = msvm;
+                SearchText = "";
 
                 if (SelectedMod != null)
                 {
