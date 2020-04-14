@@ -6,11 +6,11 @@ namespace ModLib.Debugging
 {
     public static class ModDebug
     {
-        public static void ShowError(string message, string title, Exception exception)
+        public static void ShowError(string message, string title="", Exception exception = null)
         {
             if (string.IsNullOrWhiteSpace(title))
                 title = "";
-            MessageBox.Show($"{message}\n\n{exception.ToStringFull()}", title);
+            MessageBox.Show($"{message}\n\n{exception?.ToStringFull()}", title);
         }
 
         public static void ShowMessage(string message, string title = "", bool nonModal = false)

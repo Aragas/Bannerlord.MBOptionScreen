@@ -29,12 +29,21 @@
           </Children>
         </Widget>
 
-        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" MarginTop="4" Brush="Kingdom.Divider.White"/>
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" MarginTop="4" Brush="Divider.White"/>
 
+        <!-- SettingProperties List -->
         <ListPanel DataSource="{SettingProperties}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" MarginLeft="10" MarginRight="10"
-                   LayoutImp.LayoutMethod="VerticalBottomToTop" HorizontalAlignment="Left" MarginTop="10">
+                   LayoutImp.LayoutMethod="VerticalBottomToTop" HorizontalAlignment="Left" MarginTop="10" IsVisible="@HasSubGroups">
           <ItemTemplate>
             <SettingPropertyView />
+          </ItemTemplate>
+        </ListPanel>
+
+        <!-- Subgroups List -->
+        <ListPanel DataSource="{SettingPropertyGroups}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" MarginLeft="25" MarginRight="25"
+                   LayoutImp.LayoutMethod="VerticalBottomToTop" HorizontalAlignment="Left" IsVisible="@HasSettingsProperties">
+          <ItemTemplate>
+            <SettingPropertyGroupView />
           </ItemTemplate>
         </ListPanel>
 

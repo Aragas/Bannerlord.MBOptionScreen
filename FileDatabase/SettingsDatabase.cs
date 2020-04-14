@@ -26,11 +26,16 @@ namespace ModLib
             }
         }
 
-        public static bool RegisterSettings(SettingsBase settingsClass, string uniqueID)
+        /// <summary>
+        /// Registers the settings class with the SettingsDatabase for use in the settings menu.
+        /// </summary>
+        /// <param name="settings">Intance of the settings object to be registered with the SettingsDatabase.</param>
+        /// <returns>Returns true if successful. Returns false if the object's ID key is already present in the SettingsDatabase.</returns>
+        public static bool RegisterSettings(SettingsBase settings)
         {
-            if (!AllSettingsDict.ContainsKey(uniqueID))
+            if (!AllSettingsDict.ContainsKey(settings.ID))
             {
-                AllSettingsDict.Add(uniqueID, settingsClass);
+                AllSettingsDict.Add(settings.ID, settings);
                 _modSettingsVMs = null;
                 return true;
             }
@@ -41,6 +46,11 @@ namespace ModLib
             }
         }
 
+        /// <summary>
+        /// Retrieves the Settings instance from the SettingsDatabase with the given ID.
+        /// </summary>
+        /// <param name="uniqueID">The ID for the settings instance.</param>
+        /// <returns>Returns the settings instance with the given ID. Returns null if nothing can be found.</returns>
         public static ISerialisableFile GetSettings(string uniqueID)
         {
             if (AllSettingsDict.ContainsKey(uniqueID))
@@ -51,12 +61,17 @@ namespace ModLib
                 return null;
         }
 
-        public static void SaveSettings(SettingsBase settingsInstance)
+        /// <summary>
+        /// Saves the settings instance to file.
+        /// </summary>
+        /// <param name="settingsInstance">Instance of the settings object to save to file.</param>
+        /// <returns>Return true if the settings object was saved successfully. Returns false if it failed to save.</returns>
+        public static bool SaveSettings(SettingsBase settingsInstance)
         {
-            FileDatabase.SaveToFile(settingsInstance.ModuleFolderName, settingsInstance, FileDatabase.Location.Configs);
+            return FileDatabase.SaveToFile(settingsInstance.ModuleFolderName, settingsInstance, FileDatabase.Location.Configs);
         }
 
-        public static void BuildModSettingsVMs()
+        internal static void BuildModSettingsVMs()
         {
             try
             {

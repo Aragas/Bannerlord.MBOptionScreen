@@ -6,7 +6,6 @@ using System.IO;
 using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
-using TaleWorlds.Library;
 
 namespace ModLib
 {
@@ -16,11 +15,11 @@ namespace ModLib
         public static Dictionary<Type, Dictionary<string, ISerialisableFile>> Data { get; } = new Dictionary<Type, Dictionary<string, ISerialisableFile>>();
 
         /// <summary>
-        /// Returns the ILoadable of type T with the given ID.
+        /// Returns the ISerialisabeFile of type T with the given ID.
         /// </summary>
-        /// <typeparam name="T">Type of object to retrieve</typeparam>
-        /// <param name="id">ID of object to retrieve</param>
-        /// <returns></returns>
+        /// <typeparam name="T">Type of object to retrieve.</typeparam>
+        /// <param name="id">ID of object to retrieve.</param>
+        /// <returns>Returns the instance of the object with the given type and ID. If it cannot be found, returns null.</returns>
         public static T Get<T>(string id) where T : ISerialisableFile
         {
             //First check if the dictionary contains the key
@@ -53,11 +52,11 @@ namespace ModLib
         }
 
         /// <summary>
-        /// Saves the given instance to file.
+        /// Saves the given object instance which inherits ISerialisableFile to an xml file.
         /// </summary>
-        /// <typeparam name="T">Type of the instance to save to file.</typeparam>
         /// <param name="moduleName">The folder name of the module to save to.</param>
         /// <param name="sf">Instance of the object to save to file.</param>
+        /// <param name="location">Indicates whether to save the file to the ModuleData/Loadables folder or to the mod's Config folder in Bannerlord's 'My Documents' directory.</param>
         public static bool SaveToFile(string moduleName, ISerialisableFile sf, Location location = Location.Modules)
         {
             try
@@ -67,10 +66,13 @@ namespace ModLib
                 if (string.IsNullOrWhiteSpace(moduleName))
                     throw new Exception($"FileDatabase tried to save an object of type {sf.GetType().FullName} with ID {sf.ID} but the module folder name given was null or empty.");
 
+                //Gets the intended path for the file.
                 string path = GetPathForModule(moduleName, location);
 
-                if (!Directory.Exists(path))
+                if (location == Location.Modules && !Directory.Exists(path))
                     throw new Exception($"FileDatabase cannot find the module named {moduleName}");
+                else if (location == Location.Configs && !Directory.Exists(path))
+                    Directory.CreateDirectory(path);
 
                 if (location == Location.Modules)
                     path = Path.Combine(path, "ModuleData", LoadablesFolderName);
@@ -85,7 +87,7 @@ namespace ModLib
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
 
-                path = Path.Combine(path, $@"{sf.GetType().Name}.{sf.ID}.xml");
+                path = Path.Combine(path, GetFileNameFor(sf));
 
                 if (File.Exists(path))
                     File.Delete(path);
@@ -107,10 +109,37 @@ namespace ModLib
             }
         }
 
+        /// <summary>
+        /// Deletes the file for the given module.
+        /// </summary>
+        /// <param name="moduleName">The folder name of the module to delete the file for.</param>
+        /// <param name="fileName">The file name of the file to be deleted.</param>
+        /// <param name="location">The location of the file to be deleted.</param>
+        /// <returns>Returns true if the file was deleted successfully.</returns>
+        public static bool DeleteFile(string moduleName, string fileName, Location location = Location.Modules)
+        {
+            bool successful = true;
+            string path = GetPathForModule(moduleName, location);
+            if (!Directory.Exists(path))
+            {
+                ModDebug.ShowError($"Tried to delete a file with file name {fileName} from directory \"{path}\" but the directory doesn't exist.", "Could not find directory");
+                successful = false;
+            }
+
+            if (location == Location.Modules)
+                path = Path.Combine(path, "ModuleData", LoadablesFolderName);
+
+            string filePath = Path.Combine(path, fileName);
+            if (File.Exists(filePath))
+                File.Delete(filePath);
+
+            return successful;
+        }
+
         private static void Add(ISerialisableFile loadable)
         {
             if (loadable == null)
-                throw new ArgumentNullException("Tried to add something to the Loader Data dictionary that was null");
+                throw new ArgumentNullException("Tried to add something to the FileDatabase Data dictionary that was null");
             if (string.IsNullOrWhiteSpace(loadable.ID))
                 throw new ArgumentNullException($"Loadable of type {loadable.GetType().ToString()} has missing ID field");
 
@@ -129,13 +158,6 @@ namespace ModLib
 
         private static void LoadFromFile(string filePath)
         {
-            //DEBUG:: People can't read and aren't deleting the old mod installation. Need to manually delete the old config file for a couple updates.
-            string modulefolder = Directory.GetParent(filePath).Parent.Parent.Name;
-            if (Path.GetFileName(filePath) == "config.xml" && modulefolder == "zzBannerlordTweaks")
-            {
-                File.Delete(filePath);
-                return;
-            }
             using (XmlReader reader = XmlReader.Create(filePath))
             {
                 string nodeData = "";
@@ -247,12 +269,28 @@ namespace ModLib
             #endregion
         }
 
-        private static string GetPathForModule(string moduleName, Location location)
+        /// <summary>
+        /// Returns the file name for the given ISerialisableFile
+        /// </summary>
+        /// <param name="sf">The instance of the ISerialisableFile to retrieve the file name for.</param>
+        /// <returns>Returns the file name of the given ISerialisableFile, including the file extension.</returns>
+        public static string GetFileNameFor(ISerialisableFile sf)
+        {
+            return $"{sf.GetType().Name}.{sf.ID}.xml";
+        }
+
+        /// <summary>
+        /// Returns the root folder for the given module name and intended location.
+        /// </summary>
+        /// <param name="moduleName">Name of the Module's Folder.</param>
+        /// <param name="location">Which location to get the path to - configs or the mod's module folder.</param>
+        /// <returns></returns>
+        public static string GetPathForModule(string moduleName, Location location)
         {
             if (location == Location.Modules)
-                return System.IO.Path.Combine(BasePath.Name, "Modules", moduleName);
+                return Path.Combine(TaleWorlds.Library.BasePath.Name, "Modules", moduleName);
             else
-                return System.IO.Path.Combine(TaleWorlds.Engine.Utilities.GetConfigsPath(), moduleName);
+                return Path.Combine(TaleWorlds.Engine.Utilities.GetConfigsPath(), moduleName);
         }
 
         private class TypeData

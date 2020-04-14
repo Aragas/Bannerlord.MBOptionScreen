@@ -202,16 +202,21 @@ namespace ModLib.GUI.ViewModels
             Parent = parent;
         }
 
-        public void OnHover()
+        private void OnHover()
         {
             if (Parent != null)
                 Parent.HintText = HintText;
         }
 
-        public void OnHoverEnd()
+        private void OnHoverEnd()
         {
             if (Parent != null)
                 Parent.HintText = "";
+        }
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }

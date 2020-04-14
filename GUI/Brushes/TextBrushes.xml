@@ -26,6 +26,13 @@
     </Styles>
   </Brush>
 
+  <Brush Name="ModSettings.SubGroup.Text" Font="FiraSansExtraCondensed-Regular" TextHorizontalAlignment="Right" TextVerticalAlignment="Center" FontSize="28">
+    <Styles>
+      <Style Name="Default" FontColor="#FFCF9AFF" TextGlowRadius="0" TextShadowAngle="0" TextAlphaFactor="0.8" TextGlowColor="#FFFFFF00"
+             TextOutlineColor="#FFFFFF00" TextOutlineAmount="0" TextBlur="0" />
+    </Styles>
+  </Brush>
+
   <Brush Name="Mod.Settings.Item.Name" Font="FiraSansExtraCondensed-Regular" TextHorizontalAlignment="Left" TextVerticalAlignment="Center">
     <Styles>
       <Style Name="Default" FontColor="#F7C895FF" TextOutlineAmount="0" TextGlowRadius="0" TextBlur="0" TextShadowOffset="0" TextShadowAngle="60" FontSize="28" />

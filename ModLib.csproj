@@ -102,6 +102,7 @@
     <Compile Include="Attributes\SettingPropertyGroupAttribute.cs" />
     <Compile Include="Debugging\DebugVars.cs" />
     <Compile Include="ExtensionMethods\ExceptionExtensionMethods.cs" />
+    <Compile Include="ExtensionMethods\ICollectionExtensions.cs" />
     <Compile Include="ExtensionMethods\IEnumerableExtensions.cs" />
     <Compile Include="ExtensionMethods\MBBindingListExtensions.cs" />
     <Compile Include="ExtensionMethods\StackExtension.cs" />
@@ -139,7 +140,6 @@
     <Content Include="GUI\Views\SettingPropertyGroupView.xml" />
     <Content Include="GUI\Views\SettingPropertyView.xml" />
     <Content Include="GUI\Views\SettingsView.xml" />
-    <Content Include="ModuleData\Loadables\modlib_config.xml" />
     <Content Include="SubModule.xml" />
   </ItemGroup>
   <ItemGroup>
