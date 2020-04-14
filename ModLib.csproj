@@ -132,6 +132,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="GUI\Brushes\DividerBrushes.xml" />
+    <Content Include="GUI\Brushes\ExpandIndicator.xml" />
     <Content Include="GUI\Brushes\ResetButtonBrush.xml" />
     <Content Include="GUI\Brushes\TextBrushes.xml" />
     <Content Include="GUI\Brushes\ModSettingsItemBrush.xml" />

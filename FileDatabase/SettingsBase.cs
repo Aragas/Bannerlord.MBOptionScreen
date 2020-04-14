@@ -63,6 +63,9 @@ namespace ModLib
             if (miscGroup != null)
                 groups.Add(miscGroup);
 
+            foreach (var group in groups)
+                group.SetParentGroup(null);
+
             return groups;
         }
 

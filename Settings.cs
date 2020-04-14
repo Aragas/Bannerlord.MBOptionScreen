@@ -35,8 +35,13 @@ namespace ModLib
 
         [XmlElement]
         [SettingProperty("Test Property 1", "")]
-        [SettingPropertyGroup("Debugging/Test Group")]
+        [SettingPropertyGroup("Debugging/Test Group", true)]
         public bool TestProperty1 { get; set; } = false;
+
+        [XmlElement]
+        [SettingProperty("Test Property 5", "")]
+        [SettingPropertyGroup("Debugging/Test Group")]
+        public bool TestProperty5 { get; set; } = false;
 
         [XmlElement]
         [SettingProperty("Test Property 2", "")]

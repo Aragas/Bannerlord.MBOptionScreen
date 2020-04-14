@@ -7,12 +7,13 @@ namespace ModLib.GUI.ViewModels
     public class SettingPropertyGroup : ViewModel
     {
         private string groupNameOverride = "";
-
+        private bool _isExpanded = true;
         public const string DefaultGroupName = "Misc";
         public SettingProperty GroupToggleSettingProperty { get; private set; } = null;
         public SettingPropertyGroupAttribute Attribute { get; private set; }
         public UndoRedoStack URS { get; private set; }
-        public ModSettingsScreenVM Parent { get; private set; }
+        public ModSettingsScreenVM ScreenVM { get; private set; }
+        public SettingPropertyGroup ParentGroup { get; set; } = null;
         public string HintText
         {
             get
@@ -65,11 +66,19 @@ namespace ModLib.GUI.ViewModels
                 {
                     GroupToggleSettingProperty.BoolValue = value;
                     OnPropertyChanged();
+                    OnPropertyChanged("IsExpanded");
+                    OnGroupClick();
+                    OnGroupClick();
+                    OnPropertyChanged("GroupNameDisplay");
                     foreach (var propSetting in SettingProperties)
                     {
                         propSetting.OnPropertyChanged("IsEnabled");
                         propSetting.OnPropertyChanged("IsSettingVisible");
-                        OnPropertyChanged("GroupNameDisplay");
+                    }
+                    foreach (var subGroup in SettingPropertyGroups)
+                    {
+                        subGroup.OnPropertyChanged("IsGroupVisible");
+                        subGroup.OnPropertyChanged("IsExpanded");
                     }
                 }
             }
@@ -77,9 +86,39 @@ namespace ModLib.GUI.ViewModels
         [DataSourceProperty]
         public bool HasGroupToggle => GroupToggleSettingProperty != null;
         [DataSourceProperty]
-        public bool HasSubGroups => SettingPropertyGroups.Count > 0;
+        public bool IsGroupVisible
+        {
+            get
+            {
+                if (ParentGroup != null)
+                    return ParentGroup.IsExpanded && ParentGroup.GroupToggle;
+
+                return true;
+            }
+        }
         [DataSourceProperty]
         public bool HasSettingsProperties => SettingProperties.Count > 0;
+        [DataSourceProperty]
+        public bool IsExpanded
+        {
+            get => _isExpanded;
+            set
+            {
+                if (_isExpanded != value)
+                {
+                    _isExpanded = value;
+                    OnPropertyChanged();
+                    OnPropertyChanged("IsGroupVisible");
+                    foreach (var subGroup in SettingPropertyGroups)
+                    {
+                        subGroup.OnPropertyChanged("IsGroupVisible");
+                        subGroup.OnPropertyChanged("IsExpanded");
+                    }
+                    foreach (var settingProp in SettingProperties)
+                        settingProp.OnPropertyChanged("IsSettingVisible");
+                }
+            }
+        }
 
         public SettingPropertyGroup(SettingPropertyGroupAttribute attribute, string groupNameOverride = "")
         {
@@ -104,7 +143,7 @@ namespace ModLib.GUI.ViewModels
             if (sp.GroupAttribute.IsMainToggle)
             {
                 if (HasGroupToggle)
-                    throw new Exception($"Tried to add a group toggle to Setting Property Group {GroupName} but it already has a group toggle: {GroupToggleSettingProperty.Name}. A Setting Property Group can only have one group toggle.");
+                    throw new Exception($"Tried to add a group toggle to setting property group \"{GroupName}\" but it already has a group toggle: {GroupToggleSettingProperty.Name}. A setting property group can only have one group toggle.");
 
                 Attribute = sp.GroupAttribute;
                 GroupToggleSettingProperty = sp;
@@ -122,27 +161,43 @@ namespace ModLib.GUI.ViewModels
                 settingProp.AssignUndoRedoStack(urs);
         }
 
-        public void SetParent(ModSettingsScreenVM parent)
+        public void SetScreenVM(ModSettingsScreenVM screenVM)
         {
-            Parent = parent;
+            ScreenVM = screenVM;
 
             foreach (var subGroup in SettingPropertyGroups)
-                subGroup.SetParent(Parent);
+                subGroup.SetScreenVM(ScreenVM);
 
             foreach (var settingProperty in SettingProperties)
-                settingProperty.SetParent(Parent);
+                settingProperty.SetScreenVM(ScreenVM);
+        }
+
+        public void SetParentGroup(SettingPropertyGroup parentGroup)
+        {
+            ParentGroup = parentGroup;
+
+            if (SettingPropertyGroups.Count > 0)
+            {
+                foreach (var subGroup in SettingPropertyGroups)
+                    subGroup.SetParentGroup(this);
+            }
         }
 
         private void OnHover()
         {
-            if (Parent != null && !string.IsNullOrWhiteSpace(HintText))
-                Parent.HintText = HintText;
+            if (ScreenVM != null && !string.IsNullOrWhiteSpace(HintText))
+                ScreenVM.HintText = HintText;
         }
 
         private void OnHoverEnd()
         {
-            if (Parent != null)
-                Parent.HintText = "";
+            if (ScreenVM != null)
+                ScreenVM.HintText = "";
+        }
+
+        private void OnGroupClick()
+        {
+            IsExpanded = !IsExpanded;
         }
 
         public override string ToString()

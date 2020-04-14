@@ -19,7 +19,7 @@ namespace ModLib.GUI.ViewModels
         public ISerialisableFile SettingsInstance { get; private set; }
         public SettingType SettingType { get; private set; }
         public UndoRedoStack URS { get; private set; }
-        public ModSettingsScreenVM Parent { get; private set; }
+        public ModSettingsScreenVM ScreenVM { get; private set; }
         public string HintText { get; private set; }
 
         [DataSourceProperty]
@@ -49,6 +49,8 @@ namespace ModLib.GUI.ViewModels
                 if (Group != null && GroupAttribute != null && GroupAttribute.IsMainToggle)
                     return false;
                 else if (!Group.GroupToggle)
+                    return false;
+                else if (!Group.IsExpanded)
                     return false;
                 else
                     return true;
@@ -197,21 +199,21 @@ namespace ModLib.GUI.ViewModels
             URS = urs;
         }
 
-        public void SetParent(ModSettingsScreenVM parent)
+        public void SetScreenVM(ModSettingsScreenVM screenVM)
         {
-            Parent = parent;
+            ScreenVM = screenVM;
         }
 
         private void OnHover()
         {
-            if (Parent != null)
-                Parent.HintText = HintText;
+            if (ScreenVM != null)
+                ScreenVM.HintText = HintText;
         }
 
         private void OnHoverEnd()
         {
-            if (Parent != null)
-                Parent.HintText = "";
+            if (ScreenVM != null)
+                ScreenVM.HintText = "";
         }
 
         public override string ToString()

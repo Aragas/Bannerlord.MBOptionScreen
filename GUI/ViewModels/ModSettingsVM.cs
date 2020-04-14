@@ -71,7 +71,7 @@ namespace ModLib.GUI.ViewModels
         {
             Parent = parent;
             foreach (var group in SettingPropertyGroups)
-                group.SetParent(Parent);
+                group.SetScreenVM(Parent);
         }
 
         private void ExecuteSelect()

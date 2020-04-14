@@ -79,7 +79,7 @@
 
               </Children>
             </Widget>
-            <!--Brush="SPOptions.Slider.Value.Text"-->
+
             <RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" MarginLeft="60"
                             IsEnabled="@IsEnabled" Text="@ValueString" VerticalAlignment="Center" Brush="ModSettings.Setting.Text"/>
 
