@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MBOptionScreen.SettingDatabase
+namespace MBOptionScreen
 {
     [SettingsStorageVersion("e1.0.0",  1)]
     [SettingsStorageVersion("e1.0.1",  1)]
@@ -25,13 +25,11 @@ namespace MBOptionScreen.SettingDatabase
     [SettingsStorageVersion("e1.1.0",  1)]
     internal class DefaultSettingsStorage : ISettingsStorage
     {
-        private List<ModSettingsVM> _modSettings = null;
-
         private Dictionary<string, SettingsBase> AllSettingsDict { get; } = new Dictionary<string, SettingsBase>();
 
         public List<SettingsBase> AllSettings => AllSettingsDict.Values.ToList();
         public int SettingsCount => AllSettingsDict.Values.Count;
-        public List<ModSettingsVM> ModSettingsVMs => _modSettings ??= GetModSettingsVMs().ToList();
+        public List<ModSettingsVM> ModSettingsVMs => GetModSettingsVMs().ToList();
 
         public DefaultSettingsStorage()
         {
@@ -80,6 +78,30 @@ namespace MBOptionScreen.SettingDatabase
                 // TODO
                 //ModDebug.ShowError("An error occurred while creating the ViewModels for all mod settings", "Error Occurred", ex);
             }
+        }
+
+        public bool OverrideSettingsWithId(SettingsBase settings, string Id)
+        {
+            if (AllSettingsDict.ContainsKey(Id))
+            {
+                AllSettingsDict[Id] = settings;
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Resets the settings instance to the default values for that instance.
+        /// </summary>
+        /// <param name="settingsInstance">The instance of the object to be reset</param>
+        /// <returns>Returns the instance of the new object with default values.</returns>
+        public SettingsBase ResetSettingsInstance(SettingsBase settingsInstance)
+        {
+            var id = settingsInstance.ID;
+            var newObj = (SettingsBase) Activator.CreateInstance(settingsInstance.GetType());
+            newObj.ID = id;
+            AllSettingsDict[id] = newObj;
+            return newObj;
         }
     }
 }

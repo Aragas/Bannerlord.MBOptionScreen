@@ -6,9 +6,9 @@ namespace ModLib
 {
     public class TestSettings : SettingsBase<TestSettings>
     {
-        public override string ModName => "ModLib";
-        public override string ModuleFolderName => "MBOptionScreen";
-        public const string SettingsInstanceID = "ModLibSettings";
+        public override string ModName => "Testing";
+        public override string ModuleFolderName => "Testing";
+        public const string SettingsInstanceID = "Testing";
 
         [XmlElement]
         public override string ID { get; set; } = SettingsInstanceID;

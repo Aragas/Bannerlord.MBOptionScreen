@@ -5,25 +5,23 @@ using TaleWorlds.Engine.Screens;
 using TaleWorlds.GauntletUI.Data;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
-using TaleWorlds.MountAndBlade.View.Missions;
 using TaleWorlds.TwoDimension;
 
 namespace ModLib.GUI.GauntletUI
 {
-    [ModuleOptionVersion("e1.0.0", 1)]
-    [ModuleOptionVersion("e1.0.1", 1)]
-    [ModuleOptionVersion("e1.0.2", 1)]
-    [ModuleOptionVersion("e1.0.3", 1)]
-    [ModuleOptionVersion("e1.0.4", 1)]
-    [ModuleOptionVersion("e1.0.5", 1)]
-    [ModuleOptionVersion("e1.0.6", 1)]
-    [ModuleOptionVersion("e1.0.7", 1)]
-    [ModuleOptionVersion("e1.0.8", 1)]
-    [ModuleOptionVersion("e1.0.9", 1)]
+    [ModuleOptionVersion("e1.0.0",  1)]
+    [ModuleOptionVersion("e1.0.1",  1)]
+    [ModuleOptionVersion("e1.0.2",  1)]
+    [ModuleOptionVersion("e1.0.3",  1)]
+    [ModuleOptionVersion("e1.0.4",  1)]
+    [ModuleOptionVersion("e1.0.5",  1)]
+    [ModuleOptionVersion("e1.0.6",  1)]
+    [ModuleOptionVersion("e1.0.7",  1)]
+    [ModuleOptionVersion("e1.0.8",  1)]
+    [ModuleOptionVersion("e1.0.9",  1)]
     [ModuleOptionVersion("e1.0.10", 1)]
     [ModuleOptionVersion("e1.0.11", 1)]
-    [ModuleOptionVersion("e1.1.0", 1)]
-    [OverrideView(typeof(ModSettingsScreenVM))]
+    [ModuleOptionVersion("e1.1.0",  1)]
     internal class ModOptionsGauntletScreen : ScreenBase
     {
         private GauntletLayer gauntletLayer;

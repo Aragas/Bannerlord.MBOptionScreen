@@ -5,7 +5,7 @@ namespace ModLib
 {
     public static class FileDatabase
     {
-        private static IFileStorage FileStorage => MBOptionScreenSubModule.SyncObject.FileStorage;
+        private static IFileStorage FileStorage => MBOptionScreenSubModule.SharedStateObject.FileStorage;
 
         public static T Get<T>(string id) where T : ISerialisableFile =>
             FileStorage == null ? default : FileStorage.Get<T>(id);

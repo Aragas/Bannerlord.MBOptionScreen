@@ -2,14 +2,13 @@
 
 using MBOptionScreen.Attributes;
 using MBOptionScreen.ResourceInjection;
-using MBOptionScreen.SettingDatabase;
+using MBOptionScreen.SharedState;
 
 using ModLib;
 
 using SandBox.View.Map;
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -26,9 +25,6 @@ namespace MBOptionScreen
 {
     public class MBOptionScreenSubModule : MBSubModuleBase
     {
-        private static FieldInfo InitialStateOptionsField { get; } =
-            typeof(Module).GetField("_initialStateOptions", BindingFlags.Instance | BindingFlags.NonPublic);
-
         private static MethodInfo OnEscapeMenuToggledMethod { get; } =
             typeof(MapScreen).GetMethod("OnEscapeMenuToggled", BindingFlags.Instance | BindingFlags.NonPublic);
         private static void GetEscapeMenuItemsPostfix(MapScreen __instance, List<EscapeMenuItemVM> __result)
@@ -38,63 +34,24 @@ namespace MBOptionScreen
                 obj =>
                 {
                     OnEscapeMenuToggledMethod.Invoke(__instance, new object[] { false });
-                    ScreenManager.PushScreen((ScreenBase) Activator.CreateInstance(SyncObject.ModOptionScreen));
+                    ScreenManager.PushScreen((ScreenBase) Activator.CreateInstance(SharedStateObject.ModOptionScreen));
                 },
                 null, false, false));
         }
-
         static MBOptionScreenSubModule()
         {
             // Mark so if necessary, something can unpatch it
             new Harmony("bannerlord.mboptionscreen.defaultmapscreeninjection_v1").Patch(
                 original: typeof(MapScreen).GetMethod("GetEscapeMenuItems", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic),
-                prefix: new HarmonyMethod(typeof(MBOptionScreenSubModule).GetMethod("GetEscapeMenuItemsPostfix", BindingFlags.Static | BindingFlags.NonPublic)));
+                postfix: new HarmonyMethod(typeof(MBOptionScreenSubModule).GetMethod("GetEscapeMenuItemsPostfix", BindingFlags.Static | BindingFlags.NonPublic)));
         }
 
-        internal static SyncObjectV1 SyncObject;
-
-        protected IResourceInjector ResourceInjector => SyncObject.ResourceInjector;
+        internal static SharedStateObject SharedStateObject;
+        private static IStateProvider _stateProvider;
 
         protected override void OnSubModuleLoad()
         {
-            // Check if another 'copy' of MBOptionScreen inside another mod has already done initialization
-            SyncObject = (SyncObjectV1) Module.CurrentModule.GetInitialStateOptionWithId(SyncObjectV1.SyncId);
-
-            // This is the first instance of MBOptionScreen to make the initialization 
-            if (SyncObject == null)
-            {
-                // Find the latest implementation among loaded mods
-                // The currently loaded MBOptionScreen might not the the latest one,
-                // but some other mod might have it inside itself
-                var version = ApplicationVersionParser.TryParse(Managed.GetVersionStr(), out var v) ? v : default;
-                var modOptionsGauntletScreenType = AttributeHelper.Get<ModuleOptionVersionAttribute>(version);
-                var fileStorageType = AttributeHelper.Get<FileStorageVersionAttribute>(version);
-                var settingsStorageType = AttributeHelper.Get<SettingsStorageVersionAttribute>(version);
-                var resourceInjectorType = AttributeHelper.Get<ResourceInjectorVersionAttribute>(version);
-
-                // Initialize the shared class among other instances of MBOptionScreen.
-                SyncObject = new SyncObjectV1
-                {
-                    FileStorage = (IFileStorage) Activator.CreateInstance(fileStorageType.Type),
-                    SettingsStorage = (ISettingsStorage) Activator.CreateInstance(settingsStorageType.Type),
-                    ResourceInjector = (IResourceInjector) Activator.CreateInstance(resourceInjectorType.Type),
-                    ModOptionScreen = modOptionsGauntletScreenType.Type
-                };
-                // TODO: Get folder from SettingsBase
-                SyncObject.FileStorage.Initialize("MBOptionScreen");
-
-                // Module._initialStateOptions was used to host the shared class,
-                // as the game is using the list only after OnBeforeInitialModuleScreenSetAsRoot() was called
-                Module.CurrentModule.AddInitialStateOption(SyncObject); // Workaround
-
-
-                Module.CurrentModule.AddInitialStateOption(new InitialStateOption("ModOptionsMenu", new TextObject("{=HiZbHGvYG}Mod Options"), 9990, () =>
-                {
-                    var screen = (ScreenBase) Activator.CreateInstance(SyncObject.ModOptionScreen);
-                    ScreenManager.PushScreen(screen);
-                }, false));
-            }
-
+            StartInitialization();
 
             var settingsEnumerable = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(a => a.DefinedTypes)
@@ -105,41 +62,67 @@ namespace MBOptionScreen
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
-            if (!SyncObject.HasInitializedVM)
-            {
-                ResourceInjector.InjectBrush(BrushLoader.DividerBrushes_v1());
-                ResourceInjector.InjectBrush(BrushLoader.ModSettingsItem_v1Brush_v1());
-                ResourceInjector.InjectBrush(BrushLoader.ResetButtonBrush_v1());
-                ResourceInjector.InjectBrush(BrushLoader.TextBrushes_v1());
-
-                ResourceInjector.InjectPrefab("ModSettingsItem_v1", PrefabsLoader.ModSettingsItem_v1());
-                ResourceInjector.InjectPrefab("SettingPropertyGroupView_v1", PrefabsLoader.SettingPropertyGroupView_v1());
-                ResourceInjector.InjectPrefab("SettingPropertyView_v1", PrefabsLoader.SettingPropertyView_v1());
-                ResourceInjector.InjectPrefab("SettingsView_v1", PrefabsLoader.SettingsView_v1());
-
-                SyncObject.HasInitializedVM = true;
-            }
-
-            var list = InitialStateOptionsField.GetValue(Module.CurrentModule) as IList;
-            list?.Remove(SyncObject);
+            EndInitialization();
         }
 
-
-        /// <summary>
-        /// A shareable object between multiple mods that will use this library
-        /// Life length expectation - OnSubModuleLoad()->OnBeforeInitialModuleScreenSetAsRoot()
-        /// </summary>
-        internal class SyncObjectV1 : InitialStateOption
+        private static void StartInitialization()
         {
-            public static string SyncId = "mboptionscreen_synchronization_object";
+            var version = ApplicationVersionParser.TryParse(Managed.GetVersionStr(), out var v) ? v : default;
+            var stateProviderTuple = AttributeHelper.Get<StateProviderVersionAttribute>(version);
+            _stateProvider = (IStateProvider) Activator.CreateInstance(stateProviderTuple.Type);
 
-            public bool HasInitializedVM { get; internal set; }
-            public Type ModOptionScreen { get; internal set; }
-            public IFileStorage FileStorage { get; internal set; }
-            public ISettingsStorage SettingsStorage { get; internal set; }
-            public IResourceInjector ResourceInjector { get; internal set; }
+            // Check if another 'copy' of MBOptionScreen inside another mod has already done initialization
+            SharedStateObject = _stateProvider.Get<SharedStateObject>();
 
-            public SyncObjectV1() : base(SyncId, new TextObject(""), 1, null, true) { }
+            // This is the first instance of MBOptionScreen to make the initialization 
+            if (SharedStateObject == null)
+            {
+                // Find the latest implementation among loaded mods
+                // The currently loaded MBOptionScreen might not be the one with the latest implementation versions,
+                // but some other mod might have it included
+                var modOptionsScreenTuple = AttributeHelper.Get<ModuleOptionVersionAttribute>(version);
+                var fileStorageTuple = AttributeHelper.Get<FileStorageVersionAttribute>(version);
+                var settingsStorageTuple = AttributeHelper.Get<SettingsStorageVersionAttribute>(version);
+                var resourceInjectorTuple = AttributeHelper.Get<ResourceInjectorVersionAttribute>(version);
+
+                // Initialize the shared class among other instances of MBOptionScreen.
+                SharedStateObject = new SharedStateObject(
+                    (IFileStorage) Activator.CreateInstance(fileStorageTuple.Type),
+                    (ISettingsStorage) Activator.CreateInstance(settingsStorageTuple.Type),
+                    (IResourceInjector) Activator.CreateInstance(resourceInjectorTuple.Type),
+                    modOptionsScreenTuple.Type);
+                _stateProvider.Set(SharedStateObject);
+
+                // TODO: Get folder from SettingsBase
+                SharedStateObject.FileStorage.Initialize("MBOptionScreen");
+
+
+                Module.CurrentModule.AddInitialStateOption(new InitialStateOption("ModOptionsMenu", new TextObject("{=HiZbHGvYG}Mod Options"), 9990, () =>
+                {
+                    var screen = (ScreenBase) Activator.CreateInstance(SharedStateObject.ModOptionScreen);
+                    ScreenManager.PushScreen(screen);
+                }, false));
+            }
+        }
+
+        private static void EndInitialization()
+        {
+            if (!SharedStateObject.HasInitialized)
+            {
+                SharedStateObject.ResourceInjector.InjectBrush(BrushLoader.DividerBrushes_v1());
+                SharedStateObject.ResourceInjector.InjectBrush(BrushLoader.ModSettingsItem_v1Brush_v1());
+                SharedStateObject.ResourceInjector.InjectBrush(BrushLoader.ResetButtonBrush_v1());
+                SharedStateObject.ResourceInjector.InjectBrush(BrushLoader.TextBrushes_v1());
+
+                SharedStateObject.ResourceInjector.InjectPrefab("ModSettingsItem_v1", PrefabsLoader.ModSettingsItem_v1());
+                SharedStateObject.ResourceInjector.InjectPrefab("SettingPropertyGroupView_v1", PrefabsLoader.SettingPropertyGroupView_v1());
+                SharedStateObject.ResourceInjector.InjectPrefab("SettingPropertyView_v1", PrefabsLoader.SettingPropertyView_v1());
+                SharedStateObject.ResourceInjector.InjectPrefab("SettingsView_v1", PrefabsLoader.SettingsView_v1());
+
+                SharedStateObject.HasInitialized = true;
+            }
+
+            _stateProvider.Clear();
         }
     }
 }

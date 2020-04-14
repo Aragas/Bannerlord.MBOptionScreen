@@ -35,7 +35,7 @@ namespace MBOptionScreen.ResourceInjection
             typeof(GauntletMovie).GetField("_movieRootNode", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
         private static bool LoadMoviePrefix(GauntletMovie __instance)
         {
-            var movie = MBOptionScreenSubModule.SyncObject.ResourceInjector.RequestMovie(__instance.MovieName);
+            var movie = MBOptionScreenSubModule.SharedStateObject.ResourceInjector.RequestMovie(__instance.MovieName);
             if (movie == null)
                 return true;
 
