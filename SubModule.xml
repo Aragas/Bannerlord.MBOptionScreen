@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Module>
-	<Name value="ModLib"/>
-	<Id value="ModLib"/>
+	<Name value="MBOptionScreen"/>
+	<Id value="MBOptionScreen"/>
 	<Version value="v1.0.0"/>
 	<DefaultModule value="false"/>
 	<SingleplayerModule value="true"/>
@@ -16,9 +16,9 @@
 	</DependedModules>
 	<SubModules>
 		<SubModule>
-			<Name value="ModLib"/>
-			<DLLName value="ModLib.dll"/>
-			<SubModuleClassType value="ModLib.ModLibSubModule"/>
+			<Name value="MBOptionScreen"/>
+			<DLLName value="MBOptionScreen.dll"/>
+			<SubModuleClassType value="MBOptionScreen.MBOptionScreenSubModule"/>
 			<Tags>
 				<Tag key="DedicatedServerType" value="none" />
 				<Tag key="IsNoRenderModeElement" value="false" />

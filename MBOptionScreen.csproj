@@ -1,0 +1,69 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <!--Harmony does not provide a netstandard2.0 implementation and even if it did,
+    it would bring a lot of .dll with itself, so stick to net472 for now-->
+    <TargetFrameworks>net472;netstandard2.0</TargetFrameworks>
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <GameFolder>C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord</GameFolder>
+    <Authors>mipen, Aragas</Authors>
+    <Copyright>Copyright ©  2020</Copyright>
+    <Company />
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>Bannerlord.MBOptionScreen</PackageId>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <Version>1.0.2</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="$(GameFolder)\bin\Win64_Shipping_Client\System.*.dll">
+      <HintPath>%(Identity)</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="$(GameFolder)\bin\Win64_Shipping_Client\TaleWorlds.*.dll">
+      <HintPath>%(Identity)</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="$(GameFolder)\bin\Win64_Shipping_Client\Steamworks.*.dll">
+      <HintPath>%(Identity)</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="$(GameFolder)\Modules\Native\bin\Win64_Shipping_Client\*.dll">
+      <HintPath>%(Identity)</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="$(GameFolder)\Modules\SandBox\bin\Win64_Shipping_Client\*.dll">
+      <HintPath>%(Identity)</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="$(GameFolder)\Modules\SandBoxCore\bin\Win64_Shipping_Client\*.dll">
+      <HintPath>%(Identity)</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="$(GameFolder)\Modules\StoryMode\bin\Win64_Shipping_Client\*.dll">
+      <HintPath>%(Identity)</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="GUI\v1\Brushes\DividerBrushes.xml" />
+    <EmbeddedResource Include="GUI\v1\Brushes\ExpandIndicator.xml" />
+    <EmbeddedResource Include="GUI\v1\Brushes\ModSettingsItemBrush.xml" />
+    <EmbeddedResource Include="GUI\v1\Brushes\ResetButtonBrush.xml" />
+    <EmbeddedResource Include="GUI\v1\Brushes\TextBrushes.xml" />
+    <EmbeddedResource Include="GUI\v1\Views\ModOptionsScreen.xml" />
+    <EmbeddedResource Include="GUI\v1\Views\ModSettingsItem.xml" />
+    <EmbeddedResource Include="GUI\v1\Views\SettingPropertyGroupView.xml" />
+    <EmbeddedResource Include="GUI\v1\Views\SettingPropertyView.xml" />
+    <EmbeddedResource Include="GUI\v1\Views\SettingsView.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lib.Harmony" Version="2.0.0.9" Condition="$(TargetFramework) == 'net472'" />
+    <PackageReference Include="Aragas.Lib.Harmony" Version="2.0.0.9" Condition="$(TargetFramework) == 'netstandard2.0'" />
+  </ItemGroup>
+
+</Project>
