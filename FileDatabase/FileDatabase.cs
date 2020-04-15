@@ -302,7 +302,7 @@ namespace ModLib
             {
                 get
                 {
-                    return Type.GetType(FullName);
+                    return AppDomain.CurrentDomain.GetAssemblies().Where(z => z.FullName.StartsWith(this.AssemblyName)).FirstOrDefault().GetType(TypeName);
                 }
             }
 
