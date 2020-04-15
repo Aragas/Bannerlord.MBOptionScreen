@@ -1,13 +1,12 @@
 ﻿using MBOptionScreen.Attributes;
-using ModLib.GUI.v1.ViewModels;
+using MBOptionScreen.GUI.v1.ViewModels;
 using TaleWorlds.Engine.GauntletUI;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.GauntletUI.Data;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
-using TaleWorlds.TwoDimension;
 
-namespace ModLib.GUI.v1.GauntletUI
+namespace MBOptionScreen.GUI.v1.GauntletUI
 {
     [ModuleOptionVersion("e1.0.0",  1)]
     [ModuleOptionVersion("e1.0.1",  1)]
@@ -31,9 +30,9 @@ namespace ModLib.GUI.v1.GauntletUI
         protected override void OnInitialize()
         {
             base.OnInitialize();
-            SpriteData spriteData = UIResourceManager.SpriteData;
-            TwoDimensionEngineResourceContext resourceContext = UIResourceManager.ResourceContext;
-            ResourceDepot uiresourceDepot = UIResourceManager.UIResourceDepot;
+            var spriteData = UIResourceManager.SpriteData;
+            var resourceContext = UIResourceManager.ResourceContext;
+            var uiresourceDepot = UIResourceManager.UIResourceDepot;
             spriteData.SpriteCategories["ui_encyclopedia"].Load(resourceContext, uiresourceDepot);
             gauntletLayer = new GauntletLayer(1);
             gauntletLayer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);

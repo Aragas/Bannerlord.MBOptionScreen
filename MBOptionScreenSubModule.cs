@@ -1,10 +1,10 @@
 ﻿using HarmonyLib;
 
 using MBOptionScreen.Attributes;
-using MBOptionScreen.ResourceInjection;
-using MBOptionScreen.SharedState;
-
-using ModLib;
+using MBOptionScreen.Interfaces;
+using MBOptionScreen.ResourceInjection.EmbedLoaders;
+using MBOptionScreen.Settings;
+using MBOptionScreen.State;
 
 using SandBox.View.Map;
 

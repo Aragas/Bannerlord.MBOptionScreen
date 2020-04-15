@@ -1,13 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using MBOptionScreen.Settings;
+
+using System.Collections.Generic;
 using System.Linq;
 
-namespace ModLib
+namespace MBOptionScreen.ExtensionMethods
 {
     public static class ICollectionExtensions
     {
         public static SettingPropertyGroupDefinition GetGroup(this ICollection<SettingPropertyGroupDefinition> groupsList, string groupName)
         {
-            return groupsList.Where((x) => x.GroupName == groupName).FirstOrDefault();
+            return groupsList.FirstOrDefault(x => x.GroupName == groupName);
         }
     }
 }

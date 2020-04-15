@@ -1,10 +1,16 @@
-﻿using ModLib.Attributes;
-using ModLib.Interfaces;
+﻿using MBOptionScreen.Actions;
+using MBOptionScreen.Attributes;
+using MBOptionScreen.GUI.v1a.GauntletUI;
+using MBOptionScreen.Interfaces;
+using MBOptionScreen.Settings;
+
 using System;
 using System.Reflection;
+
+using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
 
-namespace ModLib.GUI.v1a.ViewModels
+namespace MBOptionScreen.GUI.v1a.ViewModels
 {
     public class SettingProperty : ViewModel
     {
@@ -17,11 +23,21 @@ namespace ModLib.GUI.v1a.ViewModels
         public SettingPropertyAttribute SettingAttribute => SettingPropertyDefinition.SettingAttribute;
         public PropertyInfo Property => SettingPropertyDefinition.Property;
         public SettingPropertyGroupAttribute GroupAttribute => SettingPropertyDefinition.GroupAttribute;
-        public ISerialisableFile SettingsInstance => SettingPropertyDefinition.SettingsInstance;
+        public ISerializableFile SettingsInstance => SettingPropertyDefinition.SettingsInstance;
         public SettingType SettingType => SettingPropertyDefinition.SettingType;
         public SettingPropertyGroup Group { get; set; }
         public UndoRedoStack URS { get; private set; }
         public string HintText { get; private set; }
+        public bool SatisfiesSearch
+        {
+            get
+            {
+                if (MainView == null || MainView.SearchText == "")
+                    return true;
+
+                return Name.IndexOf(MainView.SearchText, StringComparison.OrdinalIgnoreCase) >= 0;
+            }
+        }
 
         [DataSourceProperty]
         public string Name => SettingAttribute.DisplayName;
@@ -51,10 +67,17 @@ namespace ModLib.GUI.v1a.ViewModels
                     return false;
                 else if (Group?.GroupToggle == false)
                     return false;
+                else if (Group?.IsExpanded == false)
+                    return false;
+                else if (!SatisfiesSearch)
+                    return false;
                 else
                     return true;
             }
         }
+
+        [DataSourceProperty]
+        public bool IsValueFieldVisible => !IsBoolVisible;
 
         [DataSourceProperty]
         public float FloatValue
@@ -132,10 +155,15 @@ namespace ModLib.GUI.v1a.ViewModels
         [DataSourceProperty]
         public string ValueString => SettingType switch
         {
-            SettingType.Int => IntValue.ToString(),
-            SettingType.Float => FloatValue.ToString("0.00"),
+            SettingType.Int => ((int) Property.GetValue(SettingsInstance)).ToString("0"),
+            SettingType.Float => ((float) Property.GetValue(SettingsInstance)).ToString("0.00"),
             _ => ""
         };
+
+        [DataSourceProperty]
+        public Action OnHoverAction => OnHover;
+        [DataSourceProperty]
+        public Action OnHoverEndAction => OnHoverEnd;
 
         public SettingProperty(SettingPropertyDefinition definition, ModSettingsScreenVM mainView)
         {
@@ -175,5 +203,12 @@ namespace ModLib.GUI.v1a.ViewModels
             if (MainView != null)
                 MainView.HintText = "";
         }
+
+        private void OnValueClick()
+        {
+            ScreenManager.PushScreen(new EditValueGauntletScreen(this));
+        }
+
+        public override string ToString() => Name;
     }
 }

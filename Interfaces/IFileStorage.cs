@@ -1,7 +1,6 @@
-﻿using ModLib;
-using ModLib.Interfaces;
+﻿using MBOptionScreen.Settings;
 
-namespace MBOptionScreen
+namespace MBOptionScreen.Interfaces
 {
     public interface IFileStorage
     {
@@ -18,7 +17,7 @@ namespace MBOptionScreen
         /// <typeparam name="T">Type of object to retrieve</typeparam>
         /// <param name="id">ID of object to retrieve</param>
         /// <returns></returns>
-        T Get<T>(string id) where T : ISerialisableFile;
+        T Get<T>(string id) where T : ISerializableFile;
 
         /// <summary>
         /// Saves the given instance to file.
@@ -26,7 +25,7 @@ namespace MBOptionScreen
         /// <typeparam name="T">Type of the instance to save to file.</typeparam>
         /// <param name="moduleName">The folder name of the module to save to.</param>
         /// <param name="sf">Instance of the object to save to file.</param>
-        bool SaveToFile(string moduleName, ISerialisableFile sf, Location location = Location.Modules);
+        bool SaveToFile(string moduleName, ISerializableFile sf, Location location = Location.Modules);
 
     }
 }

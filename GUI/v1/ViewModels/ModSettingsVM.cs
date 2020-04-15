@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using MBOptionScreen;
+using MBOptionScreen.Settings;
 using TaleWorlds.Library;
 
-namespace ModLib.GUI.v1.ViewModels
+namespace MBOptionScreen.GUI.v1.ViewModels
 {
     public class ModSettingsVM : ViewModel
     {

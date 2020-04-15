@@ -1,6 +1,8 @@
-﻿using System;
+﻿using MBOptionScreen.Interfaces;
 
-namespace MBOptionScreen.SharedState
+using System;
+
+namespace MBOptionScreen.State
 {
     internal class SharedStateObjectV1 : ISharedStateObject
     {

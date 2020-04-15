@@ -1,8 +1,8 @@
 <Prefab>
   <Constants>
 
-    <Constant Name="CancelButton.Width" BrushLayer="Default" BrushName="Popup.Cancel.Button" BrushValueType="Width" />
-    <Constant Name="CancelButton.Height" BrushLayer="Default" BrushName="Popup.Cancel.Button" BrushValueType="Height" />
+    <Constant Name="CancelButton.Width" BrushLayer="Default" BrushName="ModLib.Cancel.Button_v1a" BrushValueType="Width" />
+    <Constant Name="CancelButton.Height" BrushLayer="Default" BrushName="ModLib.Cancel.Button_v1a" BrushValueType="Height" />
 
   </Constants>
   <Window>
@@ -22,7 +22,7 @@
               <Children>
 
                 <!-- Title -->
-                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" Brush="ModSettings.Title.Text_v1a" Text="Mods"
+                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" Brush="ModLib.Settings.Title.Text_v1a" Text="Mods"
                                 HorizontalAlignment="Center" VerticalAlignment="Top" MarginRight="19" PositionYOffset="-10"/>
 
                 <!-- Mods Listing Section Inner Panel-->
@@ -70,7 +70,9 @@
                   <Children>
 
                     <!-- Cancel button -->
-                    <ButtonWidget Id="CancelButton" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!CancelButton.Width" SuggestedHeight="!CancelButton.Height" Brush="Popup.Cancel.Button" Command.Click="ExecuteCancel">
+                    <ButtonWidget Id="CancelButton" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
+                                  SuggestedWidth="!CancelButton.Width" SuggestedHeight="!CancelButton.Height" Brush="ModLib.Cancel.Button_v1a"
+                                  Command.Click="ExecuteCancel">
                       <Children>
 
                         <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="@CancelButtonText" />
@@ -80,7 +82,7 @@
 
                     <!--Done Button-->
                     <ButtonWidget Id="DoneButton" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
-                                  SuggestedWidth="!CancelButton.Width" SuggestedHeight="!CancelButton.Height" Brush="Popup.Done.Button"
+                                  SuggestedWidth="!CancelButton.Width" SuggestedHeight="!CancelButton.Height" Brush="ModLib.Done.Button_v1a"
                                   Command.Click="ExecuteDone">
                       <Children>
 
@@ -102,10 +104,31 @@
 
                 <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" LayoutImp.LayoutMethod="VerticalBottomToTop">
                   <Children>
-                    <!-- Title -->
-                    <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="80" Brush="ModSettings.Title.Text_v1a" Text="@SelectedModName"
-                                    HorizontalAlignment="Center" VerticalAlignment="Top" />
-                    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="Divider.Yellow_v1a"
+                    <!-- Title Section -->
+                    <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="80" LayoutImp.LayoutMethod="HorizontalLeftToRight"
+                               HorizontalAlignment="Center" VerticalAlignment="Top">
+                      <Children>
+                        <!-- Title -->
+                        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="80" Brush="ModLib.Settings.Title.Text_v1a"
+                                        Text="@SelectedModName" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+
+
+                        <!-- Search box -->
+                        <Widget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="200" VerticalAlignment="Center" SuggestedHeight="40"
+                                HorizontalAlignment="Right" MarginLeft="40" MarginRight="20" ClipContents="true" Sprite="SaveLoad\load_tuple_selected" Brush.ColorFactor="0.2">
+                          <Children>
+                            <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" MarginLeft="10" MarginRight="10"
+                                                VerticalAlignment="Center" Brush="Encyclopedia.Search.TextBox" RealText="@SearchText" IsObfuscationEnabled="false"/>
+                            
+                            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="25" SuggestedHeight="24" Sprite="Encyclopedia\icon_search"
+                                    VerticalAlignment="Center" HorizontalAlignment="Right" IsDisabled="true" MarginRight="5"/>
+                          </Children>
+                        </Widget>
+
+                      </Children>
+                    </ListPanel>
+                    <!-- Separator -->
+                    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="ModLib.Divider.Yellow_v1a"
                             MarginLeft="15" MarginRight="15"/>
 
                     <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="30" MarginLeft="30">
@@ -143,11 +166,11 @@
                                LayoutImp.LayoutMethod="VerticalBottomToTop" MarginTop="1">
                       <Children>
 
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="Divider.Yellow_v1a"
+                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="ModLib.Divider.Yellow_v1a"
                                 MarginLeft="15" MarginRight="15" MarginBottom="2"/>
 
                         <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Text="@HintText" IsVisible="@IsHintVisible"
-                                    HorizontalAlignment="Left" VerticalAlignment="Center" MarginLeft="20" MarginRight="10" Brush="ModSettings.Hint.Text_v1a"/>
+                                    HorizontalAlignment="Left" VerticalAlignment="Center" MarginLeft="20" MarginRight="10" Brush="ModLib.Settings.Hint.Text_v1a"/>
 
                       </Children>
                     </ListPanel>
@@ -163,7 +186,16 @@
 
         <!-- Top Banner -->
         <Standard.TopPanel Parameter.Title="@TitleLabel"/>
-        
+
+        <!-- Revert to default button -->
+        <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!CancelButton.Width"
+                      SuggestedHeight="!CancelButton.Height" Brush="ModLib.Delete.Button_v1a" Command.Click="ExecuteRevert" IsVisible="@SomethingSelected"
+                      HorizontalAlignment="Right" VerticalAlignment="Top" MarginTop="75" MarginRight="40">
+          <Children>
+            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="Revert to defaults" />
+          </Children>
+        </ButtonWidget>
+
       </Children>
     </Widget>
   </Window>

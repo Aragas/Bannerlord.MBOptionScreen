@@ -1,6 +1,6 @@
-﻿namespace ModLib.Interfaces
+﻿namespace MBOptionScreen.Interfaces
 {
-    interface ISubFolder
+    internal interface ISubFolder
     {
         string SubFolder { get; }
     }

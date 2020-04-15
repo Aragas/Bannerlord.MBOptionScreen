@@ -1,7 +1,5 @@
 ﻿using MBOptionScreen.Attributes;
-
-using ModLib;
-using ModLib.Interfaces;
+using MBOptionScreen.Interfaces;
 
 using System;
 using System.Collections.Generic;
@@ -12,9 +10,7 @@ using System.Xml.Serialization;
 using TaleWorlds.Engine;
 using TaleWorlds.Library;
 
-using Path = System.IO.Path;
-
-namespace MBOptionScreen
+namespace MBOptionScreen.Settings
 {
     [FileStorageVersion("e1.0.0",  1)]
     [FileStorageVersion("e1.0.1",  1)]
@@ -28,12 +24,12 @@ namespace MBOptionScreen
     [FileStorageVersion("e1.0.9",  1)]
     [FileStorageVersion("e1.0.10", 1)]
     [FileStorageVersion("e1.0.11", 1)]
-    //[FileStorageVersion("e1.1.0",  1)]
+    [FileStorageVersion("e1.1.0",  1)]
     internal class DefaultFileStorage : IFileStorage
     {
         private readonly string LoadablesFolderName = "Loadables";
 
-        public Dictionary<Type, Dictionary<string, ISerialisableFile>> Data { get; } = new Dictionary<Type, Dictionary<string, ISerialisableFile>>();
+        public Dictionary<Type, Dictionary<string, ISerializableFile>> Data { get; } = new Dictionary<Type, Dictionary<string, ISerializableFile>>();
 
         public bool Initialize(string moduleName)
         {
@@ -51,7 +47,7 @@ namespace MBOptionScreen
             return successful;
         }
 
-        public T Get<T>(string id) where T : ISerialisableFile
+        public T Get<T>(string id) where T : ISerializableFile
         {
             //First check if the dictionary contains the key
             if (!Data.ContainsKey(typeof(T)))
@@ -63,7 +59,7 @@ namespace MBOptionScreen
             return (T) Data[typeof(T)][id];
         }
 
-        public bool SaveToFile(string moduleName, ISerialisableFile sf, Location location = Location.Modules)
+        public bool SaveToFile(string moduleName, ISerializableFile sf, Location location = Location.Modules)
         {
             try
             {
@@ -77,15 +73,15 @@ namespace MBOptionScreen
                     throw new Exception($"FileDatabase cannot find the module named {moduleName}");
 
                 if (location == Location.Modules)
-                    path = Path.Combine(path, "ModuleData", LoadablesFolderName);
+                    path = System.IO.Path.Combine(path, "ModuleData", LoadablesFolderName);
 
                 if (sf is ISubFolder subFolder && !string.IsNullOrWhiteSpace(subFolder.SubFolder))
-                    path = Path.Combine(path, subFolder.SubFolder);
+                    path = System.IO.Path.Combine(path, subFolder.SubFolder);
 
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
 
-                path = Path.Combine(path, $"{sf.GetType().Name}.{sf.ID}.xml");
+                path = System.IO.Path.Combine(path, $"{sf.GetType().Name}.{sf.ID}.xml");
 
                 if (File.Exists(path))
                     File.Delete(path);
@@ -115,7 +111,7 @@ namespace MBOptionScreen
             }
         }
 
-        private void Add(ISerialisableFile loadable)
+        private void Add(ISerializableFile loadable)
         {
             if (loadable == null)
                 throw new ArgumentNullException("Tried to add something to the Loader Data dictionary that was null");
@@ -124,7 +120,7 @@ namespace MBOptionScreen
 
             var type = loadable.GetType();
             if (!Data.ContainsKey(type))
-                Data.Add(type, new Dictionary<string, ISerialisableFile>());
+                Data.Add(type, new Dictionary<string, ISerializableFile>());
 
             if (Data[type].ContainsKey(loadable.ID))
             {
@@ -140,7 +136,7 @@ namespace MBOptionScreen
         {
             //DEBUG:: People can't read and aren't deleting the old mod installation. Need to manually delete the old config file for a couple updates.
             var modulefolder = Directory.GetParent(filePath).Parent.Parent.Name;
-            if (Path.GetFileName(filePath) == "config.xml" && modulefolder == "zzBannerlordTweaks")
+            if (System.IO.Path.GetFileName(filePath) == "config.xml" && modulefolder == "zzBannerlordTweaks")
             {
                 File.Delete(filePath);
                 return;
@@ -170,7 +166,7 @@ namespace MBOptionScreen
                     IsNullable = true
                 };
                 var serializer = new XmlSerializer(data.Type, root);
-                var loaded = (ISerialisableFile) serializer.Deserialize(reader);
+                var loaded = (ISerializableFile) serializer.Deserialize(reader);
                 if (loaded != null)
                     Add(loaded);
                 else
@@ -197,7 +193,7 @@ namespace MBOptionScreen
             if (!Directory.Exists(modulePath))
                 throw new Exception($"Cannot find module named {moduleName}");
             //Check the module's ModuleData folder for the Loadables folder.
-            var moduleLoadablesPath = Path.Combine(modulePath, "ModuleData", LoadablesFolderName);
+            var moduleLoadablesPath = System.IO.Path.Combine(modulePath, "ModuleData", LoadablesFolderName);
             if (Directory.Exists(moduleLoadablesPath))
             {
                 try
@@ -265,8 +261,8 @@ namespace MBOptionScreen
 
         private static string GetPathForModule(string moduleName, Location location) => location switch
         {
-            Location.Modules => Path.Combine(BasePath.Name, "Modules", moduleName),
-            Location.Configs => Path.Combine(Utilities.GetConfigsPath(), moduleName)
+            Location.Modules => System.IO.Path.Combine(BasePath.Name, "Modules", moduleName),
+            Location.Configs => System.IO.Path.Combine(Utilities.GetConfigsPath(), moduleName)
         };
 
         private class TypeData

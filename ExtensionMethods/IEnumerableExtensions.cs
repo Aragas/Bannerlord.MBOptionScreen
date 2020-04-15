@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ModLib
+namespace MBOptionScreen.ExtensionMethods
 {
     public static class IEnumerableExtensions
     {

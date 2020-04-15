@@ -1,25 +1,12 @@
 ﻿using MBOptionScreen.Attributes;
-
-using ModLib;
-using ModLib.Interfaces;
+using MBOptionScreen.Interfaces;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MBOptionScreen
+namespace MBOptionScreen.Settings
 {
-    public class ModSettingsDefinition
-    {
-        public SettingsBase SettingsInstance { get; set; }
-        public string ModName => SettingsInstance.ModName;
-
-        public ModSettingsDefinition(SettingsBase settings)
-        {
-            SettingsInstance = settings;
-        }
-    }
-
     [SettingsStorageVersion("e1.0.0",  1)]
     [SettingsStorageVersion("e1.0.1",  1)]
     [SettingsStorageVersion("e1.0.2",  1)]
@@ -66,7 +53,7 @@ namespace MBOptionScreen
             }
         }
 
-        public ISerialisableFile? GetSettings(string uniqueId) => AllSettingsDict.TryGetValue(uniqueId, out var val) ? val : null;
+        public ISerializableFile? GetSettings(string uniqueId) => AllSettingsDict.TryGetValue(uniqueId, out var val) ? val : null;
 
         public void SaveSettings(SettingsBase settingsInstance)
         {

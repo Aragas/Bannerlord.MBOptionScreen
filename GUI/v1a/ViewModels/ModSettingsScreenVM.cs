@@ -1,4 +1,8 @@
-﻿using System.Linq;
+﻿using MBOptionScreen.Actions;
+using MBOptionScreen.ExtensionMethods;
+using MBOptionScreen.Settings;
+
+using System.Linq;
 
 using TaleWorlds.Core;
 using TaleWorlds.Engine;
@@ -6,7 +10,7 @@ using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
 
-namespace ModLib.GUI.v1a.ViewModels
+namespace MBOptionScreen.GUI.v1a.ViewModels
 {
     public class ModSettingsScreenVM : ViewModel
     {
@@ -16,6 +20,7 @@ namespace ModLib.GUI.v1a.ViewModels
         private ModSettingsVM _selectedMod;
         private MBBindingList<ModSettingsVM> _modSettingsList = new MBBindingList<ModSettingsVM>();
         private string _hintText;
+        private string _searchText = "";
 
         [DataSourceProperty]
         public string TitleLabel
@@ -95,13 +100,33 @@ namespace ModLib.GUI.v1a.ViewModels
                 }
             }
         }
+        [DataSourceProperty]
         public bool IsHintVisible => !string.IsNullOrWhiteSpace(HintText);
+        [DataSourceProperty]
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                if (_searchText != value)
+                {
+                    _searchText = value;
+                    OnPropertyChanged();
+                    if (SelectedMod?.SettingPropertyGroups.Count > 0)
+                    {
+                        foreach (var group in SelectedMod.SettingPropertyGroups)
+                            group.NotifySearchChanged();
+                    }
+                }
+            }
+        }
 
         public ModSettingsScreenVM()
         {
             TitleLabel = "Mod Options";
             DoneButtonText = new TextObject("{=WiNRdfsm}Done", null).ToString();
             CancelButtonText = new TextObject("{=3CpNUnVl}Cancel", null).ToString();
+            SearchText = "";
 
             ModSettingsList = new MBBindingList<ModSettingsVM>();
             foreach (var viewModel in SettingsDatabase.ModSettingsVMs.Select(s => new ModSettingsVM(s, this)))
@@ -165,6 +190,41 @@ namespace ModLib.GUI.v1a.ViewModels
                 }, () => { }));
         }
 
+        private void ExecuteRevert()
+        {
+            if (SelectedMod != null)
+            {
+                InformationManager.ShowInquiry(new InquiryData("Revert mod settings to defaults",
+                    $"Are you sure you wish to revert all settings for {SelectedMod.ModName} to their default values?",
+                    true, true, "Yes", "No",
+                    () =>
+                    {
+                        SelectedMod.URS.Do(new ComplexAction<(ModSettingsVM VM, SettingsBase SettingsInstance)>((SelectedMod, SelectedMod.SettingsInstance),
+                            tuple =>
+                            {
+                                //Do action
+                                tuple.SettingsInstance = SettingsDatabase.ResetSettingsInstance(SelectedMod.SettingsInstance);
+                                tuple.VM.RefreshValues();
+                                ExecuteSelect(null);
+                                ExecuteSelect(tuple.VM);
+                            },
+                            tuple =>
+                            {
+                                //Undo action
+                                SettingsDatabase.OverrideSettingsWithId(tuple.SettingsInstance, tuple.SettingsInstance.ID);
+                                tuple.VM.SettingsInstance = tuple.SettingsInstance;
+                                tuple.VM.RefreshValues();
+                                if (SelectedMod == tuple.VM)
+                                {
+                                    ExecuteSelect(null);
+                                    ExecuteSelect(tuple.VM);
+                                }
+                            }));
+
+                    }, null));
+            }
+        }
+
         public void ExecuteSelect(ModSettingsVM viewModel)
         {
             if (SelectedMod != viewModel)
@@ -177,7 +237,6 @@ namespace ModLib.GUI.v1a.ViewModels
                 if (SelectedMod != null)
                 {
                     SelectedMod.IsSelected = true;
-                    //TODO:: Update the settings view
                 }
             }
         }

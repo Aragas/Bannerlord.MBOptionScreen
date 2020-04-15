@@ -1,4 +1,4 @@
-﻿namespace MBOptionScreen
+﻿namespace MBOptionScreen.Interfaces
 {
     /// <summary>
     /// A shareable object between multiple mods that will use this library

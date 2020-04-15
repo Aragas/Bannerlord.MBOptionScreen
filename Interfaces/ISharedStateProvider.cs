@@ -1,4 +1,4 @@
-﻿namespace MBOptionScreen
+﻿namespace MBOptionScreen.Interfaces
 {
     public interface IStateProvider
     {

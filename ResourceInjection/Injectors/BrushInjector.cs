@@ -5,7 +5,7 @@ using System.Xml;
 using TaleWorlds.Engine.GauntletUI;
 using TaleWorlds.GauntletUI;
 
-namespace MBOptionScreen.ResourceInjection
+namespace MBOptionScreen.ResourceInjection.Injectors
 {
     internal static class BrushInjector
     {

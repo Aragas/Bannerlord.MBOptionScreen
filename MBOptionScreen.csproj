@@ -49,21 +49,21 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="GUI\v1\Brushes\DividerBrushes.xml" />
-    <EmbeddedResource Include="GUI\v1\Brushes\ExpandIndicator.xml" />
-    <EmbeddedResource Include="GUI\v1\Brushes\ModSettingsItemBrush.xml" />
-    <EmbeddedResource Include="GUI\v1\Brushes\ResetButtonBrush.xml" />
-    <EmbeddedResource Include="GUI\v1\Brushes\TextBrushes.xml" />
-    <EmbeddedResource Include="GUI\v1\Views\ModOptionsScreen.xml" />
-    <EmbeddedResource Include="GUI\v1\Views\ModSettingsItem.xml" />
-    <EmbeddedResource Include="GUI\v1\Views\SettingPropertyGroupView.xml" />
-    <EmbeddedResource Include="GUI\v1\Views\SettingPropertyView.xml" />
-    <EmbeddedResource Include="GUI\v1\Views\SettingsView.xml" />
+    <Compile Remove="GUI\v1\**" />
+    <EmbeddedResource Remove="GUI\v1\**" />
+    <None Remove="GUI\v1\**" />
+  </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="GUI\v1a\Brushes\ButtonBrushes.xml" />
     <EmbeddedResource Include="GUI\v1a\Brushes\DividerBrushes.xml" />
+    <EmbeddedResource Include="GUI\v1a\Brushes\ExpandIndicator.xml" />
     <EmbeddedResource Include="GUI\v1a\Brushes\ModSettingsItemBrush.xml" />
     <EmbeddedResource Include="GUI\v1a\Brushes\ResetButtonBrush.xml" />
+    <EmbeddedResource Include="GUI\v1a\Brushes\SettingsValueDisplayBrush.xml" />
     <EmbeddedResource Include="GUI\v1a\Brushes\TextBrushes.xml" />
+
+    <EmbeddedResource Include="GUI\v1a\Views\EditValueView.xml" />
     <EmbeddedResource Include="GUI\v1a\Views\ModOptionsScreen.xml" />
     <EmbeddedResource Include="GUI\v1a\Views\ModSettingsItem.xml" />
     <EmbeddedResource Include="GUI\v1a\Views\SettingPropertyGroupView.xml" />

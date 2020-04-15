@@ -10,8 +10,8 @@
             <!-- Property Name Section -->
             <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="Fixed" HorizontalAlignment="Left" SuggestedWidth="500">
               <Children>
-                <RichTextWidget Text="@Name" HeightSizePolicy="StretchToParent" WidthSizePolicy="CoverChildren" HorizontalAlignment="Right" IsEnabled="@IsEnabled"
-                                Brush="ModSettings.Setting.Text_v1a"/>
+                <HoverRichTextWidget_v1a Text="@Name" HeightSizePolicy="StretchToParent" WidthSizePolicy="CoverChildren" HorizontalAlignment="Right" IsEnabled="@IsEnabled"
+                                         Brush="ModLib.Settings.Text_v1a" HoverBegin="@OnHoverAction" HoverEnd="@OnHoverEndAction"/>
               </Children>
             </Widget>
 
@@ -79,14 +79,18 @@
 
               </Children>
             </Widget>
-            <!--Brush="SPOptions.Slider.Value.Text"-->
-            <RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" MarginLeft="60"
-                            IsEnabled="@IsEnabled" Text="@ValueString" VerticalAlignment="Center" Brush="ModSettings.Setting.Text_v1a"/>
+
+            <!-- Value text/button -->
+            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="60" HorizontalAlignment="Right" DoNotPassEventsToChildren="true"
+                          IsEnabled="@IsEnabled" VerticalAlignment="Center" Brush="ModLib.Settings.Value.Display_v1a" Command.Click="OnValueClick">
+              <Children>
+                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right"
+                                IsEnabled="@IsEnabled" Text="@ValueString" VerticalAlignment="Center" Brush="ModLib.Settings.Settings.Text_v1a"/>
+              </Children>
+            </ButtonWidget>
 
           </Children>
         </ListPanel>
-
-        <HintWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Command.HoverBegin="OnHover" Command.HoverEnd="OnHoverEnd"/>
 
       </Children>
     </Widget>

@@ -1,9 +1,11 @@
-﻿using System;
+﻿using MBOptionScreen.Settings;
+
+using System;
 using System.Linq;
-using MBOptionScreen;
+
 using TaleWorlds.Library;
 
-namespace ModLib.GUI.v1a.ViewModels
+namespace MBOptionScreen.GUI.v1a.ViewModels
 {
     public class ModSettingsVM : ViewModel
     {
@@ -13,7 +15,11 @@ namespace ModLib.GUI.v1a.ViewModels
         public ModSettingsScreenVM MainView { get; }
 
         public ModSettingsDefinition ModSettingsDefinition { get; }
-        public SettingsBase SettingsInstance => ModSettingsDefinition.SettingsInstance;
+        public SettingsBase SettingsInstance
+        {
+            get => ModSettingsDefinition.SettingsInstance;
+            set => ModSettingsDefinition.SettingsInstance = value;
+        }
         public UndoRedoStack URS { get; } = new UndoRedoStack();
 
         [DataSourceProperty]

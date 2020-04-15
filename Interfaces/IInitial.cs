@@ -1,4 +1,4 @@
-﻿namespace ModLib.Interfaces
+﻿namespace MBOptionScreen.Interfaces
 {
     public interface IInitial
     {

@@ -2,7 +2,7 @@
 
 using TaleWorlds.GauntletUI.PrefabSystem;
 
-namespace MBOptionScreen.ResourceInjection
+namespace MBOptionScreen.Interfaces
 {
     public interface IResourceInjector
     {

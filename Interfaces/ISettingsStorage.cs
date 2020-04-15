@@ -1,9 +1,8 @@
-﻿using ModLib;
-using ModLib.Interfaces;
+﻿using MBOptionScreen.Settings;
 
 using System.Collections.Generic;
 
-namespace MBOptionScreen
+namespace MBOptionScreen.Interfaces
 {
     public interface ISettingsStorage
     {
@@ -13,7 +12,7 @@ namespace MBOptionScreen
         List<ModSettingsDefinition> ModSettingsVMs { get; }
 
         bool RegisterSettings(SettingsBase settingsClass);
-        ISerialisableFile? GetSettings(string uniqueId);
+        ISerializableFile? GetSettings(string uniqueId);
         void SaveSettings(SettingsBase settingsInstance);
         bool OverrideSettingsWithId(SettingsBase settings, string Id);
         SettingsBase ResetSettingsInstance(SettingsBase settingsInstance);

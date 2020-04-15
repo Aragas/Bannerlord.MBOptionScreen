@@ -1,6 +1,5 @@
 ﻿using MBOptionScreen.Attributes;
-
-using ModLib.GUI.v1a.ViewModels;
+using MBOptionScreen.GUI.v1a.ViewModels;
 
 using TaleWorlds.Engine;
 using TaleWorlds.Engine.GauntletUI;
@@ -9,7 +8,7 @@ using TaleWorlds.GauntletUI.Data;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
 
-namespace ModLib.GUI.v1a.GauntletUI
+namespace MBOptionScreen.GUI.v1a.GauntletUI
 {
     [ModuleOptionVersion("e1.0.0",  2)]
     [ModuleOptionVersion("e1.0.1",  2)]
@@ -32,6 +31,11 @@ namespace ModLib.GUI.v1a.GauntletUI
 
         protected override void OnInitialize()
         {
+            var spriteData = UIResourceManager.SpriteData;
+            var resourceContext = UIResourceManager.ResourceContext;
+            var uiresourceDepot = UIResourceManager.UIResourceDepot;
+            spriteData.SpriteCategories["ui_encyclopedia"].Load(resourceContext, uiresourceDepot);
+
             base.OnInitialize();
             _dataSource = new ModSettingsScreenVM();
             _gauntletLayer = new GauntletLayer(4000, "GauntletLayer");
@@ -43,10 +47,10 @@ namespace ModLib.GUI.v1a.GauntletUI
             ScreenManager.TrySetFocus(_gauntletLayer);
         }
 
-        protected override void OnDeactivate()
-        {
-            LoadingWindow.EnableGlobalLoadingWindow(false);
-        }
+        //protected override void OnDeactivate()
+        //{
+        //    LoadingWindow.EnableGlobalLoadingWindow(false);
+        //}
 
         protected override void OnFrameTick(float dt)
         {
@@ -54,7 +58,7 @@ namespace ModLib.GUI.v1a.GauntletUI
             if (_gauntletLayer.Input.IsHotKeyReleased("Exit"))
             {
                 _dataSource.ExecuteClose();
-                ScreenManager.TrySetFocus(_gauntletLayer);
+                ScreenManager.TryLoseFocus(_gauntletLayer);
                 ScreenManager.PopScreen();
             }
         }

@@ -1,8 +1,8 @@
-﻿using MBOptionScreen;
-using ModLib.Interfaces;
+﻿using MBOptionScreen.Interfaces;
+
 using System.Collections.Generic;
 
-namespace ModLib
+namespace MBOptionScreen.Settings
 {
     internal static class SettingsDatabase
     {
@@ -16,11 +16,11 @@ namespace ModLib
 
         public static bool RegisterSettings(SettingsBase settingsClass) => SettingsStorage.RegisterSettings(settingsClass);
 
-        public static ISerialisableFile? GetSettings(string uniqueId) => SettingsStorage.GetSettings(uniqueId);
+        public static ISerializableFile? GetSettings(string uniqueId) => SettingsStorage.GetSettings(uniqueId);
 
         public static void SaveSettings(SettingsBase settingsInstance) => SettingsStorage.SaveSettings(settingsInstance);
 
-        public static bool OverrideSettingsWithID(SettingsBase settings, string ID) => SettingsStorage.OverrideSettingsWithId(settings, ID);
+        public static bool OverrideSettingsWithId(SettingsBase settings, string Id) => SettingsStorage.OverrideSettingsWithId(settings, Id);
 
         public static SettingsBase ResetSettingsInstance(SettingsBase settingsInstance) => SettingsStorage.ResetSettingsInstance(settingsInstance);
     }

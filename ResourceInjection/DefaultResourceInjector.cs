@@ -1,6 +1,9 @@
 ﻿using HarmonyLib;
 
 using MBOptionScreen.Attributes;
+using MBOptionScreen.Interfaces;
+using MBOptionScreen.ResourceInjection.EmbedLoaders;
+using MBOptionScreen.ResourceInjection.Injectors;
 
 using System.Reflection;
 using System.Xml;
@@ -73,11 +76,20 @@ namespace MBOptionScreen.ResourceInjection
             {
                 return PrefabsLoaderV1.LoadModOptionsScreen();
             }
+            if (movie == "EditValueView_v1")
+            {
+                //return PrefabsLoaderV1.LoadEditValueView();
+            }
 
             if (movie == "ModOptionsScreen_v1a")
             {
                 return PrefabsLoaderV1a.LoadModOptionsScreen();
             }
+            if (movie == "EditValueView_v1a")
+            {
+                return PrefabsLoaderV1a.LoadEditValueView();
+            }
+
 
             return null;
         }

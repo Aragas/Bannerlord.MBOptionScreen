@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
-namespace ModLib
+namespace MBOptionScreen.ExtensionMethods
 {
     public static class StackExtension
     {
@@ -10,8 +9,8 @@ namespace ModLib
             if (toAppend.Count == 0)
                 return;
 
-            T[] array = toAppend.ToArray();
-            for (int i = array.Count() - 1; i >= 0; i--)
+            var array = toAppend.ToArray();
+            for (var i = array.Length - 1; i >= 0; i--)
             {
                 baseStack.Push(array[i]);
             }

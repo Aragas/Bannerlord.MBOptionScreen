@@ -1,37 +1,37 @@
 ﻿using System;
 using System.Reflection;
 
-namespace ModLib
+namespace MBOptionScreen
 {
     public class Ref
     {
-        private Func<object> getter;
-        private Action<object> setter;
-        private PropertyInfo propInfo = null;
-        private object instance = null;
+        private readonly Func<object> _getter;
+        private readonly Action<object> _setter;
+        private readonly PropertyInfo _propInfo;
+        private readonly object _instance;
 
         public object Value
         {
             get
             {
-                if (propInfo != null)
-                    return propInfo.GetValue(instance);
+                if (_propInfo != null)
+                    return _propInfo.GetValue(_instance);
                 else
-                    return getter();
+                    return _getter();
             }
             set
             {
-                if (propInfo != null)
-                    propInfo.SetValue(instance, value);
+                if (_propInfo != null)
+                    _propInfo.SetValue(_instance, value);
                 else
-                    setter(value);
+                    _setter(value);
             }
         }
 
         public Ref(Func<object> getter, Action<object> setter)
         {
-            this.getter = getter ?? throw new ArgumentNullException("getter");
-            this.setter = setter;
+            _getter = getter ?? throw new ArgumentNullException(nameof(getter));
+            _setter = setter;
         }
 
         public Ref(Func<object> getter) : this(getter, null)
@@ -41,8 +41,8 @@ namespace ModLib
 
         public Ref(PropertyInfo propInfo, object instance)
         {
-            this.propInfo = propInfo;
-            this.instance = instance;
+            _propInfo = propInfo;
+            _instance = instance;
         }
     }
 }

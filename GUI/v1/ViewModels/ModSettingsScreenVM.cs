@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using MBOptionScreen.ExtensionMethods;
+using MBOptionScreen.Settings;
 using TaleWorlds.Core;
 using TaleWorlds.Engine;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
 
-namespace ModLib.GUI.v1.ViewModels
+namespace MBOptionScreen.GUI.v1.ViewModels
 {
     public class ModSettingsScreenVM : ViewModel
     {
@@ -196,7 +198,7 @@ namespace ModLib.GUI.v1.ViewModels
                             (KeyValuePair<ModSettingsVM, SettingsBase> kvp) =>
                             {
                                 //Do action
-                                SettingsBase newObj = SettingsDatabase.ResetSettingsInstance(SelectedMod.SettingsInstance);
+                                var newObj = SettingsDatabase.ResetSettingsInstance(SelectedMod.SettingsInstance);
                                 kvp.Key.SettingsInstance = newObj;
                                 kvp.Key.RefreshValues();
                                 ExecuteSelect(null);
@@ -205,7 +207,7 @@ namespace ModLib.GUI.v1.ViewModels
                             (KeyValuePair<ModSettingsVM, SettingsBase> kvp) =>
                             {
                                 //Undo action
-                                SettingsDatabase.OverrideSettingsWithID(kvp.Value, kvp.Value.ID);
+                                SettingsDatabase.OverrideSettingsWithId(kvp.Value, kvp.Value.ID);
                                 kvp.Key.SettingsInstance = kvp.Value;
                                 kvp.Key.RefreshValues();
                                 if (SelectedMod == kvp.Key)

@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using ModLib.Attributes;
+﻿using MBOptionScreen.Attributes;
 
-namespace ModLib
+using System.Collections.Generic;
+
+namespace MBOptionScreen.Settings
 {
     public class SettingPropertyGroupDefinition
     {
         public const string DefaultGroupName = "Misc";
-
-        //public event Action<SettingPropertyDefinition> OnAdd;
 
         public SettingPropertyGroupAttribute Attribute { get; set; /* Check set */ }
         public string GroupName => string.IsNullOrWhiteSpace(GroupNameOverride) ? Attribute.GroupName : GroupNameOverride;
@@ -23,7 +22,6 @@ namespace ModLib
         public void Add(SettingPropertyDefinition settingProp)
         {
             SettingProperties.Add(settingProp);
-            //OnAdd?.Invoke(settingProp);
         }
     }
 }

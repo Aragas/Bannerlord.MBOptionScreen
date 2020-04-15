@@ -1,9 +1,10 @@
-﻿using ModLib.Attributes;
-using System;
+﻿using System;
 using System.Linq;
+using MBOptionScreen.Attributes;
+using MBOptionScreen.Settings;
 using TaleWorlds.Library;
 
-namespace ModLib.GUI.v1.ViewModels
+namespace MBOptionScreen.GUI.v1.ViewModels
 {
     public class SettingPropertyGroup : ViewModel
     {
@@ -55,7 +56,7 @@ namespace ModLib.GUI.v1.ViewModels
         {
             get
             {
-                string addition = GroupToggle ? "" : "(Disabled)";
+                var addition = GroupToggle ? "" : "(Disabled)";
                 return $"{GroupName} {addition}";
             }
         }

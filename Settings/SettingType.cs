@@ -1,4 +1,4 @@
-﻿namespace ModLib
+﻿namespace MBOptionScreen.Settings
 {
     public enum SettingType
     {

@@ -1,10 +1,11 @@
-﻿using ModLib.Attributes;
-using ModLib.Interfaces;
-using System;
+﻿using System;
 using System.Reflection;
+using MBOptionScreen.Attributes;
+using MBOptionScreen.Interfaces;
+using MBOptionScreen.Settings;
 using TaleWorlds.Library;
 
-namespace ModLib.GUI.v1.ViewModels
+namespace MBOptionScreen.GUI.v1.ViewModels
 {
     public class SettingProperty : ViewModel
     {
@@ -16,7 +17,7 @@ namespace ModLib.GUI.v1.ViewModels
         public SettingPropertyAttribute SettingAttribute => SettingPropertyDefinition.SettingAttribute;
         public PropertyInfo Property => SettingPropertyDefinition.Property;
         public SettingPropertyGroupAttribute GroupAttribute => SettingPropertyDefinition.GroupAttribute;
-        public ISerialisableFile SettingsInstance => SettingPropertyDefinition.SettingsInstance;
+        public ISerializableFile SettingsInstance => SettingPropertyDefinition.SettingsInstance;
         public SettingType SettingType => SettingPropertyDefinition.SettingType;
         public SettingPropertyGroup Group { get; set; }
         public UndoRedoStack URS { get; private set; }

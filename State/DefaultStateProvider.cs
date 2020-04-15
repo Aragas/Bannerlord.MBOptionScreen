@@ -1,4 +1,5 @@
 ﻿using MBOptionScreen.Attributes;
+using MBOptionScreen.Interfaces;
 
 using System.Collections;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using TaleWorlds.MountAndBlade;
 
 using Module = TaleWorlds.MountAndBlade.Module;
 
-namespace MBOptionScreen
+namespace MBOptionScreen.State
 {
     [StateProviderVersion("e1.0.0",  1)]
     [StateProviderVersion("e1.0.1",  1)]

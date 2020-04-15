@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
+
 using TaleWorlds.Library;
 
-namespace ModLib
+namespace MBOptionScreen.ExtensionMethods
 {
     public static class MBBindingListExtensions
     {
@@ -11,7 +12,7 @@ namespace ModLib
                 bindingList.Add(listToAdd[0]);
             else if (listToAdd.Count > 0)
             {
-                for (int i = listToAdd.Count - 1; i >= 0; i--)
+                for (var i = listToAdd.Count - 1; i >= 0; i--)
                 {
                     bindingList.Add(listToAdd[i]);
                 }

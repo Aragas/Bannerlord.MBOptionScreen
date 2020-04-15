@@ -1,4 +1,4 @@
-﻿using ModLib;
+﻿using MBOptionScreen.Settings;
 
 using System.Xml.Serialization;
 

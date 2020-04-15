@@ -1,6 +1,6 @@
-﻿namespace ModLib.Interfaces
+﻿namespace MBOptionScreen.Interfaces
 {
-    public interface ISerialisableFile
+    public interface ISerializableFile
     {
         string ID { get; set; }
         string ModuleFolderName { get; }

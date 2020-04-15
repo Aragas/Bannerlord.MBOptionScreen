@@ -1,13 +1,12 @@
-﻿using ModLib;
-using ModLib.Attributes;
-using ModLib.Interfaces;
+﻿using MBOptionScreen.Attributes;
+using MBOptionScreen.Interfaces;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace MBOptionScreen
+namespace MBOptionScreen.Settings
 {
     public abstract class SettingsBase<T> : SettingsBase where T : SettingsBase, new()
     {
@@ -32,11 +31,8 @@ namespace MBOptionScreen
             }
         }
     }
-}
 
-namespace ModLib
-{
-    public abstract class SettingsBase : ISerialisableFile, ISubFolder
+    public abstract class SettingsBase : ISerializableFile, ISubFolder
     {
         public abstract string ID { get; set; }
         public abstract string ModuleFolderName { get; }
@@ -48,11 +44,11 @@ namespace ModLib
             var groups = new List<SettingPropertyGroupDefinition>();
 
             var propList = (from p in GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-                            let propAttr = p.GetCustomAttribute<SettingPropertyAttribute>(true)
-                            let groupAttr = p.GetCustomAttribute<SettingPropertyGroupAttribute>(true)
-                            where propAttr != null
-                            let groupAttrToAdd = groupAttr ?? SettingPropertyGroupAttribute.Default
-                            select new SettingPropertyDefinition(propAttr, groupAttrToAdd, p, this)).ToList();
+                let propAttr = p.GetCustomAttribute<SettingPropertyAttribute>(true)
+                let groupAttr = p.GetCustomAttribute<SettingPropertyGroupAttribute>(true)
+                where propAttr != null
+                let groupAttrToAdd = groupAttr ?? SettingPropertyGroupAttribute.Default
+                select new SettingPropertyDefinition(propAttr, groupAttrToAdd, p, this)).ToList();
 
             foreach (var settingProp in propList)
             {

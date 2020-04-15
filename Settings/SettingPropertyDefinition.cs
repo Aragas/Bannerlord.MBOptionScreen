@@ -1,23 +1,24 @@
-﻿using System;
-using System.Reflection;
-using ModLib.Attributes;
-using ModLib.Interfaces;
+﻿using MBOptionScreen.Attributes;
+using MBOptionScreen.Interfaces;
 
-namespace ModLib
+using System;
+using System.Reflection;
+
+namespace MBOptionScreen.Settings
 {
     public class SettingPropertyDefinition
     {
         public SettingPropertyGroupAttribute GroupAttribute { get; }
         public SettingPropertyAttribute SettingAttribute { get; }
         public PropertyInfo Property { get; }
-        public ISerialisableFile SettingsInstance { get; }
+        public ISerializableFile SettingsInstance { get; }
         public SettingType SettingType { get; }
 
         public string Name => SettingAttribute.DisplayName;
         public float MaxValue => SettingAttribute.MaxValue;
         public float MinValue => SettingAttribute.MinValue;
 
-        public SettingPropertyDefinition(SettingPropertyAttribute settingAttribute, SettingPropertyGroupAttribute groupAttribute, PropertyInfo property, ISerialisableFile instance)
+        public SettingPropertyDefinition(SettingPropertyAttribute settingAttribute, SettingPropertyGroupAttribute groupAttribute, PropertyInfo property, ISerializableFile instance)
         {
             SettingAttribute = settingAttribute;
             GroupAttribute = groupAttribute;
