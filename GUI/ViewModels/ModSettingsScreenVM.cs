@@ -140,8 +140,8 @@ namespace ModLib.GUI.ViewModels
             {
                 msvm.AddSelectCommand(ExecuteSelect);
                 ModSettingsList.Add(msvm);
-                msvm.SetParent(this);
                 msvm.RefreshValues();
+                msvm.SetParent(this);
             }
             OnPropertyChanged("SelectedMod");
         }

@@ -24,9 +24,9 @@ namespace ModLib
         {
             //First check if the dictionary contains the key
             if (!Data.ContainsKey(typeof(T)))
-                return default;
+                return default(T);
             if (!Data[typeof(T)].ContainsKey(id))
-                return default;
+                return default(T);
 
             return (T)Data[typeof(T)][id];
         }
@@ -248,7 +248,6 @@ namespace ModLib
                 Directory.CreateDirectory(moduleLoadablesPath);
             #endregion
             #region Documents Folder
-            //TODO::
             string modConfigsPath = GetPathForModule(moduleName, Location.Configs);
             if (Directory.Exists(modConfigsPath))
             {
@@ -261,6 +260,24 @@ namespace ModLib
                     catch (Exception ex)
                     {
                         ModDebug.LogError($"Failed to load file: {filePath}\n\n Skipping...", ex);
+                    }
+                }
+                string[] subfolders = Directory.GetDirectories(modConfigsPath);
+                if (subfolders.Count() > 0)
+                {
+                    foreach(var subFolder in subfolders)
+                    {
+                        foreach(var filePath in Directory.GetFiles(subFolder))
+                        {
+                            try
+                            {
+                                LoadFromFile(filePath);
+                            }
+                            catch (Exception ex)
+                            {
+                                ModDebug.LogError($"Failed to load file: {filePath}\n\n Skipping...", ex);
+                            }
+                        }
                     }
                 }
             }

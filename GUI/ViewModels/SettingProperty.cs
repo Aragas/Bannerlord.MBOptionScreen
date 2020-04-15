@@ -1,7 +1,9 @@
 ﻿using ModLib.Attributes;
+using ModLib.GUI.GauntletUI;
 using ModLib.Interfaces;
 using System;
 using System.Reflection;
+using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
 
 namespace ModLib.GUI.ViewModels
@@ -17,8 +19,8 @@ namespace ModLib.GUI.ViewModels
         public SettingPropertyGroupAttribute GroupAttribute { get; private set; }
         public SettingPropertyGroup Group { get; set; }
         public ISerialisableFile SettingsInstance { get; private set; }
-        public SettingType SettingType { get; private set; }
         public UndoRedoStack URS { get; private set; }
+        public SettingType SettingType { get; private set; }
         public ModSettingsScreenVM ScreenVM { get; private set; }
         public string HintText { get; private set; }
         public bool SatisfiesSearch
@@ -166,6 +168,10 @@ namespace ModLib.GUI.ViewModels
                     return "";
             }
         }
+        [DataSourceProperty]
+        public Action OnHoverAction => OnHover;
+        [DataSourceProperty]
+        public Action OnHoverEndAction => OnHoverEnd;
 
         public SettingProperty(SettingPropertyAttribute settingAttribute, SettingPropertyGroupAttribute groupAttribute, PropertyInfo property, ISerialisableFile instance)
         {
@@ -225,6 +231,11 @@ namespace ModLib.GUI.ViewModels
         {
             if (ScreenVM != null)
                 ScreenVM.HintText = "";
+        }
+
+        private void OnValueClick()
+        {
+            ScreenManager.PushScreen(new EditValueGauntletScreen(this));
         }
 
         public override string ToString()

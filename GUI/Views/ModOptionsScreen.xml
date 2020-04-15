@@ -1,8 +1,8 @@
 <Prefab>
   <Constants>
 
-    <Constant Name="CancelButton.Width" BrushLayer="Default" BrushName="Popup.Cancel.Button" BrushValueType="Width" />
-    <Constant Name="CancelButton.Height" BrushLayer="Default" BrushName="Popup.Cancel.Button" BrushValueType="Height" />
+    <Constant Name="CancelButton.Width" BrushLayer="Default" BrushName="ModLib.Cancel.Button" BrushValueType="Width" />
+    <Constant Name="CancelButton.Height" BrushLayer="Default" BrushName="ModLib.Cancel.Button" BrushValueType="Height" />
 
   </Constants>
   <Window>
@@ -70,7 +70,9 @@
                   <Children>
 
                     <!-- Cancel button -->
-                    <ButtonWidget Id="CancelButton" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!CancelButton.Width" SuggestedHeight="!CancelButton.Height" Brush="Popup.Cancel.Button" Command.Click="ExecuteCancel">
+                    <ButtonWidget Id="CancelButton" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
+                                  SuggestedWidth="!CancelButton.Width" SuggestedHeight="!CancelButton.Height" Brush="ModLib.Cancel.Button"
+                                  Command.Click="ExecuteCancel">
                       <Children>
 
                         <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="@CancelButtonText" />
@@ -80,7 +82,7 @@
 
                     <!--Done Button-->
                     <ButtonWidget Id="DoneButton" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
-                                  SuggestedWidth="!CancelButton.Width" SuggestedHeight="!CancelButton.Height" Brush="Popup.Done.Button"
+                                  SuggestedWidth="!CancelButton.Width" SuggestedHeight="!CancelButton.Height" Brush="ModLib.Done.Button"
                                   Command.Click="ExecuteDone">
                       <Children>
 
@@ -112,12 +114,14 @@
 
 
                         <!-- Search box -->
-                        <Widget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="200" VerticalAlignment="Center" SuggestedHeight="40"
-                                HorizontalAlignment="Right" MarginLeft="40" MarginRight="20" ClipContents="true" Sprite="SaveLoad\load_tuple_selected" Brush.ColorFactor="0.2">
+                        <Widget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="200" VerticalAlignment="Center"
+                                SuggestedHeight="40" HorizontalAlignment="Right" MarginLeft="40" MarginRight="20" ClipContents="true"
+                                Sprite="SaveLoad\load_tuple_selected" Brush.ColorFactor="0.2">
                           <Children>
-                            <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" MarginLeft="10" MarginRight="10"
-                                                VerticalAlignment="Center" Brush="Encyclopedia.Search.TextBox" RealText="@SearchText" IsObfuscationEnabled="false"/>
-                            
+                            <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" MarginLeft="10"
+                                                MarginRight="10" VerticalAlignment="Center" Brush="Encyclopedia.Search.TextBox" RealText="@SearchText"
+                                                IsObfuscationEnabled="false"/>
+
                             <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="25" SuggestedHeight="24" Sprite="Encyclopedia\icon_search"
                                     VerticalAlignment="Center" HorizontalAlignment="Right" IsDisabled="true" MarginRight="5"/>
                           </Children>
@@ -187,7 +191,7 @@
 
         <!-- Revert to default button -->
         <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!CancelButton.Width"
-                      SuggestedHeight="!CancelButton.Height" Brush="Popup.Delete.Button" Command.Click="ExecuteRevert" IsVisible="@SomethingSelected" 
+                      SuggestedHeight="!CancelButton.Height" Brush="ModLib.Delete.Button" Command.Click="ExecuteRevert" IsVisible="@SomethingSelected"
                       HorizontalAlignment="Right" VerticalAlignment="Top" MarginTop="75" MarginRight="40">
           <Children>
             <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="Revert to defaults" />

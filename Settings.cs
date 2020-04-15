@@ -39,7 +39,7 @@ namespace ModLib
         public bool TestProperty2 { get; set; } = false;
 
         [XmlElement]
-        [SettingProperty("Test Property 4", 0f, 0.5f, "")]
+        [SettingProperty("Test Property 4", 0f, 0.5f, 0f, 100f, "")]
         [SettingPropertyGroup("Debugging/Test Group/Test Group 2")]
         public float TestProperty4 { get; set; } = 0.2f;
 

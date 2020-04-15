@@ -204,7 +204,6 @@ namespace ModLib.GUI.ViewModels
 
         public void NotifySearchChanged()
         {
-            OnPropertyChanged("IsGroupVisible");
             if (SettingPropertyGroups.Count > 0)
             {
                 foreach (var group in SettingPropertyGroups)
@@ -215,6 +214,7 @@ namespace ModLib.GUI.ViewModels
                 foreach (var prop in SettingProperties)
                     prop.OnPropertyChanged("IsSettingVisible");
             }
+            OnPropertyChanged("IsGroupVisible");
         }
 
         private void OnHover()

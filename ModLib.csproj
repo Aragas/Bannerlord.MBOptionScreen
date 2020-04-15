@@ -107,8 +107,13 @@
     <Compile Include="ExtensionMethods\IEnumerableExtensions.cs" />
     <Compile Include="ExtensionMethods\MBBindingListExtensions.cs" />
     <Compile Include="ExtensionMethods\StackExtension.cs" />
+    <Compile Include="ExtensionMethods\StringExtensions.cs" />
+    <Compile Include="GUI\GauntletUI\EditValueGauntletScreen.cs" />
     <Compile Include="GUI\GauntletUI\ModOptionsGauntletScreen.cs" />
+    <Compile Include="GUI\ViewModels\EditValueVM.cs" />
     <Compile Include="GUI\ViewModels\ModSettingsVM.cs" />
+    <Compile Include="GUI\Views\HoverRichTextWidget.cs" />
+    <Compile Include="GUI\Views\EditValueTextWidget.cs" />
     <Compile Include="Interfaces\IAction.cs" />
     <Compile Include="Interfaces\IInitial.cs" />
     <Compile Include="Interfaces\ISerialisableFile.cs" />
@@ -135,8 +140,11 @@
     <Content Include="GUI\Brushes\DividerBrushes.xml" />
     <Content Include="GUI\Brushes\ExpandIndicator.xml" />
     <Content Include="GUI\Brushes\ResetButtonBrush.xml" />
+    <Content Include="GUI\Brushes\SettingsValueDisplayBrush.xml" />
     <Content Include="GUI\Brushes\TextBrushes.xml" />
     <Content Include="GUI\Brushes\ModSettingsItemBrush.xml" />
+    <Content Include="GUI\Brushes\ButtonBrushes.xml" />
+    <Content Include="GUI\Views\EditValueView.xml" />
     <Content Include="GUI\Views\ModOptionsScreen.xml" />
     <Content Include="GUI\Views\ModSettingsItem.xml" />
     <Content Include="GUI\Views\SettingPropertyGroupView.xml" />

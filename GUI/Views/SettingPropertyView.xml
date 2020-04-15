@@ -4,14 +4,15 @@
                  IsVisible="@IsSettingVisible" IsEnabled="@IsEnabled" UpdateChildrenStates="true">
       <Children>
 
-        <ListPanel HeightSizePolicy="StretchToParent" WidthSizePolicy="StretchToParent" VerticalAlignment="Top" HorizontalAlignment="Left">
+        <ListPanel HeightSizePolicy="StretchToParent" WidthSizePolicy="StretchToParent" VerticalAlignment="Top" HorizontalAlignment="Left"
+                   LayoutImp.LayoutMethod="HorizontalLeftToRight">
           <Children>
 
             <!-- Property Name Section -->
             <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="Fixed" HorizontalAlignment="Left" SuggestedWidth="500">
               <Children>
-                <RichTextWidget Text="@Name" HeightSizePolicy="StretchToParent" WidthSizePolicy="CoverChildren" HorizontalAlignment="Right" IsEnabled="@IsEnabled"
-                                Brush="ModSettings.Setting.Text"/>
+                <HoverRichTextWidget Text="@Name" HeightSizePolicy="StretchToParent" WidthSizePolicy="CoverChildren" HorizontalAlignment="Right" IsEnabled="@IsEnabled"
+                                     Brush="ModSettings.Setting.Text" HoverBegin="@OnHoverAction" HoverEnd="@OnHoverEndAction"/>
               </Children>
             </Widget>
 
@@ -80,13 +81,17 @@
               </Children>
             </Widget>
 
-            <RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" MarginLeft="60"
-                            IsEnabled="@IsEnabled" Text="@ValueString" VerticalAlignment="Center" Brush="ModSettings.Setting.Text"/>
+            <!-- Value text/button -->
+            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="60" HorizontalAlignment="Right" DoNotPassEventsToChildren="true"
+                          IsEnabled="@IsEnabled" VerticalAlignment="Center" Brush="ModLib.Settings.Value.Display" Command.Click="OnValueClick">
+              <Children>
+                <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right"
+                                IsEnabled="@IsEnabled" Text="@ValueString" VerticalAlignment="Center" Brush="ModSettings.Setting.Text"/>
+              </Children>
+            </ButtonWidget>
 
           </Children>
         </ListPanel>
-
-        <HintWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Command.HoverBegin="OnHover" Command.HoverEnd="OnHoverEnd"/>
 
       </Children>
     </Widget>
