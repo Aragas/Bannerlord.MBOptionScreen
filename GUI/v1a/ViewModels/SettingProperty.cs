@@ -87,9 +87,9 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             {
                 if (SettingType == SettingType.Float && _floatValue != value)
                 {
-                    _floatValue = (float)Math.Round((double)value, 2, MidpointRounding.ToEven);
+                    _floatValue = (float) Math.Round((double) value, 2, MidpointRounding.ToEven);
                     OnPropertyChanged();
-                    OnPropertyChanged("ValueString");
+                    OnPropertyChanged(nameof(ValueString));
                 }
             }
         }
@@ -103,7 +103,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
                 {
                     _intValue = value;
                     OnPropertyChanged();
-                    OnPropertyChanged("ValueString");
+                    OnPropertyChanged(nameof(ValueString));
                 }
             }
         }

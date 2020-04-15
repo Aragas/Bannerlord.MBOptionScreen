@@ -5,14 +5,14 @@ using System.Xml.Serialization;
 
 namespace MBOptionScreen
 {
-    internal class TestSettings : SettingsBase<TestSettings>
+    internal class TestSettings : AttributeSettings<TestSettings>
     {
         public override string ModName => "Testing";
         public override string ModuleFolderName => "Testing";
         public const string SettingsInstanceID = "Testing";
 
         [XmlElement]
-        public override string ID { get; set; } = SettingsInstanceID;
+        public override string Id { get; set; } = SettingsInstanceID;
         [XmlElement]
         [SettingProperty("Enable Crash Error Reporting", "When enabled, shows a message box showing the cause of a crash.")]
         [SettingPropertyGroup("Debugging")]

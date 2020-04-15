@@ -66,6 +66,8 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         public override void RefreshValues()
         {
             base.RefreshValues();
+            foreach (var settingGroup in SettingPropertyGroups)
+                settingGroup.AssignUndoRedoStack(URS);
             foreach (var group in SettingPropertyGroups)
                 group.RefreshValues();
             OnPropertyChanged(nameof(IsSelected));

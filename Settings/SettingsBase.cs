@@ -1,10 +1,9 @@
-﻿using MBOptionScreen.Attributes;
+﻿using MBOptionScreen.ExtensionMethods;
 using MBOptionScreen.Interfaces;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace MBOptionScreen.Settings
 {
@@ -20,7 +19,7 @@ namespace MBOptionScreen.Settings
 
                 var emptySettings = new T();
 
-                _instance = FileDatabase.Get<T>(emptySettings.ID);
+                _instance = FileDatabase.Get<T>(emptySettings.Id);
                 if (_instance != null)
                     return _instance;
 
@@ -34,71 +33,103 @@ namespace MBOptionScreen.Settings
 
     public abstract class SettingsBase : ISerializableFile, ISubFolder
     {
-        public abstract string ID { get; set; }
+        public abstract string Id { get; set; }
         public abstract string ModuleFolderName { get; }
         public abstract string ModName { get; }
         public virtual string SubFolder => "";
+        protected virtual char SubGroupDelimiter => '/';
 
-        internal List<SettingPropertyGroupDefinition> GetSettingPropertyGroups()
+        public abstract List<SettingPropertyGroupDefinition> GetSettingPropertyGroups();
+
+
+        protected SettingPropertyGroupDefinition GetGroupFor(SettingPropertyDefinition sp, ICollection<SettingPropertyGroupDefinition> groupsList)
         {
-            var groups = new List<SettingPropertyGroupDefinition>();
-
-            var propList = (from p in GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-                let propAttr = p.GetCustomAttribute<SettingPropertyAttribute>(true)
-                let groupAttr = p.GetCustomAttribute<SettingPropertyGroupAttribute>(true)
-                where propAttr != null
-                let groupAttrToAdd = groupAttr ?? SettingPropertyGroupAttribute.Default
-                select new SettingPropertyDefinition(propAttr, groupAttrToAdd, p, this)).ToList();
-
-            foreach (var settingProp in propList)
-            {
-                CheckIsValid(settingProp);
-                var group = GetGroupFor(settingProp, groups);
-                group.Add(settingProp);
-            }
-
-            var noneGroup = GetGroupFor(groups, SettingPropertyGroupDefinition.DefaultGroupName);
-            if (noneGroup != null && groups.Count > 1)
-                groups.Remove(noneGroup);
-            else
-                noneGroup = null;
-
-            groups.Sort((x, y) => x.GroupName.CompareTo(y.GroupName));
-            if (noneGroup != null)
-                groups.Add(noneGroup);
-
-            return groups;
-        }
-
-        private SettingPropertyGroupDefinition GetGroupFor(SettingPropertyDefinition sp, List<SettingPropertyGroupDefinition> groupsList)
-        {
+            //If the setting somehow doesn't have a group attribute, throw an error.
             if (sp.GroupAttribute == null)
                 throw new Exception($"SettingProperty {sp.Name} has null GroupAttribute");
 
-            var group = groupsList.FirstOrDefault(x => x.GroupName == sp.GroupAttribute.GroupName);
-            if (group == null)
+            SettingPropertyGroupDefinition? group = null;
+            //Check if the intended group is a sub group
+            if (sp.GroupAttribute.GroupName.Contains(SubGroupDelimiter))
             {
-                group = new SettingPropertyGroupDefinition(sp.GroupAttribute);
-                groupsList.Add(group);
+                //Intended group is a sub group. Must find it. First get the top group.
+                var topGroupName = GetTopGroupName(sp.GroupAttribute.GroupName, out var truncatedGroupName);
+                var topGroup = groupsList.GetGroup(topGroupName);
+                if (topGroup == null)
+                {
+                    topGroup = new SettingPropertyGroupDefinition(sp.GroupAttribute, topGroupName);
+                    groupsList.Add(topGroup);
+                }
+                //Find the sub group
+                group = GetGroupForRecursive(truncatedGroupName, topGroup.SubGroups, sp);
+            }
+            else
+            {
+                //Group is not a subgroup, can find it in the main list of groups.
+                group = groupsList.GetGroup(sp.GroupAttribute.GroupName);
+                if (group == null)
+                {
+                    group = new SettingPropertyGroupDefinition(sp.GroupAttribute);
+                    groupsList.Add(group);
+                }
             }
             return group;
         }
 
-        private SettingPropertyGroupDefinition GetGroupFor(List<SettingPropertyGroupDefinition> groupsList, string groupName)
+        protected SettingPropertyGroupDefinition? GetGroupFor(string groupName, ICollection<SettingPropertyGroupDefinition> groupsList)
         {
-            return groupsList.FirstOrDefault(x => x.GroupName == groupName);
+            return groupsList.GetGroup(groupName);
         }
 
-        private void CheckIsValid(SettingPropertyDefinition prop)
+        protected SettingPropertyGroupDefinition GetGroupForRecursive(string groupName, ICollection<SettingPropertyGroupDefinition> groupsList, SettingPropertyDefinition sp)
+        {
+            if (groupName.Contains(SubGroupDelimiter))
+            {
+                //Need to go deeper
+                var topGroupName = GetTopGroupName(groupName, out var truncatedGroupName);
+                var topGroup = GetGroupFor(topGroupName, groupsList);
+                if (topGroup == null)
+                {
+                    topGroup = new SettingPropertyGroupDefinition(sp.GroupAttribute, topGroupName);
+                    groupsList.Add(topGroup);
+                }
+                return GetGroupForRecursive(truncatedGroupName, topGroup.SubGroups, sp);
+            }
+            else
+            {
+                //Reached the bottom level, can return the final group.
+                var group = groupsList.GetGroup(groupName);
+                if (group == null)
+                {
+                    group = new SettingPropertyGroupDefinition(sp.GroupAttribute, groupName);
+                    groupsList.Add(group);
+                }
+                return group;
+            }
+        }
+
+        protected string GetTopGroupName(string groupName, out string truncatedGroupName)
+        {
+            var index = groupName.IndexOf(SubGroupDelimiter);
+            var topGroupName = groupName.Substring(0, index);
+
+            truncatedGroupName = groupName.Remove(0, index + 1);
+            return topGroupName;
+        }
+
+        protected void CheckIsValid(SettingPropertyDefinition prop)
         {
             if (!prop.Property.CanRead)
                 throw new Exception($"Property {prop.Property.Name} in {prop.SettingsInstance.GetType().FullName} must have a getter.");
             if (!prop.Property.CanWrite)
                 throw new Exception($"Property {prop.Property.Name} in {prop.SettingsInstance.GetType().FullName} must have a setter.");
+
             if (prop.SettingType == SettingType.Int || prop.SettingType == SettingType.Float)
             {
                 if (prop.MinValue == prop.MaxValue)
                     throw new Exception($"Property {prop.Property.Name} in {prop.SettingsInstance.GetType().FullName} is a numeric type but the MinValue and MaxValue are the same.");
+                if (prop.GroupAttribute != null && prop.GroupAttribute.IsMainToggle)
+                    throw new Exception($"Property {prop.Property.Name} in {prop.SettingsInstance.GetType().FullName} is marked as the main toggle for the group but is a numeric type. The main toggle must be a boolean type.");
             }
         }
     }

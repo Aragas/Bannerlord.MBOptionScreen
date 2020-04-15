@@ -11,6 +11,7 @@ namespace MBOptionScreen.Settings
         public SettingPropertyGroupAttribute Attribute { get; set; /* Check set */ }
         public string GroupName => string.IsNullOrWhiteSpace(GroupNameOverride) ? Attribute.GroupName : GroupNameOverride;
         public string GroupNameOverride { get; }
+        public List<SettingPropertyGroupDefinition> SubGroups { get; } = new List<SettingPropertyGroupDefinition>();
         public List<SettingPropertyDefinition> SettingProperties { get; } = new List<SettingPropertyDefinition>();
 
         public SettingPropertyGroupDefinition(SettingPropertyGroupAttribute attribute, string groupNameOverride = "")

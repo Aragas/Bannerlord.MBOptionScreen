@@ -211,7 +211,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
                             tuple =>
                             {
                                 //Undo action
-                                SettingsDatabase.OverrideSettingsWithId(tuple.SettingsInstance, tuple.SettingsInstance.ID);
+                                SettingsDatabase.OverrideSettingsWithId(tuple.SettingsInstance, tuple.SettingsInstance.Id);
                                 tuple.VM.SettingsInstance = tuple.SettingsInstance;
                                 tuple.VM.RefreshValues();
                                 if (SelectedMod == tuple.VM)

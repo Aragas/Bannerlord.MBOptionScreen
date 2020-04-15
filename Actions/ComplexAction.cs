@@ -1,5 +1,6 @@
-﻿using System;
-using MBOptionScreen.Interfaces;
+﻿using MBOptionScreen.Interfaces;
+
+using System;
 
 namespace MBOptionScreen.Actions
 {

@@ -63,10 +63,10 @@ namespace MBOptionScreen.Settings
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(sf.ID))
+                if (string.IsNullOrWhiteSpace(sf.Id))
                     throw new Exception($"FileDatabase tried to save an object of type {sf.GetType().FullName} but the ID value was null.");
                 if (string.IsNullOrWhiteSpace(moduleName))
-                    throw new Exception($"FileDatabase tried to save an object of type {sf.GetType().FullName} with ID {sf.ID} but the module folder name given was null or empty.");
+                    throw new Exception($"FileDatabase tried to save an object of type {sf.GetType().FullName} with ID {sf.Id} but the module folder name given was null or empty.");
 
                 var path = GetPathForModule(moduleName, location);
                 if (!Directory.Exists(path))
@@ -81,7 +81,7 @@ namespace MBOptionScreen.Settings
                 if (!Directory.Exists(path))
                     Directory.CreateDirectory(path);
 
-                path = System.IO.Path.Combine(path, $"{sf.GetType().Name}.{sf.ID}.xml");
+                path = System.IO.Path.Combine(path, $"{sf.GetType().Name}.{sf.Id}.xml");
 
                 if (File.Exists(path))
                     File.Delete(path);
@@ -115,21 +115,21 @@ namespace MBOptionScreen.Settings
         {
             if (loadable == null)
                 throw new ArgumentNullException("Tried to add something to the Loader Data dictionary that was null");
-            if (string.IsNullOrWhiteSpace(loadable.ID))
+            if (string.IsNullOrWhiteSpace(loadable.Id))
                 throw new ArgumentNullException($"Loadable of type {loadable.GetType().ToString()} has missing ID field");
 
             var type = loadable.GetType();
             if (!Data.ContainsKey(type))
                 Data.Add(type, new Dictionary<string, ISerializableFile>());
 
-            if (Data[type].ContainsKey(loadable.ID))
+            if (Data[type].ContainsKey(loadable.Id))
             {
                 // TODO
                 //ModDebug.LogError($"Loader already contains Type: {type.AssemblyQualifiedName} ID: {loadable.ID}, overwriting...");
-                Data[type][loadable.ID] = loadable;
+                Data[type][loadable.Id] = loadable;
             }
             else
-                Data[type].Add(loadable.ID, loadable);
+                Data[type].Add(loadable.Id, loadable);
         }
 
         private void LoadFromFile(string filePath)

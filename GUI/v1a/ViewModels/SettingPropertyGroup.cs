@@ -1,7 +1,8 @@
-﻿using System;
-using System.Linq;
-using MBOptionScreen.Attributes;
+﻿using MBOptionScreen.Attributes;
 using MBOptionScreen.Settings;
+
+using System;
+using System.Linq;
 
 using TaleWorlds.Library;
 
@@ -36,7 +37,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         {
             get
             {
-                if (MainView == null || MainView.SearchText == "")
+                if (MainView == null || string.IsNullOrEmpty(MainView.SearchText))
                     return true;
                 return GroupName.IndexOf(MainView.SearchText, StringComparison.OrdinalIgnoreCase) >= 0 || AnyChildSettingSatisfiesSearch;
             }
@@ -86,7 +87,6 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
                     {
                         propSetting.OnPropertyChanged(nameof(SettingProperty.IsEnabled));
                         propSetting.OnPropertyChanged(nameof(SettingProperty.IsSettingVisible));
-                        OnPropertyChanged(nameof(GroupNameDisplay));
                     }
                     foreach (var subGroup in SettingPropertyGroups)
                     {
@@ -142,6 +142,8 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             SettingPropertyGroupDefinition = definition;
             foreach (var settingPropertyDefinition in SettingPropertyGroupDefinition.SettingProperties)
                 Add(settingPropertyDefinition);
+            foreach (var settingPropertyDefinition in SettingPropertyGroupDefinition.SubGroups)
+                SettingPropertyGroups.Add(new SettingPropertyGroup(settingPropertyDefinition, MainView));
         }
 
         public override void RefreshValues()
@@ -178,17 +180,6 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
 
             foreach (var settingProp in SettingProperties)
                 settingProp.AssignUndoRedoStack(urs);
-        }
-
-        public void SetParentGroup(SettingPropertyGroup parentGroup)
-        {
-            ParentGroup = parentGroup;
-
-            if (SettingPropertyGroups.Count > 0)
-            {
-                foreach (var subGroup in SettingPropertyGroups)
-                    subGroup.SetParentGroup(this);
-            }
         }
 
         public void NotifySearchChanged()

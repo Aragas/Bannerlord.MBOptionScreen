@@ -31,19 +31,19 @@ namespace MBOptionScreen.Settings
         public DefaultSettingsStorage()
         {
             var settings = new MBOptionScreenSettings();
-            AllSettingsDict.Add(settings.ID, settings);
+            AllSettingsDict.Add(settings.Id, settings);
 #if DEBUG
             var testSettings = new TestSettings();
-            AllSettingsDict.Add(testSettings.ID, testSettings);
+            AllSettingsDict.Add(testSettings.Id, testSettings);
             
 #endif
         }
 
         public bool RegisterSettings(SettingsBase settingsClass)
         {
-            if (!AllSettingsDict.ContainsKey(settingsClass.ID))
+            if (!AllSettingsDict.ContainsKey(settingsClass.Id))
             {
-                AllSettingsDict.Add(settingsClass.ID, settingsClass);
+                AllSettingsDict.Add(settingsClass.Id, settingsClass);
                 return true;
             }
             else
@@ -66,7 +66,7 @@ namespace MBOptionScreen.Settings
             {
                 return AllSettings
                     .Select(settings => new ModSettingsDefinition(settings))
-                    .OrderByDescending(a => a.ModName != MBOptionScreenSettings.Instance!.ID)
+                    .OrderByDescending(a => a.ModName != MBOptionScreenSettings.Instance!.Id)
                     .ThenBy(a => a.ModName);
             }
             catch (Exception ex)
@@ -94,9 +94,9 @@ namespace MBOptionScreen.Settings
         /// <returns>Returns the instance of the new object with default values.</returns>
         public SettingsBase ResetSettingsInstance(SettingsBase settingsInstance)
         {
-            var id = settingsInstance.ID;
+            var id = settingsInstance.Id;
             var newObj = (SettingsBase) Activator.CreateInstance(settingsInstance.GetType());
-            newObj.ID = id;
+            newObj.Id = id;
             AllSettingsDict[id] = newObj;
             return newObj;
         }

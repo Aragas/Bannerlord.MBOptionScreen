@@ -7,7 +7,7 @@ namespace MBOptionScreen.ExtensionMethods
 {
     public static class ICollectionExtensions
     {
-        public static SettingPropertyGroupDefinition GetGroup(this ICollection<SettingPropertyGroupDefinition> groupsList, string groupName)
+        public static SettingPropertyGroupDefinition? GetGroup(this ICollection<SettingPropertyGroupDefinition> groupsList, string groupName)
         {
             return groupsList.FirstOrDefault(x => x.GroupName == groupName);
         }

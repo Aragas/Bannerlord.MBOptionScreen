@@ -1,7 +1,6 @@
 ﻿using MBOptionScreen.Attributes;
 using MBOptionScreen.GUI.v1a.ViewModels;
 
-using TaleWorlds.Engine;
 using TaleWorlds.Engine.GauntletUI;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.GauntletUI.Data;
