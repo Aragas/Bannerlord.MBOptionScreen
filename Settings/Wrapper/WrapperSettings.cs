@@ -25,9 +25,9 @@ namespace MBOptionScreen.Settings.Wrapper
         public override string Id { get => (string) IdProperty.GetValue(_object); set => IdProperty.SetValue(_object, value); }
         public override string ModuleFolderName => (string) ModuleFolderNameProperty.GetValue(_object);
         public override string ModName => (string) ModNameProperty.GetValue(_object);
-        public override int UIVersion => UIVersionProperty.GetValue(_object) as int? ?? 1;
-        public override string SubFolder => SubFolderProperty.GetValue(_object) as string ?? "";
-        protected override char SubGroupDelimiter => SubGroupDelimiterProperty.GetValue(_object) as char? ?? '/';
+        public override int UIVersion => UIVersionProperty?.GetValue(_object) as int? ?? 1;
+        public override string SubFolder => SubFolderProperty?.GetValue(_object) as string ?? "";
+        protected override char SubGroupDelimiter => SubGroupDelimiterProperty?.GetValue(_object) as char? ?? '/';
 
         public WrapperSettings(object @object)
         {
