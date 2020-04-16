@@ -8,7 +8,7 @@ using TaleWorlds.Library;
 
 namespace MBOptionScreen.GUI.v1a.ViewModels
 {
-    public class SettingPropertyGroup : ViewModel
+    public class SettingPropertyGroup : ViewModel, IComparable<SettingPropertyGroup>
     {
         private bool _isExpanded = true;
         protected ModSettingsScreenVM MainView => ModSettingsView.MainView;
@@ -209,5 +209,8 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         }
 
         public override string ToString() => GroupName;
+        public override int GetHashCode() => GroupName.GetHashCode();
+
+        public int CompareTo(SettingPropertyGroup other) => string.Compare(other.GroupName, GroupName, StringComparison.InvariantCulture);
     }
 }

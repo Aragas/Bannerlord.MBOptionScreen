@@ -46,11 +46,6 @@ namespace MBOptionScreen.GUI.v1a.GauntletUI
             ScreenManager.TrySetFocus(_gauntletLayer);
         }
 
-        //protected override void OnDeactivate()
-        //{
-        //    LoadingWindow.EnableGlobalLoadingWindow(false);
-        //}
-
         protected override void OnFrameTick(float dt)
         {
             base.OnFrameTick(dt);

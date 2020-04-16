@@ -191,5 +191,6 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         }
 
         public override string ToString() => Name;
+        public override int GetHashCode() => Name.GetHashCode();
     }
 }

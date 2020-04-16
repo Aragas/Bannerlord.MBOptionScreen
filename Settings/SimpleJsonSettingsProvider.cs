@@ -49,7 +49,7 @@ namespace MBOptionScreen.Settings
 
         public List<ModSettingsDefinition> CreateModSettingsDefinitions => LoadedSettings.Keys
             .Select(id => new ModSettingsDefinition(id))
-            .OrderBy(a => a.ModName)
+            .OrderByDescending(a => a.ModName)
             .ToList();
 
         public bool RegisterSettings(SettingsBase settingsInstance)

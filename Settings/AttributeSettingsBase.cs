@@ -16,7 +16,7 @@ namespace MBOptionScreen.Settings
             var groups = new List<SettingPropertyGroupDefinition>();
 
             var propList = (from p in GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-                let propAttr = CustomAttributeExtensions.GetCustomAttribute<SettingPropertyAttribute>((MemberInfo) p, true)
+                let propAttr = p.GetCustomAttribute<SettingPropertyAttribute>(true)
                 let groupAttr = p.GetCustomAttribute<SettingPropertyGroupAttribute>(true)
                 where propAttr != null
                 let groupAttrToAdd = groupAttr ?? SettingPropertyGroupAttribute.Default
@@ -39,8 +39,6 @@ namespace MBOptionScreen.Settings
             else
                 miscGroup = null;
 
-            //Sort the list of groups alphabetically.
-            groups.Sort((x, y) => string.Compare(x.GroupName, y.GroupName, StringComparison.Ordinal));
             if (miscGroup != null)
                 groups.Add(miscGroup);
 

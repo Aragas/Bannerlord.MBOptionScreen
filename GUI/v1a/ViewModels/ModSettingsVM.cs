@@ -57,7 +57,10 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
 
             SettingPropertyGroups = new MBBindingList<SettingPropertyGroup>();
             foreach (var settingPropertyGroup in SettingsInstance.GetSettingPropertyGroups().Select(d => new SettingPropertyGroup(d, this)))
+            {
                 SettingPropertyGroups.Add(settingPropertyGroup);
+            }
+            SettingPropertyGroups.Sort();
 
             RefreshValues();
         }
