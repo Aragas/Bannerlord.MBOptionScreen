@@ -18,7 +18,7 @@ namespace MBOptionScreen.Actions
             _originalValue = SettingProperty.IntValue;
         }
 
-        public void Do() => SettingProperty.FloatValue = (float)Value;
-        public void Undo() => SettingProperty.FloatValue = _originalValue;
+        public void DoAction() => SettingProperty.FloatValue = (float)Value;
+        public void UndoAction() => SettingProperty.FloatValue = _originalValue;
     }
 }

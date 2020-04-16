@@ -62,18 +62,19 @@ namespace MBOptionScreen.GUI.v1a.Views
                                 continue;
                         }
                         base.HandleInput(lastKeysPressed);
-                        float value;
-                        float.TryParse(RealText, out value);
-                        var newVal = value;
-                        if (value > MaxValue)
-                            newVal = MaxValue;
-                        else if (value < MinValue)
-                            newVal = MinValue;
-                        if (newVal != value)
+                        if (float.TryParse(RealText, out var value))
                         {
-                            var format = SettingType == SettingType.Int ? "0" : "0.00";
-                            RealText = newVal.ToString(format);
-                            _editableWidget.SetCursorPosition(0, true);
+                            float newVal = value;
+                            if (value > MaxValue)
+                                newVal = MaxValue;
+                            else if (value < MinValue)
+                                newVal = MinValue;
+                            if (newVal != value)
+                            {
+                                string format = SettingType == SettingType.Int ? "0" : "0.00";
+                                RealText = newVal.ToString(format);
+                                _editableWidget.SetCursorPosition(0, true);
+                            }
                         }
                     }
                 }

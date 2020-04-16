@@ -54,30 +54,29 @@ namespace MBOptionScreen.Settings
 
         public bool RegisterSettings(SettingsBase settingsInstance)
         {
-            if (!LoadedSettings.ContainsKey(settingsInstance.Id))
+            if (settingsInstance == null || LoadedSettings.ContainsKey(settingsInstance.Id))
+                return false;
+
+            LoadedSettings.Add(settingsInstance.Id, settingsInstance);
+
+            var path = Path.Combine(_defaultRootFolder, settingsInstance.ModuleFolderName,
+                $"{settingsInstance.Id}.json");
+            var file = new FileInfo(path);
+            if (file.Exists)
             {
-                LoadedSettings.Add(settingsInstance.Id, settingsInstance);
-
-                var path = Path.Combine(_defaultRootFolder, settingsInstance.ModuleFolderName, $"{settingsInstance.Id}.json");
-                var file = new FileInfo(path);
-                if (file.Exists)
-                {
-                    using var reader = file.OpenText();
-                    var content = reader.ReadToEnd();
-                    JsonConvert.PopulateObject(content, settingsInstance, _jsonSerializerSettings);
-                }
-                else
-                {
-                    var content = JsonConvert.SerializeObject(settingsInstance, _jsonSerializerSettings);
-                    file.Directory?.Create();
-                    using var writer = file.CreateText();
-                    writer.Write(content);
-                }
-
-                return true;
+                using var reader = file.OpenText();
+                var content = reader.ReadToEnd();
+                JsonConvert.PopulateObject(content, settingsInstance, _jsonSerializerSettings);
             }
             else
-                return false;
+            {
+                var content = JsonConvert.SerializeObject(settingsInstance, _jsonSerializerSettings);
+                file.Directory?.Create();
+                using var writer = file.CreateText();
+                writer.Write(content);
+            }
+
+            return true;
         }
 
         public SettingsBase? GetSettings(string id) => LoadedSettings.TryGetValue(id, out var result)
@@ -86,7 +85,7 @@ namespace MBOptionScreen.Settings
 
         public void SaveSettings(SettingsBase settingsInstance)
         {
-            if (!LoadedSettings.ContainsKey(settingsInstance.Id))
+            if (settingsInstance == null || !LoadedSettings.ContainsKey(settingsInstance.Id))
                 return;
 
             var path = Path.Combine(_defaultRootFolder, settingsInstance.ModuleFolderName, $"{settingsInstance.Id}.json");
@@ -100,7 +99,7 @@ namespace MBOptionScreen.Settings
 
         public bool OverrideSettingsWithId(SettingsBase newSettingsInstance, string id)
         {
-            if (!LoadedSettings.ContainsKey(newSettingsInstance.Id))
+            if (newSettingsInstance == null || !LoadedSettings.ContainsKey(newSettingsInstance.Id))
                 return false;
 
             LoadedSettings[id] = newSettingsInstance;
@@ -109,7 +108,7 @@ namespace MBOptionScreen.Settings
 
         public SettingsBase ResetSettingsInstance(SettingsBase settingsInstance)
         {
-            if (!LoadedSettings.ContainsKey(settingsInstance.Id))
+            if (settingsInstance == null || !LoadedSettings.ContainsKey(settingsInstance.Id))
                 return null;
 
             var defaultSettingsInstance = (SettingsBase) Activator.CreateInstance(settingsInstance.GetType());

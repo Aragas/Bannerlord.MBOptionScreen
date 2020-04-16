@@ -28,7 +28,7 @@ namespace MBOptionScreen
         /// <param name="action"></param>
         public void Do(IAction action)
         {
-            action.Do();
+            action.DoAction();
             UndoStack.Push(action);
             RedoStack.Clear();
         }
@@ -41,7 +41,7 @@ namespace MBOptionScreen
             if (CanUndo)
             {
                 var a = UndoStack.Pop();
-                a.Undo();
+                a.UndoAction();
                 RedoStack.Push(a);
             }
         }
@@ -54,7 +54,7 @@ namespace MBOptionScreen
             if (CanRedo)
             {
                 var a = RedoStack.Pop();
-                a.Do();
+                a.DoAction();
                 UndoStack.Push(a);
             }
         }
@@ -69,7 +69,7 @@ namespace MBOptionScreen
                 while (UndoStack.Count > 0)
                 {
                     var a = UndoStack.Pop();
-                    a.Undo();
+                    a.UndoAction();
                 }
             }
             if (HasInitials)

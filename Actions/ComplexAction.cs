@@ -18,7 +18,7 @@ namespace MBOptionScreen.Actions
             UndoFunction = undoFunction;
         }
 
-        public void Do() => DoFunction?.Invoke((T) Value);
-        public void Undo() => UndoFunction?.Invoke((T) Value);
+        public void DoAction() => DoFunction?.Invoke((T) Value);
+        public void UndoAction() => UndoFunction?.Invoke((T) Value);
     }
 }

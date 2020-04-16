@@ -19,7 +19,7 @@ namespace MBOptionScreen.Actions
             _originalValue = SettingProperty.IntValue;
         }
 
-        public void Do() => SettingProperty.IntValue = (int)Value;
-        public void Undo() => SettingProperty.IntValue = _originalValue;
+        public void DoAction() => SettingProperty.IntValue = (int)Value;
+        public void UndoAction() => SettingProperty.IntValue = _originalValue;
     }
 }

@@ -15,7 +15,7 @@ namespace MBOptionScreen.Actions
             Original = (T) Context.Value;
         }
 
-        public void Do() => Context.Value = Value;
-        public void Undo() => Context.Value = Original;
+        public void DoAction() => Context.Value = Value;
+        public void UndoAction() => Context.Value = Original;
     }
 }

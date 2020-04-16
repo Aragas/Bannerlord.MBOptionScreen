@@ -4,7 +4,7 @@
     {
         Ref Context { get; }
         object Value { get; }
-        void Do();
-        void Undo();
+        void DoAction();
+        void UndoAction();
     }
 }
