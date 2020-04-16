@@ -46,7 +46,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         {
             get
             {
-                return SettingProperties.Any((x) => x.SatisfiesSearch) || SettingPropertyGroups.Any((x) => x.SatisfiesSearch);
+                return SettingProperties.Any(x => x.SatisfiesSearch) || SettingPropertyGroups.Any(x => x.SatisfiesSearch);
             }
         }
 

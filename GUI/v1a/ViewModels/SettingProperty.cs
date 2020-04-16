@@ -1,7 +1,6 @@
 ﻿using MBOptionScreen.Actions;
 using MBOptionScreen.Attributes;
 using MBOptionScreen.GUI.v1a.GauntletUI;
-using MBOptionScreen.Interfaces;
 using MBOptionScreen.Settings;
 
 using System;
@@ -23,7 +22,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         public SettingPropertyAttribute SettingAttribute => SettingPropertyDefinition.SettingAttribute;
         public PropertyInfo Property => SettingPropertyDefinition.Property;
         public SettingPropertyGroupAttribute GroupAttribute => SettingPropertyDefinition.GroupAttribute;
-        public ISerializableFile SettingsInstance => SettingPropertyDefinition.SettingsInstance;
+        public SettingsBase SettingsInstance => SettingPropertyDefinition.SettingsInstance;
         public SettingType SettingType => SettingPropertyDefinition.SettingType;
         public SettingPropertyGroup Group { get; set; }
         public UndoRedoStack URS { get; private set; }

@@ -32,6 +32,11 @@ namespace MBOptionScreen.Settings.Wrapper
             var propInfo = @object.GetType().GetProperty("EditableMaxValue");
             return propInfo?.GetValue(@object) as float?;
         }
+        private static bool? GetRequireRestart(object @object)
+        {
+            var propInfo = @object.GetType().GetProperty("RequireRestart");
+            return propInfo?.GetValue(@object) as bool?;
+        }
         private static string? GetHintText(object @object)
         {
             var propInfo = @object.GetType().GetProperty("HintText");
@@ -45,6 +50,7 @@ namespace MBOptionScreen.Settings.Wrapper
             GetMaxValue(@object) ?? 0f,
             GetEditableMinValue(@object) ?? 0f,
             GetEditableMaxValue(@object) ?? 0f,
+            GetRequireRestart(@object) ?? true,
             GetHintText(@object) ?? "")
         {
         }

@@ -78,15 +78,10 @@ namespace MBOptionScreen
 
                 // Initialize the shared class among other instances of MBOptionScreen.
                 SharedStateObject = new SharedStateObject(
-                    (IFileStorage) Activator.CreateInstance(fileStorageTuple.Type),
-                    (ISettingsStorage) Activator.CreateInstance(settingsStorageTuple.Type),
+                    (ISettingsProvider) Activator.CreateInstance(settingsStorageTuple.Type),
                     (IResourceInjector) Activator.CreateInstance(resourceInjectorTuple.Type),
                     modOptionsScreenTuple.Type);
                 _stateProvider.Set(SharedStateObject);
-
-                // TODO: Get folder from SettingsBase
-                SharedStateObject.FileStorage.Initialize("MBOptionScreen");
-
 
                 Module.CurrentModule.AddInitialStateOption(new InitialStateOption("ModOptionsMenu_MBOptionScreen", new TextObject("{=HiZbHGvYG}Mod Options"), 9990, () =>
                 {
@@ -101,29 +96,30 @@ namespace MBOptionScreen
             if (!SharedStateObject.HasInitialized)
             {
                 var settings = new List<SettingsBase>();
-                var allTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes());
+                var allTypes = AppDomain.CurrentDomain
+                    .GetAssemblies()
+                    .SelectMany(a => a.GetTypes())
+                    .Where(t => t.IsClass && !t.IsAbstract)
+                    .ToList();
                 foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
                 {
                     var type = assembly.GetType("ModLib.SettingsBase") ?? assembly.GetType("MBOptionScreen.Settings.SettingsBase");
                     if (type == null || type == typeof(SettingsBase))
                         continue;
 
-                    var definedList = allTypes
-                        .Where(t => !t.IsAbstract && t.IsSubclassOf(type))
-                        .ToList();
-                    if (definedList.Count == 0)
-                        continue;
-
-                    foreach (var obj in definedList)
-                        settings.Add(new WrapperSettings(Activator.CreateInstance(obj)));
+                    settings.AddRange(allTypes
+                        .Where(t => t.IsSubclassOf(type))
+                        .Select(obj => new WrapperSettings(Activator.CreateInstance(obj))));
                 }
-
-                var settingsEnumerable = AppDomain.CurrentDomain.GetAssemblies()
-                    .SelectMany(a => a.DefinedTypes)
-                    .Where(t => !t.IsAbstract && t.IsSubclassOf(typeof(SettingsBase)) && t != typeof(WrapperSettings) && t != typeof(MBOptionScreenSettings))
-                    .Select(t => (SettingsBase) Activator.CreateInstance(t));
-                settings.AddRange(settingsEnumerable);
-
+                settings.AddRange(allTypes
+                    .Where(t => t.IsSubclassOf(typeof(SettingsBase)) &&
+                                t != typeof(WrapperSettings)
+#if !DEBUG
+                                && t != typeof(MBOptionScreenSettings)
+                                && t != typeof(TestSettings)
+#endif
+                                )
+                    .Select(t => (SettingsBase) Activator.CreateInstance(t)));
                 foreach (var setting in settings)
                     SettingsDatabase.RegisterSettings(setting);
 
@@ -141,10 +137,7 @@ namespace MBOptionScreen
                 }
 
 
-                BrushLoaderV1.Inject(SharedStateObject.ResourceInjector);
                 BrushLoaderV1a.Inject(SharedStateObject.ResourceInjector);
-
-                PrefabsLoaderV1.Inject(SharedStateObject.ResourceInjector);
                 PrefabsLoaderV1a.Inject(SharedStateObject.ResourceInjector);
 
                 SharedStateObject.HasInitialized = true;

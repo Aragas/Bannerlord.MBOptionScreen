@@ -26,6 +26,10 @@ namespace MBOptionScreen.Attributes
         /// </summary>
         public float EditableMaxValue { get; private set; } = 0f;
         /// <summary>
+        /// Require restart of the game if the value is changed.
+        /// </summary>
+        public bool RequireRestart { get; private set; } = true;
+        /// <summary>
         /// The hint text that is displayed at the bottom of the screen when the user hovers over the setting in the settings menu.
         /// </summary>
         public string HintText { get; private set; } = "";
@@ -38,14 +42,16 @@ namespace MBOptionScreen.Attributes
         /// <param name="maxValue">The maximum float value that this property can be set to. This is used for the slider control.</param>
         /// <param name="editableMinValue">The absolute minimum float value that this property can be set to. This is used for the editing dialog. Set this if you wish users to be able to set values outside your recommended values.</param>
         /// <param name="editableMaxValue">The absolute maximum float value that this property can be set to. This is used for the editing dialog. Set this if you wish users to be able to set values outside your recommended values.</param>
+        /// <param name="requireRestart">Optional: Will force to ask the user to restart the game if is set to true.</param>
         /// <param name="hintText">Optional: Hint text that is displayed at the bottom of the screen when the user hovers the mouse over this property. Leave blank to have no hint.</param>
-        public SettingPropertyAttribute(string displayName, float minValue, float maxValue, float editableMinValue, float editableMaxValue, string hintText = "")
+        public SettingPropertyAttribute(string displayName, float minValue, float maxValue, float editableMinValue, float editableMaxValue, bool requireRestart = true, string hintText = "")
         {
             DisplayName = displayName;
             MinValue = minValue;
             MaxValue = maxValue;
             EditableMinValue = editableMinValue;
             EditableMaxValue = editableMaxValue;
+            RequireRestart = requireRestart;
             HintText = hintText;
         }
 
@@ -57,9 +63,10 @@ namespace MBOptionScreen.Attributes
         /// <param name="maxValue">The maximum int value that this property can be set to. This is used for the slider control.</param>
         /// <param name="editableMinValue">The absolute minimum int value that this property can be set to. This is used for the editing dialog. Set this if you wish users to be able to set values outside your recommended values.</param>
         /// <param name="editableMaxValue">The absolute maximum int value that this property can be set to. This is used for the editing dialog. Set this if you wish users to be able to set values outside your recommended values.</param>
+        /// <param name="requireRestart">Optional: Will force to ask the user to restart the game if is set to true.</param>
         /// <param name="hintText">Optional: Hint text that is displayed at the bottom of the screen when the user hovers the mouse over this property. Leave blank to have no hint.</param>
-        public SettingPropertyAttribute(string displayName, int minValue, int maxValue, int editableMinValue, int editableMaxValue, string hintText = "") :
-            this(displayName, (float)minValue, (float)maxValue, (float)editableMinValue, (float)editableMaxValue, hintText)
+        public SettingPropertyAttribute(string displayName, int minValue, int maxValue, int editableMinValue, int editableMaxValue, bool requireRestart = true, string hintText = "") :
+            this(displayName, (float)minValue, (float)maxValue, (float)editableMinValue, (float)editableMaxValue, requireRestart, hintText)
         {
         }
 
@@ -69,9 +76,10 @@ namespace MBOptionScreen.Attributes
         /// <param name="displayName">The name to be displayed in the settings menu for this property.</param>
         /// <param name="minValue">The minimum float value that this property can be set to. This is used for the slider control.</param>
         /// <param name="maxValue">The maximum float value that this property can be set to. This is used for the slider control.</param>
+        /// <param name="requireRestart">Optional: Will force to ask the user to restart the game if is set to true.</param>
         /// <param name="hintText">Optional: Hint text that is displayed at the bottom of the screen when the user hovers the mouse over this property. Leave blank to have no hint.</param>
-        public SettingPropertyAttribute(string displayName, float minValue, float maxValue, string hintText = "") :
-            this(displayName, minValue, maxValue, minValue, maxValue, hintText)
+        public SettingPropertyAttribute(string displayName, float minValue, float maxValue, bool requireRestart = true, string hintText = "") :
+            this(displayName, minValue, maxValue, minValue, maxValue, requireRestart, hintText)
         {
         }
 
@@ -81,9 +89,10 @@ namespace MBOptionScreen.Attributes
         /// <param name="displayName">The name to be displayed in the settings menu for this property.</param>
         /// <param name="minValue">The minimum int value that this property can be set to. This is used for the slider control.</param>
         /// <param name="maxValue">The maximum int value that this property can be set to. This is used for the slider control.</param>
+        /// <param name="requireRestart">Optional: Will force to ask the user to restart the game if is set to true.</param>
         /// <param name="hintText">Optional: Hint text that is displayed at the bottom of the screen when the user hovers the mouse over this property. Leave blank to have no hint.</param>
-        public SettingPropertyAttribute(string displayName, int minValue, int maxValue, string hintText = "") :
-            this(displayName, minValue, maxValue, minValue, maxValue, hintText)
+        public SettingPropertyAttribute(string displayName, int minValue, int maxValue, bool requireRestart = true, string hintText = "") :
+            this(displayName, minValue, maxValue, minValue, maxValue, requireRestart, hintText)
         {
         }
 
@@ -91,8 +100,10 @@ namespace MBOptionScreen.Attributes
         /// Tells the Settings system that this property should be used for the settings menu.
         /// </summary>
         /// <param name="displayName">The name to be displayed in the settings menu for this property.</param>
-        /// <param name="tooltip">Optional: Hint text that is displayed at the bottom of the screen when the user hovers the mouse over this property. Leave blank to have no hint.</param>
-        public SettingPropertyAttribute(string displayName, string tooltip = "") : this(displayName, 0f, 0f, tooltip)
+        /// <param name="requireRestart">Optional: Will force to ask the user to restart the game if is set to true.</param>
+        /// <param name="hintText">Optional: Hint text that is displayed at the bottom of the screen when the user hovers the mouse over this property. Leave blank to have no hint.</param>
+        public SettingPropertyAttribute(string displayName, bool requireRestart = true, string hintText = "") :
+            this(displayName, 0f, 0f, requireRestart, hintText)
         {
         }
     }

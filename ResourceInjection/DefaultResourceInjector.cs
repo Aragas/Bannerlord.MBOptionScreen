@@ -72,15 +72,6 @@ namespace MBOptionScreen.ResourceInjection
 
         public WidgetPrefab? RequestMovie(string movie)
         {
-            if (movie == "ModOptionsScreen_v1")
-            {
-                return PrefabsLoaderV1.LoadModOptionsScreen();
-            }
-            if (movie == "EditValueView_v1")
-            {
-                //return PrefabsLoaderV1.LoadEditValueView();
-            }
-
             if (movie == "ModOptionsScreen_v1a")
             {
                 return PrefabsLoaderV1a.LoadModOptionsScreen();

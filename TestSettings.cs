@@ -14,32 +14,32 @@ namespace MBOptionScreen
         [XmlElement]
         public override string Id { get; set; } = SettingsInstanceID;
         [XmlElement]
-        [SettingProperty("Enable Crash Error Reporting", "When enabled, shows a message box showing the cause of a crash.")]
+        [SettingProperty("Enable Crash Error Reporting", false, "When enabled, shows a message box showing the cause of a crash.")]
         [SettingPropertyGroup("Debugging")]
         public bool DebugMode { get; set; } = true;
 
         [XmlElement]
-        [SettingProperty("Test Property 1", "")]
+        [SettingProperty("Test Property 1", false, "")]
         [SettingPropertyGroup("Debugging/Test Group", true)]
         public bool TestProperty1 { get; set; } = false;
 
         [XmlElement]
-        [SettingProperty("Test Property 5", "")]
+        [SettingProperty("Test Property 5", false, "")]
         [SettingPropertyGroup("Debugging/Test Group")]
         public bool TestProperty5 { get; set; } = false;
 
         [XmlElement]
-        [SettingProperty("Test Property 2", "")]
+        [SettingProperty("Test Property 2", false, "")]
         [SettingPropertyGroup("Debugging/Test Group/Test Group 2", true)]
         public bool TestProperty2 { get; set; } = false;
 
         [XmlElement]
-        [SettingProperty("Test Property 4", 0f, 0.5f, 0f, 100f, "")]
+        [SettingProperty("Test Property 4", 0f, 0.5f, 0f, 100f, false, "")]
         [SettingPropertyGroup("Debugging/Test Group/Test Group 2")]
         public float TestProperty4 { get; set; } = 0.2f;
 
         [XmlElement]
-        [SettingProperty("Test Property 3", 0, 10, "")]
+        [SettingProperty("Test Property 3", 0, 10, true, "")]
         [SettingPropertyGroup("Debugging/Test Group/Test Group 3")]
         public int TestProperty3 { get; set; } = 2;
 

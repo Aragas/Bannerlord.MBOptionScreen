@@ -4,15 +4,12 @@ using System.Collections.Generic;
 
 namespace MBOptionScreen.Interfaces
 {
-    public interface ISettingsStorage
+    public interface ISettingsProvider
     {
-        List<SettingsBase> AllSettings { get; }
-        int SettingsCount { get; }
-
-        List<ModSettingsDefinition> ModSettingsVMs { get; }
+        List<ModSettingsDefinition> CreateModSettingsDefinitions { get; }
 
         bool RegisterSettings(SettingsBase settingsClass);
-        ISerializableFile? GetSettings(string uniqueId);
+        SettingsBase? GetSettings(string uniqueId);
         void SaveSettings(SettingsBase settingsInstance);
         bool OverrideSettingsWithId(SettingsBase settings, string Id);
         SettingsBase ResetSettingsInstance(SettingsBase settingsInstance);

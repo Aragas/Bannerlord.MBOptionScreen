@@ -1,5 +1,4 @@
 ﻿using MBOptionScreen.ExtensionMethods;
-using MBOptionScreen.Interfaces;
 
 using System;
 using System.Collections.Generic;
@@ -17,21 +16,13 @@ namespace MBOptionScreen.Settings
                 if (_instance != null)
                     return _instance;
 
-                var emptySettings = new T();
-
-                _instance = FileDatabase.Get<T>(emptySettings.Id);
-                if (_instance != null)
-                    return _instance;
-
-                _instance = emptySettings;
-                SettingsDatabase.SaveSettings(_instance);
-
+                _instance = SettingsDatabase.GetSettings(new T().Id) as T;
                 return _instance;
             }
         }
     }
 
-    public abstract class SettingsBase : ISerializableFile, ISubFolder
+    public abstract class SettingsBase
     {
         public abstract string Id { get; set; }
         public abstract string ModuleFolderName { get; }

@@ -2,6 +2,7 @@
 using MBOptionScreen.ExtensionMethods;
 using MBOptionScreen.Settings;
 
+using System.Collections.Generic;
 using System.Linq;
 
 using TaleWorlds.Core;
@@ -33,7 +34,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             }
         }
         [DataSourceProperty]
-        public bool ChangesMade => ModSettingsList.Any((x) => x.URS.ChangesMade());
+        public bool ChangesMade => ModSettingsList.Any(x => x.URS.ChangesMade());
 
         [DataSourceProperty]
         public string DoneButtonText
@@ -129,7 +130,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             SearchText = "";
 
             ModSettingsList = new MBBindingList<ModSettingsVM>();
-            foreach (var viewModel in SettingsDatabase.ModSettingsVMs.Select(s => new ModSettingsVM(s, this)))
+            foreach (var viewModel in SettingsDatabase.CreateModSettingsDefinitions.Select(s => new ModSettingsVM(s, this)))
             {
                 viewModel.AddSelectCommand(ExecuteSelect);
                 ModSettingsList.Add(viewModel);
@@ -177,17 +178,48 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
                 return;
             }
 
-            InformationManager.ShowInquiry(new InquiryData("Game Needs to Restart",
-                "The game needs to be restarted to apply mods settings changes. Do you want to close the game now?",
-                true, true, "Yes", "No",
-                () =>
-                {
-                    ModSettingsList.Where((x) => x.URS.ChangesMade())
-                        .Do((x) => SettingsDatabase.SaveSettings(x.SettingsInstance))
-                        .Do((x) => x.URS.ClearStack());
+            var changedModSettings = ModSettingsList.Where(x => x.URS.ChangesMade()).ToList();
 
-                    Utilities.QuitGame();
-                }, () => { }));
+            // TODO: Make it use URS
+            var requireRestart = changedModSettings
+                .SelectMany(x => x.SettingPropertyGroups)
+                .SelectMany(GetAllSettingPropertyDefinitions)
+                .Any(x => x.SettingAttribute.RequireRestart);
+
+            if (requireRestart)
+            {
+                InformationManager.ShowInquiry(new InquiryData("Game Needs to Restart",
+                    "The game needs to be restarted to apply mods settings changes. Do you want to close the game now?",
+                    true, true, "Yes", "No",
+                    () =>
+                    {
+                        changedModSettings
+                            .Do(x => SettingsDatabase.SaveSettings(x.SettingsInstance))
+                            .Do(x => x.URS.ClearStack())
+                            .ToList();
+
+                        Utilities.QuitGame();
+                    }, () => { }));
+            }
+            else
+            {
+                changedModSettings
+                    .Do(x => SettingsDatabase.SaveSettings(x.SettingsInstance))
+                    .Do(x => x.URS.ClearStack())
+                    .ToList();
+            }
+        }
+
+        private static IEnumerable<SettingPropertyDefinition> GetAllSettingPropertyDefinitions(SettingPropertyGroup settingPropertyGroup1)
+        {
+            foreach (var settingProperty in settingPropertyGroup1.SettingProperties)
+                yield return settingProperty.SettingPropertyDefinition;
+
+            foreach (var settingPropertyGroup in settingPropertyGroup1.SettingPropertyGroups)
+            foreach (var settingProperty in GetAllSettingPropertyDefinitions(settingPropertyGroup))
+            {
+                yield return settingProperty;
+            }
         }
 
         private void ExecuteRevert()
