@@ -16,8 +16,8 @@ namespace MBOptionScreen.Settings
 
         public static void SaveSettings(SettingsBase settingsInstance) => SettingsStorage.SaveSettings(settingsInstance);
 
-        public static bool OverrideSettingsWithId(SettingsBase settings, string Id) => SettingsStorage.OverrideSettingsWithId(settings, Id);
+        public static bool OverrideSettings(SettingsBase settings) => SettingsStorage.OverrideSettings(settings);
 
-        public static SettingsBase ResetSettingsInstance(SettingsBase settingsInstance) => SettingsStorage.ResetSettingsInstance(settingsInstance);
+        public static SettingsBase ResetSettings(string id) => SettingsStorage.ResetSettings(id);
     }
 }

@@ -21,7 +21,11 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             set => ModSettingsDefinition.SettingsInstance = value;
         }
         public UndoRedoStack URS { get; } = new UndoRedoStack();
-
+        /// <summary>
+        /// XSLT?
+        /// </summary>
+        [DataSourceProperty]
+        public int UIVersion => SettingsInstance.UIVersion;
         [DataSourceProperty]
         public string ModName => SettingsInstance.ModName;
         [DataSourceProperty]

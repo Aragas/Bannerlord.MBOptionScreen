@@ -27,6 +27,7 @@ namespace MBOptionScreen.Settings
         public abstract string Id { get; set; }
         public abstract string ModuleFolderName { get; }
         public abstract string ModName { get; }
+        public virtual int UIVersion => 1;
         public virtual string SubFolder => "";
         protected virtual char SubGroupDelimiter => '/';
 

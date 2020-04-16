@@ -17,11 +17,17 @@ namespace MBOptionScreen.Settings.Wrapper
         private PropertyInfo IdProperty { get; }
         private PropertyInfo ModuleFolderNameProperty { get; }
         private PropertyInfo ModNameProperty { get; }
+        private PropertyInfo UIVersionProperty { get; }
+        private PropertyInfo SubFolderProperty { get; }
+        private PropertyInfo SubGroupDelimiterProperty { get; }
 
 
         public override string Id { get => (string) IdProperty.GetValue(_object); set => IdProperty.SetValue(_object, value); }
         public override string ModuleFolderName => (string) ModuleFolderNameProperty.GetValue(_object);
         public override string ModName => (string) ModNameProperty.GetValue(_object);
+        public override int UIVersion => UIVersionProperty.GetValue(_object) as int? ?? 1;
+        public override string SubFolder => SubFolderProperty.GetValue(_object) as string ?? "";
+        protected override char SubGroupDelimiter => SubGroupDelimiterProperty.GetValue(_object) as char? ?? '/';
 
         public WrapperSettings(object @object)
         {
@@ -31,6 +37,9 @@ namespace MBOptionScreen.Settings.Wrapper
                          type.GetProperty("ID", BindingFlags.Instance | BindingFlags.Public);
             ModuleFolderNameProperty = type.GetProperty("ModuleFolderName", BindingFlags.Instance | BindingFlags.Public);
             ModNameProperty = type.GetProperty("ModName", BindingFlags.Instance | BindingFlags.Public);
+            UIVersionProperty = type.GetProperty("UIVersion", BindingFlags.Instance | BindingFlags.Public);
+            SubFolderProperty = type.GetProperty("SubFolder", BindingFlags.Instance | BindingFlags.Public);
+            SubGroupDelimiterProperty = type.GetProperty("SubGroupDelimiter", BindingFlags.Instance | BindingFlags.Public);
         }
 
         public override List<SettingPropertyGroupDefinition> GetSettingPropertyGroups()

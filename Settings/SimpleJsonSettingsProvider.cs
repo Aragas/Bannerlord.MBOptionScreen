@@ -59,8 +59,7 @@ namespace MBOptionScreen.Settings
 
             LoadedSettings.Add(settingsInstance.Id, settingsInstance);
 
-            var path = Path.Combine(_defaultRootFolder, settingsInstance.ModuleFolderName,
-                $"{settingsInstance.Id}.json");
+            var path = Path.Combine(_defaultRootFolder, settingsInstance.ModuleFolderName, settingsInstance.SubFolder ?? "", $"{settingsInstance.Id}.json");
             var file = new FileInfo(path);
             if (file.Exists)
             {
@@ -88,7 +87,7 @@ namespace MBOptionScreen.Settings
             if (settingsInstance == null || !LoadedSettings.ContainsKey(settingsInstance.Id))
                 return;
 
-            var path = Path.Combine(_defaultRootFolder, settingsInstance.ModuleFolderName, $"{settingsInstance.Id}.json");
+            var path = Path.Combine(_defaultRootFolder, settingsInstance.ModuleFolderName, settingsInstance.SubFolder ?? "", $"{settingsInstance.Id}.json");
             var file = new FileInfo(path);
 
             var content = JsonConvert.SerializeObject(settingsInstance, _jsonSerializerSettings);
@@ -97,22 +96,24 @@ namespace MBOptionScreen.Settings
             writer.Write(content);
         }
 
-        public bool OverrideSettingsWithId(SettingsBase newSettingsInstance, string id)
+        public bool OverrideSettings(SettingsBase newSettingsInstance)
         {
             if (newSettingsInstance == null || !LoadedSettings.ContainsKey(newSettingsInstance.Id))
                 return false;
 
-            LoadedSettings[id] = newSettingsInstance;
+            LoadedSettings[newSettingsInstance.Id] = newSettingsInstance;
+            SaveSettings(newSettingsInstance);
             return true;
         }
 
-        public SettingsBase ResetSettingsInstance(SettingsBase settingsInstance)
+        public SettingsBase ResetSettings(string id)
         {
-            if (settingsInstance == null || !LoadedSettings.ContainsKey(settingsInstance.Id))
+            if (!LoadedSettings.ContainsKey(id))
                 return null;
 
-            var defaultSettingsInstance = (SettingsBase) Activator.CreateInstance(settingsInstance.GetType());
-            LoadedSettings[settingsInstance.Id] = defaultSettingsInstance;
+            var defaultSettingsInstance = (SettingsBase) Activator.CreateInstance(LoadedSettings[id].GetType());
+            LoadedSettings[id] = defaultSettingsInstance;
+            SaveSettings(defaultSettingsInstance);
             return defaultSettingsInstance;
         }
 

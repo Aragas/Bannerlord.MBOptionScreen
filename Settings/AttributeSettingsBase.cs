@@ -9,6 +9,8 @@ namespace MBOptionScreen.Settings
 {
     public abstract class AttributeSettings<T> : SettingsBase<T> where T : SettingsBase, new()
     {
+        protected override char SubGroupDelimiter => '/';
+
         public override List<SettingPropertyGroupDefinition> GetSettingPropertyGroups()
         {
             var groups = new List<SettingPropertyGroupDefinition>();

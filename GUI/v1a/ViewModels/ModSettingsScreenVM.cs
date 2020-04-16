@@ -235,7 +235,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
                             tuple =>
                             {
                                 //Do action
-                                tuple.SettingsInstance = SettingsDatabase.ResetSettingsInstance(SelectedMod.SettingsInstance);
+                                tuple.SettingsInstance = SettingsDatabase.ResetSettings(SelectedMod.SettingsInstance.Id);
                                 tuple.VM.RefreshValues();
                                 ExecuteSelect(null);
                                 ExecuteSelect(tuple.VM);
@@ -243,7 +243,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
                             tuple =>
                             {
                                 //Undo action
-                                SettingsDatabase.OverrideSettingsWithId(tuple.SettingsInstance, tuple.SettingsInstance.Id);
+                                SettingsDatabase.OverrideSettings(tuple.SettingsInstance);
                                 tuple.VM.SettingsInstance = tuple.SettingsInstance;
                                 tuple.VM.RefreshValues();
                                 if (SelectedMod == tuple.VM)
