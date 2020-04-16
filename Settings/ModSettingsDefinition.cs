@@ -2,12 +2,13 @@
 {
     public class ModSettingsDefinition
     {
-        public SettingsBase SettingsInstance { get; set; }
+        public string SettingsId { get; }
+        public SettingsBase SettingsInstance => SettingsDatabase.GetSettings(SettingsId);
         public string ModName => SettingsInstance.ModName;
 
-        public ModSettingsDefinition(SettingsBase settings)
+        public ModSettingsDefinition(string settingsId)
         {
-            SettingsInstance = settings;
+            SettingsId = settingsId;
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace MBOptionScreen.Actions
 {
-    public class SetValueAction<T> : IAction where T : struct
+    public class SetValueAction<T> : IAction
     {
         public Ref Context { get; }
         public object Value { get; }

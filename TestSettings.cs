@@ -35,5 +35,9 @@ namespace MBOptionScreen
         [SettingProperty("Test Property 3", 0, 10, true, "")]
         [SettingPropertyGroup("Debugging/Test Group/Test Group 3")]
         public int TestProperty3 { get; set; } = 2;
+
+        [SettingProperty("Test Property 6", true, "")]
+        [SettingPropertyGroup("Debugging/Test Group/Test Group 3")]
+        public string TestProperty6 { get; set; } = "";
     }
 }

@@ -54,7 +54,7 @@ namespace MBOptionScreen.Settings.Wrapper
                 let gAttr = groupAttr != null
                     ? (SettingPropertyGroupAttribute) new SettingPropertyGroupAttributeWrapper(propAttr)
                     : SettingPropertyGroupAttribute.Default
-                select new SettingPropertyDefinition(pAttr, gAttr, new ProxyPropertyInfo(_object, propertyInfo), this);
+                select new SettingPropertyDefinition(pAttr, gAttr, new ProxyPropertyInfo(_object, propertyInfo), Id);
 
             //Loop through each property
             foreach (var settingProp in propList)

@@ -15,7 +15,7 @@ namespace MBOptionScreen.Actions
         {
             Value = value;
             SettingProperty = settingProperty;
-            _originalValue = SettingProperty.IntValue;
+            _originalValue = SettingProperty.FloatValue;
         }
 
         public void DoAction() => SettingProperty.FloatValue = (float)Value;

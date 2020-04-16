@@ -12,6 +12,11 @@ namespace MBOptionScreen.Settings.Wrapper
             var propInfo = @object.GetType().GetProperty("DisplayName");
             return propInfo?.GetValue(@object) as string;
         }
+        private static string? GetDefaultStringValue(object @object)
+        {
+            var propInfo = @object.GetType().GetProperty("DefaultStringValue");
+            return propInfo?.GetValue(@object) as string;
+        }
         private static float? GetMinValue(object @object)
         {
             var propInfo = @object.GetType().GetProperty("MinValue");
@@ -46,6 +51,7 @@ namespace MBOptionScreen.Settings.Wrapper
 
         public SettingPropertyAttributeWrapper(object @object) : base(
             GetDisplayName(@object) ?? "ERROR",
+            GetDefaultStringValue(@object) ?? "",
             GetMinValue(@object) ?? 0f,
             GetMaxValue(@object) ?? 0f,
             GetEditableMinValue(@object) ?? 0f,

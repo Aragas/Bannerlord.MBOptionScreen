@@ -35,7 +35,7 @@
                 </Widget>
 
                 <!-- Float Slider -->
-                <ModLibSliderWidget_v1a WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="338" SuggestedHeight="42" VerticalAlignment="Center"
+                <SliderWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="338" SuggestedHeight="42" VerticalAlignment="Center"
                               DoNotUpdateHandleSize="true" Filler="Filler" Handle="SliderHandle" IsDiscrete="false" MaxValueFloat="@MaxValue" FinalizedFloatValue="@FinalizedFloatValue"
                               MinValueFloat="@MinValue" ValueFloat="@FloatValue" IsEnabled="@IsEnabled" IsVisible="@IsFloatVisible" HorizontalAlignment="Center">
                   <Children>
@@ -53,11 +53,11 @@
                     <Widget Id="SliderHandle" DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="14" SuggestedHeight="38"
                             HorizontalAlignment="Left" VerticalAlignment="Center" Brush="SPOptions.Slider.Handle" />
                   </Children>
-                </ModLibSliderWidget_v1a>
+                </SliderWidget>
 
                 <!-- Int Slider -->
-                <ModLibSliderWidget_v1a WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="338" SuggestedHeight="42" VerticalAlignment="Center"
-                              DoNotUpdateHandleSize="true" Filler="Filler" Handle="SliderHandle" IsDiscrete="false" MaxValueFloat="@MaxValue" FinalizedIntValue="@FinalizedIntValue"
+                <SliderWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="338" SuggestedHeight="42" VerticalAlignment="Center"
+                              DoNotUpdateHandleSize="true" Filler="Filler" Handle="SliderHandle" IsDiscrete="false" MaxValueFloat="@MaxValue"
                               MinValueFloat="@MinValue" ValueInt="@IntValue" IsEnabled="@IsEnabled" IsVisible="@IsIntVisible" HorizontalAlignment="Center">
                   <Children>
                     <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="362" SuggestedHeight="38" HorizontalAlignment="Center"
@@ -74,18 +74,27 @@
                     <Widget Id="SliderHandle" DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="14" SuggestedHeight="38"
                             HorizontalAlignment="Left" VerticalAlignment="Center" Brush="SPOptions.Slider.Handle" />
                   </Children>
-                </ModLibSliderWidget_v1a>
+                </SliderWidget>
+
+                <!-- String textbox -->
+                <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="362" SuggestedHeight="42" HorizontalAlignment="Right" VerticalAlignment="Center" DoNotPassEventsToChildren="true"
+                              IsEnabled="@IsEnabled" IsVisible="@IsStringVisible" Sprite="SPOptions\standart_slider_canvas" Command.Click="OnValueClick">
+                  <Children>
+                    <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                    IsEnabled="@IsEnabled" IsVisible="@IsStringVisible" Text="@ValueString" Brush="ModLib.Settings.Text_v1a"/>
+                  </Children>
+                </ButtonWidget>
 
 
               </Children>
             </Widget>
 
             <!-- Value text/button -->
-            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="60" HorizontalAlignment="Right" DoNotPassEventsToChildren="true"
-                          IsEnabled="@IsEnabled" VerticalAlignment="Center" Brush="ModLib.Settings.Value.Display_v1a" Command.Click="OnValueClick">
+            <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="60" HorizontalAlignment="Right" VerticalAlignment="Center" DoNotPassEventsToChildren="true"
+                          IsEnabled="@IsEnabled" IsVisible="@HasEditableText" Brush="ModLib.Settings.Value.Display_v1a" Command.Click="OnValueClick" >
               <Children>
-                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right"
-                                IsEnabled="@IsEnabled" Text="@ValueString" VerticalAlignment="Center" Brush="ModLib.Settings.Settings.Text_v1a"/>
+                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                IsEnabled="@IsEnabled" IsVisible="@HasEditableText" Text="@ValueString" Brush="ModLib.Settings.Settings.Text_v1a"/>
               </Children>
             </ButtonWidget>
 

@@ -10,17 +10,15 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
     public class ModSettingsVM : ViewModel
     {
         private bool _isSelected;
-        private Action<ModSettingsVM> _executeSelect = null;
+        private Action<ModSettingsVM> _executeSelect;
         private MBBindingList<SettingPropertyGroup> _settingPropertyGroups;
+
         public ModSettingsScreenVM MainView { get; }
+        public UndoRedoStack URS { get; } = new UndoRedoStack();
 
         public ModSettingsDefinition ModSettingsDefinition { get; }
-        public SettingsBase SettingsInstance
-        {
-            get => ModSettingsDefinition.SettingsInstance;
-            set => ModSettingsDefinition.SettingsInstance = value;
-        }
-        public UndoRedoStack URS { get; } = new UndoRedoStack();
+        public SettingsBase SettingsInstance => ModSettingsDefinition.SettingsInstance;
+
         /// <summary>
         /// XSLT?
         /// </summary>
@@ -58,11 +56,8 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             MainView = mainView;
 
             SettingPropertyGroups = new MBBindingList<SettingPropertyGroup>();
-            foreach (var settingPropertyGroup in SettingsInstance.GetSettingPropertyGroups().Select(d => new SettingPropertyGroup(d, MainView)))
-            {
-                settingPropertyGroup.AssignUndoRedoStack(URS);
+            foreach (var settingPropertyGroup in SettingsInstance.GetSettingPropertyGroups().Select(d => new SettingPropertyGroup(d, this)))
                 SettingPropertyGroups.Add(settingPropertyGroup);
-            }
 
             RefreshValues();
         }
@@ -70,10 +65,9 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         public override void RefreshValues()
         {
             base.RefreshValues();
-            foreach (var settingGroup in SettingPropertyGroups)
-                settingGroup.AssignUndoRedoStack(URS);
             foreach (var group in SettingPropertyGroups)
                 group.RefreshValues();
+            OnPropertyChanged(nameof(UIVersion));
             OnPropertyChanged(nameof(IsSelected));
             OnPropertyChanged(nameof(ModName));
             OnPropertyChanged(nameof(SettingPropertyGroups));

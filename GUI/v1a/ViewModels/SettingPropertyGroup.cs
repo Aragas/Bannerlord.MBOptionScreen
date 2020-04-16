@@ -11,7 +11,10 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
     public class SettingPropertyGroup : ViewModel
     {
         private bool _isExpanded = true;
-        public ModSettingsScreenVM MainView { get; private set; }
+        protected ModSettingsScreenVM MainView => ModSettingsView.MainView;
+        protected ModSettingsVM ModSettingsView { get; }
+        public UndoRedoStack URS => ModSettingsView.URS;
+
         public SettingPropertyGroupDefinition SettingPropertyGroupDefinition { get; }
         public string GroupName => SettingPropertyGroupDefinition.GroupName;
         public SettingPropertyGroupAttribute Attribute
@@ -21,7 +24,6 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         }
         public SettingPropertyGroup ParentGroup { get; set; } = null;
         public SettingProperty GroupToggleSettingProperty { get; private set; } = null;
-        public UndoRedoStack URS { get; private set; }
         public string HintText
         {
             get
@@ -109,7 +111,6 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
                     return true;
             }
         }
-
         [DataSourceProperty]
         public bool HasSettingsProperties => SettingProperties.Count > 0;
         [DataSourceProperty]
@@ -121,7 +122,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
                 if (_isExpanded != value)
                 {
                     _isExpanded = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(IsExpanded));
                     OnPropertyChanged(nameof(IsGroupVisible));
                     foreach (var subGroup in SettingPropertyGroups)
                     {
@@ -136,14 +137,16 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         [DataSourceProperty]
         public bool HasGroupToggle => GroupToggleSettingProperty != null;
 
-        public SettingPropertyGroup(SettingPropertyGroupDefinition definition, ModSettingsScreenVM mainView)
+        public SettingPropertyGroup(SettingPropertyGroupDefinition definition, ModSettingsVM modSettingsView)
         {
-            MainView = mainView;
+            ModSettingsView = modSettingsView;
             SettingPropertyGroupDefinition = definition;
             foreach (var settingPropertyDefinition in SettingPropertyGroupDefinition.SettingProperties)
                 Add(settingPropertyDefinition);
             foreach (var settingPropertyDefinition in SettingPropertyGroupDefinition.SubGroups)
-                SettingPropertyGroups.Add(new SettingPropertyGroup(settingPropertyDefinition, MainView));
+                SettingPropertyGroups.Add(new SettingPropertyGroup(settingPropertyDefinition, ModSettingsView));
+
+            RefreshValues();
         }
 
         public override void RefreshValues()
@@ -151,13 +154,15 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             base.RefreshValues();
             foreach (var setting in SettingProperties)
                 setting.RefreshValues();
+            foreach (var setting in SettingPropertyGroups)
+                setting.RefreshValues();
 
             OnPropertyChanged(nameof(GroupNameDisplay));
         }
 
         private void Add(SettingPropertyDefinition definition)
         {
-            var sp = new SettingProperty(definition, MainView);
+            var sp = new SettingProperty(definition, ModSettingsView);
             SettingProperties.Add(sp);
             sp.Group = this;
 
@@ -169,17 +174,6 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
                 Attribute = sp.GroupAttribute;
                 GroupToggleSettingProperty = sp;
             }
-        }
-
-        internal void AssignUndoRedoStack(UndoRedoStack urs)
-        {
-            URS = urs;
-
-            foreach (var subGroup in SettingPropertyGroups)
-                subGroup.AssignUndoRedoStack(urs);
-
-            foreach (var settingProp in SettingProperties)
-                settingProp.AssignUndoRedoStack(urs);
         }
 
         public void NotifySearchChanged()

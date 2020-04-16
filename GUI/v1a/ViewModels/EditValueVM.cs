@@ -1,4 +1,5 @@
-﻿using MBOptionScreen.Actions;
+﻿using System;
+using MBOptionScreen.Actions;
 using MBOptionScreen.Settings;
 
 using TaleWorlds.Engine.Screens;
@@ -60,8 +61,24 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             SettingProperty = settingProperty;
 
             TitleText = $"Edit \"{SettingProperty.Name}\"";
-            var format = SettingProperty.SettingType == SettingType.Int ? "0" : "0.00";
-            DescriptionText = $"Edit the value for \"{SettingProperty.Name}\".\nThe minimum value is {SettingProperty.SettingAttribute.EditableMinValue.ToString(format)} and the maximum value is {SettingProperty.SettingAttribute.EditableMaxValue.ToString(format)}.";
+            switch (SettingType)
+            {
+                case SettingType.Bool:
+                case SettingType.ListBox:
+                    break;
+                case SettingType.Int:
+                case SettingType.Float:
+                {
+                    var format = SettingProperty.SettingType == SettingType.Int ? "0" : "0.00";
+                    DescriptionText = $"Edit the value for \"{SettingProperty.Name}\".\nThe minimum value is {SettingProperty.SettingAttribute.EditableMinValue.ToString(format)} and the maximum value is {SettingProperty.SettingAttribute.EditableMaxValue.ToString(format)}.";
+                    break;
+                }
+                case SettingType.String:
+                {
+                    DescriptionText = $"Edit the value for \"{SettingProperty.Name}\".";
+                    break;
+                }
+            }
 
             RefreshValues();
         }
@@ -70,7 +87,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         {
             base.RefreshValues();
 
-            TextInput = SettingProperty.ValueString;
+            TextInput = SettingProperty.ValueString ?? "";
             OnPropertyChanged(nameof(SettingType));
         }
 
@@ -95,6 +112,12 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
                     SettingProperty.URS.Do(new SetValueAction<float>(new Ref(SettingProperty.Property, SettingProperty.SettingsInstance), val));
                     SettingProperty.OnPropertyChanged(nameof(SettingProperty.ValueString));
                 }
+            }
+            else if (SettingProperty.SettingType == SettingType.String)
+            {
+                SettingProperty.URS.Do(new SetStringSettingProperty(SettingProperty, TextInput));
+                SettingProperty.URS.Do(new SetValueAction<string>(new Ref(SettingProperty.Property, SettingProperty.SettingsInstance), TextInput));
+                SettingProperty.OnPropertyChanged(nameof(SettingProperty.ValueString));
             }
             ScreenManager.PopScreen();
         }

@@ -39,9 +39,13 @@ namespace MBOptionScreen.GUI.v1a.Views
                 for (var i = 0; i < lastKeysPressed.Count; i++)
                 {
                     var key = lastKeysPressed[i];
-                    if (Enum.IsDefined(typeof(KeyCodes), key))
+                    if (SettingType == SettingType.String)
                     {
-                        if (key == (int)KeyCodes.Minus)
+                        base.HandleInput(lastKeysPressed);
+                    }
+                    else if (Enum.IsDefined(typeof(KeyCodes), key))
+                    {
+                        if (key == (int) KeyCodes.Minus)
                         {
                             if (_editableWidget.SelectedTextBegin != 0)
                                 continue;
@@ -62,18 +66,22 @@ namespace MBOptionScreen.GUI.v1a.Views
                                 continue;
                         }
                         base.HandleInput(lastKeysPressed);
-                        if (float.TryParse(RealText, out var value))
+
+                        if (SettingType == SettingType.Float)
                         {
-                            float newVal = value;
-                            if (value > MaxValue)
-                                newVal = MaxValue;
-                            else if (value < MinValue)
-                                newVal = MinValue;
-                            if (newVal != value)
+                            if (float.TryParse(RealText, out var value))
                             {
-                                string format = SettingType == SettingType.Int ? "0" : "0.00";
-                                RealText = newVal.ToString(format);
-                                _editableWidget.SetCursorPosition(0, true);
+                                var newVal = value;
+                                if (value > MaxValue)
+                                    newVal = MaxValue;
+                                else if (value < MinValue)
+                                    newVal = MinValue;
+                                if (newVal != value)
+                                {
+                                    var format = SettingType == SettingType.Int ? "0" : "0.00";
+                                    RealText = newVal.ToString(format);
+                                    _editableWidget.SetCursorPosition(0, true);
+                                }
                             }
                         }
                     }

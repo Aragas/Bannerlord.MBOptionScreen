@@ -35,7 +35,6 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         }
         [DataSourceProperty]
         public bool ChangesMade => ModSettingsList.Any(x => x.URS.ChangesMade());
-
         [DataSourceProperty]
         public string DoneButtonText
         {
@@ -235,7 +234,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
                             tuple =>
                             {
                                 //Do action
-                                tuple.SettingsInstance = SettingsDatabase.ResetSettings(SelectedMod.SettingsInstance.Id);
+                                var newSettingsInstance = SettingsDatabase.ResetSettings(tuple.SettingsInstance.Id);
                                 tuple.VM.RefreshValues();
                                 ExecuteSelect(null);
                                 ExecuteSelect(tuple.VM);
@@ -244,7 +243,6 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
                             {
                                 //Undo action
                                 SettingsDatabase.OverrideSettings(tuple.SettingsInstance);
-                                tuple.VM.SettingsInstance = tuple.SettingsInstance;
                                 tuple.VM.RefreshValues();
                                 if (SelectedMod == tuple.VM)
                                 {

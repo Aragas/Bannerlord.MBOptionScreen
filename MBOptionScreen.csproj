@@ -8,13 +8,13 @@
     <Nullable>enable</Nullable>
     <GameFolder>C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord</GameFolder>
     <Authors>mipen, Aragas</Authors>
-    <Copyright>Copyright ©  2020</Copyright>
+    <Copyright>Copyright © 2020</Copyright>
     <Company />
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Bannerlord.MBOptionScreen</PackageId>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Version>1.1.2</Version>
+    <Version>1.1.3</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -50,12 +50,6 @@
       <HintPath>%(Identity)</HintPath>
       <Private>False</Private>
     </Reference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="GUI\v1\**" />
-    <EmbeddedResource Remove="GUI\v1\**" />
-    <None Remove="GUI\v1\**" />
   </ItemGroup>
 
   <ItemGroup>

@@ -20,7 +20,7 @@ namespace MBOptionScreen.Settings
                 let groupAttr = p.GetCustomAttribute<SettingPropertyGroupAttribute>(true)
                 where propAttr != null
                 let groupAttrToAdd = groupAttr ?? SettingPropertyGroupAttribute.Default
-                select new SettingPropertyDefinition(propAttr, groupAttrToAdd, p, this)).ToList();
+                select new SettingPropertyDefinition(propAttr, groupAttrToAdd, p, Id)).ToList();
 
             //Loop through each property
             foreach (var settingProp in propList)

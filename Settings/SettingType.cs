@@ -4,6 +4,8 @@
     {
         Bool,
         Int,
-        Float
+        Float,
+        String,
+        ListBox
     }
 }

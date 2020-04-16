@@ -47,8 +47,8 @@ namespace MBOptionScreen.Settings
         };
         private Dictionary<string, SettingsBase> LoadedSettings { get; } = new Dictionary<string, SettingsBase>();
 
-        public List<ModSettingsDefinition> CreateModSettingsDefinitions => LoadedSettings.Values
-            .Select(s => new ModSettingsDefinition(s))
+        public List<ModSettingsDefinition> CreateModSettingsDefinitions => LoadedSettings.Keys
+            .Select(id => new ModSettingsDefinition(id))
             .OrderBy(a => a.ModName)
             .ToList();
 
