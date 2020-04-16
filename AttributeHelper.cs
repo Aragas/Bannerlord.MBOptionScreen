@@ -27,7 +27,7 @@ namespace MBOptionScreen
             foreach (var pair in attributes)
             {
                 var maxFound = pair.Value
-                    .Where(a => a.GameVersion.IsSame(version))
+                    .Where(a => a.GameVersion.IsSameOverride(version))
                     .DefaultIfEmpty()
                     .MaxBy(a => a?.ImplementationVersion);
 
@@ -107,7 +107,7 @@ namespace MBOptionScreen
         {
             public int Compare(ApplicationVersion x, ApplicationVersion y)
             {
-                if (x.IsSame(y))
+                if (x.IsSameOverride(y))
                     return 0;
                 else
                     return
@@ -115,7 +115,6 @@ namespace MBOptionScreen
                         x.Major != y.Major ? (x.Major > y.Major ? 1 : -1) :
                         x.Minor != y.Minor ? (x.Minor > y.Minor ? 1 : -1) :
                         x.Revision != y.Revision ? (x.Revision > y.Revision ? 1 : -1) :
-                        x.ChangeSet != y.ChangeSet ? (x.ChangeSet > y.ChangeSet ? 1 : -1) :
                         0;
             }
         }
