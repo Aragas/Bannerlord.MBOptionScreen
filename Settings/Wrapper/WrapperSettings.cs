@@ -13,7 +13,7 @@ namespace MBOptionScreen.Settings.Wrapper
     /// <typeparam name="T"></typeparam>
     internal class WrapperSettings : SettingsBase
     {
-        private readonly object _object;
+        internal readonly object _object;
         private PropertyInfo IdProperty { get; }
         private PropertyInfo ModuleFolderNameProperty { get; }
         private PropertyInfo ModNameProperty { get; }
@@ -52,7 +52,7 @@ namespace MBOptionScreen.Settings.Wrapper
                 let groupAttr = propertyInfo.GetCustomAttributes().FirstOrDefault(a => a.GetType().FullName == "ModLib.Attributes.SettingPropertyGroupAttribute")
                 let pAttr = new SettingPropertyAttributeWrapper(propAttr)
                 let gAttr = groupAttr != null
-                    ? (SettingPropertyGroupAttribute) new SettingPropertyGroupAttributeWrapper(propAttr)
+                    ? (SettingPropertyGroupAttribute) new SettingPropertyGroupAttributeWrapper(groupAttr)
                     : SettingPropertyGroupAttribute.Default
                 select new SettingPropertyDefinition(pAttr, gAttr, new ProxyPropertyInfo(_object, propertyInfo), Id);
 

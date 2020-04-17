@@ -9,9 +9,9 @@ namespace MBOptionScreen.Actions
 
         public Ref Context { get; } = null;
         public object Value { get; }
-        private SettingProperty SettingProperty { get; }
+        private SettingPropertyVM SettingProperty { get; }
 
-        public SetFloatSettingProperty(SettingProperty settingProperty, float value)
+        public SetFloatSettingProperty(SettingPropertyVM settingProperty, float value)
         {
             Value = value;
             SettingProperty = settingProperty;

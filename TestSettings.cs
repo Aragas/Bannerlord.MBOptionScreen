@@ -5,9 +5,16 @@ namespace MBOptionScreen
 {
     internal class TestSettings : AttributeSettings<TestSettings>
     {
-        public const string SettingsInstanceID = "Testing";
+        private static string[] CreateDropdown() => new string[]
+        {
+            "Test1",
+            "Test2",
+            "Test3"
+        };
 
-        public override string Id { get; set; } = SettingsInstanceID;
+
+
+        public override string Id { get; set; } = "Testing";
         public override string ModName => "Testing";
         public override string ModuleFolderName => "Testing";
 
@@ -39,5 +46,23 @@ namespace MBOptionScreen
         [SettingProperty("Test Property 6", true, "")]
         [SettingPropertyGroup("Debugging/Test Group/Test Group 3")]
         public string TestProperty6 { get; set; } = "";
+
+        [SettingProperty("Test Property 7", "", false, "")]
+        [SettingPropertyGroup("Debugging/Test Group/Test Group 3")]
+        public Dropdown<string> TestProperty7 { get; set; } = new Dropdown<string>(new string[] 
+        {
+            "Test1",
+            "Test2",
+            "Test3"
+        }, 0);
+
+        [SettingProperty("Test Property 8", false, "")]
+        [SettingPropertyGroup("Debugging/Test Group/Test Group 3")]
+        public Dropdown<string> TestProperty8 { get; set; } = new Dropdown<string>(new string[]
+        {
+            "Test1",
+            "Test2",
+            "Test3"
+        }, 2);
     }
 }

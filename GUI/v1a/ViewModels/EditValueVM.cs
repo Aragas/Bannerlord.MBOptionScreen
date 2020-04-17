@@ -13,7 +13,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         private string _titleText = "title";
         private string _descriptionText = "description";
 
-        public SettingProperty SettingProperty { get; set; } = null;
+        public SettingPropertyVM SettingProperty { get; set; } = null;
 
         [DataSourceProperty]
         public string TextInput
@@ -56,7 +56,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         [DataSourceProperty]
         public float MaxValue => SettingProperty.SettingAttribute.EditableMaxValue;
 
-        public EditValueVM(SettingProperty settingProperty)
+        public EditValueVM(SettingPropertyVM settingProperty)
         {
             SettingProperty = settingProperty;
 
@@ -64,7 +64,8 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             switch (SettingType)
             {
                 case SettingType.Bool:
-                case SettingType.ListBox:
+                case SettingType.Dropdown:
+                    // Won't appear here
                     break;
                 case SettingType.Int:
                 case SettingType.Float:

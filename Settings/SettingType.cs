@@ -2,10 +2,11 @@
 {
     public enum SettingType
     {
+        NONE,
         Bool,
         Int,
         Float,
         String,
-        ListBox
+        Dropdown
     }
 }

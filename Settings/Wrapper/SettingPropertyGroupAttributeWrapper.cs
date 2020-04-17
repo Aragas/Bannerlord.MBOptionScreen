@@ -1,4 +1,5 @@
 ﻿using MBOptionScreen.Attributes;
+using System.Reflection;
 
 namespace MBOptionScreen.Settings.Wrapper
 {
@@ -9,12 +10,12 @@ namespace MBOptionScreen.Settings.Wrapper
     {
         private static string? GetGroupName(object @object)
         {
-            var propInfo = @object.GetType().GetProperty("GroupName");
+            var propInfo = @object.GetType().GetProperty("GroupName", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             return propInfo?.GetValue(@object) as string;
         }
         private static bool? GetIsMainToggle(object @object)
         {
-            var propInfo = @object.GetType().GetProperty("IsMainToggle");
+            var propInfo = @object.GetType().GetProperty("IsMainToggle", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             return propInfo?.GetValue(@object) as bool?;
         }
 

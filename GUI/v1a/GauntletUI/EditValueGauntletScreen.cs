@@ -10,12 +10,12 @@ namespace MBOptionScreen.GUI.v1a.GauntletUI
 {
     public class EditValueGauntletScreen : ScreenBase
     {
-        private readonly SettingProperty _settingProperty;
+        private readonly SettingPropertyVM _settingProperty;
         private GauntletLayer _gauntletLayer;
         private GauntletMovie _gauntletMovie;
         private EditValueVM _dataSource;
 
-        public EditValueGauntletScreen(SettingProperty settingProperty)
+        public EditValueGauntletScreen(SettingPropertyVM settingProperty)
         {
             _settingProperty = settingProperty;
         }

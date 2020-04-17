@@ -1,6 +1,6 @@
 ﻿using MBOptionScreen.Attributes;
 using MBOptionScreen.Interfaces;
-
+using MBOptionScreen.Settings.Wrapper;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -65,11 +65,16 @@ namespace MBOptionScreen.Settings
             {
                 using var reader = file.OpenText();
                 var content = reader.ReadToEnd();
-                JsonConvert.PopulateObject(content, settingsInstance, _jsonSerializerSettings);
+                if (settingsInstance is WrapperSettings wrapperSettings)
+                    JsonConvert.PopulateObject(content, wrapperSettings._object, _jsonSerializerSettings);
+                else
+                    JsonConvert.PopulateObject(content, settingsInstance, _jsonSerializerSettings);
             }
             else
             {
-                var content = JsonConvert.SerializeObject(settingsInstance, _jsonSerializerSettings);
+                var content = settingsInstance is WrapperSettings wrapperSettings
+                    ? JsonConvert.SerializeObject(wrapperSettings._object, _jsonSerializerSettings)
+                    : JsonConvert.SerializeObject(settingsInstance, _jsonSerializerSettings);
                 file.Directory?.Create();
                 using var writer = file.CreateText();
                 writer.Write(content);
@@ -90,7 +95,9 @@ namespace MBOptionScreen.Settings
             var path = Path.Combine(_defaultRootFolder, settingsInstance.ModuleFolderName, settingsInstance.SubFolder ?? "", $"{settingsInstance.Id}.json");
             var file = new FileInfo(path);
 
-            var content = JsonConvert.SerializeObject(settingsInstance, _jsonSerializerSettings);
+            var content = settingsInstance is WrapperSettings wrapperSettings
+                ? JsonConvert.SerializeObject(wrapperSettings._object, _jsonSerializerSettings)
+                : JsonConvert.SerializeObject(settingsInstance, _jsonSerializerSettings);
             file.Directory?.Create();
             using var writer = file.CreateText();
             writer.Write(content);
@@ -111,11 +118,14 @@ namespace MBOptionScreen.Settings
             if (!LoadedSettings.ContainsKey(id))
                 return null;
 
-            var defaultSettingsInstance = (SettingsBase) Activator.CreateInstance(LoadedSettings[id].GetType());
+            var defaultSettingsInstance = LoadedSettings[id] is WrapperSettings wrapperSettings
+                ? new WrapperSettings(Activator.CreateInstance(wrapperSettings._object.GetType())) 
+                : (SettingsBase) Activator.CreateInstance(LoadedSettings[id].GetType());
             LoadedSettings[id] = defaultSettingsInstance;
             SaveSettings(defaultSettingsInstance);
             return defaultSettingsInstance;
         }
+
 
         public class IgnorePropertiesResolver : DefaultContractResolver
         {

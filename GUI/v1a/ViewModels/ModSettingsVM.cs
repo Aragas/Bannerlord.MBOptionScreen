@@ -11,7 +11,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
     {
         private bool _isSelected;
         private Action<ModSettingsVM> _executeSelect;
-        private MBBindingList<SettingPropertyGroup> _settingPropertyGroups;
+        private MBBindingList<SettingPropertyGroupVM> _settingPropertyGroups;
 
         public ModSettingsScreenVM MainView { get; }
         public UndoRedoStack URS { get; } = new UndoRedoStack();
@@ -37,7 +37,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             }
         }
         [DataSourceProperty]
-        public MBBindingList<SettingPropertyGroup> SettingPropertyGroups
+        public MBBindingList<SettingPropertyGroupVM> SettingPropertyGroups
         {
             get => _settingPropertyGroups;
             set
@@ -55,8 +55,8 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             ModSettingsDefinition = definition;
             MainView = mainView;
 
-            SettingPropertyGroups = new MBBindingList<SettingPropertyGroup>();
-            foreach (var settingPropertyGroup in SettingsInstance.GetSettingPropertyGroups().Select(d => new SettingPropertyGroup(d, this)))
+            SettingPropertyGroups = new MBBindingList<SettingPropertyGroupVM>();
+            foreach (var settingPropertyGroup in SettingsInstance.GetSettingPropertyGroups().Select(d => new SettingPropertyGroupVM(d, this)))
             {
                 SettingPropertyGroups.Add(settingPropertyGroup);
             }

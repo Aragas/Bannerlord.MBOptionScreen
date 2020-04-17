@@ -8,7 +8,7 @@ using TaleWorlds.Library;
 
 namespace MBOptionScreen.GUI.v1a.ViewModels
 {
-    public class SettingPropertyGroup : ViewModel, IComparable<SettingPropertyGroup>
+    public class SettingPropertyGroupVM : ViewModel, IComparable<SettingPropertyGroupVM>
     {
         private bool _isExpanded = true;
         protected ModSettingsScreenVM MainView => ModSettingsView.MainView;
@@ -22,8 +22,8 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             get => SettingPropertyGroupDefinition.Attribute;
             set => SettingPropertyGroupDefinition.Attribute = value;
         }
-        public SettingPropertyGroup ParentGroup { get; set; } = null;
-        public SettingProperty GroupToggleSettingProperty { get; private set; } = null;
+        public SettingPropertyGroupVM ParentGroup { get; set; } = null;
+        public SettingPropertyVM GroupToggleSettingProperty { get; private set; } = null;
         public string HintText
         {
             get
@@ -62,9 +62,9 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             }
         }
         [DataSourceProperty]
-        public MBBindingList<SettingProperty> SettingProperties { get; } = new MBBindingList<SettingProperty>();
+        public MBBindingList<SettingPropertyVM> SettingProperties { get; } = new MBBindingList<SettingPropertyVM>();
         [DataSourceProperty]
-        public MBBindingList<SettingPropertyGroup> SettingPropertyGroups { get; } = new MBBindingList<SettingPropertyGroup>();
+        public MBBindingList<SettingPropertyGroupVM> SettingPropertyGroups { get; } = new MBBindingList<SettingPropertyGroupVM>();
         [DataSourceProperty]
         public bool GroupToggle
         {
@@ -87,13 +87,13 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
                     OnPropertyChanged(nameof(GroupNameDisplay));
                     foreach (var propSetting in SettingProperties)
                     {
-                        propSetting.OnPropertyChanged(nameof(SettingProperty.IsEnabled));
-                        propSetting.OnPropertyChanged(nameof(SettingProperty.IsSettingVisible));
+                        propSetting.OnPropertyChanged(nameof(SettingPropertyVM.IsEnabled));
+                        propSetting.OnPropertyChanged(nameof(SettingPropertyVM.IsSettingVisible));
                     }
                     foreach (var subGroup in SettingPropertyGroups)
                     {
-                        subGroup.OnPropertyChanged(nameof(SettingPropertyGroup.IsGroupVisible));
-                        subGroup.OnPropertyChanged(nameof(SettingPropertyGroup.IsExpanded));
+                        subGroup.OnPropertyChanged(nameof(SettingPropertyGroupVM.IsGroupVisible));
+                        subGroup.OnPropertyChanged(nameof(SettingPropertyGroupVM.IsExpanded));
                     }
                 }
             }
@@ -126,25 +126,25 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
                     OnPropertyChanged(nameof(IsGroupVisible));
                     foreach (var subGroup in SettingPropertyGroups)
                     {
-                        subGroup.OnPropertyChanged(nameof(SettingPropertyGroup.IsGroupVisible));
-                        subGroup.OnPropertyChanged(nameof(SettingPropertyGroup.IsExpanded));
+                        subGroup.OnPropertyChanged(nameof(SettingPropertyGroupVM.IsGroupVisible));
+                        subGroup.OnPropertyChanged(nameof(SettingPropertyGroupVM.IsExpanded));
                     }
                     foreach (var settingProp in SettingProperties)
-                        settingProp.OnPropertyChanged(nameof(SettingProperty.IsSettingVisible));
+                        settingProp.OnPropertyChanged(nameof(SettingPropertyVM.IsSettingVisible));
                 }
             }
         }
         [DataSourceProperty]
         public bool HasGroupToggle => GroupToggleSettingProperty != null;
 
-        public SettingPropertyGroup(SettingPropertyGroupDefinition definition, ModSettingsVM modSettingsView)
+        public SettingPropertyGroupVM(SettingPropertyGroupDefinition definition, ModSettingsVM modSettingsView)
         {
             ModSettingsView = modSettingsView;
             SettingPropertyGroupDefinition = definition;
             foreach (var settingPropertyDefinition in SettingPropertyGroupDefinition.SettingProperties)
                 Add(settingPropertyDefinition);
             foreach (var settingPropertyDefinition in SettingPropertyGroupDefinition.SubGroups)
-                SettingPropertyGroups.Add(new SettingPropertyGroup(settingPropertyDefinition, ModSettingsView));
+                SettingPropertyGroups.Add(new SettingPropertyGroupVM(settingPropertyDefinition, ModSettingsView));
 
             RefreshValues();
         }
@@ -162,7 +162,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
 
         private void Add(SettingPropertyDefinition definition)
         {
-            var sp = new SettingProperty(definition, ModSettingsView);
+            var sp = new SettingPropertyVM(definition, ModSettingsView);
             SettingProperties.Add(sp);
             sp.Group = this;
 
@@ -186,7 +186,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             if (SettingProperties.Count > 0)
             {
                 foreach (var prop in SettingProperties)
-                    prop.OnPropertyChanged(nameof(SettingProperty.IsSettingVisible));
+                    prop.OnPropertyChanged(nameof(SettingPropertyVM.IsSettingVisible));
             }
             OnPropertyChanged(nameof(IsGroupVisible));
         }
@@ -211,6 +211,6 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         public override string ToString() => GroupName;
         public override int GetHashCode() => GroupName.GetHashCode();
 
-        public int CompareTo(SettingPropertyGroup other) => string.Compare(other.GroupName, GroupName, StringComparison.InvariantCulture);
+        public int CompareTo(SettingPropertyGroupVM other) => string.Compare(other.GroupName, GroupName, StringComparison.InvariantCulture);
     }
 }

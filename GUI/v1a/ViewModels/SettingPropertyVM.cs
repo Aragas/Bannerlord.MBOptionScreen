@@ -4,15 +4,21 @@ using MBOptionScreen.GUI.v1a.GauntletUI;
 using MBOptionScreen.Settings;
 
 using System;
+using System.Linq;
 using System.Reflection;
-
+using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Engine.Screens;
+using TaleWorlds.GauntletUI;
 using TaleWorlds.Library;
 
 namespace MBOptionScreen.GUI.v1a.ViewModels
 {
-    public class SettingProperty : ViewModel
+    // <Standard.DropdownWithHorizontalControl Id="StringOption" VerticalAlignment="Center" IsVisible="false" Parameter.SelectorDataSource="{Selector}" />
+    // ListPanel
+    public class SettingPropertyVM : ViewModel
     {
+        private SelectorVM<SelectorItemVM> _selector;
+
         protected ModSettingsScreenVM MainView => ModSettingsView.MainView;
         protected ModSettingsVM ModSettingsView { get; }
         public UndoRedoStack URS => ModSettingsView.URS;
@@ -23,7 +29,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         public SettingPropertyGroupAttribute GroupAttribute => SettingPropertyDefinition.GroupAttribute;
         public SettingsBase SettingsInstance => SettingPropertyDefinition.SettingsInstance;
         public SettingType SettingType => SettingPropertyDefinition.SettingType;
-        public SettingPropertyGroup Group { get; set; }
+        public SettingPropertyGroupVM Group { get; set; }
         public string HintText { get; private set; }
         public bool SatisfiesSearch
         {
@@ -47,6 +53,8 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         public bool IsBoolVisible => SettingType == SettingType.Bool;
         [DataSourceProperty]
         public bool IsStringVisible => SettingType == SettingType.String;
+        [DataSourceProperty]
+        public bool IsDropdownVisible => SettingType == SettingType.Dropdown;
         [DataSourceProperty]
         public bool IsEnabled => Group?.GroupToggle != false;
         [DataSourceProperty]
@@ -121,6 +129,19 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             }
         }
         [DataSourceProperty]
+        public SelectorVM<SelectorItemVM> DropdownValue
+        {
+            get => _selector;
+            set
+            {
+                if (value != _selector)
+                {
+                    _selector = value;
+                    OnPropertyChanged(nameof(DropdownValue));
+                }
+            }
+        }
+        [DataSourceProperty]
         public float MaxValue => SettingAttribute.MaxValue;
         [DataSourceProperty]
         public float MinValue => SettingAttribute.MinValue;
@@ -130,6 +151,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             SettingType.Int => ((int) Property.GetValue(SettingsInstance)).ToString("0"),
             SettingType.Float => ((float) Property.GetValue(SettingsInstance)).ToString("0.00"),
             SettingType.String => (string) Property.GetValue(SettingsInstance),
+            SettingType.Dropdown => DropdownValue.SelectedItem.StringItem,
             _ => ""
         };
         [DataSourceProperty]
@@ -137,7 +159,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         [DataSourceProperty]
         public Action OnHoverEndAction => OnHoverEnd;
 
-        public SettingProperty(SettingPropertyDefinition definition, ModSettingsVM modSettingsView)
+        public SettingPropertyVM(SettingPropertyDefinition definition, ModSettingsVM modSettingsView)
         {
             ModSettingsView = modSettingsView;
             SettingPropertyDefinition = definition;
@@ -170,7 +192,18 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
                     StringValue = (string) Property.GetValue(SettingsInstance);
                     OnPropertyChanged(nameof(StringValue));
                     break;
+                case SettingType.Dropdown:
+                    var dropdownValue = (Dropdown<string>) Property.GetValue(SettingsInstance);
+                    DropdownValue = new SelectorVM<SelectorItemVM>(
+                        dropdownValue.GetValues().AsEnumerable(),
+                        dropdownValue.GetSelectedIndex(), value =>
+                        {
+                            dropdownValue.SelectValue(value.SelectedItem.StringItem);
+                        });
+                    OnPropertyChanged(nameof(DropdownValue));
+                    break;
             }
+            OnPropertyChanged(nameof(ValueString));
         }
 
         public void OnHover()

@@ -82,7 +82,6 @@ namespace MBOptionScreen.Attributes
             HintText = hintText;
         }
 
-
         /// <summary>
         /// Tells the Settings system that this property should be used for the settings menu.
         /// </summary>

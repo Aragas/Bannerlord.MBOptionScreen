@@ -209,7 +209,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             }
         }
 
-        private static IEnumerable<SettingPropertyDefinition> GetAllSettingPropertyDefinitions(SettingPropertyGroup settingPropertyGroup1)
+        private static IEnumerable<SettingPropertyDefinition> GetAllSettingPropertyDefinitions(SettingPropertyGroupVM settingPropertyGroup1)
         {
             foreach (var settingProperty in settingPropertyGroup1.SettingProperties)
                 yield return settingProperty.SettingPropertyDefinition;

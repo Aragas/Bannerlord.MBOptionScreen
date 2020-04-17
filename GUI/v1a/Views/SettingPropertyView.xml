@@ -19,6 +19,12 @@
             <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="Fixed" VerticalAlignment="Top" HorizontalAlignment="Left" MarginLeft="90" SuggestedWidth="360">
               <Children>
 
+                <!-- Dropdown list -->
+                <!-- TODO
+                <Standard.DropdownWithHorizontalControl WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="362" SuggestedHeight="42" HorizontalAlignment="Right" VerticalAlignment="Center"
+                                                        IsEnabled="@IsEnabled" IsVisible="@IsDropdownVisible" Parameter.SelectorDataSource="{DropdownValue}"/>
+                -->
+                
                 <!-- Boolean switch widget -->
                 <Widget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" VerticalAlignment="Center" HorizontalAlignment="Center"
                         IsVisible="@IsBoolVisible" UpdateChildrenStates="true"  IsEnabled="@IsEnabled">
@@ -85,7 +91,7 @@
                   </Children>
                 </ButtonWidget>
 
-
+                
               </Children>
             </Widget>
 

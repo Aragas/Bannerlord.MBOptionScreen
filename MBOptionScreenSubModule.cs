@@ -2,6 +2,7 @@
 
 using MBOptionScreen.Attributes;
 using MBOptionScreen.Interfaces;
+using MBOptionScreen.ResourceInjection;
 using MBOptionScreen.ResourceInjection.EmbedLoaders;
 using MBOptionScreen.Settings;
 using MBOptionScreen.Settings.Wrapper;
@@ -72,14 +73,13 @@ namespace MBOptionScreen
                 // The currently loaded MBOptionScreen might not be the one with the latest implementation versions,
                 // but some other mod might have it included
                 var modOptionsScreenTuple = AttributeHelper.Get<ModuleOptionVersionAttribute>(version);
-                var fileStorageTuple = AttributeHelper.Get<FileStorageVersionAttribute>(version);
                 var settingsStorageTuple = AttributeHelper.Get<SettingsStorageVersionAttribute>(version);
                 var resourceInjectorTuple = AttributeHelper.Get<ResourceInjectorVersionAttribute>(version);
 
                 // Initialize the shared class among other instances of MBOptionScreen.
                 SharedStateObject = new SharedStateObject(
-                    (ISettingsProvider) Activator.CreateInstance(settingsStorageTuple.Type),
-                    (IResourceInjector) Activator.CreateInstance(resourceInjectorTuple.Type),
+                    new SettingsProviderWrapper(Activator.CreateInstance(settingsStorageTuple.Type)),
+                    new ResourceInjectorWrapper(Activator.CreateInstance(resourceInjectorTuple.Type)),
                     modOptionsScreenTuple.Type);
                 _stateProvider.Set(SharedStateObject);
 
