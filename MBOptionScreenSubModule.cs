@@ -85,6 +85,7 @@ namespace MBOptionScreen
 
                 Module.CurrentModule.AddInitialStateOption(new InitialStateOption("ModOptionsMenu_MBOptionScreen", new TextObject("{=HiZbHGvYG}Mod Options"), 9990, () =>
                 {
+                    // No wrapper needed as the type MUST be castable to ScreenBase
                     var screen = (ScreenBase) Activator.CreateInstance(SharedStateObject.ModOptionScreen);
                     ScreenManager.PushScreen(screen);
                 }, false));
@@ -109,11 +110,11 @@ namespace MBOptionScreen
 
                     settings.AddRange(allTypes
                         .Where(t => t.IsSubclassOf(type))
-                        .Select(obj => new WrapperSettings(Activator.CreateInstance(obj))));
+                        .Select(obj => new SettingsWrapper(Activator.CreateInstance(obj))));
                 }
                 settings.AddRange(allTypes
                     .Where(t => t.IsSubclassOf(typeof(SettingsBase)) &&
-                                t != typeof(WrapperSettings)
+                                t != typeof(SettingsWrapper)
 #if !DEBUG
                                 && t != typeof(MBOptionScreenSettings)
                                 && t != typeof(TestSettings)

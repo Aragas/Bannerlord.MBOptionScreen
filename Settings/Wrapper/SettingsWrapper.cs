@@ -11,7 +11,7 @@ namespace MBOptionScreen.Settings.Wrapper
     /// It is unsafe to cast an instance of SettingsBase to out SettingsBase, so use a wrapper
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    internal class WrapperSettings : SettingsBase
+    internal class SettingsWrapper : SettingsBase
     {
         internal readonly object _object;
         private PropertyInfo IdProperty { get; }
@@ -29,7 +29,7 @@ namespace MBOptionScreen.Settings.Wrapper
         public override string SubFolder => SubFolderProperty?.GetValue(_object) as string ?? "";
         protected override char SubGroupDelimiter => SubGroupDelimiterProperty?.GetValue(_object) as char? ?? '/';
 
-        public WrapperSettings(object @object)
+        public SettingsWrapper(object @object)
         {
             _object = @object;
             var type = @object.GetType();

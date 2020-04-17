@@ -65,14 +65,14 @@ namespace MBOptionScreen.Settings
             {
                 using var reader = file.OpenText();
                 var content = reader.ReadToEnd();
-                if (settingsInstance is WrapperSettings wrapperSettings)
+                if (settingsInstance is SettingsWrapper wrapperSettings)
                     JsonConvert.PopulateObject(content, wrapperSettings._object, _jsonSerializerSettings);
                 else
                     JsonConvert.PopulateObject(content, settingsInstance, _jsonSerializerSettings);
             }
             else
             {
-                var content = settingsInstance is WrapperSettings wrapperSettings
+                var content = settingsInstance is SettingsWrapper wrapperSettings
                     ? JsonConvert.SerializeObject(wrapperSettings._object, _jsonSerializerSettings)
                     : JsonConvert.SerializeObject(settingsInstance, _jsonSerializerSettings);
                 file.Directory?.Create();
@@ -95,7 +95,7 @@ namespace MBOptionScreen.Settings
             var path = Path.Combine(_defaultRootFolder, settingsInstance.ModuleFolderName, settingsInstance.SubFolder ?? "", $"{settingsInstance.Id}.json");
             var file = new FileInfo(path);
 
-            var content = settingsInstance is WrapperSettings wrapperSettings
+            var content = settingsInstance is SettingsWrapper wrapperSettings
                 ? JsonConvert.SerializeObject(wrapperSettings._object, _jsonSerializerSettings)
                 : JsonConvert.SerializeObject(settingsInstance, _jsonSerializerSettings);
             file.Directory?.Create();
@@ -118,8 +118,8 @@ namespace MBOptionScreen.Settings
             if (!LoadedSettings.ContainsKey(id))
                 return null;
 
-            var defaultSettingsInstance = LoadedSettings[id] is WrapperSettings wrapperSettings
-                ? new WrapperSettings(Activator.CreateInstance(wrapperSettings._object.GetType())) 
+            var defaultSettingsInstance = LoadedSettings[id] is SettingsWrapper wrapperSettings
+                ? new SettingsWrapper(Activator.CreateInstance(wrapperSettings._object.GetType())) 
                 : (SettingsBase) Activator.CreateInstance(LoadedSettings[id].GetType());
             LoadedSettings[id] = defaultSettingsInstance;
             SaveSettings(defaultSettingsInstance);
