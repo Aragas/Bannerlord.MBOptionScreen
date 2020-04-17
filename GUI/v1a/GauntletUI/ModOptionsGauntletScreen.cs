@@ -28,7 +28,7 @@ namespace MBOptionScreen.GUI.v1a.GauntletUI
     {
         private GauntletLayer _gauntletLayer;
         private GauntletMovie _gauntletMovie;
-        private ModSettingsScreenVM _dataSource;
+        private ModOptionsScreenVM _dataSource;
 
         protected override void OnInitialize()
         {
@@ -38,9 +38,9 @@ namespace MBOptionScreen.GUI.v1a.GauntletUI
             spriteData.SpriteCategories["ui_encyclopedia"].Load(resourceContext, uiresourceDepot);
 
             base.OnInitialize();
-            _dataSource = new ModSettingsScreenVM();
+            _dataSource = new ModOptionsScreenVM();
             _gauntletLayer = new GauntletLayer(4000, "GauntletLayer");
-            _gauntletMovie = _gauntletLayer.LoadMovie("ModOptionsScreen_v1a", _dataSource);
+            _gauntletMovie = _gauntletLayer.LoadMovie("ModOptionsView_v1a", _dataSource);
             _gauntletLayer.Input.RegisterHotKeyCategory(HotKeyManager.GetCategory("GenericPanelGameKeyCategory"));
             _gauntletLayer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);
             _gauntletLayer.IsFocusLayer = true;

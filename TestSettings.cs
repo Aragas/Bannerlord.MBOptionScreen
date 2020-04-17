@@ -64,5 +64,13 @@ namespace MBOptionScreen
             "Test2",
             "Test3"
         }, 2);
+
+        [SettingProperty("Test Property 9", true, "")]
+        [SettingPropertyGroup("Debugging/Test Group/Restart")]
+        public bool TestProperty9 { get; set; } = false;
+
+        [SettingProperty("Test Property 10", true, "")]
+        [SettingPropertyGroup("Debugging/Test Group/Restart")]
+        public bool TestProperty10 { get; set; } = false;
     }
 }

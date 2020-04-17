@@ -12,7 +12,7 @@ namespace MBOptionScreen.ResourceInjection.EmbedLoaders
         private static readonly string ButtonBrushesPath = "MBOptionScreen.GUI.v1a.Brushes.ButtonBrushes.xml";
         private static readonly string DividerBrushesPath = "MBOptionScreen.GUI.v1a.Brushes.DividerBrushes.xml";
         private static readonly string ExpandIndicatorPath = "MBOptionScreen.GUI.v1a.Brushes.ExpandIndicator.xml";
-        private static readonly string ModSettingsItemBrushPath = "MBOptionScreen.GUI.v1a.Brushes.ModSettingsItemBrush.xml";
+        private static readonly string ModSettingsBrushPath = "MBOptionScreen.GUI.v1a.Brushes.ModSettingsBrush.xml";
         private static readonly string ResetButtonBrushPath = "MBOptionScreen.GUI.v1a.Brushes.ResetButtonBrush.xml";
         private static readonly string SettingsValueDisplayBrushPath = "MBOptionScreen.GUI.v1a.Brushes.SettingsValueDisplayBrush.xml";
         private static readonly string TextBrushesPath = "MBOptionScreen.GUI.v1a.Brushes.TextBrushes.xml";
@@ -20,7 +20,7 @@ namespace MBOptionScreen.ResourceInjection.EmbedLoaders
         public static XmlDocument ButtonBrushes() => Load(ButtonBrushesPath);
         public static XmlDocument DividerBrushes() => Load(DividerBrushesPath);
         public static XmlDocument ExpandIndicator() => Load(ExpandIndicatorPath);
-        public static XmlDocument ModSettingsItemBrush() => Load(ModSettingsItemBrushPath);
+        public static XmlDocument ModSettingsBrush() => Load(ModSettingsBrushPath);
         public static XmlDocument ResetButtonBrush() => Load(ResetButtonBrushPath);
         public static XmlDocument SettingsValueDisplayBrush() => Load(SettingsValueDisplayBrushPath);
         public static XmlDocument TextBrushes() => Load(TextBrushesPath);
@@ -38,7 +38,7 @@ namespace MBOptionScreen.ResourceInjection.EmbedLoaders
             resourceInjector.InjectBrush(ButtonBrushes());
             resourceInjector.InjectBrush(DividerBrushes());
             resourceInjector.InjectBrush(ExpandIndicator());
-            resourceInjector.InjectBrush(ModSettingsItemBrush());
+            resourceInjector.InjectBrush(ModSettingsBrush());
             resourceInjector.InjectBrush(ResetButtonBrush());
             resourceInjector.InjectBrush(SettingsValueDisplayBrush());
             resourceInjector.InjectBrush(TextBrushes());

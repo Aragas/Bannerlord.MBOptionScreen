@@ -9,12 +9,10 @@ namespace MBOptionScreen.Settings.Wrapper
     /// </summary>
     internal class ProxyPropertyInfo : PropertyInfo
     {
-        private readonly object _proxiedObject;
         private readonly PropertyInfo _propertyInfoImplementation;
 
-        public ProxyPropertyInfo(object proxiedObject, PropertyInfo actualPropertyInfo)
+        public ProxyPropertyInfo(PropertyInfo actualPropertyInfo)
         {
-            _proxiedObject = proxiedObject;
             _propertyInfoImplementation = actualPropertyInfo;
         }
 
@@ -30,12 +28,15 @@ namespace MBOptionScreen.Settings.Wrapper
 
         public override object GetValue(object obj, BindingFlags invokeAttr, Binder binder, object[] index, CultureInfo culture)
         {
-            return _propertyInfoImplementation.GetValue(_proxiedObject, invokeAttr, binder, index, culture);
+            if (obj is SettingsWrapper settingsWrapper)
+                return _propertyInfoImplementation.GetValue(settingsWrapper._object, invokeAttr, binder, index, culture);
+            return null;
         }
 
         public override void SetValue(object obj, object value, BindingFlags invokeAttr, Binder binder, object[] index, CultureInfo culture)
         {
-            _propertyInfoImplementation.SetValue(_proxiedObject, value, invokeAttr, binder, index, culture);
+            if (obj is SettingsWrapper settingsWrapper)
+                _propertyInfoImplementation.SetValue(settingsWrapper._object, value, invokeAttr, binder, index, culture);
         }
 
         public override MethodInfo[] GetAccessors(bool nonPublic)

@@ -6,20 +6,18 @@ using MBOptionScreen.Settings;
 using System;
 using System.Linq;
 using System.Reflection;
+
 using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Engine.Screens;
-using TaleWorlds.GauntletUI;
 using TaleWorlds.Library;
 
 namespace MBOptionScreen.GUI.v1a.ViewModels
 {
-    // <Standard.DropdownWithHorizontalControl Id="StringOption" VerticalAlignment="Center" IsVisible="false" Parameter.SelectorDataSource="{Selector}" />
-    // ListPanel
     public class SettingPropertyVM : ViewModel
     {
         private SelectorVM<SelectorItemVM> _selector;
 
-        protected ModSettingsScreenVM MainView => ModSettingsView.MainView;
+        protected ModOptionsScreenVM MainView => ModSettingsView.MainView;
         protected ModSettingsVM ModSettingsView { get; }
         public UndoRedoStack URS => ModSettingsView.URS;
 
@@ -30,7 +28,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         public SettingsBase SettingsInstance => SettingPropertyDefinition.SettingsInstance;
         public SettingType SettingType => SettingPropertyDefinition.SettingType;
         public SettingPropertyGroupVM Group { get; set; }
-        public string HintText { get; private set; }
+        public string HintText { get; }
         public bool SatisfiesSearch
         {
             get
@@ -164,15 +162,15 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             ModSettingsView = modSettingsView;
             SettingPropertyDefinition = definition;
 
+            if (!string.IsNullOrWhiteSpace(SettingAttribute.HintText))
+                HintText = $"{Name}: {SettingAttribute.HintText}";
+
             RefreshValues();
         }
 
         public override void RefreshValues()
         {
             base.RefreshValues();
-
-            if (!string.IsNullOrWhiteSpace(SettingAttribute.HintText))
-                HintText = $"{Name}: {SettingAttribute.HintText}";
 
             switch (SettingType)
             {
@@ -203,7 +201,6 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
                     OnPropertyChanged(nameof(DropdownValue));
                     break;
             }
-            OnPropertyChanged(nameof(ValueString));
         }
 
         public void OnHover()

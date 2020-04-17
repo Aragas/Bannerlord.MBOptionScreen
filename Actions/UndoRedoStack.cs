@@ -3,7 +3,7 @@ using MBOptionScreen.Interfaces;
 
 using System.Collections.Generic;
 
-namespace MBOptionScreen
+namespace MBOptionScreen.Actions
 {
     public class UndoRedoStack
     {

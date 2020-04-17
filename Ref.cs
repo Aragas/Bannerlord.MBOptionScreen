@@ -1,7 +1,8 @@
-﻿using System;
+﻿using MBOptionScreen.Attributes;
+using System;
 using System.Reflection;
 
-namespace MBOptionScreen
+namespace MBOptionScreen.Actions
 {
     public class Ref
     {

@@ -1,6 +1,7 @@
 ﻿using MBOptionScreen.Attributes;
 using MBOptionScreen.Interfaces;
 using MBOptionScreen.Settings.Wrapper;
+
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -35,14 +36,7 @@ namespace MBOptionScreen.Settings
         private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings()
         {
             Formatting = Formatting.Indented,
-            ContractResolver = new IgnorePropertiesResolver(new string[]
-            {
-                "ID", "Id",
-                "ModuleFolderName",
-                "ModName",
-                "SubFolder",
-                "SubGroupDelimiter",
-            })
+            ContractResolver = new IgnorePropertiesResolver()
 
         };
         private Dictionary<string, SettingsBase> LoadedSettings { get; } = new Dictionary<string, SettingsBase>();
@@ -129,15 +123,10 @@ namespace MBOptionScreen.Settings
 
         public class IgnorePropertiesResolver : DefaultContractResolver
         {
-            private readonly IEnumerable<string> _propsToIgnore;
-            public IgnorePropertiesResolver(IEnumerable<string> propNamesToIgnore)
-            {
-                _propsToIgnore = propNamesToIgnore;
-            }
             protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
             {
                 var property = base.CreateProperty(member, memberSerialization);
-                property.ShouldSerialize = x => !_propsToIgnore.Contains(property.PropertyName);
+                property.ShouldSerialize = x => property.AttributeProvider.GetAttributes(true).Any(a => a.GetType() == typeof(SettingPropertyAttribute));
                 return property;
             }
         }

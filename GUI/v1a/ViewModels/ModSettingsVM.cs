@@ -1,6 +1,8 @@
-﻿using MBOptionScreen.Settings;
+﻿using MBOptionScreen.Actions;
+using MBOptionScreen.Settings;
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using TaleWorlds.Library;
@@ -10,10 +12,11 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
     public class ModSettingsVM : ViewModel
     {
         private bool _isSelected;
+        private readonly Dictionary<SettingPropertyDefinition, object> _initialValues = new Dictionary<SettingPropertyDefinition, object>();
         private Action<ModSettingsVM> _executeSelect;
         private MBBindingList<SettingPropertyGroupVM> _settingPropertyGroups;
 
-        public ModSettingsScreenVM MainView { get; }
+        public ModOptionsScreenVM MainView { get; }
         public UndoRedoStack URS { get; } = new UndoRedoStack();
 
         public ModSettingsDefinition ModSettingsDefinition { get; }
@@ -50,7 +53,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             }
         }
 
-        public ModSettingsVM(ModSettingsDefinition definition, ModSettingsScreenVM mainView)
+        public ModSettingsVM(ModSettingsDefinition definition, ModOptionsScreenVM mainView)
         {
             ModSettingsDefinition = definition;
             MainView = mainView;
@@ -61,6 +64,11 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
                 SettingPropertyGroups.Add(settingPropertyGroup);
             }
             SettingPropertyGroups.Sort();
+
+            var properties = SettingPropertyGroups.SelectMany(GetAllSettingPropertyDefinitions)
+                .Where(p => p.SettingAttribute.RequireRestart);
+            var initialSettings = SettingsInstance;
+            _initialValues = properties.ToDictionary(p => p, p => p.Property.GetValue(initialSettings));
 
             RefreshValues();
         }
@@ -84,6 +92,30 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         private void ExecuteSelect()
         {
             _executeSelect?.Invoke(this);
+        }
+
+        public bool RestartRequired()
+        {
+            var properties = SettingPropertyGroups.SelectMany(GetAllSettingPropertyDefinitions)
+                .Where(p => p.SettingAttribute.RequireRestart);
+
+            var lastSettings = SettingsInstance;
+            var lastValues = properties.ToDictionary(p => p, p => p.Property.GetValue(lastSettings));
+
+            var diff1 = lastValues.Except(_initialValues);
+            var diff2 = _initialValues.Except(lastValues);
+            return diff1.Concat(diff2).Any();
+        }
+        private static IEnumerable<SettingPropertyDefinition> GetAllSettingPropertyDefinitions(SettingPropertyGroupVM settingPropertyGroup1)
+        {
+            foreach (var settingProperty in settingPropertyGroup1.SettingProperties)
+                yield return settingProperty.SettingPropertyDefinition;
+
+            foreach (var settingPropertyGroup in settingPropertyGroup1.SettingPropertyGroups)
+                foreach (var settingProperty in GetAllSettingPropertyDefinitions(settingPropertyGroup))
+                {
+                    yield return settingProperty;
+                }
         }
     }
 }

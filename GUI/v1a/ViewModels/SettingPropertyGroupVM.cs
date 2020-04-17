@@ -1,4 +1,5 @@
-﻿using MBOptionScreen.Attributes;
+﻿using MBOptionScreen.Actions;
+using MBOptionScreen.Attributes;
 using MBOptionScreen.Settings;
 
 using System;
@@ -11,7 +12,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
     public class SettingPropertyGroupVM : ViewModel, IComparable<SettingPropertyGroupVM>
     {
         private bool _isExpanded = true;
-        protected ModSettingsScreenVM MainView => ModSettingsView.MainView;
+        protected ModOptionsScreenVM MainView => ModSettingsView.MainView;
         protected ModSettingsVM ModSettingsView { get; }
         public UndoRedoStack URS => ModSettingsView.URS;
 

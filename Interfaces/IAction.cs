@@ -1,4 +1,6 @@
-﻿namespace MBOptionScreen.Interfaces
+﻿using MBOptionScreen.Actions;
+
+namespace MBOptionScreen.Interfaces
 {
     public interface IAction
     {

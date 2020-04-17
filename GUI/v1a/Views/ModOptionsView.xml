@@ -6,7 +6,7 @@
 
   </Constants>
   <Window>
-    <Widget Id="ModOptionsScreen_v1a" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
+    <Widget Id="ModOptionsView_v1a" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
       <Children>
 
         <Standard.Background/>
@@ -47,7 +47,7 @@
                             <ListPanel Id="ModList" DataSource="{ModSettingsList}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren"
                                        HorizontalAlightment="Left" LayoutImp.LayoutMethod="VerticalTopToBottom">
                               <ItemTemplate>
-                                <ModSettingsItem_v1a />
+                                <ModSettingsView_v1a />
                               </ItemTemplate>
                             </ListPanel>
 

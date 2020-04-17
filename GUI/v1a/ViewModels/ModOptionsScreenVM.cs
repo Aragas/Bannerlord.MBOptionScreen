@@ -1,7 +1,7 @@
 ﻿using MBOptionScreen.Actions;
 using MBOptionScreen.ExtensionMethods;
 using MBOptionScreen.Settings;
-
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -13,7 +13,7 @@ using TaleWorlds.Localization;
 
 namespace MBOptionScreen.GUI.v1a.ViewModels
 {
-    public class ModSettingsScreenVM : ViewModel
+    public class ModOptionsScreenVM : ViewModel
     {
         private string _titleLabel;
         private string _cancelButtonText;
@@ -121,7 +121,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             }
         }
 
-        public ModSettingsScreenVM()
+        public ModOptionsScreenVM()
         {
             TitleLabel = "Mod Options";
             DoneButtonText = new TextObject("{=WiNRdfsm}Done", null).ToString();
@@ -179,12 +179,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
 
             var changedModSettings = ModSettingsList.Where(x => x.URS.ChangesMade()).ToList();
 
-            // TODO: Make it use URS
-            var requireRestart = changedModSettings
-                .SelectMany(x => x.SettingPropertyGroups)
-                .SelectMany(GetAllSettingPropertyDefinitions)
-                .Any(x => x.SettingAttribute.RequireRestart);
-
+            var requireRestart = changedModSettings.Any(x => x.RestartRequired());
             if (requireRestart)
             {
                 InformationManager.ShowInquiry(new InquiryData("Game Needs to Restart",
@@ -209,18 +204,6 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             }
         }
 
-        private static IEnumerable<SettingPropertyDefinition> GetAllSettingPropertyDefinitions(SettingPropertyGroupVM settingPropertyGroup1)
-        {
-            foreach (var settingProperty in settingPropertyGroup1.SettingProperties)
-                yield return settingProperty.SettingPropertyDefinition;
-
-            foreach (var settingPropertyGroup in settingPropertyGroup1.SettingPropertyGroups)
-            foreach (var settingProperty in GetAllSettingPropertyDefinitions(settingPropertyGroup))
-            {
-                yield return settingProperty;
-            }
-        }
-
         private void ExecuteRevert()
         {
             if (SelectedMod != null)
@@ -230,24 +213,24 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
                     true, true, "Yes", "No",
                     () =>
                     {
-                        SelectedMod.URS.Do(new ComplexAction<(ModSettingsVM VM, SettingsBase SettingsInstance)>((SelectedMod, SelectedMod.SettingsInstance),
-                            tuple =>
+                        SelectedMod.URS.Do(new ComplexAction<ModSettingsVM>(SelectedMod,
+                            modSettingsVM =>
                             {
                                 //Do action
-                                var newSettingsInstance = SettingsDatabase.ResetSettings(tuple.SettingsInstance.Id);
-                                tuple.VM.RefreshValues();
+                                var newSettingsInstance = SettingsDatabase.ResetSettings(modSettingsVM.SettingsInstance.Id);
+                                modSettingsVM.RefreshValues();
                                 ExecuteSelect(null);
-                                ExecuteSelect(tuple.VM);
+                                ExecuteSelect(modSettingsVM);
                             },
-                            tuple =>
+                            modSettingsVM =>
                             {
                                 //Undo action
-                                SettingsDatabase.OverrideSettings(tuple.SettingsInstance);
-                                tuple.VM.RefreshValues();
-                                if (SelectedMod == tuple.VM)
+                                SettingsDatabase.OverrideSettings(modSettingsVM.SettingsInstance);
+                                modSettingsVM.RefreshValues();
+                                if (SelectedMod == modSettingsVM)
                                 {
                                     ExecuteSelect(null);
-                                    ExecuteSelect(tuple.VM);
+                                    ExecuteSelect(modSettingsVM);
                                 }
                             }));
 

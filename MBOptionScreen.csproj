@@ -14,7 +14,7 @@
     <PackageId>Bannerlord.MBOptionScreen</PackageId>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Version>1.1.7</Version>
+    <Version>1.1.8</Version>
     <PackageProjectUrl>https://github.com/Aragas/Bannerlord.MBOptionScreen</PackageProjectUrl>
     <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/Aragas/Bannerlord.MBOptionScreen</RepositoryUrl>
@@ -60,14 +60,14 @@
     <EmbeddedResource Include="GUI\v1a\Brushes\ButtonBrushes.xml" />
     <EmbeddedResource Include="GUI\v1a\Brushes\DividerBrushes.xml" />
     <EmbeddedResource Include="GUI\v1a\Brushes\ExpandIndicator.xml" />
-    <EmbeddedResource Include="GUI\v1a\Brushes\ModSettingsItemBrush.xml" />
+    <EmbeddedResource Include="GUI\v1a\Brushes\ModSettingsBrush.xml" />
     <EmbeddedResource Include="GUI\v1a\Brushes\ResetButtonBrush.xml" />
     <EmbeddedResource Include="GUI\v1a\Brushes\SettingsValueDisplayBrush.xml" />
     <EmbeddedResource Include="GUI\v1a\Brushes\TextBrushes.xml" />
 
     <EmbeddedResource Include="GUI\v1a\Views\EditValueView.xml" />
-    <EmbeddedResource Include="GUI\v1a\Views\ModOptionsScreen.xml" />
-    <EmbeddedResource Include="GUI\v1a\Views\ModSettingsItem.xml" />
+    <EmbeddedResource Include="GUI\v1a\Views\ModOptionsView.xml" />
+    <EmbeddedResource Include="GUI\v1a\Views\ModSettingsView.xml" />
     <EmbeddedResource Include="GUI\v1a\Views\SettingPropertyGroupView.xml" />
     <EmbeddedResource Include="GUI\v1a\Views\SettingPropertyView.xml" />
     <EmbeddedResource Include="GUI\v1a\Views\SettingsView.xml" />
