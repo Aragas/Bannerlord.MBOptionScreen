@@ -112,8 +112,9 @@ namespace MBOptionScreen.Settings
             if (!LoadedSettings.ContainsKey(id))
                 return null;
 
+            // TODO:
             var defaultSettingsInstance = LoadedSettings[id] is SettingsWrapper wrapperSettings
-                ? new SettingsWrapper(Activator.CreateInstance(wrapperSettings._object.GetType())) 
+                ? new AttributeSettingsWrapper(Activator.CreateInstance(wrapperSettings._object.GetType())) 
                 : (SettingsBase) Activator.CreateInstance(LoadedSettings[id].GetType());
             LoadedSettings[id] = defaultSettingsInstance;
             SaveSettings(defaultSettingsInstance);

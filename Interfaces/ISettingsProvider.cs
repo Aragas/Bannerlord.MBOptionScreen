@@ -12,6 +12,6 @@ namespace MBOptionScreen.Interfaces
         SettingsBase? GetSettings(string uniqueId);
         void SaveSettings(SettingsBase settingsInstance);
         bool OverrideSettings(SettingsBase settings);
-        SettingsBase ResetSettings(string id);
+        SettingsBase? ResetSettings(string id);
     }
 }

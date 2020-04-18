@@ -48,7 +48,7 @@ namespace MBOptionScreen.Settings.Wrapper
             return propInfo?.GetValue(@object) as string;
         }
 
-
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Redundancy", "CS0618")]
         public SettingPropertyAttributeWrapper(object @object) : base(
             GetDisplayName(@object) ?? "ERROR",
             GetDefaultStringValue(@object) ?? "",
@@ -57,8 +57,6 @@ namespace MBOptionScreen.Settings.Wrapper
             GetEditableMinValue(@object) ?? 0f,
             GetEditableMaxValue(@object) ?? 0f,
             GetRequireRestart(@object) ?? true,
-            GetHintText(@object) ?? "")
-        {
-        }
+            GetHintText(@object) ?? "") { }
     }
 }

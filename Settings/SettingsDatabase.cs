@@ -1,23 +1,60 @@
 ﻿using MBOptionScreen.Interfaces;
+using MBOptionScreen.Settings.Wrapper;
 
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MBOptionScreen.Settings
 {
     internal static class SettingsDatabase
     {
-        private static ISettingsProvider SettingsStorage => MBOptionScreenSubModule.SharedStateObject.SettingsStorage;
+        private static ISettingsProvider ModLibSettingsProvider = new ModLibSettingsProviderWrapper();
+        private static ISettingsProvider SettingsProvider => MBOptionScreenSubModule.SharedStateObject.SettingsStorage;
 
-        public static List<ModSettingsDefinition> CreateModSettingsDefinitions => SettingsStorage.CreateModSettingsDefinitions;
+        public static List<ModSettingsDefinition> CreateModSettingsDefinitions
+        {
+            get
+            {
+                return SettingsProvider.CreateModSettingsDefinitions
+                    .Concat(ModLibSettingsProvider.CreateModSettingsDefinitions)
+                    .ToList();
+            }
+        }
 
-        public static bool RegisterSettings(SettingsBase settingsClass) => SettingsStorage.RegisterSettings(settingsClass);
+        public static bool RegisterSettings(SettingsBase settings)
+        {
+            if (settings is ModLibSettingsWrapper modLibSettings)
+                return ModLibSettingsProvider.RegisterSettings(modLibSettings);
 
-        public static SettingsBase? GetSettings(string uniqueId) => SettingsStorage.GetSettings(uniqueId);
+            return SettingsProvider.RegisterSettings(settings);
+        }
 
-        public static void SaveSettings(SettingsBase settingsInstance) => SettingsStorage.SaveSettings(settingsInstance);
+        public static SettingsBase? GetSettings(string id)
+        {
+            return SettingsProvider.GetSettings(id)
+                ?? ModLibSettingsProvider.GetSettings(id);
+        }
 
-        public static bool OverrideSettings(SettingsBase settings) => SettingsStorage.OverrideSettings(settings);
+        public static void SaveSettings(SettingsBase settings)
+        {
+            if (settings is ModLibSettingsWrapper modLibSettings)
+                ModLibSettingsProvider.SaveSettings(modLibSettings);
 
-        public static SettingsBase ResetSettings(string id) => SettingsStorage.ResetSettings(id);
+            SettingsProvider.SaveSettings(settings);
+        }
+
+        public static bool OverrideSettings(SettingsBase settings)
+        {
+            if (settings is ModLibSettingsWrapper modLibSettings)
+                return ModLibSettingsProvider.OverrideSettings(modLibSettings);
+
+            return SettingsProvider.OverrideSettings(settings);
+        }
+
+        public static SettingsBase ResetSettings(string id)
+        {
+            return SettingsProvider.ResetSettings(id)
+                ?? ModLibSettingsProvider.ResetSettings(id);
+        }
     }
 }

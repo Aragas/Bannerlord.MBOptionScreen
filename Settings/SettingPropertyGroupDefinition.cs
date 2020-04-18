@@ -1,6 +1,4 @@
-﻿using MBOptionScreen.Attributes;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MBOptionScreen.Settings
 {
@@ -8,15 +6,15 @@ namespace MBOptionScreen.Settings
     {
         public const string DefaultGroupName = "Misc";
 
-        public SettingPropertyGroupAttribute Attribute { get; set; /* Check set */ }
-        public string GroupName => string.IsNullOrWhiteSpace(GroupNameOverride) ? Attribute.GroupName : GroupNameOverride;
+        public string GroupName { get; }
         public string GroupNameOverride { get; }
+        public string DisplayGroupName => string.IsNullOrWhiteSpace(GroupNameOverride) ? GroupName : GroupNameOverride;
         public List<SettingPropertyGroupDefinition> SubGroups { get; } = new List<SettingPropertyGroupDefinition>();
         public List<SettingPropertyDefinition> SettingProperties { get; } = new List<SettingPropertyDefinition>();
 
-        public SettingPropertyGroupDefinition(SettingPropertyGroupAttribute attribute, string groupNameOverride = "")
+        public SettingPropertyGroupDefinition(string groupName, string groupNameOverride = "")
         {
-            Attribute = attribute;
+            GroupName = groupName;
             GroupNameOverride = groupNameOverride;
         }
 

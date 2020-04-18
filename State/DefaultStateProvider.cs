@@ -25,7 +25,7 @@ namespace MBOptionScreen.State
     [StateProviderVersion("e1.0.10", 1)]
     [StateProviderVersion("e1.0.11", 1)]
     [StateProviderVersion("e1.1.0",  1)]
-    public class DefaultStateProvider : IStateProvider
+    internal class DefaultStateProvider : IStateProvider
     {
         private static FieldInfo InitialStateOptionsField { get; } =
             typeof(Module).GetField("_initialStateOptions", BindingFlags.Instance | BindingFlags.NonPublic);

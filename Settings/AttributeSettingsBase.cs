@@ -1,9 +1,4 @@
-﻿using MBOptionScreen.Attributes;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
+﻿using System.Collections.Generic;
 
 namespace MBOptionScreen.Settings
 {
@@ -15,15 +10,8 @@ namespace MBOptionScreen.Settings
         {
             var groups = new List<SettingPropertyGroupDefinition>();
 
-            var propList = (from p in GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-                let propAttr = p.GetCustomAttribute<SettingPropertyAttribute>(true)
-                let groupAttr = p.GetCustomAttribute<SettingPropertyGroupAttribute>(true)
-                where propAttr != null
-                let groupAttrToAdd = groupAttr ?? SettingPropertyGroupAttribute.Default
-                select new SettingPropertyDefinition(propAttr, groupAttrToAdd, p, Id)).ToList();
-
             //Loop through each property
-            foreach (var settingProp in propList)
+            foreach (var settingProp in Utils.GetProperties(this, Id))
             {
                 //First check that the setting property is set up properly.
                 CheckIsValid(settingProp);
@@ -39,6 +27,7 @@ namespace MBOptionScreen.Settings
             else
                 miscGroup = null;
 
+            groups.Sort(new AlphanumComparatorFast());
             if (miscGroup != null)
                 groups.Add(miscGroup);
 

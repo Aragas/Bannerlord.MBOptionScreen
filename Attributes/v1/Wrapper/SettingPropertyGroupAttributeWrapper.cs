@@ -1,4 +1,5 @@
 ﻿using MBOptionScreen.Attributes;
+
 using System.Reflection;
 
 namespace MBOptionScreen.Settings.Wrapper
@@ -21,8 +22,6 @@ namespace MBOptionScreen.Settings.Wrapper
 
         public SettingPropertyGroupAttributeWrapper(object @object) : base(
             GetGroupName(@object) ?? "ERROR",
-            GetIsMainToggle(@object) ?? false)
-        {
-        }
+            GetIsMainToggle(@object) ?? false) { }
     }
 }

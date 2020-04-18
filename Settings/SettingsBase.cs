@@ -16,8 +16,11 @@ namespace MBOptionScreen.Settings
                 if (_instance != null)
                     return _instance;
 
-                _instance = SettingsDatabase.GetSettings(new T().Id) as T;
-                return _instance;
+                var settings = SettingsDatabase.GetSettings(new T().Id);
+                //if (settings is AttributeSettingsWrapper settingsWrapper)
+                //    return _instance = settingsWrapper._object as T;
+
+                return _instance = settings as T;
             }
         }
     }
@@ -36,20 +39,16 @@ namespace MBOptionScreen.Settings
 
         protected SettingPropertyGroupDefinition GetGroupFor(SettingPropertyDefinition sp, ICollection<SettingPropertyGroupDefinition> groupsList)
         {
-            //If the setting somehow doesn't have a group attribute, throw an error.
-            if (sp.GroupAttribute == null)
-                throw new Exception($"SettingProperty {sp.Name} has null GroupAttribute");
-
-            SettingPropertyGroupDefinition? group = null;
+            SettingPropertyGroupDefinition? group;
             //Check if the intended group is a sub group
-            if (sp.GroupAttribute.GroupName.Contains(SubGroupDelimiter))
+            if (sp.GroupName.Contains(SubGroupDelimiter))
             {
                 //Intended group is a sub group. Must find it. First get the top group.
-                var topGroupName = GetTopGroupName(sp.GroupAttribute.GroupName, out var truncatedGroupName);
+                var topGroupName = GetTopGroupName(sp.GroupName, out var truncatedGroupName);
                 var topGroup = groupsList.GetGroup(topGroupName);
                 if (topGroup == null)
                 {
-                    topGroup = new SettingPropertyGroupDefinition(sp.GroupAttribute, topGroupName);
+                    topGroup = new SettingPropertyGroupDefinition(sp.GroupName, topGroupName);
                     groupsList.Add(topGroup);
                 }
                 //Find the sub group
@@ -58,10 +57,10 @@ namespace MBOptionScreen.Settings
             else
             {
                 //Group is not a subgroup, can find it in the main list of groups.
-                group = groupsList.GetGroup(sp.GroupAttribute.GroupName);
+                group = groupsList.GetGroup(sp.GroupName);
                 if (group == null)
                 {
-                    group = new SettingPropertyGroupDefinition(sp.GroupAttribute);
+                    group = new SettingPropertyGroupDefinition(sp.GroupName);
                     groupsList.Add(group);
                 }
             }
@@ -82,7 +81,7 @@ namespace MBOptionScreen.Settings
                 var topGroup = GetGroupFor(topGroupName, groupsList);
                 if (topGroup == null)
                 {
-                    topGroup = new SettingPropertyGroupDefinition(sp.GroupAttribute, topGroupName);
+                    topGroup = new SettingPropertyGroupDefinition(sp.GroupName, topGroupName);
                     groupsList.Add(topGroup);
                 }
                 return GetGroupForRecursive(truncatedGroupName, topGroup.SubGroups, sp);
@@ -93,7 +92,7 @@ namespace MBOptionScreen.Settings
                 var group = groupsList.GetGroup(groupName);
                 if (group == null)
                 {
-                    group = new SettingPropertyGroupDefinition(sp.GroupAttribute, groupName);
+                    group = new SettingPropertyGroupDefinition(sp.GroupName, groupName);
                     groupsList.Add(group);
                 }
                 return group;
@@ -120,7 +119,7 @@ namespace MBOptionScreen.Settings
             {
                 if (prop.MinValue == prop.MaxValue)
                     throw new Exception($"Property {prop.Property.Name} in {prop.SettingsInstance.GetType().FullName} is a numeric type but the MinValue and MaxValue are the same.");
-                if (prop.GroupAttribute != null && prop.GroupAttribute.IsMainToggle)
+                if (prop.IsMainToggle)
                     throw new Exception($"Property {prop.Property.Name} in {prop.SettingsInstance.GetType().FullName} is marked as the main toggle for the group but is a numeric type. The main toggle must be a boolean type.");
             }
         }

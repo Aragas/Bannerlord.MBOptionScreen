@@ -1,5 +1,4 @@
 ﻿using MBOptionScreen.Actions;
-using MBOptionScreen.Attributes;
 using MBOptionScreen.Settings;
 
 using System;
@@ -17,12 +16,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         public UndoRedoStack URS => ModSettingsView.URS;
 
         public SettingPropertyGroupDefinition SettingPropertyGroupDefinition { get; }
-        public string GroupName => SettingPropertyGroupDefinition.GroupName;
-        public SettingPropertyGroupAttribute Attribute
-        {
-            get => SettingPropertyGroupDefinition.Attribute;
-            set => SettingPropertyGroupDefinition.Attribute = value;
-        }
+        public string GroupName => SettingPropertyGroupDefinition.DisplayGroupName;
         public SettingPropertyGroupVM ParentGroup { get; set; } = null;
         public SettingPropertyVM GroupToggleSettingProperty { get; private set; } = null;
         public string HintText
@@ -54,14 +48,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         }
 
         [DataSourceProperty]
-        public string GroupNameDisplay
-        {
-            get
-            {
-                var addition = GroupToggle ? "" : "(Disabled)";
-                return $"{GroupName} {addition}";
-            }
-        }
+        public string GroupNameDisplay => GroupToggle ? GroupName : $"{GroupName} (Disabled)";
         [DataSourceProperty]
         public MBBindingList<SettingPropertyVM> SettingProperties { get; } = new MBBindingList<SettingPropertyVM>();
         [DataSourceProperty]
@@ -167,12 +154,12 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             SettingProperties.Add(sp);
             sp.Group = this;
 
-            if (sp.GroupAttribute.IsMainToggle)
+            if (sp.SettingPropertyDefinition.IsMainToggle)
             {
                 if (HasGroupToggle)
                     throw new Exception($"Tried to add a group toggle to Setting Property Group {GroupName} but it already has a group toggle: {GroupToggleSettingProperty.Name}. A Setting Property Group can only have one group toggle.");
 
-                Attribute = sp.GroupAttribute;
+                //Attribute = sp.SettingPropertyDefinition;
                 GroupToggleSettingProperty = sp;
             }
         }

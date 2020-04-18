@@ -9,7 +9,7 @@ namespace MBOptionScreen.Attributes
         public ApplicationVersion GameVersion { get; }
         public int ImplementationVersion { get; }
 
-        public BaseVersionAttribute(string gameVersion, int implementationVersion)
+        protected BaseVersionAttribute(string gameVersion, int implementationVersion)
         {
             GameVersion = ApplicationVersionParser.TryParse(gameVersion, out var v) ? v : default;
             ImplementationVersion = implementationVersion;

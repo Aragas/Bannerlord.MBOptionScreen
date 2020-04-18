@@ -1,8 +1,4 @@
-﻿using MBOptionScreen.Attributes;
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Reflection;
 
 namespace MBOptionScreen.Settings.Wrapper
@@ -11,16 +7,14 @@ namespace MBOptionScreen.Settings.Wrapper
     /// It is unsafe to cast an instance of SettingsBase to out SettingsBase, so use a wrapper
     /// </summary>
     /// <typeparam name="T"></typeparam>
-    internal class SettingsWrapper : SettingsBase
+    internal class AttributeSettingsWrapper : SettingsWrapper
     {
-        internal readonly object _object;
         private PropertyInfo IdProperty { get; }
         private PropertyInfo ModuleFolderNameProperty { get; }
         private PropertyInfo ModNameProperty { get; }
         private PropertyInfo UIVersionProperty { get; }
         private PropertyInfo SubFolderProperty { get; }
         private PropertyInfo SubGroupDelimiterProperty { get; }
-
 
         public override string Id { get => (string) IdProperty.GetValue(_object); set => IdProperty.SetValue(_object, value); }
         public override string ModuleFolderName => (string) ModuleFolderNameProperty.GetValue(_object);
@@ -29,9 +23,8 @@ namespace MBOptionScreen.Settings.Wrapper
         public override string SubFolder => SubFolderProperty?.GetValue(_object) as string ?? "";
         protected override char SubGroupDelimiter => SubGroupDelimiterProperty?.GetValue(_object) as char? ?? '/';
 
-        public SettingsWrapper(object @object)
+        public AttributeSettingsWrapper(object @object) : base(@object)
         {
-            _object = @object;
             var type = @object.GetType();
             IdProperty = type.GetProperty("Id", BindingFlags.Instance | BindingFlags.Public) ??
                          type.GetProperty("ID", BindingFlags.Instance | BindingFlags.Public);
@@ -46,18 +39,8 @@ namespace MBOptionScreen.Settings.Wrapper
         {
             var groups = new List<SettingPropertyGroupDefinition>();
 
-            var propList = from propertyInfo in _object.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-                let propAttr = propertyInfo.GetCustomAttributes().FirstOrDefault(a => a.GetType().FullName == "ModLib.Attributes.SettingPropertyAttribute")
-                where propAttr != null
-                let groupAttr = propertyInfo.GetCustomAttributes().FirstOrDefault(a => a.GetType().FullName == "ModLib.Attributes.SettingPropertyGroupAttribute")
-                let pAttr = new SettingPropertyAttributeWrapper(propAttr)
-                let gAttr = groupAttr != null
-                    ? (SettingPropertyGroupAttribute) new SettingPropertyGroupAttributeWrapper(groupAttr)
-                    : SettingPropertyGroupAttribute.Default
-                select new SettingPropertyDefinition(pAttr, gAttr, new ProxyPropertyInfo(propertyInfo), Id);
-
             //Loop through each property
-            foreach (var settingProp in propList)
+            foreach (var settingProp in Utils.GetProperties(_object, Id))
             {
                 //First check that the setting property is set up properly.
                 CheckIsValid(settingProp);
@@ -74,7 +57,7 @@ namespace MBOptionScreen.Settings.Wrapper
                 miscGroup = null;
 
             //Sort the list of groups alphabetically.
-            groups.Sort((x, y) => string.Compare(x.GroupName, y.GroupName, StringComparison.Ordinal));
+            groups.Sort(new AlphanumComparatorFast());
             if (miscGroup != null)
                 groups.Add(miscGroup);
 

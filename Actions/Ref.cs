@@ -1,5 +1,4 @@
-﻿using MBOptionScreen.Attributes;
-using System;
+﻿using System;
 using System.Reflection;
 
 namespace MBOptionScreen.Actions

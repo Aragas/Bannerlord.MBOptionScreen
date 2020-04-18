@@ -30,13 +30,16 @@ namespace MBOptionScreen.Settings.Wrapper
         {
             if (obj is SettingsWrapper settingsWrapper)
                 return _propertyInfoImplementation.GetValue(settingsWrapper._object, invokeAttr, binder, index, culture);
-            return null;
+            else
+                return _propertyInfoImplementation.GetValue(obj, invokeAttr, binder, index, culture);
         }
 
         public override void SetValue(object obj, object value, BindingFlags invokeAttr, Binder binder, object[] index, CultureInfo culture)
         {
             if (obj is SettingsWrapper settingsWrapper)
                 _propertyInfoImplementation.SetValue(settingsWrapper._object, value, invokeAttr, binder, index, culture);
+            else
+                _propertyInfoImplementation.SetValue(obj, value, invokeAttr, binder, index, culture);
         }
 
         public override MethodInfo[] GetAccessors(bool nonPublic)

@@ -1,7 +1,6 @@
 ﻿using MBOptionScreen.Attributes;
 using MBOptionScreen.GUI.v1a.ViewModels;
-using System.Collections.Generic;
-using System.Reflection;
+
 using TaleWorlds.Engine.GauntletUI;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.GauntletUI.Data;
@@ -10,7 +9,6 @@ using TaleWorlds.Library;
 
 namespace MBOptionScreen.GUI.v1a.GauntletUI
 {
-
     [ModuleOptionVersion("e1.0.0",  2)]
     [ModuleOptionVersion("e1.0.1",  2)]
     [ModuleOptionVersion("e1.0.2",  2)]

@@ -66,7 +66,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             SettingPropertyGroups.Sort();
 
             var properties = SettingPropertyGroups.SelectMany(GetAllSettingPropertyDefinitions)
-                .Where(p => p.SettingAttribute.RequireRestart);
+                .Where(p => p.RequireRestart);
             var initialSettings = SettingsInstance;
             _initialValues = properties.ToDictionary(p => p, p => p.Property.GetValue(initialSettings));
 
@@ -97,7 +97,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         public bool RestartRequired()
         {
             var properties = SettingPropertyGroups.SelectMany(GetAllSettingPropertyDefinitions)
-                .Where(p => p.SettingAttribute.RequireRestart);
+                .Where(p => p.RequireRestart);
 
             var lastSettings = SettingsInstance;
             var lastValues = properties.ToDictionary(p => p, p => p.Property.GetValue(lastSettings));

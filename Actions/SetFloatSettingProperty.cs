@@ -7,7 +7,7 @@ namespace MBOptionScreen.Actions
     {
         private readonly float _originalValue;
 
-        public Ref Context { get; } = null;
+        public Ref Context { get; }
         public object Value { get; }
         private SettingPropertyVM SettingProperty { get; }
 

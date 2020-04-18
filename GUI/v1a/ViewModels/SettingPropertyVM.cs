@@ -1,10 +1,8 @@
 ﻿using MBOptionScreen.Actions;
-using MBOptionScreen.Attributes;
 using MBOptionScreen.GUI.v1a.GauntletUI;
 using MBOptionScreen.Settings;
 
 using System;
-using System.Linq;
 using System.Reflection;
 
 using TaleWorlds.Core.ViewModelCollection;
@@ -22,9 +20,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         public UndoRedoStack URS => ModSettingsView.URS;
 
         public SettingPropertyDefinition SettingPropertyDefinition { get; }
-        public SettingPropertyAttribute SettingAttribute => SettingPropertyDefinition.SettingAttribute;
         public PropertyInfo Property => SettingPropertyDefinition.Property;
-        public SettingPropertyGroupAttribute GroupAttribute => SettingPropertyDefinition.GroupAttribute;
         public SettingsBase SettingsInstance => SettingPropertyDefinition.SettingsInstance;
         public SettingType SettingType => SettingPropertyDefinition.SettingType;
         public SettingPropertyGroupVM Group { get; set; }
@@ -41,7 +37,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         }
 
         [DataSourceProperty]
-        public string Name => SettingAttribute.DisplayName;
+        public string Name => SettingPropertyDefinition.DisplayName;
 
         [DataSourceProperty]
         public bool IsIntVisible => SettingType == SettingType.Int;
@@ -62,7 +58,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         {
             get
             {
-                if (Group != null && GroupAttribute?.IsMainToggle == true)
+                if (Group != null && SettingPropertyDefinition.IsMainToggle == true)
                     return false;
                 else if (Group?.GroupToggle == false)
                     return false;
@@ -140,16 +136,16 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             }
         }
         [DataSourceProperty]
-        public float MaxValue => SettingAttribute.MaxValue;
+        public float MaxValue => SettingPropertyDefinition.MaxValue;
         [DataSourceProperty]
-        public float MinValue => SettingAttribute.MinValue;
+        public float MinValue => SettingPropertyDefinition.MinValue;
         [DataSourceProperty]
         public string? ValueString => SettingType switch
         {
             SettingType.Int => ((int) Property.GetValue(SettingsInstance)).ToString("0"),
             SettingType.Float => ((float) Property.GetValue(SettingsInstance)).ToString("0.00"),
             SettingType.String => (string) Property.GetValue(SettingsInstance),
-            SettingType.Dropdown => DropdownValue.SelectedItem.StringItem,
+            //SettingType.Dropdown => DropdownValue?.SelectedItem?.StringItem ?? "",
             _ => ""
         };
         [DataSourceProperty]
@@ -162,8 +158,8 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             ModSettingsView = modSettingsView;
             SettingPropertyDefinition = definition;
 
-            if (!string.IsNullOrWhiteSpace(SettingAttribute.HintText))
-                HintText = $"{Name}: {SettingAttribute.HintText}";
+            if (!string.IsNullOrWhiteSpace(SettingPropertyDefinition.HintText))
+                HintText = $"{Name}: {SettingPropertyDefinition.HintText}";
 
             RefreshValues();
         }
@@ -171,36 +167,6 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         public override void RefreshValues()
         {
             base.RefreshValues();
-
-            switch (SettingType)
-            {
-                case SettingType.Float:
-                    FloatValue = (float) Property.GetValue(SettingsInstance);
-                    OnPropertyChanged(nameof(FloatValue));
-                    break;
-                case SettingType.Int:
-                    IntValue = (int) Property.GetValue(SettingsInstance);
-                    OnPropertyChanged(nameof(IntValue));
-                    break;
-                case SettingType.Bool:
-                    BoolValue = (bool) Property.GetValue(SettingsInstance);
-                    OnPropertyChanged(nameof(BoolValue));
-                    break;
-                case SettingType.String:
-                    StringValue = (string) Property.GetValue(SettingsInstance);
-                    OnPropertyChanged(nameof(StringValue));
-                    break;
-                case SettingType.Dropdown:
-                    var dropdownValue = (Dropdown<string>) Property.GetValue(SettingsInstance);
-                    DropdownValue = new SelectorVM<SelectorItemVM>(
-                        dropdownValue.GetValues().AsEnumerable(),
-                        dropdownValue.GetSelectedIndex(), value =>
-                        {
-                            dropdownValue.SelectValue(value.SelectedItem.StringItem);
-                        });
-                    OnPropertyChanged(nameof(DropdownValue));
-                    break;
-            }
         }
 
         public void OnHover()

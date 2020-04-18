@@ -89,52 +89,62 @@ namespace MBOptionScreen
                     var screen = (ScreenBase) Activator.CreateInstance(SharedStateObject.ModOptionScreen);
                     ScreenManager.PushScreen(screen);
                 }, false));
+
+
+                SetupSettings();
             }
+        }
+
+        private static void SetupSettings()
+        {
+            var settings = new List<SettingsBase>();
+            var allTypes = AppDomain.CurrentDomain
+                .GetAssemblies()
+                .SelectMany(a => a.GetTypes())
+                .Where(t => t.IsClass && !t.IsAbstract)
+                .Where(t => t.FullName != "MBOptionScreen.Settings.Wrapper.AttributeSettingsWrapper")
+                .Where(t => t.FullName != "MBOptionScreen.Settings.Wrapper.ModLibSettingsWrapper")
+#if !DEBUG
+                .Where(t => t.FullName != "MBOptionScreen.TestSettings")
+#endif
+                .ToList();
+
+            // ModLib
+            var modLibSettings = allTypes
+                .Where(t => Utils.AnyBaseTypeIs(t, "ModLib.SettingsBase"))
+                .Select(obj => new ModLibSettingsWrapper(Activator.CreateInstance(obj)));
+            settings.AddRange(modLibSettings);
+
+            var mbOptionScreenSettings = allTypes
+                .Where(t => Utils.AnyBaseTypeIs(t, "MBOptionScreen.Settings.SettingsBase"));
+            var thisSettings = mbOptionScreenSettings.Where(t => Utils.AnyBaseTypeIs(t, typeof(SettingsBase)))
+                .Select(obj => (SettingsBase) Activator.CreateInstance(obj));
+            settings.AddRange(thisSettings);
+            var externalSettings = mbOptionScreenSettings.Where(t => !Utils.AnyBaseTypeIs(t, typeof(SettingsBase)))
+                .Select(obj => new AttributeSettingsWrapper(Activator.CreateInstance(obj)));
+            settings.AddRange(externalSettings);
+
+            foreach (var setting in settings)
+                SettingsDatabase.RegisterSettings(setting);
         }
 
         private static void EndInitialization()
         {
             if (!SharedStateObject.HasInitialized)
             {
-                var settings = new List<SettingsBase>();
-                var allTypes = AppDomain.CurrentDomain
-                    .GetAssemblies()
-                    .SelectMany(a => a.GetTypes())
-                    .Where(t => t.IsClass && !t.IsAbstract)
-                    .ToList();
-                foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-                {
-                    var type = assembly.GetType("ModLib.SettingsBase") ?? assembly.GetType("MBOptionScreen.Settings.SettingsBase");
-                    if (type == null || type == typeof(SettingsBase))
-                        continue;
-
-                    settings.AddRange(allTypes
-                        .Where(t => t.IsSubclassOf(type))
-                        .Select(obj => new SettingsWrapper(Activator.CreateInstance(obj))));
-                }
-                settings.AddRange(allTypes
-                    .Where(t => t.IsSubclassOf(typeof(SettingsBase)) &&
-                                t != typeof(SettingsWrapper)
-#if !DEBUG
-                                && t != typeof(MBOptionScreenSettings)
-                                && t != typeof(TestSettings)
-#endif
-                                )
-                    .Select(t => (SettingsBase) Activator.CreateInstance(t)));
-                foreach (var setting in settings)
-                    SettingsDatabase.RegisterSettings(setting);
-
-
                 // Mark so if necessary, something can unpatch it
                 new Harmony("bannerlord.mboptionscreen.defaultmapscreeninjection_v1").Patch(
                     original: typeof(MapScreen).GetMethod("GetEscapeMenuItems", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic),
                     postfix: new HarmonyMethod(typeof(MBOptionScreenSubModule).GetMethod("GetEscapeMenuItemsPostfix", BindingFlags.Static | BindingFlags.NonPublic)));
 
-                var oldOptionScreen = Module.CurrentModule.GetInitialStateOptionWithId("ModOptionsMenu");
-                if (oldOptionScreen != null)
+                if (MBOptionScreenSettings.Instance.OverrideModLib)
                 {
-                    var list = (IList)InitialStateOptionsField.GetValue(Module.CurrentModule);
-                    list.Remove(oldOptionScreen);
+                    var oldOptionScreen = Module.CurrentModule.GetInitialStateOptionWithId("ModOptionsMenu");
+                    if (oldOptionScreen != null)
+                    {
+                        var list = (IList)InitialStateOptionsField.GetValue(Module.CurrentModule);
+                        list.Remove(oldOptionScreen);
+                    }
                 }
 
 

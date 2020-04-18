@@ -1,5 +1,4 @@
-﻿using System;
-using MBOptionScreen.Actions;
+﻿using MBOptionScreen.Actions;
 using MBOptionScreen.Settings;
 
 using TaleWorlds.Engine.Screens;
@@ -52,9 +51,9 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         [DataSourceProperty]
         public SettingType SettingType => SettingProperty.SettingType;
         [DataSourceProperty]
-        public float MinValue => SettingProperty.SettingAttribute.EditableMinValue;
+        public float MinValue => SettingProperty.SettingPropertyDefinition.EditableMinValue;
         [DataSourceProperty]
-        public float MaxValue => SettingProperty.SettingAttribute.EditableMaxValue;
+        public float MaxValue => SettingProperty.SettingPropertyDefinition.EditableMaxValue;
 
         public EditValueVM(SettingPropertyVM settingProperty)
         {
@@ -71,7 +70,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
                 case SettingType.Float:
                 {
                     var format = SettingProperty.SettingType == SettingType.Int ? "0" : "0.00";
-                    DescriptionText = $"Edit the value for \"{SettingProperty.Name}\".\nThe minimum value is {SettingProperty.SettingAttribute.EditableMinValue.ToString(format)} and the maximum value is {SettingProperty.SettingAttribute.EditableMaxValue.ToString(format)}.";
+                    DescriptionText = $"Edit the value for \"{SettingProperty.Name}\".\nThe minimum value is {SettingProperty.SettingPropertyDefinition.EditableMinValue.ToString(format)} and the maximum value is {SettingProperty.SettingPropertyDefinition.EditableMaxValue.ToString(format)}.";
                     break;
                 }
                 case SettingType.String:
