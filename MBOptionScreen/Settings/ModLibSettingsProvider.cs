@@ -14,7 +14,6 @@ namespace MBOptionScreen.Settings
     {
         private Dictionary<string, SettingsWrapper> LoadedModLibSettings { get; } = new Dictionary<string, SettingsWrapper>();
         private Type ModLibSettingsDatabase { get; }
-        //private bool BuiltInModLib { get; } = false;
 
         public List<ModSettingsDefinition> CreateModSettingsDefinitions
         {
@@ -35,15 +34,8 @@ namespace MBOptionScreen.Settings
         public ModLibSettingsProviderWrapper()
         {
             ModLibSettingsDatabase = AppDomain.CurrentDomain.GetAssemblies()
-                //.Where(a => a != typeof(ModLib.SettingsDatabase).Assembly)
                 .SelectMany(a => a.GetTypes())
                 .FirstOrDefault(a => a.FullName == "ModLib.SettingsDatabase");
-
-            //if (ModLibSettingsDatabase == null)
-            //{
-            //    ModLibSettingsDatabase = typeof(ModLib.SettingsDatabase);
-            //    BuiltInModLib = true;
-            //}
         }
 
         public SettingsBase? GetSettings(string id)
