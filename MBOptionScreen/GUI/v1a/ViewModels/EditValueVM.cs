@@ -87,7 +87,11 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         {
             base.RefreshValues();
 
-            TextInput = SettingProperty.ValueString ?? "";
+            if(SettingProperty.SettingType == SettingType.Int)
+                TextInput = ((int)SettingProperty.Property.GetValue(SettingProperty.SettingsInstance)).ToString("0") ?? "";
+            else
+                TextInput = ((float)SettingProperty.Property.GetValue(SettingProperty.SettingsInstance)).ToString("0.00") ?? "";
+
             OnPropertyChanged(nameof(SettingType));
         }
 
