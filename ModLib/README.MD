@@ -1,0 +1,2 @@
+﻿Because mods implementing ModLib do not include ModLib, in case of user not installing ModLib, a fallback mechanism should exist that should still emulate ModLibs save/loading behaviour.
+While this is not the best implementation, it should still be sufficient for now.

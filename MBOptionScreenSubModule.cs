@@ -100,6 +100,9 @@ namespace MBOptionScreen
             var settings = new List<SettingsBase>();
             var allTypes = AppDomain.CurrentDomain
                 .GetAssemblies()
+                .Where(a => !a.FullName.StartsWith("System"))
+                .Where(a => !a.FullName.StartsWith("Microsoft"))
+                .Where(a => !a.FullName.StartsWith("mscorlib"))
                 .SelectMany(a => a.GetTypes())
                 .Where(t => t.IsClass && !t.IsAbstract)
                 .Where(t => t.FullName != "MBOptionScreen.Settings.Wrapper.AttributeSettingsWrapper")

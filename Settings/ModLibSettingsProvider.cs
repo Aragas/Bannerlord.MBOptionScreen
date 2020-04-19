@@ -14,11 +14,15 @@ namespace MBOptionScreen.Settings
     {
         private Dictionary<string, SettingsWrapper> LoadedModLibSettings { get; } = new Dictionary<string, SettingsWrapper>();
         private Type ModLibSettingsDatabase { get; }
+        private bool BuiltInModLib { get; } = false;
 
         public List<ModSettingsDefinition> CreateModSettingsDefinitions
         {
             get
             {
+                if (ModLibSettingsDatabase == null)
+                    return new List<ModSettingsDefinition>();
+
                 ReloadAll();
 
                 return LoadedModLibSettings.Keys
@@ -30,18 +34,32 @@ namespace MBOptionScreen.Settings
 
         public ModLibSettingsProviderWrapper()
         {
-            ModLibSettingsDatabase = AppDomain.CurrentDomain.GetAssemblies().SelectMany(a => a.GetTypes())
+            ModLibSettingsDatabase = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(a => a != typeof(ModLib.SettingsDatabase).Assembly)
+                .SelectMany(a => a.GetTypes())
                 .FirstOrDefault(a => a.FullName == "ModLib.SettingsDatabase");
+
+            if (ModLibSettingsDatabase == null)
+            {
+                ModLibSettingsDatabase = typeof(ModLib.SettingsDatabase);
+                BuiltInModLib = true;
+            }
         }
 
         public SettingsBase? GetSettings(string id)
         {
+            if (ModLibSettingsDatabase == null)
+                return null;
+
             ReloadAll();
             return LoadedModLibSettings.TryGetValue(id, out var setings) ? setings : null;
         }
 
         public bool OverrideSettings(SettingsBase settings)
         {
+            if (ModLibSettingsDatabase == null)
+                return false;
+
             if (settings is SettingsWrapper settingsWrapper)
             {
                 var overrideSettingsWithIDMethod = AccessTools.Method(ModLibSettingsDatabase, "OverrideSettingsWithID");
@@ -52,10 +70,26 @@ namespace MBOptionScreen.Settings
             return false;
         }
 
-        public bool RegisterSettings(SettingsBase settingsClass) => true;
+        public bool RegisterSettings(SettingsBase settingsClass)
+        {
+            if (BuiltInModLib)
+            {
+                if (settingsClass is SettingsWrapper settingsWrapper)
+                {
+                    var registerSettingsMethod = AccessTools.Method(ModLibSettingsDatabase, "RegisterSettings");
+                    registerSettingsMethod.Invoke(null, new object[] { settingsWrapper._object });
+                    return true;
+                }
+            }
+
+            return ModLibSettingsDatabase != null;
+        }
 
         public SettingsBase ResetSettings(string id)
         {
+            if (ModLibSettingsDatabase == null)
+                return null;
+
             ReloadAll();
 
             var resetSettingsInstanceMethod = AccessTools.Method(ModLibSettingsDatabase, "ResetSettingsInstance");
@@ -69,6 +103,9 @@ namespace MBOptionScreen.Settings
 
         public void SaveSettings(SettingsBase settings)
         {
+            if (ModLibSettingsDatabase == null)
+                return;
+
             if (settings is SettingsWrapper settingsWrapper)
             {
                 var saveSettingsMethod = AccessTools.Method(ModLibSettingsDatabase, "SaveSettings");
@@ -80,7 +117,7 @@ namespace MBOptionScreen.Settings
         private void ReloadAll()
         {
             var saveSettingsMethod = AccessTools.Property(ModLibSettingsDatabase, "AllSettingsDict");
-            var dict = (IDictionary)saveSettingsMethod.GetValue(null);
+            var dict = (IDictionary) saveSettingsMethod.GetValue(null);
             foreach (var settings in dict.Values)
             {
                 var settingsType = settings.GetType();

@@ -14,9 +14,9 @@
     <PackageId>Bannerlord.MBOptionScreen</PackageId>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Version>1.1.10</Version>
+    <Version>1.1.11</Version>
     <PackageProjectUrl>https://github.com/Aragas/Bannerlord.MBOptionScreen</PackageProjectUrl>
-    <PackageLicenseExpression>GPL-3.0-only</PackageLicenseExpression>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/Aragas/Bannerlord.MBOptionScreen</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
   </PropertyGroup>
