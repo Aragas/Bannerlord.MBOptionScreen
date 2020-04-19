@@ -25,6 +25,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         public SettingType SettingType => SettingPropertyDefinition.SettingType;
         public SettingPropertyGroupVM Group { get; set; }
         public string HintText { get; }
+        public string ValueFormat => SettingPropertyDefinition.ValueFormat;
         public bool SatisfiesSearch
         {
             get
@@ -142,8 +143,8 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         [DataSourceProperty]
         public string? ValueString => SettingType switch
         {
-            SettingType.Int => ((int) Property.GetValue(SettingsInstance)).ToString("0"),
-            SettingType.Float => ((float) Property.GetValue(SettingsInstance)).ToString("0.00"),
+            SettingType.Int => string.IsNullOrWhiteSpace(ValueFormat) ? ((int)Property.GetValue(SettingsInstance)).ToString("0") : ((int)Property.GetValue(SettingsInstance)).ToString(ValueFormat),
+            SettingType.Float => string.IsNullOrWhiteSpace(ValueFormat) ? ((float)Property.GetValue(SettingsInstance)).ToString("0.00") : ((float)Property.GetValue(SettingsInstance)).ToString(ValueFormat),
             SettingType.String => (string) Property.GetValue(SettingsInstance),
             //SettingType.Dropdown => DropdownValue?.SelectedItem?.StringItem ?? "",
             _ => ""
