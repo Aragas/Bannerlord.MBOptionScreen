@@ -36,6 +36,11 @@ namespace MBOptionScreen.Settings.Wrapper
             var propInfo = @object.GetType().GetProperty("HintText", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             return propInfo?.GetValue(@object) as string;
         }
+        private static string? GetValueFormat(object @object)
+        {
+            var propInfo = @object.GetType().GetProperty("ValueFormat", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            return propInfo?.GetValue(@object) as string;
+        }
 
         public SettingPropertyIntegerAttributeWrapper(object @object) : base(
             GetDisplayName(@object) ?? "ERROR",
@@ -43,6 +48,7 @@ namespace MBOptionScreen.Settings.Wrapper
             GetMaxValue(@object) ?? 0,
             GetOrder(@object) ?? -1,
             GetRequireRestart(@object) ?? true,
-            GetHintText(@object) ?? "") { }
+            GetHintText(@object) ?? "",
+            GetValueFormat(@object) ?? "") { }
     }
 }

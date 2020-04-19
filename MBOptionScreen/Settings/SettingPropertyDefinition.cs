@@ -23,6 +23,7 @@ namespace MBOptionScreen.Settings
         public float EditableMaxValue { get; } = 0f;
         public string GroupName { get; } = SettingPropertyGroupDefinition.DefaultGroupName;
         public bool IsMainToggle { get; } = false;
+        public string ValueFormat { get; } = "";
 
         public SettingPropertyDefinition(BaseSettingPropertyAttribute settingAttribute, SettingPropertyGroupAttribute groupAttribute, PropertyInfo property, string settingsId)
         {
@@ -74,6 +75,7 @@ namespace MBOptionScreen.Settings
                 MaxValue = settingPropertyFloatingIntegerAttribute.MaxValue;
                 EditableMinValue = settingPropertyFloatingIntegerAttribute.MinValue;
                 EditableMaxValue = settingPropertyFloatingIntegerAttribute.MaxValue;
+                ValueFormat = settingPropertyFloatingIntegerAttribute.ValueFormat;
             }
             if (settingAttribute is SettingPropertyIntegerAttribute settingPropertyIntegerAttribute)
             {
@@ -82,6 +84,7 @@ namespace MBOptionScreen.Settings
                 MaxValue = settingPropertyIntegerAttribute.MaxValue;
                 EditableMinValue = settingPropertyIntegerAttribute.MinValue;
                 EditableMaxValue = settingPropertyIntegerAttribute.MaxValue;
+                ValueFormat = settingPropertyIntegerAttribute.ValueFormat;
             }
             if (settingAttribute is SettingPropertyTextAttribute settingPropertyTextAttribute)
             {
