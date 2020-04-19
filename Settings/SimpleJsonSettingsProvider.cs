@@ -127,7 +127,9 @@ namespace MBOptionScreen.Settings
             protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
             {
                 var property = base.CreateProperty(member, memberSerialization);
-                property.ShouldSerialize = x => property.AttributeProvider.GetAttributes(true).Any(a => a.GetType() == typeof(SettingPropertyAttribute));
+                property.ShouldSerialize = x => property.AttributeProvider.GetAttributes(true).Any(a =>
+                    Utils.AnyBaseTypeIs(a.GetType(), "MBOptionScreen.Attributes.BaseSettingPropertyAttribute")
+                    );
                 return property;
             }
         }
