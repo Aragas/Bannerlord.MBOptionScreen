@@ -18,7 +18,7 @@ namespace MBOptionScreen.Settings.Wrapper
         }
         private static int? GetMaxValue(object @object)
         {
-            var propInfo = @object.GetType().GetProperty("MinValue", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
+            var propInfo = @object.GetType().GetProperty("MaxValue", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
             return propInfo?.GetValue(@object) as int?;
         }
         private static int? GetOrder(object @object)
