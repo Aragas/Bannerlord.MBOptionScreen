@@ -8,8 +8,8 @@ namespace MBOptionScreen
     {
         public int Compare(SettingPropertyGroupDefinition x, SettingPropertyGroupDefinition y)
         {
-            var s1 = x.DisplayGroupName;
-            var s2 = y.DisplayGroupName;
+            var s1 = x.DisplayGroupName.ToString();
+            var s2 = y.DisplayGroupName.ToString();
             var len1 = s1.Length;
             var len2 = s2.Length;
             var marker1 = 0;

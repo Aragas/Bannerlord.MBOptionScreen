@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ModLib.Debugging;
+using ModLib.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,10 +9,10 @@ using System.Xml.Serialization;
 
 namespace ModLib
 {
-    internal static class FileDatabase
+    public static class FileDatabase
     {
         private const string LoadablesFolderName = "Loadables";
-        public static Dictionary<Type, Dictionary<string, object>> Data { get; } = new Dictionary<Type, Dictionary<string, object>>();
+        public static Dictionary<Type, Dictionary<string, ISerialisableFile>> Data { get; } = new Dictionary<Type, Dictionary<string, ISerialisableFile>>();
 
         /// <summary>
         /// Returns the ISerialisableFile of type T with the given ID from the database. If it cannot be found, returns null.
@@ -18,7 +20,7 @@ namespace ModLib
         /// <typeparam name="T">Type of object to retrieve.</typeparam>
         /// <param name="id">ID of object to retrieve.</param>
         /// <returns>Returns the instance of the object with the given type and ID. If it cannot be found, returns null.</returns>
-        public static T Get<T>(string id)
+        public static T Get<T>(string id) where T : ISerialisableFile
         {
             //First check if the dictionary contains the key
             if (!Data.ContainsKey(typeof(T)))
@@ -44,7 +46,7 @@ namespace ModLib
             }
             catch (Exception ex)
             {
-                //ModDebug.ShowError($"An error occurred whilst trying to load files for module: {moduleFolderName}", "Error occurred during loading files", ex);
+                ModDebug.ShowError($"An error occurred whilst trying to load files for module: {moduleFolderName}", "Error occurred during loading files", ex);
             }
             return successful;
         }
@@ -55,15 +57,15 @@ namespace ModLib
         /// <param name="moduleFolderName">The folder name of the module to save to.</param>
         /// <param name="sf">Instance of the object to save to file.</param>
         /// <param name="location">Indicates whether to save the file to the ModuleData/Loadables folder or to the mod's Config folder in Bannerlord's 'My Documents' directory.</param>
-        public static bool SaveToFile(string moduleFolderName, object sf, Location location = Location.Modules)
+        public static bool SaveToFile(string moduleFolderName, ISerialisableFile sf, Location location = Location.Modules)
         {
             try
             {
                 if (sf == null) throw new ArgumentNullException(nameof(sf));
-                if (string.IsNullOrWhiteSpace(Utils.GetID(sf)))
+                if (string.IsNullOrWhiteSpace(sf.ID))
                     throw new Exception($"FileDatabase tried to save an object of type {sf.GetType().FullName} but the ID value was null.");
                 if (string.IsNullOrWhiteSpace(moduleFolderName))
-                    throw new Exception($"FileDatabase tried to save an object of type {sf.GetType().FullName} with ID {Utils.GetID(sf)} but the module folder name given was null or empty.");
+                    throw new Exception($"FileDatabase tried to save an object of type {sf.GetType().FullName} with ID {sf.ID} but the module folder name given was null or empty.");
 
                 //Gets the intended path for the file.
                 string path = GetPathForModule(moduleFolderName, location);
@@ -76,10 +78,11 @@ namespace ModLib
                 if (location == Location.Modules)
                     path = Path.Combine(path, "ModuleData", LoadablesFolderName);
 
-                var subFolder = Utils.GetSubFolder(sf);
-                if (!string.IsNullOrEmpty(subFolder))
+                if (sf is ISubFolder)
                 {
-                    path = Path.Combine(path, subFolder);
+                    ISubFolder subFolder = sf as ISubFolder;
+                    if (!string.IsNullOrWhiteSpace(subFolder.SubFolder))
+                        path = Path.Combine(path, subFolder.SubFolder);
                 }
 
                 if (!Directory.Exists(path))
@@ -90,7 +93,7 @@ namespace ModLib
                 if (File.Exists(path))
                     File.Delete(path);
 
-                using (var writer = XmlWriter.Create(path, new XmlWriterSettings() { Indent = true, OmitXmlDeclaration = true }))
+                using (XmlWriter writer = XmlWriter.Create(path, new XmlWriterSettings() { Indent = true, OmitXmlDeclaration = true }))
                 {
                     XmlRootAttribute rootNode = new XmlRootAttribute();
                     rootNode.ElementName = $"{sf.GetType().Assembly.GetName().Name}-{sf.GetType().FullName}";
@@ -102,7 +105,7 @@ namespace ModLib
             }
             catch (Exception ex)
             {
-                //ModDebug.ShowError($"Cannot create the file for type {sf?.GetType().FullName} with ID {sf?.ID} for module {moduleFolderName}:", "Error saving to file", ex);
+                ModDebug.ShowError($"Cannot create the file for type {sf?.GetType().FullName} with ID {sf?.ID} for module {moduleFolderName}:", "Error saving to file", ex);
                 return false;
             }
         }
@@ -120,7 +123,7 @@ namespace ModLib
             string path = GetPathForModule(moduleFolderName, location);
             if (!Directory.Exists(path))
             {
-                //ModDebug.ShowError($"Tried to delete a file with file name {fileName} from directory \"{path}\" but the directory doesn't exist.", "Could not find directory");
+                ModDebug.ShowError($"Tried to delete a file with file name {fileName} from directory \"{path}\" but the directory doesn't exist.", "Could not find directory");
                 successful = false;
             }
 
@@ -141,29 +144,29 @@ namespace ModLib
         /// <param name="sf">The instance of the object whose file should be deleted.</param>
         /// <param name="location">The location of the file to be deleted.</param>
         /// <returns>Returns true if the file was deleted successfully.</returns>
-        public static bool DeleteFile(string moduleFolderName, object sf, Location location = Location.Modules)
+        public static bool DeleteFile(string moduleFolderName, ISerialisableFile sf, Location location = Location.Modules)
         {
             return DeleteFile(moduleFolderName, GetFileNameFor(sf), location);
         }
 
-        private static void Add(object loadable)
+        private static void Add(ISerialisableFile loadable)
         {
             if (loadable == null)
                 throw new ArgumentNullException(nameof(loadable), "Tried to add something to the FileDatabase Data dictionary that was null");
-            if (string.IsNullOrWhiteSpace(Utils.GetID(loadable)))
+            if (string.IsNullOrWhiteSpace(loadable.ID))
                 throw new ArgumentNullException($"Loadable of type {loadable.GetType().ToString()} has missing ID field");
 
             Type type = loadable.GetType();
             if (!Data.ContainsKey(type))
-                Data.Add(type, new Dictionary<string, object>());
+                Data.Add(type, new Dictionary<string, ISerialisableFile>());
 
-            if (Data[type].ContainsKey(Utils.GetID(loadable)))
+            if (Data[type].ContainsKey(loadable.ID))
             {
-                //ModDebug.LogError($"Loader already contains Type: {type.AssemblyQualifiedName} ID: {loadable.ID}, overwriting...");
-                Data[type][Utils.GetID(loadable)] = loadable;
+                ModDebug.LogError($"Loader already contains Type: {type.AssemblyQualifiedName} ID: {loadable.ID}, overwriting...");
+                Data[type][loadable.ID] = loadable;
             }
             else
-                Data[type].Add(Utils.GetID(loadable), loadable);
+                Data[type].Add(loadable.ID, loadable);
         }
 
         private static void LoadFromFile(string filePath)
@@ -186,11 +189,11 @@ namespace ModLib
                     if (data.Type == null)
                         throw new Exception($"Unable to find type {data.FullName}");
 
-                    var root = new XmlRootAttribute();
+                    XmlRootAttribute root = new XmlRootAttribute();
                     root.ElementName = nodeData;
                     root.IsNullable = true;
-                    var serialiser = new XmlSerializer(data.Type, root);
-                    var loaded = serialiser.Deserialize(reader);
+                    XmlSerializer serialiser = new XmlSerializer(data.Type, root);
+                    ISerialisableFile loaded = (ISerialisableFile)serialiser.Deserialize(reader);
                     if (loaded != null)
                         Add(loaded);
                     else
@@ -243,7 +246,7 @@ namespace ModLib
                                 }
                                 catch (Exception ex)
                                 {
-                                    //ModDebug.LogError($"Failed to load file: {filePath} \n\nSkipping..\n\n", ex);
+                                    ModDebug.LogError($"Failed to load file: {filePath} \n\nSkipping..\n\n", ex);
                                 }
                             }
                         }
@@ -269,7 +272,7 @@ namespace ModLib
                     }
                     catch (Exception ex)
                     {
-                        //ModDebug.LogError($"Failed to load file: {filePath}\n\n Skipping...", ex);
+                        ModDebug.LogError($"Failed to load file: {filePath}\n\n Skipping...", ex);
                     }
                 }
                 string[] subfolders = Directory.GetDirectories(modConfigsPath);
@@ -285,7 +288,7 @@ namespace ModLib
                             }
                             catch (Exception ex)
                             {
-                                //ModDebug.LogError($"Failed to load file: {filePath}\n\n Skipping...", ex);
+                                ModDebug.LogError($"Failed to load file: {filePath}\n\n Skipping...", ex);
                             }
                         }
                     }
@@ -301,10 +304,10 @@ namespace ModLib
         /// </summary>
         /// <param name="sf">The instance of the ISerialisableFile to retrieve the file name for.</param>
         /// <returns>Returns the file name of the given ISerialisableFile, including the file extension.</returns>
-        public static string GetFileNameFor(object sf)
+        public static string GetFileNameFor(ISerialisableFile sf)
         {
             if (sf == null) throw new ArgumentNullException(nameof(sf));
-            return $"{sf.GetType().Name}.{Utils.GetID(sf)}.xml";
+            return $"{sf.GetType().Name}.{sf.ID}.xml";
         }
 
         /// <summary>
@@ -363,7 +366,7 @@ namespace ModLib
             }
         }
 
-        internal enum Location
+        public enum Location
         {
             Modules,
             Configs

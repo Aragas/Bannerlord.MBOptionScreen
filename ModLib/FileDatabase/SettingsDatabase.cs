@@ -1,27 +1,32 @@
-﻿using System;
+﻿using ModLib.Interfaces;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace ModLib
 {
-    internal static class SettingsDatabase
+    public static class SettingsDatabase
     {
-        private static Dictionary<string, object> AllSettingsDict { get; } = new Dictionary<string, object>();
+        private static Dictionary<string, SettingsBase> AllSettingsDict { get; } = new Dictionary<string, SettingsBase>();
 
-        public static List<object> AllSettings => AllSettingsDict.Values.ToList();
+        public static List<SettingsBase> AllSettings => AllSettingsDict.Values.ToList();
         public static int SettingsCount => AllSettingsDict.Values.Count;
+
+        // No reason for a mod to call that.
+        //public static List<ModSettingsVM> ModSettingsVMs
 
         /// <summary>
         /// Registers the settings class with the SettingsDatabase for use in the settings menu.
         /// </summary>
         /// <param name="settings">Intance of the settings object to be registered with the SettingsDatabase.</param>
         /// <returns>Returns true if successful. Returns false if the object's ID key is already present in the SettingsDatabase.</returns>
-        public static bool RegisterSettings(object settings)
+        public static bool RegisterSettings(SettingsBase settings)
         {
             if (settings == null) throw new ArgumentNullException(nameof(settings));
-            if (!AllSettingsDict.ContainsKey(Utils.GetID(settings)))
+            if (!AllSettingsDict.ContainsKey(settings.ID))
             {
-                AllSettingsDict.Add(Utils.GetID(settings), settings);
+                AllSettingsDict.Add(settings.ID, settings);
                 return true;
             }
             else
@@ -36,7 +41,7 @@ namespace ModLib
         /// </summary>
         /// <param name="uniqueID">The ID for the settings instance.</param>
         /// <returns>Returns the settings instance with the given ID. Returns null if nothing can be found.</returns>
-        public static object GetSettings(string uniqueID)
+        public static ISerialisableFile GetSettings(string uniqueID)
         {
             if (AllSettingsDict.ContainsKey(uniqueID))
             {
@@ -51,10 +56,10 @@ namespace ModLib
         /// </summary>
         /// <param name="settingsInstance">Instance of the settings object to save to file.</param>
         /// <returns>Return true if the settings object was saved successfully. Returns false if it failed to save.</returns>
-        public static bool SaveSettings(object settingsInstance)
+        public static bool SaveSettings(SettingsBase settingsInstance)
         {
             if (settingsInstance == null) throw new ArgumentNullException(nameof(settingsInstance));
-            return FileDatabase.SaveToFile(Utils.GetModuleFolderName(settingsInstance), settingsInstance, FileDatabase.Location.Configs);
+            return FileDatabase.SaveToFile(settingsInstance.ModuleFolderName, settingsInstance, FileDatabase.Location.Configs);
         }
 
         /// <summary>
@@ -62,24 +67,14 @@ namespace ModLib
         /// </summary>
         /// <param name="settingsInstance">The instance of the object to be reset</param>
         /// <returns>Returns the instance of the new object with default values.</returns>
-        public static object ResetSettingsInstance(object settingsInstance)
+        public static SettingsBase ResetSettingsInstance(SettingsBase settingsInstance)
         {
             if (settingsInstance == null) throw new ArgumentNullException(nameof(settingsInstance));
-            string id = Utils.GetID(settingsInstance);
-            var newObj = Activator.CreateInstance(settingsInstance.GetType());
-            Utils.SetID(newObj, id);
+            string id = settingsInstance.ID;
+            SettingsBase newObj = (SettingsBase)Activator.CreateInstance(settingsInstance.GetType());
+            newObj.ID = id;
             AllSettingsDict[id] = newObj;
             return newObj;
-        }
-
-        internal static bool OverrideSettingsWithID(object settings, string ID)
-        {
-            if (AllSettingsDict.ContainsKey(ID))
-            {
-                AllSettingsDict[ID] = settings;
-                return true;
-            }
-            return false;
         }
     }
 }

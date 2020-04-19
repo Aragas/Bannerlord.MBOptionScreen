@@ -9,7 +9,7 @@ namespace MBOptionScreen.ExtensionMethods
     {
         public static SettingPropertyGroupDefinition? GetGroup(this ICollection<SettingPropertyGroupDefinition> groupsList, string groupName)
         {
-            return groupsList.FirstOrDefault(x => x.DisplayGroupName == groupName);
+            return groupsList.FirstOrDefault(x => x.GroupName == groupName);
         }
     }
 }

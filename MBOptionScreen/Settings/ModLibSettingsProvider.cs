@@ -14,7 +14,7 @@ namespace MBOptionScreen.Settings
     {
         private Dictionary<string, SettingsWrapper> LoadedModLibSettings { get; } = new Dictionary<string, SettingsWrapper>();
         private Type ModLibSettingsDatabase { get; }
-        private bool BuiltInModLib { get; } = false;
+        //private bool BuiltInModLib { get; } = false;
 
         public List<ModSettingsDefinition> CreateModSettingsDefinitions
         {
@@ -35,15 +35,15 @@ namespace MBOptionScreen.Settings
         public ModLibSettingsProviderWrapper()
         {
             ModLibSettingsDatabase = AppDomain.CurrentDomain.GetAssemblies()
-                .Where(a => a != typeof(ModLib.SettingsDatabase).Assembly)
+                //.Where(a => a != typeof(ModLib.SettingsDatabase).Assembly)
                 .SelectMany(a => a.GetTypes())
                 .FirstOrDefault(a => a.FullName == "ModLib.SettingsDatabase");
 
-            if (ModLibSettingsDatabase == null)
-            {
-                ModLibSettingsDatabase = typeof(ModLib.SettingsDatabase);
-                BuiltInModLib = true;
-            }
+            //if (ModLibSettingsDatabase == null)
+            //{
+            //    ModLibSettingsDatabase = typeof(ModLib.SettingsDatabase);
+            //    BuiltInModLib = true;
+            //}
         }
 
         public SettingsBase? GetSettings(string id)
@@ -72,15 +72,15 @@ namespace MBOptionScreen.Settings
 
         public bool RegisterSettings(SettingsBase settingsClass)
         {
-            if (BuiltInModLib)
-            {
-                if (settingsClass is SettingsWrapper settingsWrapper)
-                {
-                    var registerSettingsMethod = AccessTools.Method(ModLibSettingsDatabase, "RegisterSettings");
-                    registerSettingsMethod.Invoke(null, new object[] { settingsWrapper._object });
-                    return true;
-                }
-            }
+            //if (BuiltInModLib)
+            //{
+            //    if (settingsClass is SettingsWrapper settingsWrapper)
+            //    {
+            //        var registerSettingsMethod = AccessTools.Method(ModLibSettingsDatabase, "RegisterSettings");
+            //        registerSettingsMethod.Invoke(null, new object[] { settingsWrapper._object });
+            //        return true;
+            //    }
+            //}
 
             return ModLibSettingsDatabase != null;
         }

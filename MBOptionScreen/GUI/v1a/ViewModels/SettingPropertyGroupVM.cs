@@ -16,7 +16,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         public UndoRedoStack URS => ModSettingsView.URS;
 
         public SettingPropertyGroupDefinition SettingPropertyGroupDefinition { get; }
-        public string GroupName => SettingPropertyGroupDefinition.DisplayGroupName;
+        public string GroupName => SettingPropertyGroupDefinition.DisplayGroupName.ToString();
         public SettingPropertyGroupVM ParentGroup { get; set; } = null;
         public SettingPropertyVM GroupToggleSettingProperty { get; private set; } = null;
         public string HintText

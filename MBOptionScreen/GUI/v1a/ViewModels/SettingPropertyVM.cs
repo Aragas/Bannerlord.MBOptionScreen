@@ -37,7 +37,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
         }
 
         [DataSourceProperty]
-        public string Name => SettingPropertyDefinition.DisplayName;
+        public string Name => SettingPropertyDefinition.DisplayName.ToString();
 
         [DataSourceProperty]
         public bool IsIntVisible => SettingType == SettingType.Int;
@@ -158,7 +158,7 @@ namespace MBOptionScreen.GUI.v1a.ViewModels
             ModSettingsView = modSettingsView;
             SettingPropertyDefinition = definition;
 
-            if (!string.IsNullOrWhiteSpace(SettingPropertyDefinition.HintText))
+            if (SettingPropertyDefinition.HintText.Length > 0)
                 HintText = $"{Name}: {SettingPropertyDefinition.HintText}";
 
             RefreshValues();

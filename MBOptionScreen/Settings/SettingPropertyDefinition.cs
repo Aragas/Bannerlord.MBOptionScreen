@@ -2,6 +2,8 @@
 
 using System.Reflection;
 
+using TaleWorlds.Localization;
+
 namespace MBOptionScreen.Settings
 {
     public class SettingPropertyDefinition
@@ -11,10 +13,10 @@ namespace MBOptionScreen.Settings
         public PropertyInfo Property { get; }
         public SettingType SettingType { get; }
 
-        public string DisplayName { get; } = "";
+        public TextObject DisplayName { get; } = new TextObject("");
         public int Order { get; } = -1;
         public bool RequireRestart { get; } = true;
-        public string HintText { get; } = "";
+        public TextObject HintText { get; } = new TextObject("");
         public float MaxValue { get; } = 0f;
         public float MinValue { get; } = 0f;
         public float EditableMinValue { get; } = 0f;
@@ -32,10 +34,10 @@ namespace MBOptionScreen.Settings
 
             if (settingAttribute is BaseSettingPropertyAttribute baseSettingPropertyAttribute)
             {
-                DisplayName = baseSettingPropertyAttribute.DisplayName;
+                DisplayName = new TextObject(baseSettingPropertyAttribute.DisplayName, null);
                 Order = baseSettingPropertyAttribute.Order;
                 RequireRestart = baseSettingPropertyAttribute.RequireRestart;
-                HintText = baseSettingPropertyAttribute.HintText;
+                HintText = new TextObject(baseSettingPropertyAttribute.HintText, null);
             }
 
             // v1
