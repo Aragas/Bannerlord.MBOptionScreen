@@ -6,9 +6,10 @@ using System.Linq;
 using System.Text;
 using JetBrains.Annotations;
 using MBOptionScreen.Interfaces;
-using MBOptionScreen.Settings;
+using TaleWorlds.Engine;
 using Tomlyn;
 using Tomlyn.Syntax;
+using Path = System.IO.Path;
 
 namespace MBOptionScreen.Settings {
 
@@ -137,6 +138,8 @@ namespace MBOptionScreen.Settings {
       var path = GetPath(settingsInstance);
       if (File.Exists(path))
         File.WriteAllBytes(path, new byte[0]);
+      
+      // TODO: reset to default?
 
       return settingsInstance;
     }
