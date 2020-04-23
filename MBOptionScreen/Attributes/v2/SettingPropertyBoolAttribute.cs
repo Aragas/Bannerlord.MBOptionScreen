@@ -1,12 +1,13 @@
-﻿using System;
+﻿using MBOptionScreen.Settings;
 
-namespace MBOptionScreen.Attributes
+using System;
+
+namespace MBOptionScreen.Attributes.v2
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    internal class SettingPropertyBoolAttribute : BaseSettingPropertyAttribute
+    public sealed class SettingPropertyBoolAttribute : BaseSettingPropertyAttribute, IPropertyDefinitionBool
     {
-        public SettingPropertyBoolAttribute(string displayName, int order = -1, bool requireRestart = true, string hintText = "")
-            : base(displayName, order, requireRestart, hintText)
+        public SettingPropertyBoolAttribute(string displayName) : base(displayName)
         {
 
         }

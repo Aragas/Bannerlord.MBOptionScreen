@@ -1,11 +1,10 @@
 ﻿using MBOptionScreen.ExtensionMethods;
-using MBOptionScreen.Interfaces;
 
 using System.Collections.Generic;
 
 namespace MBOptionScreen.Actions
 {
-    public class UndoRedoStack
+    public sealed class UndoRedoStack
     {
         public Stack<IAction> UndoStack { get; }
         public Stack<IAction> RedoStack { get; }

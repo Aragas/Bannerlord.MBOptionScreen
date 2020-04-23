@@ -1,21 +1,18 @@
-﻿using MBOptionScreen.Interfaces;
-using MBOptionScreen.Settings.Wrapper;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace MBOptionScreen.Settings
 {
     internal static class SettingsDatabase
     {
-        private static ISettingsProvider ModLibSettingsProvider = new ModLibSettingsProviderWrapper();
-        private static ISettingsProvider SettingsProvider => MBOptionScreenSubModule.SharedStateObject.SettingsStorage;
+        internal static IModLibSettingsProvider ModLibSettingsProvider { get; set; } = default!;
+        internal static IMBOptionScreenSettingsProvider MBOptionScreenSettingsProvider { get; set; } = default!;
 
         public static List<ModSettingsDefinition> CreateModSettingsDefinitions
         {
             get
             {
-                return SettingsProvider.CreateModSettingsDefinitions
+                return MBOptionScreenSettingsProvider.CreateModSettingsDefinitions
                     .Concat(ModLibSettingsProvider.CreateModSettingsDefinitions)
                     .ToList();
             }
@@ -26,12 +23,12 @@ namespace MBOptionScreen.Settings
             if (settings is ModLibSettingsWrapper modLibSettings)
                 return ModLibSettingsProvider.RegisterSettings(modLibSettings);
 
-            return SettingsProvider.RegisterSettings(settings);
+            return MBOptionScreenSettingsProvider.RegisterSettings(settings);
         }
 
         public static SettingsBase? GetSettings(string id)
         {
-            return SettingsProvider.GetSettings(id)
+            return MBOptionScreenSettingsProvider.GetSettings(id)
                 ?? ModLibSettingsProvider.GetSettings(id);
         }
 
@@ -40,7 +37,7 @@ namespace MBOptionScreen.Settings
             if (settings is ModLibSettingsWrapper modLibSettings)
                 ModLibSettingsProvider.SaveSettings(modLibSettings);
 
-            SettingsProvider.SaveSettings(settings);
+            MBOptionScreenSettingsProvider.SaveSettings(settings);
         }
 
         public static bool OverrideSettings(SettingsBase settings)
@@ -48,12 +45,12 @@ namespace MBOptionScreen.Settings
             if (settings is ModLibSettingsWrapper modLibSettings)
                 return ModLibSettingsProvider.OverrideSettings(modLibSettings);
 
-            return SettingsProvider.OverrideSettings(settings);
+            return MBOptionScreenSettingsProvider.OverrideSettings(settings);
         }
 
         public static SettingsBase ResetSettings(string id)
         {
-            return SettingsProvider.ResetSettings(id)
+            return MBOptionScreenSettingsProvider.ResetSettings(id)
                 ?? ModLibSettingsProvider.ResetSettings(id);
         }
     }

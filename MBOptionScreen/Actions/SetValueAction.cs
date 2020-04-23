@@ -1,8 +1,6 @@
-﻿using MBOptionScreen.Interfaces;
-
-namespace MBOptionScreen.Actions
+﻿namespace MBOptionScreen.Actions
 {
-    public class SetValueAction<T> : IAction
+    public sealed class SetValueAction<T> : IAction
     {
         public Ref Context { get; }
         public object Value { get; }

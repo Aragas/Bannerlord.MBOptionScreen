@@ -14,12 +14,18 @@
     <PackageId>Bannerlord.MBOptionScreen</PackageId>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <Version>1.1.15</Version>
+    <Version>2.0.0</Version>
     <PackageProjectUrl>https://github.com/Aragas/Bannerlord.MBOptionScreen</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/Aragas/Bannerlord.MBOptionScreen</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <AssemblyName>MBOptionScreen2.0.0</AssemblyName>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Libraries Include="$(TargetDir)\*.*" Exclude="$(TargetDir)\*.pdb;$(TargetDir)\*.json;" />
+    <Data Include="_Data\**\*.*" />
+  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="$(GameFolder)\bin\Win64_Shipping_Client\System.*.dll">
@@ -57,25 +63,33 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="GUI\v1a\Brushes\ButtonBrushes.xml" />
-    <EmbeddedResource Include="GUI\v1a\Brushes\DividerBrushes.xml" />
-    <EmbeddedResource Include="GUI\v1a\Brushes\ExpandIndicator.xml" />
-    <EmbeddedResource Include="GUI\v1a\Brushes\ModSettingsBrush.xml" />
-    <EmbeddedResource Include="GUI\v1a\Brushes\ResetButtonBrush.xml" />
-    <EmbeddedResource Include="GUI\v1a\Brushes\SettingsValueDisplayBrush.xml" />
-    <EmbeddedResource Include="GUI\v1a\Brushes\TextBrushes.xml" />
+    <EmbeddedResource Include="GUI\v1b\Brushes\ButtonBrushes.xml" />
+    <EmbeddedResource Include="GUI\v1b\Brushes\DividerBrushes.xml" />
+    <EmbeddedResource Include="GUI\v1b\Brushes\ExpandIndicator.xml" />
+    <EmbeddedResource Include="GUI\v1b\Brushes\ModSettingsBrush.xml" />
+    <EmbeddedResource Include="GUI\v1b\Brushes\ResetButtonBrush.xml" />
+    <EmbeddedResource Include="GUI\v1b\Brushes\SettingsValueDisplayBrush.xml" />
+    <EmbeddedResource Include="GUI\v1b\Brushes\TextBrushes.xml" />
 
-    <EmbeddedResource Include="GUI\v1a\Views\EditValueView.xml" />
-    <EmbeddedResource Include="GUI\v1a\Views\ModOptionsView.xml" />
-    <EmbeddedResource Include="GUI\v1a\Views\ModSettingsView.xml" />
-    <EmbeddedResource Include="GUI\v1a\Views\SettingPropertyGroupView.xml" />
-    <EmbeddedResource Include="GUI\v1a\Views\SettingPropertyView.xml" />
-    <EmbeddedResource Include="GUI\v1a\Views\SettingsView.xml" />
+    <EmbeddedResource Include="GUI\v1b\Views\EditValueView.xml" />
+    <EmbeddedResource Include="GUI\v1b\Views\ModOptionsView.xml" />
+    <EmbeddedResource Include="GUI\v1b\Views\ModSettingsView.xml" />
+    <EmbeddedResource Include="GUI\v1b\Views\SettingPropertyGroupView.xml" />
+    <EmbeddedResource Include="GUI\v1b\Views\SettingPropertyView.xml" />
+    <EmbeddedResource Include="GUI\v1b\Views\SettingsView.xml" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Lib.Harmony" Version="2.0.0.9" Condition="$(TargetFramework) == 'net472'" />
     <PackageReference Include="Aragas.Lib.Harmony" Version="2.0.0.9" Condition="$(TargetFramework) == 'netstandard2.0'" />
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="if not exist &quot;$(GameFolder)\Modules\$(ProjectName)&quot; mkdir &quot;$(GameFolder)\Modules\$(ProjectName)&quot;" />
+
+    <Copy SourceFiles="@(Libraries)" DestinationFiles="@(Libraries->'$(GameFolder)\Modules\$(ProjectName)\bin\Win64_Shipping_Client\%(RecursiveDir)%(Filename)%(Extension)')" />
+
+    <Copy SourceFiles="@(Data)" DestinationFiles="@(Data->'$(GameFolder)\Modules\$(ProjectName)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
 
 </Project>

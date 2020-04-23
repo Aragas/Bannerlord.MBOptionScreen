@@ -1,7 +1,6 @@
 ﻿using HarmonyLib;
 
-using MBOptionScreen.Interfaces;
-using MBOptionScreen.Settings.Wrapper;
+using MBOptionScreen.Attributes;
 
 using System;
 using System.Collections;
@@ -10,7 +9,21 @@ using System.Linq;
 
 namespace MBOptionScreen.Settings
 {
-    internal class ModLibSettingsProviderWrapper : ISettingsProvider
+    [Version("e1.0.0",  200)]
+    [Version("e1.0.1",  200)]
+    [Version("e1.0.2",  200)]
+    [Version("e1.0.3",  200)]
+    [Version("e1.0.4",  200)]
+    [Version("e1.0.5",  200)]
+    [Version("e1.0.6",  200)]
+    [Version("e1.0.7",  200)]
+    [Version("e1.0.8",  200)]
+    [Version("e1.0.9",  200)]
+    [Version("e1.0.10", 200)]
+    [Version("e1.0.11", 200)]
+    [Version("e1.1.0",  200)]
+    [Version("e1.2.0",  200)]
+    internal sealed class ModLibSettingsProvider : IModLibSettingsProvider
     {
         private Dictionary<string, SettingsWrapper> LoadedModLibSettings { get; } = new Dictionary<string, SettingsWrapper>();
         private Type ModLibSettingsDatabase { get; }
@@ -31,7 +44,7 @@ namespace MBOptionScreen.Settings
             }
         }
 
-        public ModLibSettingsProviderWrapper()
+        public ModLibSettingsProvider()
         {
             ModLibSettingsDatabase = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(a => a.GetTypes())
@@ -130,7 +143,7 @@ namespace MBOptionScreen.Settings
             var dict = (IDictionary) saveSettingsMethod.GetValue(null);
 
             if (dict.Contains(id))
-                LoadedModLibSettings[id] = new AttributeSettingsWrapper(dict[id]);
+                LoadedModLibSettings[id] = new SettingsWrapper(dict[id]);
         }
     }
 }

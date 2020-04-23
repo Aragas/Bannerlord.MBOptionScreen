@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using MBOptionScreen.Utils;
+
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MBOptionScreen.Settings
 {
@@ -6,31 +9,23 @@ namespace MBOptionScreen.Settings
     {
         protected override char SubGroupDelimiter => '/';
 
-        public override List<SettingPropertyGroupDefinition> GetSettingPropertyGroups()
+        public override List<SettingPropertyGroupDefinition> GetSettingPropertyGroups() => GetUnsortedSettingPropertyGroups()
+            .OrderByDescending(x => x.GroupName == SettingPropertyGroupDefinition.DefaultGroupName)
+            .ThenByDescending(x => x.Order)
+            .ThenByDescending(x => x, new AlphanumComparatorFast())
+            .ToList();
+
+        public IEnumerable<SettingPropertyGroupDefinition> GetUnsortedSettingPropertyGroups()
         {
             var groups = new List<SettingPropertyGroupDefinition>();
-
-            //Loop through each property
-            foreach (var settingProp in Utils.GetProperties(this, Id))
+            foreach (var settingProp in SettingsHelper.GetProperties(this, Id))
             {
-                //First check that the setting property is set up properly.
                 CheckIsValid(settingProp);
+
                 //Find the group that the setting property should belong to. This is the default group if no group is specifically set with the SettingPropertyGroup attribute.
                 var group = GetGroupFor(settingProp, groups);
                 group.Add(settingProp);
             }
-
-            //If there is more than one group in the list, remove the misc group so that it can be added to the bottom of the list after sorting.
-            var miscGroup = GetGroupFor(SettingPropertyGroupDefinition.DefaultGroupName, groups);
-            if (miscGroup != null && groups.Count > 1)
-                groups.Remove(miscGroup);
-            else
-                miscGroup = null;
-
-            groups.Sort(new AlphanumComparatorFast());
-            if (miscGroup != null)
-                groups.Add(miscGroup);
-
             return groups;
         }
     }

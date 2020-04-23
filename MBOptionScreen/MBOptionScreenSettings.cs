@@ -1,16 +1,17 @@
 ﻿using MBOptionScreen.Attributes;
+using MBOptionScreen.Attributes.v2;
 using MBOptionScreen.Settings;
 
 namespace MBOptionScreen
 {
-    internal class MBOptionScreenSettings : AttributeSettings<MBOptionScreenSettings>
+    internal sealed class MBOptionScreenSettings : AttributeSettings<MBOptionScreenSettings>
     {
-        public override string Id { get; set; } = "OptionScreen_v1";
-        public override string ModName => $"MBOptionScreen";
-        public override string ModuleFolderName => "OptionScreen";
+        public override string Id { get; set; } = "MBOptionScreen_v2";
+        public override string ModName => $"MBOptionScreen {typeof(MBOptionScreenSettings).Assembly.GetName().Version.ToString(3)}";
+        public override string ModuleFolderName => "";
 
 
-        [SettingPropertyBool("Override ModLib Option Screen", requireRestart: true, hintText: "")]
+        [SettingPropertyBool("Override ModLib Option Screen", RequireRestart = true)]
         [SettingPropertyGroup("General")]
         public bool OverrideModLib { get; set; } = true;
     }

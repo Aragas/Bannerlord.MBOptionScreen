@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MBOptionScreen.Attributes
+namespace MBOptionScreen.Attributes.v1
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class SettingPropertyAttribute : BaseSettingPropertyAttribute

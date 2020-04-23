@@ -1,21 +1,19 @@
-﻿using MBOptionScreen.Interfaces;
-
-using System.Xml;
+﻿using System.Xml;
 
 namespace MBOptionScreen.ResourceInjection.EmbedLoaders
 {
     /// <summary>
     /// Loads the embed .xml files from the library
     /// </summary>
-    internal static class BrushLoaderV1a
+    internal static class BrushLoaderv1b
     {
-        private static readonly string ButtonBrushesPath = "MBOptionScreen.GUI.v1a.Brushes.ButtonBrushes.xml";
-        private static readonly string DividerBrushesPath = "MBOptionScreen.GUI.v1a.Brushes.DividerBrushes.xml";
-        private static readonly string ExpandIndicatorPath = "MBOptionScreen.GUI.v1a.Brushes.ExpandIndicator.xml";
-        private static readonly string ModSettingsBrushPath = "MBOptionScreen.GUI.v1a.Brushes.ModSettingsBrush.xml";
-        private static readonly string ResetButtonBrushPath = "MBOptionScreen.GUI.v1a.Brushes.ResetButtonBrush.xml";
-        private static readonly string SettingsValueDisplayBrushPath = "MBOptionScreen.GUI.v1a.Brushes.SettingsValueDisplayBrush.xml";
-        private static readonly string TextBrushesPath = "MBOptionScreen.GUI.v1a.Brushes.TextBrushes.xml";
+        private static readonly string ButtonBrushesPath = "MBOptionScreen.GUI.v1b.Brushes.ButtonBrushes.xml";
+        private static readonly string DividerBrushesPath = "MBOptionScreen.GUI.v1b.Brushes.DividerBrushes.xml";
+        private static readonly string ExpandIndicatorPath = "MBOptionScreen.GUI.v1b.Brushes.ExpandIndicator.xml";
+        private static readonly string ModSettingsBrushPath = "MBOptionScreen.GUI.v1b.Brushes.ModSettingsBrush.xml";
+        private static readonly string ResetButtonBrushPath = "MBOptionScreen.GUI.v1b.Brushes.ResetButtonBrush.xml";
+        private static readonly string SettingsValueDisplayBrushPath = "MBOptionScreen.GUI.v1b.Brushes.SettingsValueDisplayBrush.xml";
+        private static readonly string TextBrushesPath = "MBOptionScreen.GUI.v1b.Brushes.TextBrushes.xml";
 
         public static XmlDocument ButtonBrushes() => Load(ButtonBrushesPath);
         public static XmlDocument DividerBrushes() => Load(DividerBrushesPath);
@@ -27,13 +25,13 @@ namespace MBOptionScreen.ResourceInjection.EmbedLoaders
 
         private static XmlDocument Load(string embedPath)
         {
-            using var stream = typeof(PrefabsLoaderV1a).Assembly.GetManifestResourceStream(embedPath);
+            using var stream = typeof(PrefabsLoaderv1b).Assembly.GetManifestResourceStream(embedPath);
             var doc = new XmlDocument();
             doc.Load(stream);
             return doc;
         }
 
-        public static void Inject(IResourceInjector resourceInjector)
+        public static void Inject(BaseResourceInjector resourceInjector)
         {
             resourceInjector.InjectBrush(ButtonBrushes());
             resourceInjector.InjectBrush(DividerBrushes());

@@ -1,9 +1,11 @@
-﻿using System;
+﻿using MBOptionScreen.Settings;
 
-namespace MBOptionScreen.Attributes
+using System;
+
+namespace MBOptionScreen.Attributes.v2
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    internal class SettingPropertyTextAttribute : BaseSettingPropertyAttribute
+    public sealed class SettingPropertyTextAttribute : BaseSettingPropertyAttribute, IPropertyDefinitionText
     {
         public SettingPropertyTextAttribute(string displayName, int order = -1, bool requireRestart = true, string hintText = "")
             : base(displayName, order, requireRestart, hintText)

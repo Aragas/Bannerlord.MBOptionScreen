@@ -1,17 +1,16 @@
-﻿using MBOptionScreen.GUI.v1a.ViewModels;
-using MBOptionScreen.Interfaces;
+﻿using MBOptionScreen.Settings;
 
 namespace MBOptionScreen.Actions
 {
-    public class SetFloatSettingProperty : IAction
+    public sealed class SetFloatSettingProperty : IAction
     {
         private readonly float _originalValue;
 
         public Ref Context { get; }
         public object Value { get; }
-        private SettingPropertyVM SettingProperty { get; }
+        private ISettingPropertyFloatValue SettingProperty { get; }
 
-        public SetFloatSettingProperty(SettingPropertyVM settingProperty, float value)
+        public SetFloatSettingProperty(ISettingPropertyFloatValue settingProperty, float value)
         {
             Value = value;
             SettingProperty = settingProperty;

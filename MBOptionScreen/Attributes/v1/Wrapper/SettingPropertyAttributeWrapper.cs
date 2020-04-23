@@ -1,6 +1,4 @@
-﻿using MBOptionScreen.Attributes;
-
-namespace MBOptionScreen.Settings.Wrapper
+﻿namespace MBOptionScreen.Attributes.v1
 {
     /// <summary>
     /// Wrapper for SettingPropertyAttribute. I think it world be better to make a model for it.

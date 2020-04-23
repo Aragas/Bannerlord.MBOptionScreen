@@ -1,9 +1,11 @@
-﻿using System;
+﻿using MBOptionScreen.Settings;
 
-namespace MBOptionScreen.Attributes
+using System;
+
+namespace MBOptionScreen.Attributes.v2
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    public class SettingPropertyIntegerAttribute : BaseSettingPropertyAttribute
+    public sealed class SettingPropertyIntegerAttribute : BaseSettingPropertyAttribute, IPropertyDefinitionInteger
     {
         /// <summary>
         /// The minimum value the setting can be set to. Used by the slider control.
@@ -18,8 +20,7 @@ namespace MBOptionScreen.Attributes
         /// </summary>
         public string ValueFormat { get; } = "";
 
-        public SettingPropertyIntegerAttribute(string displayName, int minValue, int maxValue, int order = -1, bool requireRestart = true, string hintText = "", string valueFormat = "0")
-            : base(displayName, order, requireRestart, hintText)
+        public SettingPropertyIntegerAttribute(string displayName, int minValue, int maxValue, string valueFormat = "0") : base(displayName)
         {
             MinValue = minValue;
             MaxValue = maxValue;

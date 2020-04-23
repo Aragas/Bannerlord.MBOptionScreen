@@ -33,11 +33,12 @@ namespace MBOptionScreen.Settings
         public virtual int UIVersion => 1;
         public virtual string SubFolder => "";
         protected virtual char SubGroupDelimiter => '/';
+        public virtual string Format => "json";
 
         public abstract List<SettingPropertyGroupDefinition> GetSettingPropertyGroups();
 
 
-        protected SettingPropertyGroupDefinition GetGroupFor(SettingPropertyDefinition sp, ICollection<SettingPropertyGroupDefinition> groupsList)
+        protected SettingPropertyGroupDefinition GetGroupFor(SettingPropertyDefinition sp, ICollection<SettingPropertyGroupDefinition> rootCollection)
         {
             SettingPropertyGroupDefinition? group;
             //Check if the intended group is a sub group
@@ -45,55 +46,52 @@ namespace MBOptionScreen.Settings
             {
                 //Intended group is a sub group. Must find it. First get the top group.
                 var topGroupName = GetTopGroupName(sp.GroupName, out var truncatedGroupName);
-                var topGroup = groupsList.GetGroup(topGroupName);
+                var topGroup = rootCollection.GetGroup(topGroupName);
                 if (topGroup == null)
                 {
+                    // Order will not be passed to the subgroup
                     topGroup = new SettingPropertyGroupDefinition(sp.GroupName, topGroupName);
-                    groupsList.Add(topGroup);
+                    rootCollection.Add(topGroup);
                 }
                 //Find the sub group
-                group = GetGroupForRecursive(truncatedGroupName, topGroup.SubGroups, sp);
+                group = GetGroupForRecursive(truncatedGroupName, topGroup, sp);
             }
             else
             {
                 //Group is not a subgroup, can find it in the main list of groups.
-                group = groupsList.GetGroup(sp.GroupName);
+                group = rootCollection.GetGroup(sp.GroupName);
                 if (group == null)
                 {
-                    group = new SettingPropertyGroupDefinition(sp.GroupName);
-                    groupsList.Add(group);
+                    group = new SettingPropertyGroupDefinition(sp.GroupName, order: sp.GroupOrder);
+                    rootCollection.Add(group);
                 }
             }
             return group;
         }
 
-        protected SettingPropertyGroupDefinition? GetGroupFor(string groupName, ICollection<SettingPropertyGroupDefinition> groupsList)
-        {
-            return groupsList.GetGroup(groupName);
-        }
-
-        protected SettingPropertyGroupDefinition GetGroupForRecursive(string groupName, ICollection<SettingPropertyGroupDefinition> groupsList, SettingPropertyDefinition sp)
+        protected SettingPropertyGroupDefinition GetGroupForRecursive(string groupName, SettingPropertyGroupDefinition sgp, SettingPropertyDefinition sp)
         {
             if (groupName.Contains(SubGroupDelimiter))
             {
                 //Need to go deeper
                 var topGroupName = GetTopGroupName(groupName, out var truncatedGroupName);
-                var topGroup = GetGroupFor(topGroupName, groupsList);
+                var topGroup = sgp.GetGroupFor(topGroupName);
                 if (topGroup == null)
                 {
+                    // Order will not be passed to the subgroup
                     topGroup = new SettingPropertyGroupDefinition(sp.GroupName, topGroupName);
-                    groupsList.Add(topGroup);
+                    sgp.Add(topGroup);
                 }
-                return GetGroupForRecursive(truncatedGroupName, topGroup.SubGroups, sp);
+                return GetGroupForRecursive(truncatedGroupName, topGroup, sp);
             }
             else
             {
                 //Reached the bottom level, can return the final group.
-                var group = groupsList.GetGroup(groupName);
+                var group = sgp.GetGroup(groupName);
                 if (group == null)
                 {
-                    group = new SettingPropertyGroupDefinition(sp.GroupName, groupName);
-                    groupsList.Add(group);
+                    group = new SettingPropertyGroupDefinition(sp.GroupName, groupName, sp.GroupOrder);
+                    sgp.Add(group);
                 }
                 return group;
             }
@@ -108,7 +106,7 @@ namespace MBOptionScreen.Settings
             return topGroupName;
         }
 
-        protected void CheckIsValid(SettingPropertyDefinition prop)
+        protected static void CheckIsValid(SettingPropertyDefinition prop)
         {
             if (!prop.Property.CanRead)
                 throw new Exception($"Property {prop.Property.Name} in {prop.SettingsInstance.GetType().FullName} must have a getter.");

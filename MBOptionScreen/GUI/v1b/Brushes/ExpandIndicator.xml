@@ -1,0 +1,15 @@
+﻿<Brushes>
+  <Brush Name="ModLib.ExpandIndicator_v1b" GlobalAlphaFactor="0.6" Sprite="StdAssets\expanded">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="StdAssets\expanded" />
+    </Layers>
+    <Styles>
+      <Style Name="Default">
+        <BrushLayer Name="Default" Sprite="StdAssets\collapsed" />
+      </Style>
+      <Style Name="Selected">
+        <BrushLayer Name="Default" Sprite="StdAssets\expanded" />
+      </Style>
+    </Styles>
+  </Brush>
+</Brushes>

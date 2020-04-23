@@ -1,10 +1,8 @@
-﻿using MBOptionScreen.Interfaces;
-
-using System;
+﻿using System;
 
 namespace MBOptionScreen.Actions
 {
-    public class ComplexAction<T> : IAction
+    public sealed class ComplexAction<T> : IAction
     {
         public Ref Context { get; }
         public object Value { get; }
@@ -13,7 +11,7 @@ namespace MBOptionScreen.Actions
 
         public ComplexAction(T value, Action<T> doFunction, Action<T> undoFunction)
         {
-            Value = value;
+            Value = value!;
             DoFunction = doFunction;
             UndoFunction = undoFunction;
         }

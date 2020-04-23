@@ -2,7 +2,7 @@
 {
     public enum SettingType
     {
-        NONE,
+        NONE = -1,
         Bool,
         Int,
         Float,

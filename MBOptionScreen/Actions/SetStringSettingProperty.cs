@@ -1,17 +1,16 @@
-﻿using MBOptionScreen.GUI.v1a.ViewModels;
-using MBOptionScreen.Interfaces;
+﻿using MBOptionScreen.Settings;
 
 namespace MBOptionScreen.Actions
 {
-    public class SetStringSettingProperty : IAction
+    public sealed class SetStringSettingProperty : IAction
     {
         private readonly string _originalValue;
 
         public Ref Context { get; }
         public object Value { get; }
-        private SettingPropertyVM SettingProperty { get; }
+        private ISettingPropertyStringValue SettingProperty { get; }
 
-        public SetStringSettingProperty(SettingPropertyVM settingProperty, string value)
+        public SetStringSettingProperty(ISettingPropertyStringValue settingProperty, string value)
         {
             Value = value;
             SettingProperty = settingProperty;
