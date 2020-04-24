@@ -1,15 +1,16 @@
-﻿using MBOptionScreen.ResourceInjection.Injectors;
+﻿using MBOptionScreen.ResourceInjection;
+using MBOptionScreen.ResourceInjection.Injectors;
 
 using System.Xml;
 
 using TaleWorlds.GauntletUI.PrefabSystem;
 
-namespace MBOptionScreen.ResourceInjection.EmbedLoaders
+namespace MBOptionScreen.GUI.v1b.ResourceInjection
 {
     /// <summary>
     /// Loads the embed .xml files from the library
     /// </summary>
-    internal static class PrefabsLoaderv1b
+    internal static class PrefabsLoader
     {
         private static readonly string EditValueViewPath = "MBOptionScreen.GUI.v1b.Views.EditValueView.xml";
         private static readonly string ModOptionsViewPath = "MBOptionScreen.GUI.v1b.Views.ModOptionsView.xml";
@@ -28,7 +29,7 @@ namespace MBOptionScreen.ResourceInjection.EmbedLoaders
 
         private static XmlDocument Load(string embedPath)
         {
-            using var stream = typeof(PrefabsLoaderv1b).Assembly.GetManifestResourceStream(embedPath);
+            using var stream = typeof(PrefabsLoader).Assembly.GetManifestResourceStream(embedPath);
             var doc = new XmlDocument();
             doc.Load(stream);
             return doc;

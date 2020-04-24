@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using HarmonyLib;
+
+using System.Collections;
 using System.Reflection;
 using System.Xml;
 
@@ -9,17 +11,16 @@ namespace MBOptionScreen.ResourceInjection.Injectors
 {
     internal static class BrushInjector
     {
-        private static MethodInfo LoadBrushFromMethod { get; } = typeof(BrushFactory)
-            .GetMethod("LoadBrushFrom", BindingFlags.Instance | BindingFlags.NonPublic);
-        private static FieldInfo BrushesField { get; } = typeof(BrushFactory)
-            .GetField("_brushes", BindingFlags.Instance | BindingFlags.NonPublic);
+        private static readonly AccessTools.FieldRef<BrushFactory, IDictionary> _brushes =
+            AccessTools.FieldRefAccess<BrushFactory, IDictionary>("_brushes");
+        private static MethodInfo LoadBrushFromMethod { get; } = AccessTools.Method(typeof(BrushFactory), "LoadBrushFrom");
 
         public static void InjectDocument(XmlDocument xmlDocument)
         {
-            var brushes = (IDictionary) BrushesField.GetValue(UIResourceManager.BrushFactory);
+            var brushes = _brushes(UIResourceManager.BrushFactory);
             foreach (XmlNode brushNode in xmlDocument.SelectSingleNode("Brushes").ChildNodes)
             {
-                var brush = (Brush)LoadBrushFromMethod.Invoke(UIResourceManager.BrushFactory, new object[] { brushNode });
+                var brush = (Brush) LoadBrushFromMethod.Invoke(UIResourceManager.BrushFactory, new object[] { brushNode });
                 if (brushes.Contains(brush.Name))
                 {
                     brushes[brush.Name] = brush;

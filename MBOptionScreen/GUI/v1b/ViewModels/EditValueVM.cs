@@ -12,7 +12,7 @@ namespace MBOptionScreen.GUI.v1b.ViewModels
         private string _titleText = "title";
         private string _descriptionText = "description";
 
-        public SettingPropertyVM SettingProperty { get; set; } = null;
+        public SettingPropertyVM SettingProperty { get; set; }
 
         [DataSourceProperty]
         public string TextInput

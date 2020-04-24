@@ -18,7 +18,7 @@ namespace MBOptionScreen
 
         [SettingPropertyBool("Test Property 1")]
         [SettingPropertyGroup("Debugging/Test Group", IsMainToggle = true)]
-        public bool TestProperty1 { get; set; } = false;
+        public bool TestProperty1 { get; set; } = true;
 
         [SettingPropertyBool("Test Property 5")]
         [SettingPropertyGroup("Debugging/Test Group")]
@@ -26,7 +26,7 @@ namespace MBOptionScreen
 
         [SettingPropertyBool("Test Property 2")]
         [SettingPropertyGroup("Debugging/Test Group/Test Group 2", IsMainToggle = true)]
-        public bool TestProperty2 { get; set; } = false;
+        public bool TestProperty2 { get; set; } = true;
 
         [SettingPropertyFloatingInteger("Test Property 4", 0f, 0.5f)]
         [SettingPropertyGroup("Debugging/Test Group/Test Group 2")]

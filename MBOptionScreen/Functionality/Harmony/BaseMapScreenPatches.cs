@@ -13,7 +13,7 @@ namespace MBOptionScreen.Functionality
     {
         private static BaseMapScreenPatches? _instance;
         public static BaseMapScreenPatches Instance =>
-            _instance ??= ReflectionUtils.GetImplementation<BaseMapScreenPatches, MapScreenPatchesWrapper>(ApplicationVersionParser.GameVersion());
+            _instance ??= DI.GetImplementation<BaseMapScreenPatches, MapScreenPatchesWrapper>(ApplicationVersionUtils.GameVersion());
 
         public virtual HarmonyMethod? GetEscapeMenuItemsPostfix { get; }
 

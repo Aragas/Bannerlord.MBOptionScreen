@@ -15,7 +15,7 @@ namespace MBOptionScreen.Legacy.v1
 {
     internal sealed class StateProviderV1
     {
-        private static AccessTools.FieldRef<Module, IList> _initialStateOptions { get; } =
+        private static readonly AccessTools.FieldRef<Module, IList> _initialStateOptions =
             AccessTools.FieldRefAccess<Module, IList>("_initialStateOptions");
 
         private readonly List<InitialStateOption> _containers = new List<InitialStateOption>();
@@ -37,7 +37,7 @@ namespace MBOptionScreen.Legacy.v1
                 var settingsProviderWrapper = Activator.CreateInstance(settingsProviderWrapperType, new object[] { settings });
 
                 var sharedStateObjectType = assembly.GetType("MBOptionScreen.State.SharedStateObject");
-                var sharedStateObject = Activator.CreateInstance(sharedStateObjectType, new object[] { settingsProviderWrapper, null, null });
+                var sharedStateObject = Activator.CreateInstance(sharedStateObjectType, new object[] { settingsProviderWrapper, null!, null! });
                 var hasInitializedProperty = sharedStateObjectType.GetProperty("HasInitialized");
                 hasInitializedProperty.SetValue(sharedStateObject, true);
 

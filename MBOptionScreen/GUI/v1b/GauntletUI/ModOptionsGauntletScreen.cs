@@ -1,5 +1,7 @@
 ﻿using MBOptionScreen.Attributes;
+using MBOptionScreen.GUI.v1b.ResourceInjection;
 using MBOptionScreen.GUI.v1b.ViewModels;
+using MBOptionScreen.ResourceInjection;
 
 using TaleWorlds.Engine.GauntletUI;
 using TaleWorlds.Engine.Screens;
@@ -28,6 +30,12 @@ namespace MBOptionScreen.GUI.v1b.GauntletUI
         private GauntletLayer _gauntletLayer;
         private GauntletMovie _gauntletMovie;
         private ModOptionsScreenVM _dataSource;
+
+        public ModOptionsGauntletScreen()
+        {
+            BrushLoader.Inject(BaseResourceInjector.Instance);
+            PrefabsLoader.Inject(BaseResourceInjector.Instance);
+        }
 
         protected override void OnInitialize()
         {

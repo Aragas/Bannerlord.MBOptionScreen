@@ -1,13 +1,12 @@
 ﻿using HarmonyLib;
 
 using MBOptionScreen.Attributes;
-using MBOptionScreen.ResourceInjection.EmbedLoaders;
 using MBOptionScreen.ResourceInjection.Injectors;
 
+using System.Threading;
 using System.Xml;
 
 using TaleWorlds.GauntletUI.Data;
-using TaleWorlds.GauntletUI.PrefabSystem;
 
 namespace MBOptionScreen.ResourceInjection
 {
@@ -30,11 +29,16 @@ namespace MBOptionScreen.ResourceInjection
     [Version("e1.2.0",  200)]
     internal sealed class DefaultResourceInjector : BaseResourceInjector
     {
+        private static int _initialized;
+
         public DefaultResourceInjector()
         {
-            new Harmony("bannerlord.mboptionscreen.defaultresourceinjector").Patch(
-                original: AccessTools.Method(typeof(GauntletMovie), "LoadMovie"),
-                prefix: BaseGauntletMoviePatches.Instance.LoadMoviePostfix);
+            if (Interlocked.Exchange(ref _initialized, 1) == 0)
+            {
+                new Harmony("bannerlord.mboptionscreen.defaultresourceinjector").Patch(
+                    original: AccessTools.Method(typeof(GauntletMovie), "LoadMovie"),
+                    prefix: BaseGauntletMoviePatches.Instance.LoadMoviePostfix);
+            }
         }
 
         public override void InjectBrush(XmlDocument xmlDocument)
@@ -45,20 +49,6 @@ namespace MBOptionScreen.ResourceInjection
         public override void InjectPrefab(string prefabName, XmlDocument xmlDocument)
         {
             PrefabInjector.InjectDocumentAndCreate(prefabName, xmlDocument);
-        }
-
-        public override WidgetPrefab? RequestMovie(string movie)
-        {
-            if (movie == "ModOptionsView_v1b")
-            {
-                return PrefabsLoaderv1b.LoadModOptionsView();
-            }
-            if (movie == "EditValueView_v1b")
-            {
-                return PrefabsLoaderv1b.LoadEditValueView();
-            }
-
-            return null;
         }
     }
 }

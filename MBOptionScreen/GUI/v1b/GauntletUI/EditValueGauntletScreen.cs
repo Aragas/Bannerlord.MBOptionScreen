@@ -52,10 +52,10 @@ namespace MBOptionScreen.GUI.v1b.GauntletUI
             base.OnFinalize();
             RemoveLayer(_gauntletLayer);
             _gauntletLayer.ReleaseMovie(_gauntletMovie);
-            _gauntletLayer = null;
-            _gauntletMovie = null;
-            _dataSource.SettingProperty = null;
-            _dataSource = null;
+            _gauntletLayer = null!;
+            _gauntletMovie = null!;
+            _dataSource.SettingProperty = null!;
+            _dataSource = null!;
         }
     }
 }

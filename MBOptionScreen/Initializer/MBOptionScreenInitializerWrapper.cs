@@ -6,12 +6,12 @@ using TaleWorlds.Library;
 
 namespace MBOptionScreen
 {
-    internal sealed class MBOptionScreenInitializerWrapper : IMBOptionScreenInitializer
+    internal sealed class MBOptionScreenInitializerWrapper : IMBOptionScreenInitializer, IWrapper
     {
         private readonly object _object;
-
         private MethodInfo StartInitializationMethod { get; }
         private MethodInfo EndInitializationMethod { get; }
+        public bool IsCorrect { get; }
 
         public MBOptionScreenInitializerWrapper(object @object)
         {
@@ -20,6 +20,8 @@ namespace MBOptionScreen
 
             StartInitializationMethod = AccessTools.Method(type, "StartInitialization");
             EndInitializationMethod = AccessTools.Method(type, "EndInitialization");
+
+            IsCorrect = StartInitializationMethod != null && EndInitializationMethod != null;
         }
 
         public void StartInitialization(ApplicationVersion gameVerion, bool first) =>

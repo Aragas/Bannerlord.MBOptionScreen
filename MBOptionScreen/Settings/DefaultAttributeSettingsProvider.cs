@@ -38,7 +38,7 @@ namespace MBOptionScreen.Settings
 
         public DefaultAttributeSettingsProvider()
         {
-            foreach (var format in ReflectionUtils.GetImplementations<ISettingsFormat, SettingFormatWrapper>(ApplicationVersionParser.GameVersion()))
+            foreach (var format in DI.GetImplementations<ISettingsFormat, SettingFormatWrapper>(ApplicationVersionUtils.GameVersion()))
             foreach (var provider in format.Providers)
             {
                 AvailableSettingsFormats[provider] = format;

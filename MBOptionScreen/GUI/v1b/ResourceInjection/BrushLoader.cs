@@ -1,11 +1,13 @@
-﻿using System.Xml;
+﻿using MBOptionScreen.ResourceInjection;
 
-namespace MBOptionScreen.ResourceInjection.EmbedLoaders
+using System.Xml;
+
+namespace MBOptionScreen.GUI.v1b.ResourceInjection
 {
     /// <summary>
     /// Loads the embed .xml files from the library
     /// </summary>
-    internal static class BrushLoaderv1b
+    internal static class BrushLoader
     {
         private static readonly string ButtonBrushesPath = "MBOptionScreen.GUI.v1b.Brushes.ButtonBrushes.xml";
         private static readonly string DividerBrushesPath = "MBOptionScreen.GUI.v1b.Brushes.DividerBrushes.xml";
@@ -25,7 +27,7 @@ namespace MBOptionScreen.ResourceInjection.EmbedLoaders
 
         private static XmlDocument Load(string embedPath)
         {
-            using var stream = typeof(PrefabsLoaderv1b).Assembly.GetManifestResourceStream(embedPath);
+            using var stream = typeof(PrefabsLoader).Assembly.GetManifestResourceStream(embedPath);
             var doc = new XmlDocument();
             doc.Load(stream);
             return doc;

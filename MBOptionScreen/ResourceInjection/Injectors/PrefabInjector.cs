@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HarmonyLib;
+
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
@@ -13,6 +15,9 @@ namespace MBOptionScreen.ResourceInjection.Injectors
 {
     internal static class PrefabInjector
     {
+        private static readonly AccessTools.FieldRef<WidgetFactory, IDictionary> _customTypes =
+            AccessTools.FieldRefAccess<WidgetFactory, IDictionary>("_customTypes");
+
         public static WidgetPrefab InjectDocumentAndCreate(string name, XmlDocument doc)
         {
             static Type CustomWidgetType() => typeof(WidgetTemplate).Assembly
@@ -26,12 +31,6 @@ namespace MBOptionScreen.ResourceInjection.Injectors
             static PropertyInfo WidgetPrefabProperty() => CustomWidgetType()
                 .GetProperty("WidgetPrefab", BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic);
 
-            static FieldInfo CustomTypesField() => typeof(WidgetFactory)
-                .GetField("_customTypes", BindingFlags.Instance | BindingFlags.NonPublic);
-
-
-            var dict = (IDictionary)CustomTypesField().GetValue(UIResourceManager.WidgetFactory);
-
             var widgetPrefab = LoadFromDocument(
                 UIResourceManager.WidgetFactory.PrefabExtensionContext,
                 UIResourceManager.WidgetFactory.WidgetAttributeContext,
@@ -43,7 +42,8 @@ namespace MBOptionScreen.ResourceInjection.Injectors
             WidgetFactoryProperty().SetValue(customWidgetType, UIResourceManager.WidgetFactory);
             WidgetPrefabProperty().SetValue(customWidgetType, widgetPrefab);
 
-            if(!dict.Contains(name))
+            var dict = _customTypes(UIResourceManager.WidgetFactory);
+            if (!dict.Contains(name))
                 dict.Add(name, customWidgetType);
 
             return widgetPrefab;
@@ -171,7 +171,7 @@ namespace MBOptionScreen.ResourceInjection.Injectors
         private static void DoLoading(PrefabExtensionContext prefabExtensionContext, WidgetAttributeContext widgetAttributeContext, WidgetTemplate template, XmlNode node)
         {
             var xmlNodeList = node.SelectNodes("ItemTemplate");
-            ItemTemplateUsage itemTemplateUsage = null;
+            ItemTemplateUsage itemTemplateUsage = null!;
             foreach (XmlNode xmlNode in xmlNodeList)
             {
                 var xmlAttribute = xmlNode.Attributes["Type"];

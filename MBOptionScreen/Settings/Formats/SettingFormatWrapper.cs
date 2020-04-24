@@ -6,12 +6,13 @@ using System.Reflection;
 
 namespace MBOptionScreen.Settings
 {
-    internal sealed class SettingFormatWrapper : ISettingsFormat
+    internal sealed class SettingFormatWrapper : ISettingsFormat, IWrapper
     {
         private readonly object _object;
         private PropertyInfo ProvidersProperty { get; }
         private MethodInfo LoadMethod { get; }
         private MethodInfo SaveMethod { get; }
+        public bool IsCorrect { get; }
 
         public IEnumerable<string> Providers => ProvidersProperty?.GetValue(_object) as IEnumerable<string> ?? Array.Empty<string>();
 
@@ -23,6 +24,8 @@ namespace MBOptionScreen.Settings
             ProvidersProperty = AccessTools.Property(type, "Providers");
             LoadMethod = AccessTools.Method(type, "Load");
             SaveMethod = AccessTools.Method(type, "Save");
+
+            IsCorrect = ProvidersProperty != null && LoadMethod != null && SaveMethod != null;
         }
 
         public SettingsBase? Load(SettingsBase settings, string path) => LoadMethod?.Invoke(_object, new object[] { settings, path }) as SettingsBase;

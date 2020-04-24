@@ -7,7 +7,7 @@ using TaleWorlds.Library;
 
 namespace MBOptionScreen.Utils
 {
-    internal static class ApplicationVersionParser
+    internal static class ApplicationVersionUtils
     {
         private static ConstructorInfo ApplicationVersionConstructorV1 { get; } =
             typeof(ApplicationVersion).GetConstructor(new Type[]

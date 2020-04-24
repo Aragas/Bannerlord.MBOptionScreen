@@ -2,8 +2,6 @@
 using MBOptionScreen.Attributes;
 using MBOptionScreen.Functionality;
 using MBOptionScreen.Legacy.v1;
-using MBOptionScreen.ResourceInjection;
-using MBOptionScreen.ResourceInjection.EmbedLoaders;
 using MBOptionScreen.Settings;
 using MBOptionScreen.Utils;
 
@@ -32,7 +30,7 @@ namespace MBOptionScreen
     [Version("e1.0.11", 200)]
     [Version("e1.1.0",  200)]
     [Version("e1.2.0",  200)]
-    public sealed class MBOptionScreenInitializer : IMBOptionScreenInitializer
+    public sealed class DefaultMBOptionScreenInitializer : IMBOptionScreenInitializer
     {
         protected ApplicationVersion GameVerion { get; private set; }
         protected IApplicationContainerProvider ApplicationContainerProvider { get; private set; }
@@ -42,18 +40,18 @@ namespace MBOptionScreen
         {
             GameVerion = gameVerion;
 
-            ApplicationContainerProvider = ReflectionUtils.GetImplementation<IApplicationContainerProvider, ApplicationContainerProviderWrapper>(GameVerion);
+            ApplicationContainerProvider = DI.GetImplementation<IApplicationContainerProvider, ApplicationContainerProviderWrapper>(GameVerion);
             if (first)
             {
-                var settingsProvider = ReflectionUtils.GetImplementation<IMBOptionScreenSettingsProvider, SettingsProviderWrapper>(GameVerion);
-                var modLibSettingsProvider = ReflectionUtils.GetImplementation<IModLibSettingsProvider, SettingsProviderWrapper>(GameVerion);
+                var settingsProvider = DI.GetImplementation<IMBOptionScreenSettingsProvider, SettingsProviderWrapper>(GameVerion);
+                var modLibSettingsProvider = DI.GetImplementation<IModLibSettingsProvider, SettingsProviderWrapper>(GameVerion);
                 ApplicationContainerProvider.Set("MBOptionScreenSettingsProvider", settingsProvider);
                 ApplicationContainerProvider.Set("ModLibSettingsProvider", modLibSettingsProvider);
 
                 Resolver.GameMenuScreenHandler.AddScreen(
                     "ModOptionsMenu_MBOptionScreen_v2",
                     9990,
-                    () => (ScreenBase) ReflectionUtils.GetImplementation(GameVerion, typeof(MBOptionScreen).FullName),
+                    () => (ScreenBase) DI.GetImplementation(GameVerion, typeof(MBOptionScreen).FullName),
                     new TextObject("{=HiZbHGvYG}Mod Options"));
             }
 
@@ -75,14 +73,11 @@ namespace MBOptionScreen
             {
                 Resolver.IngameMenuScreenHandler.AddScreen(
                     1,
-                    () => (ScreenBase) ReflectionUtils.GetImplementation(GameVerion, typeof(MBOptionScreen).FullName),
+                    () => (ScreenBase) DI.GetImplementation(GameVerion, typeof(MBOptionScreen).FullName),
                     new TextObject("{=NqarFr4P}Mod Options", null));
 
                 if (MBOptionScreenSettings.Instance!.OverrideModLib)
                     Resolver.ModLibScreenOverrider.OverrideModLibScreen();
-
-                BrushLoaderv1b.Inject(BaseResourceInjector.Instance);
-                PrefabsLoaderv1b.Inject(BaseResourceInjector.Instance);
 
                 ApplicationContainerProvider.Clear();
                 StateProviderV1?.Clear();

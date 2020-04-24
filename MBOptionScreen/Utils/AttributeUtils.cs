@@ -10,7 +10,7 @@ using TaleWorlds.Library;
 
 namespace MBOptionScreen.Utils
 {
-    internal static class AttributeHelper
+    internal static class AttributeUtils
     {
         // Rewrite
         public static (Type Type, VersionAttribute Attribute) Get(ApplicationVersion version, IEnumerable<Type>? types = null)

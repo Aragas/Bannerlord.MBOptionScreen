@@ -4,7 +4,6 @@ using MBOptionScreen.Attributes;
 
 using System.Collections;
 using System.Collections.Generic;
-using System.Reflection;
 
 using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
@@ -29,27 +28,45 @@ namespace MBOptionScreen.ApplicationContainer
     [Version("e1.2.0",  200)]
     internal sealed class DefaultApplicationContainerProvider : IApplicationContainerProvider
     {
-        private static FieldInfo InitialStateOptionsField { get; } = AccessTools.Field(typeof(Module), "_initialStateOptions");
+        private static readonly AccessTools.FieldRef<Module, IList> _initialStateOptions =
+            AccessTools.FieldRefAccess<Module, IList>("_initialStateOptions");
 
         private readonly List<Container> _containers = new List<Container>();
 
         public object Get(string name)
         {
-            if (Module.CurrentModule.GetInitialStateOptionWithId(name) is Container container)
+            if (Module.CurrentModule.GetInitialStateOptionWithId(name) is object obj)
+            {
+                if (!(obj is Container container))
+                {
+                    var wrapper = new ContainerWrapper(obj);
+                    if (!wrapper.IsCorrect)
+                        return default;
+                    container = wrapper;
+                }
+
                 return container.Value;
+            }
             return default;
         }
 
         public void Set(string name, object value)
         {
-            if (Module.CurrentModule.GetInitialStateOptionWithId(name) is Container container)
+            if (Module.CurrentModule.GetInitialStateOptionWithId(name) is object obj)
+            {
+                if (!(obj is Container container))
+                {
+                    var wrapper = new ContainerWrapper(obj);
+                    if (!wrapper.IsCorrect)
+                        return;
+                    container = wrapper;
+                }
+
                 container.Value = value;
+            }
             else
             {
-                container = new Container(name, value);
-
-                // Module._initialStateOptions was used to host the shared class,
-                // as the game is using the list only after OnBeforeInitialModuleScreenSetAsRoot() was called
+                var container = new Container(name, value);
                 Module.CurrentModule.AddInitialStateOption(container);
                 _containers.Add(container);
             }
@@ -57,7 +74,7 @@ namespace MBOptionScreen.ApplicationContainer
 
         public void Clear()
         {
-            var list = (IList) InitialStateOptionsField.GetValue(Module.CurrentModule);
+            var list = _initialStateOptions(Module.CurrentModule);
             foreach (var container in _containers)
                 list.Remove(container);
             _containers.Clear();
@@ -70,6 +87,26 @@ namespace MBOptionScreen.ApplicationContainer
             public Container(string name, object value) : base(name, new TextObject(""), 1, () => { }, true)
             {
                 Value = value;
+            }
+        }
+        private class ContainerWrapper : Container, IWrapper
+        {
+            private static string? GetName(object @object)
+            {
+                var propInfo = @object.GetType().GetProperty("Id");
+                return propInfo?.GetValue(@object) as string;
+            }
+            private static object? GetValue(object @object)
+            {
+                var propInfo = @object.GetType().GetProperty("Value");
+                return propInfo?.GetValue(@object) as object;
+            }
+
+            public bool IsCorrect { get; }
+
+            public ContainerWrapper(object @object) : base(GetName(@object) ?? "ERROR", GetValue(@object))
+            {
+                IsCorrect = Id != "ERROR" && @object.GetType().GetProperty("Value") != null;
             }
         }
     }

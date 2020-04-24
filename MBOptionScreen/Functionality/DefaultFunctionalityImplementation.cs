@@ -2,11 +2,8 @@
 
 using MBOptionScreen.Attributes;
 
-using SandBox.View.Map;
-
 using System;
 using System.Collections;
-using System.Threading;
 
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Localization;
@@ -29,26 +26,11 @@ namespace MBOptionScreen.Functionality
     [Version("e1.1.0",  200)]
     [Version("e1.2.0",  200)]
     public sealed class DefaultFunctionalityImplementation :
-        IIngameMenuScreenHandler,
         IGameMenuScreenHandler,
         IModLibScreenOverrider
     {
-        private static AccessTools.FieldRef<Module, IList> _initialStateOptions { get; } =
+        private static readonly AccessTools.FieldRef<Module, IList> _initialStateOptions =
             AccessTools.FieldRefAccess<Module, IList>("_initialStateOptions");
-
-        private int _initializedScreen = 0;
-
-        void IIngameMenuScreenHandler.AddScreen(int index, Func<ScreenBase> screenFactory, TextObject text)
-        {
-            if (Interlocked.Exchange(ref _initializedScreen, 1) == 0)
-            {
-                new Harmony("bannerlord.mboptionscreen.defaultmapscreeninjection_v1").Patch(
-                    original: AccessTools.Method(typeof(MapScreen), "GetEscapeMenuItems"),
-                    postfix: BaseMapScreenPatches.Instance.GetEscapeMenuItemsPostfix);
-            }
-
-            BaseMapScreenPatches.Instance.AddScreen(index, screenFactory, text);
-        }
 
         void IGameMenuScreenHandler.AddScreen(string internalName, int index, Func<ScreenBase> screenFactory, TextObject text)
         {

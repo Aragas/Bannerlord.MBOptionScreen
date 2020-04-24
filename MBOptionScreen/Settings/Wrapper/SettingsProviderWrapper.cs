@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace MBOptionScreen.Settings
 {
-    internal sealed class SettingsProviderWrapper : IMBOptionScreenSettingsProvider, IModLibSettingsProvider
+    internal sealed class SettingsProviderWrapper : IMBOptionScreenSettingsProvider, IModLibSettingsProvider, IWrapper
     {
         private readonly object _object;
         private PropertyInfo CreateModSettingsDefinitionsProperty { get; }
@@ -14,6 +14,7 @@ namespace MBOptionScreen.Settings
         private MethodInfo RegisterSettingsMethod { get; }
         private MethodInfo ResetSettingsMethod { get; }
         private MethodInfo SaveSettingsMethod { get; }
+        public bool IsCorrect { get; }
 
         public List<ModSettingsDefinition> CreateModSettingsDefinitions => (List < ModSettingsDefinition > ) CreateModSettingsDefinitionsProperty.GetValue(_object);
 
@@ -27,6 +28,10 @@ namespace MBOptionScreen.Settings
             RegisterSettingsMethod = AccessTools.Method(type, "RegisterSettings");
             ResetSettingsMethod = AccessTools.Method(type, "ResetSettings");
             SaveSettingsMethod = AccessTools.Method(type, "SaveSettings");
+
+            IsCorrect = CreateModSettingsDefinitionsProperty != null && GetSettingsMethod != null
+                && OverrideSettingsMethod != null && RegisterSettingsMethod != null
+                && ResetSettingsMethod != null && SaveSettingsMethod != null;
         }
 
         public SettingsBase? GetSettings(string id) => GetSettingsMethod.Invoke(_object, new object[] { id }) as SettingsBase;

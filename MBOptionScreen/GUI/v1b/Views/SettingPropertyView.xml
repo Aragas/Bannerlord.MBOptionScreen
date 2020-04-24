@@ -18,10 +18,6 @@
             <!-- Controls Section-->
             <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="Fixed" VerticalAlignment="Top" HorizontalAlignment="Left" MarginLeft="60" SuggestedWidth="400">
               <Children>
-
-                <!-- Dropdown list -->
-                <Standard.DropdownWithHorizontalControl WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="362" SuggestedHeight="42" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                                        IsEnabled="@IsEnabled" IsVisible="@IsDropdownVisible" Parameter.SelectorDataSource="{DropdownValue}"/>
                 
                 <!-- Boolean switch widget -->
                 <Widget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" VerticalAlignment="Center" HorizontalAlignment="Center"
@@ -89,6 +85,16 @@
                   </Children>
                 </ButtonWidget>
 
+                <!-- Dropdown list -->
+                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="362" SuggestedHeight="42" HorizontalAlignment="Center"
+                        IsEnabled="@IsEnabled" IsVisible="@IsDropdownVisible">
+                  <Children>
+                    <RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    BIsEnabled="@IsEnabled" IsVisible="@IsDropdownVisible" rush="CustomBattle.Value.Text" Text="@ValueString" />
+                    <Standard.DropdownWithHorizontalControl HorizontalAlignment="Right" Parameter.SelectorDataSource="{DropdownValue}" />
+                  </Children>
+                </Widget>
+                
                 
               </Children>
             </Widget>

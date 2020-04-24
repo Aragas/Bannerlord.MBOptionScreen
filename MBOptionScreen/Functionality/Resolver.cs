@@ -6,14 +6,14 @@ namespace MBOptionScreen.Functionality
     {
         private static IIngameMenuScreenHandler? _ingameMenuScreenHandler;
         public static IIngameMenuScreenHandler IngameMenuScreenHandler => _ingameMenuScreenHandler
-            ??= ReflectionUtils.GetImplementation<IIngameMenuScreenHandler, IngameMenuScreenHandlerWrapper>(ApplicationVersionParser.GameVersion());
+            ??= DI.GetImplementation<IIngameMenuScreenHandler, IngameMenuScreenHandlerWrapper>(ApplicationVersionUtils.GameVersion());
 
         private static IGameMenuScreenHandler? _gameMenuScreenHandler;
         public static IGameMenuScreenHandler GameMenuScreenHandler => _gameMenuScreenHandler
-            ??= ReflectionUtils.GetImplementation<IGameMenuScreenHandler, GameMenuScreenHandlerWrapper>(ApplicationVersionParser.GameVersion());
+            ??= DI.GetImplementation<IGameMenuScreenHandler, GameMenuScreenHandlerWrapper>(ApplicationVersionUtils.GameVersion());
 
         private static IModLibScreenOverrider? _modLibScreenOverrider;
         public static IModLibScreenOverrider ModLibScreenOverrider => _modLibScreenOverrider
-            ??= ReflectionUtils.GetImplementation<IModLibScreenOverrider, ModLibScreenOverriderWrapper>(ApplicationVersionParser.GameVersion());
+            ??= DI.GetImplementation<IModLibScreenOverrider, ModLibScreenOverriderWrapper>(ApplicationVersionUtils.GameVersion());
     }
 }

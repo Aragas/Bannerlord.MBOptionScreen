@@ -139,27 +139,6 @@ namespace MBOptionScreen.GUI.v1b.ViewModels
         public SelectorVM<SelectorItemVM> DropdownValue
         {
             get => SettingType == SettingType.Dropdown ? GetSelector(Property.GetValue(SettingsInstance)) : new SelectorVM<SelectorItemVM>(0, null);
-            set
-            {
-                ;
-                //if (value != _selector)
-                //{
-                //    _selector = value;
-                //    OnPropertyChanged(nameof(DropdownValue));
-                //}
-            }
-
-            /*
-            get => _selector;
-            set
-            {
-                if (value != _selector)
-                {
-                    _selector = value;
-                    OnPropertyChanged(nameof(DropdownValue));
-                }
-            }
-            */
         }
         [DataSourceProperty]
         public float MaxValue => SettingPropertyDefinition.MaxValue;
@@ -187,13 +166,25 @@ namespace MBOptionScreen.GUI.v1b.ViewModels
             if (SettingPropertyDefinition.HintText.Length > 0)
                 HintText = $"{Name}: {SettingPropertyDefinition.HintText}";
 
+            if (SettingType == SettingType.Dropdown)
+            {
+                DropdownValue.PropertyChanged += (s, e) =>
+                {
+                    URS.Do(new ComplexAction<int>(
+                        DropdownValue.SelectedIndex,
+                        index => DropdownValue.SelectedIndex = index,
+                        index => DropdownValue.SelectedIndex = index));
+
+                    OnPropertyChanged(nameof(DropdownValue));
+                };
+            }
+
             RefreshValues();
         }
 
         public override void RefreshValues()
         {
             base.RefreshValues();
-
         }
 
         public void OnHover()

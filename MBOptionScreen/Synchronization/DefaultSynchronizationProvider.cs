@@ -27,7 +27,7 @@ namespace MBOptionScreen.Synchronization
     [Version("e1.2.0",  200)]
     internal sealed class DefaultSynchronizationProvider : ISynchronizationProvider
     {
-        private static AccessTools.FieldRef<Module, IList> _initialStateOptions { get; } =
+        private static readonly AccessTools.FieldRef<Module, IList> _initialStateOptions =
             AccessTools.FieldRefAccess<Module, IList>("_initialStateOptions");
 
         public string Name { get; }

@@ -13,8 +13,8 @@ namespace MBOptionScreen.ResourceInjection
             {
                 if (_instance == null)
                 {
-                    var version = ApplicationVersionParser.GameVersion();
-                    _instance = ReflectionUtils.GetImplementation<BaseGauntletMoviePatches, GauntletMoviePatchesWrapper>(version);
+                    var version = ApplicationVersionUtils.GameVersion();
+                    _instance = DI.GetImplementation<BaseGauntletMoviePatches, GauntletMoviePatchesWrapper>(version);
                 }
 
                 return _instance;

@@ -3,6 +3,7 @@ using MBOptionScreen.Data;
 using MBOptionScreen.Utils;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Serialization;
 
 using System;
@@ -90,19 +91,27 @@ namespace MBOptionScreen.Settings
 
         public class DropdownJsonConverter : JsonConverter
         {
-            public override bool CanConvert(Type objectType) => typeof(IDropdownProvider).IsAssignableFrom(objectType.GetType());
+            public override bool CanConvert(Type objectType) => typeof(IDropdownProvider).IsAssignableFrom(objectType);
 
             public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
             {
-                var dropdown = (IDropdownProvider)value;
-                writer.WriteValue(dropdown.SelectedIndex);
+                var dropdown = (IDropdownProvider) value;
+                var jo = new JObject
+                {
+                    { "SelectedIndex", dropdown.SelectedIndex },
+                };
+                jo.WriteTo(writer);
             }
 
             public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
             {
-                var selectedIndex = reader.ReadAsInt32();
-                var dropdown = (IDropdownProvider)existingValue;
-                dropdown.SelectedIndex = selectedIndex ?? dropdown.SelectedIndex;
+                var dropdown = (IDropdownProvider) existingValue;
+                try
+                {
+                    var jo = JObject.Load(reader);
+                    dropdown.SelectedIndex = int.TryParse(jo["SelectedIndex"].ToString(), out var res) ? res : dropdown.SelectedIndex;
+                }
+                catch (Exception) { }
                 return dropdown;
             }
         }

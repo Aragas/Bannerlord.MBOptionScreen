@@ -18,7 +18,7 @@ namespace MBOptionScreen.Settings
         public IEnumerable<SettingPropertyGroupDefinition> GetUnsortedSettingPropertyGroups()
         {
             var groups = new List<SettingPropertyGroupDefinition>();
-            foreach (var settingProp in SettingsHelper.GetProperties(this, Id))
+            foreach (var settingProp in SettingsUtils.GetProperties(this, Id))
             {
                 CheckIsValid(settingProp);
 

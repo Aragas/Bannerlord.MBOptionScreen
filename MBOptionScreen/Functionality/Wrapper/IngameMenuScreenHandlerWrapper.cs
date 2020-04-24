@@ -8,11 +8,11 @@ using TaleWorlds.Localization;
 
 namespace MBOptionScreen.Functionality
 {
-    internal sealed class IngameMenuScreenHandlerWrapper : IIngameMenuScreenHandler
+    internal sealed class IngameMenuScreenHandlerWrapper : IIngameMenuScreenHandler, IWrapper
     {
         private readonly object _object;
-
         private MethodInfo AddScreenMethod { get; }
+        public bool IsCorrect { get; }
 
         public IngameMenuScreenHandlerWrapper(object @object)
         {
@@ -20,6 +20,8 @@ namespace MBOptionScreen.Functionality
             var type = @object.GetType();
 
             AddScreenMethod = AccessTools.Method(type, "AddScreen");
+
+            IsCorrect = AddScreenMethod != null;
         }
 
         public void AddScreen(int index, Func<ScreenBase> screenFactory, TextObject text) =>

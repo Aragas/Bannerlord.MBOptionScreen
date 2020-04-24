@@ -60,8 +60,6 @@ namespace MBOptionScreen.Settings
                     SettingType = SettingType.String;
                 else if (typeof(IDropdownProvider).IsAssignableFrom(Property.PropertyType))
                     SettingType = SettingType.Dropdown;
-                else
-                    ;
 
                 MinValue = settingPropertyAttribute.MinValue;
                 MaxValue = settingPropertyAttribute.MaxValue;

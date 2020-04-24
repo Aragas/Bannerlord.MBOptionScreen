@@ -4,7 +4,7 @@
     {
         internal PropertyDefinitionBoolWrapper(object @object) : base(@object)
         {
-        
+
         }
     }
 }

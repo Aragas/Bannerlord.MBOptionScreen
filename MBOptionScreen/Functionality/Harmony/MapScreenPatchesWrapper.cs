@@ -8,12 +8,12 @@ using TaleWorlds.Localization;
 
 namespace MBOptionScreen.Functionality
 {
-    internal sealed class MapScreenPatchesWrapper : BaseMapScreenPatches
+    internal sealed class MapScreenPatchesWrapper : BaseMapScreenPatches, IWrapper
     {
         private readonly object _object;
-
         private PropertyInfo GetEscapeMenuItemsPostfixProperty { get; }
         private MethodInfo AddScreenMethod { get; }
+        public bool IsCorrect { get; }
 
         public override HarmonyMethod? GetEscapeMenuItemsPostfix => GetEscapeMenuItemsPostfixProperty.GetValue(_object) as HarmonyMethod;
 
@@ -24,6 +24,8 @@ namespace MBOptionScreen.Functionality
 
             GetEscapeMenuItemsPostfixProperty = AccessTools.Property(type, "GetEscapeMenuItemsPostfix");
             AddScreenMethod = AccessTools.Method(type, "AddScreen");
+
+            IsCorrect = GetEscapeMenuItemsPostfixProperty != null && AddScreenMethod != null;
         }
 
         public override void AddScreen(int index, Func<ScreenBase> screenFactory, TextObject text) =>

@@ -44,7 +44,7 @@ namespace MBOptionScreen.Settings
         {
             _groupName = new TextObject(groupName, null);
             _groupNameOverride = new TextObject(groupNameOverride ?? "", null);
-            GroupName = string.IsNullOrWhiteSpace(groupNameOverride) ? groupName : groupNameOverride;
+            GroupName = string.IsNullOrWhiteSpace(groupNameOverride) ? groupName : groupNameOverride!;
             Order = order;
         }
 

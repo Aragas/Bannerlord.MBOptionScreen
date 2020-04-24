@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace MBOptionScreen.Utils
 {
-    internal static class SettingsHelper
+    internal static class SettingsUtils
     {
         public static IEnumerable<SettingPropertyDefinition> GetProperties(object @object, string id)
         {
