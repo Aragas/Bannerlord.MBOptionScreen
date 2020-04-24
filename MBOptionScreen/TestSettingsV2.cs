@@ -81,12 +81,7 @@ namespace MBOptionScreen
         public class CustomObject
         {
             private readonly string _value;
-
-            public CustomObject(string value)
-            {
-                _value = value;
-            }
-
+            public CustomObject(string value) => _value = value;
             public override string ToString() => _value;
         }
     }

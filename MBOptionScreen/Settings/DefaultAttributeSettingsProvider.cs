@@ -39,9 +39,9 @@ namespace MBOptionScreen.Settings
         public DefaultAttributeSettingsProvider()
         {
             foreach (var format in DI.GetImplementations<ISettingsFormat, SettingFormatWrapper>(ApplicationVersionUtils.GameVersion()))
-            foreach (var provider in format.Providers)
+            foreach (var extension in format.Extensions)
             {
-                AvailableSettingsFormats[provider] = format;
+                AvailableSettingsFormats[extension] = format;
             }
 
             if (AvailableSettingsFormats.Count == 0)

@@ -14,7 +14,7 @@ namespace MBOptionScreen.Settings
         private MethodInfo SaveMethod { get; }
         public bool IsCorrect { get; }
 
-        public IEnumerable<string> Providers => ProvidersProperty?.GetValue(_object) as IEnumerable<string> ?? Array.Empty<string>();
+        public IEnumerable<string> Extensions => ProvidersProperty?.GetValue(_object) as IEnumerable<string> ?? Array.Empty<string>();
 
         public SettingFormatWrapper(object @object)
         {

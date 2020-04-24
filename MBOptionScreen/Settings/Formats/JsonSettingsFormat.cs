@@ -37,7 +37,7 @@ namespace MBOptionScreen.Settings
             Converters = { new DropdownJsonConverter() }
         };
 
-        public IEnumerable<string> Providers => new string[] { "json" };
+        public IEnumerable<string> Extensions => new string[] { "json" };
 
         public bool Save(SettingsBase settings, string path)
         {
