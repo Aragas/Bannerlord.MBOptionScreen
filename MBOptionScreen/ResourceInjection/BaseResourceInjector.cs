@@ -1,5 +1,6 @@
 ﻿using MBOptionScreen.Utils;
 
+using System.Linq;
 using System.Xml;
 
 using TaleWorlds.GauntletUI.PrefabSystem;
@@ -17,7 +18,12 @@ namespace MBOptionScreen.ResourceInjection
 
         public WidgetPrefab? RequestMovie(string movie)
         {
-            foreach (var resourceLoader in DI.GetImplementations<IResourceLoader, ResourceLoaderWrapper>(ApplicationVersionUtils.GameVersion()))
+            var loaders = DI.GetImplementations<IResourceLoader, ResourceLoaderWrapper>(ApplicationVersionUtils.GameVersion()).ToList();
+            // Try the built-in none is found
+            if (loaders.Count == 0)
+                loaders.Add(new GUI.v1b.ResourceInjection.ResourceLoader());
+
+            foreach (var resourceLoader in loaders)
             {
                 var widget = resourceLoader.MovieRequested(movie);
                 if (widget != null)
