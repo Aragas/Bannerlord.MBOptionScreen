@@ -2,7 +2,7 @@
 <Module>
 	<Name value="Option Screen Standalone"/>
 	<Id value="Bannerlord.MBOptionScreen"/>
-	<Version value="v2.0.0"/>
+	<Version value="v2.0.2"/>
 	<DefaultModule value="false"/>
 	<SingleplayerModule value="true"/>
 	<MultiplayerModule value="false"/>
@@ -17,7 +17,7 @@
 	<SubModules>
 		<SubModule>
 			<Name value="Bannerlord.MBOptionScreen"/>
-			<DLLName value="MBOptionScreen2.0.0.dll"/>
+			<DLLName value="MBOptionScreen.v2.0.2.dll"/>
 			<SubModuleClassType value="MBOptionScreen.MBOptionScreenSubModule"/>
 			<Tags>
 				<Tag key="DedicatedServerType" value="none" />

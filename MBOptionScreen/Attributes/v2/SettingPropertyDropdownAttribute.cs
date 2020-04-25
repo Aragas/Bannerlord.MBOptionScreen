@@ -5,7 +5,7 @@ using System;
 namespace MBOptionScreen.Attributes.v2
 {
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
-    internal sealed class SettingPropertyDropdownAttribute : BaseSettingPropertyAttribute, IPropertyDefinitionDropdown
+    public sealed class SettingPropertyDropdownAttribute : BaseSettingPropertyAttribute, IPropertyDefinitionDropdown
     {
         public SettingPropertyDropdownAttribute(string displayName) : base(displayName)
         {
