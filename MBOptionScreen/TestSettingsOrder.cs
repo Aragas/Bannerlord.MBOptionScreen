@@ -1,14 +1,12 @@
 ﻿using MBOptionScreen.Attributes;
 using MBOptionScreen.Attributes.v2;
-using MBOptionScreen.Settings;
 
 namespace MBOptionScreen
 {
-    internal sealed class TestSettingsOrder : AttributeSettings<TestSettingsOrder>
+    internal sealed class TestSettingsOrder : TestSettingsBase<TestSettingsOrder>
     {
         public override string Id { get; set; } = "Testing_Order_v1";
         public override string ModName => "Testing Order";
-        public override string ModuleFolderName => "Testing";
 
 
         [SettingPropertyBool("Correct Order: ACBED")]

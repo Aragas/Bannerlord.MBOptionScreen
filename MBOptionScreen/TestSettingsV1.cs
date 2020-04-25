@@ -1,80 +1,163 @@
 ﻿using MBOptionScreen.Attributes;
 using MBOptionScreen.Attributes.v1;
 using MBOptionScreen.Data;
-using MBOptionScreen.Settings;
 
 namespace MBOptionScreen
 {
-    internal sealed class TestSettingsV1 : AttributeSettings<TestSettingsV1>
+    internal sealed class TestSettingsV1 : TestSettingsBase<TestSettingsV1>
     {
         public override string Id { get; set; } = "Testing_v1";
         public override string ModName => "Testing v1 API";
-        public override string ModuleFolderName => "Testing";
 
 
-        [SettingProperty("Enable Crash Error Reporting", requireRestart: true, hintText: "When enabled, shows a message box showing the cause of a crash.")]
-        [SettingPropertyGroup("Debugging")]
-        public bool DebugMode { get; set; } = true;
+        [SettingProperty("Property Bool Default False")]
+        [SettingPropertyGroup("Bool")]
+        public bool PropertyBoolDefaultFalse { get; set; } = false;
+        [SettingProperty("Property Bool Default True")]
+        [SettingPropertyGroup("Bool")]
+        public bool PropertyBoolDefaultTrue { get; set; } = true;
+        [SettingProperty("Property Bool Require Restart", requireRestart: true)]
+        [SettingPropertyGroup("Bool")]
+        public bool PropertyBoolRequireRestart { get; set; }
+        [SettingProperty("Property Bool With Hint", hintText: "Hint Text")]
+        [SettingPropertyGroup("Bool")]
+        public bool PropertyBoolWithHint { get; set; }
 
-        [SettingProperty("Test Property 1", requireRestart: false, hintText: "")]
-        [SettingPropertyGroup("Debugging/Test Group", IsMainToggle = true)]
-        public bool TestProperty1 { get; set; } = false;
 
-        [SettingProperty("Test Property 5", requireRestart: false, hintText: "")]
-        [SettingPropertyGroup("Debugging/Test Group")]
-        public bool TestProperty5 { get; set; } = false;
+        [SettingProperty("Property Int Default 0", 0f, 100f)]
+        [SettingPropertyGroup("Int")]
+        public int PropertyIntDefault0 { get; set; } = 0;
+        [SettingProperty("Property Int Default 1", 0f, 100f)]
+        [SettingPropertyGroup("Int")]
+        public int PropertyIntDefault1 { get; set; } = 1;
+        [SettingProperty("Property Int Require Restart", 0f, 100f, requireRestart: true)]
+        [SettingPropertyGroup("Int")]
+        public int PropertyIntRequireRestart { get; set; }
+        [SettingProperty("Property Int -10 to 10", -10f, 10f)]
+        [SettingPropertyGroup("Int")]
+        public int PropertyInt1to10 { get; set; }
+        [SettingProperty("Property Int With Hint", 0f, 100f, hintText: "Hint Text")]
+        [SettingPropertyGroup("Int")]
+        public int PropertyIntWithHint { get; set; }
 
-        [SettingProperty("Test Property 2", requireRestart: false, hintText: "")]
-        [SettingPropertyGroup("Debugging/Test Group/Test Group 2", IsMainToggle = true)]
-        public bool TestProperty2 { get; set; } = false;
 
-        [SettingProperty("Test Property 4", 0f, 0.5f, 0f, 100f, requireRestart: false, hintText: "")]
-        [SettingPropertyGroup("Debugging/Test Group/Test Group 2")]
-        public float TestProperty4 { get; set; } = 0.2f;
+        [SettingProperty("Property Float Default 0f", 0f, 100f)]
+        [SettingPropertyGroup("Float")]
+        public float PropertyFloatDefault0f { get; set; } = 0f;
+        [SettingProperty("Property Float Default 1f", 0f, 100f)]
+        [SettingPropertyGroup("Float")]
+        public float PropertyFloatDefault1f { get; set; } = 1f;
+        [SettingProperty("Property Float Require Restart", 0f, 100f, requireRestart: true)]
+        [SettingPropertyGroup("Float")]
+        public float PropertyFloatRequireRestart { get; set; }
+        [SettingProperty("Property Float -10 to 10", -10f, 10f)]
+        [SettingPropertyGroup("Float")]
+        public float PropertyFloat1to10 { get; set; }
+        [SettingProperty("Property Float With Hint", 0f, 100f, hintText: "Hint Text")]
+        [SettingPropertyGroup("Float")]
+        public float PropertyFloatWithHint { get; set; }
 
-        [SettingProperty("Test Property 3", 0, 10, requireRestart: true, hintText: "")]
-        [SettingPropertyGroup("Debugging/Test Group/Test Group 3")]
-        public int TestProperty3 { get; set; } = 2;
 
-        [SettingProperty("Test Property 6", requireRestart: true, hintText: "")]
-        [SettingPropertyGroup("Debugging/Test Group/Test Group 3")]
-        public string TestProperty6 { get; set; } = "";
+        [SettingProperty("Property Text Default Empty")]
+        [SettingPropertyGroup("Text")]
+        public string PropertyTextDefaultEmpty { get; set; } = "";
+        [SettingProperty("Property Text Default Text")]
+        [SettingPropertyGroup("Text")]
+        public string PropertyTextDefaultText { get; set; } = "Text";
+        [SettingProperty("Property Text Require Restart", requireRestart: true)]
+        [SettingPropertyGroup("Text")]
+        public string PropertyTextRequireRestart { get; set; }
+        [SettingProperty("Property Text With Hint", hintText: "Hint Text")]
+        [SettingPropertyGroup("Text")]
+        public string PropertyTextWithHint { get; set; }
 
-        [SettingProperty("Test Property 7", "", requireRestart: false, hintText: "")]
-        [SettingPropertyGroup("Debugging/Test Group/Test Group 3")]
-        public DefaultDropdown<string> TestProperty7 { get; set; } = new DefaultDropdown<string>(new string[]
+
+        [SettingProperty("Property Dropdown SelectedIndex 0")]
+        [SettingPropertyGroup("Dropdown")]
+        public DefaultDropdown<string> PropertyDropdownSelectedIndex0 { get; } = new DefaultDropdown<string>(new string[]
         {
             "Test1",
             "Test2",
-            "Test3"
+            "Test3",
+        }, 0);
+        [SettingProperty("Property Dropdown SelectedIndex 1")]
+        [SettingPropertyGroup("Dropdown")]
+        public DefaultDropdown<string> PropertyDropdownSelectedIndex1 { get; } = new DefaultDropdown<string>(new string[]
+        {
+            "Test1",
+            "Test2",
+            "Test3",
+        }, 1);
+        [SettingProperty("Property Dropdown SelectedIndex 2")]
+        [SettingPropertyGroup("Dropdown")]
+        public DefaultDropdown<string> PropertyDropdownSelectedIndex2 { get; } = new DefaultDropdown<string>(new string[]
+        {
+            "Test1",
+            "Test2",
+            "Test3",
+        }, 2);
+        [SettingProperty("Property Dropdown Require Restart", requireRestart: true)]
+        [SettingPropertyGroup("Dropdown")]
+        public DefaultDropdown<string> PropertyDropdownRequireRestart { get; } = new DefaultDropdown<string>(new string[]
+        {
+            "Test1",
+            "Test2",
+            "Test3",
+        }, 0);
+        [SettingProperty("Property Dropdown With Hint", hintText: "Hint Text")]
+        [SettingPropertyGroup("Dropdown")]
+        public DefaultDropdown<string> PropertyDropdownWithHint { get; } = new DefaultDropdown<string>(new string[]
+        {
+            "Test1",
+            "Test2",
+            "Test3",
         }, 0);
 
-        [SettingProperty("Test Property 8", requireRestart: false, hintText: "")]
-        [SettingPropertyGroup("Debugging/Test Group/Test Group 3")]
-        public DefaultDropdown<CustomObject> TestProperty8 { get; set; } = new DefaultDropdown<CustomObject>(new CustomObject[]
+
+        [SettingProperty("Property Dropdown Custom SelectedIndex 0")]
+        [SettingPropertyGroup("Dropdown Custom")]
+        public DefaultDropdown<CustomObject> PropertyDropdownCustomSelectedIndex0 { get; } = new DefaultDropdown<CustomObject>(new CustomObject[]
         {
             new CustomObject("Test1"),
             new CustomObject("Test2"),
-            new CustomObject("Test3")
+            new CustomObject("Test3"),
+        }, 0);
+        [SettingProperty("Property Dropdown Custom SelectedIndex 1")]
+        [SettingPropertyGroup("Dropdown Custom")]
+        public DefaultDropdown<CustomObject> PropertyDropdownCustomSelectedIndex1 { get; } = new DefaultDropdown<CustomObject>(new CustomObject[]
+        {
+            new CustomObject("Test1"),
+            new CustomObject("Test2"),
+            new CustomObject("Test3"),
+        }, 1);
+        [SettingProperty("Property Dropdown Custom SelectedIndex 2")]
+        [SettingPropertyGroup("Dropdown Custom")]
+        public DefaultDropdown<CustomObject> PropertyDropdownCustomSelectedIndex2 { get; } = new DefaultDropdown<CustomObject>(new CustomObject[]
+        {
+            new CustomObject("Test1"),
+            new CustomObject("Test2"),
+            new CustomObject("Test3"),
         }, 2);
-
-        [SettingProperty("Test Property 9", requireRestart: true, hintText: "")]
-        [SettingPropertyGroup("Debugging/Test Group/Restart")]
-        public bool TestProperty9 { get; set; } = false;
-
-        [SettingProperty("Test Property 10", requireRestart: true, hintText: "")]
-        [SettingPropertyGroup("Debugging/Test Group/Restart")]
-        public bool TestProperty10 { get; set; } = false;
-
+        [SettingProperty("Property Dropdown Custom Require Restart", requireRestart: true)]
+        [SettingPropertyGroup("Dropdown Custom")]
+        public DefaultDropdown<CustomObject> PropertyDropdownCustomRequireRestart { get; } = new DefaultDropdown<CustomObject>(new CustomObject[]
+        {
+            new CustomObject("Test1"),
+            new CustomObject("Test2"),
+            new CustomObject("Test3"),
+        }, 0);
+        [SettingProperty("Property Dropdown Custom With Hint", hintText: "Hint Text")]
+        [SettingPropertyGroup("Dropdown Custom")]
+        public DefaultDropdown<CustomObject> PropertyDropdownCustomWithHint { get; } = new DefaultDropdown<CustomObject>(new CustomObject[]
+        {
+            new CustomObject("Test1"),
+            new CustomObject("Test2"),
+            new CustomObject("Test3"),
+        }, 0);
         public class CustomObject
         {
             private readonly string _value;
-
-            public CustomObject(string value)
-            {
-                _value = value;
-            }
-
+            public CustomObject(string value) => _value = value;
             public override string ToString() => _value;
         }
     }

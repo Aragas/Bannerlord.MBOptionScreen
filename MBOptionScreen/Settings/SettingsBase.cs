@@ -110,7 +110,7 @@ namespace MBOptionScreen.Settings
         {
             if (!prop.Property.CanRead)
                 throw new Exception($"Property {prop.Property.Name} in {prop.SettingsInstance.GetType().FullName} must have a getter.");
-            if (!prop.Property.CanWrite)
+            if (prop.SettingType != SettingType.Dropdown && !prop.Property.CanWrite)
                 throw new Exception($"Property {prop.Property.Name} in {prop.SettingsInstance.GetType().FullName} must have a setter.");
 
             if (prop.SettingType == SettingType.Int || prop.SettingType == SettingType.Float)

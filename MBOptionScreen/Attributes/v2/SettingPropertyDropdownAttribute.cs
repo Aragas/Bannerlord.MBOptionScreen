@@ -7,14 +7,9 @@ namespace MBOptionScreen.Attributes.v2
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     internal sealed class SettingPropertyDropdownAttribute : BaseSettingPropertyAttribute, IPropertyDefinitionDropdown
     {
-        /// <summary>
-        ///
-        /// </summary>
-        public int SelectedIndex { get; } = 0;
-
-        public SettingPropertyDropdownAttribute(string displayName, int selectedIndex) : base(displayName)
+        public SettingPropertyDropdownAttribute(string displayName) : base(displayName)
         {
-            SelectedIndex = selectedIndex;
+
         }
     }
 }

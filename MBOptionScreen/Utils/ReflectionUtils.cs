@@ -9,10 +9,10 @@ namespace MBOptionScreen.Utils
 
         public static bool ImplementsOrImplementsEquivalent(Type type, string fullBaseTypeName)
         {
-            var typeToCheck = type.BaseType;
+            var typeToCheck = type;
             while (typeToCheck != null)
             {
-                if (typeToCheck.FullName == fullBaseTypeName)
+                if (typeToCheck.FullName == fullBaseTypeName || (typeToCheck.IsGenericType && $"{typeToCheck.Namespace}.{typeToCheck.Name}" == fullBaseTypeName))
                     return true;
 
                 typeToCheck = typeToCheck.BaseType;

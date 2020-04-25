@@ -96,6 +96,7 @@ namespace MBOptionScreen
                 .Where(a => !a.FullName.StartsWith("System"))
                 .Where(a => !a.FullName.StartsWith("Microsoft"))
                 .Where(a => !a.FullName.StartsWith("mscorlib"))
+                // ignore v1 classes
                 .Where(a => Path.GetFileName(a.Location) != "MBOptionScreen.dll")
                 .SelectMany(a => a.GetTypes())
                 .Where(t => t.IsClass && !t.IsAbstract)
@@ -111,25 +112,20 @@ namespace MBOptionScreen
                 ModLibStub.LoadIfNeeded();
 
             var mbOptionScreenSettings = allTypes
-                .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, "MBOptionScreen.Settings.SettingsBase"));
+                .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, "MBOptionScreen.Settings.SettingsBase"))
+                .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(StubSettings)))
+                .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(SettingsWrapper)))
+                .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(ModLibSettingsWrapper)))
+#if !DEBUG
+                .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(TestSettingsBase<>)))
+#endif
+                ;
             var thisSettings = mbOptionScreenSettings
                 .Where(t => ReflectionUtils.Implements(t, typeof(SettingsBase)))
-                .Where(t => t != typeof(StubSettings))
-                .Where(t => t != typeof(SettingsWrapper))
-                .Where(t => t != typeof(ModLibSettingsWrapper))
-#if !DEBUG
-                .Where(t => t != typeof(TestSettingsV1))
-                .Where(t => t != typeof(TestSettingsV2))
-#endif
                 .Select(obj => (SettingsBase) Activator.CreateInstance(obj));
             settings.AddRange(thisSettings);
             var externalSettings = mbOptionScreenSettings
                 .Where(t => !ReflectionUtils.Implements(t, typeof(SettingsBase)))
-#if !DEBUG
-                .Where(t => t.FullName != "MBOptionScreen.TestSettings")
-                .Where(t => t.FullName != "MBOptionScreen.TestSettingsV1")
-                .Where(t => t.FullName != "MBOptionScreen.TestSettingsV2")
-#endif
                 .Select(obj => new SettingsWrapper(Activator.CreateInstance(obj)));
             settings.AddRange(externalSettings);
 

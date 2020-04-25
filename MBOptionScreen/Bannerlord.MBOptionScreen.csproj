@@ -20,6 +20,7 @@
     <RepositoryUrl>https://github.com/Aragas/Bannerlord.MBOptionScreen</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <AssemblyName>MBOptionScreen2.0.0</AssemblyName>
+    <RootNamespace>MBOptionScreen</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
