@@ -6,14 +6,12 @@
 	<DefaultModule value="false"/>
 	<SingleplayerModule value="true"/>
 	<MultiplayerModule value="false"/>
-  	<Official value="false"/>
+	<Official value="false"/>
 	<DependedModules>
-		<DependedModule Id="Native"/>
-		<DependedModule Id="SandBoxCore"/>
-		<DependedModule Id="Sandbox"/>
-		<DependedModule Id="CustomBattle"/>
-		<DependedModule Id="StoryMode"/>
 	</DependedModules>
+	<OptionalDependedModules>
+		<OptionalDependedModule Id="ModLib"/>
+	</OptionalDependedModules>
 	<SubModules>
 		<SubModule>
 			<Name value="Bannerlord.MBOptionScreen"/>
