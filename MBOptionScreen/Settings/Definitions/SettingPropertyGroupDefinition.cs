@@ -20,7 +20,7 @@ namespace MBOptionScreen.Settings
         public string GroupName { get; }
         public TextObject DisplayGroupName => _groupNameOverride.Length > 0 ? _groupNameOverride : _groupName;
         public int Order { get; }
-        public IOrderedEnumerable<SettingPropertyGroupDefinition> SubGroups
+        public IEnumerable<SettingPropertyGroupDefinition> SubGroups
         {
             get
             {
@@ -30,7 +30,7 @@ namespace MBOptionScreen.Settings
                     .ThenByDescending(x => x, new AlphanumComparatorFast());
             }
         }
-        public IOrderedEnumerable<SettingPropertyDefinition> SettingProperties
+        public IEnumerable<SettingPropertyDefinition> SettingProperties
         {
             get
             {

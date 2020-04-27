@@ -6,7 +6,7 @@ using System.Linq;
 
 using TaleWorlds.Library;
 
-namespace MBOptionScreen.GUI.v1b.ViewModels
+namespace MBOptionScreen.GUI.v1c.ViewModels
 {
     public class SettingPropertyGroupVM : ViewModel
     {

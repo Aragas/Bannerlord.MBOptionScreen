@@ -1,6 +1,6 @@
 ﻿using MBOptionScreen.Attributes;
-using MBOptionScreen.GUI.v1b.ResourceInjection;
-using MBOptionScreen.GUI.v1b.ViewModels;
+using MBOptionScreen.GUI.v1c.ResourceInjection;
+using MBOptionScreen.GUI.v1c.ViewModels;
 using MBOptionScreen.ResourceInjection;
 
 using TaleWorlds.Engine.GauntletUI;
@@ -9,7 +9,7 @@ using TaleWorlds.GauntletUI.Data;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
 
-namespace MBOptionScreen.GUI.v1b.GauntletUI
+namespace MBOptionScreen.GUI.v1c.GauntletUI
 {
     [Version("e1.0.0",  200)]
     [Version("e1.0.1",  200)]
@@ -49,7 +49,7 @@ namespace MBOptionScreen.GUI.v1b.GauntletUI
             base.OnInitialize();
             _dataSource = new ModOptionsScreenVM();
             _gauntletLayer = new GauntletLayer(4000, "GauntletLayer");
-            _gauntletMovie = _gauntletLayer.LoadMovie("ModOptionsView_v1b", _dataSource);
+            _gauntletMovie = _gauntletLayer.LoadMovie("ModOptionsView_v1c", _dataSource);
             _gauntletLayer.Input.RegisterHotKeyCategory(HotKeyManager.GetCategory("GenericPanelGameKeyCategory"));
             _gauntletLayer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);
             _gauntletLayer.IsFocusLayer = true;

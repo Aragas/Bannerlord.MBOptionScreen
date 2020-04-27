@@ -7,7 +7,7 @@ namespace MBOptionScreen
     internal sealed class MBOptionScreenSettings : AttributeSettings<MBOptionScreenSettings>
     {
         public override string Id { get; set; } = "MBOptionScreen_v2";
-        public override string ModName => $"MBOptionScreen {typeof(MBOptionScreenSettings).Assembly.GetName().Version.ToString(3)}";
+        public override string ModName => $"Mod Configuration Menu {typeof(MBOptionScreenSettings).Assembly.GetName().Version.ToString(3)}";
         public override string ModuleFolderName => "";
 
 

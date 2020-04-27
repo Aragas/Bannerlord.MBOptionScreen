@@ -38,7 +38,7 @@ namespace MBOptionScreen.Settings
         {
             var subGroupsProperty = AccessTools.Property(@object.GetType(), "SubGroups")
                 ?? AccessTools.Property(@object.GetType(), "SettingPropertyGroups");
-            var list = (IList) subGroupsProperty.GetValue(@object);
+            var list = (IEnumerable) subGroupsProperty.GetValue(@object);
             foreach (var obj in list)
             {
                 yield return new SettingPropertyGroupDefinitionWrapper(obj);
@@ -47,7 +47,7 @@ namespace MBOptionScreen.Settings
         private IEnumerable<SettingPropertyDefinition> GetSettingProperties(object @object)
         {
             var settingPropertiesProperty = AccessTools.Property(@object.GetType(), "SettingProperties");
-            var list = (IList)settingPropertiesProperty.GetValue(@object);
+            var list = (IEnumerable) settingPropertiesProperty.GetValue(@object);
             foreach (var obj in list)
             {
                 yield return new SettingPropertyDefinitionWrapper(obj);

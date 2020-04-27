@@ -2,20 +2,20 @@
 
 using System.Xml;
 
-namespace MBOptionScreen.GUI.v1b.ResourceInjection
+namespace MBOptionScreen.GUI.v1c.ResourceInjection
 {
     /// <summary>
     /// Loads the embed .xml files from the library
     /// </summary>
     internal static class BrushLoader
     {
-        private static readonly string ButtonBrushesPath = "MBOptionScreen.GUI.v1b.Brushes.ButtonBrushes.xml";
-        private static readonly string DividerBrushesPath = "MBOptionScreen.GUI.v1b.Brushes.DividerBrushes.xml";
-        private static readonly string ExpandIndicatorPath = "MBOptionScreen.GUI.v1b.Brushes.ExpandIndicator.xml";
-        private static readonly string ModSettingsBrushPath = "MBOptionScreen.GUI.v1b.Brushes.ModSettingsBrush.xml";
-        private static readonly string ResetButtonBrushPath = "MBOptionScreen.GUI.v1b.Brushes.ResetButtonBrush.xml";
-        private static readonly string SettingsValueDisplayBrushPath = "MBOptionScreen.GUI.v1b.Brushes.SettingsValueDisplayBrush.xml";
-        private static readonly string TextBrushesPath = "MBOptionScreen.GUI.v1b.Brushes.TextBrushes.xml";
+        private static readonly string ButtonBrushesPath = "MBOptionScreen.GUI.v1c.Brushes.ButtonBrushes.xml";
+        private static readonly string DividerBrushesPath = "MBOptionScreen.GUI.v1c.Brushes.DividerBrushes.xml";
+        private static readonly string ExpandIndicatorPath = "MBOptionScreen.GUI.v1c.Brushes.ExpandIndicator.xml";
+        private static readonly string ModSettingsBrushPath = "MBOptionScreen.GUI.v1c.Brushes.ModSettingsBrush.xml";
+        private static readonly string ResetButtonBrushPath = "MBOptionScreen.GUI.v1c.Brushes.ResetButtonBrush.xml";
+        private static readonly string SettingsValueDisplayBrushPath = "MBOptionScreen.GUI.v1c.Brushes.SettingsValueDisplayBrush.xml";
+        private static readonly string TextBrushesPath = "MBOptionScreen.GUI.v1c.Brushes.TextBrushes.xml";
 
         public static XmlDocument ButtonBrushes() => Load(ButtonBrushesPath);
         public static XmlDocument DividerBrushes() => Load(DividerBrushesPath);
