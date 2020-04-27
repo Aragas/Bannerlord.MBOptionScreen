@@ -7,8 +7,8 @@ namespace MBOptionScreen.Actions
     {
         private readonly Func<object> _getter;
         private readonly Action<object> _setter;
-        private readonly PropertyInfo _propInfo;
-        private readonly object _instance;
+        public readonly PropertyInfo _propInfo;
+        public readonly object _instance;
 
         public object Value
         {

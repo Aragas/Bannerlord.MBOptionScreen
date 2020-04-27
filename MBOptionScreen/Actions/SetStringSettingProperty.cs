@@ -4,20 +4,19 @@ namespace MBOptionScreen.Actions
 {
     public sealed class SetStringSettingProperty : IAction
     {
-        private readonly string _originalValue;
-
-        public Ref Context { get; }
+        public Ref? Context { get; }
         public object Value { get; }
+        public object Original { get; }
         private ISettingPropertyStringValue SettingProperty { get; }
 
         public SetStringSettingProperty(ISettingPropertyStringValue settingProperty, string value)
         {
             Value = value;
             SettingProperty = settingProperty;
-            _originalValue = SettingProperty.StringValue;
+            Original = SettingProperty.StringValue;
         }
 
         public void DoAction() => SettingProperty.StringValue = (string) Value;
-        public void UndoAction() => SettingProperty.StringValue = _originalValue;
+        public void UndoAction() => SettingProperty.StringValue = (string) Original;
     }
 }

@@ -199,5 +199,15 @@ namespace MBOptionScreen.GUI.v1b.ViewModels
 
         public override string ToString() => GroupName;
         public override int GetHashCode() => GroupName.GetHashCode();
+
+        public override void OnFinalize()
+        {
+            foreach (var settingPropertyGroup in SettingPropertyGroups)
+                settingPropertyGroup.OnFinalize();
+            foreach (var settingProperty in SettingProperties)
+                settingProperty.OnFinalize();
+
+            base.OnFinalize();
+        }
     }
 }

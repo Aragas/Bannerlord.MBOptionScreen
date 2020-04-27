@@ -25,6 +25,8 @@ namespace MBOptionScreen.Settings
     [Version("e1.0.11", 200)]
     [Version("e1.1.0",  200)]
     [Version("e1.2.0",  200)]
+    [Version("e1.2.1",  200)]
+    [Version("e1.3.0",  200)]
     internal sealed class DefaultAttributeSettingsProvider : IMBOptionScreenSettingsProvider
     {
         private readonly string _defaultRootFolder = Path.Combine(Utilities.GetConfigsPath(), "ModSettings");

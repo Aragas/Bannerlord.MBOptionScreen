@@ -2,7 +2,8 @@
 {
     public interface IAction
     {
-        Ref Context { get; }
+        Ref? Context { get; }
+        object Original { get; }
         object Value { get; }
         void DoAction();
         void UndoAction();

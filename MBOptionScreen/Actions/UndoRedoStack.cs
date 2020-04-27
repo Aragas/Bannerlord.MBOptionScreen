@@ -32,6 +32,12 @@ namespace MBOptionScreen.Actions
             RedoStack.Clear();
         }
 
+        public void DoWithoutDo(IAction action)
+        {
+            UndoStack.Push(action);
+            RedoStack.Clear();
+        }
+
         /// <summary>
         /// Calls the Undo function for the top item in the UndoStack. If there is nothing in the stack, does nothing.
         /// </summary>

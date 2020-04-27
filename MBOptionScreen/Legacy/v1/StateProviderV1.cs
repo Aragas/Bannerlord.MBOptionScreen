@@ -45,6 +45,13 @@ namespace MBOptionScreen.Legacy.v1
                 var container = (InitialStateOption) Activator.CreateInstance(containerType, new object[] { sharedStateObject });
                 Module.CurrentModule.AddInitialStateOption(container);
                 _containers.Add(container);
+
+
+                var settingsDatabaseType = assembly.GetType("MBOptionScreen.Settings.SettingsDatabase");
+
+                var mbOptionScreenSubModuleType = assembly.GetType("MBOptionScreen.MBOptionScreenSubModule");
+                var sharedStateObjectField = AccessTools.Field(mbOptionScreenSubModuleType, "SharedStateObject");
+                sharedStateObjectField.SetValue(null, sharedStateObject);
             }
         }
 

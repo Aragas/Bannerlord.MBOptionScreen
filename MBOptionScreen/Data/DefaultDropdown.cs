@@ -6,13 +6,29 @@ using TaleWorlds.Core.ViewModelCollection;
 
 namespace MBOptionScreen.Data
 {
-    public class DefaultDropdown<T> : List<T>, IDropdownProvider
+    public class DefaultDropdown<T> : List<T>, IDropdownProvider, IEqualityComparer<DefaultDropdown<T>>
     {
         public static DefaultDropdown<T> Empty => new DefaultDropdown<T>(Array.Empty<T>(), 0);
 
+        private SelectorVM<SelectorItemVM> selector;
         private int _selectedIndex;
+        public SelectorVM<SelectorItemVM> Selector
+        {
+            get { return selector; }
+            set
+            {
+                if (selector != value)
+                {
+                    selector = value;
+                    selector.SetOnChangeAction(OnSelectionChanged);
+                }
+            }
+        }
 
-        public SelectorVM<SelectorItemVM> Selector { get; }
+        private void OnSelectionChanged(SelectorVM<SelectorItemVM> obj)
+        {
+            _selectedIndex = obj.SelectedIndex;
+        }
 
         public int SelectedIndex
         {
@@ -40,17 +56,23 @@ namespace MBOptionScreen.Data
 
         public DefaultDropdown(IEnumerable<T> values, int selectedIndex) : base(values)
         {
-            _selectedIndex = selectedIndex;
+            Selector = new SelectorVM<SelectorItemVM>(this.Select(x => x?.ToString() ?? "ERROR"), selectedIndex, OnSelectionChanged);
 
             if (SelectedIndex != 0 && SelectedIndex >= Count)
                 throw new Exception();
-
-            Selector = new SelectorVM<SelectorItemVM>(this.Select(x => x?.ToString() ?? "ERROR"), selectedIndex, OnSelectionChanged);
         }
 
-        private void OnSelectionChanged(SelectorVM<SelectorItemVM> obj)
+        public bool Equals(DefaultDropdown<T> x, DefaultDropdown<T> y) => x.SelectedIndex == y.SelectedIndex;
+        public int GetHashCode(DefaultDropdown<T> obj) => obj.SelectedIndex;
+
+        public override int GetHashCode() => GetHashCode(this);
+        public override bool Equals(object obj)
         {
-            SelectedIndex = obj.SelectedIndex;
+            if (obj is DefaultDropdown<T> dropdown)
+                return Equals(this, dropdown);
+
+            return base.Equals(obj);
+
         }
     }
 }

@@ -48,5 +48,23 @@ namespace MBOptionScreen.Utils
         public override object[] GetCustomAttributes(Type attributeType, bool inherit) => _propertyInfoImplementation.GetCustomAttributes(attributeType, inherit);
         public override object[] GetCustomAttributes(bool inherit) => _propertyInfoImplementation.GetCustomAttributes(inherit);
         public override bool IsDefined(Type attributeType, bool inherit) => _propertyInfoImplementation.IsDefined(attributeType, inherit);
+
+        public override bool Equals(object obj)
+        {
+            if (obj is ProxyPropertyInfo proxy)
+            {
+                return _propertyInfoImplementation.Equals(proxy._propertyInfoImplementation);
+            }
+            if (obj is PropertyInfo propertyInfo)
+            {
+                return _propertyInfoImplementation.Equals(propertyInfo);
+            }
+
+            return _propertyInfoImplementation.Equals(obj);
+        }
+        public override int GetHashCode()
+        {
+            return _propertyInfoImplementation.GetHashCode();
+        }
     }
 }

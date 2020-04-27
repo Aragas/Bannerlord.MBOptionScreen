@@ -1,10 +1,10 @@
-﻿using HarmonyLib;
-
-using MBOptionScreen.Actions;
+﻿using MBOptionScreen.Actions;
+using MBOptionScreen.Data;
 using MBOptionScreen.GUI.v1b.GauntletUI;
 using MBOptionScreen.Settings;
 
 using System;
+using System.ComponentModel;
 using System.Reflection;
 
 using TaleWorlds.Core.ViewModelCollection;
@@ -19,13 +19,6 @@ namespace MBOptionScreen.GUI.v1b.ViewModels
         ISettingPropertyIntValue,
         ISettingPropertyFloatValue
     {
-        private SelectorVM<SelectorItemVM> GetSelector(object dropdown)
-        {
-            var selectorProperty = AccessTools.Property(dropdown.GetType(), "Selector");
-            if (selectorProperty == null)
-                return new SelectorVM<SelectorItemVM>(0, _ => { });
-            return (SelectorVM<SelectorItemVM>) selectorProperty.GetValue(dropdown);
-        }
 
         protected ModOptionsScreenVM MainView => ModSettingsView.MainView;
         protected ModSettingsVM ModSettingsView { get; }
@@ -91,7 +84,7 @@ namespace MBOptionScreen.GUI.v1b.ViewModels
             {
                 if (SettingType == SettingType.Float && FloatValue != value)
                 {
-                    URS.Do(new SetValueAction<float>(new Ref(Property, SettingsInstance), value));
+                    URS.Do(new SetValueTypeAction<float>(new Ref(Property, SettingsInstance), value));
                     OnPropertyChanged(nameof(ValueString));
                 }
             }
@@ -104,7 +97,7 @@ namespace MBOptionScreen.GUI.v1b.ViewModels
             {
                 if (SettingType == SettingType.Int && IntValue != value)
                 {
-                    URS.Do(new SetValueAction<int>(new Ref(Property, SettingsInstance), value));
+                    URS.Do(new SetValueTypeAction<int>(new Ref(Property, SettingsInstance), value));
                     OnPropertyChanged(nameof(ValueString));
                 }
             }
@@ -117,7 +110,7 @@ namespace MBOptionScreen.GUI.v1b.ViewModels
             {
                 if (SettingType == SettingType.Bool && BoolValue != value)
                 {
-                    URS.Do(new SetValueAction<bool>(new Ref(Property, SettingsInstance), value));
+                    URS.Do(new SetValueTypeAction<bool>(new Ref(Property, SettingsInstance), value));
                     OnPropertyChanged(nameof(ValueString));
                 }
             }
@@ -130,7 +123,7 @@ namespace MBOptionScreen.GUI.v1b.ViewModels
             {
                 if (SettingType == SettingType.String && StringValue != value)
                 {
-                    URS.Do(new SetValueAction<string>(new Ref(Property, SettingsInstance), value));
+                    URS.Do(new SetStringAction(new Ref(Property, SettingsInstance), value));
                     OnPropertyChanged(nameof(ValueString));
                 }
             }
@@ -138,7 +131,17 @@ namespace MBOptionScreen.GUI.v1b.ViewModels
         [DataSourceProperty]
         public SelectorVM<SelectorItemVM> DropdownValue
         {
-            get => SettingType == SettingType.Dropdown ? GetSelector(Property.GetValue(SettingsInstance)) : new SelectorVM<SelectorItemVM>(0, null);
+            get => SettingType == SettingType.Dropdown ? (Property.GetValue(SettingsInstance) as IDropdownProvider).Selector : new SelectorVM<SelectorItemVM>(0, null);
+            set
+            {
+                if (SettingType == SettingType.Dropdown && DropdownValue != value)
+                {
+                    DropdownValue.PropertyChanged -= OnDropdownPropertyChanged;
+                    value.PropertyChanged += OnDropdownPropertyChanged;
+                    DropdownValue = value;
+                    OnPropertyChanged(nameof(DropdownValue));
+                }
+            }
         }
         [DataSourceProperty]
         public float MaxValue => SettingPropertyDefinition.MaxValue;
@@ -167,19 +170,24 @@ namespace MBOptionScreen.GUI.v1b.ViewModels
                 HintText = $"{Name}: {SettingPropertyDefinition.HintText}";
 
             if (SettingType == SettingType.Dropdown)
-            {
-                DropdownValue.PropertyChanged += (s, e) =>
-                {
-                    URS.Do(new ComplexAction<int>(
-                        DropdownValue.SelectedIndex,
-                        index => DropdownValue.SelectedIndex = index,
-                        index => DropdownValue.SelectedIndex = index));
+                DropdownValue.PropertyChanged += OnDropdownPropertyChanged;
 
-                    OnPropertyChanged(nameof(DropdownValue));
-                };
-            }
 
             RefreshValues();
+        }
+        public override void OnFinalize()
+        {
+            if (SettingType == SettingType.Dropdown)
+            {
+                DropdownValue.PropertyChanged -= OnDropdownPropertyChanged;
+            }
+
+            base.OnFinalize();
+        }
+        private void OnDropdownPropertyChanged(object obj, PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName == nameof(SelectorVM<SelectorItemVM>.SelectedIndex))
+            URS.DoWithoutDo(new SetDropdownAction(new Ref(Property, SettingsInstance), (SelectorVM<SelectorItemVM>) obj));
         }
 
         public override void RefreshValues()

@@ -25,6 +25,8 @@ namespace MBOptionScreen.GUI.v1b.GauntletUI
     [Version("e1.0.11", 200)]
     [Version("e1.1.0",  200)]
     [Version("e1.2.0",  200)]
+    [Version("e1.2.1",  200)]
+    [Version("e1.3.0",  200)]
     public class ModOptionsGauntletScreen : MBOptionScreen
     {
         private GauntletLayer _gauntletLayer;

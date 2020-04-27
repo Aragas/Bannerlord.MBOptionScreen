@@ -11,7 +11,7 @@
     <Copyright>Copyright © 2020</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Bannerlord.MBOptionScreen</PackageId>
-    <Version>2.0.3</Version>
+    <Version>2.0.7</Version>
     <PackageProjectUrl>https://github.com/Aragas/Bannerlord.MBOptionScreen</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/Aragas/Bannerlord.MBOptionScreen</RepositoryUrl>

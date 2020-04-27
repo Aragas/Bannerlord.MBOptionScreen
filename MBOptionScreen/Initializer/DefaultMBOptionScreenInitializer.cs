@@ -1,7 +1,6 @@
 ﻿using MBOptionScreen.ApplicationContainer;
 using MBOptionScreen.Attributes;
 using MBOptionScreen.Functionality;
-using MBOptionScreen.Legacy.v1;
 using MBOptionScreen.Settings;
 using MBOptionScreen.Utils;
 
@@ -16,25 +15,27 @@ using TaleWorlds.Localization;
 
 namespace MBOptionScreen
 {
-    [Version("e1.0.0",  200)]
-    [Version("e1.0.1",  200)]
-    [Version("e1.0.2",  200)]
-    [Version("e1.0.3",  200)]
-    [Version("e1.0.4",  200)]
-    [Version("e1.0.5",  200)]
-    [Version("e1.0.6",  200)]
-    [Version("e1.0.7",  200)]
-    [Version("e1.0.8",  200)]
-    [Version("e1.0.9",  200)]
-    [Version("e1.0.10", 200)]
-    [Version("e1.0.11", 200)]
-    [Version("e1.1.0",  200)]
-    [Version("e1.2.0",  200)]
+    [Version("e1.0.0",  201)]
+    [Version("e1.0.1",  201)]
+    [Version("e1.0.2",  201)]
+    [Version("e1.0.3",  201)]
+    [Version("e1.0.4",  201)]
+    [Version("e1.0.5",  201)]
+    [Version("e1.0.6",  201)]
+    [Version("e1.0.7",  201)]
+    [Version("e1.0.8",  201)]
+    [Version("e1.0.9",  201)]
+    [Version("e1.0.10", 201)]
+    [Version("e1.0.11", 201)]
+    [Version("e1.1.0",  201)]
+    [Version("e1.2.0",  201)]
+    [Version("e1.2.1",  201)]
+    [Version("e1.3.0",  201)]
     public sealed class DefaultMBOptionScreenInitializer : IMBOptionScreenInitializer
     {
         protected ApplicationVersion GameVerion { get; private set; }
         protected IApplicationContainerProvider ApplicationContainerProvider { get; private set; }
-        private StateProviderV1 StateProviderV1 { get; } = new StateProviderV1();
+        private Legacy.v1.StateProviderV1 StateProviderV1 { get; } = new Legacy.v1.StateProviderV1();
 
         public void StartInitialization(ApplicationVersion gameVerion, bool first)
         {
@@ -78,6 +79,7 @@ namespace MBOptionScreen
 
                 if (MBOptionScreenSettings.Instance!.OverrideModLib)
                     Resolver.ModLibScreenOverrider.OverrideModLibScreen();
+
 
                 ApplicationContainerProvider.Clear();
                 StateProviderV1?.Clear();
@@ -153,6 +155,15 @@ namespace MBOptionScreen
                 sharedStateObject.SetInitialized();
                 Resolver.GameMenuScreenHandler.RemoveScreen("ModOptionsMenu_MBOptionScreen");
             }
+
+            // Seems that v1 SettingsDatabase.SettingsProvider is not overriden with v2 wrapper and
+            // I can't even set it via reflection.
+            // Not that big of a problem in theory. Harmony should still do the work.
+            var assembly = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(a => !a.IsDynamic)
+                .FirstOrDefault(a => Path.GetFileName(a.Location) == "MBOptionScreen.dll");
+            if (assembly != null)
+                Legacy.v1.BaseSettingsDatabasePatch.PatchAll();
         }
     }
 }

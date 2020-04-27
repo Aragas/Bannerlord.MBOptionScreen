@@ -12,7 +12,6 @@ namespace MBOptionScreen.GUI.v1b.ViewModels
     public class ModSettingsVM : ViewModel
     {
         private bool _isSelected;
-        private readonly Dictionary<SettingPropertyDefinition, object> _initialValues = new Dictionary<SettingPropertyDefinition, object>();
         private Action<ModSettingsVM> _executeSelect;
         private MBBindingList<SettingPropertyGroupVM> _settingPropertyGroups;
 
@@ -62,11 +61,6 @@ namespace MBOptionScreen.GUI.v1b.ViewModels
             foreach (var settingPropertyGroup in SettingsInstance.GetSettingPropertyGroups().Select(d => new SettingPropertyGroupVM(d, this)))
                 SettingPropertyGroups.Add(settingPropertyGroup);
 
-            var properties = SettingPropertyGroups.SelectMany(GetAllSettingPropertyDefinitions)
-                .Where(p => p.RequireRestart);
-            var initialSettings = SettingsInstance;
-            _initialValues = properties.ToDictionary(p => p, p => p.Property.GetValue(initialSettings));
-
             RefreshValues();
         }
 
@@ -96,12 +90,23 @@ namespace MBOptionScreen.GUI.v1b.ViewModels
             var properties = SettingPropertyGroups.SelectMany(GetAllSettingPropertyDefinitions)
                 .Where(p => p.RequireRestart);
 
-            var lastSettings = SettingsInstance;
-            var lastValues = properties.ToDictionary(p => p, p => p.Property.GetValue(lastSettings));
+            foreach (var property in properties)
+            {
+                var stack = URS.UndoStack.Where(s => s.Context != null && s.Context._propInfo == property.Property).ToList();
+                if (stack.Count == 0)
+                    continue;
+                else
+                {
+                    var firstChange = stack.First();
+                    var lastChange = stack.Last();
+                    var originalValue = firstChange.Original;
+                    var currentValue = lastChange.Value;
+                    if (!originalValue.Equals(currentValue))
+                        return true;
+                }
+            }
 
-            var diff1 = lastValues.Except(_initialValues);
-            var diff2 = _initialValues.Except(lastValues);
-            return diff1.Concat(diff2).Any();
+            return false;
         }
         private static IEnumerable<SettingPropertyDefinition> GetAllSettingPropertyDefinitions(SettingPropertyGroupVM settingPropertyGroup1)
         {
@@ -113,6 +118,15 @@ namespace MBOptionScreen.GUI.v1b.ViewModels
                 {
                     yield return settingProperty;
                 }
+        }
+
+
+        public override void OnFinalize()
+        {
+            foreach (var settingPropertyGroup in SettingPropertyGroups)
+                settingPropertyGroup.OnFinalize();
+
+            base.OnFinalize();
         }
     }
 }

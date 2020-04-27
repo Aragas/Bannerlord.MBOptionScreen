@@ -159,6 +159,7 @@ namespace MBOptionScreen.GUI.v1b.ViewModels
 
         public bool ExecuteCancel()
         {
+            OnFinalize();
             ScreenManager.PopScreen();
             foreach (var viewModel in ModSettingsList)
             {
@@ -172,13 +173,14 @@ namespace MBOptionScreen.GUI.v1b.ViewModels
             //Save the changes to file.
             if (!ModSettingsList.Any(x => x.URS.ChangesMade()))
             {
+                OnFinalize();
                 ScreenManager.PopScreen();
                 return;
             }
 
             var changedModSettings = ModSettingsList.Where(x => x.URS.ChangesMade()).ToList();
 
-            var requireRestart = changedModSettings.Any(x => x.RestartRequired());
+            var requireRestart = ModSettingsList.Any(x => x.RestartRequired());
             if (requireRestart)
             {
                 InformationManager.ShowInquiry(new InquiryData("Game Needs to Restart",
@@ -191,6 +193,7 @@ namespace MBOptionScreen.GUI.v1b.ViewModels
                             .Do(x => x.URS.ClearStack())
                             .ToList();
 
+                        OnFinalize();
                         Utilities.QuitGame();
                     }, () => { }));
             }
@@ -200,6 +203,8 @@ namespace MBOptionScreen.GUI.v1b.ViewModels
                     .Do(x => SettingsDatabase.SaveSettings(x.SettingsInstance))
                     .Do(x => x.URS.ClearStack())
                     .ToList();
+                OnFinalize();
+                ScreenManager.PopScreen();
             }
         }
 
@@ -251,6 +256,15 @@ namespace MBOptionScreen.GUI.v1b.ViewModels
                     SelectedMod.IsSelected = true;
                 }
             }
+        }
+
+
+        public override void OnFinalize()
+        {
+            foreach (var modSettings in ModSettingsList)
+                modSettings.OnFinalize();
+
+            base.OnFinalize();
         }
     }
 }
