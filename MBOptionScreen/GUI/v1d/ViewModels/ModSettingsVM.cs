@@ -3,6 +3,7 @@ using MBOptionScreen.Settings;
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 
 using TaleWorlds.Library;
@@ -57,10 +58,18 @@ namespace MBOptionScreen.GUI.v1d.ViewModels
             ModSettingsDefinition = definition;
             MainView = mainView;
 
+            // Can easily backfire as I do not hold the reference
+            if (ModSettingsDefinition.SettingsInstance is INotifyPropertyChanged notifyPropertyChanged)
+                notifyPropertyChanged.PropertyChanged += Settings_PropertyChanged;
+
             SettingPropertyGroups = new MBBindingList<SettingPropertyGroupVM>();
             foreach (var settingPropertyGroup in SettingsInstance.GetSettingPropertyGroups().Select(d => new SettingPropertyGroupVM(d, this)))
                 SettingPropertyGroups.Add(settingPropertyGroup);
 
+            RefreshValues();
+        }
+        private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
             RefreshValues();
         }
 
@@ -125,6 +134,10 @@ namespace MBOptionScreen.GUI.v1d.ViewModels
         {
             foreach (var settingPropertyGroup in SettingPropertyGroups)
                 settingPropertyGroup.OnFinalize();
+
+            // Can easily backfire as I do not hold the reference
+            if (ModSettingsDefinition.SettingsInstance is INotifyPropertyChanged notifyPropertyChanged)
+                notifyPropertyChanged.PropertyChanged -= Settings_PropertyChanged;
 
             base.OnFinalize();
         }

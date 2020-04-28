@@ -110,8 +110,6 @@ namespace MBOptionScreen
                 .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, "ModLib.SettingsBase"))
                 .Select(obj => new ModLibSettingsWrapper(Activator.CreateInstance(obj)));
             settings.AddRange(modLibSettings);
-            if (settings.Count > 0)
-                ModLibStub.LoadIfNeeded();
 
             var mbOptionScreenSettings = allTypes
                 .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, "MBOptionScreen.Settings.SettingsBase"))

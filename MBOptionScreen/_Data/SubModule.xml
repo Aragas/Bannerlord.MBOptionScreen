@@ -22,5 +22,14 @@
 				<Tag key="IsNoRenderModeElement" value="false" />
 			</Tags>
 		</SubModule>
+	 	<SubModule>
+			<Name value="ModLub Substitute"/>
+			<DLLName value="ModLib.dll"/>
+			<SubModuleClassType value="ModLib.ModLibSubModule"/>
+			<Tags>
+				<Tag key="DedicatedServerType" value="none" />
+				<Tag key="IsNoRenderModeElement" value="false" />
+			</Tags>
+		</SubModule>
 	</SubModules>
 </Module>

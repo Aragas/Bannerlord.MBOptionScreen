@@ -17,9 +17,8 @@ namespace MBOptionScreen.Settings
                     return _instance;
 
                 var settings = SettingsDatabase.GetSettings(new T().Id);
-                //if (settings is AttributeSettingsWrapper settingsWrapper)
-                //    return _instance = settingsWrapper._object as T;
-
+                if (settings is SettingsWrapper settingsWrapper)
+                    return _instance = settingsWrapper._object as T;
                 return _instance = settings as T;
             }
         }

@@ -1,17 +1,19 @@
 ﻿using HarmonyLib;
+
 using MBOptionScreen.Utils;
+
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
 namespace MBOptionScreen.Settings
 {
-    internal class SettingsWrapper : SettingsBase
+    internal class SettingsWrapper : SettingsBase, INotifyPropertyChanged
     {
         internal readonly object _object;
-
         private PropertyInfo IdProperty { get; }
         private PropertyInfo ModuleFolderNameProperty { get; }
         private PropertyInfo ModNameProperty { get; }
@@ -20,6 +22,7 @@ namespace MBOptionScreen.Settings
         private PropertyInfo SubGroupDelimiterProperty { get; }
         private PropertyInfo FormatProperty { get; }
         private MethodInfo GetSettingPropertyGroupsMethod { get; }
+        private EventInfo PropertyChangedEvent { get; }
 
         public override string Id { get => (string)IdProperty.GetValue(_object); set => IdProperty.SetValue(_object, value); }
         public override string ModuleFolderName => (string)ModuleFolderNameProperty.GetValue(_object);
@@ -28,6 +31,19 @@ namespace MBOptionScreen.Settings
         public override string SubFolder => SubFolderProperty?.GetValue(_object) as string ?? "";
         protected override char SubGroupDelimiter => SubGroupDelimiterProperty?.GetValue(_object) as char? ?? '/';
         public override string Format => FormatProperty?.GetValue(_object) as string ?? "json";
+        public event PropertyChangedEventHandler PropertyChanged
+        {
+            add
+            {
+                if (_object is INotifyPropertyChanged notifyPropertyChanged)
+                    notifyPropertyChanged.PropertyChanged += value;
+            }
+            remove
+            {
+                if (_object is INotifyPropertyChanged notifyPropertyChanged)
+                    notifyPropertyChanged.PropertyChanged -= value;
+            }
+        }
 
         public SettingsWrapper() : this(new StubSettings()) { }
         public SettingsWrapper(object @object)
@@ -50,14 +66,33 @@ namespace MBOptionScreen.Settings
                 .ThenByDescending(x => x.Order)
                 .ThenByDescending(x => x, new AlphanumComparatorFast())
                 .ToList();
-
         private IEnumerable<SettingPropertyGroupDefinition> GetWrappedSettingPropertyGroups()
         {
-            var list = ((IList) GetSettingPropertyGroupsMethod.Invoke(_object, Array.Empty<object>()));
-            foreach (var @object in list)
+            //SettingsUtils
+            if (GetSettingPropertyGroupsMethod == null)
             {
-                yield return new SettingPropertyGroupDefinitionWrapper(@object);
+                foreach (var item in GetUnsortedSettingPropertyGroups())
+                    yield return item;
             }
+            else
+            {
+                var list = ((IList)GetSettingPropertyGroupsMethod.Invoke(_object, Array.Empty<object>()));
+                foreach (var @object in list)
+                    yield return new SettingPropertyGroupDefinitionWrapper(@object);
+            }
+        }
+        private IEnumerable<SettingPropertyGroupDefinition> GetUnsortedSettingPropertyGroups()
+        {
+            var groups = new List<SettingPropertyGroupDefinition>();
+            foreach (var settingProp in SettingsUtils.GetProperties(_object, Id))
+            {
+                CheckIsValid(settingProp);
+
+                //Find the group that the setting property should belong to. This is the default group if no group is specifically set with the SettingPropertyGroup attribute.
+                var group = GetGroupFor(settingProp, groups);
+                group.Add(settingProp);
+            }
+            return groups;
         }
     }
 }

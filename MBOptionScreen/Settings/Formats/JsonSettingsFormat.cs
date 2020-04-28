@@ -14,22 +14,22 @@ using System.Reflection;
 
 namespace MBOptionScreen.Settings
 {
-    [Version("e1.0.0",  200)]
-    [Version("e1.0.1",  200)]
-    [Version("e1.0.2",  200)]
-    [Version("e1.0.3",  200)]
-    [Version("e1.0.4",  200)]
-    [Version("e1.0.5",  200)]
-    [Version("e1.0.6",  200)]
-    [Version("e1.0.7",  200)]
-    [Version("e1.0.8",  200)]
-    [Version("e1.0.9",  200)]
-    [Version("e1.0.10", 200)]
-    [Version("e1.0.11", 200)]
-    [Version("e1.1.0",  200)]
-    [Version("e1.2.0",  200)]
-    [Version("e1.2.1",  200)]
-    [Version("e1.3.0",  200)]
+    [Version("e1.0.0",  201)]
+    [Version("e1.0.1",  201)]
+    [Version("e1.0.2",  201)]
+    [Version("e1.0.3",  201)]
+    [Version("e1.0.4",  201)]
+    [Version("e1.0.5",  201)]
+    [Version("e1.0.6",  201)]
+    [Version("e1.0.7",  201)]
+    [Version("e1.0.8",  201)]
+    [Version("e1.0.9",  201)]
+    [Version("e1.0.10", 201)]
+    [Version("e1.0.11", 201)]
+    [Version("e1.1.0",  201)]
+    [Version("e1.2.0",  201)]
+    [Version("e1.2.1",  201)]
+    [Version("e1.3.0",  201)]
     internal sealed class JsonSettingsFormat : ISettingsFormat
     {
         private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings()
@@ -60,21 +60,23 @@ namespace MBOptionScreen.Settings
             var file = new FileInfo(path);
             if (file.Exists)
             {
-                using var reader = file.OpenText();
-                var content = reader.ReadToEnd();
-                if (settings is SettingsWrapper wrapperSettings)
-                    JsonConvert.PopulateObject(content, wrapperSettings._object, _jsonSerializerSettings);
-                else
-                    JsonConvert.PopulateObject(content, settings, _jsonSerializerSettings);
+                try
+                {
+                    using var reader = file.OpenText();
+                    var content = reader.ReadToEnd();
+                    if (settings is SettingsWrapper wrapperSettings)
+                        JsonConvert.PopulateObject(content, wrapperSettings._object, _jsonSerializerSettings);
+                    else
+                        JsonConvert.PopulateObject(content, settings, _jsonSerializerSettings);
+                }
+                catch (JsonException)
+                {
+                    Save(settings, path);
+                }
             }
             else
             {
-                var content = settings is SettingsWrapper wrapperSettings
-                    ? JsonConvert.SerializeObject(wrapperSettings._object, _jsonSerializerSettings)
-                    : JsonConvert.SerializeObject(settings, _jsonSerializerSettings);
-                file.Directory?.Create();
-                using var writer = file.CreateText();
-                writer.Write(content);
+                Save(settings, path);
             }
             return settings;
         }

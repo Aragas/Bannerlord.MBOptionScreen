@@ -82,6 +82,10 @@
     <PackageReference Include="Aragas.Lib.Harmony" Version="2.0.0.9" Condition="$(TargetFramework) == 'netstandard2.0'" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ModLib Substitute\ModLib Substitute.csproj" />
+  </ItemGroup>
+
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
     <Exec Command="if not exist &quot;$(GameFolder)\Modules\$(ProjectName)&quot; mkdir &quot;$(GameFolder)\Modules\$(ProjectName)&quot;" />
 
