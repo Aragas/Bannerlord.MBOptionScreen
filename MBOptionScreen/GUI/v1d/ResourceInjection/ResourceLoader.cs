@@ -3,7 +3,7 @@ using MBOptionScreen.ResourceInjection;
 
 using TaleWorlds.GauntletUI.PrefabSystem;
 
-namespace MBOptionScreen.GUI.v1c.ResourceInjection
+namespace MBOptionScreen.GUI.v1d.ResourceInjection
 {
     [Version("e1.0.0",  200)]
     [Version("e1.0.1",  200)]
@@ -23,11 +23,11 @@ namespace MBOptionScreen.GUI.v1c.ResourceInjection
     {
         public WidgetPrefab? MovieRequested(string movie)
         {
-            if (movie == "ModOptionsView_v1c")
+            if (movie == "ModOptionsView_v1d")
             {
                 return PrefabsLoader.LoadModOptionsView();
             }
-            if (movie == "EditValueView_v1c")
+            if (movie == "EditValueView_v1d")
             {
                 return PrefabsLoader.LoadEditValueView();
             }

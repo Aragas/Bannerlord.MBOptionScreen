@@ -21,7 +21,7 @@ namespace MBOptionScreen.ResourceInjection
             var loaders = DI.GetImplementations<IResourceLoader, ResourceLoaderWrapper>(ApplicationVersionUtils.GameVersion()).ToList();
             // Try the built-in none is found
             if (loaders.Count == 0)
-                loaders.Add(new GUI.v1c.ResourceInjection.ResourceLoader());
+                loaders.Add(new GUI.v1d.ResourceInjection.ResourceLoader());
 
             foreach (var resourceLoader in loaders)
             {

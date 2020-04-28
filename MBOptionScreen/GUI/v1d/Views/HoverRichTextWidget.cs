@@ -3,16 +3,16 @@
 using TaleWorlds.GauntletUI;
 using TaleWorlds.Library;
 
-namespace MBOptionScreen.GUI.v1c.Views
+namespace MBOptionScreen.GUI.v1d.Views
 {
-    public class HoverRichTextWidget_v1c : RichTextWidget
+    public class HoverRichTextWidget_v1d : RichTextWidget
     {
         [DataSourceProperty]
         public Action HoverBegin { get; set; } = null!;
         [DataSourceProperty]
         public Action HoverEnd { get; set; } = null!;
 
-        public HoverRichTextWidget_v1c(UIContext context) : base(context)
+        public HoverRichTextWidget_v1d(UIContext context) : base(context)
         {
         }
 

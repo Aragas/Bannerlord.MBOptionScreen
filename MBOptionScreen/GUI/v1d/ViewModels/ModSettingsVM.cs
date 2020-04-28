@@ -7,7 +7,7 @@ using System.Linq;
 
 using TaleWorlds.Library;
 
-namespace MBOptionScreen.GUI.v1c.ViewModels
+namespace MBOptionScreen.GUI.v1d.ViewModels
 {
     public class ModSettingsVM : ViewModel
     {

@@ -1,5 +1,5 @@
 ﻿<Brushes>
-  <Brush Name="ModLib.Button.Base_v1c">
+  <Brush Name="ModLib.Button.Base_v1d">
     <Layers>
       <BrushLayer Name="Default" Sprite="StdAssets\Popup\button_default" IsHidden="true" />
       <BrushLayer Name="Hovered" Sprite="StdAssets\Popup\button_default_hover" IsHidden="true" />
@@ -23,7 +23,7 @@
     </Styles>
   </Brush>
 
-  <Brush Name="ModLib.Settings.Value.Display_v1c" BaseBrush="ModLib.Button.Base_v1c">
+  <Brush Name="ModLib.Settings.Value.Display_v1d" BaseBrush="ModLib.Button.Base_v1d">
     <Layers>
       <BrushLayer Name="Default" Sprite="BlankWhiteSquare_9" IsHidden="true"/>
       <BrushLayer Name="Hovered" Sprite="BlankWhiteSquare_9" IsHidden="true"/>
