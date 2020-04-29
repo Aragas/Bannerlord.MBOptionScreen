@@ -15,8 +15,8 @@
 	<SubModules>
 		<SubModule>
 			<Name value="Bannerlord.MBOptionScreen"/>
-			<SubModuleClassType value="MBOptionScreen.MBOptionScreenSubModule"/>
 			<DLLName value="MBOptionScreen.v2.0.10.dll"/>
+			<SubModuleClassType value="MBOptionScreen.MBOptionScreenSubModuleV2010"/>
 			<Tags>
 				<Tag key="DedicatedServerType" value="none" />
 				<Tag key="IsNoRenderModeElement" value="false" />
