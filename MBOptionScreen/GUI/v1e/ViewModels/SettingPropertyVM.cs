@@ -1,6 +1,6 @@
 ﻿using MBOptionScreen.Actions;
 using MBOptionScreen.Data;
-using MBOptionScreen.GUI.v1d.GauntletUI;
+using MBOptionScreen.GUI.v1e.GauntletUI;
 using MBOptionScreen.Settings;
 
 using System;
@@ -11,7 +11,7 @@ using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
 
-namespace MBOptionScreen.GUI.v1d.ViewModels
+namespace MBOptionScreen.GUI.v1e.ViewModels
 {
     public class SettingPropertyVM :
         ViewModel,

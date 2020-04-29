@@ -11,7 +11,7 @@
     <Copyright>Copyright © 2020</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Bannerlord.MBOptionScreen</PackageId>
-    <Version>2.0.9</Version>
+    <Version>2.0.10</Version>
     <PackageProjectUrl>https://github.com/Aragas/Bannerlord.MBOptionScreen</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/Aragas/Bannerlord.MBOptionScreen</RepositoryUrl>
@@ -61,20 +61,20 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="GUI\v1d\Brushes\ButtonBrushes.xml" />
-    <EmbeddedResource Include="GUI\v1d\Brushes\DividerBrushes.xml" />
-    <EmbeddedResource Include="GUI\v1d\Brushes\ExpandIndicator.xml" />
-    <EmbeddedResource Include="GUI\v1d\Brushes\ModSettingsBrush.xml" />
-    <EmbeddedResource Include="GUI\v1d\Brushes\ResetButtonBrush.xml" />
-    <EmbeddedResource Include="GUI\v1d\Brushes\SettingsValueDisplayBrush.xml" />
-    <EmbeddedResource Include="GUI\v1d\Brushes\TextBrushes.xml" />
+    <EmbeddedResource Include="GUI\v1e\Brushes\ButtonBrushes.xml" />
+    <EmbeddedResource Include="GUI\v1e\Brushes\DividerBrushes.xml" />
+    <EmbeddedResource Include="GUI\v1e\Brushes\ExpandIndicator.xml" />
+    <EmbeddedResource Include="GUI\v1e\Brushes\ModSettingsBrush.xml" />
+    <EmbeddedResource Include="GUI\v1e\Brushes\ResetButtonBrush.xml" />
+    <EmbeddedResource Include="GUI\v1e\Brushes\SettingsValueDisplayBrush.xml" />
+    <EmbeddedResource Include="GUI\v1e\Brushes\TextBrushes.xml" />
 
-    <EmbeddedResource Include="GUI\v1d\Views\EditValueView.xml" />
-    <EmbeddedResource Include="GUI\v1d\Views\ModOptionsView.xml" />
-    <EmbeddedResource Include="GUI\v1d\Views\ModSettingsView.xml" />
-    <EmbeddedResource Include="GUI\v1d\Views\SettingPropertyGroupView.xml" />
-    <EmbeddedResource Include="GUI\v1d\Views\SettingPropertyView.xml" />
-    <EmbeddedResource Include="GUI\v1d\Views\SettingsView.xml" />
+    <EmbeddedResource Include="GUI\v1e\Views\EditValueView.xml" />
+    <EmbeddedResource Include="GUI\v1e\Views\ModOptionsView.xml" />
+    <EmbeddedResource Include="GUI\v1e\Views\ModSettingsView.xml" />
+    <EmbeddedResource Include="GUI\v1e\Views\SettingPropertyGroupView.xml" />
+    <EmbeddedResource Include="GUI\v1e\Views\SettingPropertyView.xml" />
+    <EmbeddedResource Include="GUI\v1e\Views\SettingsView.xml" />
   </ItemGroup>
 
   <ItemGroup>

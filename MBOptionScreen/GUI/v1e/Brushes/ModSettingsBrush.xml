@@ -1,5 +1,5 @@
 ﻿<Brushes>
-  <Brush Name="ModLib.Setting.Item_v1d">
+  <Brush Name="ModLib.Setting.Item_v1e">
     <Layers>
       <BrushLayer Name="Default" Sprite="SaveLoad\load_tuple" Color="#FFEBC1FF" />
     </Layers>

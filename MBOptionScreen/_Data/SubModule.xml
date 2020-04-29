@@ -2,7 +2,7 @@
 <Module>
 	<Name value="Mod Configuration Menu"/>
 	<Id value="Bannerlord.MBOptionScreen"/>
-	<Version value="v2.0.9"/>
+	<Version value="v2.0.10"/>
 	<DefaultModule value="false"/>
 	<SingleplayerModule value="true"/>
 	<MultiplayerModule value="false"/>
@@ -15,8 +15,8 @@
 	<SubModules>
 		<SubModule>
 			<Name value="Bannerlord.MBOptionScreen"/>
-			<DLLName value="MBOptionScreen.v2.0.9.dll"/>
 			<SubModuleClassType value="MBOptionScreen.MBOptionScreenSubModule"/>
+			<DLLName value="MBOptionScreen.v2.0.10.dll"/>
 			<Tags>
 				<Tag key="DedicatedServerType" value="none" />
 				<Tag key="IsNoRenderModeElement" value="false" />
