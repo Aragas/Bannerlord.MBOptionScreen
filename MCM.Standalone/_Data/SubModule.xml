@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Module>
+  <Name value="Mod Configuration Menu"/>
+  <Id value="Bannerlord.MBOptionScreen"/>
+  <Version value="v3.0.0"/>
+  <DefaultModule value="false"/>
+  <SingleplayerModule value="true"/>
+  <MultiplayerModule value="false"/>
+  <Official value="false"/>
+  <DependedModules>
+  </DependedModules>
+  <OptionalDependedModules>
+    <OptionalDependedModule Id="ModLib"/>
+  </OptionalDependedModules>
+  <SubModules>
+    <SubModule>
+      <Name value="MCM Integrated Loader"/>
+      <DLLName value="MCM.dll"/>
+      <SubModuleClassType value="MCM.IntegratedLoaderSubModule"/>
+      <Tags>
+        <Tag key="DedicatedServerType" value="none" />
+        <Tag key="IsNoRenderModeElement" value="false" />
+      </Tags>
+    </SubModule>
+    <SubModule>
+      <Name value="ModLub Substitute"/>
+      <DLLName value="ModLib.dll"/>
+      <SubModuleClassType value="ModLib.ModLibSubModule"/>
+      <Tags>
+        <Tag key="DedicatedServerType" value="none" />
+        <Tag key="IsNoRenderModeElement" value="false" />
+      </Tags>
+    </SubModule>
+  </SubModules>
+</Module>

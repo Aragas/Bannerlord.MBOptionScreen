@@ -1,0 +1,24 @@
+﻿using System;
+
+namespace MCM.UI.Actions
+{
+    internal sealed class ComplexAction<T> : IAction
+    {
+        public Ref? Context { get; }
+        public object Value { get; }
+        public object Original { get; }
+        public Action<T> DoFunction { get; }
+        public Action<T> UndoFunction { get; }
+
+        public ComplexAction(T value, Action<T> doFunction, Action<T> undoFunction)
+        {
+            Value = value!;
+            Original = value!;
+            DoFunction = doFunction;
+            UndoFunction = undoFunction;
+        }
+
+        public void DoAction() => DoFunction?.Invoke((T) Value);
+        public void UndoAction() => UndoFunction?.Invoke((T) Value);
+    }
+}

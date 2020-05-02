@@ -1,0 +1,77 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net472;netstandard2.0</TargetFrameworks>
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
+    <GameFolder>C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord</GameFolder>
+    <Authors>Aragas</Authors>
+    <Copyright>Copyright © 2020</Copyright>
+    <Version>3.0.0</Version>
+    <ModuleName>Bannerlord.MBOptionScreen</ModuleName>
+    <AssemblyName>MCM.Standalone</AssemblyName>
+    <RootNamespace>MCM.Standalone</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Libraries Include="$(TargetDir)\*.*" Exclude="$(TargetDir)\*.pdb;$(TargetDir)\*.json;$(TargetDir)\MCM.Standalone.dll;" />
+    <Data Include="_Data\**\*.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="$(GameFolder)\bin\Win64_Shipping_Client\System.*.dll">
+      <HintPath>%(Identity)</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="$(GameFolder)\bin\Win64_Shipping_Client\TaleWorlds.*.dll">
+      <HintPath>%(Identity)</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="$(GameFolder)\bin\Win64_Shipping_Client\Steamworks.*.dll">
+      <HintPath>%(Identity)</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="$(GameFolder)\bin\Win64_Shipping_Client\Newtonsoft.Json.dll">
+      <HintPath>%(Identity)</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="$(GameFolder)\Modules\Native\bin\Win64_Shipping_Client\*.dll">
+      <HintPath>%(Identity)</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="$(GameFolder)\Modules\SandBox\bin\Win64_Shipping_Client\*.dll">
+      <HintPath>%(Identity)</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="$(GameFolder)\Modules\SandBoxCore\bin\Win64_Shipping_Client\*.dll">
+      <HintPath>%(Identity)</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="$(GameFolder)\Modules\StoryMode\bin\Win64_Shipping_Client\*.dll">
+      <HintPath>%(Identity)</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lib.Harmony" Version="2.0.0.9" Condition="$(TargetFramework) == 'net472'" />
+    <PackageReference Include="Aragas.Lib.Harmony" Version="2.0.0.9" Condition="$(TargetFramework) == 'netstandard2.0'" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MCM.Implementation.v1\MCM.Implementation.v1.csproj" />
+    <ProjectReference Include="..\MCM.Implementation.v2\MCM.Implementation.v2.csproj" />
+    <ProjectReference Include="..\MCM.Implementation\MCM.Implementation.csproj" />
+    <ProjectReference Include="..\MCM.UI\MCM.UI.csproj" />
+    <ProjectReference Include="..\MCM\MCM.csproj" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="if not exist &quot;$(GameFolder)\Modules\$(ModuleName)&quot; mkdir &quot;$(GameFolder)\Modules\$(ModuleName)&quot;" />
+
+    <Copy SourceFiles="@(Libraries)" DestinationFiles="@(Libraries->'$(GameFolder)\Modules\$(ModuleName)\bin\Win64_Shipping_Client\%(RecursiveDir)%(Filename)%(Extension)')" />
+
+    <Copy SourceFiles="@(Data)" DestinationFiles="@(Data->'$(GameFolder)\Modules\$(ModuleName)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
+
+</Project>

@@ -1,11 +1,15 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net472;netstandard2.0</TargetFrameworks>
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
     <GameFolder>C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord</GameFolder>
-    <Authors>mipen, Aragas</Authors>
-    <AssemblyName>ModLib</AssemblyName>
-    <RootNamespace>ModLib</RootNamespace>
+    <Authors>Aragas</Authors>
+    <Copyright>Copyright © 2020</Copyright>
+    <Version>3.0.0</Version>
+    <AssemblyName>MCM.Implementation.v2</AssemblyName>
+    <RootNamespace>MCM.Implementation.v2</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,6 +45,15 @@
       <HintPath>%(Identity)</HintPath>
       <Private>False</Private>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lib.Harmony" Version="2.0.0.9" Condition="$(TargetFramework) == 'net472'" />
+    <PackageReference Include="Aragas.Lib.Harmony" Version="2.0.0.9" Condition="$(TargetFramework) == 'netstandard2.0'" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MCM\MCM.csproj" />
   </ItemGroup>
 
 </Project>

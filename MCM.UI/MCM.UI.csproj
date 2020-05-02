@@ -1,12 +1,33 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net472;netstandard2.0</TargetFrameworks>
+    <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
     <GameFolder>C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord</GameFolder>
     <Authors>mipen, Aragas</Authors>
-    <AssemblyName>ModLib</AssemblyName>
-    <RootNamespace>ModLib</RootNamespace>
+    <Copyright>Copyright © 2020</Copyright>
+    <Version>3.0.0</Version>
+    <AssemblyName>MCM.UI.v$(Version)</AssemblyName>
+    <RootNamespace>MCM.UI</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="GUI\Brushes\ButtonBrushes.xml" />
+    <EmbeddedResource Include="GUI\Brushes\DividerBrushes.xml" />
+    <EmbeddedResource Include="GUI\Brushes\ExpandIndicator.xml" />
+    <EmbeddedResource Include="GUI\Brushes\SettingsBrush.xml" />
+    <EmbeddedResource Include="GUI\Brushes\ResetButtonBrush.xml" />
+    <EmbeddedResource Include="GUI\Brushes\SettingsValueDisplayBrush.xml" />
+    <EmbeddedResource Include="GUI\Brushes\TextBrushes.xml" />
+
+    <EmbeddedResource Include="GUI\Views\EditValueView.xml" />
+    <EmbeddedResource Include="GUI\Views\ModOptionsView.xml" />
+    <EmbeddedResource Include="GUI\Views\SettingsItemView.xml" />
+    <EmbeddedResource Include="GUI\Views\SettingsPropertyGroupView.xml" />
+    <EmbeddedResource Include="GUI\Views\SettingsPropertyView.xml" />
+    <EmbeddedResource Include="GUI\Views\SettingsView.xml" />
+  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="$(GameFolder)\bin\Win64_Shipping_Client\System.*.dll">
@@ -41,6 +62,15 @@
       <HintPath>%(Identity)</HintPath>
       <Private>False</Private>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Lib.Harmony" Version="2.0.0.9" Condition="$(TargetFramework) == 'net472'" />
+    <PackageReference Include="Aragas.Lib.Harmony" Version="2.0.0.9" Condition="$(TargetFramework) == 'netstandard2.0'" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MCM\MCM.csproj" />
   </ItemGroup>
 
 </Project>

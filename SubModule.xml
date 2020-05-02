@@ -1,0 +1,11 @@
+<SubModules>
+  <SubModule>
+    <Name value="MCM Integrated Loader"/>
+    <DLLName value="MCM.dll"/>
+    <SubModuleClassType value="MCM.IntegratedLoaderSubModule"/>
+    <Tags>
+      <Tag key="DedicatedServerType" value="none" />
+      <Tag key="IsNoRenderModeElement" value="false" />
+    </Tags>
+  </SubModule>
+</SubModules>
