@@ -1,5 +1,5 @@
 ﻿<Brushes>
-  <Brush Name="MobLib.ResetButton_v1e">
+  <Brush Name="MobLib.ResetButton_v1e_7">
     <Layers>
       <BrushLayer Name="Default" Sprite="Nameplates\hover_ring" />
     </Layers>

@@ -7,7 +7,7 @@ namespace MBOptionScreen.Settings
 {
     internal sealed class SettingsProviderWrapper : IMBOptionScreenSettingsProvider, IModLibSettingsProvider, IWrapper
     {
-        private readonly object _object;
+        internal readonly object _object;
         private PropertyInfo CreateModSettingsDefinitionsProperty { get; }
         private MethodInfo GetSettingsMethod { get; }
         private MethodInfo OverrideSettingsMethod { get; }
@@ -34,10 +34,26 @@ namespace MBOptionScreen.Settings
                 && ResetSettingsMethod != null && SaveSettingsMethod != null;
         }
 
-        public SettingsBase? GetSettings(string id) => GetSettingsMethod.Invoke(_object, new object[] { id }) as SettingsBase;
-        public bool OverrideSettings(SettingsBase settings) => (bool) OverrideSettingsMethod.Invoke(_object, new object[] { settings });
-        public bool RegisterSettings(SettingsBase settings) => (bool) RegisterSettingsMethod.Invoke(_object, new object[] { settings });
-        public SettingsBase? ResetSettings(string id) => ResetSettingsMethod.Invoke(_object, new object[] { id }) as SettingsBase;
-        public void SaveSettings(SettingsBase settings) => SaveSettingsMethod.Invoke(_object, new object[] { settings });
+        public SettingsBase? GetSettings(string id)
+        {
+            var settings = GetSettingsMethod.Invoke(_object, new object[] {id});
+            if (settings is SettingsBase settingsBase)
+                return settingsBase;
+            if (settings != null)
+                return new SettingsWrapper(settings);
+            return null;
+        }
+
+        public bool OverrideSettings(SettingsBase settings) => (bool) OverrideSettingsMethod.Invoke(_object, new object[] { settings is SettingsWrapper wrapper ? wrapper : settings });
+        public bool RegisterSettings(SettingsBase settings) => (bool) RegisterSettingsMethod.Invoke(_object, new object[] { settings is SettingsWrapper wrapper ? wrapper : settings });
+        public SettingsBase? ResetSettings(string id)
+        {
+            var settings = ResetSettingsMethod.Invoke(_object, new object[] { id });
+            if (settings is SettingsBase settingsBase)
+                return settingsBase;
+            return new SettingsWrapper(settings);
+        }
+
+        public void SaveSettings(SettingsBase settings) => SaveSettingsMethod.Invoke(_object, new object[] { settings is SettingsWrapper wrapper ? wrapper : settings });
     }
 }

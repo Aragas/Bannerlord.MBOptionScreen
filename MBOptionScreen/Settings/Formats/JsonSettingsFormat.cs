@@ -11,25 +11,27 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using HarmonyLib;
+using TaleWorlds.Core;
 
 namespace MBOptionScreen.Settings
 {
-    [Version("e1.0.0",  201)]
-    [Version("e1.0.1",  201)]
-    [Version("e1.0.2",  201)]
-    [Version("e1.0.3",  201)]
-    [Version("e1.0.4",  201)]
-    [Version("e1.0.5",  201)]
-    [Version("e1.0.6",  201)]
-    [Version("e1.0.7",  201)]
-    [Version("e1.0.8",  201)]
-    [Version("e1.0.9",  201)]
-    [Version("e1.0.10", 201)]
-    [Version("e1.0.11", 201)]
-    [Version("e1.1.0",  201)]
-    [Version("e1.2.0",  201)]
-    [Version("e1.2.1",  201)]
-    [Version("e1.3.0",  201)]
+    [Version("e1.0.0",  210)]
+    [Version("e1.0.1",  210)]
+    [Version("e1.0.2",  210)]
+    [Version("e1.0.3",  210)]
+    [Version("e1.0.4",  210)]
+    [Version("e1.0.5",  210)]
+    [Version("e1.0.6",  210)]
+    [Version("e1.0.7",  210)]
+    [Version("e1.0.8",  210)]
+    [Version("e1.0.9",  210)]
+    [Version("e1.0.10", 210)]
+    [Version("e1.0.11", 210)]
+    [Version("e1.1.0",  210)]
+    [Version("e1.2.0",  210)]
+    [Version("e1.2.1",  210)]
+    [Version("e1.3.0",  210)]
     internal sealed class JsonSettingsFormat : ISettingsFormat
     {
         private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings()
@@ -95,28 +97,29 @@ namespace MBOptionScreen.Settings
 
         public class DropdownJsonConverter : JsonConverter
         {
-            public override bool CanConvert(Type objectType) => typeof(IDropdownProvider).IsAssignableFrom(objectType);
+            public override bool CanConvert(Type objectType) => ReflectionUtils.ImplementsOrImplementsEquivalent(objectType, typeof(IDropdownProvider));
 
             public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
             {
-                var dropdown = (IDropdownProvider) value;
+                var selectedIndexProperty = AccessTools.Property(value.GetType(), "SelectedIndex");
                 var jo = new JObject
                 {
-                    { "SelectedIndex", dropdown.SelectedIndex },
+                    { "SelectedIndex", selectedIndexProperty?.GetValue(value) as int? ?? 0 },
                 };
                 jo.WriteTo(writer);
             }
 
             public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
             {
-                var dropdown = (IDropdownProvider) existingValue;
+                var selectedIndexProperty = AccessTools.Property(existingValue.GetType(), "SelectedIndex");
                 try
                 {
                     var jo = JObject.Load(reader);
-                    dropdown.SelectedIndex = int.TryParse(jo["SelectedIndex"].ToString(), out var res) ? res : dropdown.SelectedIndex;
+                    var index = selectedIndexProperty?.GetValue(existingValue) as int? ?? 0;
+                    selectedIndexProperty?.SetValue(existingValue, int.TryParse(jo["SelectedIndex"].ToString(), out var res) ? res : index);
                 }
                 catch (Exception) { }
-                return dropdown;
+                return existingValue;
             }
         }
     }

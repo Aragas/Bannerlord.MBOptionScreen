@@ -10,7 +10,7 @@ using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
 
-namespace MBOptionScreen.GUI.v1e.ViewModels
+namespace MBOptionScreen.GUI.v1e_7.ViewModels
 {
     public class ModOptionsScreenVM : ViewModel
     {

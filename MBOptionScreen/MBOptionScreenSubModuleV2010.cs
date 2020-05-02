@@ -6,12 +6,12 @@ using TaleWorlds.MountAndBlade;
 
 namespace MBOptionScreen
 {
-    public sealed class MBOptionScreenSubModuleV2010 : MBSubModuleBase
+    public sealed class MBOptionScreenSubModuleV2011 : MBSubModuleBase
     {
         private ApplicationVersion GameVersion { get; }
         private IMBOptionScreenInitializer MBOptionScreenInitializer { get; } = default!;
 
-        public MBOptionScreenSubModuleV2010()
+        public MBOptionScreenSubModuleV2011()
         {
             GameVersion = ApplicationVersionUtils.GameVersion();
             MBOptionScreenInitializer = DI.GetImplementation<IMBOptionScreenInitializer, MBOptionScreenInitializerWrapper>(GameVersion);

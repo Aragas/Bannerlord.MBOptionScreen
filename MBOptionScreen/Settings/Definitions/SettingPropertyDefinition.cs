@@ -3,7 +3,7 @@
 using MBOptionScreen.Data;
 
 using System.Reflection;
-
+using MBOptionScreen.Utils;
 using TaleWorlds.Localization;
 
 namespace MBOptionScreen.Settings
@@ -58,7 +58,7 @@ namespace MBOptionScreen.Settings
                     SettingType = SettingType.Float;
                 else if (Property.PropertyType == typeof(string))
                     SettingType = SettingType.String;
-                else if (typeof(IDropdownProvider).IsAssignableFrom(Property.PropertyType))
+                else if (ReflectionUtils.ImplementsOrImplementsEquivalent(Property.PropertyType, typeof(IDropdownProvider)))
                     SettingType = SettingType.Dropdown;
 
                 MinValue = settingPropertyAttribute.MinValue;

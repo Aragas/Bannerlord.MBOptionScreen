@@ -1,4 +1,5 @@
-﻿using MBOptionScreen.ApplicationContainer;
+﻿using HarmonyLib;
+using MBOptionScreen.ApplicationContainer;
 using MBOptionScreen.Attributes;
 using MBOptionScreen.Functionality;
 using MBOptionScreen.Settings;
@@ -6,6 +7,7 @@ using MBOptionScreen.Utils;
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 
@@ -15,22 +17,22 @@ using TaleWorlds.Localization;
 
 namespace MBOptionScreen
 {
-    [Version("e1.0.0",  201)]
-    [Version("e1.0.1",  201)]
-    [Version("e1.0.2",  201)]
-    [Version("e1.0.3",  201)]
-    [Version("e1.0.4",  201)]
-    [Version("e1.0.5",  201)]
-    [Version("e1.0.6",  201)]
-    [Version("e1.0.7",  201)]
-    [Version("e1.0.8",  201)]
-    [Version("e1.0.9",  201)]
-    [Version("e1.0.10", 201)]
-    [Version("e1.0.11", 201)]
-    [Version("e1.1.0",  201)]
-    [Version("e1.2.0",  201)]
-    [Version("e1.2.1",  201)]
-    [Version("e1.3.0",  201)]
+    [Version("e1.0.0",  320)]
+    [Version("e1.0.1",  320)]
+    [Version("e1.0.2",  320)]
+    [Version("e1.0.3",  320)]
+    [Version("e1.0.4",  320)]
+    [Version("e1.0.5",  320)]
+    [Version("e1.0.6",  320)]
+    [Version("e1.0.7",  320)]
+    [Version("e1.0.8",  320)]
+    [Version("e1.0.9",  320)]
+    [Version("e1.0.10", 320)]
+    [Version("e1.0.11", 320)]
+    [Version("e1.1.0",  320)]
+    [Version("e1.2.0",  320)]
+    [Version("e1.2.1",  320)]
+    [Version("e1.3.0",  320)]
     public sealed class DefaultMBOptionScreenInitializer : IMBOptionScreenInitializer
     {
         protected ApplicationVersion GameVerion { get; private set; }
@@ -54,12 +56,32 @@ namespace MBOptionScreen
                     9990,
                     () => (ScreenBase) DI.GetImplementation(GameVerion, typeof(MBOptionScreen).FullName),
                     new TextObject("{=HiZbHGvYG}Mod Options"));
+
+
+                var assemblies = AppDomain.CurrentDomain.GetAssemblies()
+                    .Where(a => !a.IsDynamic)
+                    .Where(a => Path.GetFileNameWithoutExtension(a.Location).StartsWith("MBOptionScreen"));
+                foreach (var assembly in assemblies)
+                {
+                    var settingsProviderWrapperType = assembly.GetType("MBOptionScreen.Settings.SettingsProviderWrapper");
+                    var settingsDatabaseType = assembly.GetType("MBOptionScreen.Settings.SettingsDatabase");
+                    var mbOptionScreenSettingsProviderProperty =
+                        AccessTools.Property(settingsDatabaseType, "MBOptionScreenSettingsProvider");
+                    var modLibSettingsProviderProperty =
+                        AccessTools.Property(settingsDatabaseType, "ModLibSettingsProvider");
+                    mbOptionScreenSettingsProviderProperty?.SetValue(
+                        null,
+                        Activator.CreateInstance(settingsProviderWrapperType, new object[] { settingsProvider }));
+                    modLibSettingsProviderProperty?.SetValue(
+                        null,
+                        Activator.CreateInstance(settingsProviderWrapperType, new object[] { modLibSettingsProvider }));
+                }
             }
 
             // Settings providers are the only classes that need 'true' global access between MBOptionMods
             // get the global settings provider
-            SettingsDatabase.MBOptionScreenSettingsProvider = new SettingsProviderWrapper(ApplicationContainerProvider.Get("MBOptionScreenSettingsProvider"));
-            SettingsDatabase.ModLibSettingsProvider = new SettingsProviderWrapper(ApplicationContainerProvider.Get("ModLibSettingsProvider"));
+            //SettingsDatabase.MBOptionScreenSettingsProvider = new SettingsProviderWrapper(ApplicationContainerProvider.Get("MBOptionScreenSettingsProvider"));
+            //SettingsDatabase.ModLibSettingsProvider = new SettingsProviderWrapper(ApplicationContainerProvider.Get("ModLibSettingsProvider"));
 
             if (first)
             {

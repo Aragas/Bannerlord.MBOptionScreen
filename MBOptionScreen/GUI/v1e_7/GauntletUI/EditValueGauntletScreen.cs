@@ -1,4 +1,4 @@
-﻿using MBOptionScreen.GUI.v1e.ViewModels;
+﻿using MBOptionScreen.GUI.v1e_7.ViewModels;
 
 using TaleWorlds.Engine.GauntletUI;
 using TaleWorlds.Engine.Screens;
@@ -6,7 +6,7 @@ using TaleWorlds.GauntletUI.Data;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
 
-namespace MBOptionScreen.GUI.v1e.GauntletUI
+namespace MBOptionScreen.GUI.v1e_7.GauntletUI
 {
     public class EditValueGauntletScreen : ScreenBase
     {
@@ -25,7 +25,7 @@ namespace MBOptionScreen.GUI.v1e.GauntletUI
             base.OnInitialize();
             _dataSource = new EditValueVM(_settingProperty);
             _gauntletLayer = new GauntletLayer(4000, "GauntletLayer");
-            _gauntletMovie = _gauntletLayer.LoadMovie("EditValueView_v1e", _dataSource);
+            _gauntletMovie = _gauntletLayer.LoadMovie("EditValueView_v1e_7", _dataSource);
             _gauntletLayer.Input.RegisterHotKeyCategory(HotKeyManager.GetCategory("ChatLogHotKeyCategory"));
             _gauntletLayer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);
             _gauntletLayer.IsFocusLayer = true;

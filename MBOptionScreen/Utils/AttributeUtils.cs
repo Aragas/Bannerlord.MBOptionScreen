@@ -13,16 +13,20 @@ namespace MBOptionScreen.Utils
     internal static class AttributeUtils
     {
         // Rewrite
-        public static (Type Type, VersionAttribute Attribute) Get(ApplicationVersion version, IEnumerable<Type>? types = null)
+        public static (Type Type, ApplicationVersion GameVersion, int ImplementationVersion) Get(ApplicationVersion version, IEnumerable<Type>? types = null)
         {
             types ??= AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(a => a.DefinedTypes);
 
             var attributes = types
-                .Where(t => t.GetCustomAttributes<VersionAttribute>().Any())
-                .ToDictionary(k => k, v => v.GetCustomAttributes<VersionAttribute>());
+                .Where(t => t.GetCustomAttributes().Any(a => a.GetType().FullName == typeof(VersionAttribute).FullName))
+                .ToDictionary(
+                    k => k,
+                    v => v.GetCustomAttributes()
+                        .Where(a => a.GetType().FullName == typeof(VersionAttribute).FullName)
+                        .Select(a => new VersionAttributeWrapper(a)));
 
-            (Type Type, VersionAttribute Attribute) maxMatching = default;
+            (Type Type, VersionAttributeWrapper Attribute) maxMatching = default;
             foreach (var pair in attributes)
             {
                 var maxFound = pair.Value
@@ -99,19 +103,23 @@ namespace MBOptionScreen.Utils
                 }
             }
 
-            return maxMatching;
+            return (maxMatching.Type, maxMatching.Attribute.GameVersion, maxMatching.Attribute.ImplementationVersion);
         }
 
-        public static Dictionary<Type, VersionAttribute> GetMultiple(ApplicationVersion version, IEnumerable<Type>? types = null)
+        public static Dictionary<Type, (ApplicationVersion GameVersion, int ImplementationVersion)> GetMultiple(ApplicationVersion version, IEnumerable<Type>? types = null)
         {
             types ??= AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(a => a.GetTypes());
 
             var attributes = types
-                .Where(t => t.GetCustomAttributes<VersionAttribute>().Any())
-                .ToDictionary(k => k, v => v.GetCustomAttributes<VersionAttribute>());
+                .Where(t => t.GetCustomAttributes().Any(a => a.GetType().FullName == typeof(VersionAttribute).FullName))
+                .ToDictionary(
+                    k => k,
+                    v => v.GetCustomAttributes()
+                        .Where(a => a.GetType().FullName == typeof(VersionAttribute).FullName)
+                        .Select(a => new VersionAttributeWrapper(a)));
 
-            var allMatching = new Dictionary<Type, VersionAttribute>();
+            var allMatching = new Dictionary<Type, (ApplicationVersion GameVersion, int ImplementationVersion)>();
             foreach (var pair in attributes)
             {
                 var maxFound = pair.Value
@@ -126,12 +134,12 @@ namespace MBOptionScreen.Utils
                 {
                     if (allMatching[pair.Key].ImplementationVersion < maxFound.ImplementationVersion)
                     {
-                        allMatching[pair.Key] = maxFound;
+                        allMatching[pair.Key] = (maxFound.GameVersion, maxFound.ImplementationVersion);
                     }
                 }
                 else
                 {
-                    allMatching[pair.Key] = maxFound;
+                    allMatching[pair.Key] = (maxFound.GameVersion, maxFound.ImplementationVersion);
                 }
             }
 

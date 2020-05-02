@@ -1,17 +1,17 @@
 ﻿using MBOptionScreen.Actions;
 using MBOptionScreen.Data;
-using MBOptionScreen.GUI.v1e.GauntletUI;
+using MBOptionScreen.GUI.v1e_7.GauntletUI;
 using MBOptionScreen.Settings;
 
 using System;
 using System.ComponentModel;
 using System.Reflection;
-
+using HarmonyLib;
 using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
 
-namespace MBOptionScreen.GUI.v1e.ViewModels
+namespace MBOptionScreen.GUI.v1e_7.ViewModels
 {
     public class SettingPropertyVM :
         ViewModel,
@@ -19,6 +19,13 @@ namespace MBOptionScreen.GUI.v1e.ViewModels
         ISettingPropertyIntValue,
         ISettingPropertyFloatValue
     {
+        private SelectorVM<SelectorItemVM> GetSelector(object dropdown)
+        {
+            var selectorProperty = AccessTools.Property(dropdown.GetType(), "Selector");
+            if (selectorProperty == null)
+                return new SelectorVM<SelectorItemVM>(0, _ => { });
+            return (SelectorVM<SelectorItemVM>)selectorProperty.GetValue(dropdown);
+        }
 
         protected ModOptionsScreenVM MainView => ModSettingsView.MainView;
         protected ModSettingsVM ModSettingsView { get; }
@@ -131,7 +138,7 @@ namespace MBOptionScreen.GUI.v1e.ViewModels
         [DataSourceProperty]
         public SelectorVM<SelectorItemVM> DropdownValue
         {
-            get => SettingType == SettingType.Dropdown ? (Property.GetValue(SettingsInstance) as IDropdownProvider).Selector : new SelectorVM<SelectorItemVM>(0, null);
+            get => SettingType == SettingType.Dropdown ? GetSelector(Property.GetValue(SettingsInstance)) : new SelectorVM<SelectorItemVM>(0, null);
             set
             {
                 if (SettingType == SettingType.Dropdown && DropdownValue != value)

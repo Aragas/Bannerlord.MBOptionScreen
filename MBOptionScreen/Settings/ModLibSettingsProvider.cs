@@ -9,22 +9,22 @@ using System.Linq;
 
 namespace MBOptionScreen.Settings
 {
-    [Version("e1.0.0",  200)]
-    [Version("e1.0.1",  200)]
-    [Version("e1.0.2",  200)]
-    [Version("e1.0.3",  200)]
-    [Version("e1.0.4",  200)]
-    [Version("e1.0.5",  200)]
-    [Version("e1.0.6",  200)]
-    [Version("e1.0.7",  200)]
-    [Version("e1.0.8",  200)]
-    [Version("e1.0.9",  200)]
-    [Version("e1.0.10", 200)]
-    [Version("e1.0.11", 200)]
-    [Version("e1.1.0",  200)]
-    [Version("e1.2.0",  200)]
-    [Version("e1.2.1",  200)]
-    [Version("e1.3.0",  200)]
+    [Version("e1.0.0",  210)]
+    [Version("e1.0.1",  210)]
+    [Version("e1.0.2",  210)]
+    [Version("e1.0.3",  210)]
+    [Version("e1.0.4",  210)]
+    [Version("e1.0.5",  210)]
+    [Version("e1.0.6",  210)]
+    [Version("e1.0.7",  210)]
+    [Version("e1.0.8",  210)]
+    [Version("e1.0.9",  210)]
+    [Version("e1.0.10", 210)]
+    [Version("e1.0.11", 210)]
+    [Version("e1.1.0",  210)]
+    [Version("e1.2.0",  210)]
+    [Version("e1.2.1",  210)]
+    [Version("e1.3.0",  210)]
     internal sealed class ModLibSettingsProvider : IModLibSettingsProvider
     {
         private Dictionary<string, SettingsWrapper> LoadedModLibSettings { get; } = new Dictionary<string, SettingsWrapper>();

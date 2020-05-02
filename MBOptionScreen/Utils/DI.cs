@@ -72,7 +72,8 @@ namespace MBOptionScreen.Utils
         {
             var types = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(a => a.GetTypes())
-                .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(TBase)));
+                .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(TBase)))
+                .ToList();
             return GetImplementationRecursive<TBase, TWrapper>(version, args, types);
         }
 

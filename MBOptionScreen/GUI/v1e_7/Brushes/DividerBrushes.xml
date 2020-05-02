@@ -1,6 +1,6 @@
 ﻿<Brushes>
 
-  <Brush Name="ModLib.Divider.White_v1e" >
+  <Brush Name="ModLib.Divider.White_v1e_7" >
     <Layers>
       <BrushLayer Name="Default" Sprite="GradientDivider_9"/>
     </Layers>
@@ -11,7 +11,7 @@
     </Styles>
   </Brush>
 
-  <Brush Name="ModLib.Divider.Yellow_v1e" >
+  <Brush Name="ModLib.Divider.Yellow_v1e_7" >
     <Layers>
       <BrushLayer Name="Default" Sprite="GradientDivider_9" Color="#FFEBC1FF"/>
     </Layers>

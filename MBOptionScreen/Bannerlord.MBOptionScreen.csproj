@@ -11,7 +11,7 @@
     <Copyright>Copyright © 2020</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>Bannerlord.MBOptionScreen</PackageId>
-    <Version>2.0.10</Version>
+    <Version>2.0.11</Version>
     <PackageProjectUrl>https://github.com/Aragas/Bannerlord.MBOptionScreen</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <RepositoryUrl>https://github.com/Aragas/Bannerlord.MBOptionScreen</RepositoryUrl>
@@ -60,21 +60,26 @@
     </Reference>
   </ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="GUI\v1e\Brushes\ButtonBrushes.xml" />
-    <EmbeddedResource Include="GUI\v1e\Brushes\DividerBrushes.xml" />
-    <EmbeddedResource Include="GUI\v1e\Brushes\ExpandIndicator.xml" />
-    <EmbeddedResource Include="GUI\v1e\Brushes\ModSettingsBrush.xml" />
-    <EmbeddedResource Include="GUI\v1e\Brushes\ResetButtonBrush.xml" />
-    <EmbeddedResource Include="GUI\v1e\Brushes\SettingsValueDisplayBrush.xml" />
-    <EmbeddedResource Include="GUI\v1e\Brushes\TextBrushes.xml" />
+  <ItemGroup Condition="$(Version) == '2.0.11'">
+    <EmbeddedResource Include="GUI\v1e_7\Brushes\ButtonBrushes.xml" />
+    <EmbeddedResource Include="GUI\v1e_7\Brushes\DividerBrushes.xml" />
+    <EmbeddedResource Include="GUI\v1e_7\Brushes\ExpandIndicator.xml" />
+    <EmbeddedResource Include="GUI\v1e_7\Brushes\ModSettingsBrush.xml" />
+    <EmbeddedResource Include="GUI\v1e_7\Brushes\ResetButtonBrush.xml" />
+    <EmbeddedResource Include="GUI\v1e_7\Brushes\SettingsValueDisplayBrush.xml" />
+    <EmbeddedResource Include="GUI\v1e_7\Brushes\TextBrushes.xml" />
 
-    <EmbeddedResource Include="GUI\v1e\Views\EditValueView.xml" />
-    <EmbeddedResource Include="GUI\v1e\Views\ModOptionsView.xml" />
-    <EmbeddedResource Include="GUI\v1e\Views\ModSettingsView.xml" />
-    <EmbeddedResource Include="GUI\v1e\Views\SettingPropertyGroupView.xml" />
-    <EmbeddedResource Include="GUI\v1e\Views\SettingPropertyView.xml" />
-    <EmbeddedResource Include="GUI\v1e\Views\SettingsView.xml" />
+    <EmbeddedResource Include="GUI\v1e_7\Views\EditValueView.xml" />
+    <EmbeddedResource Include="GUI\v1e_7\Views\ModOptionsView.xml" />
+    <EmbeddedResource Include="GUI\v1e_7\Views\ModSettingsView.xml" />
+    <EmbeddedResource Include="GUI\v1e_7\Views\SettingPropertyGroupView.xml" />
+    <EmbeddedResource Include="GUI\v1e_7\Views\SettingPropertyView.xml" />
+    <EmbeddedResource Include="GUI\v1e_7\Views\SettingsView.xml" />
+  </ItemGroup>
+  <ItemGroup Condition="$(Version) != '2.0.11'">
+    <Compile Remove="GUI\**" />
+    <EmbeddedResource Remove="GUI\**" />
+    <None Remove="GUI\**" />
   </ItemGroup>
 
   <ItemGroup>

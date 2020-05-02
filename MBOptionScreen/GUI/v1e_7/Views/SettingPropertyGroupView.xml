@@ -34,10 +34,10 @@
                   <Children>
 
                     <RichTextWidget Text="@GroupNameDisplay" HeightSizePolicy="CoverChildren" WidthSizePolicy="CoverChildren" HorizontalAlignment="Left"
-                                    VerticalAlignment="Center" Brush="ModLib.Settings.Group.Text_v1e" IsEnabled="@GroupToggle"/>
+                                    VerticalAlignment="Center" Brush="ModLib.Settings.Group.Text_v1e_7" IsEnabled="@GroupToggle"/>
 
                     <ImageWidget HeightSizePolicy="Fixed" WidthSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" HorizontalAlignment="Right"
-                                 Brush="ModLib.ExpandIndicator_v1e" VerticalAlignment="Center" IsVisible="@GroupToggle"/>
+                                 Brush="ModLib.ExpandIndicator_v1e_7" VerticalAlignment="Center" IsVisible="@GroupToggle"/>
 
                   </Children>
                 </ButtonWidget>
@@ -51,13 +51,13 @@
         </Widget>
 
         <!-- Divider -->
-        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" MarginTop="4" Brush="ModLib.Divider.White_v1e"/>
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" MarginTop="4" Brush="ModLib.Divider.White_v1e_7"/>
 
         <!-- SettingProperties List -->
         <ListPanel DataSource="{SettingProperties}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" MarginLeft="10" MarginRight="10"
                    LayoutImp.LayoutMethod="VerticalBottomToTop" HorizontalAlignment="Left" MarginTop="10">
           <ItemTemplate>
-            <SettingPropertyView_v1e />
+            <SettingPropertyView_v1e_7 />
           </ItemTemplate>
         </ListPanel>
 
@@ -65,7 +65,7 @@
         <ListPanel DataSource="{SettingPropertyGroups}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" MarginLeft="25" MarginRight="25"
                    LayoutImp.LayoutMethod="VerticalBottomToTop" HorizontalAlignment="Left">
           <ItemTemplate>
-            <SettingPropertyGroupView_v1e />
+            <SettingPropertyGroupView_v1e_7 />
           </ItemTemplate>
         </ListPanel>
 

@@ -2,20 +2,20 @@
 
 using System.Xml;
 
-namespace MBOptionScreen.GUI.v1e.ResourceInjection
+namespace MBOptionScreen.GUI.v1e_7.ResourceInjection
 {
     /// <summary>
     /// Loads the embed .xml files from the library
     /// </summary>
     internal static class BrushLoader
     {
-        private static readonly string ButtonBrushesPath = "MBOptionScreen.GUI.v1e.Brushes.ButtonBrushes.xml";
-        private static readonly string DividerBrushesPath = "MBOptionScreen.GUI.v1e.Brushes.DividerBrushes.xml";
-        private static readonly string ExpandIndicatorPath = "MBOptionScreen.GUI.v1e.Brushes.ExpandIndicator.xml";
-        private static readonly string ModSettingsBrushPath = "MBOptionScreen.GUI.v1e.Brushes.ModSettingsBrush.xml";
-        private static readonly string ResetButtonBrushPath = "MBOptionScreen.GUI.v1e.Brushes.ResetButtonBrush.xml";
-        private static readonly string SettingsValueDisplayBrushPath = "MBOptionScreen.GUI.v1e.Brushes.SettingsValueDisplayBrush.xml";
-        private static readonly string TextBrushesPath = "MBOptionScreen.GUI.v1e.Brushes.TextBrushes.xml";
+        private static readonly string ButtonBrushesPath = "MBOptionScreen.GUI.v1e_7.Brushes.ButtonBrushes.xml";
+        private static readonly string DividerBrushesPath = "MBOptionScreen.GUI.v1e_7.Brushes.DividerBrushes.xml";
+        private static readonly string ExpandIndicatorPath = "MBOptionScreen.GUI.v1e_7.Brushes.ExpandIndicator.xml";
+        private static readonly string ModSettingsBrushPath = "MBOptionScreen.GUI.v1e_7.Brushes.ModSettingsBrush.xml";
+        private static readonly string ResetButtonBrushPath = "MBOptionScreen.GUI.v1e_7.Brushes.ResetButtonBrush.xml";
+        private static readonly string SettingsValueDisplayBrushPath = "MBOptionScreen.GUI.v1e_7.Brushes.SettingsValueDisplayBrush.xml";
+        private static readonly string TextBrushesPath = "MBOptionScreen.GUI.v1e_7.Brushes.TextBrushes.xml";
 
         public static XmlDocument ButtonBrushes() => Load(ButtonBrushesPath);
         public static XmlDocument DividerBrushes() => Load(DividerBrushesPath);

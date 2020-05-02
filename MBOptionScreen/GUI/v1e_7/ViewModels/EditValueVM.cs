@@ -4,7 +4,7 @@ using MBOptionScreen.Settings;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
 
-namespace MBOptionScreen.GUI.v1e.ViewModels
+namespace MBOptionScreen.GUI.v1e_7.ViewModels
 {
     public class EditValueVM : ViewModel
     {

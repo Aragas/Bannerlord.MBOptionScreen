@@ -3,6 +3,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HarmonyLib;
+using MBOptionScreen.Utils;
 
 namespace MBOptionScreen.Settings
 {
@@ -13,12 +15,15 @@ namespace MBOptionScreen.Settings
         {
             get
             {
-                if (_instance != null)
-                    return _instance;
+                //if (_instance != null)
+                //    return _instance;
 
-                var settings = SettingsDatabase.GetSettings(new T().Id);
-                if (settings is SettingsWrapper settingsWrapper)
-                    return _instance = settingsWrapper._object as T;
+                object settings = SettingsDatabase.GetSettings(new T().Id);
+                while (settings != null && ReflectionUtils.ImplementsOrImplementsEquivalent(settings.GetType(), typeof(SettingsWrapper)))
+                {
+                    var prop = AccessTools.Field(settings.GetType(), "_object");
+                    settings = prop.GetValue(settings);
+                }
                 return _instance = settings as T;
             }
         }

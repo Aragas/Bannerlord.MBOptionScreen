@@ -1,5 +1,5 @@
 ﻿<Brushes>
-  <Brush Name="ModLib.ExpandIndicator_v1e" GlobalAlphaFactor="0.6" Sprite="StdAssets\expanded">
+  <Brush Name="ModLib.ExpandIndicator_v1e_7" GlobalAlphaFactor="0.6" Sprite="StdAssets\expanded">
     <Layers>
       <BrushLayer Name="Default" Sprite="StdAssets\expanded" />
     </Layers>

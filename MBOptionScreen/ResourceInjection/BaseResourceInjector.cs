@@ -19,9 +19,6 @@ namespace MBOptionScreen.ResourceInjection
         public WidgetPrefab? RequestMovie(string movie)
         {
             var loaders = DI.GetImplementations<IResourceLoader, ResourceLoaderWrapper>(ApplicationVersionUtils.GameVersion()).ToList();
-            // Try the built-in none is found
-            if (loaders.Count == 0)
-                loaders.Add(new GUI.v1e.ResourceInjection.ResourceLoader());
 
             foreach (var resourceLoader in loaders)
             {

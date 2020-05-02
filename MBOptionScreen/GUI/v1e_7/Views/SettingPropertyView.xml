@@ -10,8 +10,8 @@
             <!-- Property Name Section -->
             <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="Fixed" HorizontalAlignment="Left" SuggestedWidth="500">
               <Children>
-                <HoverRichTextWidget_v1e Text="@Name" HeightSizePolicy="StretchToParent" WidthSizePolicy="CoverChildren" HorizontalAlignment="Right" IsEnabled="@IsEnabled"
-                                         Brush="ModLib.Settings.Text_v1e" HoverBegin="@OnHoverAction" HoverEnd="@OnHoverEndAction"/>
+                <HoverRichTextWidget_v1e_7 Text="@Name" HeightSizePolicy="StretchToParent" WidthSizePolicy="CoverChildren" HorizontalAlignment="Right" IsEnabled="@IsEnabled"
+                                         Brush="ModLib.Settings.Text_v1e_7" HoverBegin="@OnHoverAction" HoverEnd="@OnHoverEndAction"/>
               </Children>
             </Widget>
 
@@ -81,7 +81,7 @@
                               IsEnabled="@IsEnabled" IsVisible="@IsStringVisible" Sprite="SPOptions\standart_slider_canvas" Command.Click="OnValueClick">
                   <Children>
                     <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                    IsEnabled="@IsEnabled" IsVisible="@IsStringVisible" Text="@ValueString" Brush="ModLib.Settings.Text_v1e"/>
+                                    IsEnabled="@IsEnabled" IsVisible="@IsStringVisible" Text="@ValueString" Brush="ModLib.Settings.Text_v1e_7"/>
                   </Children>
                 </ButtonWidget>
 
@@ -101,10 +101,10 @@
 
             <!-- Value text/button -->
             <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="60" HorizontalAlignment="Right" VerticalAlignment="Center" DoNotPassEventsToChildren="true"
-                          IsEnabled="@IsEnabled" IsVisible="@HasEditableText" Brush="ModLib.Settings.Value.Display_v1e" Command.Click="OnValueClick" >
+                          IsEnabled="@IsEnabled" IsVisible="@HasEditableText" Brush="ModLib.Settings.Value.Display_v1e_7" Command.Click="OnValueClick" >
               <Children>
                 <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                IsEnabled="@IsEnabled" IsVisible="@HasEditableText" Text="@ValueString" Brush="ModLib.Settings.Settings.Text_v1e"/>
+                                IsEnabled="@IsEnabled" IsVisible="@HasEditableText" Text="@ValueString" Brush="ModLib.Settings.Settings.Text_v1e_7"/>
               </Children>
             </ButtonWidget>
 

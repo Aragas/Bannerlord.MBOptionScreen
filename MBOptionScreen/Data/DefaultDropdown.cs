@@ -14,7 +14,7 @@ namespace MBOptionScreen.Data
         private int _selectedIndex;
         public SelectorVM<SelectorItemVM> Selector
         {
-            get { return selector; }
+            get => selector;
             set
             {
                 if (selector != value)

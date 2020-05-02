@@ -10,9 +10,9 @@ using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
 using TaleWorlds.TwoDimension;
 
-namespace MBOptionScreen.GUI.v1e.Views
+namespace MBOptionScreen.GUI.v1e_7.Views
 {
-    public class EditValueTextWidget_v1e : EditableTextWidget
+    public class EditValueTextWidget_v1e_7 : EditableTextWidget
     {
         private readonly EditableText _editableWidget;
 
@@ -23,7 +23,7 @@ namespace MBOptionScreen.GUI.v1e.Views
         [DataSourceProperty]
         public float MinValue { get; set; } = 0f;
 
-        public EditValueTextWidget_v1e(UIContext context) : base(context)
+        public EditValueTextWidget_v1e_7(UIContext context) : base(context)
         {
             _editableWidget = (EditableText) typeof(EditableTextWidget).GetField("_editableText", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(this);
