@@ -16,13 +16,16 @@ namespace MCM.UI.GUI.ViewModels
         private const BindingFlags BindingFlagsAnyDeclared = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
 
         private readonly OptionsVM _wrapped;
-        private readonly ModOptionsVM _modOptions = new ModOptionsVM();
+        private readonly ModOptionsVM _modOptions;
         private bool _modOptionsSelected;
+        private int _descriptionWidth = 650;
 
-        public OptionsModOptionsViewModel(OptionsVM wrapped)
+        public OptionsModOptionsViewModel(OptionsVM options, ModOptionsVM modOptions)
         {
-            _wrapped = wrapped;
+            _wrapped = options;
             _wrapped.PropertyChanged += (sender, args) => OnPropertyChanged(args.PropertyName);
+            _modOptions = modOptions;
+            _modOptions.PropertyChanged += (sender, args) => OnPropertyChanged(args.PropertyName);
         }
 
         #region Wrapped Properties
@@ -135,12 +138,14 @@ namespace MCM.UI.GUI.ViewModels
 
         public override void OnFinalize()
         {
+            _modOptions.OnFinalize();
             _wrapped.OnFinalize();
             base.OnFinalize();
         }
 
         public override void RefreshValues()
         {
+            _modOptions.RefreshValues();
             _wrapped.RefreshValues();
             base.RefreshValues();
         }
@@ -158,15 +163,29 @@ namespace MCM.UI.GUI.ViewModels
         }
 
         [DataSourceProperty]
-        public int DescriptionWidth => ModOptionsSelected ? 0 : 650;
+        public int DescriptionWidth
+        {
+            get => _descriptionWidth;
+            private set
+            {
+                if (_descriptionWidth == value)
+                    return;
+
+                _descriptionWidth = value;
+                OnPropertyChanged(nameof(DescriptionWidth));
+            }
+        }
 
         private bool ModOptionsSelected
         {
             get => _modOptionsSelected;
             set
             {
-                OnPropertyChanged(nameof(DescriptionWidth));
+                if (_modOptionsSelected == value)
+                    return;
+
                 _modOptionsSelected = value;
+                DescriptionWidth = ModOptionsSelected ? 0 : 650;
             }
         }
 

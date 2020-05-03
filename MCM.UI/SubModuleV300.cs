@@ -69,12 +69,12 @@ namespace MCM.UI
                 Resolver.GameMenuScreenHandler.AddScreen(
                     "MCM_OptionScreen_v3",
                     9990,
-                    () => (ScreenBase) DI.GetImplementation(gameVersion, typeof(MBOptionScreen).FullName),
+                    () => (ScreenBase) DI.GetImplementation(gameVersion, typeof(MCMOptionsScreen).FullName),
                     new TextObject("{=HiZbHGvYG}Mod Options"));
                 Resolver.IngameMenuScreenHandler.AddScreen(
                     "MCM_OptionScreen_v3",
                     1,
-                    () => (ScreenBase) DI.GetImplementation(gameVersion, typeof(MBOptionScreen).FullName),
+                    () => (ScreenBase) DI.GetImplementation(gameVersion, typeof(MCMOptionsScreen).FullName),
                     new TextObject("{=NqarFr4P}Mod Options", null));
             }
         }

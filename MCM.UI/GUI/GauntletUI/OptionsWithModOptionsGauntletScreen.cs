@@ -1,4 +1,5 @@
-﻿using MCM.UI.GUI.ViewModels;
+﻿using MCM.Abstractions;
+using MCM.UI.GUI.ViewModels;
 
 using System.Linq;
 
@@ -19,7 +20,7 @@ using TaleWorlds.TwoDimension;
 namespace MCM.UI.GUI.GauntletUI
 {
 	[OverrideView(typeof(OptionsScreen))]
-    public class OptionsWithModOptionsGauntletScreen : ScreenBase
+    public class OptionsWithModOptionsGauntletScreen : OptionsWithMCMOptionsScreen
 	{
         private GauntletLayer _gauntletLayer;
         private OptionsModOptionsViewModel _dataSource;
@@ -39,7 +40,7 @@ namespace MCM.UI.GUI.GauntletUI
             _spriteCategoryOptions.Load(resourceContext, uiresourceDepot);
             _spriteCategoryEncyclopedia = spriteData.SpriteCategories["ui_encyclopedia"];
             _spriteCategoryEncyclopedia.Load(resourceContext, uiresourceDepot);
-			_dataSource = new OptionsModOptionsViewModel(new OptionsVM(true, false, OnKeybindRequest));
+			_dataSource = new OptionsModOptionsViewModel(new OptionsVM(true, false, OnKeybindRequest), new ModOptionsVM());
 			_gauntletLayer = new GauntletLayer(4000, "GauntletLayer");
 			_gauntletMovie = _gauntletLayer.LoadMovie("OptionsWithModOptionsView_v3", _dataSource);
 			_gauntletLayer.Input.RegisterHotKeyCategory(HotKeyManager.GetCategory("GenericPanelGameKeyCategory"));
