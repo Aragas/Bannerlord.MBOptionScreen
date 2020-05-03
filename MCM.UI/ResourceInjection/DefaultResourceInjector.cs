@@ -2,15 +2,17 @@
 
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.ResourceInjection;
-using MCM.UI.ResourceInjection.Harmony;
 using MCM.UI.ResourceInjection.Injectors;
 
 using System;
+using System.Collections;
+using System.Reflection;
 using System.Threading;
 using System.Xml;
 
 using TaleWorlds.GauntletUI;
 using TaleWorlds.GauntletUI.Data;
+using TaleWorlds.GauntletUI.PrefabSystem;
 
 namespace MCM.UI.ResourceInjection
 {
@@ -41,13 +43,41 @@ namespace MCM.UI.ResourceInjection
         {
             if (Interlocked.Exchange(ref _initialized, 1) == 0)
             {
-                new HarmonyLib.Harmony("bannerlord.mcm.loadmovie_v3").Patch(
+                new Harmony("bannerlord.mcm.loadmovie_v3").Patch(
                     original: AccessTools.Method(typeof(GauntletMovie), "LoadMovie"),
-                    prefix: BaseHarmonyPatches.Instance.LoadMovie);
+                    prefix: new HarmonyMethod(AccessTools.Method(typeof(DefaultResourceInjector), nameof(LoadMovieHarmony))));
 
-                new HarmonyLib.Harmony("bannerlord.mcm.loadbrush_v3").Patch(
+                new Harmony("bannerlord.mcm.loadbrush_v3").Patch(
                     original: AccessTools.Method(typeof(BrushFactory), "LoadBrushes"),
-                    postfix: BaseHarmonyPatches.Instance.LoadBrushes);
+                    postfix: new HarmonyMethod(AccessTools.Method(typeof(DefaultResourceInjector), nameof(LoadBrushesHarmony))));
+            }
+        }
+
+        private static PropertyInfo RootViewProperty { get; } = AccessTools.Property(typeof(GauntletMovie), nameof(GauntletMovie.RootView));
+        private static bool LoadMovieHarmony(GauntletMovie __instance, Widget ____movieRootNode)
+        {
+            var movie = Instance.RequestMovie(__instance.MovieName);
+            if (movie == null)
+                return true;
+
+            var widgetCreationData = new WidgetCreationData(__instance.Context, __instance.WidgetFactory);
+            widgetCreationData.AddExtensionData(__instance);
+            RootViewProperty.SetValue(__instance, movie.Instantiate(widgetCreationData).GetGauntletView());
+            ____movieRootNode.AddChild(__instance.RootView.Target);
+            __instance.RootView.RefreshBindingWithChildren();
+            return false;
+        }
+
+        private static FieldInfo BrushesField { get; } = AccessTools.Field(typeof(BrushFactory), "_brushes");
+        private static void LoadBrushesHarmony(BrushFactory __instance)
+        {
+            var brushes = (IDictionary) BrushesField.GetValue(__instance);
+            foreach (var brush in BrushInjector._brushes.Keys)
+            {
+                if (brushes.Contains(brush.Name))
+                    brushes[brush.Name] = brush;
+                else
+                    brushes.Add(brush.Name, brush);
             }
         }
 

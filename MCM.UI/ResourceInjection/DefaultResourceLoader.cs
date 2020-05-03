@@ -1,5 +1,6 @@
 ﻿using MCM.Abstractions.Attributes;
 using MCM.Abstractions.ResourceInjection;
+using MCM.UI.ResourceInjection.Loaders;
 
 using TaleWorlds.GauntletUI.PrefabSystem;
 
@@ -23,18 +24,12 @@ namespace MCM.UI.ResourceInjection
     [Version("e1.3.0",  1)]
     internal class DefaultResourceLoader : IResourceLoader
     {
-        public WidgetPrefab? MovieRequested(string movie)
+        public WidgetPrefab? MovieRequested(string movie) => movie switch
         {
-            if (movie == "ModOptionsView_v3")
-            {
-                return PrefabsLoader.LoadModOptionsView();
-            }
-            if (movie == "EditValueView_v3")
-            {
-                return PrefabsLoader.LoadEditValueView();
-            }
-
-            return null;
-        }
+            "ModOptionsView_v3" => PrefabsLoader.LoadModOptionsView(),
+            "EditValueView_v3" => PrefabsLoader.LoadEditValueView(),
+            "OptionsWithModOptionsView_v3" => PrefabsLoader.LoadOptionsWithModOptionsView(),
+            _ => null
+        };
     }
 }

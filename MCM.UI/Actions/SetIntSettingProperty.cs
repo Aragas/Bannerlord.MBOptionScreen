@@ -4,19 +4,18 @@ namespace MCM.UI.Actions
 {
     internal sealed class SetIntSettingProperty : IAction
     {
-        public Ref? Context { get; }
+        public IRef Context { get; }
         public object Value { get; }
         public object Original { get; }
-        private ISettingPropertyIntValue SettingProperty { get; }
 
         public SetIntSettingProperty(ISettingPropertyIntValue settingProperty, int value)
         {
+            Context = new ProxyRef(() => settingProperty.IntValue, o => settingProperty.IntValue = o as int? ?? 0);
             Value = value;
-            SettingProperty = settingProperty;
-            Original = SettingProperty.IntValue;
+            Original = settingProperty.IntValue;
         }
 
-        public void DoAction() => SettingProperty.IntValue = (int) Value;
-        public void UndoAction() => SettingProperty.IntValue = (int) Original;
+        public void DoAction() => Context.Value = (int) Value;
+        public void UndoAction() => Context.Value = (int) Original;
     }
 }

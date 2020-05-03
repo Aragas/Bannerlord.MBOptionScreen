@@ -2,7 +2,7 @@
 {
     internal interface IAction
     {
-        Ref? Context { get; }
+        IRef Context { get; }
         object Original { get; }
         object Value { get; }
         void DoAction();

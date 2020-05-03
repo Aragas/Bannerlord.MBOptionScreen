@@ -4,19 +4,18 @@ namespace MCM.UI.Actions
 {
     internal sealed class SetFloatSettingProperty : IAction
     {
-        public Ref? Context { get; }
+        public IRef Context { get; }
         public object Value { get; }
         public object Original { get; }
-        private ISettingPropertyFloatValue SettingProperty { get; }
 
         public SetFloatSettingProperty(ISettingPropertyFloatValue settingProperty, float value)
         {
+            Context = new ProxyRef(() => settingProperty.FloatValue, o => settingProperty.FloatValue = o as int? ?? 0);
             Value = value;
-            SettingProperty = settingProperty;
-            Original = SettingProperty.FloatValue;
+            Original = settingProperty.FloatValue;
         }
 
-        public void DoAction() => SettingProperty.FloatValue = (float) Value;
-        public void UndoAction() => SettingProperty.FloatValue = (float) Original;
+        public void DoAction() => Context.Value = (float) Value;
+        public void UndoAction() => Context.Value = (float) Original;
     }
 }

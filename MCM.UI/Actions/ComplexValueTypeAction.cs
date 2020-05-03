@@ -2,18 +2,19 @@
 
 namespace MCM.UI.Actions
 {
-    internal sealed class ComplexAction<T> : IAction
+    internal sealed class ComplexValueTypeAction<T> : IAction
+        where T : struct
     {
-        public Ref? Context { get; }
+        public IRef? Context { get; }
         public object Value { get; }
         public object Original { get; }
-        public Action<T> DoFunction { get; }
-        public Action<T> UndoFunction { get; }
+        private Action<T> DoFunction { get; }
+        private Action<T> UndoFunction { get; }
 
-        public ComplexAction(T value, Action<T> doFunction, Action<T> undoFunction)
+        public ComplexValueTypeAction(T value, Action<T> doFunction, Action<T> undoFunction)
         {
-            Value = value!;
-            Original = value!;
+            Value = value;
+            Original = value;
             DoFunction = doFunction;
             UndoFunction = undoFunction;
         }

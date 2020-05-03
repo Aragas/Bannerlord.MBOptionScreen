@@ -57,7 +57,7 @@ namespace MCM.Implementation.Settings.SettingsContainer
 
         public bool RegisterSettings(SettingsBase settingsInstance)
         {
-            if (settingsInstance == null || LoadedSettings.ContainsKey(settingsInstance.Id))
+            if (settingsInstance == null || LoadedSettings.ContainsKey(settingsInstance.Id) || settingsInstance is ModLibSettingsWrapper)
                 return false;
 
             LoadedSettings.Add(settingsInstance.Id, settingsInstance);

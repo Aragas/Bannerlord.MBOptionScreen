@@ -30,8 +30,8 @@ namespace MCM.Implementation.Settings.SettingsContainer
     [Version("e1.3.0",  1)]
     internal sealed class ModLibSettingsContainer : IModLibSettingsContainer
     {
-        private Dictionary<string, SettingsWrapper> LoadedModLibSettings { get; } = new Dictionary<string, SettingsWrapper>();
-        private Type ModLibSettingsDatabase { get; }
+        private Dictionary<string, ModLibSettingsWrapper> LoadedModLibSettings { get; } = new Dictionary<string, ModLibSettingsWrapper>();
+        private Type? ModLibSettingsDatabase { get; }
 
         public List<SettingsDefinition> CreateModSettingsDefinitions
         {
@@ -62,7 +62,7 @@ namespace MCM.Implementation.Settings.SettingsContainer
                 return null;
 
             ReloadAll();
-            return LoadedModLibSettings.TryGetValue(id, out var setings) ? setings : null;
+            return LoadedModLibSettings.TryGetValue(id, out var settings) ? settings : null;
         }
 
         public bool OverrideSettings(SettingsBase settings)
@@ -70,7 +70,7 @@ namespace MCM.Implementation.Settings.SettingsContainer
             if (ModLibSettingsDatabase == null)
                 return false;
 
-            if (settings is SettingsWrapper settingsWrapper)
+            if (settings is ModLibSettingsWrapper settingsWrapper)
             {
                 var overrideSettingsWithIDMethod = AccessTools.Method(ModLibSettingsDatabase, "OverrideSettingsWithID");
 
@@ -80,22 +80,9 @@ namespace MCM.Implementation.Settings.SettingsContainer
             return false;
         }
 
-        public bool RegisterSettings(SettingsBase settingsClass)
-        {
-            //if (BuiltInModLib)
-            //{
-            //    if (settingsClass is SettingsWrapper settingsWrapper)
-            //    {
-            //        var registerSettingsMethod = AccessTools.Method(ModLibSettingsDatabase, "RegisterSettings");
-            //        registerSettingsMethod.Invoke(null, new object[] { settingsWrapper._object });
-            //        return true;
-            //    }
-            //}
+        public bool RegisterSettings(SettingsBase settingsClass) => settingsClass is ModLibSettingsWrapper;
 
-            return ModLibSettingsDatabase != null;
-        }
-
-        public SettingsBase ResetSettings(string id)
+        public SettingsBase? ResetSettings(string id)
         {
             if (ModLibSettingsDatabase == null)
                 return null;
@@ -116,7 +103,7 @@ namespace MCM.Implementation.Settings.SettingsContainer
             if (ModLibSettingsDatabase == null)
                 return;
 
-            if (settings is SettingsWrapper settingsWrapper)
+            if (settings is ModLibSettingsWrapper settingsWrapper)
             {
                 var saveSettingsMethod = AccessTools.Method(ModLibSettingsDatabase, "SaveSettings");
 
@@ -148,7 +135,7 @@ namespace MCM.Implementation.Settings.SettingsContainer
             var dict = (IDictionary) saveSettingsMethod.GetValue(null);
 
             if (dict.Contains(id))
-                LoadedModLibSettings[id] = new SettingsWrapper(dict[id]);
+                LoadedModLibSettings[id] = new ModLibSettingsWrapper(dict[id]);
         }
     }
 }

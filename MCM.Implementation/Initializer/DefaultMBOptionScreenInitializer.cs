@@ -37,7 +37,7 @@ namespace MCM.Implementation.Initializer
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
-    public sealed class DefaultMBOptionScreenInitializer : IMBOptionScreenInitializer
+    internal sealed class DefaultMBOptionScreenInitializer : IMBOptionScreenInitializer
     {
         private ApplicationVersion GameVersion { get; set; }
         private IApplicationContainerProvider ApplicationContainerProvider { get; set; }
@@ -53,13 +53,6 @@ namespace MCM.Implementation.Initializer
                 var modLibSettingsProvider = DI.GetImplementation<IModLibSettingsContainer, SettingsContainerWrapper>(GameVersion);
                 ApplicationContainerProvider.Set("MBOptionScreenSettingsProvider", settingsProvider);
                 ApplicationContainerProvider.Set("ModLibSettingsProvider", modLibSettingsProvider);
-
-                Resolver.GameMenuScreenHandler.AddScreen(
-                    "ModOptionsMenu_MBOptionScreen_v3",
-                    9990,
-                    () => (ScreenBase) DI.GetImplementation(GameVersion, typeof(MBOptionScreen).FullName),
-                    new TextObject("{=HiZbHGvYG}Mod Options"));
-
 
                 var assemblies = AppDomain.CurrentDomain.GetAssemblies()
                     .Where(a => !a.IsDynamic)
@@ -87,11 +80,6 @@ namespace MCM.Implementation.Initializer
         {
             if (first)
             {
-                Resolver.IngameMenuScreenHandler.AddScreen(
-                    1,
-                    () => (ScreenBase) DI.GetImplementation(GameVersion, typeof(MBOptionScreen).FullName),
-                    new TextObject("{=NqarFr4P}Mod Options", null));
-
                 if (MCMSettings.Instance!.OverrideModLib)
                     Resolver.ModLibScreenOverrider.OverrideModLibScreen();
 

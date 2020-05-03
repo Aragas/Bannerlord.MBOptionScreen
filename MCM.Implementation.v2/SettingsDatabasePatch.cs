@@ -13,13 +13,10 @@ namespace MCM.Implementation.v2
 {
     public class BaseSettingsDatabasePatch
     {
-        protected static IEnumerable<Type?> GetSettingsDatabaseTypes()
-        {
-            return AppDomain.CurrentDomain.GetAssemblies()
-                .Where(a => !a.IsDynamic)
-                .Where(a => Path.GetFileNameWithoutExtension(a.Location).StartsWith("MBOptionScreen.v"))
-                .Select(a => a?.GetType("MBOptionScreen.Settings.SettingsDatabase"));
-        }
+        protected static IEnumerable<Type?> GetSettingsDatabaseTypes() => AppDomain.CurrentDomain.GetAssemblies()
+            .Where(a => !a.IsDynamic)
+            .Where(a => Path.GetFileNameWithoutExtension(a.Location).StartsWith("MBOptionScreen.v"))
+            .Select(a => a?.GetType("MBOptionScreen.Settings.SettingsDatabase"));
     }
 
     public class SettingsDatabasePatch1 : BaseSettingsDatabasePatch

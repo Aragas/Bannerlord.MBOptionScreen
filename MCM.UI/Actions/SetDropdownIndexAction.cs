@@ -8,29 +8,22 @@ namespace MCM.UI.Actions
 {
     internal sealed class SetDropdownIndexAction : IAction
     {
-        private readonly PropertyInfo SelectedIndexProperty;
-        private static int GetSelectedIndex(object dropdown)
-        {
-            var selectedIndexProperty = AccessTools.Property(dropdown.GetType(), "SelectedIndex");
-            if (selectedIndexProperty == null)
-                return 0;
-            return (int) selectedIndexProperty.GetValue(dropdown);
-        }
-
-        public Ref? Context { get; }
+        private IRef DropdownContext { get; }
+        public IRef Context { get; }
         public object Value { get; }
         public object Original { get; }
 
-        public SetDropdownIndexAction(Ref context, SelectorVM<SelectorItemVM> value)
+        public SetDropdownIndexAction(IRef context, SelectorVM<SelectorItemVM> value)
         {
-            SelectedIndexProperty = AccessTools.Property(context.Value.GetType(), "SelectedIndex");
+            var selectedIndexProperty = AccessTools.Property(context.Value.GetType(), "SelectedIndex");
 
-            Context = context;
+            DropdownContext = context;
+            Context = new ProxyRef(() => selectedIndexProperty.GetValue(DropdownContext.Value), o => selectedIndexProperty.SetValue(DropdownContext.Value, o));
             Value = value.SelectedIndex;
-            Original = SelectedIndexProperty?.GetValue(Context.Value) ?? 0;
+            Original = selectedIndexProperty.GetValue(Context.Value);
         }
 
-        public void DoAction() => SelectedIndexProperty?.SetValue(Context!.Value, Value);
-        public void UndoAction() => SelectedIndexProperty?.SetValue(Context!.Value, Original);
+        public void DoAction() => Context!.Value = Value;
+        public void UndoAction() => Context!.Value = Original;
     }
 }

@@ -2,7 +2,7 @@
 
 using System.Xml;
 
-namespace MCM.UI.ResourceInjection
+namespace MCM.UI.ResourceInjection.Loaders
 {
     /// <summary>
     /// Loads the embed .xml files from the library

@@ -2,7 +2,7 @@
 {
     internal interface IInitial
     {
-        Ref Context { get; }
+        IRef Context { get; }
         object Value { get; }
         void Reset();
         bool Changed();

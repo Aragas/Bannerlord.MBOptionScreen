@@ -17,6 +17,8 @@ namespace MCM.Abstractions.Settings
 
     public abstract class SettingsBase : INotifyPropertyChanged
     {
+        public const string SaveTriggered = "SAVE_TRIGGERED";
+
         public virtual event PropertyChangedEventHandler? PropertyChanged;
         public abstract string Id { get; }
         public abstract string ModuleFolderName { get; }

@@ -7,6 +7,7 @@ using TaleWorlds.Engine.Screens;
 using TaleWorlds.GauntletUI.Data;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
+using TaleWorlds.TwoDimension;
 
 namespace MCM.UI.GUI.GauntletUI
 {
@@ -31,15 +32,16 @@ namespace MCM.UI.GUI.GauntletUI
         private GauntletLayer _gauntletLayer = default!;
         private GauntletMovie _gauntletMovie = default!;
         private ModOptionsVM _dataSource = default!;
+        private SpriteCategory _spriteCategoryEncyclopedia;
 
         protected override void OnInitialize()
         {
+            base.OnInitialize();
             var spriteData = UIResourceManager.SpriteData;
             var resourceContext = UIResourceManager.ResourceContext;
             var uiresourceDepot = UIResourceManager.UIResourceDepot;
-            spriteData.SpriteCategories["ui_encyclopedia"].Load(resourceContext, uiresourceDepot);
-            
-            base.OnInitialize();
+            _spriteCategoryEncyclopedia = spriteData.SpriteCategories["ui_encyclopedia"];
+            _spriteCategoryEncyclopedia.Load(resourceContext, uiresourceDepot);
             _dataSource = new ModOptionsVM();
             _gauntletLayer = new GauntletLayer(4000, "GauntletLayer");
             _gauntletMovie = _gauntletLayer.LoadMovie("ModOptionsView_v3", _dataSource);
@@ -64,6 +66,7 @@ namespace MCM.UI.GUI.GauntletUI
         protected override void OnFinalize()
         {
             base.OnFinalize();
+            _spriteCategoryEncyclopedia.Unload();
             RemoveLayer(_gauntletLayer);
             _gauntletLayer.ReleaseMovie(_gauntletMovie);
             _gauntletLayer = null!;

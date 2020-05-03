@@ -3,18 +3,18 @@
     internal sealed class SetValueTypeAction<T> : IAction
         where T : struct
     {
-        public Ref? Context { get; }
+        public IRef Context { get; }
         public object Value { get; }
         public object Original { get; }
 
-        public SetValueTypeAction(Ref context, T value)
+        public SetValueTypeAction(IRef context, T value)
         {
             Context = context;
-            Value = value!;
+            Value = value;
             Original = Context.Value;
         }
 
-        public void DoAction() => Context!.Value = Value;
-        public void UndoAction() => Context!.Value = Original;
+        public void DoAction() => Context.Value = Value;
+        public void UndoAction() => Context.Value = Original;
     }
 }

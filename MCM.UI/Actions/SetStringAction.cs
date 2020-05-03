@@ -2,18 +2,18 @@
 {
     internal sealed class SetStringAction : IAction
     {
-        public Ref? Context { get; }
+        public IRef Context { get; }
         public object Value { get; }
         public object Original { get; }
 
-        public SetStringAction(Ref context, string value)
+        public SetStringAction(IRef context, string value)
         {
             Context = context;
-            Value = value!;
+            Value = value;
             Original = Context.Value;
         }
 
-        public void DoAction() => Context!.Value = Value;
-        public void UndoAction() => Context!.Value = Original;
+        public void DoAction() => Context.Value = Value;
+        public void UndoAction() => Context.Value = Original;
     }
 }

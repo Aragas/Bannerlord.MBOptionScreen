@@ -26,7 +26,7 @@ namespace MCM.Implementation.Settings.SettingsProvider
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
-    public sealed class DefaultSettingsProvider : BaseSettingsProvider
+    internal sealed class DefaultSettingsProvider : BaseSettingsProvider
     {
         private List<ISettingsContainer> SettingsProviders { get; }
 
@@ -41,9 +41,8 @@ namespace MCM.Implementation.Settings.SettingsProvider
         {
             foreach (var settingsProvider in SettingsProviders)
             {
-                return settingsProvider.GetSettings(id) is { } settings
-                    ? settings is SettingsBase settingsBase ? settingsBase : new SettingsWrapper(settings)
-                    : default;
+                if (settingsProvider.GetSettings(id) is {} settings)
+                    return settings is SettingsBase settingsBase ? settingsBase : new SettingsWrapper(settings);
             }
             return null;
         }
@@ -59,18 +58,15 @@ namespace MCM.Implementation.Settings.SettingsProvider
         public override void SaveSettings(SettingsBase settings)
         {
             foreach (var settingsProvider in SettingsProviders)
-            {
                 settingsProvider.SaveSettings(settings is SettingsWrapper wrapper ? wrapper : settings);
-            }
         }
 
         public override SettingsBase? ResetSettings(string id)
         {
             foreach (var settingsProvider in SettingsProviders)
             {
-                return settingsProvider.ResetSettings(id) is { } settings
-                    ? settings is SettingsBase settingsBase ? settingsBase : new SettingsWrapper(settings)
-                    : default;
+                if (settingsProvider.ResetSettings(id) is { } settings)
+                    return settings is SettingsBase settingsBase ? settingsBase : new SettingsWrapper(settings);
             }
             return null;
         }
@@ -78,9 +74,7 @@ namespace MCM.Implementation.Settings.SettingsProvider
         public override void OverrideSettings(SettingsBase settings)
         {
             foreach (var settingsProvider in SettingsProviders)
-            {
                 settingsProvider.OverrideSettings(settings is SettingsWrapper wrapper ? wrapper : settings);
-            }
         }
     }
 }

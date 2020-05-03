@@ -1,8 +1,9 @@
 ﻿using MCM.Abstractions.ResourceInjection;
 using MCM.UI.GUI.Views;
+
 using TaleWorlds.GauntletUI;
 
-namespace MCM.UI.ResourceInjection
+namespace MCM.UI.ResourceInjection.Loaders
 {
     /// <summary>
     /// Loads the embed .xml files from the library

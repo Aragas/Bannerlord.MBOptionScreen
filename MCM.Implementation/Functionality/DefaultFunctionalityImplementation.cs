@@ -3,11 +3,8 @@
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Functionality;
 
-using System;
 using System.Collections;
 
-using TaleWorlds.Engine.Screens;
-using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
 
 namespace MCM.Implementation.Functionality
@@ -28,27 +25,11 @@ namespace MCM.Implementation.Functionality
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
-    public sealed class DefaultFunctionalityImplementation :
-        IGameMenuScreenHandler,
+    internal sealed class DefaultFunctionalityImplementation :
         IModLibScreenOverrider
     {
         private static readonly AccessTools.FieldRef<Module, IList> _initialStateOptions =
             AccessTools.FieldRefAccess<Module, IList>("_initialStateOptions");
-
-        void IGameMenuScreenHandler.AddScreen(string internalName, int index, Func<ScreenBase> screenFactory, TextObject text)
-        {
-            Module.CurrentModule.AddInitialStateOption(new InitialStateOption(
-                internalName,
-                text,
-                index,
-                () => ScreenManager.PushScreen(screenFactory()),
-                false));
-        }
-        void IGameMenuScreenHandler.RemoveScreen(string internalName)
-        {
-            var screen = Module.CurrentModule.GetInitialStateOptionWithId(internalName);
-            _initialStateOptions(Module.CurrentModule).Remove(screen);
-        }
 
         void IModLibScreenOverrider.OverrideModLibScreen()
         {

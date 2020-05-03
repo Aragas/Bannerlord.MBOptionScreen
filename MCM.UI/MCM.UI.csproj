@@ -22,10 +22,13 @@
     <EmbeddedResource Include="GUI\Brushes\TextBrushes.xml" />
 
     <EmbeddedResource Include="GUI\Views\EditValueView.xml" />
+
+    <EmbeddedResource Include="GUI\Views\ModOptionsPageView.xml" />
     <EmbeddedResource Include="GUI\Views\ModOptionsView.xml" />
     <EmbeddedResource Include="GUI\Views\SettingsItemView.xml" />
     <EmbeddedResource Include="GUI\Views\SettingsPropertyGroupView.xml" />
     <EmbeddedResource Include="GUI\Views\SettingsPropertyView.xml" />
+    <EmbeddedResource Include="GUI\Views\OptionsWithModOptionsView.xml" />
     <EmbeddedResource Include="GUI\Views\SettingsView.xml" />
   </ItemGroup>
 
@@ -62,6 +65,11 @@
       <HintPath>%(Identity)</HintPath>
       <Private>False</Private>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="GUI\Views\ModOptionsPageView.xml" />
+    <None Remove="GUI\Views\OptionsWithModOptionsView.xml" />
   </ItemGroup>
 
   <ItemGroup>

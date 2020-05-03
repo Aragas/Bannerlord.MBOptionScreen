@@ -103,7 +103,7 @@ namespace MCM.UI.GUI.ViewModels
 
             foreach (var property in properties)
             {
-                var stack = URS.UndoStack.Where(s => s.Context != null && s.Context._propInfo == property.Property).ToList();
+                var stack = URS.UndoStack.Where(s => s.Context != null && s.Context is PropertyRef propertyRef && propertyRef.PropertyInfo == property.Property).ToList();
                 if (stack.Count == 0)
                     continue;
                 else

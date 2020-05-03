@@ -4,19 +4,18 @@ namespace MCM.UI.Actions
 {
     internal sealed class SetStringSettingProperty : IAction
     {
-        public Ref? Context { get; }
+        public IRef Context { get; }
         public object Value { get; }
         public object Original { get; }
-        private ISettingPropertyStringValue SettingProperty { get; }
 
         public SetStringSettingProperty(ISettingPropertyStringValue settingProperty, string value)
         {
+            Context = new ProxyRef(() => settingProperty.StringValue, o => settingProperty.StringValue = o as string ?? "");
             Value = value;
-            SettingProperty = settingProperty;
-            Original = SettingProperty.StringValue;
+            Original = settingProperty.StringValue;
         }
 
-        public void DoAction() => SettingProperty.StringValue = (string) Value;
-        public void UndoAction() => SettingProperty.StringValue = (string) Original;
+        public void DoAction() => Context.Value = (string) Value;
+        public void UndoAction() => Context.Value = (string) Original;
     }
 }

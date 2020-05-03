@@ -92,7 +92,7 @@ namespace MCM.UI.GUI.ViewModels
             {
                 if (SettingType == SettingType.Float && FloatValue != value)
                 {
-                    URS.Do(new SetValueTypeAction<float>(new Ref(Property, SettingsInstance), value));
+                    URS.Do(new SetValueTypeAction<float>(new PropertyRef(Property, SettingsInstance), value));
                     OnPropertyChanged(nameof(ValueString));
                 }
             }
@@ -105,7 +105,7 @@ namespace MCM.UI.GUI.ViewModels
             {
                 if (SettingType == SettingType.Int && IntValue != value)
                 {
-                    URS.Do(new SetValueTypeAction<int>(new Ref(Property, SettingsInstance), value));
+                    URS.Do(new SetValueTypeAction<int>(new PropertyRef(Property, SettingsInstance), value));
                     OnPropertyChanged(nameof(ValueString));
                 }
             }
@@ -118,7 +118,7 @@ namespace MCM.UI.GUI.ViewModels
             {
                 if (SettingType == SettingType.Bool && BoolValue != value)
                 {
-                    URS.Do(new SetValueTypeAction<bool>(new Ref(Property, SettingsInstance), value));
+                    URS.Do(new SetValueTypeAction<bool>(new PropertyRef(Property, SettingsInstance), value));
                     OnPropertyChanged(nameof(ValueString));
                 }
             }
@@ -131,7 +131,7 @@ namespace MCM.UI.GUI.ViewModels
             {
                 if (SettingType == SettingType.String && StringValue != value)
                 {
-                    URS.Do(new SetStringAction(new Ref(Property, SettingsInstance), value));
+                    URS.Do(new SetStringAction(new PropertyRef(Property, SettingsInstance), value));
                     OnPropertyChanged(nameof(ValueString));
                 }
             }
@@ -146,7 +146,7 @@ namespace MCM.UI.GUI.ViewModels
                 {
                     DropdownValue.PropertyChanged -= OnDropdownPropertyChanged;
                     value.PropertyChanged += OnDropdownPropertyChanged;
-                    URS.Do(new SetDropdownAction(new Ref(Property, SettingsInstance), value));
+                    URS.Do(new SetDropdownAction(new PropertyRef(Property, SettingsInstance), value));
                     OnPropertyChanged(nameof(DropdownValue));
                 }
             }
@@ -194,7 +194,7 @@ namespace MCM.UI.GUI.ViewModels
         private void OnDropdownPropertyChanged(object obj, PropertyChangedEventArgs args)
         {
             if (args.PropertyName == nameof(SelectorVM<SelectorItemVM>.SelectedIndex))
-            URS.DoWithoutDo(new SetDropdownIndexAction(new Ref(Property, SettingsInstance), (SelectorVM<SelectorItemVM>) obj));
+            URS.DoWithoutDo(new SetDropdownIndexAction(new PropertyRef(Property, SettingsInstance), (SelectorVM<SelectorItemVM>) obj));
         }
 
         public void OnHover()

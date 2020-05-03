@@ -23,6 +23,7 @@ namespace MCM.Abstractions.Settings
         private PropertyInfo? SubGroupDelimiterProperty { get; }
         private PropertyInfo? FormatProperty { get; }
         private MethodInfo? GetSettingPropertyGroupsMethod { get; }
+        private MethodInfo? OnPropertyChangedMethod { get; }
 
         public override string Id => IdProperty?.GetValue(Object) as string ?? "ERROR";
         public override string ModuleFolderName // TODO: ModLib throws for some reason
@@ -38,7 +39,7 @@ namespace MCM.Abstractions.Settings
         public override string SubFolder => SubFolderProperty?.GetValue(Object) as string ?? "";
         protected override char SubGroupDelimiter => SubGroupDelimiterProperty?.GetValue(Object) as char? ?? '/';
         public override string Format => FormatProperty?.GetValue(Object) as string ?? "json";
-        public override event PropertyChangedEventHandler PropertyChanged
+        public override event PropertyChangedEventHandler? PropertyChanged
         {
             add
             {
@@ -66,7 +67,11 @@ namespace MCM.Abstractions.Settings
             SubGroupDelimiterProperty = AccessTools.Property(type, nameof(SubGroupDelimiter));
             FormatProperty = AccessTools.Property(type, nameof(Format));
             GetSettingPropertyGroupsMethod = AccessTools.Method(type, nameof(GetSettingPropertyGroups));
+            OnPropertyChangedMethod = AccessTools.Method(type, nameof(OnPropertyChanged));
         }
+
+        protected override void OnPropertyChanged(string? propertyName = null) =>
+            OnPropertyChangedMethod?.Invoke(Object, new object[] { propertyName });
 
         public override List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() => GetWrappedSettingPropertyGroups();
         private List<SettingsPropertyGroupDefinition> GetWrappedSettingPropertyGroups()

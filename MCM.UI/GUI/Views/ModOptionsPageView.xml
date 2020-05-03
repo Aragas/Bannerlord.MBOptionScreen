@@ -9,10 +9,8 @@
     <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
       <Children>
 
-        <Standard.Background/>
-
         <!-- Main screen section -->
-        <ListPanel Id="MainSection" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginTop="164">
+        <ListPanel Id="MainSection" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent">
           <Children>
 
             <!-- Mods list section on the left-->
@@ -69,24 +67,11 @@
                            MarginRight="39">
                   <Children>
 
-                    <!-- Cancel button -->
-                    <ButtonWidget Id="CancelButton" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
-                                  SuggestedWidth="!CancelButton.Width" SuggestedHeight="!CancelButton.Height" Brush="ModLib.Cancel.Button_v3"
-                                  Command.Click="ExecuteCancel">
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!CancelButton.Width"
+                                  SuggestedHeight="!CancelButton.Height" Brush="ModLib.Delete.Button_v3" Command.Click="ExecuteRevert" IsVisible="@SomethingSelected"
+                                  HorizontalAlignment="Right" VerticalAlignment="Top" MarginTop="75" MarginRight="40">
                       <Children>
-
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="@CancelButtonText" />
-
-                      </Children>
-                    </ButtonWidget>
-
-                    <!--Done Button-->
-                    <ButtonWidget Id="DoneButton" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
-                                  SuggestedWidth="!CancelButton.Width" SuggestedHeight="!CancelButton.Height" Brush="ModLib.Done.Button_v3"
-                                  Command.Click="ExecuteDone">
-                      <Children>
-
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="@DoneButtonText" />
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="Revert to defaults" />
                       </Children>
                     </ButtonWidget>
 
@@ -183,18 +168,6 @@
 
           </Children>
         </ListPanel>
-
-        <!-- Top Banner -->
-        <Standard.TopPanel Parameter.Title="@Name"/>
-
-        <!-- Revert to default button -->
-        <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!CancelButton.Width"
-                      SuggestedHeight="!CancelButton.Height" Brush="ModLib.Delete.Button_v3" Command.Click="ExecuteRevert" IsVisible="@SomethingSelected"
-                      HorizontalAlignment="Right" VerticalAlignment="Top" MarginTop="75" MarginRight="40">
-          <Children>
-            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="Revert to defaults" />
-          </Children>
-        </ButtonWidget>
 
       </Children>
     </Widget>

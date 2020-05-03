@@ -105,7 +105,7 @@ namespace MCM.UI.GUI.ViewModels
                 if (int.TryParse(TextInput, out var val))
                 {
                     SettingProperty.URS.Do(new SetIntSettingProperty(SettingProperty, val));
-                    SettingProperty.URS.Do(new SetValueTypeAction<int>(new Ref(SettingProperty.Property, SettingProperty.SettingsInstance), val));
+                    SettingProperty.URS.Do(new SetValueTypeAction<int>(new PropertyRef(SettingProperty.Property, SettingProperty.SettingsInstance), val));
                     SettingProperty.OnPropertyChanged(nameof(SettingProperty.ValueString));
                 }
             }
@@ -114,14 +114,14 @@ namespace MCM.UI.GUI.ViewModels
                 if (float.TryParse(TextInput, out var val))
                 {
                     SettingProperty.URS.Do(new SetFloatSettingProperty(SettingProperty, val));
-                    SettingProperty.URS.Do(new SetValueTypeAction<float>(new Ref(SettingProperty.Property, SettingProperty.SettingsInstance), val));
+                    SettingProperty.URS.Do(new SetValueTypeAction<float>(new PropertyRef(SettingProperty.Property, SettingProperty.SettingsInstance), val));
                     SettingProperty.OnPropertyChanged(nameof(SettingProperty.ValueString));
                 }
             }
             else if (SettingProperty.SettingType == SettingType.String)
             {
                 SettingProperty.URS.Do(new SetStringSettingProperty(SettingProperty, TextInput));
-                SettingProperty.URS.Do(new SetStringAction(new Ref(SettingProperty.Property, SettingProperty.SettingsInstance), TextInput));
+                SettingProperty.URS.Do(new SetStringAction(new PropertyRef(SettingProperty.Property, SettingProperty.SettingsInstance), TextInput));
                 SettingProperty.OnPropertyChanged(nameof(SettingProperty.ValueString));
             }
             ScreenManager.PopScreen();

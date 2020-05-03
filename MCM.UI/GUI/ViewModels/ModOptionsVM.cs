@@ -1,4 +1,5 @@
-﻿using MCM.Abstractions.Settings.SettingsProvider;
+﻿using MCM.Abstractions.Settings;
+using MCM.Abstractions.Settings.SettingsProvider;
 using MCM.UI.Actions;
 using MCM.UI.ExtensionMethods;
 
@@ -9,6 +10,7 @@ using TaleWorlds.Engine;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
+
 
 namespace MCM.UI.GUI.ViewModels
 {
@@ -23,13 +25,13 @@ namespace MCM.UI.GUI.ViewModels
         private string _searchText = "";
 
         [DataSourceProperty]
-        public string TitleLabel
+        public string Name
         {
             get => _titleLabel;
             set
             {
                 _titleLabel = value;
-                OnPropertyChanged(nameof(TitleLabel));
+                OnPropertyChanged(nameof(Name));
             }
         }
         [DataSourceProperty]
@@ -122,7 +124,7 @@ namespace MCM.UI.GUI.ViewModels
 
         public ModOptionsVM()
         {
-            TitleLabel = new TextObject("{=XiGPhfsm}Mod Options", null).ToString();
+            Name = new TextObject("{=XiGPhfsm}Mod Options", null).ToString();
             DoneButtonText = new TextObject("{=WiNRdfsm}Done", null).ToString();
             CancelButtonText = new TextObject("{=3CpNUnVl}Cancel", null).ToString();
             SearchText = "";
@@ -158,10 +160,12 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
 
-        public bool ExecuteCancel()
+        public bool ExecuteCancel() => ExecuteCancelInternal(true);
+        public bool ExecuteCancelInternal(bool popScreen)
         {
             OnFinalize();
-            ScreenManager.PopScreen();
+            if (popScreen)
+                ScreenManager.PopScreen();
             foreach (var viewModel in ModSettingsList)
             {
                 viewModel.URS.UndoAll();
@@ -169,13 +173,15 @@ namespace MCM.UI.GUI.ViewModels
             }
             return true;
         }
-        private void ExecuteDone()
+        public void ExecuteDone() => ExecuteDoneInternal(true);
+        public void ExecuteDoneInternal(bool popScreen)
         {
             //Save the changes to file.
             if (!ModSettingsList.Any(x => x.URS.ChangesMade()))
             {
                 OnFinalize();
-                ScreenManager.PopScreen();
+                if (popScreen)
+                    ScreenManager.PopScreen();
                 return;
             }
 
@@ -191,6 +197,7 @@ namespace MCM.UI.GUI.ViewModels
                     {
                         changedModSettings
                             .Do(x => BaseSettingsProvider.Instance.SaveSettings(x.SettingsInstance))
+                            .Do(x => HarmonyLib.AccessTools.Method(x.SettingsInstance.GetType(), "OnPropertyChanged")?.Invoke(x.SettingsInstance, new object[] { SettingsBase.SaveTriggered }))
                             .Do(x => x.URS.ClearStack())
                             .ToList();
 
@@ -202,14 +209,23 @@ namespace MCM.UI.GUI.ViewModels
             {
                 changedModSettings
                     .Do(x => BaseSettingsProvider.Instance.SaveSettings(x.SettingsInstance))
+                    .Do(x =>
+                    {
+                        var method = HarmonyLib.AccessTools.Method(x.SettingsInstance.GetType(), "OnPropertyChanged");
+
+                        method?.Invoke(x.SettingsInstance, new object[] {SettingsBase.SaveTriggered});
+                    })
                     .Do(x => x.URS.ClearStack())
                     .ToList();
                 OnFinalize();
-                ScreenManager.PopScreen();
+                if (popScreen)
+                    ScreenManager.PopScreen();
             }
         }
 
-        private void ExecuteRevert()
+        // TODO: Do not replace the reference
+        // TODO: Trigger Save
+        public void ExecuteRevert()
         {
             if (SelectedMod != null)
             {
@@ -218,7 +234,7 @@ namespace MCM.UI.GUI.ViewModels
                     true, true, "Yes", "No",
                     () =>
                     {
-                        SelectedMod.URS.Do(new ComplexAction<SettingsVM>(SelectedMod,
+                        SelectedMod.URS.Do(new ComplexReferenceTypeAction<SettingsVM>(SelectedMod,
                             modSettingsVM =>
                             {
                                 //Do action
