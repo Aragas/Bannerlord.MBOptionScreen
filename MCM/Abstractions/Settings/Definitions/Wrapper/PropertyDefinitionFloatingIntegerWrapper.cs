@@ -6,7 +6,7 @@
         public float MaxValue { get; }
         public string ValueFormat { get; }
 
-        internal PropertyDefinitionFloatingIntegerWrapper(object @object) : base(@object)
+        public PropertyDefinitionFloatingIntegerWrapper(object @object) : base(@object)
         {
             MinValue = @object.GetType().GetProperty(nameof(MinValue))?.GetValue(@object) as float? ?? 0;
             MaxValue = @object.GetType().GetProperty(nameof(MaxValue))?.GetValue(@object) as float? ?? 0;

@@ -11,7 +11,7 @@ namespace MCM.Abstractions.Settings.SettingsContainer
 {
     public sealed class SettingsContainerWrapper : IMBOptionScreenSettingsContainer, IModLibSettingsContainer, IWrapper
     {
-        private readonly object _object;
+        public object Object { get; }
         private PropertyInfo? CreateModSettingsDefinitionsProperty { get; }
         private MethodInfo? GetSettingsMethod { get; }
         private MethodInfo? OverrideSettingsMethod { get; }
@@ -22,7 +22,7 @@ namespace MCM.Abstractions.Settings.SettingsContainer
 
         public SettingsContainerWrapper(object @object)
         {
-            _object = @object;
+            Object = @object;
             var type = @object.GetType();
             CreateModSettingsDefinitionsProperty = AccessTools.Property(type, nameof(CreateModSettingsDefinitions));
             GetSettingsMethod = AccessTools.Method(type, nameof(GetSettings));
@@ -37,18 +37,18 @@ namespace MCM.Abstractions.Settings.SettingsContainer
         }
 
         public List<SettingsDefinition> CreateModSettingsDefinitions =>
-            ((IEnumerable<object>) CreateModSettingsDefinitionsProperty?.GetValue(_object)).Select(s => new SettingsDefinitionWrapper(s)).Cast<SettingsDefinition>().ToList();
-        public SettingsBase? GetSettings(string id) => GetSettingsMethod?.Invoke(_object, new object[] { id }) is { } settings
+            ((IEnumerable<object>) CreateModSettingsDefinitionsProperty?.GetValue(Object)).Select(s => new SettingsDefinitionWrapper(s)).Cast<SettingsDefinition>().ToList();
+        public SettingsBase? GetSettings(string id) => GetSettingsMethod?.Invoke(Object, new object[] { id }) is { } settings
                 ? settings is SettingsBase settingsBase ? settingsBase : new SettingsWrapper(settings)
                 : default;
         public bool OverrideSettings(SettingsBase settings) =>
-            OverrideSettingsMethod?.Invoke(_object, new object[] { settings is SettingsWrapper wrapper ? wrapper : settings }) as bool? ?? false;
+            OverrideSettingsMethod?.Invoke(Object, new object[] { settings is SettingsWrapper wrapper ? wrapper : settings }) as bool? ?? false;
         public bool RegisterSettings(SettingsBase settings) =>
-            RegisterSettingsMethod?.Invoke(_object, new object[] { settings is SettingsWrapper wrapper ? wrapper : settings }) as bool? ?? false;
-        public SettingsBase? ResetSettings(string id) => ResetSettingsMethod?.Invoke(_object, new object[] { id }) is { } settings
+            RegisterSettingsMethod?.Invoke(Object, new object[] { settings is SettingsWrapper wrapper ? wrapper : settings }) as bool? ?? false;
+        public SettingsBase? ResetSettings(string id) => ResetSettingsMethod?.Invoke(Object, new object[] { id }) is { } settings
                 ? settings is SettingsBase settingsBase ? settingsBase : new SettingsWrapper(settings)
                 : default;
         public void SaveSettings(SettingsBase settings) =>
-            SaveSettingsMethod?.Invoke(_object, new object[] { settings is SettingsWrapper wrapper ? wrapper : settings });
+            SaveSettingsMethod?.Invoke(Object, new object[] { settings is SettingsWrapper wrapper ? wrapper : settings });
     }
 }

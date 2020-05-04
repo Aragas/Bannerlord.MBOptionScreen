@@ -63,8 +63,8 @@ namespace MCM.Abstractions.Settings.Definitions
 
                 MinValue = settingPropertyAttribute.MinValue;
                 MaxValue = settingPropertyAttribute.MaxValue;
-                EditableMinValue = settingPropertyAttribute.EditableMinValue;
-                EditableMaxValue = settingPropertyAttribute.EditableMaxValue;
+                EditableMinValue = settingPropertyAttribute.MinValue;
+                EditableMaxValue = settingPropertyAttribute.MaxValue;
             }
 
             // v2

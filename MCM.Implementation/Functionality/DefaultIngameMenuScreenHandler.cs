@@ -3,13 +3,17 @@
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Functionality;
 
+using SandBox.View.Map;
+
 using System;
 using System.Collections.Generic;
 using System.Threading;
 
 using TaleWorlds.Engine.Screens;
-using TaleWorlds.Library;
 using TaleWorlds.Localization;
+using TaleWorlds.MountAndBlade.GauntletUI;
+using TaleWorlds.MountAndBlade.LegacyGUI.Missions.Singleplayer;
+using TaleWorlds.MountAndBlade.View.Missions;
 using TaleWorlds.MountAndBlade.ViewModelCollection;
 
 namespace MCM.Implementation.Functionality
@@ -32,41 +36,114 @@ namespace MCM.Implementation.Functionality
     [Version("e1.3.0",  1)]
     internal sealed class DefaultIngameMenuScreenHandler : IIngameMenuScreenHandler
     {
-        private static Dictionary<string, (int, Func<ScreenBase>, TextObject)> Screens { get; } = new Dictionary<string, (int, Func<ScreenBase>, TextObject)>();
+        private static readonly WeakReference<EscapeMenuVM> _instance = new WeakReference<EscapeMenuVM>(null!);
+        private static Dictionary<string, (int, Func<ScreenBase>, TextObject)> ScreensCache { get; } = new Dictionary<string, (int, Func<ScreenBase>, TextObject)>();
         private static int _initialized;
 
         public DefaultIngameMenuScreenHandler()
         {
             if (Interlocked.Exchange(ref _initialized, 1) == 0)
             {
-                new HarmonyLib.Harmony("bannerlord.mcm.mapscreeninjection_v3").Patch(
-                    original: AccessTools.Constructor(typeof(EscapeMenuVM), new Type[] { typeof(IEnumerable<EscapeMenuItemVM>), typeof(TextObject) }),
-                    postfix: new HarmonyMethod(AccessTools.Method(typeof(DefaultIngameMenuScreenHandler), nameof(SetEscapeMenuItems)), 300));
+                var harmony = new Harmony("bannerlord.mcm.escapemenuinjection_v3");
+
+                harmony.Patch(
+                    original: AccessTools.Method(typeof(MapScreen), "GetEscapeMenuItems"),
+                    postfix: new HarmonyMethod(AccessTools.Method(typeof(DefaultIngameMenuScreenHandler), nameof(MapScreen_GetEscapeMenuItems)), 300));
+
+                // TODO: We can't replace MissionSingleplayerEscapeMenu at runtime because it's injected in the MissionView[] 
+                // TODO: Won't work if the type is replaced at runtime
+                var actualViewTypes = (Dictionary<Type, Type>) AccessTools.Field(typeof(ViewCreatorManager), "_actualViewTypes")?.GetValue(null) ?? new Dictionary<Type, Type>();
+                var overrideType = actualViewTypes[typeof(MissionSingleplayerEscapeMenu)];
+                harmony.Patch(
+                    original: AccessTools.DeclaredMethod(overrideType, "GetEscapeMenuItems"),
+                    postfix: new HarmonyMethod(AccessTools.Method(typeof(DefaultIngameMenuScreenHandler), nameof(MissionSingleplayerEscapeMenu_GetEscapeMenuItems)), 300));
+                harmony.Patch(
+                    original: AccessTools.DeclaredMethod(overrideType, "OnMissionScreenInitialize"),
+                    postfix: new HarmonyMethod(AccessTools.Method(typeof(DefaultIngameMenuScreenHandler), nameof(OnMissionScreenInitialize)), 300));
+                harmony.Patch(
+                    original: AccessTools.DeclaredMethod(overrideType, "OnMissionScreenFinalize") ?? AccessTools.DeclaredMethod(typeof(GauntletMissionEscapeMenuBase), "OnMissionScreenFinalize"),
+                    postfix: new HarmonyMethod(AccessTools.Method(typeof(DefaultIngameMenuScreenHandler), nameof(OnMissionScreenFinalize)), 300));
             }
         }
 
-        private static void SetEscapeMenuItems(ref MBBindingList<EscapeMenuItemVM> ____menuItems)
+        private static void MapScreen_GetEscapeMenuItems(MapScreen __instance, ref List<EscapeMenuItemVM> __result)
         {
-            foreach (var (Index, ScreenFactory, Text) in Screens.Values)
+            foreach (var pair in ScreensCache)
             {
-                ____menuItems.Insert(Index, new EscapeMenuItemVM(
+                var (Index, ScreenFactory, Text) = pair.Value;
+                __result.Insert(Index, new EscapeMenuItemVM(
                     Text,
-                    _ => ScreenManager.PushScreen(ScreenFactory()),
-                    null, false, false));
+                    _ =>
+                    {
+                        AccessTools.Method(typeof(MapScreen), "OnEscapeMenuToggled")?.Invoke(__instance, new object[] { false });
+                        ScreenManager.PushScreen(ScreenFactory());
+                    },
+                    pair.Key, false, false));
+            }
+        }
+        private static void MissionSingleplayerEscapeMenu_GetEscapeMenuItems(GauntletMissionEscapeMenuBase __instance, ref List<EscapeMenuItemVM> __result)
+        {
+            foreach (var pair in ScreensCache)
+            {
+                var (Index, ScreenFactory, Text) = pair.Value;
+                __result.Insert(Index, new EscapeMenuItemVM(
+                    Text,
+                    _ =>
+                    {
+                        AccessTools.Method(typeof(GauntletMissionEscapeMenuBase), "OnEscapeMenuToggled")?.Invoke(__instance, new object[] { false });
+                        ScreenManager.PushScreen(ScreenFactory());
+                    },
+                    pair.Key, false, false));
+            }
+        }
+        private static void OnMissionScreenInitialize(MissionView __instance)
+        {
+            if (__instance is GauntletMissionEscapeMenuBase instance)
+            {
+                var dataSource = AccessTools.Field(typeof(GauntletMissionEscapeMenuBase), "_dataSource")?.GetValue(__instance) as EscapeMenuVM;
+                _instance.SetTarget(dataSource);
+            }
+        }
+        private static void OnMissionScreenFinalize(MissionView __instance)
+        {
+            if (__instance is GauntletMissionEscapeMenuBase instance)
+            {
+                _instance.SetTarget(null);
             }
         }
 
         public void AddScreen(string internalName, int index, Func<ScreenBase> screenFactory, TextObject text)
         {
-            if (Screens.ContainsKey(internalName))
-                Screens[internalName] = (index, screenFactory, text);
+            if (_instance.TryGetTarget(out var instance))
+            {
+                // Do not add the Mod Options menu entry because the MissionView will not change
+                /*
+                instance.MenuItems.Insert(index, new EscapeMenuItemVM(
+                    text,
+                    _ => ScreenManager.PushScreen(screenFactory()),
+                    internalName, false, false));
+                */
+            }
+
+            if (ScreensCache.ContainsKey(internalName))
+                ScreensCache[internalName] = (index, screenFactory, text);
             else
-                Screens.Add(internalName, (index, screenFactory, text));
+                ScreensCache.Add(internalName, (index, screenFactory, text));
         }
         public void RemoveScreen(string internalName)
         {
-            if (Screens.ContainsKey(internalName))
-                Screens.Remove(internalName);
+            if (_instance.TryGetTarget(out var instance))
+            {
+                // Do not remove the screen if it's the mission options because the MissionView will not change
+                /*
+                var found = instance.MenuItems.FirstOrDefault(i => _identifierField.GetValue(i) is string text && text == internalName);
+                if (found != null)
+                    instance.MenuItems.Remove(found);
+                */
+            }
+
+            if (ScreensCache.ContainsKey(internalName))
+                ScreensCache.Remove(internalName);
         }
     }
 }

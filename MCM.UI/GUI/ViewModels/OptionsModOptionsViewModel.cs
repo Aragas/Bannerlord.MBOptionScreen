@@ -191,6 +191,7 @@ namespace MCM.UI.GUI.ViewModels
 
         public void ExecuteCloseOptions()
         {
+            ModOptions.ExecuteCancelInternal(false);
             _wrapped.ExecuteCloseOptions();
         }
 

@@ -4,7 +4,7 @@
     {
         public int SelectedIndex { get; }
 
-        internal PropertyDefinitionDropdownWrapper(object @object) : base(@object)
+        public PropertyDefinitionDropdownWrapper(object @object) : base(@object)
         {
             SelectedIndex = @object.GetType().GetProperty(nameof(SelectedIndex))?.GetValue(@object) as int? ?? 0;
         }

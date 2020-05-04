@@ -10,7 +10,7 @@ using TaleWorlds.Library;
 
 namespace MCM.Utils
 {
-    internal static class AttributeUtils
+    public static class AttributeUtils
     {
         // Rewrite
         public static (Type Type, ApplicationVersion GameVersion, int ImplementationVersion)? Get(ApplicationVersion version, IEnumerable<Type>? types = null)

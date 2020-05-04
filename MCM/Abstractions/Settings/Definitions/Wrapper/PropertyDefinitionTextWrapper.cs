@@ -2,7 +2,7 @@
 {
     public sealed class PropertyDefinitionTextWrapper : BasePropertyDefinitionWrapper, IPropertyDefinitionText
     {
-        internal PropertyDefinitionTextWrapper(object @object) : base(@object)
+        public PropertyDefinitionTextWrapper(object @object) : base(@object)
         {
 
         }

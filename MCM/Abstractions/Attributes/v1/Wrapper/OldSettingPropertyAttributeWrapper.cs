@@ -1,9 +1,6 @@
 ﻿namespace MCM.Abstractions.Attributes.v1.Wrapper
 {
-    /// <summary>
-    /// Wrapper for SettingPropertyAttribute. I think it world be better to make a model for it.
-    /// </summary>
-    public sealed class SettingPropertyAttributeWrapper : SettingPropertyAttribute
+    public sealed class OldSettingPropertyAttributeWrapper : SettingPropertyAttribute
     {
         private static string? GetDisplayName(object @object)
         {
@@ -20,6 +17,16 @@
             var propInfo = @object.GetType().GetProperty(nameof(MaxValue));
             return propInfo?.GetValue(@object) as float?;
         }
+        private static float? GetEditableMinValue(object @object)
+        {
+            var propInfo = @object.GetType().GetProperty(nameof(EditableMinValue));
+            return propInfo?.GetValue(@object) as float?;
+        }
+        private static float? GetEditableMaxValue(object @object)
+        {
+            var propInfo = @object.GetType().GetProperty(nameof(EditableMaxValue));
+            return propInfo?.GetValue(@object) as float?;
+        }
         private static bool? GetRequireRestart(object @object)
         {
             var propInfo = @object.GetType().GetProperty(nameof(RequireRestart));
@@ -31,11 +38,22 @@
             return propInfo?.GetValue(@object) as string;
         }
 
-        public SettingPropertyAttributeWrapper(object @object) : base(
+        /// <summary>
+        /// The absolute minimum value that this setting can be set to. This is used for the editing dialog. Set this if you wish users to be able to set values outside your recommended values.
+        /// </summary>
+        public float EditableMinValue { get; } = 0f;
+        /// <summary>
+        /// The absolute maximum value that this setting can be set to. This is used for the editing dialog. Set this if you wish users to be able to set values outside your recommended values.
+        /// </summary>
+        public float EditableMaxValue { get; } = 0f;
+
+        public OldSettingPropertyAttributeWrapper(object @object) : base(
             GetDisplayName(@object) ?? "ERROR",
             GetMinValue(@object) ?? 0f,
             GetMaxValue(@object) ?? 0f)
         {
+            EditableMinValue = GetEditableMinValue(@object) ?? 0f;
+            EditableMaxValue = GetEditableMaxValue(@object) ?? 0f;
             RequireRestart = GetRequireRestart(@object) ?? true;
             HintText = GetHintText(@object) ?? "";
         }

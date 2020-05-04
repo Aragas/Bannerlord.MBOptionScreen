@@ -13,7 +13,6 @@ using Path = System.IO.Path;
 
 namespace MCM
 {
-    //
     /// <summary>
     /// Will search for any MCM.Implementation assembly and use it for loading if the standalone module was didn't load before
     /// </summary>
@@ -21,7 +20,10 @@ namespace MCM
     {
         private readonly List<Assembly> _mcmReferencingAssemblies = new List<Assembly>();
         private readonly List<Assembly> _mcmImplementationAssemblies = new List<Assembly>();
-        private readonly List<MBSubModuleBase> _mcmImplementationSubModules = new List<MBSubModuleBase>();
+        private readonly List<(MBSubModuleBase, Type)> _mcmImplementationSubModules = new List<(MBSubModuleBase, Type)>();
+        private readonly Dictionary<Type, Dictionary<string, MethodInfo?>> _reflectionCache = new Dictionary<Type, Dictionary<string, MethodInfo?>>();
+        private readonly object[] _emptyParams = Array.Empty<object>();
+        private readonly object[] _dtParams = new object[1];
 
         public IntegratedLoaderSubModule()
         {
@@ -68,80 +70,93 @@ namespace MCM
             foreach (var subModuleType in _mcmImplementationAssemblies.SelectMany(assembly => assembly.GetTypes().Where(t => typeof(MBSubModuleBase).IsAssignableFrom(t))))
             {
                 if (subModuleType.GetConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.CreateInstance, null, Type.EmptyTypes, null)?.Invoke(Array.Empty<object>()) is MBSubModuleBase subModule)
-                    _mcmImplementationSubModules.Add(subModule);
+                    _mcmImplementationSubModules.Add((subModule, subModuleType));
+            }
+
+            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
+            {
+                if (!_reflectionCache.ContainsKey(subModuleType))
+                    _reflectionCache.Add(subModuleType, new Dictionary<string, MethodInfo?>());
+
+                _reflectionCache[subModuleType]["OnSubModuleLoad"] = AccessTools.Method(subModuleType, "OnSubModuleLoad");
+                _reflectionCache[subModuleType]["OnSubModuleUnloaded"] = AccessTools.Method(subModuleType, "OnSubModuleUnloaded");
+                _reflectionCache[subModuleType]["OnApplicationTick"] = AccessTools.Method(subModuleType, "OnApplicationTick");
+                _reflectionCache[subModuleType]["OnBeforeInitialModuleScreenSetAsRoot"] = AccessTools.Method(subModuleType, "OnBeforeInitialModuleScreenSetAsRoot");
+                _reflectionCache[subModuleType]["OnGameStart"] = AccessTools.Method(subModuleType, "OnGameStart");
             }
         }
 
         protected override void OnSubModuleLoad()
         {
-            foreach (var subModule in _mcmImplementationSubModules)
-                subModule.GetType().GetMethod("OnSubModuleLoad", AccessTools.All)?.Invoke(subModule, Array.Empty<object>());
+            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
+                _reflectionCache[subModuleType]["OnSubModuleLoad"]?.Invoke(subModule, _emptyParams);
         }
         protected override void OnSubModuleUnloaded()
         {
-            foreach (var subModule in _mcmImplementationSubModules)
-                subModule.GetType().GetMethod("OnSubModuleUnloaded", AccessTools.All)?.Invoke(subModule, Array.Empty<object>());
+            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
+                _reflectionCache[subModuleType]["OnSubModuleUnloaded"]?.Invoke(subModule, _emptyParams);
         }
         protected override void OnApplicationTick(float dt)
         {
-            // TODO:
-            foreach (var subModule in _mcmImplementationSubModules)
-                subModule.GetType().GetMethod("OnApplicationTick", AccessTools.All)?.Invoke(subModule, new object[] { dt });
+            _dtParams[0] = dt;
+            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
+                _reflectionCache[subModuleType]["OnApplicationTick"]?.Invoke(subModule, _dtParams);
         }
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
-            foreach (var subModule in _mcmImplementationSubModules)
-                subModule.GetType().GetMethod("OnBeforeInitialModuleScreenSetAsRoot", AccessTools.All)?.Invoke(subModule, Array.Empty<object>());
+            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
+                _reflectionCache[subModuleType]["OnBeforeInitialModuleScreenSetAsRoot"]?.Invoke(subModule, _emptyParams);
         }
         protected override void OnGameStart(Game game, IGameStarter gameStarterObject)
         {
-            foreach (var subModule in _mcmImplementationSubModules)
-                subModule.GetType().GetMethod("OnGameStart", AccessTools.All)?.Invoke(subModule, new object[] { game, gameStarterObject });
+            var @params = new object[] { game, gameStarterObject };
+            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
+                _reflectionCache[subModuleType]["OnGameStart"]?.Invoke(subModule, @params);
         }
 
         public override bool DoLoading(Game game)
         {
-            return _mcmImplementationSubModules.All(subModule => subModule.DoLoading(game));
+            return _mcmImplementationSubModules.All(tuple => tuple.Item1.DoLoading(game));
 
         }
         public override void OnGameLoaded(Game game, object initializerObject)
         {
-            foreach (var subModule in _mcmImplementationSubModules)
+            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
                 subModule.OnGameLoaded(game, initializerObject);
         }
         public override void OnCampaignStart(Game game, object starterObject)
         {
-            foreach (var subModule in _mcmImplementationSubModules)
+            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
                 subModule.OnCampaignStart(game, starterObject);
         }
         public override void BeginGameStart(Game game)
         {
-            foreach (var subModule in _mcmImplementationSubModules)
+            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
                 subModule.BeginGameStart(game);
         }
         public override void OnGameEnd(Game game)
         {
-            foreach (var subModule in _mcmImplementationSubModules)
+            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
                 subModule.OnGameEnd(game);
         }
         public override void OnGameInitializationFinished(Game game)
         {
-            foreach (var subModule in _mcmImplementationSubModules)
+            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
                 subModule.OnGameInitializationFinished(game);
         }
         public override void OnMissionBehaviourInitialize(Mission mission)
         {
-            foreach (var subModule in _mcmImplementationSubModules)
+            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
                 subModule.OnMissionBehaviourInitialize(mission);
         }
         public override void OnMultiplayerGameStart(Game game, object starterObject)
         {
-            foreach (var subModule in _mcmImplementationSubModules)
+            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
                 subModule.OnMultiplayerGameStart(game, starterObject);
         }
         public override void OnNewGameCreated(Game game, object initializerObject)
         {
-            foreach (var subModule in _mcmImplementationSubModules)
+            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
                 subModule.OnNewGameCreated(game, initializerObject);
         }
     }

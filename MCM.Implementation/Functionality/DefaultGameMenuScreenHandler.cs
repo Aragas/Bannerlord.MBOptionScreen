@@ -34,8 +34,8 @@ namespace MCM.Implementation.Functionality
     [Version("e1.3.0",  1)]
     internal sealed class DefaultGameMenuScreenHandler : IGameMenuScreenHandler
     {
-        private static InitialMenuVM? _instance;
-        private static Dictionary<string, (int, Func<ScreenBase>, TextObject)> Screens { get; } = new Dictionary<string, (int, Func<ScreenBase>, TextObject)>();
+        private static readonly WeakReference<InitialMenuVM> _instance = new WeakReference<InitialMenuVM>(null!);
+        private static Dictionary<string, (int, Func<ScreenBase>, TextObject)> ScreensCache { get; } = new Dictionary<string, (int, Func<ScreenBase>, TextObject)>();
         private static int _initialized;
 
         public DefaultGameMenuScreenHandler()
@@ -51,8 +51,8 @@ namespace MCM.Implementation.Functionality
 
         private static void Constructor(InitialMenuVM __instance, ref MBBindingList<InitialMenuOptionVM> ____menuOptions)
         {
-            _instance = __instance;
-            foreach (var pair in Screens)
+            _instance.SetTarget(__instance);
+            foreach (var pair in ScreensCache)
             {
                 var (Index, ScreenFactory, Text) = pair.Value;
 
@@ -68,37 +68,33 @@ namespace MCM.Implementation.Functionality
 
         public void AddScreen(string internalName, int index, Func<ScreenBase> screenFactory, TextObject text)
         {
-            if (_instance == null)
+            if (_instance.TryGetTarget(out var instance))
             {
-                if (Screens.ContainsKey(internalName))
-                    Screens[internalName] = (index, screenFactory, text);
-                else
-                    Screens.Add(internalName, (index, screenFactory, text));
-            }
-            else
-            {
-                var insertIndex = _instance.MenuOptions.FindIndex(i => i.InitialStateOption.OrderIndex > index);
-                _instance.MenuOptions.Insert(insertIndex, new InitialMenuOptionVM(new InitialStateOption(
+                var insertIndex = instance.MenuOptions.FindIndex(i => i.InitialStateOption.OrderIndex > index);
+                instance.MenuOptions.Insert(insertIndex, new InitialMenuOptionVM(new InitialStateOption(
                     internalName,
                     text,
                     index,
                     () => ScreenManager.PushScreen(screenFactory()),
                     false)));
             }
+
+            if (ScreensCache.ContainsKey(internalName))
+                ScreensCache[internalName] = (index, screenFactory, text);
+            else
+                ScreensCache.Add(internalName, (index, screenFactory, text));
         }
         public void RemoveScreen(string internalName)
         {
-            if (_instance == null)
+            if (_instance.TryGetTarget(out var instance))
             {
-                if (Screens.ContainsKey(internalName))
-                    Screens.Remove(internalName);
-            }
-            else
-            {
-                var found = _instance.MenuOptions.FirstOrDefault(i => i.InitialStateOption.Id == internalName);
+                var found = instance.MenuOptions.FirstOrDefault(i => i.InitialStateOption.Id == internalName);
                 if (found != null)
-                    _instance.MenuOptions.Remove(found);
+                    instance.MenuOptions.Remove(found);
             }
+
+            if (ScreensCache.ContainsKey(internalName))
+                ScreensCache.Remove(internalName);
         }
     }
 }

@@ -7,7 +7,7 @@ namespace MCM.Abstractions.ApplicationContainer
 {
     public sealed class ApplicationContainerProviderWrapper : IApplicationContainerProvider, IWrapper
     {
-        private readonly object _object;
+        public object Object { get; }
         private MethodInfo? GetMethod { get; }
         private MethodInfo? SetMethod { get; }
         private MethodInfo? ClearMethod { get; }
@@ -15,7 +15,7 @@ namespace MCM.Abstractions.ApplicationContainer
 
         public ApplicationContainerProviderWrapper(object @object)
         {
-            _object = @object;
+            @object = @object;
             var type = @object.GetType();
 
             GetMethod = AccessTools.Method(type, nameof(Get));
@@ -25,8 +25,8 @@ namespace MCM.Abstractions.ApplicationContainer
             IsCorrect = GetMethod != null && SetMethod != null && ClearMethod != null;
         }
 
-        public object? Get(string name) => GetMethod?.Invoke(_object, new object[] { name });
-        public void Set(string name, object value) => SetMethod?.Invoke(_object, new object[] { name, value });
-        public void Clear() => ClearMethod?.Invoke(_object, Array.Empty<object>());
+        public object? Get(string name) => GetMethod?.Invoke(Object, new object[] { name });
+        public void Set(string name, object value) => SetMethod?.Invoke(Object, new object[] { name, value });
+        public void Clear() => ClearMethod?.Invoke(Object, Array.Empty<object>());
     }
 }

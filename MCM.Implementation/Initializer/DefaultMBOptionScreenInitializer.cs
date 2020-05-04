@@ -14,7 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
+using MCM.Implementation.Settings;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
@@ -46,11 +46,11 @@ namespace MCM.Implementation.Initializer
         {
             GameVersion = gameVersion;
 
-            ApplicationContainerProvider = DI.GetImplementation<IApplicationContainerProvider, ApplicationContainerProviderWrapper>(GameVersion);
+            ApplicationContainerProvider = DI.GetImplementation<IApplicationContainerProvider, ApplicationContainerProviderWrapper>(GameVersion)!;
             if (first)
             {
-                var settingsProvider = DI.GetImplementation<IMBOptionScreenSettingsContainer, SettingsContainerWrapper>(GameVersion);
-                var modLibSettingsProvider = DI.GetImplementation<IModLibSettingsContainer, SettingsContainerWrapper>(GameVersion);
+                var settingsProvider = DI.GetImplementation<IMBOptionScreenSettingsContainer, SettingsContainerWrapper>(GameVersion)!;
+                var modLibSettingsProvider = DI.GetImplementation<IModLibSettingsContainer, SettingsContainerWrapper>(GameVersion)!;
                 ApplicationContainerProvider.Set("MBOptionScreenSettingsProvider", settingsProvider);
                 ApplicationContainerProvider.Set("ModLibSettingsProvider", modLibSettingsProvider);
 
@@ -83,7 +83,6 @@ namespace MCM.Implementation.Initializer
                 if (MCMSettings.Instance!.OverrideModLib)
                     Resolver.ModLibScreenOverrider.OverrideModLibScreen();
 
-
                 ApplicationContainerProvider.Clear();
             }
         }
@@ -110,7 +109,7 @@ namespace MCM.Implementation.Initializer
             // ModLib
             var modLibSettings = allTypes
                 .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, "ModLib.SettingsBase"))
-                .Select(obj => new ModLibSettingsWrapper(Activator.CreateInstance(obj)));
+                .Select(obj => new ModLibSettings(Activator.CreateInstance(obj)));
             settings.AddRange(modLibSettings);
 
             var mbOptionScreenSettings = allTypes
@@ -118,7 +117,7 @@ namespace MCM.Implementation.Initializer
                             ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(SettingsBase)))
                 .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(EmptySettings)))
                 .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(SettingsWrapper)))
-                .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(ModLibSettingsWrapper)))
+                .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(ModLibSettings)))
 #if !DEBUG
                 .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(TestSettingsBase<>)))
 #endif

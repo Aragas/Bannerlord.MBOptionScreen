@@ -68,31 +68,38 @@ namespace MCM.Abstractions.Settings
         }
         protected SettingsPropertyGroupDefinition GetGroupForRecursive(string groupName, SettingsPropertyGroupDefinition sgp, SettingsPropertyDefinition sp)
         {
-            if (groupName.Contains(SubGroupDelimiter))
+            while (true)
             {
-                //Need to go deeper
-                var topGroupName = GetTopGroupName(groupName, out var truncatedGroupName);
-                var topGroup = sgp.GetGroupFor(topGroupName);
-                if (topGroup == null)
+                if (groupName.Contains(SubGroupDelimiter))
                 {
-                    // Order will not be passed to the subgroup
-                    topGroup = new SettingsPropertyGroupDefinition(sp.GroupName, topGroupName);
-                    sgp.Add(topGroup);
+                    //Need to go deeper
+                    var topGroupName = GetTopGroupName(groupName, out var truncatedGroupName);
+                    var topGroup = sgp.GetGroupFor(topGroupName);
+                    if (topGroup == null)
+                    {
+                        // Order will not be passed to the subgroup
+                        topGroup = new SettingsPropertyGroupDefinition(sp.GroupName, topGroupName);
+                        sgp.Add(topGroup);
+                    }
+
+                    groupName = truncatedGroupName;
+                    sgp = topGroup;
                 }
-                return GetGroupForRecursive(truncatedGroupName, topGroup, sp);
-            }
-            else
-            {
-                //Reached the bottom level, can return the final group.
-                var group = sgp.GetGroup(groupName);
-                if (group == null)
+                else
                 {
-                    group = new SettingsPropertyGroupDefinition(sp.GroupName, groupName, sp.GroupOrder);
-                    sgp.Add(group);
+                    //Reached the bottom level, can return the final group.
+                    var group = sgp.GetGroup(groupName);
+                    if (group == null)
+                    {
+                        group = new SettingsPropertyGroupDefinition(sp.GroupName, groupName, sp.GroupOrder);
+                        sgp.Add(group);
+                    }
+
+                    return group;
                 }
-                return group;
             }
         }
+
         protected string GetTopGroupName(string groupName, out string truncatedGroupName)
         {
             var index = groupName.IndexOf(SubGroupDelimiter);

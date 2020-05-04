@@ -1,9 +1,10 @@
 ﻿using HarmonyLib;
 
 using MCM.Abstractions.Attributes;
-using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings;
+using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.SettingsContainer;
+using MCM.Utils;
 
 using System;
 using System.Collections;
@@ -30,7 +31,7 @@ namespace MCM.Implementation.Settings.SettingsContainer
     [Version("e1.3.0",  1)]
     internal sealed class ModLibSettingsContainer : IModLibSettingsContainer
     {
-        private Dictionary<string, ModLibSettingsWrapper> LoadedModLibSettings { get; } = new Dictionary<string, ModLibSettingsWrapper>();
+        private Dictionary<string, ModLibSettings> LoadedModLibSettings { get; } = new Dictionary<string, ModLibSettings>();
         private Type? ModLibSettingsDatabase { get; }
 
         public List<SettingsDefinition> CreateModSettingsDefinitions
@@ -56,60 +57,36 @@ namespace MCM.Implementation.Settings.SettingsContainer
                 .FirstOrDefault(a => a.FullName == "ModLib.SettingsDatabase");
         }
 
+        public bool RegisterSettings(SettingsBase settingsClass) => settingsClass is ModLibSettings;
+
         public SettingsBase? GetSettings(string id)
         {
             if (ModLibSettingsDatabase == null)
                 return null;
 
-            ReloadAll();
+            Reload(id);
             return LoadedModLibSettings.TryGetValue(id, out var settings) ? settings : null;
         }
-
-        public bool OverrideSettings(SettingsBase settings)
-        {
-            if (ModLibSettingsDatabase == null)
-                return false;
-
-            if (settings is ModLibSettingsWrapper settingsWrapper)
-            {
-                var overrideSettingsWithIDMethod = AccessTools.Method(ModLibSettingsDatabase, "OverrideSettingsWithID");
-
-                return (bool) overrideSettingsWithIDMethod.Invoke(null, new object[] { settingsWrapper.Object, settingsWrapper.Id });
-            }
-
-            return false;
-        }
-
-        public bool RegisterSettings(SettingsBase settingsClass) => settingsClass is ModLibSettingsWrapper;
-
-        public SettingsBase? ResetSettings(string id)
-        {
-            if (ModLibSettingsDatabase == null)
-                return null;
-
-            ReloadAll();
-
-            var resetSettingsInstanceMethod = AccessTools.Method(ModLibSettingsDatabase, "ResetSettingsInstance");
-
-            var settingsWrapper = LoadedModLibSettings[id];
-            resetSettingsInstanceMethod.Invoke(null, new object[] { settingsWrapper.Object });
-
-            Reload(id);
-            return LoadedModLibSettings[id];
-        }
-
         public void SaveSettings(SettingsBase settings)
         {
             if (ModLibSettingsDatabase == null)
                 return;
 
-            if (settings is ModLibSettingsWrapper settingsWrapper)
-            {
-                var saveSettingsMethod = AccessTools.Method(ModLibSettingsDatabase, "SaveSettings");
-
-                saveSettingsMethod.Invoke(null, new object[] { settingsWrapper.Object });
-            }
+            if (settings is ModLibSettings settingsWrapper)
+                AccessTools.Method(ModLibSettingsDatabase, "SaveSettings")?.Invoke(null, new object[] { settingsWrapper.Object });
         }
+
+        public bool OverrideSettings(SettingsBase newSettings)
+        {
+            if (ModLibSettingsDatabase == null)
+                return false;
+
+            SettingsUtils.OverrideSettings(this, LoadedModLibSettings[newSettings.Id], newSettings);
+            return true;
+        }
+        public SettingsBase? ResetSettings(string id) =>
+            ModLibSettingsDatabase == null ? null : SettingsUtils.ResetSettings(this, LoadedModLibSettings[id]);
+
 
         private void ReloadAll()
         {
@@ -117,16 +94,11 @@ namespace MCM.Implementation.Settings.SettingsContainer
             var dict = (IDictionary) saveSettingsMethod.GetValue(null);
             foreach (var settings in dict.Values)
             {
-                var settingsType = settings.GetType();
-                var idProperty = AccessTools.Property(settingsType, "ID") ?? AccessTools.Property(settingsType, "Id");
-                var id = (string) idProperty.GetValue(settings);
-
-                var settWrapper = new ModLibSettingsWrapper(settings);
-
+                var id = AccessTools.Property(settings.GetType(), "ID")?.GetValue(settings) as string ?? "ERROR";
                 if (!LoadedModLibSettings.ContainsKey(id))
-                    LoadedModLibSettings.Add(id, settWrapper);
+                    LoadedModLibSettings.Add(id, new ModLibSettings(settings));
                 else
-                    LoadedModLibSettings[id] = settWrapper;
+                    LoadedModLibSettings[id].UpdateReference(settings);
             }
         }
         private void Reload(string id)
@@ -135,7 +107,7 @@ namespace MCM.Implementation.Settings.SettingsContainer
             var dict = (IDictionary) saveSettingsMethod.GetValue(null);
 
             if (dict.Contains(id))
-                LoadedModLibSettings[id] = new ModLibSettingsWrapper(dict[id]);
+                LoadedModLibSettings[id].UpdateReference(dict[id]);
         }
     }
 }

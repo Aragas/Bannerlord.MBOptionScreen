@@ -18,17 +18,8 @@ namespace MCM.Abstractions.ResourceInjection
         public abstract void InjectPrefab(string prefabName, XmlDocument xmlDocument);
         public abstract void InjectWidget(Type widgetType);
 
-        public WidgetPrefab? RequestMovie(string movie)
-        {
-            var loaders = DI.GetImplementations<IResourceLoader, ResourceLoaderWrapper>(ApplicationVersionUtils.GameVersion()).ToList();
-
-            foreach (var resourceLoader in loaders)
-            {
-                var widget = resourceLoader.MovieRequested(movie);
-                if (widget != null)
-                    return widget;
-            }
-            return null;
-        }
+        public WidgetPrefab? RequestMovie(string movie) => DI.GetImplementations<IResourceLoader, ResourceLoaderWrapper>(ApplicationVersionUtils.GameVersion())
+            .Select(resourceLoader => resourceLoader.MovieRequested(movie))
+            .FirstOrDefault(widget => widget != null);
     }
 }

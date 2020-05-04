@@ -11,6 +11,9 @@ using TaleWorlds.TwoDimension;
 
 namespace MCM.UI.GUI.GauntletUI
 {
+    /// <summary>
+    /// Mod's Option screen
+    /// </summary>
     [Version("e1.0.0",  1)]
     [Version("e1.0.1",  1)]
     [Version("e1.0.2",  1)]

@@ -8,14 +8,14 @@ namespace MCM.Abstractions.Initializer
 {
     public sealed class MBOptionScreenInitializerWrapper : IMBOptionScreenInitializer, IWrapper
     {
-        private readonly object _object;
+        public object Object { get; }
         private MethodInfo? StartInitializationMethod { get; }
         private MethodInfo? EndInitializationMethod { get; }
         public bool IsCorrect { get; }
 
         public MBOptionScreenInitializerWrapper(object @object)
         {
-            _object = @object;
+            Object = @object;
             var type = @object.GetType();
 
             StartInitializationMethod = AccessTools.Method(type, nameof(StartInitialization));
@@ -25,8 +25,8 @@ namespace MCM.Abstractions.Initializer
         }
 
         public void StartInitialization(ApplicationVersion gameVersion, bool first) =>
-            StartInitializationMethod?.Invoke(_object, new object[] { gameVersion, first });
+            StartInitializationMethod?.Invoke(Object, new object[] { gameVersion, first });
         public void EndInitialization(bool first) =>
-            EndInitializationMethod?.Invoke(_object, new object[] { first });
+            EndInitializationMethod?.Invoke(Object, new object[] { first });
     }
 }

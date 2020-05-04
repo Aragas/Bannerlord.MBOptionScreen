@@ -6,7 +6,7 @@
         public int MaxValue { get; }
         public string ValueFormat { get; }
 
-        internal PropertyDefinitionIntegerWrapper(object @object) : base(@object)
+        public PropertyDefinitionIntegerWrapper(object @object) : base(@object)
         {
             MinValue = @object.GetType().GetProperty(nameof(MinValue))?.GetValue(@object) as int? ?? 0;
             MaxValue = @object.GetType().GetProperty(nameof(MaxValue))?.GetValue(@object) as int? ?? 0;

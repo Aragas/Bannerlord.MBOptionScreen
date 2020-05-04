@@ -6,15 +6,15 @@ using TaleWorlds.GauntletUI.PrefabSystem;
 
 namespace MCM.Abstractions.ResourceInjection
 {
-    public class ResourceLoaderWrapper : IResourceLoader, IWrapper
+    public sealed class ResourceLoaderWrapper : IResourceLoader, IWrapper
     {
-        private readonly object _object;
+        public object Object { get; }
         private MethodInfo? MovieRequestedMethod { get; }
         public bool IsCorrect { get; }
 
         public ResourceLoaderWrapper(object @object)
         {
-            _object = @object;
+            Object = @object;
             var type = @object.GetType();
 
             MovieRequestedMethod = AccessTools.Method(type, nameof(MovieRequested));
@@ -22,6 +22,6 @@ namespace MCM.Abstractions.ResourceInjection
             IsCorrect = MovieRequestedMethod != null;
         }
 
-        public WidgetPrefab? MovieRequested(string movie) => MovieRequestedMethod?.Invoke(_object, new object[] { movie }) as WidgetPrefab;
+        public WidgetPrefab? MovieRequested(string movie) => MovieRequestedMethod?.Invoke(Object, new object[] { movie }) as WidgetPrefab;
     }
 }

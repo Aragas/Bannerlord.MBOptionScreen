@@ -11,7 +11,6 @@ using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
 
-
 namespace MCM.UI.GUI.ViewModels
 {
     internal class ModOptionsVM : ViewModel

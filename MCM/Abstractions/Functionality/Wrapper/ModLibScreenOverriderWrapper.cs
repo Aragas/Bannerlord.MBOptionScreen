@@ -7,13 +7,13 @@ namespace MCM.Abstractions.Functionality.Wrapper
 {
     public sealed class ModLibScreenOverriderWrapper : IModLibScreenOverrider, IWrapper
     {
-        private readonly object _object;
+        public object Object { get; }
         private MethodInfo? OverrideModLibScreenMethod { get; }
         public bool IsCorrect { get; }
 
         public ModLibScreenOverriderWrapper(object @object)
         {
-            _object = @object;
+            Object = @object;
             var type = @object.GetType();
 
             OverrideModLibScreenMethod = AccessTools.Method(type, nameof(OverrideModLibScreen));
@@ -21,6 +21,6 @@ namespace MCM.Abstractions.Functionality.Wrapper
             IsCorrect = OverrideModLibScreenMethod != null;
         }
 
-        public void OverrideModLibScreen() => OverrideModLibScreenMethod?.Invoke(_object, Array.Empty<object>());
+        public void OverrideModLibScreen() => OverrideModLibScreenMethod?.Invoke(Object, Array.Empty<object>());
     }
 }

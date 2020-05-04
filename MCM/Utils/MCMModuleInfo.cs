@@ -49,16 +49,13 @@ namespace MCM.Utils
 
         public override string ToString() => ModuleInfo.Name;
 
-        public DirectoryInfo? GetBinaryDirectory()
-        {
-            return ModulePath()?
-                .GetDirectories()
-                .FirstOrDefault(f => string.Equals(f.Name, ModuleInfo.Alias, StringComparison.Ordinal))?
-                .GetDirectories("bin")
-                .FirstOrDefault()?
-                .GetDirectories(Common.ConfigName)
-                .FirstOrDefault();
-        }
+        public DirectoryInfo? GetBinaryDirectory() => ModulePath()?
+            .GetDirectories()
+            .FirstOrDefault(f => string.Equals(f.Name, ModuleInfo.Alias, StringComparison.Ordinal))?
+            .GetDirectories("bin")
+            .FirstOrDefault()?
+            .GetDirectories(Common.ConfigName)
+            .FirstOrDefault();
 
         private static DirectoryInfo? ModulePath()
         {

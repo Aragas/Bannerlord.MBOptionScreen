@@ -8,7 +8,7 @@ namespace MCM.Abstractions.ResourceInjection
 {
     public sealed class ResourceInjectorWrapper : BaseResourceInjector, IWrapper
     {
-        private readonly object _object;
+        public object Object { get; }
         private MethodInfo? InjectBrushMethod { get; }
         private MethodInfo? InjectPrefabMethod { get; }
         private MethodInfo? InjectWidgetMethod { get; }
@@ -16,7 +16,7 @@ namespace MCM.Abstractions.ResourceInjection
 
         public ResourceInjectorWrapper(object @object)
         {
-            _object = @object;
+            Object = @object;
             var type = @object.GetType();
 
             InjectBrushMethod = AccessTools.Method(type, nameof(InjectBrush));
@@ -27,10 +27,10 @@ namespace MCM.Abstractions.ResourceInjection
         }
 
         public override void InjectBrush(XmlDocument xmlDocument) =>
-            InjectBrushMethod?.Invoke(_object, new object[] { xmlDocument });
+            InjectBrushMethod?.Invoke(Object, new object[] { xmlDocument });
         public override void InjectPrefab(string prefabName, XmlDocument xmlDocument) =>
-            InjectPrefabMethod?.Invoke(_object, new object[] { prefabName, xmlDocument });
+            InjectPrefabMethod?.Invoke(Object, new object[] { prefabName, xmlDocument });
         public override void InjectWidget(Type widgetType) =>
-            InjectWidgetMethod?.Invoke(_object, new object[] { widgetType });
+            InjectWidgetMethod?.Invoke(Object, new object[] { widgetType });
     }
 }

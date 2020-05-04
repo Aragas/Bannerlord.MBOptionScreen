@@ -15,7 +15,7 @@ namespace MCM.Implementation
         public SubModuleV300()
         {
             GameVersion = ApplicationVersionUtils.GameVersion();
-            MBOptionScreenInitializer = DI.GetImplementation<IMBOptionScreenInitializer, MBOptionScreenInitializerWrapper>(GameVersion);
+            MBOptionScreenInitializer = DI.GetImplementation<IMBOptionScreenInitializer, MBOptionScreenInitializerWrapper>(GameVersion)!;
         }
 
         /// <summary>
@@ -23,7 +23,7 @@ namespace MCM.Implementation
         /// </summary>
         protected override void OnSubModuleLoad()
         {
-            using var synchronizationProvider = DI.GetImplementation<ISynchronizationProvider, SynchronizationProviderWrapper>(GameVersion, new object[] { "OnSubModuleLoad" });
+            using var synchronizationProvider = DI.GetImplementation<ISynchronizationProvider, SynchronizationProviderWrapper>(GameVersion, new object[] { "OnSubModuleLoad" })!;
             MBOptionScreenInitializer.StartInitialization(GameVersion, synchronizationProvider.IsFirstInitialization);
         }
 
@@ -32,7 +32,7 @@ namespace MCM.Implementation
         /// </summary>
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
-            using var synchronizationProvider = DI.GetImplementation<ISynchronizationProvider, SynchronizationProviderWrapper>(GameVersion, new object[] { "OnBeforeInitialModuleScreenSetAsRoot" });
+            using var synchronizationProvider = DI.GetImplementation<ISynchronizationProvider, SynchronizationProviderWrapper>(GameVersion, new object[] { "OnBeforeInitialModuleScreenSetAsRoot" })!;
             MBOptionScreenInitializer.EndInitialization(synchronizationProvider.IsFirstInitialization);
         }
     }

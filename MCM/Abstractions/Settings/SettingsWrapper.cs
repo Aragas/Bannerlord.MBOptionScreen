@@ -14,7 +14,7 @@ namespace MCM.Abstractions.Settings
 {
     public class SettingsWrapper : SettingsBase, INotifyPropertyChanged
     {
-        public readonly object Object;
+        public object Object { get; protected  set; }
         private PropertyInfo? IdProperty { get; }
         private PropertyInfo? ModuleFolderNameProperty { get; }
         private PropertyInfo? ModNameProperty { get; }

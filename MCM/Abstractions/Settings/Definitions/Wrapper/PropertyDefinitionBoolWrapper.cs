@@ -2,7 +2,7 @@
 {
     public sealed class PropertyDefinitionBoolWrapper : BasePropertyDefinitionWrapper, IPropertyDefinitionBool
     {
-        internal PropertyDefinitionBoolWrapper(object @object) : base(@object)
+        public PropertyDefinitionBoolWrapper(object @object) : base(@object)
         {
 
         }

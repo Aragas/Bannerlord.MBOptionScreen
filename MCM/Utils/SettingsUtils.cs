@@ -1,4 +1,7 @@
-﻿using MCM.Abstractions.Attributes;
+﻿using HarmonyLib;
+
+using MCM.Abstractions.Attributes;
+using MCM.Abstractions.Attributes.v1;
 using MCM.Abstractions.Attributes.v1.Wrapper;
 using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Definitions;
@@ -8,7 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using HarmonyLib;
+using MCM.Abstractions.Settings.SettingsContainer;
 
 namespace MCM.Utils
 {
@@ -29,29 +32,42 @@ namespace MCM.Utils
             {
                 var attributes = property.GetCustomAttributes();
 
-                object groupAttrObj = attributes.FirstOrDefault(a => a.GetType().FullName == "ModLib.Attributes.SettingPropertyGroupAttribute")
-                    ?? attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.SettingPropertyGroupAttribute")
-                    ?? attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyGroupDefinition)));
+                object groupAttrObj = attributes.FirstOrDefault(a => a.GetType().FullName == "ModLib.Attributes.SettingPropertyGroupAttribute") ??
+                                      attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.SettingPropertyGroupAttribute") ??
+                                      attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), "MBOptionScreen.Settings.IPropertyGroupDefinition")) ??
+                                      attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyGroupDefinition)));
                 var groupDefinition = groupAttrObj != null
-                    ? (IPropertyGroupDefinition)new PropertyGroupDefinitionWrapper(groupAttrObj)
-                    : (IPropertyGroupDefinition)SettingPropertyGroupAttribute.Default;
+                    ? (IPropertyGroupDefinition) new PropertyGroupDefinitionWrapper(groupAttrObj)
+                    : (IPropertyGroupDefinition) SettingPropertyGroupAttribute.Default;
 
                 object propAttr;
-                propAttr = attributes.SingleOrDefault(a => a.GetType().FullName == "ModLib.Attributes.SettingPropertyAttribute")
-                    ?? attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.SettingPropertyAttribute")
-                    ?? attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.v1.SettingPropertyAttribute");
+                propAttr = attributes.SingleOrDefault(a => a.GetType().FullName == "ModLib.Attributes.SettingPropertyAttribute") ??
+                           attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.SettingPropertyAttribute") ??
+                           attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.v1.SettingPropertyAttribute");
                 if (propAttr != null)
                 {
                     yield return new SettingsPropertyDefinition(
-                        new SettingPropertyAttributeWrapper(propAttr),
+                        new OldSettingPropertyAttributeWrapper(propAttr),
                         groupDefinition,
                         new ProxyPropertyInfo(property),
                         id);
                     continue;
                 }
 
-                propAttr = attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.v2.SettingPropertyBoolAttribute")
-                    ?? attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionBool)));
+                propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(SettingPropertyAttribute)));
+                if (propAttr != null)
+                {
+                    yield return new SettingsPropertyDefinition(
+                        new OldSettingPropertyAttributeWrapper(propAttr),
+                        groupDefinition,
+                        new ProxyPropertyInfo(property),
+                        id);
+                    continue;
+                }
+
+                propAttr = attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.v2.SettingPropertyBoolAttribute") ??
+                           attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), "MBOptionScreen.Settings.IPropertyDefinitionBool")) ??
+                           attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionBool)));
                 if (propAttr != null)
                 {
                     yield return new SettingsPropertyDefinition(
@@ -62,8 +78,9 @@ namespace MCM.Utils
                     continue;
                 }
 
-                propAttr = attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.v2.SettingPropertyFloatingIntegerAttribute")
-                    ?? attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionFloatingInteger)));
+                propAttr = attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.v2.SettingPropertyFloatingIntegerAttribute") ??
+                           attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), "MBOptionScreen.Settings.IPropertyDefinitionFloatingInteger")) ??
+                           attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionFloatingInteger)));
                 if (propAttr != null)
                 {
                     yield return new SettingsPropertyDefinition(
@@ -74,8 +91,9 @@ namespace MCM.Utils
                     continue;
                 }
 
-                propAttr = attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.v2.SettingPropertyIntegerAttribute")
-                    ?? attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionInteger)));
+                propAttr = attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.v2.SettingPropertyIntegerAttribute") ??
+                           attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), "MBOptionScreen.Settings.IPropertyDefinitionInteger")) ??
+                           attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionInteger)));
                 if (propAttr != null)
                 {
                     yield return new SettingsPropertyDefinition(
@@ -86,8 +104,9 @@ namespace MCM.Utils
                     continue;
                 }
 
-                propAttr = attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.v2.SettingPropertyTextAttribute")
-                    ?? attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionText)));
+                propAttr = attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.v2.SettingPropertyTextAttribute") ??
+                           attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), "MBOptionScreen.Settings.IPropertyDefinitionText")) ??
+                           attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionText)));
                 if (propAttr != null)
                 {
                     yield return new SettingsPropertyDefinition(
@@ -98,8 +117,9 @@ namespace MCM.Utils
                     continue;
                 }
 
-                propAttr = attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.v2.SettingPropertyDropdownAttribute")
-                    ?? attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionDropdown)));
+                propAttr = attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.v2.SettingPropertyDropdownAttribute") ??
+                           attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), "MBOptionScreen.Settings.IPropertyDefinitionDropdown")) ??
+                           attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionDropdown)));
                 if (propAttr != null)
                 {
 
@@ -133,10 +153,39 @@ namespace MCM.Utils
         {
             while (settings != null && ReflectionUtils.ImplementsOrImplementsEquivalent(settings.GetType(), typeof(SettingsWrapper)))
             {
-                var prop = AccessTools.Field(settings.GetType(), "_object") ??
-                           AccessTools.Field(settings.GetType(), nameof(SettingsWrapper.Object));
+                var prop = AccessTools.Property(settings.GetType(), "_object") ??
+                           AccessTools.Property(settings.GetType(), nameof(SettingsWrapper.Object));
                 settings = prop?.GetValue(settings);
             }
+            return settings;
+        }
+        public static SettingsBase? WrapSettings(object? settingsObj) => settingsObj is { } settings
+            ? settings is SettingsBase settingsBase ? settingsBase : new SettingsWrapper(settings)
+            : null;
+
+        public static void CopyProperties(object settings, object settingsNew)
+        {
+            if (settings.GetType() != settingsNew.GetType())
+                return;
+
+            foreach (var propertyInfo in settings.GetType().GetProperties())
+                propertyInfo.SetValue(settings, propertyInfo.GetValue(settingsNew));
+        }
+
+        public static SettingsBase ResetSettings(ISettingsContainer settingsContainer, SettingsBase settings) =>
+            OverrideSettings(settingsContainer, settings, settings is SettingsWrapper settingsWrapper
+                ? new SettingsWrapper(Activator.CreateInstance(settingsWrapper.Object.GetType()))
+                : (SettingsBase) Activator.CreateInstance(settings.GetType()));
+
+        public static SettingsBase OverrideSettings(ISettingsContainer settingsContainer, SettingsBase settings, SettingsBase overrideSettings)
+        {
+            if (settings is SettingsWrapper settingsWrapper && overrideSettings is SettingsWrapper overrideSettingsWrapper)
+                SettingsUtils.CopyProperties(settingsWrapper.Object, overrideSettingsWrapper.Object);
+            else
+                SettingsUtils.CopyProperties(settings, overrideSettings);
+
+            settingsContainer.SaveSettings(settings);
+
             return settings;
         }
     }

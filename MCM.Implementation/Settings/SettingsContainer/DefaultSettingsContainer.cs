@@ -1,12 +1,11 @@
 ﻿using MCM.Abstractions.Attributes;
+using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Formats;
-using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.SettingsContainer;
 using MCM.Implementation.Settings.Formats;
 using MCM.Utils;
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -57,7 +56,7 @@ namespace MCM.Implementation.Settings.SettingsContainer
 
         public bool RegisterSettings(SettingsBase settingsInstance)
         {
-            if (settingsInstance == null || LoadedSettings.ContainsKey(settingsInstance.Id) || settingsInstance is ModLibSettingsWrapper)
+            if (settingsInstance == null || LoadedSettings.ContainsKey(settingsInstance.Id) || settingsInstance is ModLibSettings)
                 return false;
 
             LoadedSettings.Add(settingsInstance.Id, settingsInstance);
@@ -71,10 +70,7 @@ namespace MCM.Implementation.Settings.SettingsContainer
             return true;
         }
 
-        public SettingsBase? GetSettings(string id) => LoadedSettings.TryGetValue(id, out var result)
-            ? result
-            : null;
-
+        public SettingsBase? GetSettings(string id) => LoadedSettings.TryGetValue(id, out var result) ? result : null;
         public void SaveSettings(SettingsBase settingsInstance)
         {
             if (settingsInstance == null || !LoadedSettings.ContainsKey(settingsInstance.Id))
@@ -87,28 +83,15 @@ namespace MCM.Implementation.Settings.SettingsContainer
                 AvailableSettingsFormats["json"].Save(settingsInstance, path);
         }
 
-        public bool OverrideSettings(SettingsBase newSettingsInstance)
+        public bool OverrideSettings(SettingsBase newSettings)
         {
-            if (newSettingsInstance == null || !LoadedSettings.ContainsKey(newSettingsInstance.Id))
+            if (newSettings == null || !LoadedSettings.ContainsKey(newSettings.Id))
                 return false;
 
-            LoadedSettings[newSettingsInstance.Id] = newSettingsInstance;
-            SaveSettings(newSettingsInstance);
+            SettingsUtils.OverrideSettings(this, LoadedSettings[newSettings.Id], newSettings);
             return true;
         }
-
-        public SettingsBase ResetSettings(string id)
-        {
-            if (!LoadedSettings.ContainsKey(id))
-                return null;
-
-            // TODO:
-            var defaultSettingsInstance = LoadedSettings[id] is SettingsWrapper wrapperSettings
-                ? new SettingsWrapper(Activator.CreateInstance(wrapperSettings.Object.GetType()))
-                : (SettingsBase) Activator.CreateInstance(LoadedSettings[id].GetType());
-            LoadedSettings[id] = defaultSettingsInstance;
-            SaveSettings(defaultSettingsInstance);
-            return defaultSettingsInstance;
-        }
+        public SettingsBase? ResetSettings(string id) =>
+            !LoadedSettings.ContainsKey(id) ? null : SettingsUtils.ResetSettings(this, LoadedSettings[id]);
     }
 }

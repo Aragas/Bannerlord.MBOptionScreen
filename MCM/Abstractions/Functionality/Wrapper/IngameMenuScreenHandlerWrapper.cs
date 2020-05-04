@@ -10,14 +10,14 @@ namespace MCM.Abstractions.Functionality.Wrapper
 {
     public sealed class IngameMenuScreenHandlerWrapper : IIngameMenuScreenHandler, IWrapper
     {
-        private readonly object _object;
+        public object Object { get; }
         private MethodInfo? AddScreenMethod { get; }
         private MethodInfo? RemoveScreenMethod { get; }
         public bool IsCorrect { get; }
 
         public IngameMenuScreenHandlerWrapper(object @object)
         {
-            _object = @object;
+            Object = @object;
             var type = @object.GetType();
 
             AddScreenMethod = AccessTools.Method(type, nameof(AddScreen));
@@ -27,8 +27,8 @@ namespace MCM.Abstractions.Functionality.Wrapper
         }
 
         public void AddScreen(string internalName, int index, Func<ScreenBase> screenFactory, TextObject text) =>
-            AddScreenMethod?.Invoke(_object, new object[] { internalName, index, screenFactory, text });
+            AddScreenMethod?.Invoke(Object, new object[] { internalName, index, screenFactory, text });
         public void RemoveScreen(string internalName) =>
-            RemoveScreenMethod?.Invoke(_object, new object[] { internalName });
+            RemoveScreenMethod?.Invoke(Object, new object[] { internalName });
     }
 }
