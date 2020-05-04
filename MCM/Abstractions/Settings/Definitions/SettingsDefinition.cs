@@ -2,16 +2,17 @@
 
 namespace MCM.Abstractions.Settings.Definitions
 {
-    // TODO
     public class SettingsDefinition
     {
         public string SettingsId { get; }
-        private SettingsBase SettingsInstance => BaseSettingsProvider.Instance.GetSettings(SettingsId);
-        public string ModName => SettingsInstance.ModName;
+        public string ModName { get; }
 
         public SettingsDefinition(string settingsId)
         {
+            var settings = BaseSettingsProvider.Instance.GetSettings(settingsId);
+
             SettingsId = settingsId;
+            ModName = settings?.ModName ?? "ERROR";
         }
     }
 }

@@ -76,7 +76,7 @@ namespace MCM.Implementation.Settings.SettingsContainer
             if (settingsInstance == null || !LoadedSettings.ContainsKey(settingsInstance.Id))
                 return;
 
-            var path = Path.Combine(_defaultRootFolder, settingsInstance.ModuleFolderName, settingsInstance.SubFolder ?? "", $"{settingsInstance.Id}.json");
+            var path = Path.Combine(_defaultRootFolder, settingsInstance.ModuleFolderName, settingsInstance.SubFolder ?? "", $"{settingsInstance.Id}.{settingsInstance.Format}");
             if (AvailableSettingsFormats.ContainsKey(settingsInstance.Format))
                 AvailableSettingsFormats[settingsInstance.Format].Save(settingsInstance, path);
             else
@@ -88,10 +88,10 @@ namespace MCM.Implementation.Settings.SettingsContainer
             if (newSettings == null || !LoadedSettings.ContainsKey(newSettings.Id))
                 return false;
 
-            SettingsUtils.OverrideSettings(this, LoadedSettings[newSettings.Id], newSettings);
+            SettingsUtils.OverrideSettings(LoadedSettings[newSettings.Id], newSettings, this);
             return true;
         }
         public SettingsBase? ResetSettings(string id) =>
-            !LoadedSettings.ContainsKey(id) ? null : SettingsUtils.ResetSettings(this, LoadedSettings[id]);
+            !LoadedSettings.ContainsKey(id) ? null : SettingsUtils.ResetSettings(LoadedSettings[id], this);
     }
 }

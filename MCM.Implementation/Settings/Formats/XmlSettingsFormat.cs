@@ -1,6 +1,8 @@
-﻿/*
-using MBOptionScreen.Attributes;
-using MBOptionScreen.Utils;
+﻿using MCM.Abstractions.Attributes;
+using MCM.Abstractions.Settings;
+using MCM.Abstractions.Settings.Definitions;
+using MCM.Abstractions.Settings.Formats;
+using MCM.Utils;
 
 using System;
 using System.Collections.Generic;
@@ -9,44 +11,65 @@ using System.Linq;
 using System.Reflection;
 using System.Xml.Serialization;
 
-namespace MBOptionScreen.Settings
+namespace MCM.Implementation.Settings.Formats
 {
-    [Version("e1.0.0",  200)]
-    [Version("e1.0.1",  200)]
-    [Version("e1.0.2",  200)]
-    [Version("e1.0.3",  200)]
-    [Version("e1.0.4",  200)]
-    [Version("e1.0.5",  200)]
-    [Version("e1.0.6",  200)]
-    [Version("e1.0.7",  200)]
-    [Version("e1.0.8",  200)]
-    [Version("e1.0.9",  200)]
-    [Version("e1.0.10", 200)]
-    [Version("e1.0.11", 200)]
-    [Version("e1.1.0",  200)]
-    [Version("e1.2.0",  200)]
+    [Version("e1.0.0",  1)]
+    [Version("e1.0.1",  1)]
+    [Version("e1.0.2",  1)]
+    [Version("e1.0.3",  1)]
+    [Version("e1.0.4",  1)]
+    [Version("e1.0.5",  1)]
+    [Version("e1.0.6",  1)]
+    [Version("e1.0.7",  1)]
+    [Version("e1.0.8",  1)]
+    [Version("e1.0.9",  1)]
+    [Version("e1.0.10", 1)]
+    [Version("e1.0.11", 1)]
+    [Version("e1.1.0",  1)]
+    [Version("e1.2.0",  1)]
+    [Version("e1.2.1",  1)]
+    [Version("e1.3.0",  1)]
     internal sealed class XmlSettingsFormat : ISettingsFormat
     {
-        public IEnumerable<string> Providers => new string[] { "xml" };
+        public IEnumerable<string> Extensions => new string[] { "xml" };
 
         public bool Save(SettingsBase settings, string path)
         {
-            var formatter = settings is SettingsWrapper wrapperSettings ? CreateSerializer(wrapperSettings._object.GetType()) : CreateSerializer(settings.GetType());
+            var formatter = settings is SettingsWrapper wrapperSettings ? CreateSerializer(wrapperSettings.Object.GetType()) : CreateSerializer(settings.GetType());
+            
             var file = new FileInfo(path);
             file.Directory?.Create();
             using var fs = file.Create();
-            formatter.Serialize(fs, settings);
+            formatter.Serialize(fs, settings is SettingsWrapper settingsWrapper ? settingsWrapper.Object : settings);
+
             return true;
         }
 
-        // TODO: Populate like JSON is doing it
         public SettingsBase? Load(SettingsBase settings, string path)
         {
-            var formatter = settings is SettingsWrapper wrapperSettings ? CreateSerializer(wrapperSettings._object.GetType()) : CreateSerializer(settings.GetType());
             var file = new FileInfo(path);
-            file.Directory?.Create();
-            using var fs = file.Create();
-            return settings is SettingsWrapper ? new SettingsWrapper(formatter.Deserialize(fs)) : formatter.Deserialize(fs) as SettingsBase;
+            if (file.Exists)
+            {
+                var formatter = settings is SettingsWrapper wrapperSettings ? CreateSerializer(wrapperSettings.Object.GetType()) : CreateSerializer(settings.GetType());
+
+                try
+                {
+                    using var fs = file.OpenRead();
+                    if (settings is SettingsWrapper)
+                        SettingsUtils.OverrideSettings(settings, new SettingsWrapper(formatter.Deserialize(fs)));
+                    else
+                        SettingsUtils.OverrideSettings(settings, (SettingsBase) formatter.Deserialize(fs));
+                }
+                catch (Exception)
+                {
+                    Save(settings, path);
+                }
+            }
+            else
+            {
+                Save(settings, path);
+            }
+            return settings;
         }
 
         private static XmlSerializer CreateSerializer(Type serializableType)
@@ -58,13 +81,14 @@ namespace MBOptionScreen.Settings
                 // check whether each property has the custom attribute
                 foreach (var property in declaringType.GetProperties(BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Instance))
                 {
-                    var attrbs = new XmlAttributes();
+                    var attr = new XmlAttributes();
 
-                    if (property.GetCustomAttributes().Any(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(BaseSettingPropertyAttribute))))
-                        attrbs.XmlElements.Add(new XmlElementAttribute(property.Name));
+                    if (property.GetCustomAttributes().Any(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), "MBOptionScreen.Settings.IPropertyGroupDefinition") ||
+                                                                ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyGroupDefinition))))
+                        attr.XmlElements.Add(new XmlElementAttribute(property.Name));
                     else
-                        attrbs.XmlIgnore = true;
-                    overrides.Add(declaringType, property.Name, attrbs);
+                        attr.XmlIgnore = true;
+                    overrides.Add(declaringType, property.Name, attr);
                 }
             }
 
@@ -73,4 +97,3 @@ namespace MBOptionScreen.Settings
         }
     }
 }
-*/

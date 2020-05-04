@@ -172,19 +172,19 @@ namespace MCM.Utils
                 propertyInfo.SetValue(settings, propertyInfo.GetValue(settingsNew));
         }
 
-        public static SettingsBase ResetSettings(ISettingsContainer settingsContainer, SettingsBase settings) =>
-            OverrideSettings(settingsContainer, settings, settings is SettingsWrapper settingsWrapper
+        public static SettingsBase ResetSettings(SettingsBase settings, ISettingsContainer? settingsContainer = null) =>
+            OverrideSettings(settings, settings is SettingsWrapper settingsWrapper
                 ? new SettingsWrapper(Activator.CreateInstance(settingsWrapper.Object.GetType()))
-                : (SettingsBase) Activator.CreateInstance(settings.GetType()));
+                : (SettingsBase) Activator.CreateInstance(settings.GetType()), settingsContainer);
 
-        public static SettingsBase OverrideSettings(ISettingsContainer settingsContainer, SettingsBase settings, SettingsBase overrideSettings)
+        public static SettingsBase OverrideSettings(SettingsBase settings, SettingsBase overrideSettings, ISettingsContainer? settingsContainer = null)
         {
             if (settings is SettingsWrapper settingsWrapper && overrideSettings is SettingsWrapper overrideSettingsWrapper)
                 SettingsUtils.CopyProperties(settingsWrapper.Object, overrideSettingsWrapper.Object);
             else
                 SettingsUtils.CopyProperties(settings, overrideSettings);
 
-            settingsContainer.SaveSettings(settings);
+            settingsContainer?.SaveSettings(settings);
 
             return settings;
         }

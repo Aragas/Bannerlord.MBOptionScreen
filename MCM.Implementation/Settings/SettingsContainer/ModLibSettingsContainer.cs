@@ -81,11 +81,11 @@ namespace MCM.Implementation.Settings.SettingsContainer
             if (ModLibSettingsDatabase == null)
                 return false;
 
-            SettingsUtils.OverrideSettings(this, LoadedModLibSettings[newSettings.Id], newSettings);
+            SettingsUtils.OverrideSettings(LoadedModLibSettings[newSettings.Id], newSettings, this);
             return true;
         }
         public SettingsBase? ResetSettings(string id) =>
-            ModLibSettingsDatabase == null ? null : SettingsUtils.ResetSettings(this, LoadedModLibSettings[id]);
+            ModLibSettingsDatabase == null ? null : SettingsUtils.ResetSettings(LoadedModLibSettings[id], this);
 
 
         private void ReloadAll()
