@@ -1,15 +1,11 @@
 ﻿using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Settings;
-using MCM.Abstractions.Settings.Definitions;
-using MCM.Abstractions.Settings.Formats;
-using MCM.Utils;
 
-using System;
+using Newtonsoft.Json;
+
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Xml.Serialization;
+using System.Xml;
 
 namespace MCM.Implementation.Settings.Formats
 {
@@ -29,38 +25,43 @@ namespace MCM.Implementation.Settings.Formats
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
-    internal sealed class XmlSettingsFormat : ISettingsFormat
+    internal sealed class XmlSettingsFormat : JsonSettingsFormat
     {
-        public IEnumerable<string> Extensions => new string[] { "xml" };
+        public override IEnumerable<string> Extensions => new string[] { "xml" };
 
-        public bool Save(SettingsBase settings, string path)
+        public override bool Save(SettingsBase settings, string path)
         {
-            var formatter = settings is SettingsWrapper wrapperSettings ? CreateSerializer(wrapperSettings.Object.GetType()) : CreateSerializer(settings.GetType());
-            
+            var content = settings is SettingsWrapper wrapperSettings
+                ? JsonConvert.SerializeObject(wrapperSettings.Object, _jsonSerializerSettings)
+                : JsonConvert.SerializeObject(settings, _jsonSerializerSettings);
+            var xmlDocument = JsonConvert.DeserializeXmlNode(content, settings is SettingsWrapper wrapperSettings1 ? wrapperSettings1.Object.GetType().Name : settings.GetType().Name);
+
             var file = new FileInfo(path);
             file.Directory?.Create();
-            using var fs = file.Create();
-            formatter.Serialize(fs, settings is SettingsWrapper settingsWrapper ? settingsWrapper.Object : settings);
+            using var writer = file.CreateText();
+            xmlDocument.Save(writer);
 
             return true;
         }
 
-        public SettingsBase? Load(SettingsBase settings, string path)
+        public override SettingsBase? Load(SettingsBase settings, string path)
         {
             var file = new FileInfo(path);
             if (file.Exists)
             {
-                var formatter = settings is SettingsWrapper wrapperSettings ? CreateSerializer(wrapperSettings.Object.GetType()) : CreateSerializer(settings.GetType());
-
                 try
                 {
-                    using var fs = file.OpenRead();
-                    if (settings is SettingsWrapper)
-                        SettingsUtils.OverrideSettings(settings, new SettingsWrapper(formatter.Deserialize(fs)));
+                    using var reader = file.OpenText();
+                    var xmlDocument = new XmlDocument();
+                    xmlDocument.Load(reader);
+                    var content = JsonConvert.SerializeXmlNode(xmlDocument);
+
+                    if (settings is SettingsWrapper wrapperSettings)
+                        JsonConvert.PopulateObject(content, wrapperSettings.Object, _jsonSerializerSettings);
                     else
-                        SettingsUtils.OverrideSettings(settings, (SettingsBase) formatter.Deserialize(fs));
+                        JsonConvert.PopulateObject(content, settings, _jsonSerializerSettings);
                 }
-                catch (Exception)
+                catch (JsonException)
                 {
                     Save(settings, path);
                 }
@@ -70,30 +71,6 @@ namespace MCM.Implementation.Settings.Formats
                 Save(settings, path);
             }
             return settings;
-        }
-
-        private static XmlSerializer CreateSerializer(Type serializableType)
-        {
-            var overrides = new XmlAttributeOverrides();
-
-            for (var declaringType = serializableType; declaringType != null && declaringType != typeof(object); declaringType = declaringType.BaseType)
-            {
-                // check whether each property has the custom attribute
-                foreach (var property in declaringType.GetProperties(BindingFlags.Public | BindingFlags.DeclaredOnly | BindingFlags.Instance))
-                {
-                    var attr = new XmlAttributes();
-
-                    if (property.GetCustomAttributes().Any(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), "MBOptionScreen.Settings.IPropertyGroupDefinition") ||
-                                                                ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyGroupDefinition))))
-                        attr.XmlElements.Add(new XmlElementAttribute(property.Name));
-                    else
-                        attr.XmlIgnore = true;
-                    overrides.Add(declaringType, property.Name, attr);
-                }
-            }
-
-            // create the serializer
-            return new XmlSerializer(serializableType, overrides);
         }
     }
 }

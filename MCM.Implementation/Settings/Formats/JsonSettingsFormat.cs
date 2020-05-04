@@ -34,18 +34,18 @@ namespace MCM.Implementation.Settings.Formats
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
-    internal sealed class JsonSettingsFormat : ISettingsFormat
+    internal class JsonSettingsFormat : ISettingsFormat
     {
-        private readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings()
+        protected readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings()
         {
             Formatting = Formatting.Indented,
             ContractResolver = new IgnorePropertiesResolver(),
             Converters = { new DropdownJsonConverter() }
         };
 
-        public IEnumerable<string> Extensions => new string[] { "json" };
+        public virtual IEnumerable<string> Extensions => new string[] { "json" };
 
-        public bool Save(SettingsBase settings, string path)
+        public virtual bool Save(SettingsBase settings, string path)
         {
             var content = settings is SettingsWrapper wrapperSettings
                 ? JsonConvert.SerializeObject(wrapperSettings.Object, _jsonSerializerSettings)
@@ -59,7 +59,7 @@ namespace MCM.Implementation.Settings.Formats
             return true;
         }
 
-        public SettingsBase? Load(SettingsBase settings, string path)
+        public virtual SettingsBase? Load(SettingsBase settings, string path)
         {
             var file = new FileInfo(path);
             if (file.Exists)
