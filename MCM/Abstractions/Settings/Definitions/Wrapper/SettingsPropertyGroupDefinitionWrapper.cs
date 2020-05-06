@@ -28,10 +28,10 @@ namespace MCM.Abstractions.Settings.Definitions.Wrapper
             subGroups.AddRange(GetSubGroups(@object)
                 .OrderByDescending(x => x.GroupName == DefaultGroupName)
                 .ThenByDescending(x => x.Order)
-                .ThenByDescending(x => x, new AlphanumComparatorFast()));
+                .ThenByDescending(x => x.DisplayGroupName.ToString(), new AlphanumComparatorFast()));
             settingProperties.AddRange(GetSettingProperties(@object)
                 .OrderBy(x => x.Order)
-                .ThenBy(x => x, new AlphanumComparatorFast()));
+                .ThenBy(x => x.DisplayName.ToString(), new AlphanumComparatorFast()));
         }
 
         private IEnumerable<SettingsPropertyGroupDefinition> GetSubGroups(object @object)

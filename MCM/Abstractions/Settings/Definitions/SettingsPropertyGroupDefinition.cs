@@ -27,7 +27,7 @@ namespace MCM.Abstractions.Settings.Definitions
                 return subGroups
                     .OrderByDescending(x => x.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)
                     .ThenByDescending(x => x.Order)
-                    .ThenByDescending(x => x, new AlphanumComparatorFast());
+                    .ThenByDescending(x => x.DisplayGroupName.ToString(), new AlphanumComparatorFast());
             }
         }
         public IEnumerable<SettingsPropertyDefinition> SettingProperties
@@ -36,7 +36,7 @@ namespace MCM.Abstractions.Settings.Definitions
             {
                 return settingProperties
                     .OrderBy(x => x.Order)
-                    .ThenBy(x => x, new AlphanumComparatorFast());
+                    .ThenBy(x => x.DisplayName.ToString(), new AlphanumComparatorFast());
             }
         }
 

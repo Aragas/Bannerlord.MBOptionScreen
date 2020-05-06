@@ -1,9 +1,10 @@
 ﻿using HarmonyLib;
 
+using MCM.Abstractions;
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Data;
-using MCM.Abstractions.Settings.Formats;
 using MCM.Abstractions.Settings;
+using MCM.Abstractions.Settings.Formats;
 using MCM.Utils;
 
 using Newtonsoft.Json;
@@ -15,7 +16,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using MCM.Abstractions;
 
 namespace MCM.Implementation.Settings.Formats
 {

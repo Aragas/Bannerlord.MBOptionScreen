@@ -1,8 +1,5 @@
-﻿using MCM.Abstractions.Settings;
-using MCM.Abstractions.Settings.Definitions;
+﻿using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Formats;
-using MCM.Abstractions.Settings.SettingsContainer;
-using MCM.Implementation.Settings.Formats;
 using MCM.Utils;
 
 using System.Collections.Generic;
@@ -12,9 +9,9 @@ using TaleWorlds.Engine;
 
 using Path = System.IO.Path;
 
-namespace MCM.Implementation.Settings.SettingsContainer
+namespace MCM.Abstractions.Settings.SettingsContainer
 {
-    internal abstract class BaseGlobalSettingsContainer : ISettingsContainer
+    public abstract class BaseGlobalSettingsContainer : ISettingsContainer
     {
         protected readonly string _defaultRootFolder = Path.Combine(Utilities.GetConfigsPath(), "ModSettings");
         protected Dictionary<string, ISettingsFormat> AvailableSettingsFormats { get; } = new Dictionary<string, ISettingsFormat>();
@@ -33,8 +30,7 @@ namespace MCM.Implementation.Settings.SettingsContainer
                 AvailableSettingsFormats[extension] = format;
             }
 
-            if (AvailableSettingsFormats.Count == 0)
-                AvailableSettingsFormats.Add("json", new JsonSettingsFormat());
+            AvailableSettingsFormats.Add("memory", new MemorySettingsFormat());
         }
 
         protected void RegisterSettings(GlobalSettings settings)
@@ -48,7 +44,7 @@ namespace MCM.Implementation.Settings.SettingsContainer
             if (AvailableSettingsFormats.ContainsKey(settings.Format))
                 AvailableSettingsFormats[settings.Format].Load(settings, path);
             else
-                AvailableSettingsFormats["json"].Load(settings, path);
+                AvailableSettingsFormats["memory"].Load(settings, path);
         }
 
         public BaseSettings? GetSettings(string id) => LoadedSettings.TryGetValue(id, out var result) ? result : null;
@@ -61,7 +57,7 @@ namespace MCM.Implementation.Settings.SettingsContainer
             if (AvailableSettingsFormats.ContainsKey(globalSettings.Format))
                 AvailableSettingsFormats[globalSettings.Format].Save(globalSettings, path);
             else
-                AvailableSettingsFormats["json"].Save(globalSettings, path);
+                AvailableSettingsFormats["memory"].Save(globalSettings, path);
 
             return true;
         }

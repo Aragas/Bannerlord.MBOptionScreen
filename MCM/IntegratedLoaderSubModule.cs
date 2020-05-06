@@ -53,7 +53,7 @@ namespace MCM
                 var assemblyDirectory = assemblyFile.Directory;
                 if (assemblyDirectory == null || !assemblyDirectory.Exists)
                     continue;
-                var matches = assemblyDirectory.GetFiles("MCM.Implementation.v*.dll")
+                var matches = assemblyDirectory.GetFiles("MCM.Implementation.*.dll")
                     .Concat(assemblyDirectory.GetFiles("MCM.UI.v*.dll"))
                     // Might be useful later
                     .Concat(assemblyDirectory.GetFiles("MCM.Custom.*.dll"))

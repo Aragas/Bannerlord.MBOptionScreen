@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 
 using MCM.Abstractions.Attributes;
+using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
 
@@ -10,7 +11,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
-namespace MCM.Abstractions.Settings
+namespace MCM.Implementation.MBO.Settings
 {
     [Version("e1.0.0",  1)]
     [Version("e1.0.1",  1)]
@@ -28,7 +29,7 @@ namespace MCM.Abstractions.Settings
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
-    public class MBOGlobalSettingsWrapper : BaseGlobalSettingsWrapper
+    internal class MBOGlobalSettingsWrapper : BaseGlobalSettingsWrapper
     {
         private PropertyInfo? IdProperty { get; }
         private PropertyInfo? ModuleFolderNameProperty { get; }

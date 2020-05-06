@@ -24,7 +24,7 @@ namespace MCM.Abstractions.Settings
         public virtual List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() => GetUnsortedSettingPropertyGroups()
             .OrderByDescending(x => x.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)
             .ThenByDescending(x => x.Order)
-            .ThenByDescending(x => x, new AlphanumComparatorFast())
+            .ThenByDescending(x => x.DisplayGroupName.ToString(), new AlphanumComparatorFast())
             .ToList();
         protected abstract IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups();
         protected SettingsPropertyGroupDefinition GetGroupFor(SettingsPropertyDefinition sp, ICollection<SettingsPropertyGroupDefinition> rootCollection)

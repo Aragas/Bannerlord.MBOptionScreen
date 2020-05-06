@@ -61,7 +61,7 @@ namespace MCM.Abstractions.Settings
                 return GetUnsortedSettingPropertyGroups()
                     .OrderByDescending(x => x.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)
                     .ThenByDescending(x => x.Order)
-                    .ThenByDescending(x => x, new AlphanumComparatorFast())
+                    .ThenByDescending(x => x.DisplayGroupName.ToString(), new AlphanumComparatorFast())
                     .ToList();
             }
 

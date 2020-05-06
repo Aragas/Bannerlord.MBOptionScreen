@@ -23,7 +23,7 @@
       </Tags>
     </SubModule>
     <SubModule>
-      <Name value="ModLub Substitute"/>
+      <Name value="ModLib Substitute"/>
       <DLLName value="ModLib.dll"/>
       <SubModuleClassType value="ModLib.ModLibSubModule"/>
       <Tags>

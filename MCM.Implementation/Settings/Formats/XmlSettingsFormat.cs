@@ -1,4 +1,5 @@
-﻿using MCM.Abstractions.Attributes;
+﻿using MCM.Abstractions;
+using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Settings;
 
 using Newtonsoft.Json;
@@ -6,7 +7,6 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
-using MCM.Abstractions;
 
 namespace MCM.Implementation.Settings.Formats
 {

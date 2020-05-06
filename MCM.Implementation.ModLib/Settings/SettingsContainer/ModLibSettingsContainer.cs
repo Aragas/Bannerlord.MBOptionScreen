@@ -10,7 +10,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MCM.Implementation.Settings.SettingsContainer
+namespace MCM.Implementation.ModLib.Settings.SettingsContainer
 {
     [Version("e1.0.0",  1)]
     [Version("e1.0.1",  1)]

@@ -59,8 +59,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MCM.Implementation.v1\MCM.Implementation.v1.csproj" />
-    <ProjectReference Include="..\MCM.Implementation.v2\MCM.Implementation.v2.csproj" />
+    <ProjectReference Include="..\MCM.Implementation.ModLib\MCM.Implementation.ModLib.csproj" />
+    <ProjectReference Include="..\MCM.Implementation.MBO\MCM.Implementation.MBO.csproj" />
     <ProjectReference Include="..\MCM.Implementation\MCM.Implementation.csproj" />
     <ProjectReference Include="..\MCM.UI\MCM.UI.csproj" />
     <ProjectReference Include="..\MCM\MCM.csproj" />

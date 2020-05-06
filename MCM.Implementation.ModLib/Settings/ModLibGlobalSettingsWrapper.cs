@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 
 using MCM.Abstractions.Attributes;
+using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Utils;
 
@@ -9,7 +10,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 
-namespace MCM.Abstractions.Settings
+namespace MCM.Implementation.ModLib.Settings
 {
     [Version("e1.0.0",  1)]
     [Version("e1.0.1",  1)]
@@ -27,7 +28,7 @@ namespace MCM.Abstractions.Settings
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
-    public class ModLibGlobalSettingsWrapper : BaseGlobalSettingsWrapper
+    internal class ModLibGlobalSettingsWrapper : BaseGlobalSettingsWrapper
     {
         private PropertyInfo? IDProperty { get; }
         private PropertyInfo? ModuleFolderNameProperty { get; }
@@ -74,7 +75,7 @@ namespace MCM.Abstractions.Settings
         private List<SettingsPropertyGroupDefinition> GetWrappedSettingPropertyGroups() => GetUnsortedSettingPropertyGroups()
             .OrderByDescending(x => x.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)
             .ThenByDescending(x => x.Order)
-            .ThenByDescending(x => x, new AlphanumComparatorFast())
+            .ThenByDescending(x => x.DisplayGroupName.ToString(), new AlphanumComparatorFast())
             .ToList();
 
         protected override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups()

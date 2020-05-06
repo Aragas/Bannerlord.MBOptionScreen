@@ -1,5 +1,4 @@
-﻿using MCM.Abstractions.Initializer;
-using MCM.Abstractions.Synchronization;
+﻿using MCM.Abstractions.Synchronization;
 using MCM.Utils;
 
 using TaleWorlds.Library;
@@ -10,12 +9,10 @@ namespace MCM.Implementation
     public sealed class SubModuleV300 : MBSubModuleBase
     {
         private ApplicationVersion GameVersion { get; }
-        private IMBOptionScreenInitializer MBOptionScreenInitializer { get; } = default!;
 
         public SubModuleV300()
         {
             GameVersion = ApplicationVersionUtils.GameVersion();
-            MBOptionScreenInitializer = DI.GetImplementation<IMBOptionScreenInitializer, MBOptionScreenInitializerWrapper>(GameVersion)!;
         }
 
         /// <summary>
@@ -23,8 +20,11 @@ namespace MCM.Implementation
         /// </summary>
         protected override void OnSubModuleLoad()
         {
-            using var synchronizationProvider = DI.GetImplementation<ISynchronizationProvider, SynchronizationProviderWrapper>(GameVersion, new object[] { "OnSubModuleLoad" })!;
-            MBOptionScreenInitializer.StartInitialization(GameVersion, synchronizationProvider.IsFirstInitialization);
+            using var synchronizationProvider = DI.GetImplementation<ISynchronizationProvider, SynchronizationProviderWrapper>(GameVersion, new object[] { "OnSubModuleLoad_MCMv3" })!;
+            if (synchronizationProvider.IsFirstInitialization)
+            {
+
+            }
         }
 
         /// <summary>
@@ -32,8 +32,11 @@ namespace MCM.Implementation
         /// </summary>
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
-            using var synchronizationProvider = DI.GetImplementation<ISynchronizationProvider, SynchronizationProviderWrapper>(GameVersion, new object[] { "OnBeforeInitialModuleScreenSetAsRoot" })!;
-            MBOptionScreenInitializer.EndInitialization(synchronizationProvider.IsFirstInitialization);
+            using var synchronizationProvider = DI.GetImplementation<ISynchronizationProvider, SynchronizationProviderWrapper>(GameVersion, new object[] { "OnBeforeInitialModuleScreenSetAsRoot_MCMv3" })!;
+            if (synchronizationProvider.IsFirstInitialization)
+            {
+
+            }
         }
     }
 }
