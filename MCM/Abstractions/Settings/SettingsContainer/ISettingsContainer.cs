@@ -8,10 +8,9 @@ namespace MCM.Abstractions.Settings.SettingsContainer
     {
         List<SettingsDefinition> CreateModSettingsDefinitions { get; }
 
-        bool RegisterSettings(SettingsBase settingsClass);
-        SettingsBase? GetSettings(string uniqueId);
-        void SaveSettings(SettingsBase settingsInstance);
-        bool OverrideSettings(SettingsBase settings);
-        SettingsBase? ResetSettings(string id);
+        BaseSettings? GetSettings(string id);
+        bool SaveSettings(BaseSettings settings);
+        bool OverrideSettings(BaseSettings settings);
+        bool ResetSettings(BaseSettings settings);
     }
 }

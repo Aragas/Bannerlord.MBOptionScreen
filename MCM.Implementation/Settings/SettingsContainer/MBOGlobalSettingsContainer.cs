@@ -1,14 +1,12 @@
-﻿using MCM.Abstractions;
-using MCM.Abstractions.Attributes;
+﻿using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.SettingsContainer;
 using MCM.Utils;
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-
-using Path = System.IO.Path;
 
 namespace MCM.Implementation.Settings.SettingsContainer
 {
@@ -28,9 +26,9 @@ namespace MCM.Implementation.Settings.SettingsContainer
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
-    internal sealed class DefaultGlobalSettingsContainer : BaseGlobalSettingsContainer, IGlobalSettingsContainer
+    internal sealed class MBOGlobalSettingsContainer : BaseGlobalSettingsContainer, IGlobalSettingsContainer
     {
-        public DefaultGlobalSettingsContainer()
+        public MBOGlobalSettingsContainer()
         {
             var settings = new List<GlobalSettings>();
             var allTypes = AppDomain.CurrentDomain
@@ -44,13 +42,12 @@ namespace MCM.Implementation.Settings.SettingsContainer
                 .ToList();
 
             var mbOptionScreenSettings = allTypes
-                .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(GlobalSettings)))
-                //.Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(EmptyGlobalSettings)))
-                .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(IWrapper)))
-#if !DEBUG
-                .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(TestSettingsBase<>)))
-#endif
-                .Select(obj => BaseGlobalSettingsWrapper.Create(Activator.CreateInstance(obj)));
+                .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t,  "MBOptionScreen.Settings.SettingsBase"))
+                .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, "MBOptionScreen.Settings.EmptySettings"))
+                .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, "MBOptionScreen.Settings.SettingsWrapper"))
+                .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, "MBOptionScreen.Settings.ModLibSettings"))
+                .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, "MBOptionScreen.Settings.TestSettingsBase<>"))
+                .Select(obj => new MBOGlobalSettingsWrapper(Activator.CreateInstance(obj)));
             settings.AddRange(mbOptionScreenSettings);
 
             foreach (var setting in settings)

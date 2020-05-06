@@ -11,13 +11,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using MCM.Abstractions;
 using MCM.Abstractions.Settings.SettingsContainer;
 
 namespace MCM.Utils
 {
     public static class SettingsUtils
     {
-        internal static IEnumerable<SettingsPropertyDefinition> GetProperties(object @object, string id)
+        public static IEnumerable<SettingsPropertyDefinition> GetProperties(object @object, string id)
         {
             foreach (var propertyDefinition in GetPropertiesInternal(@object, id))
             {
@@ -151,16 +152,16 @@ namespace MCM.Utils
 
         public static object? UnwrapSettings(object? settings)
         {
-            while (settings != null && ReflectionUtils.ImplementsOrImplementsEquivalent(settings.GetType(), typeof(SettingsWrapper)))
+            while (settings != null && ReflectionUtils.ImplementsOrImplementsEquivalent(settings.GetType(), typeof(BaseGlobalSettingsWrapper)))
             {
                 var prop = AccessTools.Property(settings.GetType(), "_object") ??
-                           AccessTools.Property(settings.GetType(), nameof(SettingsWrapper.Object));
+                           AccessTools.Property(settings.GetType(), nameof(IWrapper.Object));
                 settings = prop?.GetValue(settings);
             }
             return settings;
         }
-        public static SettingsBase? WrapSettings(object? settingsObj) => settingsObj is { } settings
-            ? settings is SettingsBase settingsBase ? settingsBase : new SettingsWrapper(settings)
+        public static GlobalSettings? WrapSettings(object? settingsObj) => settingsObj is { } settings
+            ? settings is GlobalSettings settingsBase ? settingsBase : BaseGlobalSettingsWrapper.Create(settings)
             : null;
 
         public static void CopyProperties(object settings, object settingsNew)
@@ -172,14 +173,14 @@ namespace MCM.Utils
                 propertyInfo.SetValue(settings, propertyInfo.GetValue(settingsNew));
         }
 
-        public static SettingsBase ResetSettings(SettingsBase settings, ISettingsContainer? settingsContainer = null) =>
-            OverrideSettings(settings, settings is SettingsWrapper settingsWrapper
-                ? new SettingsWrapper(Activator.CreateInstance(settingsWrapper.Object.GetType()))
-                : (SettingsBase) Activator.CreateInstance(settings.GetType()), settingsContainer);
+        public static BaseSettings ResetSettings(BaseSettings settings, ISettingsContainer? settingsContainer = null) =>
+            OverrideSettings(settings, settings is BaseGlobalSettingsWrapper settingsWrapper
+                ? BaseGlobalSettingsWrapper.Create(Activator.CreateInstance(settingsWrapper.Object.GetType()))
+                : (GlobalSettings) Activator.CreateInstance(settings.GetType()), settingsContainer);
 
-        public static SettingsBase OverrideSettings(SettingsBase settings, SettingsBase overrideSettings, ISettingsContainer? settingsContainer = null)
+        public static BaseSettings OverrideSettings(BaseSettings settings, BaseSettings overrideSettings, ISettingsContainer? settingsContainer = null)
         {
-            if (settings is SettingsWrapper settingsWrapper && overrideSettings is SettingsWrapper overrideSettingsWrapper)
+            if (settings is BaseGlobalSettingsWrapper settingsWrapper && overrideSettings is BaseGlobalSettingsWrapper overrideSettingsWrapper)
                 SettingsUtils.CopyProperties(settingsWrapper.Object, overrideSettingsWrapper.Object);
             else
                 SettingsUtils.CopyProperties(settings, overrideSettings);

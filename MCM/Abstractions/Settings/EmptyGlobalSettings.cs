@@ -4,10 +4,10 @@ using System.Collections.Generic;
 
 namespace MCM.Abstractions.Settings
 {
-    public sealed class EmptySettings : SettingsBase<EmptySettings>
+    public sealed class EmptyGlobalSettings : GlobalSettings<EmptyGlobalSettings>
     {
         public override string Id => "empty_v1";
-        public override string ModName => $"Using Options Settings from v1 or v2!";
+        public override string DisplayName => $"Using Options Settings from v1 or v2!";
         public override string ModuleFolderName => "";
         public override string Format => "memory";
 

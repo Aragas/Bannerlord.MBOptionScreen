@@ -3,7 +3,7 @@
     <ButtonWidget HeightSizePolicy="Fixed" WidthSizePolicy="StretchToParent" SuggestedHeight="75" Brush="ModLib.Setting.Item_v3" Command.Click="ExecuteSelect"
                   IsSelected="@IsSelected" DoNotPassEventsToChildren="true" ClipContents="true">
       <Children>
-        <RichTextWidget Text="@ModName" HeightSizePolicy="CoverChildren" WidthSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Center"
+        <RichTextWidget Text="@DisplayName" HeightSizePolicy="CoverChildren" WidthSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Center"
                     MarginLeft="10" Brush="ModLib.Item.Name_v3"/>
       </Children>
     </ButtonWidget>

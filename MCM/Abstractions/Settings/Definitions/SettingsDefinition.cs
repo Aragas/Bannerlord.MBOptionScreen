@@ -5,14 +5,14 @@ namespace MCM.Abstractions.Settings.Definitions
     public class SettingsDefinition
     {
         public string SettingsId { get; }
-        public string ModName { get; }
+        public string DisplayName { get; }
 
         public SettingsDefinition(string settingsId)
         {
             var settings = BaseSettingsProvider.Instance.GetSettings(settingsId);
 
             SettingsId = settingsId;
-            ModName = settings?.ModName ?? "ERROR";
+            DisplayName = settings?.DisplayName ?? "ERROR";
         }
     }
 }

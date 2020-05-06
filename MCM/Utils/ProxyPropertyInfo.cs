@@ -3,6 +3,7 @@
 using System;
 using System.Globalization;
 using System.Reflection;
+using MCM.Abstractions;
 
 namespace MCM.Utils
 {
@@ -28,14 +29,14 @@ namespace MCM.Utils
 
         public override object GetValue(object obj, BindingFlags invokeAttr, Binder binder, object[] index, CultureInfo culture)
         {
-            if (obj is SettingsWrapper settingsWrapper)
+            if (obj is IWrapper settingsWrapper)
                 return _propertyInfoImplementation.GetValue(settingsWrapper.Object, invokeAttr, binder, index, culture);
             else
                 return _propertyInfoImplementation.GetValue(obj, invokeAttr, binder, index, culture);
         }
         public override void SetValue(object obj, object value, BindingFlags invokeAttr, Binder binder, object[] index, CultureInfo culture)
         {
-            if (obj is SettingsWrapper settingsWrapper)
+            if (obj is IWrapper settingsWrapper)
                 _propertyInfoImplementation.SetValue(settingsWrapper.Object, value, invokeAttr, binder, index, culture);
             else
                 _propertyInfoImplementation.SetValue(obj, value, invokeAttr, binder, index, culture);

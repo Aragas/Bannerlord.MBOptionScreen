@@ -5,7 +5,7 @@ namespace MCM.Implementation
     internal sealed class TestSettingsPropertyChanged : TestSettingsBase<TestSettingsOrder>
     {
         public override string Id => "Testing_PropertyChanged_v1";
-        public override string ModName => "Testing PropertyChanged";
+        public override string DisplayName => "Testing PropertyChanged";
 
 
         [SettingPropertyBool("Property 1", RequireRestart = false)]
@@ -15,7 +15,7 @@ namespace MCM.Implementation
         [SettingPropertyBool("Property 2", RequireRestart = false)]
         public bool Property2
         {
-            get { return _property2; }
+            get => _property2;
             set
             {
                 _property2 = value;

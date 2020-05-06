@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace MCM.Abstractions.Settings
 {
-    public abstract class AttributeSettingsBase<T> : SettingsBase<T> where T : SettingsBase, new()
+    public abstract class AttributeGlobalSettings<T> : GlobalSettings<T> where T : GlobalSettings, new()
     {
         protected override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups()
         {

@@ -14,7 +14,6 @@ namespace MCM.Abstractions.Settings.SettingsProvider
         public object Object { get; }
         private PropertyInfo? CreateModSettingsDefinitionsProperty { get; }
         private MethodInfo? GetSettingsMethod { get; }
-        private MethodInfo? RegisterSettingsMethod { get; }
         private MethodInfo? SaveSettingsMethod { get; }
         private MethodInfo? ResetSettingsMethod { get; }
         private MethodInfo? OverrideSettingsMethod { get; }
@@ -25,29 +24,26 @@ namespace MCM.Abstractions.Settings.SettingsProvider
             Object = @object;
             var type = @object.GetType();
 
-            CreateModSettingsDefinitionsProperty = AccessTools.Property(type, nameof(BaseSettingsProvider.CreateModSettingsDefinitions));
-            GetSettingsMethod = AccessTools.Method(type, nameof(BaseSettingsProvider.GetSettings));
-            RegisterSettingsMethod = AccessTools.Method(type, nameof(BaseSettingsProvider.RegisterSettings));
-            SaveSettingsMethod = AccessTools.Method(type, nameof(BaseSettingsProvider.SaveSettings));
-            ResetSettingsMethod = AccessTools.Method(type, nameof(BaseSettingsProvider.ResetSettings));
-            OverrideSettingsMethod = AccessTools.Method(type, nameof(BaseSettingsProvider.OverrideSettings));
+            CreateModSettingsDefinitionsProperty = AccessTools.Property(type, nameof(CreateModSettingsDefinitions));
+            GetSettingsMethod = AccessTools.Method(type, nameof(GetSettings));
+            SaveSettingsMethod = AccessTools.Method(type, nameof(SaveSettings));
+            ResetSettingsMethod = AccessTools.Method(type, nameof(ResetSettings));
+            OverrideSettingsMethod = AccessTools.Method(type, nameof(OverrideSettings));
 
-            IsCorrect = GetSettingsMethod != null;
+            IsCorrect = CreateModSettingsDefinitionsProperty != null &&
+                        GetSettingsMethod != null && SaveSettingsMethod != null &&
+                        ResetSettingsMethod != null && OverrideSettingsMethod != null;
         }
 
         public override IEnumerable<SettingsDefinition> CreateModSettingsDefinitions =>
             ((IEnumerable<object>) CreateModSettingsDefinitionsProperty?.GetValue(Object)).Select(s => new SettingsDefinitionWrapper(s));
-        public override SettingsBase? GetSettings(string id) => GetSettingsMethod?.Invoke(Object, new object[] { id }) is { } settings
-                ? settings is SettingsBase settingsBase ? settingsBase : new SettingsWrapper(settings)
-                : default;
-        public override void RegisterSettings(SettingsBase settings) =>
-            RegisterSettingsMethod?.Invoke(Object, new object[] { settings is SettingsWrapper wrapper ? wrapper.Object : settings });
-        public override void SaveSettings(SettingsBase settings) =>
-            SaveSettingsMethod?.Invoke(Object, new object[] { settings is SettingsWrapper wrapper ? wrapper.Object : settings });
-        public override SettingsBase? ResetSettings(string id) => ResetSettingsMethod?.Invoke(Object, new object[] { id }) is { } settings
-                ? settings is SettingsBase settingsBase ? settingsBase : new SettingsWrapper(settings)
-                : default;
-        public override void OverrideSettings(SettingsBase settings) =>
-            OverrideSettingsMethod?.Invoke(Object, new object[] { settings is SettingsWrapper wrapper ? wrapper.Object : settings });
+        public override BaseSettings? GetSettings(string id) => 
+            GetSettingsMethod?.Invoke(Object, new object[] { id }) as BaseSettings;
+        public override void SaveSettings(BaseSettings settings) =>
+            SaveSettingsMethod?.Invoke(Object, new object[] { settings });
+        public override void ResetSettings(BaseSettings settings) =>
+            ResetSettingsMethod?.Invoke(Object, new object[] { settings });
+        public override void OverrideSettings(BaseSettings settings) =>
+            OverrideSettingsMethod?.Invoke(Object, new object[] { settings });
     }
 }

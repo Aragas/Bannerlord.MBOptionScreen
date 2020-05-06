@@ -77,13 +77,13 @@ namespace MCM.UI.GUI.ViewModels
                 {
                     _selectedMod = value;
                     OnPropertyChanged(nameof(SelectedMod));
-                    OnPropertyChanged(nameof(SelectedModName));
+                    OnPropertyChanged(nameof(SelectedDisplayName));
                     OnPropertyChanged(nameof(SomethingSelected));
                 }
             }
         }
         [DataSourceProperty]
-        public string SelectedModName => SelectedMod == null ? "Mod Name not Specified" : SelectedMod.ModName;
+        public string SelectedDisplayName => SelectedMod == null ? "Mod Name not Specified" : SelectedMod.DisplayName;
         [DataSourceProperty]
         public bool SomethingSelected => SelectedMod != null;
         [DataSourceProperty]
@@ -196,7 +196,7 @@ namespace MCM.UI.GUI.ViewModels
                     {
                         changedModSettings
                             .Do(x => BaseSettingsProvider.Instance.SaveSettings(x.SettingsInstance))
-                            .Do(x => HarmonyLib.AccessTools.Method(x.SettingsInstance.GetType(), "OnPropertyChanged")?.Invoke(x.SettingsInstance, new object[] { SettingsBase.SaveTriggered }))
+                            .Do(x => HarmonyLib.AccessTools.Method(x.SettingsInstance.GetType(), "OnPropertyChanged")?.Invoke(x.SettingsInstance, new object[] { BaseSettings.SaveTriggered }))
                             .Do(x => x.URS.ClearStack())
                             .ToList();
 
@@ -212,7 +212,7 @@ namespace MCM.UI.GUI.ViewModels
                     {
                         var method = HarmonyLib.AccessTools.Method(x.SettingsInstance.GetType(), "OnPropertyChanged");
 
-                        method?.Invoke(x.SettingsInstance, new object[] {SettingsBase.SaveTriggered});
+                        method?.Invoke(x.SettingsInstance, new object[] { BaseSettings.SaveTriggered});
                     })
                     .Do(x => x.URS.ClearStack())
                     .ToList();
@@ -229,7 +229,7 @@ namespace MCM.UI.GUI.ViewModels
             if (SelectedMod != null)
             {
                 InformationManager.ShowInquiry(new InquiryData("Revert mod settings to defaults",
-                    $"Are you sure you wish to revert all settings for {SelectedMod.ModName} to their default values?",
+                    $"Are you sure you wish to revert all settings for {SelectedMod.DisplayName} to their default values?",
                     true, true, "Yes", "No",
                     () =>
                     {
@@ -237,7 +237,7 @@ namespace MCM.UI.GUI.ViewModels
                             modSettingsVM =>
                             {
                                 //Do action
-                                var newSettingsInstance = BaseSettingsProvider.Instance.ResetSettings(modSettingsVM.SettingsInstance.Id);
+                                BaseSettingsProvider.Instance.ResetSettings(modSettingsVM.SettingsInstance);
                                 modSettingsVM.RefreshValues();
                                 ExecuteSelect(null);
                                 ExecuteSelect(modSettingsVM);

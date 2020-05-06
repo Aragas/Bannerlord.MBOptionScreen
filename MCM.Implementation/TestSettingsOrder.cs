@@ -6,7 +6,7 @@ namespace MCM.Implementation
     internal sealed class TestSettingsOrder : TestSettingsBase<TestSettingsOrder>
     {
         public override string Id => "Testing_Order_v1";
-        public override string ModName => "Testing Order";
+        public override string DisplayName => "Testing Order";
 
 
         [SettingPropertyBool("Correct Order: ACBED")]

@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using MCM.Abstractions;
 
 namespace MCM.Implementation.Settings.Formats
 {
@@ -45,10 +46,10 @@ namespace MCM.Implementation.Settings.Formats
 
         public virtual IEnumerable<string> Extensions => new string[] { "json" };
 
-        public virtual bool Save(SettingsBase settings, string path)
+        public virtual bool Save(BaseSettings settings, string path)
         {
-            var content = settings is SettingsWrapper wrapperSettings
-                ? JsonConvert.SerializeObject(wrapperSettings.Object, _jsonSerializerSettings)
+            var content = settings is IWrapper wrapper
+                ? JsonConvert.SerializeObject(wrapper.Object, _jsonSerializerSettings)
                 : JsonConvert.SerializeObject(settings, _jsonSerializerSettings);
 
             var file = new FileInfo(path);
@@ -59,7 +60,7 @@ namespace MCM.Implementation.Settings.Formats
             return true;
         }
 
-        public virtual SettingsBase? Load(SettingsBase settings, string path)
+        public virtual BaseSettings? Load(BaseSettings settings, string path)
         {
             var file = new FileInfo(path);
             if (file.Exists)
@@ -68,8 +69,8 @@ namespace MCM.Implementation.Settings.Formats
                 {
                     using var reader = file.OpenText();
                     var content = reader.ReadToEnd();
-                    if (settings is SettingsWrapper wrapperSettings)
-                        JsonConvert.PopulateObject(content, wrapperSettings.Object, _jsonSerializerSettings);
+                    if (settings is IWrapper wrapper)
+                        JsonConvert.PopulateObject(content, wrapper.Object, _jsonSerializerSettings);
                     else
                         JsonConvert.PopulateObject(content, settings, _jsonSerializerSettings);
                 }

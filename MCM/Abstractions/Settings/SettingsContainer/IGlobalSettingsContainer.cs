@@ -1,6 +1,6 @@
 ﻿namespace MCM.Abstractions.Settings.SettingsContainer
 {
-    public interface IModLibSettingsContainer : ISettingsContainer
+    public interface IGlobalSettingsContainer : ISettingsContainer
     {
 
     }

@@ -22,7 +22,7 @@ namespace MCM.UI.GUI.ViewModels
         public UndoRedoStack URS { get; } = new UndoRedoStack();
 
         public SettingsDefinition SettingsDefinition { get; }
-        public SettingsBase SettingsInstance => BaseSettingsProvider.Instance.GetSettings(SettingsDefinition.SettingsId);
+        public BaseSettings SettingsInstance => BaseSettingsProvider.Instance.GetSettings(SettingsDefinition.SettingsId);
 
         /// <summary>
         /// XSLT?
@@ -30,7 +30,7 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public int UIVersion => SettingsInstance.UIVersion;
         [DataSourceProperty]
-        public string ModName => SettingsInstance.ModName;
+        public string DisplayName => SettingsInstance.DisplayName;
         [DataSourceProperty]
         public bool IsSelected
         {
@@ -82,7 +82,7 @@ namespace MCM.UI.GUI.ViewModels
                 group.RefreshValues();
             OnPropertyChanged(nameof(UIVersion));
             OnPropertyChanged(nameof(IsSelected));
-            OnPropertyChanged(nameof(ModName));
+            OnPropertyChanged(nameof(DisplayName));
             OnPropertyChanged(nameof(SettingPropertyGroups));
         }
 

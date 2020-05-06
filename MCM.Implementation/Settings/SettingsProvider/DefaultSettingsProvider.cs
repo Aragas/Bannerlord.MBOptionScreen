@@ -37,44 +37,30 @@ namespace MCM.Implementation.Settings.SettingsProvider
             SettingsProviders = DI.GetImplementations<ISettingsContainer, SettingsContainerWrapper>(ApplicationVersionUtils.GameVersion()).ToList();
         }
 
-        public override SettingsBase? GetSettings(string id)
+        public override BaseSettings? GetSettings(string id)
         {
             foreach (var settingsProvider in SettingsProviders)
             {
                 if (settingsProvider.GetSettings(id) is {} settings)
-                    return settings is SettingsBase settingsBase ? settingsBase : new SettingsWrapper(settings);
+                    return settings is BaseSettings baseSettings ? baseSettings : BaseGlobalSettingsWrapper.Create(settings);
             }
             return null;
         }
-        public override void RegisterSettings(SettingsBase settings)
+        public override void SaveSettings(BaseSettings settings)
         {
             foreach (var settingsProvider in SettingsProviders)
-            {
-                if (settingsProvider.RegisterSettings(settings is SettingsWrapper wrapper ? wrapper : settings))
-                    break;
-            }
+                settingsProvider.SaveSettings(settings);
         }
 
-        public override void SaveSettings(SettingsBase settings)
+        public override void ResetSettings(BaseSettings settings)
         {
             foreach (var settingsProvider in SettingsProviders)
-                settingsProvider.SaveSettings(settings is SettingsWrapper wrapper ? wrapper : settings);
+                settingsProvider.ResetSettings(settings);
         }
-
-        public override SettingsBase? ResetSettings(string id)
+        public override void OverrideSettings(BaseSettings settings)
         {
             foreach (var settingsProvider in SettingsProviders)
-            {
-                if (settingsProvider.ResetSettings(id) is { } settings)
-                    return settings is SettingsBase settingsBase ? settingsBase : new SettingsWrapper(settings);
-            }
-            return null;
-        }
-
-        public override void OverrideSettings(SettingsBase settings)
-        {
-            foreach (var settingsProvider in SettingsProviders)
-                settingsProvider.OverrideSettings(settings is SettingsWrapper wrapper ? wrapper : settings);
+                settingsProvider.OverrideSettings(settings);
         }
     }
 }

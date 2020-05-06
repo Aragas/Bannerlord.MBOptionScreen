@@ -1,6 +1,5 @@
 ﻿using MCM.Abstractions.ExtensionMethods;
 using MCM.Abstractions.Settings.Definitions;
-using MCM.Abstractions.Settings.SettingsProvider;
 using MCM.Utils;
 
 using System.Collections.Generic;
@@ -10,23 +9,15 @@ using System.Runtime.CompilerServices;
 
 namespace MCM.Abstractions.Settings
 {
-    public abstract class SettingsBase<T> : SettingsBase where T : SettingsBase, new()
-    {
-        public static T? Instance => SettingsUtils.UnwrapSettings(BaseSettingsProvider.Instance.GetSettings(new T().Id)) as T;
-    }
-
-    public abstract class SettingsBase : INotifyPropertyChanged
+    public abstract class BaseSettings : INotifyPropertyChanged
     {
         public const string SaveTriggered = "SAVE_TRIGGERED";
-
         public virtual event PropertyChangedEventHandler? PropertyChanged;
+
         public abstract string Id { get; }
-        public abstract string ModuleFolderName { get; }
-        public abstract string ModName { get; }
+        public abstract string DisplayName { get; }
         public virtual int UIVersion => 1;
-        public virtual string SubFolder => "";
         protected virtual char SubGroupDelimiter => '/';
-        public virtual string Format => "json";
 
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 

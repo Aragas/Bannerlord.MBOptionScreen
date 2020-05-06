@@ -1,23 +1,17 @@
 ﻿using HarmonyLib;
 
-using MCM.Abstractions;
 using MCM.Abstractions.ApplicationContainer;
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Functionality;
 using MCM.Abstractions.Initializer;
-using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.SettingsContainer;
-using MCM.Abstractions.Settings.SettingsProvider;
 using MCM.Utils;
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using MCM.Implementation.Settings;
-using TaleWorlds.Engine.Screens;
+using MCM.Implementation.Settings.SettingsContainer;
 using TaleWorlds.Library;
-using TaleWorlds.Localization;
 
 namespace MCM.Implementation.Initializer
 {
@@ -49,8 +43,8 @@ namespace MCM.Implementation.Initializer
             ApplicationContainerProvider = DI.GetImplementation<IApplicationContainerProvider, ApplicationContainerProviderWrapper>(GameVersion)!;
             if (first)
             {
-                var settingsProvider = DI.GetImplementation<IMBOptionScreenSettingsContainer, SettingsContainerWrapper>(GameVersion)!;
-                var modLibSettingsProvider = DI.GetImplementation<IModLibSettingsContainer, SettingsContainerWrapper>(GameVersion)!;
+                var settingsProvider = DI.GetImplementation<IGlobalSettingsContainer, SettingsContainerWrapper>(GameVersion)!;
+                var modLibSettingsProvider = DI.GetImplementation<IModLibSettingsContainer, ModLibSettingsContainerWrapper>(GameVersion)!;
                 ApplicationContainerProvider.Set("MBOptionScreenSettingsProvider", settingsProvider);
                 ApplicationContainerProvider.Set("ModLibSettingsProvider", modLibSettingsProvider);
 
@@ -61,10 +55,8 @@ namespace MCM.Implementation.Initializer
                 {
                     var settingsProviderWrapperType = assembly.GetType("MBOptionScreen.Settings.SettingsProviderWrapper");
                     var settingsDatabaseType = assembly.GetType("MBOptionScreen.Settings.SettingsDatabase");
-                    var mbOptionScreenSettingsProviderProperty =
-                        AccessTools.Property(settingsDatabaseType, "MBOptionScreenSettingsProvider");
-                    var modLibSettingsProviderProperty =
-                        AccessTools.Property(settingsDatabaseType, "ModLibSettingsProvider");
+                    var mbOptionScreenSettingsProviderProperty = AccessTools.Property(settingsDatabaseType, "MBOptionScreenSettingsProvider");
+                    var modLibSettingsProviderProperty = AccessTools.Property(settingsDatabaseType, "ModLibSettingsProvider");
                     mbOptionScreenSettingsProviderProperty?.SetValue(
                         null,
                         Activator.CreateInstance(settingsProviderWrapperType, new object[] { settingsProvider }));
@@ -72,8 +64,6 @@ namespace MCM.Implementation.Initializer
                         null,
                         Activator.CreateInstance(settingsProviderWrapperType, new object[] { modLibSettingsProvider }));
                 }
-
-                RegisterSettings();
             }
         }
         public void EndInitialization(bool first)
@@ -85,47 +75,6 @@ namespace MCM.Implementation.Initializer
 
                 ApplicationContainerProvider.Clear();
             }
-        }
-
-        /// <summary>
-        /// Find all implementations of SettingBase and register them
-        /// </summary>
-        private static void RegisterSettings()
-        {
-            var settings = new List<SettingsBase>();
-            var allTypes = AppDomain.CurrentDomain
-                .GetAssemblies()
-                .Where(a => !a.IsDynamic)
-                .Where(a => !a.FullName.StartsWith("System"))
-                .Where(a => !a.FullName.StartsWith("Microsoft"))
-                .Where(a => !a.FullName.StartsWith("mscorlib"))
-                // ignore v1 and v2 classes
-                .Where(a => !Path.GetFileNameWithoutExtension(a.Location).StartsWith("MBOptionScreen"))
-                .SelectMany(a => a.GetTypes())
-                .Where(t => t.IsClass && !t.IsAbstract)
-                .Where(t => t.GetConstructor(Type.EmptyTypes) != null)
-                .ToList();
-
-            // ModLib
-            var modLibSettings = allTypes
-                .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, "ModLib.SettingsBase"))
-                .Select(obj => new ModLibSettings(Activator.CreateInstance(obj)));
-            settings.AddRange(modLibSettings);
-
-            var mbOptionScreenSettings = allTypes
-                .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, "MBOptionScreen.Settings.SettingsBase") ||
-                            ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(SettingsBase)))
-                .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(EmptySettings)))
-                .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(SettingsWrapper)))
-                .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(ModLibSettings)))
-#if !DEBUG
-                .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(TestSettingsBase<>)))
-#endif
-                .Select(obj => new SettingsWrapper(Activator.CreateInstance(obj)));
-            settings.AddRange(mbOptionScreenSettings);
-
-            foreach (var setting in settings)
-                BaseSettingsProvider.Instance.RegisterSettings(setting);
         }
     }
 }

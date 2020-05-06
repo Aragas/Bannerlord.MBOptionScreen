@@ -34,7 +34,7 @@ namespace MCM.UI.GUI.ViewModels
 
         public SettingsPropertyDefinition SettingPropertyDefinition { get; }
         public PropertyInfo Property => SettingPropertyDefinition.Property;
-        public SettingsBase SettingsInstance => BaseSettingsProvider.Instance.GetSettings(SettingPropertyDefinition.SettingsId);
+        public BaseSettings SettingsInstance => BaseSettingsProvider.Instance.GetSettings(SettingPropertyDefinition.SettingsId);
         public SettingType SettingType => SettingPropertyDefinition.SettingType;
         public SettingPropertyGroupVM Group { get; set; }
         public string HintText { get; }

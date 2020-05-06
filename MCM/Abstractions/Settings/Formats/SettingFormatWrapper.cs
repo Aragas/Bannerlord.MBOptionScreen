@@ -27,7 +27,7 @@ namespace MCM.Abstractions.Settings.Formats
         }
 
         public IEnumerable<string> Extensions => ExtensionsProperty?.GetValue(Object) as IEnumerable<string> ?? Array.Empty<string>();
-        public SettingsBase? Load(SettingsBase settings, string path) => LoadMethod?.Invoke(Object, new object[] { settings, path }) as SettingsBase;
-        public bool Save(SettingsBase settings, string path) => SaveMethod?.Invoke(Object, new object[] { settings, path }) as bool? ?? false;
+        public BaseSettings? Load(BaseSettings settings, string path) => LoadMethod?.Invoke(Object, new object[] { settings, path }) as BaseSettings;
+        public bool Save(BaseSettings settings, string path) => SaveMethod?.Invoke(Object, new object[] { settings, path }) as bool? ?? false;
     }
 }

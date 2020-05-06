@@ -12,10 +12,9 @@ namespace MCM.Abstractions.Settings.SettingsProvider
             ?? (_instance = DI.GetImplementation<BaseSettingsProvider, SettingsProviderWrapper>(ApplicationVersionUtils.GameVersion()));
 
         public abstract IEnumerable<SettingsDefinition> CreateModSettingsDefinitions { get; }
-        public abstract SettingsBase? GetSettings(string id);
-        public abstract void RegisterSettings(SettingsBase setting);
-        public abstract void SaveSettings(SettingsBase settings);
-        public abstract SettingsBase? ResetSettings(string idd);
-        public abstract void OverrideSettings(SettingsBase settings);
+        public abstract BaseSettings? GetSettings(string id);
+        public abstract void SaveSettings(BaseSettings settings);
+        public abstract void ResetSettings(BaseSettings settings);
+        public abstract void OverrideSettings(BaseSettings settings);
     }
 }

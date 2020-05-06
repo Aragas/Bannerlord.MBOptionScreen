@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
+using MCM.Abstractions;
 
 namespace MCM.Implementation.Settings.Formats
 {
@@ -29,12 +30,12 @@ namespace MCM.Implementation.Settings.Formats
     {
         public override IEnumerable<string> Extensions => new string[] { "xml" };
 
-        public override bool Save(SettingsBase settings, string path)
+        public override bool Save(BaseSettings settings, string path)
         {
-            var content = settings is SettingsWrapper wrapperSettings
-                ? JsonConvert.SerializeObject(wrapperSettings.Object, _jsonSerializerSettings)
+            var content = settings is IWrapper wrapper
+                ? JsonConvert.SerializeObject(wrapper.Object, _jsonSerializerSettings)
                 : JsonConvert.SerializeObject(settings, _jsonSerializerSettings);
-            var xmlDocument = JsonConvert.DeserializeXmlNode(content, settings is SettingsWrapper wrapperSettings1 ? wrapperSettings1.Object.GetType().Name : settings.GetType().Name);
+            var xmlDocument = JsonConvert.DeserializeXmlNode(content, settings is IWrapper wrapper1 ? wrapper1.Object.GetType().Name : settings.GetType().Name);
 
             var file = new FileInfo(path);
             file.Directory?.Create();
@@ -44,7 +45,7 @@ namespace MCM.Implementation.Settings.Formats
             return true;
         }
 
-        public override SettingsBase? Load(SettingsBase settings, string path)
+        public override BaseSettings? Load(BaseSettings settings, string path)
         {
             var file = new FileInfo(path);
             if (file.Exists)
@@ -56,8 +57,8 @@ namespace MCM.Implementation.Settings.Formats
                     xmlDocument.Load(reader);
                     var content = JsonConvert.SerializeXmlNode(xmlDocument);
 
-                    if (settings is SettingsWrapper wrapperSettings)
-                        JsonConvert.PopulateObject(content, wrapperSettings.Object, _jsonSerializerSettings);
+                    if (settings is IWrapper wrapper)
+                        JsonConvert.PopulateObject(content, wrapper.Object, _jsonSerializerSettings);
                     else
                         JsonConvert.PopulateObject(content, settings, _jsonSerializerSettings);
                 }

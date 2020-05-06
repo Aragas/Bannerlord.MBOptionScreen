@@ -45,7 +45,7 @@ namespace MCM.UI
 
         private static void MCMSettings_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (sender is MCMSettings settings && e.PropertyName == SettingsBase.SaveTriggered)
+            if (sender is MCMSettings settings && e.PropertyName == BaseSettings.SaveTriggered)
             {
                 UpdateOptionScreen(settings);
             }

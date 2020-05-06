@@ -6,7 +6,7 @@ namespace MCM.Abstractions.Settings.Formats
     {
         IEnumerable<string> Extensions { get; }
 
-        bool Save(SettingsBase settings, string path);
-        SettingsBase? Load(SettingsBase settings, string path);
+        bool Save(BaseSettings settings, string path);
+        BaseSettings? Load(BaseSettings settings, string path);
     }
 }

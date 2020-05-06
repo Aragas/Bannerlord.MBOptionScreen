@@ -2,7 +2,7 @@
 
 namespace MCM.Implementation
 {
-    public abstract class TestSettingsBase<T> : AttributeSettingsBase<T> where T : SettingsBase, new()
+    public abstract class TestSettingsBase<T> : AttributeGlobalSettings<T> where T : GlobalSettings, new()
     {
         public override string ModuleFolderName => "Testing";
     }

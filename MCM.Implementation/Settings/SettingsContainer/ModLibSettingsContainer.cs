@@ -3,7 +3,6 @@
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Definitions;
-using MCM.Abstractions.Settings.SettingsContainer;
 using MCM.Utils;
 
 using System;
@@ -31,7 +30,7 @@ namespace MCM.Implementation.Settings.SettingsContainer
     [Version("e1.3.0",  1)]
     internal sealed class ModLibSettingsContainer : IModLibSettingsContainer
     {
-        private Dictionary<string, ModLibSettings> LoadedModLibSettings { get; } = new Dictionary<string, ModLibSettings>();
+        private Dictionary<string, ModLibGlobalSettingsWrapper> LoadedModLibSettings { get; } = new Dictionary<string, ModLibGlobalSettingsWrapper>();
         private Type? ModLibSettingsDatabase { get; }
 
         public List<SettingsDefinition> CreateModSettingsDefinitions
@@ -45,7 +44,7 @@ namespace MCM.Implementation.Settings.SettingsContainer
 
                 return LoadedModLibSettings.Keys
                     .Select(id => new SettingsDefinition(id))
-                    .OrderByDescending(a => a.ModName)
+                    .OrderByDescending(a => a.DisplayName)
                     .ToList();
             }
         }
@@ -57,9 +56,7 @@ namespace MCM.Implementation.Settings.SettingsContainer
                 .FirstOrDefault(a => a.FullName == "ModLib.SettingsDatabase");
         }
 
-        public bool RegisterSettings(SettingsBase settingsClass) => settingsClass is ModLibSettings;
-
-        public SettingsBase? GetSettings(string id)
+        public BaseSettings? GetSettings(string id)
         {
             if (ModLibSettingsDatabase == null)
                 return null;
@@ -67,16 +64,16 @@ namespace MCM.Implementation.Settings.SettingsContainer
             Reload(id);
             return LoadedModLibSettings.TryGetValue(id, out var settings) ? settings : null;
         }
-        public void SaveSettings(SettingsBase settings)
+        public bool SaveSettings(BaseSettings settings)
         {
-            if (ModLibSettingsDatabase == null)
-                return;
+            if (ModLibSettingsDatabase == null || !(settings is ModLibGlobalSettingsWrapper settingsWrapper))
+                return false;
 
-            if (settings is ModLibSettings settingsWrapper)
-                AccessTools.Method(ModLibSettingsDatabase, "SaveSettings")?.Invoke(null, new object[] { settingsWrapper.Object });
+            AccessTools.Method(ModLibSettingsDatabase, "SaveSettings")?.Invoke(null, new object[] { settingsWrapper.Object });
+            return true;
         }
 
-        public bool OverrideSettings(SettingsBase newSettings)
+        public bool OverrideSettings(BaseSettings newSettings)
         {
             if (ModLibSettingsDatabase == null)
                 return false;
@@ -84,8 +81,14 @@ namespace MCM.Implementation.Settings.SettingsContainer
             SettingsUtils.OverrideSettings(LoadedModLibSettings[newSettings.Id], newSettings, this);
             return true;
         }
-        public SettingsBase? ResetSettings(string id) =>
-            ModLibSettingsDatabase == null ? null : SettingsUtils.ResetSettings(LoadedModLibSettings[id], this);
+        public bool ResetSettings(BaseSettings settings)
+        {
+            if (ModLibSettingsDatabase == null || !(settings is ModLibGlobalSettingsWrapper settingsWrapper))
+                return false;
+
+            SettingsUtils.ResetSettings(LoadedModLibSettings[settings.Id], this);
+            return true;
+        }
 
 
         private void ReloadAll()
@@ -96,7 +99,7 @@ namespace MCM.Implementation.Settings.SettingsContainer
             {
                 var id = AccessTools.Property(settings.GetType(), "ID")?.GetValue(settings) as string ?? "ERROR";
                 if (!LoadedModLibSettings.ContainsKey(id))
-                    LoadedModLibSettings.Add(id, new ModLibSettings(settings));
+                    LoadedModLibSettings.Add(id, new ModLibGlobalSettingsWrapper(settings));
                 else
                     LoadedModLibSettings[id].UpdateReference(settings);
             }

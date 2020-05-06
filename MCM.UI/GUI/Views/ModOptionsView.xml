@@ -110,7 +110,7 @@
                       <Children>
                         <!-- Title -->
                         <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="80" Brush="ModLib.Title.Text_v3"
-                                        Text="@SelectedModName" HorizontalAlignment="Center" VerticalAlignment="Top"/>
+                                        Text="@SelectedDisplayName" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
 
                         <!-- Search box -->

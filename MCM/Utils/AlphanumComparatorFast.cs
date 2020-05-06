@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MCM.Utils
 {
-    internal class AlphanumComparatorFast : IComparer<SettingsPropertyGroupDefinition>, IComparer<SettingsPropertyDefinition>
+    public class AlphanumComparatorFast : IComparer<SettingsPropertyGroupDefinition>, IComparer<SettingsPropertyDefinition>
     {
         public int Compare(SettingsPropertyGroupDefinition x, SettingsPropertyGroupDefinition y)
         {

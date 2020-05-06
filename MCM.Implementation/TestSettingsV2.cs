@@ -7,7 +7,7 @@ namespace MCM.Implementation
     internal sealed class TestSettingsV2 : TestSettingsBase<TestSettingsV2>
     {
         public override string Id => "Testing_v2";
-        public override string ModName => "Testing v2 API";
+        public override string DisplayName => "Testing v2 API";
 
 
         [SettingPropertyBool("Property Bool Default False", RequireRestart = false)]
