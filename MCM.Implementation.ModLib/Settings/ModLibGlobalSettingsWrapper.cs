@@ -5,10 +5,12 @@ using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Utils;
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace MCM.Implementation.ModLib.Settings
 {
@@ -55,9 +57,9 @@ namespace MCM.Implementation.ModLib.Settings
         {
             var type = @object.GetType();
             IDProperty = AccessTools.Property(type, "ID");
-            ModuleFolderNameProperty = AccessTools.Property(type, nameof(ModuleFolderName));
+            ModuleFolderNameProperty = AccessTools.Property(type, "ModuleFolderName");
             ModNameProperty = AccessTools.Property(type, "ModName");
-            SubFolderProperty = AccessTools.Property(type, nameof(SubFolder));
+            SubFolderProperty = AccessTools.Property(type, "SubFolder");
 
             IsCorrect = IDProperty != null && ModuleFolderNameProperty != null &&
                         ModNameProperty != null && SubFolderProperty != null;
@@ -68,16 +70,13 @@ namespace MCM.Implementation.ModLib.Settings
             Object = @object;
         }
 
-        protected override void OnPropertyChanged(string? propertyName = null) { }
+        protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null) { }
 
-        public override List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() => GetWrappedSettingPropertyGroups();
-
-        private List<SettingsPropertyGroupDefinition> GetWrappedSettingPropertyGroups() => GetUnsortedSettingPropertyGroups()
+        public override List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() => GetUnsortedSettingPropertyGroups()
             .OrderByDescending(x => x.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)
             .ThenByDescending(x => x.Order)
             .ThenByDescending(x => x.DisplayGroupName.ToString(), new AlphanumComparatorFast())
             .ToList();
-
         protected override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups()
         {
             var groups = new List<SettingsPropertyGroupDefinition>();

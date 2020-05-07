@@ -14,13 +14,9 @@ using TaleWorlds.Library;
 
 namespace MCM.UI.GUI.ViewModels
 {
-    internal class SettingPropertyVM :
-        ViewModel,
-        ISettingPropertyStringValue,
-        ISettingPropertyIntValue,
-        ISettingPropertyFloatValue
+    internal class SettingPropertyVM : ViewModel
     {
-        private SelectorVM<SelectorItemVM> GetSelector(object dropdown)
+        private static SelectorVM<SelectorItemVM> GetSelector(object dropdown)
         {
             var selectorProperty = dropdown.GetType().GetProperty("Selector");
             if (selectorProperty == null)
@@ -34,9 +30,9 @@ namespace MCM.UI.GUI.ViewModels
 
         public SettingsPropertyDefinition SettingPropertyDefinition { get; }
         public PropertyInfo Property => SettingPropertyDefinition.Property;
-        public BaseSettings SettingsInstance => BaseSettingsProvider.Instance.GetSettings(SettingPropertyDefinition.SettingsId);
+        public BaseSettings SettingsInstance => BaseSettingsProvider.Instance.GetSettings(SettingPropertyDefinition.SettingsId)!;
         public SettingType SettingType => SettingPropertyDefinition.SettingType;
-        public SettingPropertyGroupVM Group { get; set; }
+        public SettingPropertyGroupVM Group { get; set; } = default!;
         public string HintText { get; }
         public string ValueFormat => SettingPropertyDefinition.ValueFormat;
         public bool SatisfiesSearch
@@ -93,6 +89,7 @@ namespace MCM.UI.GUI.ViewModels
                 if (SettingType == SettingType.Float && FloatValue != value)
                 {
                     URS.Do(new SetValueTypeAction<float>(new PropertyRef(Property, SettingsInstance), value));
+                    OnPropertyChanged(nameof(FloatValue));
                     OnPropertyChanged(nameof(ValueString));
                 }
             }
@@ -106,6 +103,7 @@ namespace MCM.UI.GUI.ViewModels
                 if (SettingType == SettingType.Int && IntValue != value)
                 {
                     URS.Do(new SetValueTypeAction<int>(new PropertyRef(Property, SettingsInstance), value));
+                    OnPropertyChanged(nameof(IntValue));
                     OnPropertyChanged(nameof(ValueString));
                 }
             }
@@ -119,6 +117,7 @@ namespace MCM.UI.GUI.ViewModels
                 if (SettingType == SettingType.Bool && BoolValue != value)
                 {
                     URS.Do(new SetValueTypeAction<bool>(new PropertyRef(Property, SettingsInstance), value));
+                    OnPropertyChanged(nameof(BoolValue));
                     OnPropertyChanged(nameof(ValueString));
                 }
             }
@@ -132,6 +131,7 @@ namespace MCM.UI.GUI.ViewModels
                 if (SettingType == SettingType.String && StringValue != value)
                 {
                     URS.Do(new SetStringAction(new PropertyRef(Property, SettingsInstance), value));
+                    OnPropertyChanged(nameof(StringValue));
                     OnPropertyChanged(nameof(ValueString));
                 }
             }
@@ -144,10 +144,22 @@ namespace MCM.UI.GUI.ViewModels
             {
                 if (SettingType == SettingType.Dropdown && DropdownValue != value)
                 {
-                    DropdownValue.PropertyChanged -= OnDropdownPropertyChanged;
-                    value.PropertyChanged += OnDropdownPropertyChanged;
-                    URS.Do(new SetDropdownAction(new PropertyRef(Property, SettingsInstance), value));
+                    //DropdownValue.PropertyChanged -= OnDropdownPropertyChanged;
+                    //value.PropertyChanged += OnDropdownPropertyChanged;
+                    //URS.Do(new SetDropdownAction(new PropertyRef(Property, SettingsInstance), value));
+                    URS.Do(new ComplexReferenceTypeAction<SelectorVM<SelectorItemVM>>(new PropertyRef(Property, SettingsInstance), selector =>
+                    {
+                        selector.ItemList = DropdownValue.ItemList;
+                        selector.SelectedIndex = DropdownValue.SelectedIndex;
+                        selector.HasSingleItem = DropdownValue.HasSingleItem;
+                    }, selector =>
+                    {
+                        selector.ItemList = DropdownValue.ItemList;
+                        selector.SelectedIndex = DropdownValue.SelectedIndex;
+                        selector.HasSingleItem = DropdownValue.HasSingleItem;
+                    }));
                     OnPropertyChanged(nameof(DropdownValue));
+                    OnPropertyChanged(nameof(ValueString));
                 }
             }
         }
@@ -195,6 +207,31 @@ namespace MCM.UI.GUI.ViewModels
         {
             if (args.PropertyName == nameof(SelectorVM<SelectorItemVM>.SelectedIndex))
             URS.DoWithoutDo(new SetDropdownIndexAction(new PropertyRef(Property, SettingsInstance), (SelectorVM<SelectorItemVM>) obj));
+        }
+
+        public override void RefreshValues()
+        {
+            base.RefreshValues();
+
+            switch (SettingType)
+            {
+                case SettingType.Bool:
+                    OnPropertyChanged(nameof(BoolValue));
+                    break;
+                case SettingType.Int:
+                    OnPropertyChanged(nameof(IntValue));
+                    break;
+                case SettingType.Float:
+                    OnPropertyChanged(nameof(FloatValue));
+                    break;
+                case SettingType.String:
+                    OnPropertyChanged(nameof(StringValue));
+                    break;
+                case SettingType.Dropdown:
+                    OnPropertyChanged(nameof(DropdownValue));
+                    break;
+            }
+            OnPropertyChanged(nameof(ValueString));
         }
 
         public void OnHover()

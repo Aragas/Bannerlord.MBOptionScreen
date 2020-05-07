@@ -39,13 +39,13 @@ namespace MCM.UI.GUI.GauntletUI
 	[OverrideView(typeof(MissionOptionsUIHandler))]
 	public class MissionGauntletOptionsWithModOptionsUIHandler : OptionsWithMCMOptionsMissionView
 	{
-        private GauntletLayer _gauntletLayer;
-        private OptionsModOptionsViewModel _dataSource;
-        private GauntletMovie _movie;
-        private KeybindingPopup _keybindingPopup;
-        private GameKeyOptionVM _currentGameKey;
-        private SpriteCategory _spriteCategoryOptions;
-        private SpriteCategory _spriteCategoryEncyclopedia;
+        private GauntletLayer _gauntletLayer = default!;
+		private OptionsModOptionsViewModel _dataSource = default!;
+		private GauntletMovie _movie = default!;
+		private KeybindingPopup _keybindingPopup = default!;
+		private GameKeyOptionVM _currentGameKey = default!;
+		private readonly SpriteCategory _spriteCategoryOptions;
+		private readonly SpriteCategory _spriteCategoryEncyclopedia;
 
 		public MissionGauntletOptionsWithModOptionsUIHandler()
 		{
@@ -75,15 +75,16 @@ namespace MCM.UI.GUI.GauntletUI
 			{
 				dataSource.OnFinalize();
 			}
-			_dataSource = null;
-			_movie = null;
-			var keybindingPopup = _keybindingPopup;
+			_dataSource = null!;
+            _movie.Release(); // TODO
+			_movie = null!;
+            var keybindingPopup = _keybindingPopup;
 			if (keybindingPopup != null)
 			{
 				keybindingPopup.OnToggle(false);
 			}
-			_keybindingPopup = null;
-			_gauntletLayer = null;
+			_keybindingPopup = null!;
+			_gauntletLayer = null!;
             _spriteCategoryOptions.Unload();
             _spriteCategoryEncyclopedia.Unload();
 		}
@@ -153,10 +154,10 @@ namespace MCM.UI.GUI.GauntletUI
 			{
 				keybindingPopup.OnToggle(false);
 			}
-			_gauntletLayer = null;
+			_gauntletLayer = null!;
 			_dataSource.OnFinalize();
-			_dataSource = null;
-			_gauntletLayer = null;
+			_dataSource = null!;
+			_gauntletLayer = null!;
 		}
 
 		private void OnKeybindRequest(GameKeyOptionVM requestedHotKeyToChange)
@@ -172,7 +173,7 @@ namespace MCM.UI.GUI.GauntletUI
 			{
 				currentGameKey.Set(key.InputKey);
 			}
-			_currentGameKey = null;
+			_currentGameKey = null!;
 			_keybindingPopup.OnToggle(false);
 		}
     }

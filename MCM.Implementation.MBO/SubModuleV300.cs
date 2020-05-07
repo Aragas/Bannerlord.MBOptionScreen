@@ -23,6 +23,7 @@ namespace MCM.Implementation.MBO
         public SubModuleV300()
         {
             GameVersion = ApplicationVersionUtils.GameVersion();
+            ApplicationContainerProvider = DI.GetImplementation<IApplicationContainerProvider, ApplicationContainerProviderWrapper>(GameVersion)!;
         }
 
         /// <summary>
@@ -33,8 +34,6 @@ namespace MCM.Implementation.MBO
             using var synchronizationProvider = DI.GetImplementation<ISynchronizationProvider, SynchronizationProviderWrapper>(GameVersion, new object[] { "OnSubModuleLoad_MBOv3" })!;
             if (synchronizationProvider.IsFirstInitialization)
             {
-                ApplicationContainerProvider = DI.GetImplementation<IApplicationContainerProvider, ApplicationContainerProviderWrapper>(GameVersion)!;
-
                 var settingsProvider = DI.GetImplementation<IGlobalSettingsContainer, SettingsContainerWrapper>(GameVersion)!;
                 ApplicationContainerProvider.Set("MBOptionScreenSettingsProvider", settingsProvider);
 

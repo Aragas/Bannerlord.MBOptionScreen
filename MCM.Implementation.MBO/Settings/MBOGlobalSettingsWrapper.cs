@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace MCM.Implementation.MBO.Settings
 {
@@ -33,7 +34,7 @@ namespace MCM.Implementation.MBO.Settings
     {
         private PropertyInfo? IdProperty { get; }
         private PropertyInfo? ModuleFolderNameProperty { get; }
-        private PropertyInfo? DisplayNameProperty { get; }
+        private PropertyInfo? ModNameProperty { get; }
         private PropertyInfo? UIVersionProperty { get; }
         private PropertyInfo? SubFolderProperty { get; }
         private PropertyInfo? SubGroupDelimiterProperty { get; }
@@ -43,7 +44,7 @@ namespace MCM.Implementation.MBO.Settings
 
         public override string Id => IdProperty?.GetValue(Object) as string ?? "ERROR";
         public override string ModuleFolderName => ModuleFolderNameProperty?.GetValue(Object) as string ?? "";
-        public override string DisplayName => DisplayNameProperty?.GetValue(Object) as string ?? "ERROR";
+        public override string DisplayName => ModNameProperty?.GetValue(Object) as string ?? "ERROR";
         public override int UIVersion => UIVersionProperty?.GetValue(Object) as int? ?? 1;
         public override string SubFolder => SubFolderProperty?.GetValue(Object) as string ?? "";
         protected override char SubGroupDelimiter => SubGroupDelimiterProperty?.GetValue(Object) as char? ?? '/';
@@ -59,7 +60,7 @@ namespace MCM.Implementation.MBO.Settings
             var type = @object.GetType();
             IdProperty = AccessTools.Property(type, "Id");
             ModuleFolderNameProperty = AccessTools.Property(type, "ModuleFolderName");
-            DisplayNameProperty = AccessTools.Property(type, "ModName");
+            ModNameProperty = AccessTools.Property(type, "ModName");
             UIVersionProperty = AccessTools.Property(type, "UIVersion");
             SubFolderProperty = AccessTools.Property(type, "SubFolder");
             SubGroupDelimiterProperty = AccessTools.Property(type, "SubGroupDelimiter");
@@ -68,20 +69,22 @@ namespace MCM.Implementation.MBO.Settings
             OnPropertyChangedMethod = AccessTools.Method(type, "OnPropertyChanged");
 
             IsCorrect = IdProperty != null && ModuleFolderNameProperty != null &&
-                        DisplayNameProperty != null && UIVersionProperty != null &&
+                        ModNameProperty != null && UIVersionProperty != null &&
                         SubFolderProperty != null && SubGroupDelimiterProperty != null &&
-                        FormatProperty != null && GetSettingPropertyGroupsMethod != null &&
-                        OnPropertyChangedMethod != null;
+                        GetSettingPropertyGroupsMethod != null
+                        // Not present in v1
+                        /* FormatProperty != null &&
+                        OnPropertyChangedMethod != null*/;
         }
 
-        protected override void OnPropertyChanged(string? propertyName = null) => OnPropertyChangedMethod?.Invoke(Object, new object[] { propertyName });
+        protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
+            OnPropertyChangedMethod?.Invoke(Object, new object[] { propertyName! });
 
         public override List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() =>
             ((IEnumerable<object>) GetSettingPropertyGroupsMethod!.Invoke(Object, Array.Empty<object>()))
             .Select(o => new SettingsPropertyGroupDefinitionWrapper(o))
             .Cast<SettingsPropertyGroupDefinition>()
             .ToList();
-
         protected override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups() => Array.Empty<SettingsPropertyGroupDefinition>();
     }
 }

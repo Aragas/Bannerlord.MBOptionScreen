@@ -1,7 +1,6 @@
 ﻿using HarmonyLib;
 
 using MCM.Abstractions.Attributes;
-using MCM.Abstractions.Functionality;
 
 using System.Collections;
 
@@ -25,12 +24,12 @@ namespace MCM.Implementation.ModLib.Functionality
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
-    internal sealed class DefaultFunctionalityImplementation : IModLibScreenOverrider
+    internal sealed class DefaultFunctionalityImplementation : BaseModLibScreenOverrider
     {
         private static readonly AccessTools.FieldRef<Module, IList> _initialStateOptions =
             AccessTools.FieldRefAccess<Module, IList>("_initialStateOptions");
 
-        public void OverrideModLibScreen()
+        public override void OverrideModLibScreen()
         {
             var oldOptionScreen = Module.CurrentModule.GetInitialStateOptionWithId("ModOptionsMenu");
             if (oldOptionScreen != null)

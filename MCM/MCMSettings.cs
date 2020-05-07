@@ -12,6 +12,7 @@ namespace MCM
         public override string Id => "MBOptionScreen_v3";
         public override string DisplayName => $"Mod Configuration Menu {typeof(MCMSettings).Assembly.GetName().Version.ToString(3)}";
         public override string ModuleFolderName => "";
+        public override string Format => "xml";
 
         [SettingPropertyBool("Use Standard Option Screen", Order = 1, RequireRestart = false, HintText = "Use standard Options screen instead of using an external.")]
         [SettingPropertyGroup("General")]

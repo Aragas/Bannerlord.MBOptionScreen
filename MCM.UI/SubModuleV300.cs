@@ -60,23 +60,23 @@ namespace MCM.UI
                 OverrideEscapeMenu();
                 OverrideMissionEscapeMenu();
 
-                Resolver.GameMenuScreenHandler.RemoveScreen("MCM_OptionScreen_v3");
-                Resolver.IngameMenuScreenHandler.RemoveScreen("MCM_OptionScreen_v3");
+                BaseGameMenuScreenHandler.Instance.RemoveScreen("MCM_OptionScreen_v3");
+                BaseIngameMenuScreenHandler.Instance.RemoveScreen("MCM_OptionScreen_v3");
             }
             else
             {
                 OverrideEscapeMenu(true);
                 OverrideMissionEscapeMenu(true);
 
-                Resolver.GameMenuScreenHandler.AddScreen(
+                BaseGameMenuScreenHandler.Instance.AddScreen(
                     "MCM_OptionScreen_v3",
                     9990,
-                    () => (ScreenBase) DI.GetImplementation(gameVersion, typeof(MCMOptionsScreen).FullName),
+                    () => DI.GetImplementation(gameVersion, typeof(MCMOptionsScreen).FullName) as ScreenBase,
                     new TextObject("{=HiZbHGvYG}Mod Options"));
-                Resolver.IngameMenuScreenHandler.AddScreen(
+                BaseIngameMenuScreenHandler.Instance.AddScreen(
                     "MCM_OptionScreen_v3",
                     1,
-                    () => (ScreenBase) DI.GetImplementation(gameVersion, typeof(MCMOptionsScreen).FullName),
+                    () => DI.GetImplementation(gameVersion, typeof(MCMOptionsScreen).FullName) as ScreenBase,
                     new TextObject("{=NqarFr4P}Mod Options", null));
             }
         }

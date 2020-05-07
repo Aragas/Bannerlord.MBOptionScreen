@@ -169,25 +169,32 @@ namespace MCM.Utils
             if (settings.GetType() != settingsNew.GetType())
                 return;
 
-            foreach (var propertyInfo in settings.GetType().GetProperties())
+            foreach (var propertyInfo in settings.GetType().GetProperties().Where(p => PropertyIsSetting(p.GetCustomAttributes<Attribute>(true)) && p.CanRead && p.CanWrite))
                 propertyInfo.SetValue(settings, propertyInfo.GetValue(settingsNew));
         }
 
-        public static BaseSettings ResetSettings(BaseSettings settings, ISettingsContainer? settingsContainer = null) =>
-            OverrideSettings(settings, settings is BaseGlobalSettingsWrapper settingsWrapper
-                ? BaseGlobalSettingsWrapper.Create(Activator.CreateInstance(settingsWrapper.Object.GetType()))
-                : (GlobalSettings) Activator.CreateInstance(settings.GetType()), settingsContainer);
+        public static bool PropertyIsSetting(IEnumerable<Attribute> attributes) => attributes.Any(a =>
+                ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), "ModLib.Attributes.SettingPropertyAttribute") ||
+                ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), "MBOptionScreen.Attributes.BaseSettingPropertyAttribute") ||
+                ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), "MCM.Abstractions.Settings.Definitions.IPropertyDefinitionBase") ||
+                ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionBase)));
 
-        public static BaseSettings OverrideSettings(BaseSettings settings, BaseSettings overrideSettings, ISettingsContainer? settingsContainer = null)
+        public static void ResetSettings(BaseSettings settings, ISettingsContainer? settingsContainer = null)
         {
-            if (settings is BaseGlobalSettingsWrapper settingsWrapper && overrideSettings is BaseGlobalSettingsWrapper overrideSettingsWrapper)
-                SettingsUtils.CopyProperties(settingsWrapper.Object, overrideSettingsWrapper.Object);
+            var newSettings = settings is IWrapper wrapper
+                    ? BaseGlobalSettingsWrapper.Create(Activator.CreateInstance(wrapper.Object.GetType()))
+                    : (GlobalSettings) Activator.CreateInstance(settings.GetType());
+            OverrideSettings(settings, newSettings, settingsContainer);
+        }
+
+        public static void OverrideSettings(BaseSettings settings, BaseSettings overrideSettings, ISettingsContainer? settingsContainer = null)
+        {
+            if (settings is IWrapper wrapper && overrideSettings is IWrapper overrideWrapper)
+                CopyProperties(wrapper.Object, overrideWrapper.Object);
             else
-                SettingsUtils.CopyProperties(settings, overrideSettings);
+                CopyProperties(settings, overrideSettings);
 
             settingsContainer?.SaveSettings(settings);
-
-            return settings;
         }
     }
 }

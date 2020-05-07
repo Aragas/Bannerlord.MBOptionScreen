@@ -42,13 +42,13 @@ namespace MCM.UI.GUI.GauntletUI
 	[OverrideView(typeof(OptionsScreen))]
     public class OptionsWithModOptionsGauntletScreen : OptionsWithMCMOptionsScreen
 	{
-        private GauntletLayer _gauntletLayer;
-        private OptionsModOptionsViewModel _dataSource;
-        private GauntletMovie _gauntletMovie;
+        private GauntletLayer _gauntletLayer = default!;
+		private OptionsModOptionsViewModel _dataSource = default!;
+		private GauntletMovie _gauntletMovie = default!;
         private KeybindingPopup _keybindingPopup;
-        private GameKeyOptionVM _currentGameKey;
-        private SpriteCategory _spriteCategoryOptions;
-        private SpriteCategory _spriteCategoryEncyclopedia;
+		private GameKeyOptionVM _currentGameKey = default!;
+		private SpriteCategory _spriteCategoryOptions = default!;
+		private SpriteCategory _spriteCategoryEncyclopedia = default!;
 
 		protected override void OnInitialize()
 		{
@@ -125,7 +125,7 @@ namespace MCM.UI.GUI.GauntletUI
 			{
 				currentGameKey.Set(key.InputKey);
 			}
-			_currentGameKey = null;
+			_currentGameKey = null!;
 			_keybindingPopup.OnToggle(false);
 		}
     }

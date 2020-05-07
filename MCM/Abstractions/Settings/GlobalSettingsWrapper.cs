@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace MCM.Abstractions.Settings
 {
@@ -51,7 +52,8 @@ namespace MCM.Abstractions.Settings
             OnPropertyChangedMethod = AccessTools.Method(type, nameof(OnPropertyChanged));
         }
 
-        protected override void OnPropertyChanged(string? propertyName = null) => OnPropertyChangedMethod?.Invoke(Object, new object[] { propertyName });
+        protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
+            OnPropertyChangedMethod?.Invoke(Object, new object[] { propertyName! });
 
         public override List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() => GetWrappedSettingPropertyGroups();
         private List<SettingsPropertyGroupDefinition> GetWrappedSettingPropertyGroups()

@@ -32,10 +32,10 @@ namespace MCM.Implementation.Functionality
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
-    internal sealed class DefaultGameMenuScreenHandler : IGameMenuScreenHandler
+    internal sealed class DefaultGameMenuScreenHandler : BaseGameMenuScreenHandler
     {
         private static readonly WeakReference<InitialMenuVM> _instance = new WeakReference<InitialMenuVM>(null!);
-        private static Dictionary<string, (int, Func<ScreenBase>, TextObject)> ScreensCache { get; } = new Dictionary<string, (int, Func<ScreenBase>, TextObject)>();
+        private static Dictionary<string, (int, Func<ScreenBase?>, TextObject)> ScreensCache { get; } = new Dictionary<string, (int, Func<ScreenBase?>, TextObject)>();
         private static int _initialized;
 
         public DefaultGameMenuScreenHandler()
@@ -54,19 +54,24 @@ namespace MCM.Implementation.Functionality
             _instance.SetTarget(__instance);
             foreach (var pair in ScreensCache)
             {
-                var (Index, ScreenFactory, Text) = pair.Value;
+                var (index, screenFactory, text) = pair.Value;
 
-                var insertIndex = ____menuOptions.FindIndex(i => i.InitialStateOption.OrderIndex > Index);
+                var insertIndex = ____menuOptions.FindIndex(i => i.InitialStateOption.OrderIndex > index);
                 ____menuOptions.Insert(insertIndex, new InitialMenuOptionVM(new InitialStateOption(
                     pair.Key,
-                    Text,
+                    text,
                     9000,
-                    () => ScreenManager.PushScreen(ScreenFactory()),
+                    () =>
+                    {
+                        var screen = screenFactory();
+                        if (screen != null)
+                            ScreenManager.PushScreen(screen);
+                    },
                     false)));
             }
         }
 
-        public void AddScreen(string internalName, int index, Func<ScreenBase> screenFactory, TextObject text)
+        public override void AddScreen(string internalName, int index, Func<ScreenBase?> screenFactory, TextObject text)
         {
             if (_instance.TryGetTarget(out var instance))
             {
@@ -75,7 +80,12 @@ namespace MCM.Implementation.Functionality
                     internalName,
                     text,
                     index,
-                    () => ScreenManager.PushScreen(screenFactory()),
+                    () =>
+                    {
+                        var screen = screenFactory();
+                        if (screen != null)
+                            ScreenManager.PushScreen(screen);
+                    },
                     false)));
             }
 
@@ -84,7 +94,7 @@ namespace MCM.Implementation.Functionality
             else
                 ScreensCache.Add(internalName, (index, screenFactory, text));
         }
-        public void RemoveScreen(string internalName)
+        public override void RemoveScreen(string internalName)
         {
             if (_instance.TryGetTarget(out var instance))
             {

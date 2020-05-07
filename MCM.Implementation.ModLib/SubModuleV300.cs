@@ -9,7 +9,7 @@ using MCM.Utils;
 using System;
 using System.IO;
 using System.Linq;
-
+using MCM.Implementation.ModLib.Functionality;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 
@@ -23,6 +23,7 @@ namespace MCM.Implementation.ModLib
         public SubModuleV300()
         {
             GameVersion = ApplicationVersionUtils.GameVersion();
+            ApplicationContainerProvider = DI.GetImplementation<IApplicationContainerProvider, ApplicationContainerProviderWrapper>(GameVersion)!;
         }
 
         /// <summary>
@@ -33,8 +34,6 @@ namespace MCM.Implementation.ModLib
             using var synchronizationProvider = DI.GetImplementation<ISynchronizationProvider, SynchronizationProviderWrapper>(GameVersion, new object[] { "OnSubModuleLoad_ModLibv3" })!;
             if (synchronizationProvider.IsFirstInitialization)
             {
-                ApplicationContainerProvider = DI.GetImplementation<IApplicationContainerProvider, ApplicationContainerProviderWrapper>(GameVersion)!;
-
                 var modLibSettingsProvider = DI.GetImplementation<IModLibSettingsContainer, ModLibSettingsContainerWrapper>(GameVersion)!;
                 ApplicationContainerProvider.Set("ModLibSettingsProvider", modLibSettingsProvider);
 
@@ -62,7 +61,7 @@ namespace MCM.Implementation.ModLib
             if (synchronizationProvider.IsFirstInitialization)
             {
                 if (MCMSettings.Instance!.OverrideModLib)
-                    Resolver.ModLibScreenOverrider.OverrideModLibScreen();
+                    BaseModLibScreenOverrider.Instance.OverrideModLibScreen();
             }
         }
     }

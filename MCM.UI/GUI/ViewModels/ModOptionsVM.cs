@@ -15,12 +15,12 @@ namespace MCM.UI.GUI.ViewModels
 {
     internal class ModOptionsVM : ViewModel
     {
-        private string _titleLabel;
-        private string _cancelButtonText;
-        private string _doneButtonText;
+        private string _titleLabel = "";
+        private string _cancelButtonText = "";
+        private string _doneButtonText = "";
         private SettingsVM? _selectedMod;
         private MBBindingList<SettingsVM> _modSettingsList = new MBBindingList<SettingsVM>();
-        private string _hintText;
+        private string _hintText = "";
         private string _searchText = "";
 
         [DataSourceProperty]
@@ -233,7 +233,7 @@ namespace MCM.UI.GUI.ViewModels
                     true, true, "Yes", "No",
                     () =>
                     {
-                        SelectedMod.URS.Do(new ComplexReferenceTypeAction<SettingsVM>(SelectedMod,
+                        SelectedMod.URS.Do(new ComplexReferenceTypeAction<SettingsVM>(new ProxyRef(() => SelectedMod, null), 
                             modSettingsVM =>
                             {
                                 //Do action

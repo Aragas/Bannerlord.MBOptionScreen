@@ -121,17 +121,17 @@ namespace MCM
         }
         public override void OnGameLoaded(Game game, object initializerObject)
         {
-            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
+            foreach (var (subModule, _) in _mcmImplementationSubModules)
                 subModule.OnGameLoaded(game, initializerObject);
         }
         public override void OnCampaignStart(Game game, object starterObject)
         {
-            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
+            foreach (var (subModule, _) in _mcmImplementationSubModules)
                 subModule.OnCampaignStart(game, starterObject);
         }
         public override void BeginGameStart(Game game)
         {
-            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
+            foreach (var (subModule, _) in _mcmImplementationSubModules)
                 subModule.BeginGameStart(game);
         }
         public override void OnGameEnd(Game game)
@@ -141,22 +141,22 @@ namespace MCM
         }
         public override void OnGameInitializationFinished(Game game)
         {
-            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
+            foreach (var (subModule, _) in _mcmImplementationSubModules)
                 subModule.OnGameInitializationFinished(game);
         }
         public override void OnMissionBehaviourInitialize(Mission mission)
         {
-            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
+            foreach (var (subModule, _) in _mcmImplementationSubModules)
                 subModule.OnMissionBehaviourInitialize(mission);
         }
         public override void OnMultiplayerGameStart(Game game, object starterObject)
         {
-            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
+            foreach (var (subModule, _) in _mcmImplementationSubModules)
                 subModule.OnMultiplayerGameStart(game, starterObject);
         }
         public override void OnNewGameCreated(Game game, object initializerObject)
         {
-            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
+            foreach (var (subModule, _) in _mcmImplementationSubModules)
                 subModule.OnNewGameCreated(game, initializerObject);
         }
     }

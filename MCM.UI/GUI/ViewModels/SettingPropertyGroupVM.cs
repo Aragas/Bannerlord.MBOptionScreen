@@ -17,8 +17,8 @@ namespace MCM.UI.GUI.ViewModels
 
         public SettingsPropertyGroupDefinition SettingPropertyGroupDefinition { get; }
         public string GroupName => SettingPropertyGroupDefinition.DisplayGroupName.ToString();
-        public SettingPropertyGroupVM? ParentGroup { get; set; }
-        public SettingPropertyVM GroupToggleSettingProperty { get; private set; }
+        public SettingPropertyGroupVM? ParentGroup { get; }
+        public SettingPropertyVM GroupToggleSettingProperty { get; private set; } = default!;
         public string HintText
         {
             get

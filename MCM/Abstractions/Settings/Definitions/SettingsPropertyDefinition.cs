@@ -29,7 +29,11 @@ namespace MCM.Abstractions.Settings.Definitions
         public bool IsMainToggle { get; protected set; } = false;
         public int GroupOrder { get; protected set; } = -1;
 
-        protected SettingsPropertyDefinition() { }
+        protected SettingsPropertyDefinition()
+        {
+            SettingsId = "ERROR";
+            Property = default!;
+        }
         public SettingsPropertyDefinition(IPropertyDefinitionBase propertyDefinition, IPropertyGroupDefinition propertyGroupDefinition, PropertyInfo property, string settingsId)
         {
             GroupName = propertyGroupDefinition.GroupName;

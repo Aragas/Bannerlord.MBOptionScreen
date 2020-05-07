@@ -43,11 +43,11 @@ namespace MCM.UI.ResourceInjection
         {
             if (Interlocked.Exchange(ref _initialized, 1) == 0)
             {
-                new Harmony("bannerlord.mcm.loadmovie_v3").Patch(
+                var harmony = new Harmony("bannerlord.mcm.recourceinjector_v3");
+                harmony.Patch(
                     original: AccessTools.Method(typeof(GauntletMovie), "LoadMovie"),
                     prefix: new HarmonyMethod(AccessTools.Method(typeof(DefaultResourceInjector), nameof(LoadMovieHarmony))));
-
-                new Harmony("bannerlord.mcm.loadbrush_v3").Patch(
+                harmony.Patch(
                     original: AccessTools.Method(typeof(BrushFactory), "LoadBrushes"),
                     postfix: new HarmonyMethod(AccessTools.Method(typeof(DefaultResourceInjector), nameof(LoadBrushesHarmony))));
             }
@@ -56,7 +56,7 @@ namespace MCM.UI.ResourceInjection
         private static PropertyInfo RootViewProperty { get; } = AccessTools.Property(typeof(GauntletMovie), nameof(GauntletMovie.RootView));
         private static bool LoadMovieHarmony(GauntletMovie __instance, Widget ____movieRootNode)
         {
-            var movie = Instance.RequestMovie(__instance.MovieName);
+            var movie = RequestMovie(__instance.MovieName);
             if (movie == null)
                 return true;
 

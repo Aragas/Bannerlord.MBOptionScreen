@@ -10,6 +10,6 @@ namespace MCM.Abstractions.Settings
 
     public abstract class PerCharacterSettings : BaseSettings
     {
-        public string CharacterId { get; }
+        public string CharacterId { get; } = "ERROR";
     }
 }

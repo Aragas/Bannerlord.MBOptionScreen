@@ -34,10 +34,10 @@ namespace MCM.Implementation.Functionality
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
-    internal sealed class DefaultIngameMenuScreenHandler : IIngameMenuScreenHandler
+    internal sealed class DefaultIngameMenuScreenHandler : BaseIngameMenuScreenHandler
     {
         private static readonly WeakReference<EscapeMenuVM> _instance = new WeakReference<EscapeMenuVM>(null!);
-        private static Dictionary<string, (int, Func<ScreenBase>, TextObject)> ScreensCache { get; } = new Dictionary<string, (int, Func<ScreenBase>, TextObject)>();
+        private static Dictionary<string, (int, Func<ScreenBase?>, TextObject)> ScreensCache { get; } = new Dictionary<string, (int, Func<ScreenBase?>, TextObject)>();
         private static int _initialized;
 
         public DefaultIngameMenuScreenHandler()
@@ -52,7 +52,7 @@ namespace MCM.Implementation.Functionality
 
                 // TODO: We can't replace MissionSingleplayerEscapeMenu at runtime because it's injected in the MissionView[] 
                 // TODO: Won't work if the type is replaced at runtime
-                var actualViewTypes = (Dictionary<Type, Type>) AccessTools.Field(typeof(ViewCreatorManager), "_actualViewTypes")?.GetValue(null) ?? new Dictionary<Type, Type>();
+                var actualViewTypes = (Dictionary<Type, Type>) (AccessTools.Field(typeof(ViewCreatorManager), "_actualViewTypes")?.GetValue(null) ?? new Dictionary<Type, Type>());
                 var overrideType = actualViewTypes[typeof(MissionSingleplayerEscapeMenu)];
                 harmony.Patch(
                     original: AccessTools.DeclaredMethod(overrideType, "GetEscapeMenuItems"),
@@ -70,13 +70,17 @@ namespace MCM.Implementation.Functionality
         {
             foreach (var pair in ScreensCache)
             {
-                var (Index, ScreenFactory, Text) = pair.Value;
-                __result.Insert(Index, new EscapeMenuItemVM(
-                    Text,
+                var (index, screenFactory, text) = pair.Value;
+                __result.Insert(index, new EscapeMenuItemVM(
+                    text,
                     _ =>
                     {
-                        AccessTools.Method(typeof(MapScreen), "OnEscapeMenuToggled")?.Invoke(__instance, new object[] { false });
-                        ScreenManager.PushScreen(ScreenFactory());
+                        var screen = screenFactory();
+                        if (screen != null)
+                        {
+                            AccessTools.Method(typeof(MapScreen), "OnEscapeMenuToggled")?.Invoke(__instance, new object[] {false});
+                            ScreenManager.PushScreen(screen);
+                        }
                     },
                     pair.Key, false, false));
             }
@@ -85,34 +89,38 @@ namespace MCM.Implementation.Functionality
         {
             foreach (var pair in ScreensCache)
             {
-                var (Index, ScreenFactory, Text) = pair.Value;
-                __result.Insert(Index, new EscapeMenuItemVM(
-                    Text,
+                var (index, screenFactory, text) = pair.Value;
+                __result.Insert(index, new EscapeMenuItemVM(
+                    text,
                     _ =>
                     {
-                        AccessTools.Method(typeof(GauntletMissionEscapeMenuBase), "OnEscapeMenuToggled")?.Invoke(__instance, new object[] { false });
-                        ScreenManager.PushScreen(ScreenFactory());
+                        var screen = screenFactory();
+                        if (screen != null)
+                        {
+                            AccessTools.Method(typeof(GauntletMissionEscapeMenuBase), "OnEscapeMenuToggled")?.Invoke(__instance, new object[] {false});
+                            ScreenManager.PushScreen(screen);
+                        }
                     },
                     pair.Key, false, false));
             }
         }
         private static void OnMissionScreenInitialize(MissionView __instance)
         {
-            if (__instance is GauntletMissionEscapeMenuBase instance)
+            if (__instance is GauntletMissionEscapeMenuBase)
             {
                 var dataSource = AccessTools.Field(typeof(GauntletMissionEscapeMenuBase), "_dataSource")?.GetValue(__instance) as EscapeMenuVM;
-                _instance.SetTarget(dataSource);
+                _instance.SetTarget(dataSource!);
             }
         }
         private static void OnMissionScreenFinalize(MissionView __instance)
         {
-            if (__instance is GauntletMissionEscapeMenuBase instance)
+            if (__instance is GauntletMissionEscapeMenuBase)
             {
-                _instance.SetTarget(null);
+                _instance.SetTarget(null!);
             }
         }
 
-        public void AddScreen(string internalName, int index, Func<ScreenBase> screenFactory, TextObject text)
+        public override void AddScreen(string internalName, int index, Func<ScreenBase?> screenFactory, TextObject text)
         {
             if (_instance.TryGetTarget(out var instance))
             {
@@ -130,7 +138,7 @@ namespace MCM.Implementation.Functionality
             else
                 ScreensCache.Add(internalName, (index, screenFactory, text));
         }
-        public void RemoveScreen(string internalName)
+        public override void RemoveScreen(string internalName)
         {
             if (_instance.TryGetTarget(out var instance))
             {

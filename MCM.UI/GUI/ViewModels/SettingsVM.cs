@@ -15,14 +15,14 @@ namespace MCM.UI.GUI.ViewModels
     internal class SettingsVM : ViewModel
     {
         private bool _isSelected;
-        private Action<SettingsVM> _executeSelect;
-        private MBBindingList<SettingPropertyGroupVM> _settingPropertyGroups;
+        private Action<SettingsVM> _executeSelect = default!;
+        private MBBindingList<SettingPropertyGroupVM> _settingPropertyGroups = default!;
 
         public ModOptionsVM MainView { get; }
         public UndoRedoStack URS { get; } = new UndoRedoStack();
 
         public SettingsDefinition SettingsDefinition { get; }
-        public BaseSettings SettingsInstance => BaseSettingsProvider.Instance.GetSettings(SettingsDefinition.SettingsId);
+        public BaseSettings SettingsInstance => BaseSettingsProvider.Instance.GetSettings(SettingsDefinition.SettingsId)!;
 
         /// <summary>
         /// XSLT?

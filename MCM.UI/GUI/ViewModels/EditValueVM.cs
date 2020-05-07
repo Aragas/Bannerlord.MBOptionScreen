@@ -23,7 +23,7 @@ namespace MCM.UI.GUI.ViewModels
                 if (_textInput != value)
                 {
                     _textInput = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(TextInput));
 
                 }
             }
@@ -35,7 +35,7 @@ namespace MCM.UI.GUI.ViewModels
             set
             {
                 _titleText = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(TitleText));
             }
         }
         [DataSourceProperty]
@@ -45,7 +45,7 @@ namespace MCM.UI.GUI.ViewModels
             set
             {
                 _descriptionText = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(DescriptionText));
             }
         }
         [DataSourceProperty]
@@ -87,42 +87,24 @@ namespace MCM.UI.GUI.ViewModels
         {
             base.RefreshValues();
 
-            if(SettingProperty.SettingType == SettingType.Int)
-                TextInput = ((int)SettingProperty.Property.GetValue(SettingProperty.SettingsInstance)).ToString("0") ?? "";
-            else
-            if (SettingProperty.SettingType == SettingType.Float)
-                TextInput = ((float)SettingProperty.Property.GetValue(SettingProperty.SettingsInstance)).ToString("0.00") ?? "";
-            else
-                TextInput = SettingProperty.Property.GetValue(SettingProperty.SettingsInstance).ToString() ?? "";
+            TextInput = SettingProperty.ValueString ?? "";
 
             OnPropertyChanged(nameof(SettingType));
         }
 
         public void ExecuteDone()
         {
-            if (SettingProperty.SettingType == SettingType.Int)
+            if (SettingProperty.SettingType == SettingType.Int && int.TryParse(TextInput, out var intVal))
             {
-                if (int.TryParse(TextInput, out var val))
-                {
-                    SettingProperty.URS.Do(new SetIntSettingProperty(SettingProperty, val));
-                    SettingProperty.URS.Do(new SetValueTypeAction<int>(new PropertyRef(SettingProperty.Property, SettingProperty.SettingsInstance), val));
-                    SettingProperty.OnPropertyChanged(nameof(SettingProperty.ValueString));
-                }
+                SettingProperty.URS.Do(new SetValueTypeAction<int>(new ProxyRef(() => SettingProperty.IntValue, o => SettingProperty.IntValue = (int) o), intVal));
             }
-            else if (SettingProperty.SettingType == SettingType.Float)
+            else if (SettingProperty.SettingType == SettingType.Float && float.TryParse(TextInput, out var floatVal))
             {
-                if (float.TryParse(TextInput, out var val))
-                {
-                    SettingProperty.URS.Do(new SetFloatSettingProperty(SettingProperty, val));
-                    SettingProperty.URS.Do(new SetValueTypeAction<float>(new PropertyRef(SettingProperty.Property, SettingProperty.SettingsInstance), val));
-                    SettingProperty.OnPropertyChanged(nameof(SettingProperty.ValueString));
-                }
+                SettingProperty.URS.Do(new SetValueTypeAction<float>(new ProxyRef(() => SettingProperty.FloatValue, o => SettingProperty.FloatValue = (float) o), floatVal));
             }
             else if (SettingProperty.SettingType == SettingType.String)
             {
-                SettingProperty.URS.Do(new SetStringSettingProperty(SettingProperty, TextInput));
-                SettingProperty.URS.Do(new SetStringAction(new PropertyRef(SettingProperty.Property, SettingProperty.SettingsInstance), TextInput));
-                SettingProperty.OnPropertyChanged(nameof(SettingProperty.ValueString));
+                SettingProperty.URS.Do(new SetStringAction(new ProxyRef(() => SettingProperty.StringValue, o => SettingProperty.StringValue = (string) o), TextInput));
             }
             ScreenManager.PopScreen();
         }

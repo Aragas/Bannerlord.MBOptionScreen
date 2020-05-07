@@ -6,7 +6,6 @@ namespace MCM.UI.Actions
     {
         public PropertyInfo PropertyInfo { get; }
         public object Instance { get; }
-
         public object Value { get => PropertyInfo.GetValue(Instance); set => PropertyInfo.SetValue(Instance, value); }
 
         public PropertyRef(PropertyInfo propInfo, object instance)

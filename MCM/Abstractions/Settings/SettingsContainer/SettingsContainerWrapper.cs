@@ -33,8 +33,10 @@ namespace MCM.Abstractions.Settings.SettingsContainer
                         OverrideSettingsMethod != null && ResetSettingsMethod != null && SaveSettingsMethod != null;
         }
 
-        public List<SettingsDefinition> CreateModSettingsDefinitions =>
-            ((IEnumerable<object>) CreateModSettingsDefinitionsProperty?.GetValue(Object)).Select(s => new SettingsDefinitionWrapper(s)).Cast<SettingsDefinition>().ToList();
+        public List<SettingsDefinition> CreateModSettingsDefinitions => 
+            ((IEnumerable<object>) (CreateModSettingsDefinitionsProperty?.GetValue(Object) ?? new List<object>()))
+            .Select(s => new SettingsDefinitionWrapper(s)).Cast<SettingsDefinition>()
+            .ToList();
         public BaseSettings? GetSettings(string id) => GetSettingsMethod?.Invoke(Object, new object[] { id }) is { } settings
                 ? settings is BaseSettings settingsBase ? settingsBase : BaseGlobalSettingsWrapper.Create(settings)
                 : default;

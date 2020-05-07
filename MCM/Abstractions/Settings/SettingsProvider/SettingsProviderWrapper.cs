@@ -36,7 +36,8 @@ namespace MCM.Abstractions.Settings.SettingsProvider
         }
 
         public override IEnumerable<SettingsDefinition> CreateModSettingsDefinitions =>
-            ((IEnumerable<object>) CreateModSettingsDefinitionsProperty?.GetValue(Object)).Select(s => new SettingsDefinitionWrapper(s));
+            ((IEnumerable<object>) (CreateModSettingsDefinitionsProperty?.GetValue(Object) ?? new List<object>()))
+            .Select(s => new SettingsDefinitionWrapper(s));
         public override BaseSettings? GetSettings(string id) => 
             GetSettingsMethod?.Invoke(Object, new object[] { id }) as BaseSettings;
         public override void SaveSettings(BaseSettings settings) =>

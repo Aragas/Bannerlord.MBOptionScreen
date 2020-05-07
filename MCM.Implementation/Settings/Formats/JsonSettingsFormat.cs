@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using MCM.Abstractions.Settings.Definitions;
 
 namespace MCM.Implementation.Settings.Formats
 {
@@ -92,8 +93,7 @@ namespace MCM.Implementation.Settings.Formats
             protected override JsonProperty CreateProperty(MemberInfo member, MemberSerialization memberSerialization)
             {
                 var property = base.CreateProperty(member, memberSerialization);
-                property.ShouldSerialize = _ => property.AttributeProvider.GetAttributes(true).Any(a =>
-                    ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(BaseSettingPropertyAttribute)));
+                property.ShouldSerialize = _ => SettingsUtils.PropertyIsSetting(property.AttributeProvider.GetAttributes(true));
                 return property;
             }
         }

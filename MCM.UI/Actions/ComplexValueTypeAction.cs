@@ -2,24 +2,25 @@
 
 namespace MCM.UI.Actions
 {
-    internal sealed class ComplexValueTypeAction<T> : IAction
-        where T : struct
+    internal sealed class ComplexValueTypeAction<T> : IAction where T : struct
     {
-        public IRef? Context { get; }
-        public object Value { get; }
-        public object Original { get; }
-        private Action<T> DoFunction { get; }
-        private Action<T> UndoFunction { get; }
+        public IRef Context { get; }
+        public object Value => DoFunction((T)Context.Value);
+        public object Original => UndoFunction((T)Context.Value);
+        private Func<T, T> DoFunction { get; }
+        private Func<T, T> UndoFunction { get; }
 
-        public ComplexValueTypeAction(T value, Action<T> doFunction, Action<T> undoFunction)
+        /// <summary>
+        /// new ProxyRef(() => ValueType, o => ValueType = o)
+        /// </summary>
+        public ComplexValueTypeAction(IRef context, Func<T, T> doFunction, Func<T, T> undoFunction)
         {
-            Value = value;
-            Original = value;
+            Context = context;
             DoFunction = doFunction;
             UndoFunction = undoFunction;
         }
 
-        public void DoAction() => DoFunction?.Invoke((T) Value);
-        public void UndoAction() => UndoFunction?.Invoke((T) Value);
+        public void DoAction() => Context.Value = Value;
+        public void UndoAction() => Context.Value = Original;
     }
 }

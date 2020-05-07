@@ -1,6 +1,6 @@
 ﻿using HarmonyLib;
 
-using System.Reflection;
+using MCM.Abstractions.Data;
 
 using TaleWorlds.Core.ViewModelCollection;
 
@@ -15,7 +15,7 @@ namespace MCM.UI.Actions
 
         public SetDropdownIndexAction(IRef context, SelectorVM<SelectorItemVM> value)
         {
-            var selectedIndexProperty = AccessTools.Property(context.Value.GetType(), "SelectedIndex");
+            var selectedIndexProperty = AccessTools.Property(context.Value.GetType(), nameof(IDropdownProvider.SelectedIndex));
 
             DropdownContext = context;
             Context = new ProxyRef(() => selectedIndexProperty.GetValue(DropdownContext.Value), o => selectedIndexProperty.SetValue(DropdownContext.Value, o));
@@ -23,7 +23,7 @@ namespace MCM.UI.Actions
             Original = selectedIndexProperty.GetValue(Context.Value);
         }
 
-        public void DoAction() => Context!.Value = Value;
-        public void UndoAction() => Context!.Value = Original;
+        public void DoAction() => Context.Value = Value;
+        public void UndoAction() => Context.Value = Original;
     }
 }

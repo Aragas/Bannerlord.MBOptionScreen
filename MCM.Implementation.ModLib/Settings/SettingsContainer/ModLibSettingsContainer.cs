@@ -83,7 +83,7 @@ namespace MCM.Implementation.ModLib.Settings.SettingsContainer
         }
         public bool ResetSettings(BaseSettings settings)
         {
-            if (ModLibSettingsDatabase == null || !(settings is ModLibGlobalSettingsWrapper settingsWrapper))
+            if (ModLibSettingsDatabase == null || !(settings is ModLibGlobalSettingsWrapper))
                 return false;
 
             SettingsUtils.ResetSettings(LoadedModLibSettings[settings.Id], this);

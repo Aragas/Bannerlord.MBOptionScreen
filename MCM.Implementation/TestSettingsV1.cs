@@ -66,10 +66,10 @@ namespace MCM.Implementation
         public string PropertyTextDefaultText { get; set; } = "Text";
         [SettingProperty("Property Text Require Restart")]
         [SettingPropertyGroup("Text")]
-        public string PropertyTextRequireRestart { get; set; }
+        public string PropertyTextRequireRestart { get; set; } = "";
         [SettingProperty("Property Text With Hint", RequireRestart = false, HintText = "Hint Text")]
         [SettingPropertyGroup("Text")]
-        public string PropertyTextWithHint { get; set; }
+        public string PropertyTextWithHint { get; set; } = "";
 
 
         [SettingProperty("Property Dropdown SelectedIndex 0", RequireRestart = false)]

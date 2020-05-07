@@ -35,7 +35,7 @@ namespace MCM.UI.GUI.GauntletUI
         private GauntletLayer _gauntletLayer = default!;
         private GauntletMovie _gauntletMovie = default!;
         private ModOptionsVM _dataSource = default!;
-        private SpriteCategory _spriteCategoryEncyclopedia;
+        private SpriteCategory _spriteCategoryEncyclopedia = default!;
 
         protected override void OnInitialize()
         {

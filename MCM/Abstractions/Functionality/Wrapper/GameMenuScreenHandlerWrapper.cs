@@ -8,7 +8,7 @@ using TaleWorlds.Localization;
 
 namespace MCM.Abstractions.Functionality.Wrapper
 {
-    public sealed class GameMenuScreenHandlerWrapper : IGameMenuScreenHandler, IWrapper
+    public sealed class GameMenuScreenHandlerWrapper : BaseGameMenuScreenHandler, IWrapper
     {
         public object Object { get; }
         private MethodInfo? AddScreenMethod { get; }
@@ -26,9 +26,9 @@ namespace MCM.Abstractions.Functionality.Wrapper
             IsCorrect = AddScreenMethod != null && RemoveScreenMethod != null;
         }
 
-        public void AddScreen(string internalName, int index, Func<ScreenBase> screenFactory, TextObject text) =>
+        public override void AddScreen(string internalName, int index, Func<ScreenBase?> screenFactory, TextObject text) =>
             AddScreenMethod?.Invoke(Object, new object[] { internalName, index, screenFactory, text });
-        public void RemoveScreen(string internalName) =>
+        public override void RemoveScreen(string internalName) =>
             RemoveScreenMethod?.Invoke(Object, new object[] { internalName });
     }
 }

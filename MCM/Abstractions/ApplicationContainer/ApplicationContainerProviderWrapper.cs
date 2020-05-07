@@ -15,7 +15,7 @@ namespace MCM.Abstractions.ApplicationContainer
 
         public ApplicationContainerProviderWrapper(object @object)
         {
-            @object = @object;
+            Object = @object;
             var type = @object.GetType();
 
             GetMethod = AccessTools.Method(type, nameof(Get));

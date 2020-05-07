@@ -1,11 +1,13 @@
 ﻿using HarmonyLib;
 
+using MCM.Abstractions;
+
 using System;
 using System.Reflection;
 
-namespace MCM.Abstractions.Functionality.Wrapper
+namespace MCM.Implementation.ModLib.Functionality.Wrapper
 {
-    public sealed class ModLibScreenOverriderWrapper : IModLibScreenOverrider, IWrapper
+    public sealed class ModLibScreenOverriderWrapper : BaseModLibScreenOverrider, IWrapper
     {
         public object Object { get; }
         private MethodInfo? OverrideModLibScreenMethod { get; }
@@ -21,6 +23,6 @@ namespace MCM.Abstractions.Functionality.Wrapper
             IsCorrect = OverrideModLibScreenMethod != null;
         }
 
-        public void OverrideModLibScreen() => OverrideModLibScreenMethod?.Invoke(Object, Array.Empty<object>());
+        public override void OverrideModLibScreen() => OverrideModLibScreenMethod?.Invoke(Object, Array.Empty<object>());
     }
 }
