@@ -14,9 +14,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using MCM.Abstractions.Settings.Definitions;
 
 namespace MCM.Implementation.Settings.Formats
 {

@@ -27,7 +27,7 @@ namespace MCM.Implementation.Settings.Properties
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
-    public class MCMSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
+    internal class MCMSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
     {
         public IEnumerable<SettingsPropertyDefinition> GetProperties(object @object, string id)
         {

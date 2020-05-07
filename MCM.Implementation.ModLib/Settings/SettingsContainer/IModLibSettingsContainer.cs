@@ -2,7 +2,7 @@
 
 namespace MCM.Implementation.ModLib.Settings.SettingsContainer
 {
-    internal interface IModLibSettingsContainer : ISettingsContainer
+    public interface IModLibSettingsContainer : ISettingsContainer
     {
 
     }

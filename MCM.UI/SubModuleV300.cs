@@ -2,7 +2,6 @@
 
 using MCM.Abstractions;
 using MCM.Abstractions.Functionality;
-using MCM.Abstractions.ResourceInjection;
 using MCM.Abstractions.Settings;
 using MCM.UI.ResourceInjection.Loaders;
 using MCM.Utils;
@@ -29,9 +28,9 @@ namespace MCM.UI
 
         protected override void OnSubModuleLoad()
         {
-            BrushLoader.Inject(BaseResourceInjector.Instance);
-            PrefabsLoader.Inject(BaseResourceInjector.Instance);
-            WidgetLoader.Inject(BaseResourceInjector.Instance);
+            BrushLoader.Inject(BaseResourceHandler.Instance);
+            PrefabsLoader.Inject(BaseResourceHandler.Instance);
+            WidgetLoader.Inject(BaseResourceHandler.Instance);
 
             UpdateOptionScreen(MCMSettings.Instance!);
             MCMSettings.Instance!.PropertyChanged += MCMSettings_PropertyChanged;

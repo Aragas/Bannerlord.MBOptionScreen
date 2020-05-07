@@ -2,9 +2,6 @@
 using MCM.Abstractions.Synchronization;
 using MCM.Utils;
 
-using StoryMode;
-
-using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;

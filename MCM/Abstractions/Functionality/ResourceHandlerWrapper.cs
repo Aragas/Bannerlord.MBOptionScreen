@@ -4,17 +4,20 @@ using System;
 using System.Reflection;
 using System.Xml;
 
-namespace MCM.Abstractions.ResourceInjection
+using TaleWorlds.GauntletUI.PrefabSystem;
+
+namespace MCM.Abstractions.Functionality
 {
-    public sealed class ResourceInjectorWrapper : BaseResourceInjector, IWrapper
+    public sealed class ResourceHandlerWrapper : BaseResourceHandler, IWrapper
     {
         public object Object { get; }
         private MethodInfo? InjectBrushMethod { get; }
         private MethodInfo? InjectPrefabMethod { get; }
         private MethodInfo? InjectWidgetMethod { get; }
+        private MethodInfo? MovieRequestedMethod { get; }
         public bool IsCorrect { get; }
 
-        public ResourceInjectorWrapper(object @object)
+        public ResourceHandlerWrapper(object @object)
         {
             Object = @object;
             var type = @object.GetType();
@@ -22,8 +25,10 @@ namespace MCM.Abstractions.ResourceInjection
             InjectBrushMethod = AccessTools.Method(type, nameof(InjectBrush));
             InjectPrefabMethod = AccessTools.Method(type, nameof(InjectPrefab));
             InjectWidgetMethod = AccessTools.Method(type, nameof(InjectWidget));
+            MovieRequestedMethod = AccessTools.Method(type, nameof(MovieRequested));
 
-            IsCorrect = InjectBrushMethod != null && InjectPrefabMethod != null && InjectWidgetMethod != null;
+            IsCorrect = InjectBrushMethod != null && InjectPrefabMethod != null &&
+                        InjectWidgetMethod != null && MovieRequestedMethod != null;
         }
 
         public override void InjectBrush(XmlDocument xmlDocument) =>
@@ -32,5 +37,7 @@ namespace MCM.Abstractions.ResourceInjection
             InjectPrefabMethod?.Invoke(Object, new object[] { prefabName, xmlDocument });
         public override void InjectWidget(Type widgetType) =>
             InjectWidgetMethod?.Invoke(Object, new object[] { widgetType });
+        public override WidgetPrefab? MovieRequested(string movie) =>
+            MovieRequestedMethod?.Invoke(Object, new object[] { movie }) as WidgetPrefab;
     }
 }

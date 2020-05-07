@@ -1,9 +1,8 @@
-﻿using MCM.Abstractions.Settings;
+﻿using MCM.Abstractions;
 
 using System;
 using System.Globalization;
 using System.Reflection;
-using MCM.Abstractions;
 
 namespace MCM.Utils
 {

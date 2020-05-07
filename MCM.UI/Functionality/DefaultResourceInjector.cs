@@ -1,8 +1,9 @@
 ﻿using HarmonyLib;
 
 using MCM.Abstractions.Attributes;
-using MCM.Abstractions.ResourceInjection;
+using MCM.Abstractions.Functionality;
 using MCM.UI.ResourceInjection.Injectors;
+using MCM.UI.ResourceInjection.Loaders;
 
 using System;
 using System.Collections;
@@ -14,10 +15,12 @@ using TaleWorlds.GauntletUI;
 using TaleWorlds.GauntletUI.Data;
 using TaleWorlds.GauntletUI.PrefabSystem;
 
-namespace MCM.UI.ResourceInjection
+namespace MCM.UI.Functionality
 {
     /// <summary>
     /// Can be easily replaced once a less hacky solution is found
+    /// I would gladly use UIExtenderLib, but it LGPL-3 does not allow static linking.
+    /// Wanted to incorporate the .dll via ILMerge to reduce the total binary count.
     /// </summary>
     [Version("e1.0.0",  1)]
     [Version("e1.0.1",  1)]
@@ -35,7 +38,7 @@ namespace MCM.UI.ResourceInjection
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
-    internal sealed class DefaultResourceInjector : BaseResourceInjector
+    internal sealed class DefaultResourceInjector : BaseResourceHandler
     {
         private static int _initialized;
 
@@ -56,7 +59,7 @@ namespace MCM.UI.ResourceInjection
         private static PropertyInfo RootViewProperty { get; } = AccessTools.Property(typeof(GauntletMovie), nameof(GauntletMovie.RootView));
         private static bool LoadMovieHarmony(GauntletMovie __instance, Widget ____movieRootNode)
         {
-            var movie = RequestMovie(__instance.MovieName);
+            var movie =  Instance.MovieRequested(__instance.MovieName);
             if (movie == null)
                 return true;
 
@@ -87,5 +90,12 @@ namespace MCM.UI.ResourceInjection
             PrefabInjector.InjectDocumentAndCreate(prefabName, xmlDocument);
         public override void InjectWidget(Type widgetType) =>
             WidgetInjector.InjectWidget(widgetType);
+        public override WidgetPrefab? MovieRequested(string movie) => movie switch
+        {
+            "ModOptionsView_v3" => PrefabsLoader.LoadModOptionsView(),
+            "EditValueView_v3" => PrefabsLoader.LoadEditValueView(),
+            "OptionsWithModOptionsView_v3" => PrefabsLoader.LoadOptionsWithModOptionsView(),
+            _ => null
+        };
     }
 }

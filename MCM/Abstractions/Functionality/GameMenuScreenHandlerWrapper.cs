@@ -6,7 +6,7 @@ using System.Reflection;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Localization;
 
-namespace MCM.Abstractions.Functionality.Wrapper
+namespace MCM.Abstractions.Functionality
 {
     public sealed class GameMenuScreenHandlerWrapper : BaseGameMenuScreenHandler, IWrapper
     {

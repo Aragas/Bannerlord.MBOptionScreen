@@ -1,4 +1,4 @@
-﻿using MCM.Abstractions.ResourceInjection;
+﻿using MCM.Abstractions.Functionality;
 using MCM.UI.ResourceInjection.Injectors;
 
 using System.Xml;
@@ -30,7 +30,7 @@ namespace MCM.UI.ResourceInjection.Loaders
             return doc;
         }
 
-        public static void Inject(BaseResourceInjector resourceInjector)
+        public static void Inject(BaseResourceHandler resourceInjector)
         {
             resourceInjector.InjectPrefab("ModOptionsPageView_v3", ModOptionsPageView());
             resourceInjector.InjectPrefab("SettingsItemView_v3", SettingsItemView());

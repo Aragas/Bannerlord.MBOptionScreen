@@ -27,7 +27,7 @@ namespace MCM.Implementation.MBO.Settings.Properties
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
-    public class MBOSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
+    internal class MBOSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
     {
         public IEnumerable<SettingsPropertyDefinition> GetProperties(object @object, string id)
         {

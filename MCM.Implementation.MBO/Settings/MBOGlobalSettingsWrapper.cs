@@ -4,6 +4,7 @@ using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
+using MCM.Implementation.MBO.Settings.Properties;
 
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using MCM.Utils;
 
 namespace MCM.Implementation.MBO.Settings
 {
@@ -30,7 +32,7 @@ namespace MCM.Implementation.MBO.Settings
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
-    internal class MBOGlobalSettingsWrapper : BaseGlobalSettingsWrapper
+    public class MBOGlobalSettingsWrapper : BaseGlobalSettingsWrapper
     {
         private PropertyInfo? IdProperty { get; }
         private PropertyInfo? ModuleFolderNameProperty { get; }
@@ -80,11 +82,32 @@ namespace MCM.Implementation.MBO.Settings
         public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
             OnPropertyChangedMethod?.Invoke(Object, new object[] { propertyName! });
 
-        public override List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() =>
-            ((IEnumerable<object>) GetSettingPropertyGroupsMethod!.Invoke(Object, Array.Empty<object>()))
-            .Select(o => new SettingsPropertyGroupDefinitionWrapper(o))
-            .Cast<SettingsPropertyGroupDefinition>()
-            .ToList();
-        protected override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups() => Array.Empty<SettingsPropertyGroupDefinition>();
+        public override List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() => GetWrappedSettingPropertyGroups();
+        private List<SettingsPropertyGroupDefinition> GetWrappedSettingPropertyGroups()
+        {
+            if (GetSettingPropertyGroupsMethod == null)
+            {
+                return GetUnsortedSettingPropertyGroups()
+                    .OrderByDescending(x => x.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)
+                    .ThenByDescending(x => x.Order)
+                    .ThenByDescending(x => x.DisplayGroupName.ToString(), new AlphanumComparatorFast())
+                    .ToList();
+            }
+
+            return ((IEnumerable<object>) GetSettingPropertyGroupsMethod.Invoke(Object, Array.Empty<object>()) ?? new List<object>())
+                .Select(o => new SettingsPropertyGroupDefinitionWrapper(o))
+                .Cast<SettingsPropertyGroupDefinition>()
+                .ToList();
+        }
+        protected override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups()
+        {
+            var groups = new List<SettingsPropertyGroupDefinition>();
+            foreach (var settingProp in new MBOSettingsPropertyDiscoverer().GetProperties(Object, Id))
+            {
+                var group = GetGroupFor(settingProp, groups);
+                group.Add(settingProp);
+            }
+            return groups;
+        }
     }
 }

@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using MCM.Implementation.ModLib.Settings.Properties;
 
 namespace MCM.Implementation.ModLib.Settings
 {
@@ -30,7 +31,7 @@ namespace MCM.Implementation.ModLib.Settings
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
-    internal class ModLibGlobalSettingsWrapper : BaseGlobalSettingsWrapper
+    public class ModLibGlobalSettingsWrapper : BaseGlobalSettingsWrapper
     {
         private PropertyInfo? IDProperty { get; }
         private PropertyInfo? ModuleFolderNameProperty { get; }
@@ -80,9 +81,8 @@ namespace MCM.Implementation.ModLib.Settings
         protected override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups()
         {
             var groups = new List<SettingsPropertyGroupDefinition>();
-            foreach (var settingProp in SettingsUtils.GetProperties(Object, Id))
+            foreach (var settingProp in new ModLibSettingsPropertyDiscoverer().GetProperties(Object, Id))
             {
-                //Find the group that the setting property should belong to. This is the default group if no group is specifically set with the SettingPropertyGroup attribute.
                 var group = GetGroupFor(settingProp, groups);
                 group.Add(settingProp);
             }

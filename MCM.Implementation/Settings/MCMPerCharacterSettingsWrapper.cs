@@ -4,6 +4,7 @@ using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
+using MCM.Implementation.Settings.Properties;
 using MCM.Utils;
 
 using System;
@@ -31,7 +32,7 @@ namespace MCM.Implementation.Settings
     [Version("e1.2.0", 1)]
     [Version("e1.2.1", 1)]
     [Version("e1.3.0", 1)]
-    internal class MCMPerCharacterSettingsWrapper : BasePerCharacterSettingsWrapper
+    public class MCMPerCharacterSettingsWrapper : BasePerCharacterSettingsWrapper
     {
         private PropertyInfo? CharacterIdProperty { get; }
         private PropertyInfo? IdProperty { get; }
@@ -93,7 +94,7 @@ namespace MCM.Implementation.Settings
                     .ToList();
             }
 
-            return ((IEnumerable<object>) GetSettingPropertyGroupsMethod.Invoke(Object, Array.Empty<object>()))
+            return ((IEnumerable<object>) GetSettingPropertyGroupsMethod.Invoke(Object, Array.Empty<object>()) ?? new List<object>())
                 .Select(o => new SettingsPropertyGroupDefinitionWrapper(o))
                 .Cast<SettingsPropertyGroupDefinition>()
                 .ToList();
@@ -101,9 +102,8 @@ namespace MCM.Implementation.Settings
         protected override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups()
         {
             var groups = new List<SettingsPropertyGroupDefinition>();
-            foreach (var settingProp in SettingsUtils.GetProperties(Object, Id))
+            foreach (var settingProp in new MCMSettingsPropertyDiscoverer().GetProperties(Object, Id))
             {
-                //Find the group that the setting property should belong to. This is the default group if no group is specifically set with the SettingPropertyGroup attribute.
                 var group = GetGroupFor(settingProp, groups);
                 group.Add(settingProp);
             }

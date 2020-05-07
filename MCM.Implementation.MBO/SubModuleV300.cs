@@ -1,13 +1,7 @@
 ﻿using HarmonyLib;
 
-using MCM.Abstractions.ApplicationContainer;
-using MCM.Abstractions.Settings.SettingsContainer;
 using MCM.Abstractions.Synchronization;
 using MCM.Utils;
-
-using System;
-using System.IO;
-using System.Linq;
 
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
@@ -18,12 +12,10 @@ namespace MCM.Implementation.MBO
     public sealed class SubModuleV300 : MBSubModuleBase
     {
         private ApplicationVersion GameVersion { get; }
-        private IApplicationContainerProvider ApplicationContainerProvider { get; set; }
 
         public SubModuleV300()
         {
             GameVersion = ApplicationVersionUtils.GameVersion();
-            ApplicationContainerProvider = DI.GetImplementation<IApplicationContainerProvider, ApplicationContainerProviderWrapper>(GameVersion)!;
         }
 
         /// <summary>
@@ -34,24 +26,6 @@ namespace MCM.Implementation.MBO
             using var synchronizationProvider = DI.GetImplementation<ISynchronizationProvider, SynchronizationProviderWrapper>(GameVersion, new object[] { "OnSubModuleLoad_MBOv3" })!;
             if (synchronizationProvider.IsFirstInitialization)
             {
-                /*
-                var settingsProvider = DI.GetImplementation<IGlobalSettingsContainer, SettingsContainerWrapper>(GameVersion)!;
-                ApplicationContainerProvider.Set("MBOptionScreenSettingsProvider", settingsProvider);
-
-                var assemblies = AppDomain.CurrentDomain.GetAssemblies()
-                    .Where(a => !a.IsDynamic)
-                    .Where(a => Path.GetFileNameWithoutExtension(a.Location).StartsWith("MBOptionScreen"));
-                foreach (var assembly in assemblies)
-                {
-                    var settingsProviderWrapperType = assembly.GetType("MBOptionScreen.Settings.SettingsProviderWrapper");
-                    var settingsDatabaseType = assembly.GetType("MBOptionScreen.Settings.SettingsDatabase");
-                    var mbOptionScreenSettingsProviderProperty = AccessTools.Property(settingsDatabaseType, "MBOptionScreenSettingsProvider");
-                    mbOptionScreenSettingsProviderProperty?.SetValue(
-                        null,
-                        Activator.CreateInstance(settingsProviderWrapperType, new object[] { settingsProvider }));
-                }
-                */
-
                 var harmonyV1 = new Harmony("bannerlord.mcm.v1.loaderpreventer");
                 foreach (var method in v1.SettingsDatabasePatch1.TargetMethods())
                 {

@@ -27,7 +27,7 @@ namespace MCM.Implementation.ModLib.Settings.Properties
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
-    public class ModLibSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
+    internal class ModLibSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
     {
         public IEnumerable<SettingsPropertyDefinition> GetProperties(object @object, string id)
         {
@@ -44,13 +44,15 @@ namespace MCM.Implementation.ModLib.Settings.Properties
             {
                 var attributes = property.GetCustomAttributes();
 
-                object groupAttrObj = attributes.FirstOrDefault(a => a.GetType().FullName == "ModLib.Attributes.SettingPropertyGroupAttribute");
+                object groupAttrObj = attributes.FirstOrDefault(a => a.GetType().FullName == "ModLib.Attributes.SettingPropertyGroupAttribute") ??
+                                      attributes.FirstOrDefault(a => a.GetType().FullName == "ModLib.Definitions.Attributes.SettingPropertyGroupAttribute");
                 var groupDefinition = groupAttrObj != null
                     ? (IPropertyGroupDefinition) new PropertyGroupDefinitionWrapper(groupAttrObj)
                     : (IPropertyGroupDefinition) SettingPropertyGroupAttribute.Default;
 
                 object propAttr;
-                propAttr = attributes.SingleOrDefault(a => a.GetType().FullName == "ModLib.Attributes.SettingPropertyAttribute");
+                propAttr = attributes.FirstOrDefault(a => a.GetType().FullName == "ModLib.Attributes.SettingPropertyAttribute") ??
+                           attributes.FirstOrDefault(a => a.GetType().FullName == "ModLib.Definitions.Attributes.SettingPropertyAttribute");
                 if (propAttr != null)
                 {
                     yield return new SettingsPropertyDefinition(

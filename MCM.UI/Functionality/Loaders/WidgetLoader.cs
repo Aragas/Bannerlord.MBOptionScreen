@@ -1,4 +1,4 @@
-﻿using MCM.Abstractions.ResourceInjection;
+﻿using MCM.Abstractions.Functionality;
 using MCM.UI.GUI.Views;
 
 using TaleWorlds.GauntletUI;
@@ -10,7 +10,7 @@ namespace MCM.UI.ResourceInjection.Loaders
     /// </summary>
     internal static class WidgetLoader
     {
-        public static void Inject(BaseResourceInjector resourceInjector)
+        public static void Inject(BaseResourceHandler resourceInjector)
         {
             resourceInjector.InjectWidget(typeof(EditValueTextWidget_v3));
             resourceInjector.InjectWidget(typeof(HoverRichTextWidget_v3));
