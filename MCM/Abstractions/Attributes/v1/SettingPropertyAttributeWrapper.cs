@@ -1,4 +1,4 @@
-﻿namespace MCM.Abstractions.Attributes.v1.Wrapper
+﻿namespace MCM.Abstractions.Attributes.v1
 {
     /// <summary>
     /// Wrapper for SettingPropertyAttribute. I think it world be better to make a model for it.

@@ -8,7 +8,7 @@ using TaleWorlds.Library;
 
 namespace MCM.UI.GUI.ViewModels
 {
-    internal class SettingPropertyGroupVM : ViewModel
+    internal class SettingsPropertyGroupVM : ViewModel
     {
         private bool _isExpanded = true;
         protected ModOptionsVM MainView => SettingsVM.MainView;
@@ -17,8 +17,8 @@ namespace MCM.UI.GUI.ViewModels
 
         public SettingsPropertyGroupDefinition SettingPropertyGroupDefinition { get; }
         public string GroupName => SettingPropertyGroupDefinition.DisplayGroupName.ToString();
-        public SettingPropertyGroupVM? ParentGroup { get; }
-        public SettingPropertyVM GroupToggleSettingProperty { get; private set; } = default!;
+        public SettingsPropertyGroupVM? ParentGroup { get; }
+        public SettingsPropertyVM GroupToggleSettingProperty { get; private set; } = default!;
         public string HintText
         {
             get
@@ -50,9 +50,9 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public string GroupNameDisplay => GroupToggle ? GroupName : $"{GroupName} (Disabled)";
         [DataSourceProperty]
-        public MBBindingList<SettingPropertyVM> SettingProperties { get; } = new MBBindingList<SettingPropertyVM>();
+        public MBBindingList<SettingsPropertyVM> SettingProperties { get; } = new MBBindingList<SettingsPropertyVM>();
         [DataSourceProperty]
-        public MBBindingList<SettingPropertyGroupVM> SettingPropertyGroups { get; } = new MBBindingList<SettingPropertyGroupVM>();
+        public MBBindingList<SettingsPropertyGroupVM> SettingPropertyGroups { get; } = new MBBindingList<SettingsPropertyGroupVM>();
         [DataSourceProperty]
         public bool GroupToggle
         {
@@ -75,13 +75,13 @@ namespace MCM.UI.GUI.ViewModels
                     OnPropertyChanged(nameof(GroupNameDisplay));
                     foreach (var propSetting in SettingProperties)
                     {
-                        propSetting.OnPropertyChanged(nameof(SettingPropertyVM.IsEnabled));
-                        propSetting.OnPropertyChanged(nameof(SettingPropertyVM.IsSettingVisible));
+                        propSetting.OnPropertyChanged(nameof(SettingsPropertyVM.IsEnabled));
+                        propSetting.OnPropertyChanged(nameof(SettingsPropertyVM.IsSettingVisible));
                     }
                     foreach (var subGroup in SettingPropertyGroups)
                     {
-                        subGroup.OnPropertyChanged(nameof(SettingPropertyGroupVM.IsGroupVisible));
-                        subGroup.OnPropertyChanged(nameof(SettingPropertyGroupVM.IsExpanded));
+                        subGroup.OnPropertyChanged(nameof(SettingsPropertyGroupVM.IsGroupVisible));
+                        subGroup.OnPropertyChanged(nameof(SettingsPropertyGroupVM.IsExpanded));
                     }
                 }
             }
@@ -114,18 +114,18 @@ namespace MCM.UI.GUI.ViewModels
                     OnPropertyChanged(nameof(IsGroupVisible));
                     foreach (var subGroup in SettingPropertyGroups)
                     {
-                        subGroup.OnPropertyChanged(nameof(SettingPropertyGroupVM.IsGroupVisible));
-                        subGroup.OnPropertyChanged(nameof(SettingPropertyGroupVM.IsExpanded));
+                        subGroup.OnPropertyChanged(nameof(SettingsPropertyGroupVM.IsGroupVisible));
+                        subGroup.OnPropertyChanged(nameof(SettingsPropertyGroupVM.IsExpanded));
                     }
                     foreach (var settingProp in SettingProperties)
-                        settingProp.OnPropertyChanged(nameof(SettingPropertyVM.IsSettingVisible));
+                        settingProp.OnPropertyChanged(nameof(SettingsPropertyVM.IsSettingVisible));
                 }
             }
         }
         [DataSourceProperty]
         public bool HasGroupToggle => GroupToggleSettingProperty != null;
 
-        public SettingPropertyGroupVM(SettingsPropertyGroupDefinition definition, SettingsVM settingsVM, SettingPropertyGroupVM? parentGroup = null)
+        public SettingsPropertyGroupVM(SettingsPropertyGroupDefinition definition, SettingsVM settingsVM, SettingsPropertyGroupVM? parentGroup = null)
         {
             SettingsVM = settingsVM;
             SettingPropertyGroupDefinition = definition;
@@ -133,7 +133,7 @@ namespace MCM.UI.GUI.ViewModels
             foreach (var settingPropertyDefinition in SettingPropertyGroupDefinition.SettingProperties)
                 Add(settingPropertyDefinition);
             foreach (var settingPropertyDefinition in SettingPropertyGroupDefinition.SubGroups.Reverse())
-                SettingPropertyGroups.Add(new SettingPropertyGroupVM(settingPropertyDefinition, SettingsVM, this));
+                SettingPropertyGroups.Add(new SettingsPropertyGroupVM(settingPropertyDefinition, SettingsVM, this));
 
             RefreshValues();
         }
@@ -151,7 +151,7 @@ namespace MCM.UI.GUI.ViewModels
 
         private void Add(SettingsPropertyDefinition definition)
         {
-            var sp = new SettingPropertyVM(definition, SettingsVM);
+            var sp = new SettingsPropertyVM(definition, SettingsVM);
             SettingProperties.Add(sp);
             sp.Group = this;
 
@@ -175,7 +175,7 @@ namespace MCM.UI.GUI.ViewModels
             if (SettingProperties.Count > 0)
             {
                 foreach (var prop in SettingProperties)
-                    prop.OnPropertyChanged(nameof(SettingPropertyVM.IsSettingVisible));
+                    prop.OnPropertyChanged(nameof(SettingsPropertyVM.IsSettingVisible));
             }
             OnPropertyChanged(nameof(IsGroupVisible));
         }

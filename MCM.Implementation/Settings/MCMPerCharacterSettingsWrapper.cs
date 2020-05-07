@@ -1,5 +1,7 @@
 ﻿using HarmonyLib;
 
+using MCM.Abstractions.Attributes;
+using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
 using MCM.Utils;
@@ -11,10 +13,27 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace MCM.Abstractions.Settings
+namespace MCM.Implementation.Settings
 {
-    public sealed class GlobalSettingsWrapper : BaseGlobalSettingsWrapper
+    [Version("e1.0.0", 1)]
+    [Version("e1.0.1", 1)]
+    [Version("e1.0.2", 1)]
+    [Version("e1.0.3", 1)]
+    [Version("e1.0.4", 1)]
+    [Version("e1.0.5", 1)]
+    [Version("e1.0.6", 1)]
+    [Version("e1.0.7", 1)]
+    [Version("e1.0.8", 1)]
+    [Version("e1.0.9", 1)]
+    [Version("e1.0.10", 1)]
+    [Version("e1.0.11", 1)]
+    [Version("e1.1.0", 1)]
+    [Version("e1.2.0", 1)]
+    [Version("e1.2.1", 1)]
+    [Version("e1.3.0", 1)]
+    internal class MCMPerCharacterSettingsWrapper : BasePerCharacterSettingsWrapper
     {
+        private PropertyInfo? CharacterIdProperty { get; }
         private PropertyInfo? IdProperty { get; }
         private PropertyInfo? ModuleFolderNameProperty { get; }
         private PropertyInfo? DisplayNameProperty { get; }
@@ -38,9 +57,10 @@ namespace MCM.Abstractions.Settings
             remove { if (Object is INotifyPropertyChanged notifyPropertyChanged) notifyPropertyChanged.PropertyChanged -= value; }
         }
 
-        public GlobalSettingsWrapper(object @object) : base(@object)
+        public MCMPerCharacterSettingsWrapper(object @object) : base(@object)
         {
             var type = @object.GetType();
+            CharacterIdProperty = AccessTools.Property(type, nameof(CharacterId));
             IdProperty = AccessTools.Property(type, nameof(Id));
             ModuleFolderNameProperty = AccessTools.Property(type, nameof(FolderName));
             DisplayNameProperty = AccessTools.Property(type, nameof(DisplayName));
@@ -50,6 +70,12 @@ namespace MCM.Abstractions.Settings
             FormatProperty = AccessTools.Property(type, nameof(Format));
             GetSettingPropertyGroupsMethod = AccessTools.Method(type, nameof(GetSettingPropertyGroups));
             OnPropertyChangedMethod = AccessTools.Method(type, nameof(OnPropertyChanged));
+
+            IsCorrect = CharacterIdProperty != null && IdProperty != null && ModuleFolderNameProperty != null &&
+                        DisplayNameProperty != null && UIVersionProperty != null &&
+                        SubFolderProperty != null && SubGroupDelimiterProperty != null &&
+                        FormatProperty != null && GetSettingPropertyGroupsMethod != null &&
+                        OnPropertyChangedMethod != null;
         }
 
         public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>

@@ -7,6 +7,7 @@ using MCM.Utils;
 
 using System.Collections.Generic;
 using System.Linq;
+using TaleWorlds.Core;
 
 namespace MCM.Implementation.Settings.SettingsProvider
 {
@@ -28,41 +29,64 @@ namespace MCM.Implementation.Settings.SettingsProvider
     [Version("e1.3.0",  1)]
     internal sealed class DefaultSettingsProvider : BaseSettingsProvider
     {
-        private List<ISettingsContainer> SettingsProviders { get; }
+        private List<ISettingsContainer> SettingsContainers { get; }
 
         public override IEnumerable<SettingsDefinition> CreateModSettingsDefinitions => 
-            SettingsProviders.SelectMany(sp => sp.CreateModSettingsDefinitions)
+            SettingsContainers.SelectMany(sp => sp.CreateModSettingsDefinitions)
                 .OrderByDescending(x => x.DisplayName, new AlphanumComparatorFast());
 
         public DefaultSettingsProvider()
         {
-            SettingsProviders = DI.GetImplementations<ISettingsContainer, SettingsContainerWrapper>(ApplicationVersionUtils.GameVersion()).ToList();
+            SettingsContainers = DI.GetImplementations<ISettingsContainer, SettingsContainerWrapper>(ApplicationVersionUtils.GameVersion()).ToList();
         }
 
         public override BaseSettings? GetSettings(string id)
         {
-            foreach (var settingsProvider in SettingsProviders)
+            foreach (var settingsContainer in SettingsContainers)
             {
-                if (settingsProvider.GetSettings(id) is {} settings)
+                if (settingsContainer.GetSettings(id) is {} settings)
                     return settings is BaseSettings baseSettings ? baseSettings : BaseGlobalSettingsWrapper.Create(settings);
             }
             return null;
         }
         public override void SaveSettings(BaseSettings settings)
         {
-            foreach (var settingsProvider in SettingsProviders)
-                settingsProvider.SaveSettings(settings);
+            foreach (var settingsContainer in SettingsContainers)
+                settingsContainer.SaveSettings(settings);
+            settings.OnPropertyChanged(BaseSettings.SaveTriggered);
         }
 
         public override void ResetSettings(BaseSettings settings)
         {
-            foreach (var settingsProvider in SettingsProviders)
-                settingsProvider.ResetSettings(settings);
+            foreach (var settingsContainer in SettingsContainers)
+                settingsContainer.ResetSettings(settings);
         }
         public override void OverrideSettings(BaseSettings settings)
         {
-            foreach (var settingsProvider in SettingsProviders)
-                settingsProvider.OverrideSettings(settings);
+            foreach (var settingsContainer in SettingsContainers)
+                settingsContainer.OverrideSettings(settings);
+        }
+
+        public override void OnGameStarted(Game game)
+        {
+            foreach (var settingsContainer in SettingsContainers)
+            {
+                if (settingsContainer is IPerCharacterContainer perCharacterContainer)
+                {
+                    perCharacterContainer.OnGameStarted(game);
+                }
+            }
+        }
+        public override void OnGameEnded(Game game)
+        {
+            foreach (var settingsContainer in SettingsContainers)
+            {
+                if (settingsContainer is IPerCharacterContainer perCharacterContainer)
+                {
+                    perCharacterContainer.OnGameEnded(game);
+
+                }
+            }
         }
     }
 }

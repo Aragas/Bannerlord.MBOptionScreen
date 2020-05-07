@@ -38,7 +38,7 @@ namespace MCM.Abstractions.Settings.Definitions.Wrapper
             SettingType = settingTypeObject != null
                 ? Enum.TryParse<SettingType>(settingTypeObject.ToString(), out var resultEnum) ? resultEnum : SettingType.NONE
                 : SettingType.NONE;
-            Property = new ProxyPropertyInfo((PropertyInfo) type.GetProperty(nameof(Property)).GetValue(@object));
+            Property = new WrapperPropertyInfo((PropertyInfo) type.GetProperty(nameof(Property)).GetValue(@object));
 
             DisplayName = (AccessTools.Property(type, nameof(DisplayName)) ?? AccessTools.Property(type, "Name"))?.GetValue(@object) switch
             {
@@ -87,7 +87,7 @@ namespace MCM.Abstractions.Settings.Definitions.Wrapper
 
             var settingsInstance = AccessTools.Property(type, "SettingsInstance")?.GetValue(@object);
             SettingsId = AccessTools.Property(settingsInstance!.GetType(), "ID")?.GetValue(settingsInstance) as string ?? "ERROR";
-            Property = new ProxyPropertyInfo((PropertyInfo) AccessTools.Property(type, "Property").GetValue(@object));
+            Property = new WrapperPropertyInfo((PropertyInfo) AccessTools.Property(type, "Property").GetValue(@object));
             var settingTypeObject = AccessTools.Property(type, "SettingType")?.GetValue(@object);
             SettingType = settingTypeObject != null
                 ? Enum.TryParse<SettingType>(settingTypeObject.ToString(), out var resultEnum) ? resultEnum : SettingType.NONE

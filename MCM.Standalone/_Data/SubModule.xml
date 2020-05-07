@@ -22,6 +22,7 @@
         <Tag key="IsNoRenderModeElement" value="false" />
       </Tags>
     </SubModule>
+    <!--
     <SubModule>
       <Name value="ModLib Substitute"/>
       <DLLName value="ModLib.dll"/>
@@ -31,5 +32,6 @@
         <Tag key="IsNoRenderModeElement" value="false" />
       </Tags>
     </SubModule>
+    -->
   </SubModules>
 </Module>

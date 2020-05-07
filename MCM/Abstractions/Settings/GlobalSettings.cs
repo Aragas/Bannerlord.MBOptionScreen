@@ -10,8 +10,6 @@ namespace MCM.Abstractions.Settings
 
     public abstract class GlobalSettings : BaseSettings
     {
-        public abstract string ModuleFolderName { get; }
-        public virtual string SubFolder => "";
-        public virtual string Format => "json";
+
     }
 }

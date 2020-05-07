@@ -2,6 +2,7 @@
 using MCM.Utils;
 
 using System.Collections.Generic;
+using TaleWorlds.Core;
 
 namespace MCM.Abstractions.Settings.SettingsProvider
 {
@@ -16,5 +17,8 @@ namespace MCM.Abstractions.Settings.SettingsProvider
         public abstract void SaveSettings(BaseSettings settings);
         public abstract void ResetSettings(BaseSettings settings);
         public abstract void OverrideSettings(BaseSettings settings);
+
+        public abstract void OnGameStarted(Game game);
+        public abstract void OnGameEnded(Game game);
     }
 }

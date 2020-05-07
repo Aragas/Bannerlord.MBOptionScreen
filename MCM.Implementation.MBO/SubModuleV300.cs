@@ -34,6 +34,7 @@ namespace MCM.Implementation.MBO
             using var synchronizationProvider = DI.GetImplementation<ISynchronizationProvider, SynchronizationProviderWrapper>(GameVersion, new object[] { "OnSubModuleLoad_MBOv3" })!;
             if (synchronizationProvider.IsFirstInitialization)
             {
+                /*
                 var settingsProvider = DI.GetImplementation<IGlobalSettingsContainer, SettingsContainerWrapper>(GameVersion)!;
                 ApplicationContainerProvider.Set("MBOptionScreenSettingsProvider", settingsProvider);
 
@@ -49,7 +50,7 @@ namespace MCM.Implementation.MBO
                         null,
                         Activator.CreateInstance(settingsProviderWrapperType, new object[] { settingsProvider }));
                 }
-
+                */
 
                 var harmonyV1 = new Harmony("bannerlord.mcm.v1.loaderpreventer");
                 foreach (var method in v1.SettingsDatabasePatch1.TargetMethods())

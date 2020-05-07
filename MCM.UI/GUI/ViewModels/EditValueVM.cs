@@ -12,7 +12,7 @@ namespace MCM.UI.GUI.ViewModels
         private string _titleText = "title";
         private string _descriptionText = "description";
 
-        public SettingPropertyVM SettingProperty { get; set; }
+        public SettingsPropertyVM SettingProperty { get; set; }
 
         [DataSourceProperty]
         public string TextInput
@@ -55,17 +55,13 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public float MaxValue => SettingProperty.SettingPropertyDefinition.EditableMaxValue;
 
-        public EditValueVM(SettingPropertyVM settingProperty)
+        public EditValueVM(SettingsPropertyVM settingProperty)
         {
             SettingProperty = settingProperty;
 
             TitleText = $"Edit \"{SettingProperty.Name}\"";
             switch (SettingType)
             {
-                case SettingType.Bool:
-                case SettingType.Dropdown:
-                    // Won't appear here
-                    break;
                 case SettingType.Int:
                 case SettingType.Float:
                 {

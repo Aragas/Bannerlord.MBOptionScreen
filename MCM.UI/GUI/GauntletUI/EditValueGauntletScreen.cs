@@ -10,12 +10,12 @@ namespace MCM.UI.GUI.GauntletUI
 {
     internal class EditValueGauntletScreen : ScreenBase
     {
-        private readonly SettingPropertyVM _settingProperty;
+        private readonly SettingsPropertyVM _settingProperty;
         private GauntletLayer _gauntletLayer = default!;
         private GauntletMovie _gauntletMovie = default!;
         private EditValueVM _dataSource = default!;
 
-        public EditValueGauntletScreen(SettingPropertyVM settingProperty)
+        public EditValueGauntletScreen(SettingsPropertyVM settingProperty)
         {
             _settingProperty = settingProperty;
         }

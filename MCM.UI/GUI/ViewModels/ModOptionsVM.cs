@@ -1,6 +1,5 @@
-﻿using MCM.Abstractions.Settings;
+﻿using System;
 using MCM.Abstractions.Settings.SettingsProvider;
-using MCM.UI.Actions;
 using MCM.UI.ExtensionMethods;
 
 using System.Linq;
@@ -111,7 +110,7 @@ namespace MCM.UI.GUI.ViewModels
                 if (_searchText != value)
                 {
                     _searchText = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(SearchText));
                     if (SelectedMod?.SettingPropertyGroups.Count > 0)
                     {
                         foreach (var group in SelectedMod.SettingPropertyGroups)
@@ -160,11 +159,11 @@ namespace MCM.UI.GUI.ViewModels
         }
 
         public bool ExecuteCancel() => ExecuteCancelInternal(true);
-        public bool ExecuteCancelInternal(bool popScreen)
+        public bool ExecuteCancelInternal(bool popScreen, Action? onClose = null)
         {
             OnFinalize();
-            if (popScreen)
-                ScreenManager.PopScreen();
+            if (popScreen) ScreenManager.PopScreen();
+            else onClose?.Invoke();
             foreach (var viewModel in ModSettingsList)
             {
                 viewModel.URS.UndoAll();
@@ -172,35 +171,36 @@ namespace MCM.UI.GUI.ViewModels
             }
             return true;
         }
+
         public void ExecuteDone() => ExecuteDoneInternal(true);
-        public void ExecuteDoneInternal(bool popScreen)
+        public void ExecuteDoneInternal(bool popScreen, Action? onClose = null)
         {
-            //Save the changes to file.
             if (!ModSettingsList.Any(x => x.URS.ChangesMade()))
             {
                 OnFinalize();
-                if (popScreen)
-                    ScreenManager.PopScreen();
+                if (popScreen) ScreenManager.PopScreen();
+                else onClose?.Invoke();
                 return;
             }
 
+            //Save the changes to file.
             var changedModSettings = ModSettingsList.Where(x => x.URS.ChangesMade()).ToList();
 
             var requireRestart = ModSettingsList.Any(x => x.RestartRequired());
             if (requireRestart)
             {
                 InformationManager.ShowInquiry(new InquiryData("Game Needs to Restart",
-                    "The game needs to be restarted to apply mods settings changes. Do you want to close the game now?",
+                    "The game needs to be restarted to apply mod settings changes. Do you want to close the game now?",
                     true, true, "Yes", "No",
                     () =>
                     {
                         changedModSettings
                             .Do(x => BaseSettingsProvider.Instance.SaveSettings(x.SettingsInstance))
-                            .Do(x => HarmonyLib.AccessTools.Method(x.SettingsInstance.GetType(), "OnPropertyChanged")?.Invoke(x.SettingsInstance, new object[] { BaseSettings.SaveTriggered }))
                             .Do(x => x.URS.ClearStack())
                             .ToList();
 
                         OnFinalize();
+                        onClose?.Invoke();
                         Utilities.QuitGame();
                     }, () => { }));
             }
@@ -208,22 +208,15 @@ namespace MCM.UI.GUI.ViewModels
             {
                 changedModSettings
                     .Do(x => BaseSettingsProvider.Instance.SaveSettings(x.SettingsInstance))
-                    .Do(x =>
-                    {
-                        var method = HarmonyLib.AccessTools.Method(x.SettingsInstance.GetType(), "OnPropertyChanged");
-
-                        method?.Invoke(x.SettingsInstance, new object[] { BaseSettings.SaveTriggered});
-                    })
                     .Do(x => x.URS.ClearStack())
                     .ToList();
+
                 OnFinalize();
-                if (popScreen)
-                    ScreenManager.PopScreen();
+                if (popScreen) ScreenManager.PopScreen();
+                else onClose?.Invoke();
             }
         }
 
-        // TODO: Do not replace the reference
-        // TODO: Trigger Save
         public void ExecuteRevert()
         {
             if (SelectedMod != null)
@@ -233,27 +226,10 @@ namespace MCM.UI.GUI.ViewModels
                     true, true, "Yes", "No",
                     () =>
                     {
-                        SelectedMod.URS.Do(new ComplexReferenceTypeAction<SettingsVM>(new ProxyRef(() => SelectedMod, null), 
-                            modSettingsVM =>
-                            {
-                                //Do action
-                                BaseSettingsProvider.Instance.ResetSettings(modSettingsVM.SettingsInstance);
-                                modSettingsVM.RefreshValues();
-                                ExecuteSelect(null);
-                                ExecuteSelect(modSettingsVM);
-                            },
-                            modSettingsVM =>
-                            {
-                                //Undo action
-                                BaseSettingsProvider.Instance.OverrideSettings(modSettingsVM.SettingsInstance);
-                                modSettingsVM.RefreshValues();
-                                if (SelectedMod == modSettingsVM)
-                                {
-                                    ExecuteSelect(null);
-                                    ExecuteSelect(modSettingsVM);
-                                }
-                            }));
-
+                        SelectedMod.ResetSettings();
+                        var selectedMod = SelectedMod;
+                        ExecuteSelect(null);
+                        ExecuteSelect(selectedMod);
                     }, null));
             }
         }

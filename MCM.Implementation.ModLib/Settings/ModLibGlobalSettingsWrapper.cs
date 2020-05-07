@@ -38,7 +38,7 @@ namespace MCM.Implementation.ModLib.Settings
         private PropertyInfo? SubFolderProperty { get; }
 
         public override string Id => IDProperty?.GetValue(Object) as string ?? "ERROR";
-        public override string ModuleFolderName // TODO: ModLib throws for some reason
+        public override string FolderName // TODO: ModLib throws for some reason
         {
             get
             {
@@ -70,7 +70,7 @@ namespace MCM.Implementation.ModLib.Settings
             Object = @object;
         }
 
-        protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null) { }
+        public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) { }
 
         public override List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() => GetUnsortedSettingPropertyGroups()
             .OrderByDescending(x => x.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)

@@ -10,7 +10,7 @@ namespace MCM.Utils
     /// <summary>
     /// PropertyInfo Proxy that will redirect Get/Set to the actual class, not the wrapper that holds it.
     /// </summary>
-    internal sealed class ProxyPropertyInfo : PropertyInfo
+    public sealed class WrapperPropertyInfo : PropertyInfo
     {
         private readonly PropertyInfo _propertyInfoImplementation;
 
@@ -22,7 +22,7 @@ namespace MCM.Utils
         public override bool CanRead => _propertyInfoImplementation.CanRead;
         public override bool CanWrite => _propertyInfoImplementation.CanWrite;
 
-        public ProxyPropertyInfo(PropertyInfo actualPropertyInfo)
+        public WrapperPropertyInfo(PropertyInfo actualPropertyInfo)
         {
             _propertyInfoImplementation = actualPropertyInfo;
         }
@@ -52,7 +52,7 @@ namespace MCM.Utils
 
         public override bool Equals(object obj)
         {
-            if (obj is ProxyPropertyInfo proxy)
+            if (obj is WrapperPropertyInfo proxy)
             {
                 return _propertyInfoImplementation.Equals(proxy._propertyInfoImplementation);
             }

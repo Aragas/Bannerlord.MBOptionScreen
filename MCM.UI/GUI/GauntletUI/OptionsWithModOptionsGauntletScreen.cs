@@ -45,7 +45,7 @@ namespace MCM.UI.GUI.GauntletUI
         private GauntletLayer _gauntletLayer = default!;
 		private OptionsModOptionsViewModel _dataSource = default!;
 		private GauntletMovie _gauntletMovie = default!;
-        private KeybindingPopup _keybindingPopup;
+        private KeybindingPopup _keybindingPopup = default!;
 		private GameKeyOptionVM _currentGameKey = default!;
 		private SpriteCategory _spriteCategoryOptions = default!;
 		private SpriteCategory _spriteCategoryEncyclopedia = default!;
@@ -81,6 +81,7 @@ namespace MCM.UI.GUI.GauntletUI
             _gauntletLayer.ReleaseMovie(_gauntletMovie);
             _gauntletLayer = null!;
             _gauntletMovie = null!;
+            _keybindingPopup = null!;
             _dataSource.ModOptions.ExecuteSelect(null);
             _dataSource = null!;
 			Utilities.SetForceVsync(false);

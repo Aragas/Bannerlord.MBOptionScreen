@@ -2,12 +2,15 @@
 
 using MCM.Abstractions.Data;
 
+using System.Reflection;
+
 using TaleWorlds.Core.ViewModelCollection;
 
 namespace MCM.UI.Actions
 {
     internal sealed class SetDropdownIndexAction : IAction
     {
+        private PropertyInfo SelectedIndexProperty { get; }
         private IRef DropdownContext { get; }
         public IRef Context { get; }
         public object Value { get; }
@@ -15,12 +18,11 @@ namespace MCM.UI.Actions
 
         public SetDropdownIndexAction(IRef context, SelectorVM<SelectorItemVM> value)
         {
-            var selectedIndexProperty = AccessTools.Property(context.Value.GetType(), nameof(IDropdownProvider.SelectedIndex));
-
             DropdownContext = context;
-            Context = new ProxyRef(() => selectedIndexProperty.GetValue(DropdownContext.Value), o => selectedIndexProperty.SetValue(DropdownContext.Value, o));
+            SelectedIndexProperty = AccessTools.Property(DropdownContext.Value.GetType(), nameof(IDropdownProvider.SelectedIndex));
+            Context = new ProxyRef(() => SelectedIndexProperty.GetValue(DropdownContext.Value), o => SelectedIndexProperty.SetValue(DropdownContext.Value, o));
             Value = value.SelectedIndex;
-            Original = selectedIndexProperty.GetValue(Context.Value);
+            Original = Context.Value;
         }
 
         public void DoAction() => Context.Value = Value;

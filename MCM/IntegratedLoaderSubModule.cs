@@ -73,7 +73,7 @@ namespace MCM
                     _mcmImplementationSubModules.Add((subModule, subModuleType));
             }
 
-            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
+            foreach (var (_, subModuleType) in _mcmImplementationSubModules)
             {
                 if (!_reflectionCache.ContainsKey(subModuleType))
                     _reflectionCache.Add(subModuleType, new Dictionary<string, MethodInfo?>());
@@ -136,7 +136,7 @@ namespace MCM
         }
         public override void OnGameEnd(Game game)
         {
-            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
+            foreach (var (subModule, _) in _mcmImplementationSubModules)
                 subModule.OnGameEnd(game);
         }
         public override void OnGameInitializationFinished(Game game)

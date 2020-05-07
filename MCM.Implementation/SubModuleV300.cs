@@ -1,6 +1,11 @@
-﻿using MCM.Abstractions.Synchronization;
+﻿using MCM.Abstractions.Settings.SettingsProvider;
+using MCM.Abstractions.Synchronization;
 using MCM.Utils;
 
+using StoryMode;
+
+using TaleWorlds.CampaignSystem;
+using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 
@@ -37,6 +42,18 @@ namespace MCM.Implementation
             {
 
             }
+        }
+
+        protected override void OnGameStart(Game game, IGameStarter gameStarter)
+        {
+            base.OnGameInitializationFinished(game);
+            BaseSettingsProvider.Instance.OnGameStarted(game);
+        }
+        public override void OnGameEnd(Game game)
+        {
+            base.OnGameEnd(game);
+            BaseSettingsProvider.Instance.OnGameEnded(game);
+
         }
     }
 }

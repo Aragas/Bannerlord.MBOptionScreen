@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace MCM.Abstractions.Settings
 {
-    public abstract class AttributePerCharacterSettings<T> : PerCharacterSettings where T : PerCharacterSettings, new()
+    public abstract class AttributePerCharacterSettings<T> : PerCharacterSettings<T> where T : PerCharacterSettings, new()
     {
         protected override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups()
         {

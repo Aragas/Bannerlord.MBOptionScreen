@@ -1,4 +1,5 @@
-﻿using MCM.Abstractions.Settings;
+﻿using MCM.Abstractions;
+using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.SettingsProvider;
 using MCM.UI.Actions;
@@ -16,7 +17,7 @@ namespace MCM.UI.GUI.ViewModels
     {
         private bool _isSelected;
         private Action<SettingsVM> _executeSelect = default!;
-        private MBBindingList<SettingPropertyGroupVM> _settingPropertyGroups = default!;
+        private MBBindingList<SettingsPropertyGroupVM> _settingPropertyGroups = default!;
 
         public ModOptionsVM MainView { get; }
         public UndoRedoStack URS { get; } = new UndoRedoStack();
@@ -42,7 +43,7 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
         [DataSourceProperty]
-        public MBBindingList<SettingPropertyGroupVM> SettingPropertyGroups
+        public MBBindingList<SettingsPropertyGroupVM> SettingPropertyGroups
         {
             get => _settingPropertyGroups;
             set
@@ -64,14 +65,17 @@ namespace MCM.UI.GUI.ViewModels
             if (SettingsInstance is INotifyPropertyChanged notifyPropertyChanged)
                 notifyPropertyChanged.PropertyChanged += Settings_PropertyChanged;
 
-            SettingPropertyGroups = new MBBindingList<SettingPropertyGroupVM>();
-            foreach (var settingPropertyGroup in SettingsInstance.GetSettingPropertyGroups().Select(d => new SettingPropertyGroupVM(d, this)))
+            SettingPropertyGroups = new MBBindingList<SettingsPropertyGroupVM>();
+            foreach (var settingPropertyGroup in SettingsInstance.GetSettingPropertyGroups().Select(d => new SettingsPropertyGroupVM(d, this)))
                 SettingPropertyGroups.Add(settingPropertyGroup);
 
             RefreshValues();
         }
         private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            if (e.PropertyName == BaseSettings.SaveTriggered)
+                return;
+
             RefreshValues();
         }
 
@@ -103,7 +107,7 @@ namespace MCM.UI.GUI.ViewModels
 
             foreach (var property in properties)
             {
-                var stack = URS.UndoStack.Where(s => s.Context != null && s.Context is PropertyRef propertyRef && propertyRef.PropertyInfo == property.Property).ToList();
+                var stack = URS.UndoStack.Where(s => s.Context is PropertyRef propertyRef && propertyRef.PropertyInfo == property.Property).ToList();
                 if (stack.Count == 0)
                     continue;
                 else
@@ -119,16 +123,45 @@ namespace MCM.UI.GUI.ViewModels
 
             return false;
         }
-        private static IEnumerable<SettingsPropertyDefinition> GetAllSettingPropertyDefinitions(SettingPropertyGroupVM settingPropertyGroup1)
+        private static IEnumerable<SettingsPropertyDefinition> GetAllSettingPropertyDefinitions(SettingsPropertyGroupVM settingPropertyGroup1)
         {
             foreach (var settingProperty in settingPropertyGroup1.SettingProperties)
                 yield return settingProperty.SettingPropertyDefinition;
 
             foreach (var settingPropertyGroup in settingPropertyGroup1.SettingPropertyGroups)
-                foreach (var settingProperty in GetAllSettingPropertyDefinitions(settingPropertyGroup))
-                {
-                    yield return settingProperty;
-                }
+            foreach (var settingProperty in GetAllSettingPropertyDefinitions(settingPropertyGroup))
+            {
+                yield return settingProperty;
+            }
+        }
+
+        public void ResetSettings()
+        {
+            var settings = SettingsInstance;
+            var newSettings = settings is IWrapper wrapper
+                ? BaseGlobalSettingsWrapper.Create(Activator.CreateInstance(wrapper.Object.GetType()))
+                : (GlobalSettings)Activator.CreateInstance(settings.GetType());
+
+            OverrideSettings(newSettings);
+        }
+        public void OverrideSettings(BaseSettings newSettings)
+        {
+            var settings = SettingsInstance;
+            if (settings is IWrapper wrapper && newSettings is IWrapper newWrapper)
+                Utils.OverridePropertyValues(SettingPropertyGroups.SelectMany(GetAllSettingPropertyVMs), wrapper.Object, newWrapper.Object);
+            else
+                Utils.OverridePropertyValues(SettingPropertyGroups.SelectMany(GetAllSettingPropertyVMs), settings, newSettings);
+        }
+        private static IEnumerable<SettingsPropertyVM> GetAllSettingPropertyVMs(SettingsPropertyGroupVM settingPropertyGroup1)
+        {
+            foreach (var settingProperty in settingPropertyGroup1.SettingProperties)
+                yield return settingProperty;
+
+            foreach (var settingPropertyGroup in settingPropertyGroup1.SettingPropertyGroups)
+            foreach (var settingProperty in GetAllSettingPropertyVMs(settingPropertyGroup))
+            {
+                yield return settingProperty;
+            }
         }
 
 

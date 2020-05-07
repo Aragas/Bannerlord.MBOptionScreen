@@ -64,7 +64,6 @@
     <ProjectReference Include="..\MCM.Implementation\MCM.Implementation.csproj" />
     <ProjectReference Include="..\MCM.UI\MCM.UI.csproj" />
     <ProjectReference Include="..\MCM\MCM.csproj" />
-    <ProjectReference Include="..\ModLib Substitute\ModLib Substitute.csproj" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">

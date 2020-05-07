@@ -43,7 +43,7 @@ namespace MCM.Implementation.MBO.Settings
         private MethodInfo? OnPropertyChangedMethod { get; }
 
         public override string Id => IdProperty?.GetValue(Object) as string ?? "ERROR";
-        public override string ModuleFolderName => ModuleFolderNameProperty?.GetValue(Object) as string ?? "";
+        public override string FolderName => ModuleFolderNameProperty?.GetValue(Object) as string ?? "";
         public override string DisplayName => ModNameProperty?.GetValue(Object) as string ?? "ERROR";
         public override int UIVersion => UIVersionProperty?.GetValue(Object) as int? ?? 1;
         public override string SubFolder => SubFolderProperty?.GetValue(Object) as string ?? "";
@@ -77,7 +77,7 @@ namespace MCM.Implementation.MBO.Settings
                         OnPropertyChangedMethod != null*/;
         }
 
-        protected override void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
+        public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
             OnPropertyChangedMethod?.Invoke(Object, new object[] { propertyName! });
 
         public override List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() =>

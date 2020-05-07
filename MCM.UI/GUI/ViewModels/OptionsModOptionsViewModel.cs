@@ -197,14 +197,12 @@ namespace MCM.UI.GUI.ViewModels
 
         public void ExecuteDone()
         {
-            ModOptions.ExecuteDoneInternal(false);
-            AccessTools.Method(typeof(OptionsVM), "ExecuteDone").Invoke(_wrapped, Array.Empty<object>());
+            ModOptions.ExecuteDoneInternal(false, () => AccessTools.Method(typeof(OptionsVM), "ExecuteDone").Invoke(_wrapped, Array.Empty<object>()));
         }
 
         public void ExecuteCancel()
         {
-            ModOptions.ExecuteCancelInternal(false);
-            AccessTools.Method(typeof(OptionsVM), "ExecuteCancel").Invoke(_wrapped, Array.Empty<object>());
+            ModOptions.ExecuteCancelInternal(false, () => AccessTools.Method(typeof(OptionsVM), "ExecuteCancel").Invoke(_wrapped, Array.Empty<object>()));
         }
     }
 }

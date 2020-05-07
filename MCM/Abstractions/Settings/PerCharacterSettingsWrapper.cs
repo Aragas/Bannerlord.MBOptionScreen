@@ -13,7 +13,7 @@ using System.Runtime.CompilerServices;
 
 namespace MCM.Abstractions.Settings
 {
-    public sealed class GlobalSettingsWrapper : BaseGlobalSettingsWrapper
+    public sealed class PerCharacterSettingsWrapper : BasePerCharacterSettingsWrapper
     {
         private PropertyInfo? IdProperty { get; }
         private PropertyInfo? ModuleFolderNameProperty { get; }
@@ -38,7 +38,7 @@ namespace MCM.Abstractions.Settings
             remove { if (Object is INotifyPropertyChanged notifyPropertyChanged) notifyPropertyChanged.PropertyChanged -= value; }
         }
 
-        public GlobalSettingsWrapper(object @object) : base(@object)
+        public PerCharacterSettingsWrapper(object @object) : base(@object)
         {
             var type = @object.GetType();
             IdProperty = AccessTools.Property(type, nameof(Id));
@@ -67,7 +67,7 @@ namespace MCM.Abstractions.Settings
                     .ToList();
             }
 
-            return ((IEnumerable<object>) GetSettingPropertyGroupsMethod.Invoke(Object, Array.Empty<object>()))
+            return ((IEnumerable<object>)GetSettingPropertyGroupsMethod.Invoke(Object, Array.Empty<object>()))
                 .Select(o => new SettingsPropertyGroupDefinitionWrapper(o))
                 .Cast<SettingsPropertyGroupDefinition>()
                 .ToList();

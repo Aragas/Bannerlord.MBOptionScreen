@@ -1,6 +1,8 @@
-﻿namespace MCM.Abstractions.Attributes.v1.Wrapper
+﻿using MCM.Abstractions.Attributes.v1;
+
+namespace MCM.Implementation.MBO.Attributes.v1.Wrapper
 {
-    public sealed class OldSettingPropertyAttributeWrapper : SettingPropertyAttribute
+    public sealed class MBOSettingPropertyAttributeWrapper : SettingPropertyAttribute
     {
         private static string? GetDisplayName(object @object)
         {
@@ -47,7 +49,7 @@
         /// </summary>
         public float EditableMaxValue { get; } = 0f;
 
-        public OldSettingPropertyAttributeWrapper(object @object) : base(
+        public MBOSettingPropertyAttributeWrapper(object @object) : base(
             GetDisplayName(@object) ?? "ERROR",
             GetMinValue(@object) ?? 0f,
             GetMaxValue(@object) ?? 0f)

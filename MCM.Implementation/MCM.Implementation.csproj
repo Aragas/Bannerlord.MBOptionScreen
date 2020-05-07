@@ -54,7 +54,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MCM\MCM.csproj" />
-    <ProjectReference Include="..\ModLib Substitute\ModLib Substitute.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,15 +1,15 @@
 ﻿using HarmonyLib;
 
 using MCM.Abstractions.ApplicationContainer;
-using MCM.Abstractions.Functionality;
 using MCM.Abstractions.Synchronization;
+using MCM.Implementation.ModLib.Functionality;
 using MCM.Implementation.ModLib.Settings.SettingsContainer;
 using MCM.Utils;
 
 using System;
 using System.IO;
 using System.Linq;
-using MCM.Implementation.ModLib.Functionality;
+
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 
@@ -34,6 +34,7 @@ namespace MCM.Implementation.ModLib
             using var synchronizationProvider = DI.GetImplementation<ISynchronizationProvider, SynchronizationProviderWrapper>(GameVersion, new object[] { "OnSubModuleLoad_ModLibv3" })!;
             if (synchronizationProvider.IsFirstInitialization)
             {
+                /*
                 var modLibSettingsProvider = DI.GetImplementation<IModLibSettingsContainer, ModLibSettingsContainerWrapper>(GameVersion)!;
                 ApplicationContainerProvider.Set("ModLibSettingsProvider", modLibSettingsProvider);
 
@@ -42,6 +43,7 @@ namespace MCM.Implementation.ModLib
                     .Where(a => Path.GetFileNameWithoutExtension(a.Location).StartsWith("MBOptionScreen"));
                 foreach (var assembly in assemblies)
                 {
+                    // MBO v2 patch
                     var settingsProviderWrapperType = assembly.GetType("MBOptionScreen.Settings.SettingsProviderWrapper");
                     var settingsDatabaseType = assembly.GetType("MBOptionScreen.Settings.SettingsDatabase");
                     var modLibSettingsProviderProperty = AccessTools.Property(settingsDatabaseType, "ModLibSettingsProvider");
@@ -49,6 +51,8 @@ namespace MCM.Implementation.ModLib
                         null,
                         Activator.CreateInstance(settingsProviderWrapperType, new object[] { modLibSettingsProvider }));
                 }
+
+                */
             }
         }
 

@@ -62,7 +62,7 @@ namespace MCM.Abstractions.Settings.Definitions
                     SettingType = SettingType.Float;
                 else if (Property.PropertyType == typeof(string))
                     SettingType = SettingType.String;
-                else if (ReflectionUtils.ImplementsOrImplementsEquivalent(Property.PropertyType, typeof(IDropdownProvider)))
+                else if (SettingsUtils.IsDropdown(Property.PropertyType))
                     SettingType = SettingType.Dropdown;
 
                 MinValue = settingPropertyAttribute.MinValue;

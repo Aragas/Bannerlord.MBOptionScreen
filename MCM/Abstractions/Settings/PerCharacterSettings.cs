@@ -1,6 +1,8 @@
 ﻿using MCM.Abstractions.Settings.SettingsProvider;
 using MCM.Utils;
 
+using TaleWorlds.Core;
+
 namespace MCM.Abstractions.Settings
 {
     public abstract class PerCharacterSettings<T> : PerCharacterSettings where T : PerCharacterSettings, new()
@@ -10,6 +12,6 @@ namespace MCM.Abstractions.Settings
 
     public abstract class PerCharacterSettings : BaseSettings
     {
-        public string CharacterId { get; } = "ERROR";
+        public string CharacterId { get; } = $"{Game.Current?.PlayerTroop?.Id.ToString() ?? "ERROR"}_{Game.Current?.PlayerTroop?.Name.ToString() ?? "ERROR"}";
     }
 }

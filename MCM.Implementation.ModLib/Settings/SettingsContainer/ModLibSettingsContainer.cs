@@ -78,7 +78,7 @@ namespace MCM.Implementation.ModLib.Settings.SettingsContainer
             if (ModLibSettingsDatabase == null)
                 return false;
 
-            SettingsUtils.OverrideSettings(LoadedModLibSettings[newSettings.Id], newSettings, this);
+            SettingsUtils.OverrideSettings(LoadedModLibSettings[newSettings.Id], newSettings);
             return true;
         }
         public bool ResetSettings(BaseSettings settings)
@@ -86,7 +86,7 @@ namespace MCM.Implementation.ModLib.Settings.SettingsContainer
             if (ModLibSettingsDatabase == null || !(settings is ModLibGlobalSettingsWrapper))
                 return false;
 
-            SettingsUtils.ResetSettings(LoadedModLibSettings[settings.Id], this);
+            SettingsUtils.ResetSettings(LoadedModLibSettings[settings.Id]);
             return true;
         }
 

@@ -16,10 +16,13 @@ namespace MCM.Abstractions.Settings
 
         public abstract string Id { get; }
         public abstract string DisplayName { get; }
+        public virtual string FolderName { get; } = "";
+        public virtual string SubFolder => "";
+        public virtual string Format => "json";
         public virtual int UIVersion => 1;
         protected virtual char SubGroupDelimiter => '/';
 
-        protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        public virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         public virtual List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() => GetUnsortedSettingPropertyGroups()
             .OrderByDescending(x => x.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)

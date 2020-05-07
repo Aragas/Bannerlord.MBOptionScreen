@@ -11,7 +11,6 @@ namespace MCM.Abstractions.Data
         public static DefaultDropdown<T> Empty => new DefaultDropdown<T>(Array.Empty<T>(), 0);
 
         private SelectorVM<SelectorItemVM> _selector;
-        private int _selectedIndex;
         public SelectorVM<SelectorItemVM> Selector
         {
             get => _selector;
@@ -27,18 +26,17 @@ namespace MCM.Abstractions.Data
 
         private void OnSelectionChanged(SelectorVM<SelectorItemVM> obj)
         {
-            _selectedIndex = obj.SelectedIndex;
+
         }
 
         public int SelectedIndex
         {
-            get => _selectedIndex;
+            get => Selector.SelectedIndex;
             set
             {
-                if (_selectedIndex != value)
+                if (Selector.SelectedIndex != value)
                 {
-                    _selectedIndex = value;
-                    Selector.SelectedIndex = _selectedIndex;
+                    Selector.SelectedIndex = value;
                 }
             }
         }

@@ -3,6 +3,7 @@ using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.SettingsProvider;
 using MCM.UI.Actions;
 using MCM.UI.GUI.GauntletUI;
+using MCM.Utils;
 
 using System;
 using System.ComponentModel;
@@ -14,16 +15,8 @@ using TaleWorlds.Library;
 
 namespace MCM.UI.GUI.ViewModels
 {
-    internal class SettingPropertyVM : ViewModel
+    internal class SettingsPropertyVM : ViewModel
     {
-        private static SelectorVM<SelectorItemVM> GetSelector(object dropdown)
-        {
-            var selectorProperty = dropdown.GetType().GetProperty("Selector");
-            if (selectorProperty == null)
-                return new SelectorVM<SelectorItemVM>(0, _ => { });
-            return (SelectorVM<SelectorItemVM>)selectorProperty.GetValue(dropdown);
-        }
-
         protected ModOptionsVM MainView => SettingsVM.MainView;
         protected SettingsVM SettingsVM { get; }
         public UndoRedoStack URS => SettingsVM.URS;
@@ -32,7 +25,7 @@ namespace MCM.UI.GUI.ViewModels
         public PropertyInfo Property => SettingPropertyDefinition.Property;
         public BaseSettings SettingsInstance => BaseSettingsProvider.Instance.GetSettings(SettingPropertyDefinition.SettingsId)!;
         public SettingType SettingType => SettingPropertyDefinition.SettingType;
-        public SettingPropertyGroupVM Group { get; set; } = default!;
+        public SettingsPropertyGroupVM Group { get; set; } = default!;
         public string HintText { get; }
         public string ValueFormat => SettingPropertyDefinition.ValueFormat;
         public bool SatisfiesSearch
@@ -139,14 +132,11 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public SelectorVM<SelectorItemVM> DropdownValue
         {
-            get => SettingType == SettingType.Dropdown ? GetSelector(Property.GetValue(SettingsInstance)) : new SelectorVM<SelectorItemVM>(0, null);
+            get => SettingType == SettingType.Dropdown ? SettingsUtils.GetSelector(Property.GetValue(SettingsInstance)) : new SelectorVM<SelectorItemVM>(0, null);
             set
             {
                 if (SettingType == SettingType.Dropdown && DropdownValue != value)
                 {
-                    //DropdownValue.PropertyChanged -= OnDropdownPropertyChanged;
-                    //value.PropertyChanged += OnDropdownPropertyChanged;
-                    //URS.Do(new SetDropdownAction(new PropertyRef(Property, SettingsInstance), value));
                     URS.Do(new ComplexReferenceTypeAction<SelectorVM<SelectorItemVM>>(new PropertyRef(Property, SettingsInstance), selector =>
                     {
                         selector.ItemList = DropdownValue.ItemList;
@@ -181,7 +171,7 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public Action OnHoverEndAction => OnHoverEnd;
 
-        public SettingPropertyVM(SettingsPropertyDefinition definition, SettingsVM settingsVM)
+        public SettingsPropertyVM(SettingsPropertyDefinition definition, SettingsVM settingsVM)
         {
             SettingsVM = settingsVM;
             SettingPropertyDefinition = definition;
@@ -206,7 +196,7 @@ namespace MCM.UI.GUI.ViewModels
         private void OnDropdownPropertyChanged(object obj, PropertyChangedEventArgs args)
         {
             if (args.PropertyName == nameof(SelectorVM<SelectorItemVM>.SelectedIndex))
-            URS.DoWithoutDo(new SetDropdownIndexAction(new PropertyRef(Property, SettingsInstance), (SelectorVM<SelectorItemVM>) obj));
+            URS.Do(new SetDropdownIndexAction(new PropertyRef(Property, SettingsInstance), (SelectorVM<SelectorItemVM>) obj));
         }
 
         public override void RefreshValues()
