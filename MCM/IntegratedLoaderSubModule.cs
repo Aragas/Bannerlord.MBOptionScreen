@@ -29,6 +29,8 @@ namespace MCM
         {
             var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(a => !a.IsDynamic).ToList();
 
+            _mcmImplementationAssemblies.Add(typeof(IntegratedLoaderSubModule).Assembly);
+
             // Loading as Standalone
             foreach (var assembly in assemblies)
             {
@@ -53,7 +55,8 @@ namespace MCM
                 var assemblyDirectory = assemblyFile.Directory;
                 if (assemblyDirectory == null || !assemblyDirectory.Exists)
                     continue;
-                var matches = assemblyDirectory.GetFiles("MCM.Implementation.*.dll")
+                var matches = assemblyDirectory.GetFiles("MCM.dll")
+                    .Concat(assemblyDirectory.GetFiles("MCM.Implementation.*.dll"))
                     .Concat(assemblyDirectory.GetFiles("MCM.UI.v*.dll"))
                     // Might be useful later
                     .Concat(assemblyDirectory.GetFiles("MCM.Custom.*.dll"))
@@ -67,7 +70,10 @@ namespace MCM
                     _mcmImplementationAssemblies.Add(Assembly.LoadFrom(match.FullName));
             }
 
-            foreach (var subModuleType in _mcmImplementationAssemblies.SelectMany(assembly => assembly.GetTypes().Where(t => typeof(MBSubModuleBase).IsAssignableFrom(t))))
+            var submodules = _mcmImplementationAssemblies.SelectMany(assembly => assembly.GetTypes().Where(t =>
+                t.FullName != typeof(IntegratedLoaderSubModule).FullName &&
+                typeof(MBSubModuleBase).IsAssignableFrom(t)));
+            foreach (var subModuleType in submodules)
             {
                 if (subModuleType.GetConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.CreateInstance, null, Type.EmptyTypes, null)?.Invoke(Array.Empty<object>()) is MBSubModuleBase subModule)
                     _mcmImplementationSubModules.Add((subModule, subModuleType));

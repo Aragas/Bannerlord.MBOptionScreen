@@ -1,0 +1,31 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Version>3.0.0</Version>
+    <Authors>Aragas, mipen</Authors>
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+    <PackageId>Bannerlord.MCM.Integrated</PackageId>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/Aragas/Bannerlord.MBOptionScreen</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Aragas/Bannerlord.MBOptionScreen</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ilmerge" Version="3.0.29" PrivateAssets="all" />
+    <PackageReference Include="ILMerge.MSBuild.Task" Version="1.0.7" PrivateAssets="all" />
+    <PackageReference Include="Lib.Harmony" Version="2.0.0.9" Condition="$(TargetFramework) == 'net472'" />
+    <PackageReference Include="Aragas.Lib.Harmony" Version="2.0.0.9" Condition="$(TargetFramework) == 'netstandard2.0'" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MCM.Implementation.MBO\MCM.Implementation.MBO.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\MCM.Implementation.ModLib\MCM.Implementation.ModLib.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\MCM.Implementation\MCM.Implementation.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\MCM.UI\MCM.UI.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\MCM\MCM.csproj" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

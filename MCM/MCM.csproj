@@ -1,50 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net472;netstandard2.0</TargetFrameworks>
-    <LangVersion>8.0</LangVersion>
-    <Nullable>enable</Nullable>
-    <GameFolder>C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord</GameFolder>
-    <Authors>mipen, Aragas</Authors>
-    <Copyright>Copyright © 2020</Copyright>
     <Version>3.0.0</Version>
+    <Authors>Aragas, mipen</Authors>
+    <PackageId>Bannerlord.MCM</PackageId>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/Aragas/Bannerlord.MBOptionScreen</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Aragas/Bannerlord.MBOptionScreen</PackageProjectUrl>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AssemblyName>MCM</AssemblyName>
-    <RootNamespace>MCM</RootNamespace>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Reference Include="$(GameFolder)\bin\Win64_Shipping_Client\System.*.dll">
-      <HintPath>%(Identity)</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="$(GameFolder)\bin\Win64_Shipping_Client\TaleWorlds.*.dll">
-      <HintPath>%(Identity)</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="$(GameFolder)\bin\Win64_Shipping_Client\Steamworks.*.dll">
-      <HintPath>%(Identity)</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="$(GameFolder)\bin\Win64_Shipping_Client\Newtonsoft.Json.dll">
-      <HintPath>%(Identity)</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="$(GameFolder)\Modules\Native\bin\Win64_Shipping_Client\*.dll">
-      <HintPath>%(Identity)</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="$(GameFolder)\Modules\SandBox\bin\Win64_Shipping_Client\*.dll">
-      <HintPath>%(Identity)</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="$(GameFolder)\Modules\SandBoxCore\bin\Win64_Shipping_Client\*.dll">
-      <HintPath>%(Identity)</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="$(GameFolder)\Modules\StoryMode\bin\Win64_Shipping_Client\*.dll">
-      <HintPath>%(Identity)</HintPath>
-      <Private>False</Private>
-    </Reference>
-  </ItemGroup>
 
 </Project>

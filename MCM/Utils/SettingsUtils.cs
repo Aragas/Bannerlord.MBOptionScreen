@@ -17,23 +17,27 @@ namespace MCM.Utils
 {
     public static class SettingsUtils
     {
-        public static IEnumerable<SettingsPropertyDefinition> GetProperties(object @object, string id)
+        public static IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object, string id)
         {
             var settingPropertyDefinitionsDiscoverers = DI.GetImplementations<ISettingsPropertyDiscoverer, SettingsPropertyDiscovererWrapper>(ApplicationVersionUtils.GameVersion());
             return settingPropertyDefinitionsDiscoverers.SelectMany(d => d.GetProperties(@object, id));
         }
 
-        public static void CheckIsValid(SettingsPropertyDefinition prop, object settings)
+        public static void CheckIsValid(ISettingsPropertyDefinition prop, object settings)
         {
             if (!prop.Property.CanRead)
                 throw new Exception($"Property {prop.Property.Name} in {settings.GetType().FullName} must have a getter.");
             if (prop.SettingType != SettingType.Dropdown && !prop.Property.CanWrite)
                 throw new Exception($"Property {prop.Property.Name} in {settings.GetType().FullName} must have a setter.");
 
-            if (prop.SettingType == SettingType.Int || prop.SettingType == SettingType.Float)
+            if (prop.SettingType == SettingType.Float || prop.SettingType == SettingType.Int)
             {
                 if (prop.MinValue == prop.MaxValue)
                     throw new Exception($"Property {prop.Property.Name} in {settings.GetType().FullName} is a numeric type but the MinValue and MaxValue are the same.");
+            }
+
+            if (prop.SettingType != SettingType.Bool)
+            {
                 if (prop.IsMainToggle)
                     throw new Exception($"Property {prop.Property.Name} in {settings.GetType().FullName} is marked as the main toggle for the group but is a numeric type. The main toggle must be a boolean type.");
             }

@@ -9,96 +9,92 @@ using TaleWorlds.Localization;
 
 namespace MCM.Abstractions.Settings.Definitions.Wrapper
 {
-    public sealed class SettingsPropertyDefinitionWrapper : SettingsPropertyDefinition
+    public sealed class SettingsPropertyDefinitionWrapper : ISettingsPropertyDefinition
     {
-        private readonly object _object;
+        private PropertyInfo? SettingsIdProperty { get; }
+        private PropertyInfo? SettingTypeProperty { get; }
+        private PropertyInfo? PropertyProperty { get; }
+        private PropertyInfo? DisplayNameProperty { get; }
+        private PropertyInfo? HintTextProperty { get; }
+        private PropertyInfo? OrderProperty { get; }
+        private PropertyInfo? RequireRestartProperty { get; }
+        private PropertyInfo? GroupNameProperty { get; }
+        private PropertyInfo? IsMainToggleProperty { get; }
+        private PropertyInfo? MinValueProperty { get; }
+        private PropertyInfo? MaxValueProperty { get; }
+        private PropertyInfo? EditableMinValueProperty { get; }
+        private PropertyInfo? EditableMaxValueProperty { get; }
+        private PropertyInfo? SelectedIndexProperty { get; }
+
+        public string SettingsId { get; }
+        public PropertyInfo Property { get; }
+        public SettingType SettingType { get; }
+        public string DisplayName { get; }
+        public int Order { get; } = -1;
+        public bool RequireRestart { get; } = true;
+        public string HintText { get; } //= new TextObject("");
+        public decimal MaxValue { get; } = 0m;
+        public decimal MinValue { get; } = 0m;
+        public decimal EditableMinValue { get; } = 0m;
+        public decimal EditableMaxValue { get; } = 0m;
+        public int SelectedIndex { get; } = 0;
+        public string ValueFormat { get; } = "";
+        public string GroupName { get; } = SettingsPropertyGroupDefinition.DefaultGroupName;
+        public bool IsMainToggle { get; } = false;
+        public int GroupOrder { get; } = -1;
 
         public SettingsPropertyDefinitionWrapper(object @object) : base()
         {
-            _object = @object;
             var type = @object.GetType();
 
-            switch (type.FullName)
-            {
-                case "ModLib.GUI.ViewModels.SettingProperty":
-                    ParseModLib(@object);
-                    break;
-                default:
-                    Parse(@object);
-                    break;
-            }
-        }
+            SettingsIdProperty = AccessTools.Property(type, nameof(SettingsId));
+            SettingTypeProperty = AccessTools.Property(type, nameof(SettingType));
+            PropertyProperty = AccessTools.Property(type, nameof(Property));
+            DisplayNameProperty = AccessTools.Property(type, nameof(DisplayName));
+            HintTextProperty = AccessTools.Property(type, nameof(HintText));
+            OrderProperty = AccessTools.Property(type, nameof(Order));
+            RequireRestartProperty = AccessTools.Property(type, nameof(RequireRestart));
+            GroupNameProperty = AccessTools.Property(type, nameof(GroupName));
+            IsMainToggleProperty = AccessTools.Property(type, nameof(IsMainToggle));
+            MinValueProperty = AccessTools.Property(type, nameof(MinValue));
+            MaxValueProperty = AccessTools.Property(type, nameof(MaxValue));
+            EditableMinValueProperty = AccessTools.Property(type, nameof(EditableMinValue));
+            EditableMaxValueProperty = AccessTools.Property(type, nameof(EditableMaxValue));
+            SelectedIndexProperty = AccessTools.Property(type, nameof(SelectedIndex));
 
-        private void Parse(object @object)
-        {
-            var type = @object.GetType();
 
-            SettingsId = AccessTools.Property(type, nameof(SettingsId))?.GetValue(@object) as string ?? "ERROR";
-            var settingTypeObject = AccessTools.Property(type, nameof(SettingType))?.GetValue(@object);
-            SettingType = settingTypeObject != null
-                ? Enum.TryParse<SettingType>(settingTypeObject.ToString(), out var resultEnum) ? resultEnum : SettingType.NONE
+            SettingsId = SettingsIdProperty?.GetValue(@object) as string ?? "ERROR";
+            SettingType = SettingTypeProperty?.GetValue(@object) is { } settingTypeObject
+                ? Enum.TryParse<SettingType>(settingTypeObject.ToString(), out var resultEnum) 
+                    ? resultEnum
+                    : SettingType.NONE
                 : SettingType.NONE;
-            Property = new WrapperPropertyInfo((PropertyInfo) type.GetProperty(nameof(Property)).GetValue(@object));
+            Property = new WrapperPropertyInfo((PropertyInfo) PropertyProperty?.GetValue(@object));
 
-            DisplayName = (AccessTools.Property(type, nameof(DisplayName)) ?? AccessTools.Property(type, "Name"))?.GetValue(@object) switch
+            DisplayName = DisplayNameProperty?.GetValue(@object) switch
             {
-                string str => new TextObject(str, null),
-                TextObject to => to,
+                string str => str,
+                TextObject to => to.ToString(),
                 _ => DisplayName
             };
-            HintText = AccessTools.Property(type, nameof(HintText))?.GetValue(@object) switch
+            HintText = HintTextProperty?.GetValue(@object) switch
             {
-                string str => new TextObject(str, null),
-                TextObject to => to,
+                string str => str,
+                TextObject to => to.ToString(),
                 _ => HintText
             };
-            Order = type.GetProperty(nameof(Order))?.GetValue(@object) as int? ?? -1;
-            RequireRestart = type.GetProperty(nameof(RequireRestart))?.GetValue(@object) as bool? ?? true;
+            Order = OrderProperty?.GetValue(@object) as int? ?? -1;
+            RequireRestart = RequireRestartProperty?.GetValue(@object) as bool? ?? true;
 
-            GroupName = type.GetProperty(nameof(GroupName))?.GetValue(@object) as string ?? "";
-            IsMainToggle = type.GetProperty(nameof(IsMainToggle))?.GetValue(@object) as bool? ?? false;
+            GroupName = GroupNameProperty?.GetValue(@object) as string ?? "";
+            IsMainToggle = IsMainToggleProperty?.GetValue(@object) as bool? ?? false;
 
-            MinValue = type.GetProperty(nameof(MinValue))?.GetValue(@object) as float? ?? 0f;
-            MaxValue = type.GetProperty(nameof(MaxValue))?.GetValue(@object) as float? ?? 0f;
-            EditableMinValue = type.GetProperty(nameof(EditableMinValue))?.GetValue(@object) as float? ?? 0f;
-            EditableMaxValue = type.GetProperty(nameof(EditableMaxValue))?.GetValue(@object) as float? ?? 0f;
+            MinValue = MinValueProperty?.GetValue(@object) is { } minVal ? minVal as decimal? ?? 0 : 0;
+            MaxValue = MaxValueProperty?.GetValue(@object) is { } maxVal ? maxVal as decimal? ?? 0 : 0;
+            EditableMinValue = EditableMinValueProperty?.GetValue(@object) is { } eMinVal ? eMinVal as decimal? ?? 0 : 0;
+            EditableMaxValue = EditableMaxValueProperty?.GetValue(@object) is { } eMaxValue ? eMaxValue as decimal? ?? 0 : 0;
 
-            SelectedIndex = type.GetProperty(nameof(SelectedIndex))?.GetValue(@object) as int? ?? 0;
-        }
-
-        private void ParseModLib(object @object)
-        {
-            var type = @object.GetType();
-
-            var settingAttributeProperty = AccessTools.Property(type, "SettingAttribute");
-            var settingAttribute = settingAttributeProperty.GetValue(@object);
-            var settingAttributeType = settingAttribute.GetType();
-
-            var groupAttributeProperty = AccessTools.Property(type, "GroupAttribute");
-            var groupAttribute = groupAttributeProperty.GetValue(@object);
-            var groupAttributeType = groupAttribute.GetType();
-
-            Order = -1;
-            RequireRestart = true;
-
-            GroupName = AccessTools.Property(groupAttributeType, "GroupName")?.GetValue(groupAttribute) as string ?? "";
-            IsMainToggle = AccessTools.Property(groupAttributeType, "IsMainToggle")?.GetValue(groupAttribute) as bool? ?? false;
-
-
-            var settingsInstance = AccessTools.Property(type, "SettingsInstance")?.GetValue(@object);
-            SettingsId = AccessTools.Property(settingsInstance!.GetType(), "ID")?.GetValue(settingsInstance) as string ?? "ERROR";
-            Property = new WrapperPropertyInfo((PropertyInfo) AccessTools.Property(type, "Property").GetValue(@object));
-            var settingTypeObject = AccessTools.Property(type, "SettingType")?.GetValue(@object);
-            SettingType = settingTypeObject != null
-                ? Enum.TryParse<SettingType>(settingTypeObject.ToString(), out var resultEnum) ? resultEnum : SettingType.NONE
-                : SettingType.NONE;
-
-            DisplayName = new TextObject(settingAttributeType.GetProperty("DisplayName")?.GetValue(settingAttribute) as string ?? "", null);
-            MinValue = AccessTools.Property(settingAttributeType, "MinValue")?.GetValue(settingAttribute) as float? ?? 0f;
-            MaxValue = AccessTools.Property(settingAttributeType, "MaxValue")?.GetValue(settingAttribute) as float? ?? 0f;
-            EditableMinValue = AccessTools.Property(settingAttributeType, "EditableMinValue")?.GetValue(settingAttribute) as float? ?? 0f;
-            EditableMaxValue = AccessTools.Property(settingAttributeType, "EditableMaxValue")?.GetValue(settingAttribute) as float? ?? 0f;
-            HintText = new TextObject(AccessTools.Property(settingAttributeType, "HintText")?.GetValue(settingAttribute) as string ?? "", null);
+            SelectedIndex = SelectedIndexProperty?.GetValue(@object) as int? ?? 0;
         }
     }
 }

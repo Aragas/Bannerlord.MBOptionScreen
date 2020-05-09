@@ -1,11 +1,11 @@
 ﻿using MCM.Abstractions.Functionality;
-using MCM.UI.ResourceInjection.Injectors;
+using MCM.UI.Functionality.Injectors;
 
 using System.Xml;
 
 using TaleWorlds.GauntletUI.PrefabSystem;
 
-namespace MCM.UI.ResourceInjection.Loaders
+namespace MCM.UI.Functionality.Loaders
 {
     /// <summary>
     /// Loads the embed .xml files from the library

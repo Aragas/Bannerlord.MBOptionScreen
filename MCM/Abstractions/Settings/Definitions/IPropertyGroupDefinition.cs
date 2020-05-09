@@ -4,6 +4,6 @@
     {
         string GroupName { get; }
         bool IsMainToggle { get; }
-        int Order { get; }
+        int GroupOrder { get; }
     }
 }

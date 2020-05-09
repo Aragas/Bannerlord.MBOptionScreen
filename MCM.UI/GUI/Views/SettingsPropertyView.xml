@@ -36,7 +36,7 @@
 
                 <!-- Float Slider -->
                 <SliderWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="338" SuggestedHeight="42" VerticalAlignment="Center"
-                              DoNotUpdateHandleSize="true" Filler="Filler" Handle="SliderHandle" IsDiscrete="false" MaxValueFloat="@MaxValue" FinalizedFloatValue="@FinalizedFloatValue"
+                              DoNotUpdateHandleSize="true" Filler="Filler" Handle="SliderHandle" IsDiscrete="false" MaxValueFloat="@MaxValue"
                               MinValueFloat="@MinValue" ValueFloat="@FloatValue" IsEnabled="@IsEnabled" IsVisible="@IsFloatVisible" HorizontalAlignment="Center">
                   <Children>
                     <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="362" SuggestedHeight="38" HorizontalAlignment="Center"

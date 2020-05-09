@@ -8,7 +8,7 @@ using System.Xml;
 using TaleWorlds.Engine.GauntletUI;
 using TaleWorlds.GauntletUI;
 
-namespace MCM.UI.ResourceInjection.Injectors
+namespace MCM.UI.Functionality.Injectors
 {
     internal static class BrushInjector
     {

@@ -2,7 +2,8 @@
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
 using MCM.Abstractions.Settings.Properties;
-using MCM.Implementation.MBO.Attributes.v1.Wrapper;
+using MCM.Implementation.MBO.Attributes;
+using MCM.Implementation.MBO.Settings.Definitions;
 using MCM.Utils;
 
 using System.Collections.Generic;
@@ -27,9 +28,11 @@ namespace MCM.Implementation.MBO.Settings.Properties
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
+    [Version("e1.3.1",  1)]
+    [Version("e1.4.0",  1)]
     internal class MBOSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
     {
-        public IEnumerable<SettingsPropertyDefinition> GetProperties(object @object, string id)
+        public IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object, string id)
         {
             foreach (var propertyDefinition in GetPropertiesInternal(@object, id))
             {
@@ -38,7 +41,7 @@ namespace MCM.Implementation.MBO.Settings.Properties
             }
         }
 
-        private IEnumerable<SettingsPropertyDefinition> GetPropertiesInternal(object @object, string id)
+        private IEnumerable<ISettingsPropertyDefinition> GetPropertiesInternal(object @object, string id)
         {
             foreach (var property in @object.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
             {
@@ -47,82 +50,44 @@ namespace MCM.Implementation.MBO.Settings.Properties
                 object groupAttrObj = attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.SettingPropertyGroupAttribute") ??
                                       attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), "MBOptionScreen.Settings.IPropertyGroupDefinition"));
                 var groupDefinition = groupAttrObj != null
-                    ? (IPropertyGroupDefinition) new PropertyGroupDefinitionWrapper(groupAttrObj)
+                    ? (IPropertyGroupDefinition) new MBOPropertyGroupDefinitionWrapper(groupAttrObj)
                     : (IPropertyGroupDefinition) SettingPropertyGroupAttribute.Default;
+
+                var propertyDefinitions = new List<IPropertyDefinitionBase>();
 
                 object propAttr;
                 propAttr = attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.SettingPropertyAttribute") ??
                            attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.v1.SettingPropertyAttribute");
                 if (propAttr != null)
-                {
-                    yield return new SettingsPropertyDefinition(
-                        new MBOSettingPropertyAttributeWrapper(propAttr),
-                        groupDefinition,
-                        new WrapperPropertyInfo(property),
-                        id);
-                    continue;
-                }
+                    propertyDefinitions.Add(new MBOSettingPropertyAttributeWrapper(propAttr));
 
                 propAttr = attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.v2.SettingPropertyBoolAttribute") ??
                            attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), "MBOptionScreen.Settings.IPropertyDefinitionBool"));
                 if (propAttr != null)
-                {
-                    yield return new SettingsPropertyDefinition(
-                        new PropertyDefinitionBoolWrapper(propAttr),
-                        groupDefinition,
-                        new WrapperPropertyInfo(property),
-                        id);
-                    continue;
-                }
+                    propertyDefinitions.Add(new PropertyDefinitionBoolWrapper(propAttr));
 
                 propAttr = attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.v2.SettingPropertyFloatingIntegerAttribute") ??
                            attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), "MBOptionScreen.Settings.IPropertyDefinitionFloatingInteger"));
                 if (propAttr != null)
-                {
-                    yield return new SettingsPropertyDefinition(
-                        new PropertyDefinitionFloatingIntegerWrapper(propAttr),
-                        groupDefinition,
-                        new WrapperPropertyInfo(property),
-                        id);
-                    continue;
-                }
+                    propertyDefinitions.Add(new MBOPropertyDefinitionFloatingIntegerWrapper(propAttr));
 
                 propAttr = attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.v2.SettingPropertyIntegerAttribute") ??
                            attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), "MBOptionScreen.Settings.IPropertyDefinitionInteger"));
                 if (propAttr != null)
-                {
-                    yield return new SettingsPropertyDefinition(
-                        new PropertyDefinitionIntegerWrapper(propAttr),
-                        groupDefinition,
-                        new WrapperPropertyInfo(property),
-                        id);
-                    continue;
-                }
+                    propertyDefinitions.Add(new MBOPropertyDefinitionIntegerWrapper(propAttr));
 
                 propAttr = attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.v2.SettingPropertyTextAttribute") ??
                            attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), "MBOptionScreen.Settings.IPropertyDefinitionText"));
                 if (propAttr != null)
-                {
-                    yield return new SettingsPropertyDefinition(
-                        new PropertyDefinitionTextWrapper(propAttr),
-                        groupDefinition,
-                        new WrapperPropertyInfo(property),
-                        id);
-                    continue;
-                }
+                    propertyDefinitions.Add(new PropertyDefinitionTextWrapper(propAttr));
 
                 propAttr = attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.v2.SettingPropertyDropdownAttribute") ??
                            attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), "MBOptionScreen.Settings.IPropertyDefinitionDropdown"));
                 if (propAttr != null)
-                {
+                    propertyDefinitions.Add(new PropertyDefinitionDropdownWrapper(propAttr));
 
-                    yield return new SettingsPropertyDefinition(
-                        new PropertyDefinitionDropdownWrapper(propAttr),
-                        groupDefinition,
-                        new WrapperPropertyInfo(property),
-                        id);
-                    continue;
-                }
+                if (propertyDefinitions.Count > 0)
+                    yield return new SettingsPropertyDefinition(propertyDefinitions, groupDefinition, new WrapperPropertyInfo(property), id);
             }
         }
     }

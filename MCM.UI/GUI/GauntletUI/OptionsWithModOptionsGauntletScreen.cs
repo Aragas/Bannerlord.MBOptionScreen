@@ -39,6 +39,8 @@ namespace MCM.UI.GUI.GauntletUI
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
+	[Version("e1.3.1",  1)]
+    [Version("e1.4.0",  1)]
 	[OverrideView(typeof(OptionsScreen))]
     public class OptionsWithModOptionsGauntletScreen : OptionsWithMCMOptionsScreen
 	{
@@ -75,16 +77,17 @@ namespace MCM.UI.GUI.GauntletUI
 		protected override void OnFinalize()
 		{
 			base.OnFinalize();
-            _spriteCategoryOptions.Unload();
-            _spriteCategoryEncyclopedia.Unload();
-            RemoveLayer(_gauntletLayer);
-            _gauntletLayer.ReleaseMovie(_gauntletMovie);
+            _spriteCategoryOptions?.Unload();
+            _spriteCategoryEncyclopedia?.Unload();
+			if (_gauntletLayer != null)
+                RemoveLayer(_gauntletLayer);
+            _gauntletLayer?.ReleaseMovie(_gauntletMovie);
             _gauntletLayer = null!;
             _gauntletMovie = null!;
-            _keybindingPopup = null!;
-            _dataSource.ModOptions.ExecuteSelect(null);
+            _dataSource?.ModOptions?.ExecuteSelect(null);
             _dataSource = null!;
 			Utilities.SetForceVsync(false);
+            _keybindingPopup = null!;
 		}
 
         protected override void OnFrameTick(float dt)

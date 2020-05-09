@@ -1,63 +1,35 @@
-﻿using MCM.Abstractions.Attributes.v1;
+﻿using MCM.Abstractions.Settings.Definitions;
+
+using TaleWorlds.Localization;
 
 namespace MCM.Implementation.ModLib.Attributes
 {
-    public sealed class ModLibSettingPropertyAttributeWrapper : SettingPropertyAttribute
+    public sealed class ModLibSettingPropertyAttributeWrapper :
+        IPropertyDefinitionBool,
+        IPropertyDefinitionWithMinMax
     {
-        private static string? GetDisplayName(object @object)
-        {
-            var propInfo = @object.GetType().GetProperty(nameof(DisplayName));
-            return propInfo?.GetValue(@object) as string;
-        }
-        private static float? GetMinValue(object @object)
-        {
-            var propInfo = @object.GetType().GetProperty(nameof(MinValue));
-            return propInfo?.GetValue(@object) as float?;
-        }
-        private static float? GetMaxValue(object @object)
-        {
-            var propInfo = @object.GetType().GetProperty(nameof(MaxValue));
-            return propInfo?.GetValue(@object) as float?;
-        }
-        private static float? GetEditableMinValue(object @object)
-        {
-            var propInfo = @object.GetType().GetProperty(nameof(EditableMinValue));
-            return propInfo?.GetValue(@object) as float?;
-        }
-        private static float? GetEditableMaxValue(object @object)
-        {
-            var propInfo = @object.GetType().GetProperty(nameof(EditableMaxValue));
-            return propInfo?.GetValue(@object) as float?;
-        }
-        private static bool? GetRequireRestart(object @object)
-        {
-            var propInfo = @object.GetType().GetProperty(nameof(RequireRestart));
-            return propInfo?.GetValue(@object) as bool?;
-        }
-        private static string? GetHintText(object @object)
-        {
-            var propInfo = @object.GetType().GetProperty(nameof(HintText));
-            return propInfo?.GetValue(@object) as string;
-        }
+        public string DisplayName { get; }
+        public int Order { get; }
+        public bool RequireRestart { get; }
+        public string HintText { get; }
+        public decimal MinValue { get; }
+        public decimal MaxValue { get; }
+        public float EditableMinValue { get; }
+        public float EditableMaxValue { get; }
 
-        /// <summary>
-        /// The absolute minimum value that this setting can be set to. This is used for the editing dialog. Set this if you wish users to be able to set values outside your recommended values.
-        /// </summary>
-        public float EditableMinValue { get; } = 0f;
-        /// <summary>
-        /// The absolute maximum value that this setting can be set to. This is used for the editing dialog. Set this if you wish users to be able to set values outside your recommended values.
-        /// </summary>
-        public float EditableMaxValue { get; } = 0f;
-
-        public ModLibSettingPropertyAttributeWrapper(object @object) : base(
-            GetDisplayName(@object) ?? "ERROR",
-            GetMinValue(@object) ?? 0f,
-            GetMaxValue(@object) ?? 0f)
+        public ModLibSettingPropertyAttributeWrapper(object @object)
         {
-            EditableMinValue = GetEditableMinValue(@object) ?? 0f;
-            EditableMaxValue = GetEditableMaxValue(@object) ?? 0f;
-            RequireRestart = GetRequireRestart(@object) ?? true;
-            HintText = GetHintText(@object) ?? "";
+            var type = @object.GetType();
+
+            DisplayName = new TextObject((type.GetProperty(nameof(DisplayName)) ?? type.GetProperty("Name"))?.GetValue(@object) as string ?? "ERROR", null).ToString();
+            HintText = new TextObject(type.GetProperty(nameof(HintText))?.GetValue(@object) as string ?? "ERROR", null).ToString();
+            Order = -1;
+            RequireRestart = true;
+
+            MinValue = (decimal) (type.GetProperty(nameof(MinValue))?.GetValue(@object) as float? ?? 0);
+            MaxValue = (decimal) (type.GetProperty(nameof(MaxValue))?.GetValue(@object) as float? ?? 0);
+            EditableMinValue = type.GetProperty(nameof(EditableMinValue))?.GetValue(@object) as float? ?? 0;
+            EditableMaxValue = type.GetProperty(nameof(EditableMaxValue))?.GetValue(@object) as float? ?? 0;
         }
     }
 }

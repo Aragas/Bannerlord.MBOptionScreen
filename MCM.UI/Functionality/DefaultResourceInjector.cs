@@ -2,8 +2,8 @@
 
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Functionality;
-using MCM.UI.ResourceInjection.Injectors;
-using MCM.UI.ResourceInjection.Loaders;
+using MCM.UI.Functionality.Injectors;
+using MCM.UI.Functionality.Loaders;
 
 using System;
 using System.Collections;
@@ -38,6 +38,8 @@ namespace MCM.UI.Functionality
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
+    [Version("e1.3.1",  1)]
+    [Version("e1.4.0",  1)]
     internal sealed class DefaultResourceInjector : BaseResourceHandler
     {
         private static int _initialized;

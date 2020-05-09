@@ -3,15 +3,14 @@
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Definitions;
+using MCM.Implementation.ModLib.Settings.Properties;
 using MCM.Utils;
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using MCM.Implementation.ModLib.Settings.Properties;
 
 namespace MCM.Implementation.ModLib.Settings
 {
@@ -31,6 +30,8 @@ namespace MCM.Implementation.ModLib.Settings
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
+    [Version("e1.3.1",  1)]
+    [Version("e1.4.0",  1)]
     public class ModLibGlobalSettingsWrapper : BaseGlobalSettingsWrapper
     {
         private PropertyInfo? IDProperty { get; }

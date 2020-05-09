@@ -32,6 +32,8 @@ namespace MCM.Implementation.Settings
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
+    [Version("e1.3.1",  1)]
+    [Version("e1.4.0",  1)]
     public class MCMGlobalSettingsWrapper : BaseGlobalSettingsWrapper
     {
         private PropertyInfo? IdProperty { get; }

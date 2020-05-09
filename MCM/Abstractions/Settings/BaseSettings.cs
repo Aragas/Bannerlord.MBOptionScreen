@@ -30,7 +30,7 @@ namespace MCM.Abstractions.Settings
             .ThenByDescending(x => x.DisplayGroupName.ToString(), new AlphanumComparatorFast())
             .ToList();
         protected abstract IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups();
-        protected SettingsPropertyGroupDefinition GetGroupFor(SettingsPropertyDefinition sp, ICollection<SettingsPropertyGroupDefinition> rootCollection)
+        protected SettingsPropertyGroupDefinition GetGroupFor(ISettingsPropertyDefinition sp, ICollection<SettingsPropertyGroupDefinition> rootCollection)
         {
             SettingsPropertyGroupDefinition? group;
             //Check if the intended group is a sub group
@@ -60,7 +60,7 @@ namespace MCM.Abstractions.Settings
             }
             return group;
         }
-        protected SettingsPropertyGroupDefinition GetGroupForRecursive(string groupName, SettingsPropertyGroupDefinition sgp, SettingsPropertyDefinition sp)
+        protected SettingsPropertyGroupDefinition GetGroupForRecursive(string groupName, SettingsPropertyGroupDefinition sgp, ISettingsPropertyDefinition sp)
         {
             while (true)
             {

@@ -15,7 +15,7 @@ namespace MCM.Abstractions.Settings.Definitions
         protected readonly TextObject _groupName;
         protected readonly TextObject _groupNameOverride;
         protected readonly List<SettingsPropertyGroupDefinition> subGroups = new List<SettingsPropertyGroupDefinition>();
-        protected readonly List<SettingsPropertyDefinition> settingProperties = new List<SettingsPropertyDefinition>();
+        protected readonly List<ISettingsPropertyDefinition> settingProperties = new List<ISettingsPropertyDefinition>();
 
         public string GroupName { get; }
         public TextObject DisplayGroupName => _groupNameOverride.Length > 0 ? _groupNameOverride : _groupName;
@@ -30,15 +30,9 @@ namespace MCM.Abstractions.Settings.Definitions
                     .ThenByDescending(x => x.DisplayGroupName.ToString(), new AlphanumComparatorFast());
             }
         }
-        public IEnumerable<SettingsPropertyDefinition> SettingProperties
-        {
-            get
-            {
-                return settingProperties
-                    .OrderBy(x => x.Order)
-                    .ThenBy(x => x.DisplayName.ToString(), new AlphanumComparatorFast());
-            }
-        }
+        public IEnumerable<ISettingsPropertyDefinition> SettingProperties => settingProperties
+            .OrderBy(x => x.Order)
+            .ThenBy(x => x.DisplayName.ToString(), new AlphanumComparatorFast());
 
         public SettingsPropertyGroupDefinition(string groupName, string groupNameOverride = "", int order = -1)
         {
@@ -48,7 +42,7 @@ namespace MCM.Abstractions.Settings.Definitions
             Order = order;
         }
 
-        public void Add(SettingsPropertyDefinition settingProp)
+        public void Add(ISettingsPropertyDefinition settingProp)
         {
             settingProperties.Add(settingProp);
         }

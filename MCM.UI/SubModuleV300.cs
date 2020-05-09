@@ -3,7 +3,7 @@
 using MCM.Abstractions;
 using MCM.Abstractions.Functionality;
 using MCM.Abstractions.Settings;
-using MCM.UI.ResourceInjection.Loaders;
+using MCM.UI.Functionality.Loaders;
 using MCM.Utils;
 
 using System;

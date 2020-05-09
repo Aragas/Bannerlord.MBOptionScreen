@@ -1,6 +1,5 @@
 ﻿using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Settings.Definitions;
-using MCM.Abstractions.Settings.Definitions.Wrapper;
 using MCM.Abstractions.Settings.Properties;
 using MCM.Implementation.ModLib.Attributes;
 using MCM.Utils;
@@ -27,9 +26,11 @@ namespace MCM.Implementation.ModLib.Settings.Properties
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
+    [Version("e1.3.1",  1)]
+    [Version("e1.4.0",  1)]
     internal class ModLibSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
     {
-        public IEnumerable<SettingsPropertyDefinition> GetProperties(object @object, string id)
+        public IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object, string id)
         {
             foreach (var propertyDefinition in GetPropertiesInternal(@object, id))
             {
@@ -38,30 +39,21 @@ namespace MCM.Implementation.ModLib.Settings.Properties
             }
         }
 
-        private IEnumerable<SettingsPropertyDefinition> GetPropertiesInternal(object @object, string id)
+        private IEnumerable<ISettingsPropertyDefinition> GetPropertiesInternal(object @object, string id)
         {
             foreach (var property in @object.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
             {
                 var attributes = property.GetCustomAttributes();
 
-                object groupAttrObj = attributes.FirstOrDefault(a => a.GetType().FullName == "ModLib.Attributes.SettingPropertyGroupAttribute") ??
-                                      attributes.FirstOrDefault(a => a.GetType().FullName == "ModLib.Definitions.Attributes.SettingPropertyGroupAttribute");
+                object groupAttrObj = attributes.FirstOrDefault(a => a.GetType().FullName == "ModLib.Attributes.SettingPropertyGroupAttribute");
                 var groupDefinition = groupAttrObj != null
-                    ? (IPropertyGroupDefinition) new PropertyGroupDefinitionWrapper(groupAttrObj)
+                    ? (IPropertyGroupDefinition) new ModLibPropertyGroupDefinitionWrapper(groupAttrObj)
                     : (IPropertyGroupDefinition) SettingPropertyGroupAttribute.Default;
 
-                object propAttr;
-                propAttr = attributes.FirstOrDefault(a => a.GetType().FullName == "ModLib.Attributes.SettingPropertyAttribute") ??
-                           attributes.FirstOrDefault(a => a.GetType().FullName == "ModLib.Definitions.Attributes.SettingPropertyAttribute");
+                object propAttr = attributes.FirstOrDefault(a => a.GetType().FullName == "ModLib.Attributes.SettingPropertyAttribute");
+
                 if (propAttr != null)
-                {
-                    yield return new SettingsPropertyDefinition(
-                        new ModLibSettingPropertyAttributeWrapper(propAttr),
-                        groupDefinition,
-                        new WrapperPropertyInfo(property),
-                        id);
-                    continue;
-                }
+                    yield return new SettingsPropertyDefinition(new ModLibSettingPropertyAttributeWrapper(propAttr), groupDefinition, new WrapperPropertyInfo(property), id);
             }
         }
     }

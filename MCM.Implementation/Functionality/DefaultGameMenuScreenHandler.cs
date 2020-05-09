@@ -32,6 +32,8 @@ namespace MCM.Implementation.Functionality
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
+    [Version("e1.3.1",  1)]
+    [Version("e1.4.0",  1)]
     internal sealed class DefaultGameMenuScreenHandler : BaseGameMenuScreenHandler
     {
         private static readonly WeakReference<InitialMenuVM> _instance = new WeakReference<InitialMenuVM>(null!);

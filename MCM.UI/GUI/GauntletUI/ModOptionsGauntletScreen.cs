@@ -30,6 +30,8 @@ namespace MCM.UI.GUI.GauntletUI
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
+    [Version("e1.3.1",  1)]
+    [Version("e1.4.0",  1)]
     internal class ModOptionsGauntletScreen : MCMOptionsScreen
     {
         private GauntletLayer _gauntletLayer = default!;

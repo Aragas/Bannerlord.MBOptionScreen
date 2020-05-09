@@ -42,7 +42,7 @@ namespace MCM.Abstractions.Settings.Definitions.Wrapper
                 foreach (var obj in list)
                     yield return new SettingsPropertyGroupDefinitionWrapper(obj);
         }
-        private IEnumerable<SettingsPropertyDefinition> GetSettingProperties(object @object)
+        private IEnumerable<ISettingsPropertyDefinition> GetSettingProperties(object @object)
         {
             var settingPropertiesProperty = AccessTools.Property(@object.GetType(), nameof(SettingProperties));
             if (settingPropertiesProperty?.GetValue(@object) is IEnumerable list)

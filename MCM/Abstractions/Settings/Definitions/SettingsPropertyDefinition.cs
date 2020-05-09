@@ -1,107 +1,93 @@
 ﻿using MCM.Abstractions.Attributes.v1;
-using MCM.Abstractions.Data;
 using MCM.Utils;
 
+using System.Collections.Generic;
 using System.Reflection;
 
 using TaleWorlds.Localization;
 
 namespace MCM.Abstractions.Settings.Definitions
 {
-    public class SettingsPropertyDefinition
+    public sealed class SettingsPropertyDefinition : ISettingsPropertyDefinition
     {
-        public string SettingsId { get; protected set; }
+        public string SettingsId { get; }
+        public PropertyInfo Property { get; }
+        public SettingType SettingType { get; }
+        public string DisplayName { get; } = "";
+        public int Order { get; } = -1;
+        public bool RequireRestart { get; } = true;
+        public string HintText { get; } = "";
+        public decimal MaxValue { get; }
+        public decimal MinValue { get; }
+        public decimal EditableMinValue { get; }
+        public decimal EditableMaxValue { get; }
+        public int SelectedIndex { get; }
+        public string ValueFormat { get; } = "";
+        public string GroupName { get; }
+        public bool IsMainToggle { get; }
+        public int GroupOrder { get; }
 
-        public PropertyInfo Property { get; protected set; }
-        public SettingType SettingType { get; protected set; }
-
-        public TextObject DisplayName { get; protected set; } = new TextObject("");
-        public int Order { get; protected set; } = -1;
-        public bool RequireRestart { get; protected set; } = true;
-        public TextObject HintText { get; protected set; } = new TextObject("");
-        public float MaxValue { get; protected set; } = 0f;
-        public float MinValue { get; protected set; } = 0f;
-        public float EditableMinValue { get; protected set; } = 0f;
-        public float EditableMaxValue { get; protected set; } = 0f;
-        public int SelectedIndex { get; protected set; } = 0;
-        public string ValueFormat { get; protected set; } = "";
-        public string GroupName { get; protected set; } = SettingsPropertyGroupDefinition.DefaultGroupName;
-        public bool IsMainToggle { get; protected set; } = false;
-        public int GroupOrder { get; protected set; } = -1;
-
-        protected SettingsPropertyDefinition()
-        {
-            SettingsId = "ERROR";
-            Property = default!;
-        }
         public SettingsPropertyDefinition(IPropertyDefinitionBase propertyDefinition, IPropertyGroupDefinition propertyGroupDefinition, PropertyInfo property, string settingsId)
+            : this(new []{ propertyDefinition }, propertyGroupDefinition, property, settingsId) { }
+        public SettingsPropertyDefinition(IEnumerable<IPropertyDefinitionBase> propertyDefinitions, IPropertyGroupDefinition propertyGroupDefinition, PropertyInfo property, string settingsId)
         {
             GroupName = propertyGroupDefinition.GroupName;
             IsMainToggle = propertyGroupDefinition.IsMainToggle;
-            GroupOrder = propertyGroupDefinition.Order;
+            GroupOrder = propertyGroupDefinition.GroupOrder;
 
             Property = property;
             SettingsId = settingsId;
 
-            if (propertyDefinition is IPropertyDefinitionBase propertyBase)
-            {
-                DisplayName = new TextObject(propertyBase.DisplayName, null);
-                Order = propertyBase.Order;
-                RequireRestart = propertyBase.RequireRestart;
-                HintText = new TextObject(propertyBase.HintText, null);
-            }
-
-            // v1
-            if (propertyDefinition is SettingPropertyAttribute settingPropertyAttribute)
-            {
-                if (Property.PropertyType == typeof(bool))
-                    SettingType = SettingType.Bool;
-                else if (Property.PropertyType == typeof(int))
-                    SettingType = SettingType.Int;
-                else if (Property.PropertyType == typeof(float))
-                    SettingType = SettingType.Float;
-                else if (Property.PropertyType == typeof(string))
-                    SettingType = SettingType.String;
-                else if (SettingsUtils.IsDropdown(Property.PropertyType))
-                    SettingType = SettingType.Dropdown;
-
-                MinValue = settingPropertyAttribute.MinValue;
-                MaxValue = settingPropertyAttribute.MaxValue;
-                EditableMinValue = settingPropertyAttribute.MinValue;
-                EditableMaxValue = settingPropertyAttribute.MaxValue;
-            }
-
-            // v2
-            if (propertyDefinition is IPropertyDefinitionBool propertyDefinitionBool)
-            {
+            if (Property.PropertyType == typeof(bool))
                 SettingType = SettingType.Bool;
-            }
-            if (propertyDefinition is IPropertyDefinitionFloatingInteger propertyDefinitionFloatingInteger)
-            {
-                SettingType = SettingType.Float;
-                MinValue = propertyDefinitionFloatingInteger.MinValue;
-                MaxValue = propertyDefinitionFloatingInteger.MaxValue;
-                EditableMinValue = propertyDefinitionFloatingInteger.MinValue;
-                EditableMaxValue = propertyDefinitionFloatingInteger.MaxValue;
-                ValueFormat = propertyDefinitionFloatingInteger.ValueFormat;
-            }
-            if (propertyDefinition is IPropertyDefinitionInteger propertyDefinitionInteger)
-            {
+            else if (Property.PropertyType == typeof(int))
                 SettingType = SettingType.Int;
-                MinValue = propertyDefinitionInteger.MinValue;
-                MaxValue = propertyDefinitionInteger.MaxValue;
-                EditableMinValue = propertyDefinitionInteger.MinValue;
-                EditableMaxValue = propertyDefinitionInteger.MaxValue;
-                ValueFormat = propertyDefinitionInteger.ValueFormat;
-            }
-            if (propertyDefinition is IPropertyDefinitionText propertyDefinitionText)
-            {
+            else if (Property.PropertyType == typeof(float))
+                SettingType = SettingType.Float;
+            else if (Property.PropertyType == typeof(string))
                 SettingType = SettingType.String;
-            }
-            if (propertyDefinition is IPropertyDefinitionDropdown propertyDefinitionDropdown)
-            {
+            else if (SettingsUtils.IsDropdown(Property.PropertyType))
                 SettingType = SettingType.Dropdown;
-                SelectedIndex = propertyDefinitionDropdown.SelectedIndex;
+
+            foreach (var propertyDefinition in propertyDefinitions)
+            {
+                if (propertyDefinition is IPropertyDefinitionBase propertyBase)
+                {
+                    DisplayName = new TextObject(propertyBase.DisplayName, null).ToString();
+                    Order = propertyBase.Order;
+                    RequireRestart = propertyBase.RequireRestart;
+                    HintText = new TextObject(propertyBase.HintText, null).ToString();
+                }
+                if (propertyDefinition is SettingPropertyAttribute settingPropertyAttribute) // v1
+                {
+                    MinValue = settingPropertyAttribute.MinValue;
+                    MaxValue = settingPropertyAttribute.MaxValue;
+                    EditableMinValue = settingPropertyAttribute.MinValue;
+                    EditableMaxValue = settingPropertyAttribute.MaxValue;
+                }
+                if (propertyDefinition is IPropertyDefinitionBool propertyDefinitionBool) // v2
+                {
+
+                }
+                if (propertyDefinition is IPropertyDefinitionWithMinMax propertyDefinitionWithMinMax)
+                {
+                    MinValue = propertyDefinitionWithMinMax.MinValue;
+                    MaxValue = propertyDefinitionWithMinMax.MaxValue;
+                    EditableMinValue = propertyDefinitionWithMinMax.MinValue;
+                    EditableMaxValue = propertyDefinitionWithMinMax.MaxValue;
+                }
+                if (propertyDefinition is IPropertyDefinitionWithFormat propertyDefinitionWithFormat)
+                {
+                    ValueFormat = propertyDefinitionWithFormat.ValueFormat;
+                }
+                if (propertyDefinition is IPropertyDefinitionText propertyDefinitionText)
+                {
+
+                }
+                if (propertyDefinition is IPropertyDefinitionDropdown propertyDefinitionDropdown)
+                {
+                    SelectedIndex = propertyDefinitionDropdown.SelectedIndex;
+                }
             }
         }
 

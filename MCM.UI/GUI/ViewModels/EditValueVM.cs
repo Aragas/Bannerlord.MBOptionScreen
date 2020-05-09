@@ -51,9 +51,9 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public SettingType SettingType => SettingProperty.SettingType;
         [DataSourceProperty]
-        public float MinValue => SettingProperty.SettingPropertyDefinition.EditableMinValue;
+        public float MinValue => (float) SettingProperty.SettingPropertyDefinition.EditableMinValue;
         [DataSourceProperty]
-        public float MaxValue => SettingProperty.SettingPropertyDefinition.EditableMaxValue;
+        public float MaxValue => (float) SettingProperty.SettingPropertyDefinition.EditableMaxValue;
 
         public EditValueVM(SettingsPropertyVM settingProperty)
         {

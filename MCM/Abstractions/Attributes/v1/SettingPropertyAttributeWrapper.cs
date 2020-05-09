@@ -1,43 +1,48 @@
-﻿namespace MCM.Abstractions.Attributes.v1
-{
-    /// <summary>
-    /// Wrapper for SettingPropertyAttribute. I think it world be better to make a model for it.
-    /// </summary>
-    public sealed class SettingPropertyAttributeWrapper : SettingPropertyAttribute
-    {
-        private static string? GetDisplayName(object @object)
-        {
-            var propInfo = @object.GetType().GetProperty(nameof(DisplayName));
-            return propInfo?.GetValue(@object) as string;
-        }
-        private static float? GetMinValue(object @object)
-        {
-            var propInfo = @object.GetType().GetProperty(nameof(MinValue));
-            return propInfo?.GetValue(@object) as float?;
-        }
-        private static float? GetMaxValue(object @object)
-        {
-            var propInfo = @object.GetType().GetProperty(nameof(MaxValue));
-            return propInfo?.GetValue(@object) as float?;
-        }
-        private static bool? GetRequireRestart(object @object)
-        {
-            var propInfo = @object.GetType().GetProperty(nameof(RequireRestart));
-            return propInfo?.GetValue(@object) as bool?;
-        }
-        private static string? GetHintText(object @object)
-        {
-            var propInfo = @object.GetType().GetProperty(nameof(HintText));
-            return propInfo?.GetValue(@object) as string;
-        }
+﻿using MCM.Abstractions.Settings.Definitions;
 
-        public SettingPropertyAttributeWrapper(object @object) : base(
-            GetDisplayName(@object) ?? "ERROR",
-            GetMinValue(@object) ?? 0f,
-            GetMaxValue(@object) ?? 0f)
+using TaleWorlds.Localization;
+
+namespace MCM.Abstractions.Attributes.v1
+{
+    public sealed class SettingPropertyAttributeWrapper : IWrapper,
+        IPropertyDefinitionBool,
+        IPropertyDefinitionWithMinMax,
+        IPropertyDefinitionWithFormat,
+        IPropertyDefinitionText,
+        IPropertyDefinitionDropdown
+    {
+        public object Object { get; }
+        public bool IsCorrect { get; }
+
+        public string DisplayName { get; }
+        public int Order { get; }
+        public bool RequireRestart { get; }
+        public string HintText { get; }
+        public decimal MinValue { get; }
+        public decimal MaxValue { get; }
+        public string ValueFormat { get; }
+        public int SelectedIndex { get; }
+        public decimal EditableMinValue { get; }
+        public decimal EditableMaxValue { get; }
+
+        public SettingPropertyAttributeWrapper(object @object)
         {
-            RequireRestart = GetRequireRestart(@object) ?? true;
-            HintText = GetHintText(@object) ?? "";
+            Object = @object;
+            var type = @object.GetType();
+
+            DisplayName = new TextObject(type.GetProperty("Name")?.GetValue(@object) as string ?? "ERROR", null).ToString();
+            HintText = new TextObject(type.GetProperty(nameof(HintText))?.GetValue(@object) as string ?? "ERROR", null).ToString();
+            Order = type.GetProperty(nameof(Order))?.GetValue(@object) as int? ?? 0;
+            RequireRestart = type.GetProperty(nameof(RequireRestart))?.GetValue(@object) as bool? ?? true;
+
+            MinValue = type.GetProperty(nameof(MinValue))?.GetValue(@object) as decimal? ?? 0;
+            MaxValue = type.GetProperty(nameof(MaxValue))?.GetValue(@object) as decimal? ?? 0;
+            ValueFormat = "";
+            SelectedIndex = type.GetProperty(nameof(SelectedIndex))?.GetValue(@object) as int? ?? 0;
+            EditableMinValue = type.GetProperty(nameof(EditableMinValue))?.GetValue(@object) as decimal? ?? 0;
+            EditableMaxValue = type.GetProperty(nameof(EditableMaxValue))?.GetValue(@object) as decimal? ?? 0;
+
+            IsCorrect = true;
         }
     }
 }

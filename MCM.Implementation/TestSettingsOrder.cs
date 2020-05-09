@@ -34,23 +34,23 @@ namespace MCM.Implementation
 
 
         [SettingPropertyBool("A")]
-        [SettingPropertyGroup("A", Order = 1)]
+        [SettingPropertyGroup("A", GroupOrder = 1)]
         public bool Group_A { get; set; } = true;
 
         [SettingPropertyBool("B")]
-        [SettingPropertyGroup("B", Order = 3)]
+        [SettingPropertyGroup("B", GroupOrder = 3)]
         public bool Group_B { get; set; } = true;
 
         [SettingPropertyBool("C")]
-        [SettingPropertyGroup("C", Order = 2)]
+        [SettingPropertyGroup("C", GroupOrder = 2)]
         public bool Group_C { get; set; } = true;
 
         [SettingPropertyBool("D")]
-        [SettingPropertyGroup("D", Order = 5)]
+        [SettingPropertyGroup("D", GroupOrder = 5)]
         public bool Group_D { get; set; } = true;
 
         [SettingPropertyBool("E")]
-        [SettingPropertyGroup("E", Order = 4)]
+        [SettingPropertyGroup("E", GroupOrder = 4)]
         public bool Group_E { get; set; } = true;
 
 
@@ -59,23 +59,23 @@ namespace MCM.Implementation
         public bool SubGroup_Toggle { get; set; } = true;
 
         [SettingPropertyBool("A")]
-        [SettingPropertyGroup("Group Order/A", Order = 1)]
+        [SettingPropertyGroup("Group Order/A", GroupOrder = 1)]
         public bool SubGroup_A { get; set; } = true;
 
         [SettingPropertyBool("B")]
-        [SettingPropertyGroup("Group Order/B", Order = 3)]
+        [SettingPropertyGroup("Group Order/B", GroupOrder = 3)]
         public bool SubGroup_B { get; set; } = true;
 
         [SettingPropertyBool("C")]
-        [SettingPropertyGroup("Group Order/C", Order = 2)]
+        [SettingPropertyGroup("Group Order/C", GroupOrder = 2)]
         public bool SubGroup_C { get; set; } = true;
 
         [SettingPropertyBool("D")]
-        [SettingPropertyGroup("Group Order/D", Order = 5)]
+        [SettingPropertyGroup("Group Order/D", GroupOrder = 5)]
         public bool SubGroup_D { get; set; } = true;
 
         [SettingPropertyBool("E")]
-        [SettingPropertyGroup("Group Order/E", Order = 4)]
+        [SettingPropertyGroup("Group Order/E", GroupOrder = 4)]
         public bool SubGroup_E { get; set; } = true;
     }
 }

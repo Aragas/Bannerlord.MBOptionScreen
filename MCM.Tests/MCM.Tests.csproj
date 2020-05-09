@@ -4,44 +4,8 @@
     <TargetFramework>net472</TargetFramework>
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
-    <GameFolder>C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord</GameFolder>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
-
-  <ItemGroup>
-    <Reference Include="$(GameFolder)\bin\Win64_Shipping_Client\System.*.dll">
-      <HintPath>%(Identity)</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="$(GameFolder)\bin\Win64_Shipping_Client\TaleWorlds.*.dll">
-      <HintPath>%(Identity)</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="$(GameFolder)\bin\Win64_Shipping_Client\Steamworks.*.dll">
-      <HintPath>%(Identity)</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="$(GameFolder)\bin\Win64_Shipping_Client\Newtonsoft.Json.dll">
-      <HintPath>%(Identity)</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="$(GameFolder)\Modules\Native\bin\Win64_Shipping_Client\*.dll">
-      <HintPath>%(Identity)</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="$(GameFolder)\Modules\SandBox\bin\Win64_Shipping_Client\*.dll">
-      <HintPath>%(Identity)</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="$(GameFolder)\Modules\SandBoxCore\bin\Win64_Shipping_Client\*.dll">
-      <HintPath>%(Identity)</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="$(GameFolder)\Modules\StoryMode\bin\Win64_Shipping_Client\*.dll">
-      <HintPath>%(Identity)</HintPath>
-      <Private>False</Private>
-    </Reference>
-  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />

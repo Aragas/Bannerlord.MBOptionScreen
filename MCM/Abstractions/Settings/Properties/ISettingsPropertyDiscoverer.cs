@@ -6,6 +6,6 @@ namespace MCM.Abstractions.Settings.Properties
 {
     public interface ISettingsPropertyDiscoverer
     {
-        IEnumerable<SettingsPropertyDefinition> GetProperties(object @object, string id);
+        IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object, string id);
     }
 }

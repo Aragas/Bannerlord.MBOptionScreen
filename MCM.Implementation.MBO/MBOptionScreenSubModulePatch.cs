@@ -42,6 +42,12 @@ namespace MCM.Implementation.v2
             .Where(a => !a.IsDynamic)
             .Where(assembly => Path.GetFileNameWithoutExtension(assembly.Location).StartsWith("MBOptionScreen.v2"))
             .Select(assembly => assembly.GetType("MBOptionScreen.MBOptionScreenSubModule") ??
+                                assembly.GetType("MBOptionScreen.MBOptionScreenSubModuleV204") ??
+                                assembly.GetType("MBOptionScreen.MBOptionScreenSubModuleV205") ??
+                                assembly.GetType("MBOptionScreen.MBOptionScreenSubModuleV206") ??
+                                assembly.GetType("MBOptionScreen.MBOptionScreenSubModuleV207") ??
+                                assembly.GetType("MBOptionScreen.MBOptionScreenSubModuleV208") ??
+                                assembly.GetType("MBOptionScreen.MBOptionScreenSubModuleV209") ??
                                 assembly.GetType("MBOptionScreen.MBOptionScreenSubModuleV2010") ??
                                 assembly.GetType("MBOptionScreen.MBOptionScreenSubModuleV2011"))
             .Where(type => type != null)
@@ -57,6 +63,12 @@ namespace MCM.Implementation.v2
             .Where(a => !a.IsDynamic)
             .Where(assembly => Path.GetFileNameWithoutExtension(assembly.Location).StartsWith("MBOptionScreen.v2"))
             .Select(assembly => assembly.GetType("MBOptionScreen.MBOptionScreenSubModule") ??
+                                assembly.GetType("MBOptionScreen.MBOptionScreenSubModuleV204") ??
+                                assembly.GetType("MBOptionScreen.MBOptionScreenSubModuleV205") ??
+                                assembly.GetType("MBOptionScreen.MBOptionScreenSubModuleV206") ??
+                                assembly.GetType("MBOptionScreen.MBOptionScreenSubModuleV207") ??
+                                assembly.GetType("MBOptionScreen.MBOptionScreenSubModuleV208") ??
+                                assembly.GetType("MBOptionScreen.MBOptionScreenSubModuleV209") ??
                                 assembly.GetType("MBOptionScreen.MBOptionScreenSubModuleV2010") ??
                                 assembly.GetType("MBOptionScreen.MBOptionScreenSubModuleV2011"))
             .Where(type => type != null)

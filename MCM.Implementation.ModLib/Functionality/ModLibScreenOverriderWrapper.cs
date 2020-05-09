@@ -5,7 +5,7 @@ using MCM.Abstractions;
 using System;
 using System.Reflection;
 
-namespace MCM.Implementation.ModLib.Functionality.Wrapper
+namespace MCM.Implementation.ModLib.Functionality
 {
     public sealed class ModLibScreenOverriderWrapper : BaseModLibScreenOverrider, IWrapper
     {

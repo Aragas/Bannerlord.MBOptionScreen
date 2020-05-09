@@ -11,7 +11,7 @@ using TaleWorlds.Engine.GauntletUI;
 using TaleWorlds.GauntletUI.Data;
 using TaleWorlds.GauntletUI.PrefabSystem;
 
-namespace MCM.UI.ResourceInjection.Injectors
+namespace MCM.UI.Functionality.Injectors
 {
     internal static class PrefabInjector
     {

@@ -7,6 +7,25 @@ namespace ModLib
 {
     public static class SettingsDatabase
     {
+        static SettingsDatabase()
+        {
+            var settings = new List<SettingsBase>();
+            var allTypes = AppDomain.CurrentDomain
+                .GetAssemblies()
+                .SelectMany(a => a.GetTypes())
+                .Where(t => t.IsClass && !t.IsAbstract)
+                .Where(t => t.GetConstructor(Type.EmptyTypes) != null)
+                .ToList();
+
+            var modLibDefSettingsTypes = allTypes
+                .Where(t => typeof(SettingsBase).IsAssignableFrom(t))
+                .Select(obj => (SettingsBase) Activator.CreateInstance(obj));
+            settings.AddRange(modLibDefSettingsTypes);
+
+            foreach (var setting in settings)
+                RegisterSettings(setting);
+        }
+
         private static Dictionary<string, SettingsBase> AllSettingsDict { get; } = new Dictionary<string, SettingsBase>();
 
         public static List<SettingsBase> AllSettings => AllSettingsDict.Values.ToList();

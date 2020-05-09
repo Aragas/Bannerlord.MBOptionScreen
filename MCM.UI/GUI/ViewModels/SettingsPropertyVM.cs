@@ -21,7 +21,7 @@ namespace MCM.UI.GUI.ViewModels
         protected SettingsVM SettingsVM { get; }
         public UndoRedoStack URS => SettingsVM.URS;
 
-        public SettingsPropertyDefinition SettingPropertyDefinition { get; }
+        public ISettingsPropertyDefinition SettingPropertyDefinition { get; }
         public PropertyInfo Property => SettingPropertyDefinition.Property;
         public BaseSettings SettingsInstance => BaseSettingsProvider.Instance.GetSettings(SettingPropertyDefinition.SettingsId)!;
         public SettingType SettingType => SettingPropertyDefinition.SettingType;
@@ -40,7 +40,7 @@ namespace MCM.UI.GUI.ViewModels
         }
 
         [DataSourceProperty]
-        public string Name => SettingPropertyDefinition.DisplayName.ToString();
+        public string Name => SettingPropertyDefinition.DisplayName;
 
         [DataSourceProperty]
         public bool IsIntVisible => SettingType == SettingType.Int;
@@ -154,14 +154,18 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
         [DataSourceProperty]
-        public float MaxValue => SettingPropertyDefinition.MaxValue;
+        public float MaxValue => (float) SettingPropertyDefinition.MaxValue;
         [DataSourceProperty]
-        public float MinValue => SettingPropertyDefinition.MinValue;
+        public float MinValue => (float) SettingPropertyDefinition.MinValue;
         [DataSourceProperty]
         public string? ValueString => SettingType switch
         {
-            SettingType.Int => string.IsNullOrWhiteSpace(ValueFormat) ? ((int) Property.GetValue(SettingsInstance)).ToString("0") : ((int) Property.GetValue(SettingsInstance)).ToString(ValueFormat),
-            SettingType.Float => string.IsNullOrWhiteSpace(ValueFormat) ? ((float) Property.GetValue(SettingsInstance)).ToString("0.00") : ((float) Property.GetValue(SettingsInstance)).ToString(ValueFormat),
+            SettingType.Int => string.IsNullOrWhiteSpace(ValueFormat)
+                ? ((int) Property.GetValue(SettingsInstance)).ToString("0")
+                : ((int) Property.GetValue(SettingsInstance)).ToString(ValueFormat),
+            SettingType.Float => string.IsNullOrWhiteSpace(ValueFormat)
+                ? ((float) Property.GetValue(SettingsInstance)).ToString("0.00")
+                : ((float) Property.GetValue(SettingsInstance)).ToString(ValueFormat),
             SettingType.String => (string) Property.GetValue(SettingsInstance),
             SettingType.Dropdown => DropdownValue?.SelectedItem?.StringItem ?? "",
             _ => ""
@@ -171,7 +175,7 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public Action OnHoverEndAction => OnHoverEnd;
 
-        public SettingsPropertyVM(SettingsPropertyDefinition definition, SettingsVM settingsVM)
+        public SettingsPropertyVM(ISettingsPropertyDefinition definition, SettingsVM settingsVM)
         {
             SettingsVM = settingsVM;
             SettingPropertyDefinition = definition;
@@ -196,7 +200,7 @@ namespace MCM.UI.GUI.ViewModels
         private void OnDropdownPropertyChanged(object obj, PropertyChangedEventArgs args)
         {
             if (args.PropertyName == nameof(SelectorVM<SelectorItemVM>.SelectedIndex))
-            URS.Do(new SetDropdownIndexAction(new PropertyRef(Property, SettingsInstance), (SelectorVM<SelectorItemVM>) obj));
+                URS.Do(new SetDropdownIndexAction(new PropertyRef(Property, SettingsInstance), (SelectorVM<SelectorItemVM>) obj));
         }
 
         public override void RefreshValues()

@@ -27,9 +27,11 @@ namespace MCM.Implementation.Settings.Properties
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
+    [Version("e1.3.1",  1)]
+    [Version("e1.4.0",  1)]
     internal class MCMSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
     {
-        public IEnumerable<SettingsPropertyDefinition> GetProperties(object @object, string id)
+        public IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object, string id)
         {
             foreach (var propertyDefinition in GetPropertiesInternal(@object, id))
             {
@@ -38,7 +40,7 @@ namespace MCM.Implementation.Settings.Properties
             }
         }
 
-        private IEnumerable<SettingsPropertyDefinition> GetPropertiesInternal(object @object, string id)
+        private IEnumerable<ISettingsPropertyDefinition> GetPropertiesInternal(object @object, string id)
         {
             foreach (var property in @object.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
             {
@@ -49,73 +51,35 @@ namespace MCM.Implementation.Settings.Properties
                     ? (IPropertyGroupDefinition) new PropertyGroupDefinitionWrapper(groupAttrObj)
                     : (IPropertyGroupDefinition) SettingPropertyGroupAttribute.Default;
 
+                var propertyDefinitions = new List<IPropertyDefinitionBase>();
+
                 object propAttr;
                 propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(SettingPropertyAttribute)));
                 if (propAttr != null)
-                {
-                    yield return new SettingsPropertyDefinition(
-                        new SettingPropertyAttributeWrapper(propAttr),
-                        groupDefinition,
-                        new WrapperPropertyInfo(property),
-                        id);
-                    continue;
-                }
+                    propertyDefinitions.Add(new SettingPropertyAttributeWrapper(propAttr));
 
                 propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionBool)));
                 if (propAttr != null)
-                {
-                    yield return new SettingsPropertyDefinition(
-                        new PropertyDefinitionBoolWrapper(propAttr),
-                        groupDefinition,
-                        new WrapperPropertyInfo(property),
-                        id);
-                    continue;
-                }
+                    propertyDefinitions.Add(new PropertyDefinitionBoolWrapper(propAttr));
 
-                propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionFloatingInteger)));
+                propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionWithMinMax)));
                 if (propAttr != null)
-                {
-                    yield return new SettingsPropertyDefinition(
-                        new PropertyDefinitionFloatingIntegerWrapper(propAttr),
-                        groupDefinition,
-                        new WrapperPropertyInfo(property),
-                        id);
-                    continue;
-                }
+                    propertyDefinitions.Add(new PropertyDefinitionWithMinMaxWrapper(propAttr));
 
-                propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionInteger)));
+                propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionWithFormat)));
                 if (propAttr != null)
-                {
-                    yield return new SettingsPropertyDefinition(
-                        new PropertyDefinitionIntegerWrapper(propAttr),
-                        groupDefinition,
-                        new WrapperPropertyInfo(property),
-                        id);
-                    continue;
-                }
+                    propertyDefinitions.Add(new PropertyDefinitionWithFormatWrapper(propAttr));
 
                 propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionText)));
                 if (propAttr != null)
-                {
-                    yield return new SettingsPropertyDefinition(
-                        new PropertyDefinitionTextWrapper(propAttr),
-                        groupDefinition,
-                        new WrapperPropertyInfo(property),
-                        id);
-                    continue;
-                }
+                    propertyDefinitions.Add(new PropertyDefinitionTextWrapper(propAttr));
 
                 propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionDropdown)));
                 if (propAttr != null)
-                {
+                    propertyDefinitions.Add(new PropertyDefinitionDropdownWrapper(propAttr));
 
-                    yield return new SettingsPropertyDefinition(
-                        new PropertyDefinitionDropdownWrapper(propAttr),
-                        groupDefinition,
-                        new WrapperPropertyInfo(property),
-                        id);
-                    continue;
-                }
+                if(propertyDefinitions.Count > 0)
+                    yield return new SettingsPropertyDefinition(propertyDefinitions, groupDefinition, new WrapperPropertyInfo(property), id);
             }
         }
     }

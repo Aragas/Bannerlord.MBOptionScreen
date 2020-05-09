@@ -25,9 +25,6 @@ namespace MCM.UI.GUI.ViewModels
         public SettingsDefinition SettingsDefinition { get; }
         public BaseSettings SettingsInstance => BaseSettingsProvider.Instance.GetSettings(SettingsDefinition.SettingsId)!;
 
-        /// <summary>
-        /// XSLT?
-        /// </summary>
         [DataSourceProperty]
         public int UIVersion => SettingsInstance.UIVersion;
         [DataSourceProperty]
@@ -123,7 +120,7 @@ namespace MCM.UI.GUI.ViewModels
 
             return false;
         }
-        private static IEnumerable<SettingsPropertyDefinition> GetAllSettingPropertyDefinitions(SettingsPropertyGroupVM settingPropertyGroup1)
+        private static IEnumerable<ISettingsPropertyDefinition> GetAllSettingPropertyDefinitions(SettingsPropertyGroupVM settingPropertyGroup1)
         {
             foreach (var settingProperty in settingPropertyGroup1.SettingProperties)
                 yield return settingProperty.SettingPropertyDefinition;
@@ -140,7 +137,7 @@ namespace MCM.UI.GUI.ViewModels
             var settings = SettingsInstance;
             var newSettings = settings is IWrapper wrapper
                 ? BaseGlobalSettingsWrapper.Create(Activator.CreateInstance(wrapper.Object.GetType()))
-                : (GlobalSettings)Activator.CreateInstance(settings.GetType());
+                : (GlobalSettings) Activator.CreateInstance(settings.GetType());
 
             OverrideSettings(newSettings);
         }

@@ -8,7 +8,7 @@ using System.Reflection;
 using TaleWorlds.Engine.GauntletUI;
 using TaleWorlds.GauntletUI.PrefabSystem;
 
-namespace MCM.UI.ResourceInjection.Injectors
+namespace MCM.UI.Functionality.Injectors
 {
     internal static class WidgetInjector
     {

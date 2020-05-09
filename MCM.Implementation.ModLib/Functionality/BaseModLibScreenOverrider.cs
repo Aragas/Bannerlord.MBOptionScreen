@@ -1,4 +1,4 @@
-﻿using MCM.Implementation.ModLib.Functionality.Wrapper;
+﻿using MCM.Implementation.ModLib.Functionality;
 using MCM.Utils;
 
 namespace MCM.Implementation.ModLib.Functionality

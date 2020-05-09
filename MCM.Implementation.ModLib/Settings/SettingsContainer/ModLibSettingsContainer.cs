@@ -8,6 +8,7 @@ using MCM.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 namespace MCM.Implementation.ModLib.Settings.SettingsContainer
@@ -28,6 +29,8 @@ namespace MCM.Implementation.ModLib.Settings.SettingsContainer
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
+    [Version("e1.3.1",  1)]
+    [Version("e1.4.0",  1)]
     internal sealed class ModLibSettingsContainer : IModLibSettingsContainer
     {
         private Dictionary<string, ModLibGlobalSettingsWrapper> LoadedModLibSettings { get; } = new Dictionary<string, ModLibGlobalSettingsWrapper>();
@@ -52,6 +55,8 @@ namespace MCM.Implementation.ModLib.Settings.SettingsContainer
         public ModLibSettingsContainer()
         {
             ModLibSettingsDatabase = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(a => !a.IsDynamic)
+                .Where(a => Path.GetFileNameWithoutExtension(a.Location) == "ModLib")
                 .SelectMany(a => a.GetTypes())
                 .FirstOrDefault(a => a.FullName == "ModLib.SettingsDatabase");
         }

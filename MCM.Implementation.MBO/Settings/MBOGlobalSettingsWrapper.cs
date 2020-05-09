@@ -5,6 +5,7 @@ using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
 using MCM.Implementation.MBO.Settings.Properties;
+using MCM.Utils;
 
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using MCM.Utils;
 
 namespace MCM.Implementation.MBO.Settings
 {
@@ -32,6 +32,8 @@ namespace MCM.Implementation.MBO.Settings
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
+    [Version("e1.3.1",  1)]
+    [Version("e1.4.0",  1)]
     public class MBOGlobalSettingsWrapper : BaseGlobalSettingsWrapper
     {
         private PropertyInfo? IdProperty { get; }

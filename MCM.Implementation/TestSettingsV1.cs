@@ -24,7 +24,7 @@ namespace MCM.Implementation
         public bool PropertyBoolWithHint { get; set; }
 
 
-        [SettingProperty("Property Int Default 0", 0f, 100f, RequireRestart = false)]
+        [SettingProperty("Property Int Default 0", 0, 100f, RequireRestart = false)]
         [SettingPropertyGroup("Int")]
         public int PropertyIntDefault0 { get; set; } = 0;
         [SettingProperty("Property Int Default 1", 0f, 100f, RequireRestart = false)]

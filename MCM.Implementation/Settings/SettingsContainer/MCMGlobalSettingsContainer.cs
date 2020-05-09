@@ -27,6 +27,8 @@ namespace MCM.Implementation.Settings.SettingsContainer
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
     [Version("e1.3.0",  1)]
+    [Version("e1.3.1",  1)]
+    [Version("e1.4.0",  1)]
     internal sealed class MCMGlobalSettingsContainer : BaseGlobalSettingsContainer, IGlobalSettingsContainer
     {
         public MCMGlobalSettingsContainer()

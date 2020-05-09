@@ -25,7 +25,7 @@ namespace MCM.UI.GUI.ViewModels
             {
                 if (GroupToggleSettingProperty != null && !string.IsNullOrWhiteSpace(GroupToggleSettingProperty.HintText))
                 {
-                    return $"{GroupToggleSettingProperty.HintText}";
+                    return GroupToggleSettingProperty.HintText;
                 }
                 return "";
             }
@@ -39,13 +39,7 @@ namespace MCM.UI.GUI.ViewModels
                 return GroupName.IndexOf(MainView.SearchText, StringComparison.OrdinalIgnoreCase) >= 0 || AnyChildSettingSatisfiesSearch;
             }
         }
-        public bool AnyChildSettingSatisfiesSearch
-        {
-            get
-            {
-                return SettingProperties.Any(x => x.SatisfiesSearch) || SettingPropertyGroups.Any(x => x.SatisfiesSearch);
-            }
-        }
+        public bool AnyChildSettingSatisfiesSearch => SettingProperties.Any(x => x.SatisfiesSearch) || SettingPropertyGroups.Any(x => x.SatisfiesSearch);
 
         [DataSourceProperty]
         public string GroupNameDisplay => GroupToggle ? GroupName : $"{GroupName} (Disabled)";
@@ -68,7 +62,7 @@ namespace MCM.UI.GUI.ViewModels
                 if (GroupToggleSettingProperty != null && GroupToggleSettingProperty.BoolValue != value)
                 {
                     GroupToggleSettingProperty.BoolValue = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(GroupToggle));
                     OnPropertyChanged(nameof(IsExpanded));
                     OnGroupClick();
                     OnGroupClick();
@@ -80,8 +74,8 @@ namespace MCM.UI.GUI.ViewModels
                     }
                     foreach (var subGroup in SettingPropertyGroups)
                     {
-                        subGroup.OnPropertyChanged(nameof(SettingsPropertyGroupVM.IsGroupVisible));
-                        subGroup.OnPropertyChanged(nameof(SettingsPropertyGroupVM.IsExpanded));
+                        subGroup.OnPropertyChanged(nameof(IsGroupVisible));
+                        subGroup.OnPropertyChanged(nameof(IsExpanded));
                     }
                 }
             }
@@ -114,8 +108,8 @@ namespace MCM.UI.GUI.ViewModels
                     OnPropertyChanged(nameof(IsGroupVisible));
                     foreach (var subGroup in SettingPropertyGroups)
                     {
-                        subGroup.OnPropertyChanged(nameof(SettingsPropertyGroupVM.IsGroupVisible));
-                        subGroup.OnPropertyChanged(nameof(SettingsPropertyGroupVM.IsExpanded));
+                        subGroup.OnPropertyChanged(nameof(IsGroupVisible));
+                        subGroup.OnPropertyChanged(nameof(IsExpanded));
                     }
                     foreach (var settingProp in SettingProperties)
                         settingProp.OnPropertyChanged(nameof(SettingsPropertyVM.IsSettingVisible));
@@ -149,7 +143,7 @@ namespace MCM.UI.GUI.ViewModels
             OnPropertyChanged(nameof(GroupNameDisplay));
         }
 
-        private void Add(SettingsPropertyDefinition definition)
+        private void Add(ISettingsPropertyDefinition definition)
         {
             var sp = new SettingsPropertyVM(definition, SettingsVM);
             SettingProperties.Add(sp);
