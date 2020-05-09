@@ -1,5 +1,5 @@
 ﻿using MCM.Abstractions.ExtensionMethods;
-using MCM.Abstractions.Settings.Definitions;
+using MCM.Abstractions.Settings.Models;
 using MCM.Utils;
 
 using System.Collections.Generic;

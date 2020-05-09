@@ -20,8 +20,13 @@ namespace ModLib
         /// <typeparam name="T">Type of object to retrieve.</typeparam>
         /// <param name="id">ID of object to retrieve.</param>
         /// <returns>Returns the instance of the object with the given type and ID. If it cannot be found, returns null.</returns>
-        public static T Get<T>(string id) where T : ISerialisableFile
+        public static T Get<T>(string id) where T : class
         {
+            // Some new ModLib mods love to use FileDabatabse.Get instead of SettingsDatabase.Get
+            if (typeof(ModLib.Definitions.Interfaces.ISerialisableFile).IsAssignableFrom(typeof(T)))
+                return ModLib.Definition.FileDatabaseWorkaround.Get<T>(id);
+
+
             //First check if the dictionary contains the key
             if (!Data.ContainsKey(typeof(T)))
                 return default;

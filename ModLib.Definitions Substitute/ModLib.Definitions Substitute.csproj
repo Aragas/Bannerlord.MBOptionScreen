@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <Authors>mipen, Aragas</Authors>
     <RootNamespace>ModLib.Definitions</RootNamespace>
     <AssemblyName>ModLib.Definitions</AssemblyName>
   </PropertyGroup>

@@ -2,7 +2,7 @@
 
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Settings;
-using MCM.Abstractions.Settings.Definitions;
+using MCM.Abstractions.Settings.Models;
 using MCM.Implementation.ModLib.Settings.Properties;
 using MCM.Utils;
 

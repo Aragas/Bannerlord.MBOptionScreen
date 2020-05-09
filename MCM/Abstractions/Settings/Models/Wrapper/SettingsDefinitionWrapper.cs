@@ -1,4 +1,4 @@
-﻿namespace MCM.Abstractions.Settings.Definitions.Wrapper
+﻿namespace MCM.Abstractions.Settings.Models.Wrapper
 {
     public sealed class SettingsDefinitionWrapper : SettingsDefinition
     {

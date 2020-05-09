@@ -42,7 +42,7 @@ namespace MCM.UI.GUI.GauntletUI
 	[Version("e1.3.1",  1)]
     [Version("e1.4.0",  1)]
 	[OverrideView(typeof(OptionsScreen))]
-    public class OptionsWithModOptionsGauntletScreen : OptionsWithMCMOptionsScreen
+    public class OptionsWithModOptionsGauntletScreen : ScreenBase, IOptionsWithMCMOptionsScreen
 	{
         private GauntletLayer _gauntletLayer = default!;
 		private OptionsModOptionsViewModel _dataSource = default!;

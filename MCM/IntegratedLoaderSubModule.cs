@@ -71,8 +71,7 @@ namespace MCM
             }
 
             var submodules = _mcmImplementationAssemblies.SelectMany(assembly => assembly.GetTypes().Where(t =>
-                t.FullName != typeof(IntegratedLoaderSubModule).FullName &&
-                typeof(MBSubModuleBase).IsAssignableFrom(t)));
+                t.FullName != typeof(IntegratedLoaderSubModule).FullName && typeof(MBSubModuleBase).IsAssignableFrom(t)));
             foreach (var subModuleType in submodules)
             {
                 if (subModuleType.GetConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.CreateInstance, null, Type.EmptyTypes, null)?.Invoke(Array.Empty<object>()) is MBSubModuleBase subModule)

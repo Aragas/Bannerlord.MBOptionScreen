@@ -6,7 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MCM.Abstractions.Settings.Definitions.Wrapper
+namespace MCM.Abstractions.Settings.Models.Wrapper
 {
     public sealed class SettingsPropertyGroupDefinitionWrapper : SettingsPropertyGroupDefinition
     {

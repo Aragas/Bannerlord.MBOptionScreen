@@ -11,7 +11,8 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-
+using SandBox;
+using StoryMode.GauntletUI;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
@@ -22,11 +23,45 @@ using TaleWorlds.MountAndBlade.View.Screen;
 
 namespace MCM.UI
 {
+    // Load UI after Sandbox was loaded
+    internal class MBSubModuleBasePatch
+    {
+        public static SubModuleV300 Instance { get; set; }
+        private static bool _loaded = false;
+
+        public static MethodBase OnSubModuleLoadTargetMethod() =>
+            AccessTools.Method(typeof(MBSubModuleBase), "OnSubModuleLoad");
+        public static MethodBase OnBeforeInitialModuleScreenSetAsRootTargetMethod() =>
+            AccessTools.Method(typeof(MBSubModuleBase), "OnBeforeInitialModuleScreenSetAsRoot");
+
+        public static void OnSubModuleLoadPostfix(MBSubModuleBase __instance)
+        {
+            if (__instance is SandBoxSubModule)
+            {
+                Instance.CustomOnSubModuleLoad();
+                _loaded = true;
+            }
+        }
+        public static void OnBeforeInitialModuleScreenSetAsRootPostfix(MBSubModuleBase __instance)
+        {
+            if (!_loaded)
+            {
+                Instance.CustomOnSubModuleLoad();
+                _loaded = true;
+            }
+        }
+    }
+
     public sealed class SubModuleV300 : MBSubModuleBase
     {
         private static readonly FieldInfo _actualViewTypesField = AccessTools.Field(typeof(ViewCreatorManager), "_actualViewTypes");
 
-        protected override void OnSubModuleLoad()
+        public SubModuleV300()
+        {
+            MBSubModuleBasePatch.Instance = this;
+        }
+
+        public void CustomOnSubModuleLoad()
         {
             BrushLoader.Inject(BaseResourceHandler.Instance);
             PrefabsLoader.Inject(BaseResourceHandler.Instance);
@@ -35,6 +70,20 @@ namespace MCM.UI
             UpdateOptionScreen(MCMSettings.Instance!);
             MCMSettings.Instance!.PropertyChanged += MCMSettings_PropertyChanged;
         }
+
+        protected override void OnSubModuleLoad()
+        {
+            base.OnSubModuleLoad();
+
+                var harmony = new Harmony("bannerlord.mcm.ui.loading_v3");
+                harmony.Patch(
+                    original: MBSubModuleBasePatch.OnSubModuleLoadTargetMethod(),
+                    postfix: new HarmonyMethod(typeof(MBSubModuleBasePatch), nameof(MBSubModuleBasePatch.OnSubModuleLoadPostfix)));
+                harmony.Patch(
+                    original: MBSubModuleBasePatch.OnBeforeInitialModuleScreenSetAsRootTargetMethod(),
+                    postfix: new HarmonyMethod(typeof(MBSubModuleBasePatch), nameof(MBSubModuleBasePatch.OnBeforeInitialModuleScreenSetAsRootPostfix)));
+        }
+
         protected override void OnSubModuleUnloaded()
         {
             base.OnSubModuleUnloaded();
@@ -70,12 +119,12 @@ namespace MCM.UI
                 BaseGameMenuScreenHandler.Instance.AddScreen(
                     "MCM_OptionScreen_v3",
                     9990,
-                    () => DI.GetImplementation(gameVersion, typeof(MCMOptionsScreen).FullName) as ScreenBase,
+                    () => DI.GetImplementation(gameVersion, typeof(IMCMOptionsScreen).FullName) as ScreenBase,
                     new TextObject("{=HiZbHGvYG}Mod Options"));
                 BaseIngameMenuScreenHandler.Instance.AddScreen(
                     "MCM_OptionScreen_v3",
                     1,
-                    () => DI.GetImplementation(gameVersion, typeof(MCMOptionsScreen).FullName) as ScreenBase,
+                    () => DI.GetImplementation(gameVersion, typeof(IMCMOptionsScreen).FullName) as ScreenBase,
                     new TextObject("{=NqarFr4P}Mod Options", null));
             }
         }
@@ -91,7 +140,7 @@ namespace MCM.UI
                 var types = AppDomain.CurrentDomain.GetAssemblies()
                     .Where(a => !a.IsDynamic)
                     .SelectMany(a => a.GetTypes())
-                    .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(OptionsWithMCMOptionsScreen)));
+                    .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(IOptionsWithMCMOptionsScreen)));
                 var latestImplementation = AttributeUtils.Get(ApplicationVersionUtils.GameVersion(), types);
                 if (latestImplementation != null)
                 {
@@ -110,7 +159,7 @@ namespace MCM.UI
                 var types = AppDomain.CurrentDomain.GetAssemblies()
                     .Where(a => !a.IsDynamic)
                     .SelectMany(a => a.GetTypes())
-                    .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(OptionsWithMCMOptionsMissionView)));
+                    .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(IOptionsWithMCMOptionsMissionView)));
                 var latestImplementation = AttributeUtils.Get(ApplicationVersionUtils.GameVersion(), types);
                 if (latestImplementation != null)
                 {

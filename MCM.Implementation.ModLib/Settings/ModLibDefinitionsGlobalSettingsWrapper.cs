@@ -2,7 +2,7 @@
 
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Settings;
-using MCM.Abstractions.Settings.Definitions;
+using MCM.Abstractions.Settings.Models;
 using MCM.Implementation.ModLib.Settings.Properties;
 using MCM.Utils;
 
@@ -40,14 +40,7 @@ namespace MCM.Implementation.ModLib.Settings
         private PropertyInfo? SubFolderProperty { get; }
 
         public override string Id => IDProperty?.GetValue(Object) as string ?? "ERROR";
-        public override string FolderName // TODO: ModLib throws for some reason
-        {
-            get
-            {
-                try { return ModuleFolderNameProperty?.GetValue(Object) as string ?? ""; }
-                catch (TargetInvocationException) { return ""; }
-            }
-        }
+        public override string FolderName  => ModuleFolderNameProperty?.GetValue(Object) as string ?? "";
         public override string DisplayName => ModNameProperty?.GetValue(Object) as string ?? "ERROR";
         public override int UIVersion => 1;
         public override string SubFolder => SubFolderProperty?.GetValue(Object) as string ?? "";

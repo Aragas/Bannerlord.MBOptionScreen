@@ -1,12 +1,11 @@
 ﻿using HarmonyLib;
 
-using MCM.Abstractions.Settings.Definitions;
-using MCM.Abstractions.Settings.Definitions.Wrapper;
+using MCM.Abstractions.Settings.Models;
+using MCM.Abstractions.Settings.Models.Wrapper;
 
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-
 using TaleWorlds.Core;
 
 namespace MCM.Abstractions.Settings.SettingsProvider

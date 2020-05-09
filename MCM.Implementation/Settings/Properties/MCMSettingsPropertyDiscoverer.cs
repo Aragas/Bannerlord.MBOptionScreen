@@ -2,6 +2,7 @@
 using MCM.Abstractions.Attributes.v1;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
+using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.Properties;
 using MCM.Utils;
 

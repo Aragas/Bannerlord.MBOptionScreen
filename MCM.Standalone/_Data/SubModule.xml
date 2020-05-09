@@ -2,16 +2,18 @@
 <Module>
   <Name value="Mod Configuration Menu Beta"/>
   <Id value="Bannerlord.MBOptionScreen"/>
-  <Version value="v3.0.0"/>
+  <Version value="v3.0.8"/>
   <DefaultModule value="false"/>
   <SingleplayerModule value="true"/>
   <MultiplayerModule value="false"/>
   <Official value="false"/>
   <DependedModules>
   </DependedModules>
+  <!--
   <OptionalDependedModules>
     <OptionalDependedModule Id="ModLib"/>
   </OptionalDependedModules>
+  -->
   <SubModules>
     <SubModule>
       <Name value="ModLib Substitute"/>

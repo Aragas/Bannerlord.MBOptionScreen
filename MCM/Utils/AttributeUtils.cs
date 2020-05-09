@@ -16,7 +16,8 @@ namespace MCM.Utils
         public static (Type Type, ApplicationVersion GameVersion, int ImplementationVersion)? Get(ApplicationVersion version, IEnumerable<Type>? types = null)
         {
             types ??= AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(a => a.DefinedTypes);
+                .Where(a => !a.IsDynamic)
+                .SelectMany(a => a.GetTypes());
 
             var attributes = types
                 .Where(t => t.GetCustomAttributes().Any(a => a.GetType().FullName == typeof(VersionAttribute).FullName))
@@ -109,6 +110,7 @@ namespace MCM.Utils
         public static Dictionary<Type, (ApplicationVersion GameVersion, int ImplementationVersion)> GetMultiple(ApplicationVersion version, IEnumerable<Type>? types = null)
         {
             types ??= AppDomain.CurrentDomain.GetAssemblies()
+                .Where(a => !a.IsDynamic)
                 .SelectMany(a => a.GetTypes());
 
             var attributes = types

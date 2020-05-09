@@ -1,6 +1,7 @@
 ﻿using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
+using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.Properties;
 using MCM.Implementation.MBO.Attributes;
 using MCM.Implementation.MBO.Settings.Definitions;

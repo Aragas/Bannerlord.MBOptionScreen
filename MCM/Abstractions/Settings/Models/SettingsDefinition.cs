@@ -1,6 +1,6 @@
 ﻿using MCM.Abstractions.Settings.SettingsProvider;
 
-namespace MCM.Abstractions.Settings.Definitions
+namespace MCM.Abstractions.Settings.Models
 {
     public class SettingsDefinition
     {

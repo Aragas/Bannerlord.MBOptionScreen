@@ -8,6 +8,14 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 
+namespace ModLib.Definition
+{
+    public static class FileDatabaseWorkaround
+    {
+        public static T Get<T>(string id) where T : class => FileDatabase.Get<T>(id);
+    }
+}
+
 namespace ModLib
 {
     public static class FileDatabase
@@ -21,7 +29,7 @@ namespace ModLib
         /// <typeparam name="T">Type of object to retrieve.</typeparam>
         /// <param name="id">ID of object to retrieve.</param>
         /// <returns>Returns the instance of the object with the given type and ID. If it cannot be found, returns null.</returns>
-        public static T Get<T>(string id) where T : ISerialisableFile
+        public static T Get<T>(string id) where T : class
         {
             //First check if the dictionary contains the key
             if (!Data.ContainsKey(typeof(T)))

@@ -1,5 +1,5 @@
 ﻿using MCM.Abstractions.Settings;
-using MCM.Abstractions.Settings.Definitions;
+using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.SettingsProvider;
 using MCM.UI.Actions;
 using MCM.UI.GUI.GauntletUI;

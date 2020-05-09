@@ -4,6 +4,7 @@ using MCM.Abstractions;
 using MCM.Abstractions.Data;
 using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Definitions;
+using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.Properties;
 
 using System;

@@ -39,7 +39,7 @@ namespace MCM.UI.GUI.GauntletUI
 	[Version("e1.3.1",  1)]
     [Version("e1.4.0",  1)]
 	[OverrideView(typeof(MissionOptionsUIHandler))]
-	public class MissionGauntletOptionsWithModOptionsUIHandler : OptionsWithMCMOptionsMissionView
+	public class MissionGauntletOptionsWithModOptionsUIHandler : MissionView, IOptionsWithMCMOptionsMissionView
 	{
         private GauntletLayer _gauntletLayer = default!;
 		private OptionsModOptionsViewModel _dataSource = default!;
@@ -72,23 +72,15 @@ namespace MCM.UI.GUI.GauntletUI
 		{
 			Mission.GetMissionBehaviour<MissionOptionsComponent>().OnOptionsAdded -= OnShowOptions;
 			base.OnMissionScreenFinalize();
-			var dataSource = _dataSource;
-			if (dataSource != null)
-			{
-				dataSource.OnFinalize();
-			}
-			_dataSource = null!;
-            _movie.Release(); // TODO
+            _dataSource?.OnFinalize();
+            _dataSource = null!;
+            _movie?.Release(); // TODO
 			_movie = null!;
-            var keybindingPopup = _keybindingPopup;
-			if (keybindingPopup != null)
-			{
-				keybindingPopup.OnToggle(false);
-			}
-			_keybindingPopup = null!;
+            _keybindingPopup?.OnToggle(false);
+            _keybindingPopup = null!;
 			_gauntletLayer = null!;
-            _spriteCategoryOptions.Unload();
-            _spriteCategoryEncyclopedia.Unload();
+            _spriteCategoryOptions?.Unload();
+            _spriteCategoryEncyclopedia?.Unload();
 		}
 
 		public override void OnMissionScreenTick(float dt)
@@ -151,13 +143,9 @@ namespace MCM.UI.GUI.GauntletUI
 			_gauntletLayer.IsFocusLayer = false;
 			ScreenManager.TryLoseFocus(_gauntletLayer);
 			MissionScreen.RemoveLayer(_gauntletLayer);
-			var keybindingPopup = _keybindingPopup;
-			if (keybindingPopup != null)
-			{
-				keybindingPopup.OnToggle(false);
-			}
-			_gauntletLayer = null!;
-			_dataSource.OnFinalize();
+            _keybindingPopup?.OnToggle(false);
+            _gauntletLayer = null!;
+			_dataSource?.OnFinalize();
 			_dataSource = null!;
 			_gauntletLayer = null!;
 		}

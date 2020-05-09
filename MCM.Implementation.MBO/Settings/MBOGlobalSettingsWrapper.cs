@@ -2,8 +2,8 @@
 
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Settings;
-using MCM.Abstractions.Settings.Definitions;
-using MCM.Abstractions.Settings.Definitions.Wrapper;
+using MCM.Abstractions.Settings.Models;
+using MCM.Abstractions.Settings.Models.Wrapper;
 using MCM.Implementation.MBO.Settings.Properties;
 using MCM.Utils;
 
@@ -84,23 +84,11 @@ namespace MCM.Implementation.MBO.Settings
         public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
             OnPropertyChangedMethod?.Invoke(Object, new object[] { propertyName! });
 
-        public override List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() => GetWrappedSettingPropertyGroups();
-        private List<SettingsPropertyGroupDefinition> GetWrappedSettingPropertyGroups()
-        {
-            if (GetSettingPropertyGroupsMethod == null)
-            {
-                return GetUnsortedSettingPropertyGroups()
-                    .OrderByDescending(x => x.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)
-                    .ThenByDescending(x => x.Order)
-                    .ThenByDescending(x => x.DisplayGroupName.ToString(), new AlphanumComparatorFast())
-                    .ToList();
-            }
-
-            return ((IEnumerable<object>) GetSettingPropertyGroupsMethod.Invoke(Object, Array.Empty<object>()) ?? new List<object>())
-                .Select(o => new SettingsPropertyGroupDefinitionWrapper(o))
-                .Cast<SettingsPropertyGroupDefinition>()
-                .ToList();
-        }
+        public override List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() => GetUnsortedSettingPropertyGroups()
+            .OrderByDescending(x => x.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)
+            .ThenByDescending(x => x.Order)
+            .ThenByDescending(x => x.DisplayGroupName.ToString(), new AlphanumComparatorFast())
+            .ToList();
         protected override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups()
         {
             var groups = new List<SettingsPropertyGroupDefinition>();

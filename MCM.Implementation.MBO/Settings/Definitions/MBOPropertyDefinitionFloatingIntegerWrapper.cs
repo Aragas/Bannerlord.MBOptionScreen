@@ -13,8 +13,8 @@ namespace MCM.Implementation.MBO.Settings.Definitions
 
         public MBOPropertyDefinitionFloatingIntegerWrapper(object @object) : base(@object)
         {
-            MinValue = @object.GetType().GetProperty(nameof(MinValue))?.GetValue(@object) as decimal? ?? 0;
-            MaxValue = @object.GetType().GetProperty(nameof(MaxValue))?.GetValue(@object) as decimal? ?? 0;
+            MinValue = (decimal) (@object.GetType().GetProperty(nameof(MinValue))?.GetValue(@object) as float? ?? 0);
+            MaxValue = (decimal) (@object.GetType().GetProperty(nameof(MaxValue))?.GetValue(@object) as float? ?? 0);
             ValueFormat = @object.GetType().GetProperty(nameof(ValueFormat))?.GetValue(@object) as string ?? "0.00";
         }
     }

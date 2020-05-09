@@ -19,9 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModLib Substitute", "ModLib
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{43511F4A-5CCA-41F0-AEB4-38D8A1EFA803}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Standalone", "Standalone", "{8CE0FC50-A411-4502-8737-6DF24C2D69AD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Standalone", "_Standalone", "{8CE0FC50-A411-4502-8737-6DF24C2D69AD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Integrated", "Integrated", "{CA7EC15E-2C6B-447A-825B-2AA21E7E75F3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Integrated", "_Integrated", "{CA7EC15E-2C6B-447A-825B-2AA21E7E75F3}"
 	ProjectSection(SolutionItems) = preProject
 		SubModule.xml = SubModule.xml
 	EndProjectSection

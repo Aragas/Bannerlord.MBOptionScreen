@@ -7,7 +7,7 @@ using System.Reflection;
 
 using TaleWorlds.Localization;
 
-namespace MCM.Abstractions.Settings.Definitions.Wrapper
+namespace MCM.Abstractions.Settings.Models.Wrapper
 {
     public sealed class SettingsPropertyDefinitionWrapper : ISettingsPropertyDefinition
     {

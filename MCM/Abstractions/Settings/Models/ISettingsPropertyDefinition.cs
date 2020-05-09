@@ -1,21 +1,22 @@
-﻿using System.Reflection;
+﻿using MCM.Abstractions.Settings.Definitions;
 
-namespace MCM.Abstractions.Settings.Definitions
+using System.Reflection;
+
+namespace MCM.Abstractions.Settings.Models
 {
     public interface ISettingsPropertyDefinition :
         IPropertyDefinitionBase,
         IPropertyDefinitionBool,
         IPropertyDefinitionDropdown,
         IPropertyDefinitionWithMinMax,
+        IPropertyDefinitionWithEditableMinMax,
         IPropertyDefinitionWithFormat,
         IPropertyDefinitionText,
         IPropertyGroupDefinition
     {
-        PropertyInfo Property { get; }
         string SettingsId { get; }
-        SettingType SettingType { get; }
+        PropertyInfo Property { get; }
 
-        decimal EditableMinValue { get; }
-        decimal EditableMaxValue { get; }
+        SettingType SettingType { get; }
     }
 }

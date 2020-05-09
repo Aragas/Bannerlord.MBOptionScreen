@@ -2,7 +2,7 @@
 
 namespace MCM.Abstractions
 {
-    public abstract class OptionsWithMCMOptionsScreen : ScreenBase
+    public interface IOptionsWithMCMOptionsScreen
     {
 
     }

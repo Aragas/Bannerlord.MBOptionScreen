@@ -1,5 +1,6 @@
 ﻿using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Settings.Definitions;
+using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.Properties;
 using MCM.Implementation.ModLib.Attributes;
 using MCM.Utils;

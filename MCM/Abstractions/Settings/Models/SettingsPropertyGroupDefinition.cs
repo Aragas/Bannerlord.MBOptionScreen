@@ -6,7 +6,7 @@ using System.Linq;
 
 using TaleWorlds.Localization;
 
-namespace MCM.Abstractions.Settings.Definitions
+namespace MCM.Abstractions.Settings.Models
 {
     public class SettingsPropertyGroupDefinition
     {

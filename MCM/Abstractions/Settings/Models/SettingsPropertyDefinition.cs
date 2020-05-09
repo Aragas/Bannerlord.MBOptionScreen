@@ -1,4 +1,5 @@
 ﻿using MCM.Abstractions.Attributes.v1;
+using MCM.Abstractions.Settings.Definitions;
 using MCM.Utils;
 
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Reflection;
 
 using TaleWorlds.Localization;
 
-namespace MCM.Abstractions.Settings.Definitions
+namespace MCM.Abstractions.Settings.Models
 {
     public sealed class SettingsPropertyDefinition : ISettingsPropertyDefinition
     {
@@ -75,6 +76,11 @@ namespace MCM.Abstractions.Settings.Definitions
                     MaxValue = propertyDefinitionWithMinMax.MaxValue;
                     EditableMinValue = propertyDefinitionWithMinMax.MinValue;
                     EditableMaxValue = propertyDefinitionWithMinMax.MaxValue;
+                }
+                if (propertyDefinition is IPropertyDefinitionWithEditableMinMax propertyDefinitionWithEditableMinMax)
+                {
+                    EditableMinValue = propertyDefinitionWithEditableMinMax.EditableMinValue;
+                    EditableMaxValue = propertyDefinitionWithEditableMinMax.EditableMaxValue;
                 }
                 if (propertyDefinition is IPropertyDefinitionWithFormat propertyDefinitionWithFormat)
                 {
