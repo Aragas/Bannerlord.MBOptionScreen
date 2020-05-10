@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Version>3.0.0</Version>
@@ -6,18 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lib.Harmony" Version="2.0.0.9" Condition="$(TargetFramework) == 'net472'" />
-    <PackageReference Include="Aragas.Lib.Harmony" Version="2.0.0.9" Condition="$(TargetFramework) == 'netstandard2.0'" />
+    <PackageReference Include="Lib.Harmony" Version="2.0.0.10" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MCM.Implementation.ModLib\MCM.Implementation.ModLib.csproj" />
-    <ProjectReference Include="..\MCM.Implementation.MBO\MCM.Implementation.MBO.csproj" />
     <ProjectReference Include="..\MCM.Implementation\MCM.Implementation.csproj" />
     <ProjectReference Include="..\MCM.UI\MCM.UI.csproj" />
     <ProjectReference Include="..\MCM\MCM.csproj" />
-    <ProjectReference Include="..\ModLib Substitute\ModLib Substitute.csproj" />
-    <ProjectReference Include="..\ModLib.Definitions Substitute\ModLib.Definitions Substitute.csproj" />
   </ItemGroup>
 
   <PropertyGroup Condition="$(TargetFramework) == 'net472'">
@@ -26,32 +21,6 @@
   <ItemGroup Condition="$(TargetFramework) == 'net472'">
     <Libraries Include="$(TargetDir)\*.*" Exclude="$(TargetDir)\*.pdb;$(TargetDir)\*.json;$(TargetDir)\MCM.Standalone.dll;" />
     <Data Include="_Data\**\*.*" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="MBOptionScreen.v2.0.10.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="MBOptionScreen.v2.0.11.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="MBOptionScreen.v2.0.4.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="MBOptionScreen.v2.0.5.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="MBOptionScreen.v2.0.6.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="MBOptionScreen.v2.0.7.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="MBOptionScreen.v2.0.8.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="MBOptionScreen.v2.0.9.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="$(TargetFramework) == 'net472'">
     <Exec Command="if not exist &quot;$(GameFolder)\Modules\$(ModuleName)&quot; mkdir &quot;$(GameFolder)\Modules\$(ModuleName)&quot;" />

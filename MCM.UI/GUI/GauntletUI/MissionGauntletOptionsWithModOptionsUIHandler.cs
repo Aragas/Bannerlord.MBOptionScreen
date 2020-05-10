@@ -80,7 +80,8 @@ namespace MCM.UI.GUI.GauntletUI
             _keybindingPopup = null!;
 			_gauntletLayer = null!;
             _spriteCategoryOptions?.Unload();
-            _spriteCategoryEncyclopedia?.Unload();
+            // TODO: There was a report that the encyclopedia UI is bugged
+			//_spriteCategoryEncyclopedia?.Unload();
 		}
 
 		public override void OnMissionScreenTick(float dt)

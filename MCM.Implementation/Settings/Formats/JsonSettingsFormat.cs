@@ -38,7 +38,7 @@ namespace MCM.Implementation.Settings.Formats
     [Version("e1.4.0",  1)]
     internal class JsonSettingsFormat : ISettingsFormat
     {
-        protected readonly JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings()
+        protected readonly JsonSerializerSettings JsonSerializerSettings = new JsonSerializerSettings()
         {
             Formatting = Formatting.Indented,
             ContractResolver = new IgnorePropertiesResolver(),
@@ -50,8 +50,8 @@ namespace MCM.Implementation.Settings.Formats
         public virtual bool Save(BaseSettings settings, string path)
         {
             var content = settings is IWrapper wrapper
-                ? JsonConvert.SerializeObject(wrapper.Object, _jsonSerializerSettings)
-                : JsonConvert.SerializeObject(settings, _jsonSerializerSettings);
+                ? JsonConvert.SerializeObject(wrapper.Object, JsonSerializerSettings)
+                : JsonConvert.SerializeObject(settings, JsonSerializerSettings);
 
             var file = new FileInfo(path);
             file.Directory?.Create();
@@ -71,9 +71,9 @@ namespace MCM.Implementation.Settings.Formats
                     using var reader = file.OpenText();
                     var content = reader.ReadToEnd();
                     if (settings is IWrapper wrapper)
-                        JsonConvert.PopulateObject(content, wrapper.Object, _jsonSerializerSettings);
+                        JsonConvert.PopulateObject(content, wrapper.Object, JsonSerializerSettings);
                     else
-                        JsonConvert.PopulateObject(content, settings, _jsonSerializerSettings);
+                        JsonConvert.PopulateObject(content, settings, JsonSerializerSettings);
                 }
                 catch (JsonException)
                 {

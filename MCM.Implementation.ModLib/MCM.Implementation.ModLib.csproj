@@ -7,12 +7,28 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Lib.Harmony" Version="2.0.0.9" Condition="$(TargetFramework) == 'net472'" />
-    <PackageReference Include="Aragas.Lib.Harmony" Version="2.0.0.9" Condition="$(TargetFramework) == 'netstandard2.0'" />
+    <PackageReference Include="Lib.Harmony" Version="2.0.0.10" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MCM\MCM.csproj" />
+    <ProjectReference Include="..\ModLib Substitute\ModLib Substitute.csproj" />
+    <ProjectReference Include="..\ModLib.Definitions Substitute\ModLib.Definitions Substitute.csproj" />
   </ItemGroup>
+
+  <PropertyGroup Condition="$(TargetFramework) == 'net472'">
+    <ModuleName>Bannerlord.MBOptionScreen.ModLib</ModuleName>
+  </PropertyGroup>
+  <ItemGroup Condition="$(TargetFramework) == 'net472'">
+    <Libraries Include="$(TargetDir)\*.*" Exclude="$(TargetDir)\*.pdb;$(TargetDir)\*.json;$(TargetDir)\MCM.dll;" />
+    <Data Include="_Data\**\*.*" />
+  </ItemGroup>
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="$(TargetFramework) == 'net472'">
+    <Exec Command="if not exist &quot;$(GameFolder)\Modules\$(ModuleName)&quot; mkdir &quot;$(GameFolder)\Modules\$(ModuleName)&quot;" />
+
+    <Copy SourceFiles="@(Libraries)" DestinationFiles="@(Libraries->'$(GameFolder)\Modules\$(ModuleName)\bin\Win64_Shipping_Client\%(RecursiveDir)%(Filename)%(Extension)')" />
+
+    <Copy SourceFiles="@(Data)" DestinationFiles="@(Data->'$(GameFolder)\Modules\$(ModuleName)\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
 
 </Project>

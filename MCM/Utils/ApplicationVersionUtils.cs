@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HarmonyLib;
+
 using System.Reflection;
 using System.Runtime.Serialization;
 
@@ -9,31 +10,30 @@ namespace MCM.Utils
 {
     public static class ApplicationVersionUtils
     {
-        private static ConstructorInfo ApplicationVersionConstructorV1 { get; } =
-            typeof(ApplicationVersion).GetConstructor(new Type[]
-            {
-                typeof(ApplicationVersionType),
-                typeof(int),
-                typeof(int),
-                typeof(int),
-                typeof(int)
-            });
-        private static ConstructorInfo ApplicationVersionConstructorV2 { get; } =
-            typeof(ApplicationVersion).GetConstructor(new Type[]
-            {
-                        typeof(ApplicationVersionType),
-                        typeof(int),
-                        typeof(int),
-                        typeof(int)
-            });
-        private static PropertyInfo ApplicationVersionTypeProperty { get; } =
-            typeof(ApplicationVersion).GetProperty("ApplicationVersionType");
-        private static PropertyInfo MajorProperty { get; } =
-            typeof(ApplicationVersion).GetProperty("Major");
-        private static PropertyInfo MinorProperty { get; } =
-            typeof(ApplicationVersion).GetProperty("Minor");
-        private static PropertyInfo RevisionProperty { get; } =
-            typeof(ApplicationVersion).GetProperty("Revision");
+        private static ConstructorInfo? ApplicationVersionConstructorV1 { get; } = AccessTools.Constructor(typeof(ApplicationVersion), new[]
+        {
+            typeof(ApplicationVersionType),
+            typeof(int),
+            typeof(int),
+            typeof(int),
+            typeof(int)
+        });
+
+        private static ConstructorInfo? ApplicationVersionConstructorV2 { get; } = AccessTools.Constructor(typeof(ApplicationVersion), new []
+        {
+            typeof(ApplicationVersionType),
+            typeof(int),
+            typeof(int),
+            typeof(int)
+        });
+        private static PropertyInfo? ApplicationVersionTypeProperty { get; } =
+            AccessTools.Property(typeof(ApplicationVersion), "ApplicationVersionType");
+        private static PropertyInfo? MajorProperty { get; } =
+            AccessTools.Property(typeof(ApplicationVersion), "Major");
+        private static PropertyInfo? MinorProperty { get; } =
+            AccessTools.Property(typeof(ApplicationVersion), "Minor");
+        private static PropertyInfo? RevisionProperty { get; } =
+            AccessTools.Property(typeof(ApplicationVersion), "Revision");
 
         public static bool TryParse(string versionAsString, out ApplicationVersion version)
         {
@@ -62,13 +62,13 @@ namespace MCM.Utils
         private static ApplicationVersion Create(ApplicationVersionType applicationVersionType, int major, int minor, int revision)
         {
             if (ApplicationVersionConstructorV1 != null)
-                return (ApplicationVersion)ApplicationVersionConstructorV1.Invoke(new object[] { applicationVersionType, major, minor, revision, 0 });
+                return (ApplicationVersion) ApplicationVersionConstructorV1.Invoke(new object[] { applicationVersionType, major, minor, revision, 0 });
 
             if (ApplicationVersionConstructorV2 != null)
-                return (ApplicationVersion)ApplicationVersionConstructorV2.Invoke(new object[] { applicationVersionType, major, minor, revision });
+                return (ApplicationVersion) ApplicationVersionConstructorV2.Invoke(new object[] { applicationVersionType, major, minor, revision });
 
             // Fallback
-            var version = (ApplicationVersion)FormatterServices.GetUninitializedObject(typeof(ApplicationVersion));
+            var version = (ApplicationVersion) FormatterServices.GetUninitializedObject(typeof(ApplicationVersion));
             ApplicationVersionTypeProperty?.SetValue(version, applicationVersionType);
             MajorProperty?.SetValue(version, major);
             MinorProperty?.SetValue(version, minor);

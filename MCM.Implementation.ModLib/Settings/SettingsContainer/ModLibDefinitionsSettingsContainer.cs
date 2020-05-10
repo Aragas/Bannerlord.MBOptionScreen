@@ -80,7 +80,7 @@ namespace MCM.Implementation.ModLib.Settings.SettingsContainer
 
         public bool OverrideSettings(BaseSettings newSettings)
         {
-            if (ModLibSettingsDatabase == null)
+            if (ModLibSettingsDatabase == null || !(newSettings is ModLibDefinitionsGlobalSettingsWrapper))
                 return false;
 
             SettingsUtils.OverrideSettings(LoadedModLibSettings[newSettings.Id], newSettings);

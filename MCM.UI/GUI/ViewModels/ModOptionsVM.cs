@@ -1,7 +1,7 @@
-﻿using System;
-using MCM.Abstractions.Settings.SettingsProvider;
+﻿using MCM.Abstractions.Settings.SettingsProvider;
 using MCM.UI.ExtensionMethods;
 
+using System;
 using System.Linq;
 
 using TaleWorlds.Core;

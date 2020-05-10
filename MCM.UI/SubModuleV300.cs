@@ -6,13 +6,14 @@ using MCM.Abstractions.Settings;
 using MCM.UI.Functionality.Loaders;
 using MCM.Utils;
 
+using SandBox;
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
-using SandBox;
-using StoryMode.GauntletUI;
+
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
@@ -26,7 +27,6 @@ namespace MCM.UI
     // Load UI after Sandbox was loaded
     internal class MBSubModuleBasePatch
     {
-        public static SubModuleV300 Instance { get; set; }
         private static bool _loaded = false;
 
         public static MethodBase OnSubModuleLoadTargetMethod() =>
@@ -36,19 +36,19 @@ namespace MCM.UI
 
         public static void OnSubModuleLoadPostfix(MBSubModuleBase __instance)
         {
-            if (__instance is SandBoxSubModule)
-            {
-                Instance.CustomOnSubModuleLoad();
-                _loaded = true;
-            }
+            if (!(__instance is SandBoxSubModule)) 
+                return;
+
+            SubModuleV300.CustomOnSubModuleLoad();
+            _loaded = true;
         }
-        public static void OnBeforeInitialModuleScreenSetAsRootPostfix(MBSubModuleBase __instance)
+        public static void OnBeforeInitialModuleScreenSetAsRootPostfix()
         {
-            if (!_loaded)
-            {
-                Instance.CustomOnSubModuleLoad();
-                _loaded = true;
-            }
+            if (_loaded)
+                return;
+
+            SubModuleV300.CustomOnSubModuleLoad();
+            _loaded = true;
         }
     }
 
@@ -56,19 +56,14 @@ namespace MCM.UI
     {
         private static readonly FieldInfo _actualViewTypesField = AccessTools.Field(typeof(ViewCreatorManager), "_actualViewTypes");
 
-        public SubModuleV300()
-        {
-            MBSubModuleBasePatch.Instance = this;
-        }
-
-        public void CustomOnSubModuleLoad()
+        public static void CustomOnSubModuleLoad()
         {
             BrushLoader.Inject(BaseResourceHandler.Instance);
             PrefabsLoader.Inject(BaseResourceHandler.Instance);
             WidgetLoader.Inject(BaseResourceHandler.Instance);
 
-            UpdateOptionScreen(MCMSettings.Instance!);
-            MCMSettings.Instance!.PropertyChanged += MCMSettings_PropertyChanged;
+            UpdateOptionScreen(MCMUISettings.Instance!);
+            MCMUISettings.Instance!.PropertyChanged += MCMSettings_PropertyChanged;
         }
 
         protected override void OnSubModuleLoad()
@@ -88,18 +83,18 @@ namespace MCM.UI
         {
             base.OnSubModuleUnloaded();
 
-            MCMSettings.Instance!.PropertyChanged -= MCMSettings_PropertyChanged;
+            MCMUISettings.Instance!.PropertyChanged -= MCMSettings_PropertyChanged;
         }
 
         private static void MCMSettings_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (sender is MCMSettings settings && e.PropertyName == BaseSettings.SaveTriggered)
+            if (sender is MCMUISettings settings && e.PropertyName == BaseSettings.SaveTriggered)
             {
                 UpdateOptionScreen(settings);
             }
         }
 
-        private static void UpdateOptionScreen(MCMSettings settings)
+        private static void UpdateOptionScreen(MCMUISettings settings)
         {
             var gameVersion = ApplicationVersionUtils.GameVersion();
 

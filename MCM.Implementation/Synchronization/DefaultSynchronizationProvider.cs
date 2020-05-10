@@ -23,20 +23,18 @@ namespace MCM.Implementation.Synchronization
     [Version("e1.3.0",  1)]
     [Version("e1.3.1",  1)]
     [Version("e1.4.0",  1)]
-    internal sealed class DefaultSynchronizationProvider : ISynchronizationProvider
+    internal sealed class DefaultSynchronizationProvider : BaseSynchronizationProvider
     {
         private static readonly ConcurrentDictionary<string, object?> _set = new ConcurrentDictionary<string, object?>();
 
-        public string Name { get; }
-        public bool IsFirstInitialization { get; }
-
-        public DefaultSynchronizationProvider(string name)
+        public DefaultSynchronizationProvider(string name) : base(name)
         {
-            Name = name;
             IsFirstInitialization = _set.TryAdd(name, null);
         }
-        public void Dispose()
+
+        protected override void Dispose(bool disposing)
         {
+            base.Dispose(disposing);
             // Keep the names alive for the whole application lifetime
         }
     }

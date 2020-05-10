@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace MCM.Abstractions.Synchronization
 {
-    public sealed class SynchronizationProviderWrapper : ISynchronizationProvider, IWrapper
+    public sealed class SynchronizationProviderWrapper : BaseSynchronizationProvider, IWrapper
     {
         public object Object { get; }
         private PropertyInfo? NameProperty { get; }

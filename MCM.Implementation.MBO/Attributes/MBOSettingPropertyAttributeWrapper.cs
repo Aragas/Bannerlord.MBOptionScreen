@@ -27,17 +27,17 @@ namespace MCM.Implementation.MBO.Attributes
         {
             var type = @object.GetType();
 
-            DisplayName = new TextObject((type.GetProperty(nameof(DisplayName)) ?? type.GetProperty("Name"))?.GetValue(@object) as string ?? "ERROR", null).ToString();
-            HintText = new TextObject(type.GetProperty(nameof(HintText))?.GetValue(@object) as string ?? "ERROR", null).ToString();
-            Order = type.GetProperty(nameof(Order))?.GetValue(@object) as int? ?? 0;
-            RequireRestart = type.GetProperty(nameof(RequireRestart))?.GetValue(@object) as bool? ?? true;
+            DisplayName = new TextObject((type.GetProperty("DisplayName") ?? type.GetProperty("Name"))?.GetValue(@object) as string ?? "ERROR", null).ToString();
+            HintText = new TextObject(type.GetProperty("HintText")?.GetValue(@object) as string ?? "ERROR", null).ToString();
+            Order = type.GetProperty("Order")?.GetValue(@object) as int? ?? 0;
+            RequireRestart = type.GetProperty("RequireRestart")?.GetValue(@object) as bool? ?? true;
 
-            MinValue = (decimal) (type.GetProperty(nameof(MinValue))?.GetValue(@object) as float? ?? 0);
-            MaxValue = (decimal) (type.GetProperty(nameof(MaxValue))?.GetValue(@object) as float? ?? 0);
-            ValueFormat = type.GetProperty(nameof(ValueFormat))?.GetValue(@object) as string ?? "";
-            SelectedIndex = type.GetProperty(nameof(SelectedIndex))?.GetValue(@object) as int? ?? 0;
-            EditableMinValue = (decimal) (type.GetProperty(nameof(EditableMinValue))?.GetValue(@object) as float? ?? (float) MinValue);
-            EditableMaxValue = (decimal) (type.GetProperty(nameof(EditableMaxValue))?.GetValue(@object) as float? ?? (float) MaxValue);
+            MinValue = (decimal) (type.GetProperty("MinValue")?.GetValue(@object) as float? ?? 0);
+            MaxValue = (decimal) (type.GetProperty("MaxValue")?.GetValue(@object) as float? ?? 0);
+            ValueFormat = type.GetProperty("ValueFormat")?.GetValue(@object) as string ?? "";
+            SelectedIndex = type.GetProperty("SelectedIndex")?.GetValue(@object) as int? ?? 0;
+            EditableMinValue = (decimal) (type.GetProperty("EditableMinValue")?.GetValue(@object) as float? ?? (float) MinValue);
+            EditableMaxValue = (decimal) (type.GetProperty("EditableMaxValue")?.GetValue(@object) as float? ?? (float) MaxValue);
         }
     }
 }

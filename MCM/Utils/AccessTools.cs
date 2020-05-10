@@ -35,6 +35,25 @@ namespace HarmonyLib
             }
         }
 
+        /// <summary>Gets the reflection information for a constructor by searching the type and all its super types</summary>
+        /// <param name="type">The class/type where the constructor is declared</param>
+        /// <param name="parameters">Optional parameters to target a specific overload of the method</param>
+        /// <param name="searchForStatic">Optional parameters to only consider static constructors</param>
+        /// <returns>A constructor info or null when type is null or when the method cannot be found</returns>
+        ///
+        public static ConstructorInfo? Constructor(Type type, Type[]? parameters = null, bool searchForStatic = false)
+        {
+            if (type == null)
+            {
+                //if (Harmony.DEBUG)
+                //    FileLog.Log("AccessTools.ConstructorInfo: type is null");
+                return null;
+            }
+            if (parameters == null) parameters = Type.EmptyTypes;
+            var flags = searchForStatic ? All & ~BindingFlags.Instance : All & ~BindingFlags.Static;
+            return FindIncludingBaseTypes(type, t => t.GetConstructor(flags, null, parameters, Array.Empty<ParameterModifier>()));
+        }
+
         /// <summary>Gets the reflection information for a method by searching the type and all its super types</summary>
         /// <param name="type">The class/type where the method is declared</param>
         /// <param name="name">The name of the method (case sensitive)</param>

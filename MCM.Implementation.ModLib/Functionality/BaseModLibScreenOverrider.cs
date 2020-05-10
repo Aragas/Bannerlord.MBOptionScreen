@@ -1,5 +1,4 @@
-﻿using MCM.Implementation.ModLib.Functionality;
-using MCM.Utils;
+﻿using MCM.Utils;
 
 namespace MCM.Implementation.ModLib.Functionality
 {

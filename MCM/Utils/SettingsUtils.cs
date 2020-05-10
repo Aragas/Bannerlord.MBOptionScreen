@@ -100,7 +100,7 @@ namespace MCM.Utils
             var selectorProperty = dropdown.GetType().GetProperty("Selector");
             if (selectorProperty == null)
                 return new SelectorVM<SelectorItemVM>(0, _ => { });
-            return (SelectorVM<SelectorItemVM>)selectorProperty.GetValue(dropdown);
+            return (SelectorVM<SelectorItemVM>) selectorProperty.GetValue(dropdown);
         }
     }
 }

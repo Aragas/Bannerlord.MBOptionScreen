@@ -42,21 +42,21 @@ namespace MCM.Implementation.MBO.Settings.Properties
             }
         }
 
-        private IEnumerable<ISettingsPropertyDefinition> GetPropertiesInternal(object @object, string id)
+        private static IEnumerable<ISettingsPropertyDefinition> GetPropertiesInternal(object @object, string id)
         {
             foreach (var property in @object.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
             {
-                var attributes = property.GetCustomAttributes();
+                var attributes = property.GetCustomAttributes().ToList();
 
-                object groupAttrObj = attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.SettingPropertyGroupAttribute") ??
+                object? groupAttrObj = attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.SettingPropertyGroupAttribute") ??
                                       attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), "MBOptionScreen.Settings.IPropertyGroupDefinition"));
                 var groupDefinition = groupAttrObj != null
-                    ? (IPropertyGroupDefinition) new MBOPropertyGroupDefinitionWrapper(groupAttrObj)
-                    : (IPropertyGroupDefinition) SettingPropertyGroupAttribute.Default;
+                    ? new MBOPropertyGroupDefinitionWrapper(groupAttrObj)
+                    : SettingPropertyGroupAttribute.Default;
 
                 var propertyDefinitions = new List<IPropertyDefinitionBase>();
 
-                object propAttr;
+                object? propAttr = null;
                 propAttr = attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.SettingPropertyAttribute") ??
                            attributes.SingleOrDefault(a => a.GetType().FullName == "MBOptionScreen.Attributes.v1.SettingPropertyAttribute");
                 if (propAttr != null)

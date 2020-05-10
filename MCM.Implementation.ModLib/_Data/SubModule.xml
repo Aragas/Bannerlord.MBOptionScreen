@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Module>
+  <Name value="MCM Beta ModLib Compatibility"/>
+  <Id value="Bannerlord.MBOptionScreen.ModLib"/>
+  <Version value="v3.0.10"/>
+  <DefaultModule value="false"/>
+  <SingleplayerModule value="true"/>
+  <MultiplayerModule value="false"/>
+  <Official value="false"/>
+  <DependedModules>
+    <DependedModule Id="Bannerlord.MBOptionScreen"/>
+  </DependedModules>
+  <SubModules>
+    <SubModule>
+      <Name value="ModLib Substitute"/>
+      <DLLName value="ModLib.dll"/>
+      <SubModuleClassType value="ModLib.ModLibSubModule"/>
+      <Tags>
+        <Tag key="DedicatedServerType" value="none" />
+        <Tag key="IsNoRenderModeElement" value="false" />
+      </Tags>
+    </SubModule>
+    <SubModule>
+      <Name value="ModLib.Definitions Substitute"/>
+      <DLLName value="ModLib.Definitions.dll"/>
+      <SubModuleClassType value="ModLib.Definitions.ModLibSubModule"/>
+      <Tags>
+        <Tag key="DedicatedServerType" value="none" />
+        <Tag key="IsNoRenderModeElement" value="false" />
+      </Tags>
+    </SubModule>
+    <SubModule>
+      <Name value="MCM ModLib Compatibility"/>
+      <DLLName value="MCM.Implementation.ModLib.v3.0.0.dll"/>
+      <SubModuleClassType value="MCM.Implementation.ModLib.SubModuleV300"/>
+      <Tags>
+        <Tag key="DedicatedServerType" value="none" />
+        <Tag key="IsNoRenderModeElement" value="false" />
+      </Tags>
+    </SubModule>
+  </SubModules>
+</Module>

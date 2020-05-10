@@ -8,9 +8,7 @@
       "MCM.Integrated.dll",
       "MCM.dll",
       "MCM.Implementation.v3.0.0.dll",
-      "MCM.UI.v3.0.0.dll",
-      "MCM.Implementation.MBO.dll",
-      "MCM.Implementation.ModLib.dll"
+      "MCM.UI.v3.0.0.dll"
     ]
   },
   "Advanced": {

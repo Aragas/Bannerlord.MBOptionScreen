@@ -1,6 +1,4 @@
-﻿using TaleWorlds.Engine.Screens;
-
-namespace MCM.Abstractions
+﻿namespace MCM.Abstractions
 {
     public interface IMCMOptionsScreen
     {

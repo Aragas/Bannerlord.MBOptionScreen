@@ -4,11 +4,9 @@ using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Models;
 using MCM.Implementation.ModLib.Settings.Properties;
-using MCM.Utils;
 
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
@@ -60,18 +58,10 @@ namespace MCM.Implementation.ModLib.Settings
                         ModNameProperty != null && SubFolderProperty != null;
         }
 
-        internal void UpdateReference(object @object)
-        {
-            Object = @object;
-        }
+        internal void UpdateReference(object @object) => Object = @object;
 
         public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) { }
 
-        public override List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() => GetUnsortedSettingPropertyGroups()
-            .OrderByDescending(x => x.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)
-            .ThenByDescending(x => x.Order)
-            .ThenByDescending(x => x.DisplayGroupName.ToString(), new AlphanumComparatorFast())
-            .ToList();
         protected override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups()
         {
             var groups = new List<SettingsPropertyGroupDefinition>();

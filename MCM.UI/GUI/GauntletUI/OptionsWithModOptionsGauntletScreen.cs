@@ -78,7 +78,8 @@ namespace MCM.UI.GUI.GauntletUI
 		{
 			base.OnFinalize();
             _spriteCategoryOptions?.Unload();
-            _spriteCategoryEncyclopedia?.Unload();
+			// TODO: There was a report that the encyclopedia UI is bugged
+			//_spriteCategoryEncyclopedia?.Unload();
 			if (_gauntletLayer != null)
                 RemoveLayer(_gauntletLayer);
             _gauntletLayer?.ReleaseMovie(_gauntletMovie);

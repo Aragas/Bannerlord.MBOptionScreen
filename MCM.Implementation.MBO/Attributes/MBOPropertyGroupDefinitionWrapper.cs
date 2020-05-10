@@ -12,8 +12,8 @@ namespace MCM.Implementation.MBO.Attributes
         {
             var type = @object.GetType();
 
-            GroupName = type.GetProperty(nameof(GroupName))?.GetValue(@object) as string ?? "ERROR";
-            IsMainToggle = type.GetProperty(nameof(IsMainToggle))?.GetValue(@object) as bool? ?? false;
+            GroupName = type.GetProperty("GroupName")?.GetValue(@object) as string ?? "ERROR";
+            IsMainToggle = type.GetProperty("IsMainToggle")?.GetValue(@object) as bool? ?? false;
             GroupOrder = type.GetProperty("Order")?.GetValue(@object) as int? ?? -1;
         }
     }

@@ -11,7 +11,7 @@ namespace MCM.Abstractions.Attributes
         /// <summary>
         /// The default group used for settings that don't have a group explicitly set.
         /// </summary>
-        public static SettingPropertyGroupAttribute Default => new SettingPropertyGroupAttribute(SettingsPropertyGroupDefinition.DefaultGroupName);
+        public static IPropertyGroupDefinition Default => new SettingPropertyGroupAttribute(SettingsPropertyGroupDefinition.DefaultGroupName);
 
         /// <summary>
         /// The name of the settings group. Includes SubGroup notation if present.

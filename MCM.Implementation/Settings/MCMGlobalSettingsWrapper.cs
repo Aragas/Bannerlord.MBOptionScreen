@@ -5,7 +5,6 @@ using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.Models.Wrapper;
 using MCM.Implementation.Settings.Properties;
-using MCM.Utils;
 
 using System;
 using System.Collections.Generic;
@@ -82,17 +81,10 @@ namespace MCM.Implementation.Settings
         public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
             OnPropertyChangedMethod?.Invoke(Object, new object[] { propertyName! });
 
-        public override List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() => GetWrappedSettingPropertyGroups();
-        private List<SettingsPropertyGroupDefinition> GetWrappedSettingPropertyGroups()
+        public override List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups()
         {
             if (GetSettingPropertyGroupsMethod == null)
-            {
-                return GetUnsortedSettingPropertyGroups()
-                    .OrderByDescending(x => x.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)
-                    .ThenByDescending(x => x.Order)
-                    .ThenByDescending(x => x.DisplayGroupName.ToString(), new AlphanumComparatorFast())
-                    .ToList();
-            }
+                return base.GetSettingPropertyGroups();
 
             return ((IEnumerable<object>) GetSettingPropertyGroupsMethod.Invoke(Object, Array.Empty<object>()) ?? new List<object>())
                 .Select(o => new SettingsPropertyGroupDefinitionWrapper(o))

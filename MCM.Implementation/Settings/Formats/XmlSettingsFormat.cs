@@ -35,8 +35,8 @@ namespace MCM.Implementation.Settings.Formats
         public override bool Save(BaseSettings settings, string path)
         {
             var content = settings is IWrapper wrapper
-                ? JsonConvert.SerializeObject(wrapper.Object, _jsonSerializerSettings)
-                : JsonConvert.SerializeObject(settings, _jsonSerializerSettings);
+                ? JsonConvert.SerializeObject(wrapper.Object, JsonSerializerSettings)
+                : JsonConvert.SerializeObject(settings, JsonSerializerSettings);
             var xmlDocument = JsonConvert.DeserializeXmlNode(content, settings is IWrapper wrapper1 ? wrapper1.Object.GetType().Name : settings.GetType().Name);
 
             var file = new FileInfo(path);
@@ -60,9 +60,9 @@ namespace MCM.Implementation.Settings.Formats
                     var content = JsonConvert.SerializeXmlNode(xmlDocument);
 
                     if (settings is IWrapper wrapper)
-                        JsonConvert.PopulateObject(content, wrapper.Object, _jsonSerializerSettings);
+                        JsonConvert.PopulateObject(content, wrapper.Object, JsonSerializerSettings);
                     else
-                        JsonConvert.PopulateObject(content, settings, _jsonSerializerSettings);
+                        JsonConvert.PopulateObject(content, settings, JsonSerializerSettings);
                 }
                 catch (JsonException)
                 {

@@ -71,7 +71,8 @@ namespace MCM.UI.GUI.GauntletUI
         protected override void OnFinalize()
         {
             base.OnFinalize();
-            _spriteCategoryEncyclopedia.Unload();
+            // TODO: There was a report that the encyclopedia UI is bugged
+            //_spriteCategoryEncyclopedia.Unload();
             RemoveLayer(_gauntletLayer);
             _gauntletLayer.ReleaseMovie(_gauntletMovie);
             _gauntletLayer = null!;

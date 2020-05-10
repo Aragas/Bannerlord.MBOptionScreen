@@ -3,14 +3,10 @@
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Models;
-using MCM.Abstractions.Settings.Models.Wrapper;
 using MCM.Implementation.MBO.Settings.Properties;
-using MCM.Utils;
 
-using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
@@ -84,11 +80,6 @@ namespace MCM.Implementation.MBO.Settings
         public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
             OnPropertyChangedMethod?.Invoke(Object, new object[] { propertyName! });
 
-        public override List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() => GetUnsortedSettingPropertyGroups()
-            .OrderByDescending(x => x.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)
-            .ThenByDescending(x => x.Order)
-            .ThenByDescending(x => x.DisplayGroupName.ToString(), new AlphanumComparatorFast())
-            .ToList();
         protected override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups()
         {
             var groups = new List<SettingsPropertyGroupDefinition>();

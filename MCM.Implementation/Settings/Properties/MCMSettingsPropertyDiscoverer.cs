@@ -41,20 +41,20 @@ namespace MCM.Implementation.Settings.Properties
             }
         }
 
-        private IEnumerable<ISettingsPropertyDefinition> GetPropertiesInternal(object @object, string id)
+        private static IEnumerable<ISettingsPropertyDefinition> GetPropertiesInternal(object @object, string id)
         {
             foreach (var property in @object.GetType().GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
             {
-                var attributes = property.GetCustomAttributes();
+                var attributes = property.GetCustomAttributes().ToList();
 
-                object groupAttrObj = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyGroupDefinition)));
+                object? groupAttrObj = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyGroupDefinition)));
                 var groupDefinition = groupAttrObj != null
-                    ? (IPropertyGroupDefinition) new PropertyGroupDefinitionWrapper(groupAttrObj)
-                    : (IPropertyGroupDefinition) SettingPropertyGroupAttribute.Default;
+                    ? new PropertyGroupDefinitionWrapper(groupAttrObj)
+                    : SettingPropertyGroupAttribute.Default;
 
                 var propertyDefinitions = new List<IPropertyDefinitionBase>();
 
-                object propAttr;
+                object? propAttr = null;
                 propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(SettingPropertyAttribute)));
                 if (propAttr != null)
                     propertyDefinitions.Add(new SettingPropertyAttributeWrapper(propAttr));

@@ -35,7 +35,7 @@ namespace MCM.Utils
                     yield return (TBase)obj;
                 else
                 {
-                    var wrapper = (TWrapper) Activator.CreateInstance(typeof(TWrapper), new object[] { obj });
+                    var wrapper = (TWrapper) Activator.CreateInstance(typeof(TWrapper), obj);
                     if (wrapper.IsCorrect)
                         yield return wrapper;
                 }
@@ -106,13 +106,10 @@ namespace MCM.Utils
                 return (TBase) obj;
             else
             {
-                var wrapper = (TWrapper) Activator.CreateInstance(typeof(TWrapper), new object[] { obj });
-                if (wrapper.IsCorrect)
-                    return wrapper;
-                else
-                {
-                    return GetImplementationRecursive<TBase, TWrapper>(version, args, types.Where(t => t != tuple?.Type));
-                }
+                var wrapper = (TWrapper) Activator.CreateInstance(typeof(TWrapper), obj);
+                return wrapper.IsCorrect
+                    ? wrapper
+                    : GetImplementationRecursive<TBase, TWrapper>(version, args, types.Where(t => t != tuple?.Type));
             }
         }
     }

@@ -1,9 +1,7 @@
 ﻿using HarmonyLib;
 
 using MCM.Abstractions.Synchronization;
-using MCM.Utils;
 
-using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 
 namespace MCM.Implementation.MBO
@@ -11,19 +9,12 @@ namespace MCM.Implementation.MBO
     // Do not provide assembly substitutes
     public sealed class SubModuleV300 : MBSubModuleBase
     {
-        private ApplicationVersion GameVersion { get; }
-
-        public SubModuleV300()
-        {
-            GameVersion = ApplicationVersionUtils.GameVersion();
-        }
-
         /// <summary>
         /// Start initialization
         /// </summary>
         protected override void OnSubModuleLoad()
         {
-            using var synchronizationProvider = DI.GetImplementation<ISynchronizationProvider, SynchronizationProviderWrapper>(GameVersion, new object[] { "OnSubModuleLoad_MBOv3" })!;
+            using var synchronizationProvider = BaseSynchronizationProvider.Create("OnSubModuleLoad_MBOv3");
             if (synchronizationProvider.IsFirstInitialization)
             {
                 var harmonyV1 = new Harmony("bannerlord.mcm.v1.loaderpreventer");
@@ -73,7 +64,7 @@ namespace MCM.Implementation.MBO
         /// </summary>
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
-            using var synchronizationProvider = DI.GetImplementation<ISynchronizationProvider, SynchronizationProviderWrapper>(GameVersion, new object[] { "OnBeforeInitialModuleScreenSetAsRoot_MBOv3" })!;
+            using var synchronizationProvider = BaseSynchronizationProvider.Create("OnBeforeInitialModuleScreenSetAsRoot_MBOv3");
             if (synchronizationProvider.IsFirstInitialization)
             {
 
