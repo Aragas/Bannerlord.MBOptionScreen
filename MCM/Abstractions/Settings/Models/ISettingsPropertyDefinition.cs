@@ -1,6 +1,5 @@
-﻿using MCM.Abstractions.Settings.Definitions;
-
-using System.Reflection;
+﻿using MCM.Abstractions.Ref;
+using MCM.Abstractions.Settings.Definitions;
 
 namespace MCM.Abstractions.Settings.Models
 {
@@ -14,8 +13,7 @@ namespace MCM.Abstractions.Settings.Models
         IPropertyDefinitionText,
         IPropertyGroupDefinition
     {
-        string SettingsId { get; }
-        PropertyInfo Property { get; }
+        IRef PropertyReference { get; }
 
         SettingType SettingType { get; }
     }

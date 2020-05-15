@@ -1,13 +1,16 @@
 ﻿using HarmonyLib;
 
 using MCM.Abstractions.Attributes;
+using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Models;
-using MCM.Implementation.MBO.Settings.Properties;
+using MCM.Utils;
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using MCM.Implementation.MBO.Settings.Properties;
 
 namespace MCM.Implementation.MBO.Settings
 {
@@ -29,6 +32,7 @@ namespace MCM.Implementation.MBO.Settings
     [Version("e1.3.0",  1)]
     [Version("e1.3.1",  1)]
     [Version("e1.4.0",  1)]
+    [Version("e1.4.1",  1)]
     public class MBOGlobalSettingsWrapper : BaseMBOGlobalSettingsWrapper
     {
         private PropertyInfo? IdProperty { get; }
@@ -79,12 +83,18 @@ namespace MCM.Implementation.MBO.Settings
         public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
             OnPropertyChangedMethod?.Invoke(Object, new object[] { propertyName! });
 
+        protected override BaseSettings CreateNew() => new MBOGlobalSettingsWrapper(Activator.CreateInstance(Object.GetType()));
+
         protected override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups()
         {
+            //var Discoverer = new MBOSettingsPropertyDiscoverer();
             var groups = new List<SettingsPropertyGroupDefinition>();
-            foreach (var settingProp in new MBOSettingsPropertyDiscoverer().GetProperties(Object, Id))
+            if (Discoverer == null)
+                return groups;
+
+            foreach (var settingProp in Discoverer.GetProperties(Object))
             {
-                var group = GetGroupFor(settingProp, groups);
+                var group = SettingsUtils.GetGroupFor(SubGroupDelimiter, settingProp, groups);
                 group.Add(settingProp);
             }
             return groups;

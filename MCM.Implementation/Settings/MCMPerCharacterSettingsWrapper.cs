@@ -4,9 +4,10 @@ using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.Models.Wrapper;
-using MCM.Implementation.Settings.Properties;
+using MCM.Utils;
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -33,6 +34,7 @@ namespace MCM.Implementation.Settings
     [Version("e1.3.0",  1)]
     [Version("e1.3.1",  1)]
     [Version("e1.4.0",  1)]
+    [Version("e1.4.1",  1)]
     public class MCMPerCharacterSettingsWrapper : BaseMCMPerCharacterSettingsWrapper
     {
         private PropertyInfo? CharacterIdProperty { get; }
@@ -43,6 +45,9 @@ namespace MCM.Implementation.Settings
         private PropertyInfo? SubFolderProperty { get; }
         private PropertyInfo? SubGroupDelimiterProperty { get; }
         private PropertyInfo? FormatProperty { get; }
+        private MethodInfo? CreateNewMethod { get; }
+        private MethodInfo? CopyAsNewMethod { get; }
+        private MethodInfo? GetAvailablePresetsMethod { get; }
         private MethodInfo? GetSettingPropertyGroupsMethod { get; }
         private MethodInfo? GetUnsortedSettingPropertyGroupsMethod { get; }
         private MethodInfo? OnPropertyChangedMethod { get; }
@@ -71,6 +76,9 @@ namespace MCM.Implementation.Settings
             SubFolderProperty = AccessTools.Property(type, nameof(SubFolder));
             SubGroupDelimiterProperty = AccessTools.Property(type, nameof(SubGroupDelimiter));
             FormatProperty = AccessTools.Property(type, nameof(Format));
+            CreateNewMethod = AccessTools.Method(type, nameof(CreateNew));
+            CopyAsNewMethod = AccessTools.Method(type, nameof(CopyAsNew));
+            GetAvailablePresetsMethod = AccessTools.Method(type, nameof(GetAvailablePresets));
             GetSettingPropertyGroupsMethod = AccessTools.Method(type, nameof(GetSettingPropertyGroups));
             GetUnsortedSettingPropertyGroupsMethod = AccessTools.Method(type, nameof(GetUnsortedSettingPropertyGroups));
             OnPropertyChangedMethod = AccessTools.Method(type, nameof(OnPropertyChanged));
@@ -79,11 +87,26 @@ namespace MCM.Implementation.Settings
                         DisplayNameProperty != null && UIVersionProperty != null &&
                         SubFolderProperty != null && SubGroupDelimiterProperty != null &&
                         FormatProperty != null && GetSettingPropertyGroupsMethod != null &&
-                        OnPropertyChangedMethod != null;
+                        OnPropertyChangedMethod != null && CreateNewMethod != null &&
+                        GetAvailablePresetsMethod != null && CopyAsNewMethod != null;
         }
 
         public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
             OnPropertyChangedMethod?.Invoke(Object, new object[] { propertyName! });
+
+        protected override BaseSettings CreateNew() => new MCMPerCharacterSettingsWrapper(CreateNewMethod!.Invoke(Object, Array.Empty<object>()));
+        protected override BaseSettings CopyAsNew() => new MCMPerCharacterSettingsWrapper(CopyAsNewMethod!.Invoke(Object, Array.Empty<object>()));
+
+        public override IDictionary<string, Func<BaseSettings>> GetAvailablePresets()
+        {
+            if (!(GetAvailablePresetsMethod?.Invoke(Object, Array.Empty<object>()) is IDictionary dict))
+                return new Dictionary<string, Func<BaseSettings>>();
+
+            var returnDict = new Dictionary<string, Func<BaseSettings>>();
+            foreach (DictionaryEntry pair in dict)
+                returnDict.Add((string) pair.Key, () => new MCMPerCharacterSettingsWrapper(((Func<object>) pair.Value).Invoke()));
+            return returnDict;
+        }
 
         public override List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups()
         {
@@ -101,10 +124,14 @@ namespace MCM.Implementation.Settings
         }
         protected override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups()
         {
+            //var Discoverer = new AttributeSettingsPropertyDiscoverer();
             var groups = new List<SettingsPropertyGroupDefinition>();
-            foreach (var settingProp in new MCMSettingsPropertyDiscoverer().GetProperties(Object, Id))
+            if (Discoverer == null)
+                return groups;
+
+            foreach (var settingProp in Discoverer.GetProperties(Object))
             {
-                var group = GetGroupFor(settingProp, groups);
+                var group = SettingsUtils.GetGroupFor(SubGroupDelimiter, settingProp, groups);
                 group.Add(settingProp);
             }
             return groups;

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Version>3.0.0</Version>
     <Authors>Aragas, mipen</Authors>
-    <AssemblyName>MCM.Implementation.ModLib.v$(Version)</AssemblyName>
+    <AssemblyName>MCMv3.Implementation.ModLib.v$(Version)</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

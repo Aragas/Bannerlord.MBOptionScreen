@@ -25,8 +25,8 @@ namespace MCM.Abstractions.Settings.Properties
             IsCorrect = GetPropertiesMethod != null;
         }
 
-        public IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object, string id) =>
-            ((IEnumerable<object>) (GetPropertiesMethod?.Invoke(Object, new object[] { @object, id }) ?? new List<object>()))
+        public IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object) =>
+            ((IEnumerable<object>) (GetPropertiesMethod?.Invoke(Object, new object[] { @object }) ?? new List<object>()))
             .Select(o => new SettingsPropertyDefinitionWrapper(o));
     }
 }

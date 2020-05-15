@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 
+using MCM.Abstractions.Ref;
 using MCM.Utils;
 
 using System;
@@ -27,7 +28,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
         private PropertyInfo? SelectedIndexProperty { get; }
 
         public string SettingsId { get; }
-        public PropertyInfo Property { get; }
+        public IRef PropertyReference { get; }
         public SettingType SettingType { get; }
         public string DisplayName { get; }
         public int Order { get; } = -1;
@@ -49,7 +50,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
 
             SettingsIdProperty = AccessTools.Property(type, nameof(SettingsId));
             SettingTypeProperty = AccessTools.Property(type, nameof(SettingType));
-            PropertyProperty = AccessTools.Property(type, nameof(Property));
+            PropertyProperty = AccessTools.Property(type, nameof(PropertyReference));
             DisplayNameProperty = AccessTools.Property(type, nameof(DisplayName));
             HintTextProperty = AccessTools.Property(type, nameof(HintText));
             OrderProperty = AccessTools.Property(type, nameof(Order));
@@ -69,7 +70,9 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
                     ? resultEnum
                     : SettingType.NONE
                 : SettingType.NONE;
-            Property = new WrapperPropertyInfo((PropertyInfo) PropertyProperty?.GetValue(@object));
+            PropertyReference = PropertyProperty?.GetValue(@object) is { } value 
+                ? value is IRef @ref ? @ref : new RefWrapper(value)
+                : null;
 
             DisplayName = DisplayNameProperty?.GetValue(@object) switch
             {

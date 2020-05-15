@@ -1,11 +1,14 @@
-﻿using MCM.Abstractions.ExtensionMethods;
+﻿using HarmonyLib;
+
 using MCM.Abstractions.Settings.Models;
 using MCM.Utils;
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 
 namespace MCM.Abstractions.Settings
 {
@@ -24,83 +27,40 @@ namespace MCM.Abstractions.Settings
 
         public virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
+        protected virtual BaseSettings CreateNew()
+        {
+            var type = GetType();
+            var constructor = AccessTools.Constructor(type, Type.EmptyTypes);
+            return constructor != null
+                ? (BaseSettings) constructor.Invoke(null)
+                : (BaseSettings) FormatterServices.GetUninitializedObject(type);
+        }
+        protected virtual BaseSettings CopyAsNew()
+        {
+            var newSettings = CreateNew();
+            SettingsUtils.OverrideSettings(newSettings, this);
+            return newSettings;
+        }
+        public virtual IDictionary<string, Func<BaseSettings>> GetAvailablePresets() => new Dictionary<string, Func<BaseSettings>>()
+        {
+            {"Default", CreateNew}
+        };
+
         public virtual List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() => GetUnsortedSettingPropertyGroups()
             .OrderByDescending(x => x.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)
             .ThenByDescending(x => x.Order)
             .ThenByDescending(x => x.DisplayGroupName.ToString(), new AlphanumComparatorFast())
             .ToList();
-        protected abstract IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups();
-        protected SettingsPropertyGroupDefinition GetGroupFor(ISettingsPropertyDefinition sp, ICollection<SettingsPropertyGroupDefinition> rootCollection)
+        protected virtual IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups()
         {
-            SettingsPropertyGroupDefinition? group;
-            //Check if the intended group is a sub group
-            if (sp.GroupName.Contains(SubGroupDelimiter))
+            var groups = new List<SettingsPropertyGroupDefinition>();
+            foreach (var settingProp in SettingsUtils.GetProperties(this))
             {
-                //Intended group is a sub group. Must find it. First get the top group.
-                var topGroupName = GetTopGroupName(sp.GroupName, out var truncatedGroupName);
-                var topGroup = rootCollection.GetGroup(topGroupName);
-                if (topGroup == null)
-                {
-                    // Order will not be passed to the subgroup
-                    topGroup = new SettingsPropertyGroupDefinition(sp.GroupName, topGroupName);
-                    rootCollection.Add(topGroup);
-                }
-                //Find the sub group
-                group = GetGroupForRecursive(truncatedGroupName, topGroup, sp);
+                //Find the group that the setting property should belong to. This is the default group if no group is specifically set with the SettingPropertyGroup attribute.
+                var group = SettingsUtils.GetGroupFor(SubGroupDelimiter, settingProp, groups);
+                group.Add(settingProp);
             }
-            else
-            {
-                //Group is not a subgroup, can find it in the main list of groups.
-                group = rootCollection.GetGroup(sp.GroupName);
-                if (group == null)
-                {
-                    group = new SettingsPropertyGroupDefinition(sp.GroupName, order: sp.GroupOrder);
-                    rootCollection.Add(group);
-                }
-            }
-            return group;
-        }
-        protected SettingsPropertyGroupDefinition GetGroupForRecursive(string groupName, SettingsPropertyGroupDefinition sgp, ISettingsPropertyDefinition sp)
-        {
-            while (true)
-            {
-                if (groupName.Contains(SubGroupDelimiter))
-                {
-                    //Need to go deeper
-                    var topGroupName = GetTopGroupName(groupName, out var truncatedGroupName);
-                    var topGroup = sgp.GetGroupFor(topGroupName);
-                    if (topGroup == null)
-                    {
-                        // Order will not be passed to the subgroup
-                        topGroup = new SettingsPropertyGroupDefinition(sp.GroupName, topGroupName);
-                        sgp.Add(topGroup);
-                    }
-
-                    groupName = truncatedGroupName;
-                    sgp = topGroup;
-                }
-                else
-                {
-                    //Reached the bottom level, can return the final group.
-                    var group = sgp.GetGroup(groupName);
-                    if (group == null)
-                    {
-                        group = new SettingsPropertyGroupDefinition(sp.GroupName, groupName, sp.GroupOrder);
-                        sgp.Add(group);
-                    }
-
-                    return group;
-                }
-            }
-        }
-
-        protected string GetTopGroupName(string groupName, out string truncatedGroupName)
-        {
-            var index = groupName.IndexOf(SubGroupDelimiter);
-            var topGroupName = groupName.Substring(0, index);
-
-            truncatedGroupName = groupName.Remove(0, index + 1);
-            return topGroupName;
+            return groups;
         }
     }
 }

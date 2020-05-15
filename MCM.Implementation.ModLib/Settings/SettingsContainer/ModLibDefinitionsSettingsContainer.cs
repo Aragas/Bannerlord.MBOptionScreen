@@ -31,6 +31,7 @@ namespace MCM.Implementation.ModLib.Settings.SettingsContainer
     [Version("e1.3.0",  1)]
     [Version("e1.3.1",  1)]
     [Version("e1.4.0",  1)]
+    [Version("e1.4.1",  1)]
     internal sealed class ModLibDefinitionsSettingsContainer : IModLibDefinitionsSettingsContainer
     {
         private Dictionary<string, ModLibDefinitionsGlobalSettingsWrapper> LoadedModLibSettings { get; } = new Dictionary<string, ModLibDefinitionsGlobalSettingsWrapper>();

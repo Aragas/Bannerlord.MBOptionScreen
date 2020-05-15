@@ -31,6 +31,7 @@ namespace MCM.Implementation.Settings.SettingsContainer
     [Version("e1.3.0",  1)]
     [Version("e1.3.1",  1)]
     [Version("e1.4.0",  1)]
+    [Version("e1.4.1",  1)]
     internal sealed class MCMPerCharacterSettingsContainer : BasePerCharacterSettingsContainer, IMCMPerCharacterSettingsContainer
     {
         public override void OnGameStarted(Game game)
@@ -52,9 +53,6 @@ namespace MCM.Implementation.Settings.SettingsContainer
                 .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(PerCharacterSettings)))
                 .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(EmptyPerCharacterSettings)))
                 .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(IWrapper)))
-#if !DEBUG
-                .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(TestSettingsBase<>)))
-#endif
                 .Select(obj => BasePerCharacterSettingsWrapper.Create(Activator.CreateInstance(obj)));
             settings.AddRange(mbOptionScreenSettings);
 

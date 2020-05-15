@@ -4,7 +4,7 @@ using MCM.Utils;
 
 namespace MCM.Abstractions.Synchronization
 {
-    public abstract class BaseSynchronizationProvider : IDisposable
+    public abstract class BaseSynchronizationProvider : IDependency, IDisposable
     {
         private static BaseSynchronizationProvider? _instance;
         public static BaseSynchronizationProvider Create(string name) =>

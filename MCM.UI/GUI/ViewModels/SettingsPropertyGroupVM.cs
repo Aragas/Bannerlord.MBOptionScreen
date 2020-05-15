@@ -11,9 +11,9 @@ namespace MCM.UI.GUI.ViewModels
     internal class SettingsPropertyGroupVM : ViewModel
     {
         private bool _isExpanded = true;
+
         protected ModOptionsVM MainView => SettingsVM.MainView;
         protected SettingsVM SettingsVM { get; }
-        public UndoRedoStack URS => SettingsVM.URS;
 
         public SettingsPropertyGroupDefinition SettingPropertyGroupDefinition { get; }
         public string GroupName => SettingPropertyGroupDefinition.DisplayGroupName.ToString();
@@ -161,35 +161,30 @@ namespace MCM.UI.GUI.ViewModels
 
         public void NotifySearchChanged()
         {
-            if (SettingPropertyGroups.Count > 0)
-            {
-                foreach (var group in SettingPropertyGroups)
-                    group.NotifySearchChanged();
-            }
-            if (SettingProperties.Count > 0)
-            {
-                foreach (var prop in SettingProperties)
-                    prop.OnPropertyChanged(nameof(SettingsPropertyVM.IsSettingVisible));
-            }
+            foreach (var group in SettingPropertyGroups)
+                group.NotifySearchChanged();
+            foreach (var prop in SettingProperties)
+                prop.OnPropertyChanged(nameof(SettingsPropertyVM.IsSettingVisible));
             OnPropertyChanged(nameof(IsGroupVisible));
         }
 
-        private void OnHover()
+        public void OnResetStart()
         {
-            if (MainView != null && !string.IsNullOrWhiteSpace(HintText))
-                MainView.HintText = HintText;
+            foreach (var setting in SettingProperties)
+                setting.OnResetStart();
+            foreach (var setting in SettingPropertyGroups)
+                setting.OnResetStart();
         }
-
-        private void OnHoverEnd()
+        public void OnResetEnd()
         {
-            if (MainView != null)
-                MainView.HintText = "";
+            foreach (var setting in SettingProperties)
+                setting.OnResetEnd();
+            foreach (var setting in SettingPropertyGroups)
+                setting.OnResetEnd();
         }
-
-        private void OnGroupClick()
-        {
-            IsExpanded = !IsExpanded;
-        }
+        private void OnHover() { if (MainView != null && !string.IsNullOrWhiteSpace(HintText)) MainView.HintText = HintText; }
+        private void OnHoverEnd() { if (MainView != null) MainView.HintText = ""; }
+        private void OnGroupClick() => IsExpanded = !IsExpanded;
 
         public override string ToString() => GroupName;
         public override int GetHashCode() => GroupName.GetHashCode();

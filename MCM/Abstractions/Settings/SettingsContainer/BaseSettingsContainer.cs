@@ -17,14 +17,14 @@ namespace MCM.Abstractions.Settings.SettingsContainer
         protected Dictionary<string, ISettingsFormat> AvailableSettingsFormats { get; } = new Dictionary<string, ISettingsFormat>();
         protected Dictionary<string, TSettings> LoadedSettings { get; } = new Dictionary<string, TSettings>();
 
-        public List<SettingsDefinition> CreateModSettingsDefinitions => LoadedSettings.Keys
+        public virtual List<SettingsDefinition> CreateModSettingsDefinitions => LoadedSettings.Keys.ToList()
             .Select(id => new SettingsDefinition(id))
             .OrderByDescending(a => a.DisplayName)
             .ToList();
 
         protected BaseSettingsContainer()
         {
-            foreach (var format in DI.GetBaseInterfaceImplementations<ISettingsFormat>())
+            foreach (var format in DI.GetBaseImplementations<ISettingsFormat>())
             foreach (var extension in format.Extensions)
             {
                 AvailableSettingsFormats[extension] = format;
@@ -48,7 +48,7 @@ namespace MCM.Abstractions.Settings.SettingsContainer
                 AvailableSettingsFormats["memory"].Load(tSettings, path);
         }
 
-        public BaseSettings? GetSettings(string id) => LoadedSettings.TryGetValue(id, out var result) ? result : null;
+        public virtual BaseSettings? GetSettings(string id) => LoadedSettings.TryGetValue(id, out var result) ? result : null;
         public virtual bool SaveSettings(BaseSettings settings)
         {
             if (!(settings is TSettings tSettings) || !LoadedSettings.ContainsKey(tSettings.Id))

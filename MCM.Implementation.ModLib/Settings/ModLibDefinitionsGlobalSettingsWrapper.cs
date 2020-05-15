@@ -1,9 +1,11 @@
 ﻿using HarmonyLib;
 
 using MCM.Abstractions.Attributes;
+using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Models;
-using MCM.Implementation.ModLib.Settings.Properties;
+using MCM.Utils;
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
@@ -29,6 +31,7 @@ namespace MCM.Implementation.ModLib.Settings
     [Version("e1.3.0",  1)]
     [Version("e1.3.1",  1)]
     [Version("e1.4.0",  1)]
+    [Version("e1.4.1",  1)]
     public class ModLibDefinitionsGlobalSettingsWrapper : BaseModLibDefinitionsGlobalSettingsWrapper
     {
         private PropertyInfo? IDProperty { get; }
@@ -61,12 +64,18 @@ namespace MCM.Implementation.ModLib.Settings
 
         public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) { }
 
+        protected override BaseSettings CreateNew() => new ModLibDefinitionsGlobalSettingsWrapper(Activator.CreateInstance(Object.GetType()));
+
         protected override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups()
         {
+            //var Discoverer = new ModLibDefinitionsSettingsPropertyDiscoverer();
             var groups = new List<SettingsPropertyGroupDefinition>();
-            foreach (var settingProp in new ModLibDefinitionsSettingsPropertyDiscoverer().GetProperties(Object, Id))
+            if (Discoverer == null)
+                return groups;
+
+            foreach (var settingProp in Discoverer.GetProperties(Object))
             {
-                var group = GetGroupFor(settingProp, groups);
+                var group = SettingsUtils.GetGroupFor(SubGroupDelimiter, settingProp, groups);
                 group.Add(settingProp);
             }
             return groups;

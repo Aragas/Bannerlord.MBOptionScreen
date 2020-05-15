@@ -1,4 +1,5 @@
-﻿using MCM.Abstractions.Attributes;
+﻿#if DEBUG
+using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
 using MCM.Abstractions.Data;
 
@@ -162,3 +163,4 @@ namespace MCM.Implementation
         }
     }
 }
+#endif

@@ -26,6 +26,7 @@ namespace MCM.Implementation.ModLib.Functionality
     [Version("e1.3.0",  1)]
     [Version("e1.3.1",  1)]
     [Version("e1.4.0",  1)]
+    [Version("e1.4.1",  1)]
     internal sealed class DefaultModLibScreenOverrider : BaseModLibScreenOverrider
     {
         private static readonly AccessTools.FieldRef<Module, IList> _initialStateOptions =

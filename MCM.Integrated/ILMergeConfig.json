@@ -7,8 +7,8 @@
     "InputAssemblies": [
       "MCM.Integrated.dll",
       "MCMv3.dll",
-      "MCM.Implementation.v3.0.0.dll",
-      "MCM.UI.v3.0.0.dll"
+      "MCMv3.Implementation.v3.0.0.dll",
+      "MCMv3.UI.v3.0.0.dll"
     ]
   },
   "Advanced": {

@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 
 using MCM.Abstractions.Data;
+using MCM.Abstractions.Ref;
 
 using System.Reflection;
 
@@ -20,7 +21,7 @@ namespace MCM.UI.Actions
         {
             DropdownContext = context;
             SelectedIndexProperty = AccessTools.Property(DropdownContext.Value.GetType(), nameof(IDropdownProvider.SelectedIndex));
-            Context = new ProxyRef(() => SelectedIndexProperty.GetValue(DropdownContext.Value), o => SelectedIndexProperty.SetValue(DropdownContext.Value, o));
+            Context = new ProxyRef<object>(() => SelectedIndexProperty.GetValue(DropdownContext.Value), o => SelectedIndexProperty.SetValue(DropdownContext.Value, o));
             Value = value.SelectedIndex;
             Original = Context.Value;
         }

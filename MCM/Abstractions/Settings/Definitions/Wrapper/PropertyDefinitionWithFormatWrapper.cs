@@ -1,4 +1,6 @@
-﻿namespace MCM.Abstractions.Settings.Definitions.Wrapper
+﻿using HarmonyLib;
+
+namespace MCM.Abstractions.Settings.Definitions.Wrapper
 {
     public sealed class PropertyDefinitionWithFormatWrapper : BasePropertyDefinitionWrapper, IPropertyDefinitionWithFormat
     {
@@ -6,7 +8,9 @@
 
         public PropertyDefinitionWithFormatWrapper(object @object) : base(@object)
         {
-            ValueFormat = @object.GetType().GetProperty(nameof(ValueFormat))?.GetValue(@object) as string ?? "";
+            var type = @object.GetType();
+
+            ValueFormat = AccessTools.Property(type, nameof(ValueFormat))?.GetValue(@object) as string ?? "";
         }
     }
 }

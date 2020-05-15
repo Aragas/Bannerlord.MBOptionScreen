@@ -108,6 +108,15 @@
                     <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="80" LayoutImp.LayoutMethod="HorizontalLeftToRight"
                                HorizontalAlignment="Center" VerticalAlignment="Top">
                       <Children>
+                        <!-- Dropdown Presets -->
+                        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="300" SuggestedHeight="42" HorizontalAlignment="Left"
+                                VerticalAlignment="Center"  MarginLeft="20" MarginRight="40" IsVisible="@IsPresetsSelectorVisible">
+                          <Children>
+                            <Standard.DropdownWithHorizontalControl HorizontalAlignment="Center" Parameter.SelectorDataSource="{PresetsSelector}"
+                                                                    Parameter.ShowNextAndPrevious="false" />
+                          </Children>
+                        </Widget>
+
                         <!-- Title -->
                         <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="80" Brush="ModLib.Title.Text_v3"
                                         Text="@SelectedDisplayName" HorizontalAlignment="Center" VerticalAlignment="Top"/>
@@ -186,15 +195,6 @@
 
         <!-- Top Banner -->
         <Standard.TopPanel Parameter.Title="@Name"/>
-
-        <!-- Revert to default button -->
-        <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="!CancelButton.Width"
-                      SuggestedHeight="!CancelButton.Height" Brush="ModLib.Delete.Button_v3" Command.Click="ExecuteRevert" IsVisible="@SomethingSelected"
-                      HorizontalAlignment="Right" VerticalAlignment="Top" MarginTop="75" MarginRight="40">
-          <Children>
-            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="Revert to defaults" />
-          </Children>
-        </ButtonWidget>
 
       </Children>
     </Widget>

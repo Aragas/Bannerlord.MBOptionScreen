@@ -11,7 +11,7 @@
   </DependedModules>
   <SubModules>
     <SubModule>
-      <Name value="MCM Integrated Loader"/>
+      <Name value="MCMv3 Integrated Loader"/>
       <DLLName value="MCMv3.dll"/>
       <SubModuleClassType value="MCM.IntegratedLoaderSubModule"/>
       <Tags>

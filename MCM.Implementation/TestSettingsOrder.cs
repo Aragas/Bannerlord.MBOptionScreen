@@ -1,4 +1,5 @@
-﻿using MCM.Abstractions.Attributes;
+﻿#if DEBUG
+using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
 
 namespace MCM.Implementation
@@ -79,3 +80,4 @@ namespace MCM.Implementation
         public bool SubGroup_E { get; set; } = true;
     }
 }
+#endif

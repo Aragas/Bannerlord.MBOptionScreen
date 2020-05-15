@@ -7,7 +7,7 @@ using TaleWorlds.Core;
 
 namespace MCM.Abstractions.Settings.SettingsProvider
 {
-    public abstract class BaseSettingsProvider
+    public abstract class BaseSettingsProvider : IDependency
     {
         private static BaseSettingsProvider? _instance;
         public static BaseSettingsProvider Instance =>

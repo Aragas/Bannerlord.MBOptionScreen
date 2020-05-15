@@ -1,4 +1,5 @@
-﻿using MCM.Abstractions.Attributes.v2;
+﻿#if DEBUG
+using MCM.Abstractions.Attributes.v2;
 
 namespace MCM.Implementation
 {
@@ -25,3 +26,4 @@ namespace MCM.Implementation
         }
     }
 }
+#endif

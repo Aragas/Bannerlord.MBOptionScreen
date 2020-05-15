@@ -1,4 +1,7 @@
-﻿using MCM.Abstractions.Settings.SettingsProvider;
+﻿using System.Collections;
+using System.Collections.Generic;
+using MCM.Abstractions.Settings.SettingsProvider;
+using MCM.Utils;
 
 namespace MCM.Abstractions.Settings.Models
 {
@@ -6,13 +9,37 @@ namespace MCM.Abstractions.Settings.Models
     {
         public string SettingsId { get; }
         public string DisplayName { get; }
+        public List<SettingsPropertyGroupDefinition> SettingPropertyGroups { get; }
 
-        public SettingsDefinition(string settingsId)
+        public SettingsDefinition(string id)
         {
-            var settings = BaseSettingsProvider.Instance.GetSettings(settingsId);
+            SettingsId = id;
 
-            SettingsId = settingsId;
+            var settings = BaseSettingsProvider.Instance.GetSettings(id);
             DisplayName = settings?.DisplayName ?? "ERROR";
+            SettingPropertyGroups = settings?.GetSettingPropertyGroups() ?? new List<SettingsPropertyGroupDefinition>();
+        }
+
+        public SettingsDefinition(string id, string displayName, List<SettingsPropertyGroupDefinition> settingsPropertyGroups)
+        {
+            SettingsId = id;
+            DisplayName = displayName;
+            SettingPropertyGroups = settingsPropertyGroups;
+        }
+
+        public SettingsDefinition(string id, string displayName, List<SettingsPropertyDefinition> settingsProperties)
+        {
+            SettingsId = id;
+            DisplayName = displayName;
+            var groups = new List<SettingsPropertyGroupDefinition>();
+            foreach (var settingProp in settingsProperties)
+            {
+                // TODO:
+                //Find the group that the setting property should belong to. This is the default group if no group is specifically set with the SettingPropertyGroup attribute.
+                var group = SettingsUtils.GetGroupFor('/', settingProp, groups);
+                group.Add(settingProp);
+            }
+            SettingPropertyGroups = groups;
         }
     }
 }

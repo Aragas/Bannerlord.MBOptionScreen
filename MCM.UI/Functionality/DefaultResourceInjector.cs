@@ -40,6 +40,7 @@ namespace MCM.UI.Functionality
     [Version("e1.3.0",  1)]
     [Version("e1.3.1",  1)]
     [Version("e1.4.0",  1)]
+    [Version("e1.4.1",  1)]
     internal sealed class DefaultResourceInjector : BaseResourceHandler
     {
         private static int _initialized;
@@ -67,7 +68,7 @@ namespace MCM.UI.Functionality
 
             var widgetCreationData = new WidgetCreationData(__instance.Context, __instance.WidgetFactory);
             widgetCreationData.AddExtensionData(__instance);
-            RootViewProperty.SetValue(__instance, movie.Instantiate(widgetCreationData).GetGauntletView());
+            RootViewProperty.SetValue(__instance, WidgetInstantiationResultDatabindingExtension.GetGauntletView(movie.Instantiate(widgetCreationData)));
             ____movieRootNode.AddChild(__instance.RootView.Target);
             __instance.RootView.RefreshBindingWithChildren();
             return false;

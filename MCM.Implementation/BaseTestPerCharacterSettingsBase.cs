@@ -1,8 +1,10 @@
-﻿using MCM.Abstractions.Settings;
+﻿#if DEBUG
+using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Models;
-using MCM.Implementation.Settings.Properties;
+using MCM.Utils;
 
 using System.Collections.Generic;
+using MCM.Implementation.Settings.Properties;
 
 namespace MCM.Implementation
 {
@@ -12,13 +14,18 @@ namespace MCM.Implementation
 
         protected override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups()
         {
+            //var Discoverer = new AttributeSettingsPropertyDiscoverer();
             var groups = new List<SettingsPropertyGroupDefinition>();
-            foreach (var settingProp in new MCMSettingsPropertyDiscoverer().GetProperties(this, Id))
+            if (Discoverer == null)
+                return groups;
+
+            foreach (var settingProp in Discoverer.GetProperties(this))
             {
-                var group = GetGroupFor(settingProp, groups);
+                var group = SettingsUtils.GetGroupFor(SubGroupDelimiter, settingProp, groups);
                 group.Add(settingProp);
             }
             return groups;
         }
     }
 }
+#endif

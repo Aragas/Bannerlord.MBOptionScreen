@@ -1,11 +1,12 @@
-﻿using MCM.Abstractions.Settings.Formats;
+﻿using MCM.Abstractions;
+using MCM.Abstractions.Settings.Formats;
 
 namespace MCM.Implementation.Settings.Formats
 {
     /// <summary>
     /// So it can be overriden by an external library
     /// </summary>
-    public interface IXmlSettingsFormat : ISettingsFormat
+    public interface IXmlSettingsFormat : ISettingsFormat, IDependency
     {
 
     }

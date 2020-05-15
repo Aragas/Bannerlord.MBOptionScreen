@@ -1,81 +1,66 @@
 ﻿using MCM.Abstractions.Settings;
+using MCM.Abstractions.Settings.Models;
 using MCM.UI.Actions;
-using MCM.UI.GUI.ViewModels;
 using MCM.Utils;
 
-using System.Collections.Generic;
-
-using TaleWorlds.Core.ViewModelCollection;
+using System.Linq;
 
 namespace MCM.UI.GUI
 {
     internal static class Utils
     {
-        public static void OverridePropertyValues(IEnumerable<SettingsPropertyVM> settingProperties, object settings, object settingsNew)
+        /// <summary>
+        /// Mimics the same method in SettingsUtils, but it registers every action in URS
+        /// </summary>
+        /// <param name="urs"></param>
+        /// <param name="current"></param>
+        /// <param name="new"></param>
+        public static void OverrideValues(UndoRedoStack urs, BaseSettings current, BaseSettings @new)
         {
-            if (settings.GetType() != settingsNew.GetType())
-                return;
-
-            foreach (var settingProperty in settingProperties)
+            foreach (var newSettingPropertyGroup in @new.GetSettingPropertyGroups())
             {
-                if (Equal(settingProperty, settings, settingsNew))
-                    return;
-
-                switch (settingProperty.SettingType)
-                {
-                    case SettingType.Bool:
-                        settingProperty.URS.Do(new SetValueTypeAction<bool>(
-                            new ProxyRef(() => settingProperty.BoolValue, o => settingProperty.BoolValue = (bool) o),
-                            (bool) settingProperty.Property.GetValue(settingsNew)));
-                        break;
-                    case SettingType.Int:
-                        settingProperty.URS.Do(new SetValueTypeAction<int>(
-                            new ProxyRef(() => settingProperty.IntValue, o => settingProperty.IntValue = (int) o),
-                            (int) settingProperty.Property.GetValue(settingsNew)));
-                        break;
-                    case SettingType.Float:
-                        settingProperty.URS.Do(new SetValueTypeAction<float>(
-                            new ProxyRef(() => settingProperty.FloatValue, o => settingProperty.FloatValue = (float) o),
-                            (float) settingProperty.Property.GetValue(settingsNew)));
-                        break;
-                    case SettingType.String:
-                        settingProperty.URS.Do(new SetStringAction(
-                            new ProxyRef(() => settingProperty.StringValue, o => settingProperty.StringValue = (string) o),
-                            (string) settingProperty.Property.GetValue(settingsNew)));
-                        break;
-                    case SettingType.Dropdown:
-                        settingProperty.URS.Do(new SetDropdownIndexAction(
-                            new ProxyRef(() => settingProperty.DropdownValue,
-                                o => settingProperty.DropdownValue = (SelectorVM<SelectorItemVM>) o),
-                            SettingsUtils.GetSelector(settingProperty.Property.GetValue(settingsNew))));
-                        break;
-                }
+                var settingPropertyGroup = current.GetSettingPropertyGroups()
+                    .FirstOrDefault(x => x.DisplayGroupName.ToString() == newSettingPropertyGroup.DisplayGroupName.ToString());
+                OverrideValues(urs, settingPropertyGroup, newSettingPropertyGroup);
             }
         }
-
-        private static bool Equal(SettingsPropertyVM settingProperty, object settings, object settingsNew)
+        public static void OverrideValues(UndoRedoStack urs, SettingsPropertyGroupDefinition current, SettingsPropertyGroupDefinition @new)
         {
-            switch (settingProperty.SettingType)
+            foreach (var newSettingPropertyGroup in @new.SubGroups)
+            {
+                var settingPropertyGroup = current.SubGroups
+                    .FirstOrDefault(x => x.DisplayGroupName.ToString() == newSettingPropertyGroup.DisplayGroupName.ToString());
+                OverrideValues(urs, settingPropertyGroup, newSettingPropertyGroup);
+            }
+            foreach (var newSettingProperty in @new.SettingProperties)
+            {
+                var settingProperty = current.SettingProperties
+                    .FirstOrDefault(x => x.DisplayName == newSettingProperty.DisplayName);
+                OverrideValues(urs, settingProperty, newSettingProperty);
+            }
+        }
+        public static void OverrideValues(UndoRedoStack urs, ISettingsPropertyDefinition current, ISettingsPropertyDefinition @new)
+        {
+            if (SettingsUtils.Equals(current, @new))
+                return;
+
+            switch (current.SettingType)
             {
                 case SettingType.Bool:
+                    urs.Do(new SetValueTypeAction<bool>(current.PropertyReference, (bool) @new.PropertyReference.Value));
+                    break;
                 case SettingType.Int:
+                    urs.Do(new SetValueTypeAction<int>(current.PropertyReference, (int) @new.PropertyReference.Value));
+                    break;
                 case SettingType.Float:
+                    urs.Do(new SetValueTypeAction<float>(current.PropertyReference, (float) @new.PropertyReference.Value));
+                    break;
                 case SettingType.String:
-                {
-                    var original = settingProperty.Property.GetValue(settings);
-                    var @new = settingProperty.Property.GetValue(settingsNew); 
-                    return original.Equals(@new);
-                }
+                    urs.Do(new SetStringAction(current.PropertyReference, (string) @new.PropertyReference.Value));
+                    break;
                 case SettingType.Dropdown:
-                {
-                    var original = (SelectorVM<SelectorItemVM>) settingProperty.Property.GetValue(settings);
-                    var @new = (SelectorVM<SelectorItemVM>) settingProperty.Property.GetValue(settingsNew);
-                    return original.SelectedIndex.Equals(@new.SelectedIndex);
-                }
-                default:
-                {
-                    return false;
-                }
+                    urs.Do(new SetDropdownIndexAction(current.PropertyReference, SettingsUtils.GetSelector(@new.PropertyReference.Value)));
+                    break;
             }
         }
     }

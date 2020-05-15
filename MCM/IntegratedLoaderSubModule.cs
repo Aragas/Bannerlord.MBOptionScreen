@@ -27,21 +27,22 @@ namespace MCM
 
         public IntegratedLoaderSubModule()
         {
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(a => !a.IsDynamic).ToList();
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies()
+                .Where(a => !a.IsDynamic)
+                .ToList();
 
             _mcmImplementationAssemblies.Add(typeof(IntegratedLoaderSubModule).Assembly);
 
             // Loading as Standalone
-            foreach (var assembly in assemblies)
+            foreach (var assembly in assemblies.Where(assembly => assembly.GetName().Name == "MCMv3"))
             {
-                if (Path.GetFileNameWithoutExtension(assembly.Location) == "MCM")
-                    _mcmReferencingAssemblies.Add(assembly);
+                _mcmReferencingAssemblies.Add(assembly);
             }
             // Loading as Integrated
             foreach (var assembly in assemblies)
             {
                 var referencedAssemblies = assembly.GetReferencedAssemblies();
-                if (!referencedAssemblies.Any(r => r.Name.StartsWith("MCM")))
+                if (referencedAssemblies.All(r => r.Name != "MCMv3"))
                     continue;
                 _mcmReferencingAssemblies.Add(assembly);
             }
@@ -55,11 +56,11 @@ namespace MCM
                 var assemblyDirectory = assemblyFile.Directory;
                 if (assemblyDirectory == null || !assemblyDirectory.Exists)
                     continue;
-                var matches = assemblyDirectory.GetFiles("MCM.dll")
-                    .Concat(assemblyDirectory.GetFiles("MCM.Implementation.*.dll"))
-                    .Concat(assemblyDirectory.GetFiles("MCM.UI.v*.dll"))
+                var matches = assemblyDirectory.GetFiles("MCMv3.dll")
+                    .Concat(assemblyDirectory.GetFiles("MCMv3.Implementation.*.dll"))
+                    .Concat(assemblyDirectory.GetFiles("MCMv3.UI.v*.dll"))
                     // Might be useful later
-                    .Concat(assemblyDirectory.GetFiles("MCM.Custom.*.dll"))
+                    .Concat(assemblyDirectory.GetFiles("MCMv3.Custom.*.dll"))
                     // ModLib is required at a more early stage, needs SubModule.xml definition entry
                     //.Concat(assemblyDirectory.GetFiles("ModLib.dll"))
                     .ToList();

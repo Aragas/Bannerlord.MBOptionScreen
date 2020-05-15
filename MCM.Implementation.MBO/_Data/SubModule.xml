@@ -12,8 +12,8 @@
   </DependedModules>
   <SubModules>
     <SubModule>
-      <Name value="MCM MBO Compatibility"/>
-      <DLLName value="MCM.Implementation.MBO.v3.0.0.dll"/>
+      <Name value="MCMv3 MBO Compatibility"/>
+      <DLLName value="MCMv3.Implementation.MBO.v3.0.0.dll"/>
       <SubModuleClassType value="MCM.Implementation.MBO.SubModuleV300"/>
       <Tags>
         <Tag key="DedicatedServerType" value="none" />

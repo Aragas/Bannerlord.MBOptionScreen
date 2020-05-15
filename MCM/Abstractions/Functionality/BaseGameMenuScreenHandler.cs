@@ -7,7 +7,7 @@ using TaleWorlds.Localization;
 
 namespace MCM.Abstractions.Functionality
 {
-    public abstract class BaseGameMenuScreenHandler
+    public abstract class BaseGameMenuScreenHandler : IDependency
     {
         private static BaseGameMenuScreenHandler? _instance;
         public static BaseGameMenuScreenHandler Instance =>

@@ -7,7 +7,7 @@ using TaleWorlds.GauntletUI.PrefabSystem;
 
 namespace MCM.Abstractions.Functionality
 {
-    public abstract class BaseResourceHandler
+    public abstract class BaseResourceHandler : IDependency
     {
         private static BaseResourceHandler? _instance;
         public static BaseResourceHandler Instance =>

@@ -14,7 +14,7 @@ namespace MCM.Abstractions.Settings.Formats
         private MethodInfo? SaveMethod { get; }
         public virtual bool IsCorrect { get; }
 
-        public BaseSettingFormatWrapper(object @object)
+        protected BaseSettingFormatWrapper(object @object)
         {
             Object = @object;
             var type = @object.GetType();

@@ -1,12 +1,12 @@
 ﻿using MCM.Abstractions.Settings.SettingsProvider;
-using MCM.UI.ExtensionMethods;
 
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-
+using MCM.Utils;
 using TaleWorlds.Core;
+using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Engine;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
@@ -76,10 +76,25 @@ namespace MCM.UI.GUI.ViewModels
             {
                 if (_selectedMod != value)
                 {
+                    _selectedMod?.PresetsSelector?.SetOnChangeAction(null);
                     _selectedMod = value;
+
                     OnPropertyChanged(nameof(SelectedMod));
                     OnPropertyChanged(nameof(SelectedDisplayName));
                     OnPropertyChanged(nameof(SomethingSelected));
+
+                    if (_selectedMod != null && _selectedMod.PresetsSelector != null)
+                    {
+                        PresetsSelector.SetOnChangeAction(null);
+                        OnPropertyChanged(nameof(PresetsSelector));
+                        PresetsSelector.ItemList = _selectedMod.PresetsSelector.ItemList;
+                        PresetsSelector.SelectedIndex = _selectedMod.PresetsSelector.SelectedIndex;
+                        PresetsSelector.HasSingleItem = _selectedMod.PresetsSelector.HasSingleItem;
+                        _selectedMod.PresetsSelector.SetOnChangeAction(OnModPresetsSelectorChange);
+                        PresetsSelector.SetOnChangeAction(OnPresetsSelectorChange);
+
+                        OnPropertyChanged(nameof(IsPresetsSelectorVisible));
+                    }
                 }
             }
         }
@@ -121,24 +136,30 @@ namespace MCM.UI.GUI.ViewModels
                 }
             }
         }
+        [DataSourceProperty]
+        public SelectorVM<SelectorItemVM> PresetsSelector { get; } = new SelectorVM<SelectorItemVM>(Array.Empty<string>(), -1, null);
+        [DataSourceProperty]
+        public bool IsPresetsSelectorVisible => SelectedMod != null;
 
         public ModOptionsVM()
         {
-            Name = new TextObject("{=XiGPhfsm}Mod Options", null).ToString();
-            DoneButtonText = new TextObject("{=WiNRdfsm}Done", null).ToString();
-            CancelButtonText = new TextObject("{=3CpNUnVl}Cancel", null).ToString();
+            // TODO:
+            Name = new TextObject("{=XiGPhfsm}Mod Options").ToString();
+            DoneButtonText = new TextObject("{=WiNRdfsm}Done").ToString();
+            CancelButtonText = new TextObject("{=3CpNUnVl}Cancel").ToString();
             SearchText = "";
 
-
             ModSettingsList = new MBBindingList<SettingsVM>();
-
-            // Build the options in a separate context if possible
-            new TaskFactory().StartNew(syncContext =>
+            // Fancy
+            new TaskFactory().StartNew(syncContext => // Build the options in a separate context if possible
             {
                 if (!(syncContext is SynchronizationContext uiContext))
                     return;
 
-                foreach (var viewModel in BaseSettingsProvider.Instance.CreateModSettingsDefinitions.Select(s => new SettingsVM(s, this)))
+                var settingsVM = BaseSettingsProvider.Instance.CreateModSettingsDefinitions
+                    .Parallel()
+                    .Select(s => new SettingsVM(s, this));
+                foreach (var viewModel in settingsVM)
                 {
                     uiContext.Send(o =>
                     {
@@ -163,6 +184,40 @@ namespace MCM.UI.GUI.ViewModels
                 viewModel.RefreshValues();
 
             OnPropertyChanged(nameof(SelectedMod));
+
+            if (SelectedMod != null)
+            {
+                PresetsSelector.SetOnChangeAction(null);
+                PresetsSelector.SelectedIndex = SelectedMod?.PresetsSelector?.SelectedIndex ?? -1;
+                PresetsSelector.SetOnChangeAction(OnPresetsSelectorChange);
+            }
+        }
+
+        private void OnPresetsSelectorChange(SelectorVM<SelectorItemVM> selector)
+        {
+            // TODO:
+            InformationManager.ShowInquiry(new InquiryData($"Change to preset '{selector.SelectedItem.StringItem}'",
+                $"Are you sure you wish to discard the current settings for {SelectedMod!.DisplayName} to '{selector.SelectedItem.StringItem}'?",
+                true, true, "Yes", "No",
+                () =>
+                {
+                    SelectedMod!.ChangePreset(PresetsSelector.SelectedItem.StringItem);
+                    var selectedMod = SelectedMod;
+                    ExecuteSelect(null);
+                    ExecuteSelect(selectedMod);
+                },
+                () =>
+                {
+                    PresetsSelector.SetOnChangeAction(null);
+                    PresetsSelector.SelectedIndex = SelectedMod.PresetsSelector?.SelectedIndex ?? -1;
+                    PresetsSelector.SetOnChangeAction(OnPresetsSelectorChange);
+                }));
+        }
+        private void OnModPresetsSelectorChange(SelectorVM<SelectorItemVM> selector)
+        {
+            PresetsSelector.SetOnChangeAction(null);
+            PresetsSelector.SelectedIndex = selector.SelectedIndex;
+            PresetsSelector.SetOnChangeAction(OnPresetsSelectorChange);
         }
 
         public void ExecuteClose()
@@ -205,15 +260,17 @@ namespace MCM.UI.GUI.ViewModels
             var requireRestart = ModSettingsList.Any(x => x.RestartRequired());
             if (requireRestart)
             {
+                // TODO:
                 InformationManager.ShowInquiry(new InquiryData("Game Needs to Restart",
                     "The game needs to be restarted to apply mod settings changes. Do you want to close the game now?",
-                    true, true, "Yes", "No",
+                    true, true, "Yes", "Cancel",
                     () =>
                     {
-                        changedModSettings
-                            .Do(x => BaseSettingsProvider.Instance.SaveSettings(x.SettingsInstance))
-                            .Do(x => x.URS.ClearStack())
-                            .ToList();
+                        foreach (var changedModSetting in changedModSettings)
+                        {
+                            changedModSetting.SaveSettings();
+                            changedModSetting.URS.ClearStack();
+                        }
 
                         OnFinalize();
                         onClose?.Invoke();
@@ -222,31 +279,15 @@ namespace MCM.UI.GUI.ViewModels
             }
             else
             {
-                changedModSettings
-                    .Do(x => BaseSettingsProvider.Instance.SaveSettings(x.SettingsInstance))
-                    .Do(x => x.URS.ClearStack())
-                    .ToList();
+                foreach (var changedModSetting in changedModSettings)
+                {
+                    changedModSetting.SaveSettings();
+                    changedModSetting.URS.ClearStack();
+                }
 
                 OnFinalize();
                 if (popScreen) ScreenManager.PopScreen();
                 else onClose?.Invoke();
-            }
-        }
-
-        public void ExecuteRevert()
-        {
-            if (SelectedMod != null)
-            {
-                InformationManager.ShowInquiry(new InquiryData("Revert mod settings to defaults",
-                    $"Are you sure you wish to revert all settings for {SelectedMod.DisplayName} to their default values?",
-                    true, true, "Yes", "No",
-                    () =>
-                    {
-                        SelectedMod.ResetSettings();
-                        var selectedMod = SelectedMod;
-                        ExecuteSelect(null);
-                        ExecuteSelect(selectedMod);
-                    }, null));
             }
         }
 
@@ -260,9 +301,7 @@ namespace MCM.UI.GUI.ViewModels
                 SelectedMod = viewModel;
 
                 if (SelectedMod != null)
-                {
                     SelectedMod.IsSelected = true;
-                }
             }
         }
 

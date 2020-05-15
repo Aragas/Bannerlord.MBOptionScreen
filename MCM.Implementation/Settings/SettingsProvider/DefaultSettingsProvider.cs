@@ -30,19 +30,20 @@ namespace MCM.Implementation.Settings.SettingsProvider
     [Version("e1.3.0",  1)]
     [Version("e1.3.1",  1)]
     [Version("e1.4.0",  1)]
+    [Version("e1.4.1",  1)]
     internal sealed class DefaultSettingsProvider : BaseSettingsProvider
     {
         private List<ISettingsContainer> SettingsContainers { get; }
 
-        public override IEnumerable<SettingsDefinition> CreateModSettingsDefinitions => 
+        public override IEnumerable<SettingsDefinition> CreateModSettingsDefinitions =>
             SettingsContainers.SelectMany(sp => sp.CreateModSettingsDefinitions)
                 .OrderByDescending(x => x.DisplayName, new AlphanumComparatorFast());
 
         public DefaultSettingsProvider()
         {
             SettingsContainers = new List<ISettingsContainer>()
-                .Concat(DI.GetBaseInterfaceImplementations<IGlobalSettingsContainer>())
-                .Concat(DI.GetBaseInterfaceImplementations<IPerCharacterSettingsContainer>())
+                .Concat(DI.GetBaseImplementations<IGlobalSettingsContainer>())
+                .Concat(DI.GetBaseImplementations<IPerCharacterSettingsContainer>())
                 .ToList();
         }
 

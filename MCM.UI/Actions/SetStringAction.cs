@@ -1,4 +1,6 @@
-﻿namespace MCM.UI.Actions
+﻿using MCM.Abstractions.Ref;
+
+namespace MCM.UI.Actions
 {
     internal sealed class SetStringAction : IAction
     {

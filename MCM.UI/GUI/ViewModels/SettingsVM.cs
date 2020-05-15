@@ -1,14 +1,15 @@
-﻿using MCM.Abstractions;
-using MCM.Abstractions.Settings;
+﻿using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.SettingsProvider;
 using MCM.UI.Actions;
+using MCM.Utils;
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
+using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Library;
 
 namespace MCM.UI.GUI.ViewModels
@@ -18,12 +19,15 @@ namespace MCM.UI.GUI.ViewModels
         private bool _isSelected;
         private Action<SettingsVM> _executeSelect = default!;
         private MBBindingList<SettingsPropertyGroupVM> _settingPropertyGroups = default!;
+        private readonly IDictionary<string, BaseSettings>? _cachedPresets;
 
         public ModOptionsVM MainView { get; }
         public UndoRedoStack URS { get; } = new UndoRedoStack();
 
         public SettingsDefinition SettingsDefinition { get; }
         public BaseSettings SettingsInstance => BaseSettingsProvider.Instance.GetSettings(SettingsDefinition.SettingsId)!;
+
+        public SelectorVM<SelectorItemVM>? PresetsSelector { get; }
 
         [DataSourceProperty]
         public int UIVersion => SettingsInstance.UIVersion;
@@ -58,6 +62,16 @@ namespace MCM.UI.GUI.ViewModels
             SettingsDefinition = definition;
             MainView = mainView;
 
+            //new TaskFactory().StartNew(() =>
+            //{
+                _cachedPresets = SettingsInstance.GetAvailablePresets().ToDictionary(pair => pair.Key, pair => pair.Value());
+
+                PresetsSelector = new SelectorVM<SelectorItemVM>(new List<string> { "Custom" }.Concat(_cachedPresets.Keys), -1, null);
+                PresetsSelector.ItemList[0].CanBeSelected = false;
+
+                RecalculateIndex();
+            //});
+
             // Can easily backfire as I do not hold the reference
             if (SettingsInstance is INotifyPropertyChanged notifyPropertyChanged)
                 notifyPropertyChanged.PropertyChanged += Settings_PropertyChanged;
@@ -75,10 +89,32 @@ namespace MCM.UI.GUI.ViewModels
 
             RefreshValues();
         }
+        public void RecalculateIndex()
+        {
+            if (_cachedPresets == null || PresetsSelector == null)
+                return;
+
+            var settings = SettingsInstance;
+
+            var index = 1;
+            foreach (var preset in _cachedPresets.Values)
+            {
+                if (SettingsUtils.Equals(settings, preset))
+                {
+                    PresetsSelector.SelectedIndex = index;
+                    return;
+                }
+
+                index++;
+            }
+
+            PresetsSelector.SelectedIndex = 0;
+        }
 
         public override void RefreshValues()
         {
             base.RefreshValues();
+
             foreach (var group in SettingPropertyGroups)
                 group.RefreshValues();
             OnPropertyChanged(nameof(UIVersion));
@@ -87,15 +123,9 @@ namespace MCM.UI.GUI.ViewModels
             OnPropertyChanged(nameof(SettingPropertyGroups));
         }
 
-        public void AddSelectCommand(Action<SettingsVM> command)
-        {
-            _executeSelect = command;
-        }
+        public void AddSelectCommand(Action<SettingsVM> command) => _executeSelect = command;
 
-        private void ExecuteSelect()
-        {
-            _executeSelect?.Invoke(this);
-        }
+        private void ExecuteSelect() => _executeSelect?.Invoke(this);
 
         public bool RestartRequired()
         {
@@ -104,7 +134,7 @@ namespace MCM.UI.GUI.ViewModels
 
             foreach (var property in properties)
             {
-                var stack = URS.UndoStack.Where(s => s.Context is PropertyRef propertyRef && propertyRef.PropertyInfo == property.Property).ToList();
+                var stack = URS.UndoStack.Where(s => s.Context == property.PropertyReference).ToList();
                 if (stack.Count == 0)
                     continue;
                 else
@@ -132,33 +162,26 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
 
+
+        public void ChangePreset(string presetName)
+        {
+            if (_cachedPresets == null)
+                return;
+
+            var settings = SettingsInstance;
+
+            if (_cachedPresets.TryGetValue(presetName, out var preset))
+                Utils.OverrideValues(URS, settings, preset);
+
+            RecalculateIndex();
+        }
         public void ResetSettings()
         {
-            var settings = SettingsInstance;
-            var newSettings = settings is IWrapper wrapper
-                ? BaseGlobalSettingsWrapper.Create(Activator.CreateInstance(wrapper.Object.GetType()))
-                : (GlobalSettings) Activator.CreateInstance(settings.GetType());
-
-            OverrideSettings(newSettings);
+            ChangePreset("Default");
         }
-        public void OverrideSettings(BaseSettings newSettings)
+        public void SaveSettings()
         {
-            var settings = SettingsInstance;
-            if (settings is IWrapper wrapper && newSettings is IWrapper newWrapper)
-                Utils.OverridePropertyValues(SettingPropertyGroups.SelectMany(GetAllSettingPropertyVMs), wrapper.Object, newWrapper.Object);
-            else
-                Utils.OverridePropertyValues(SettingPropertyGroups.SelectMany(GetAllSettingPropertyVMs), settings, newSettings);
-        }
-        private static IEnumerable<SettingsPropertyVM> GetAllSettingPropertyVMs(SettingsPropertyGroupVM settingPropertyGroup1)
-        {
-            foreach (var settingProperty in settingPropertyGroup1.SettingProperties)
-                yield return settingProperty;
-
-            foreach (var settingPropertyGroup in settingPropertyGroup1.SettingPropertyGroups)
-            foreach (var settingProperty in GetAllSettingPropertyVMs(settingPropertyGroup))
-            {
-                yield return settingProperty;
-            }
+            BaseSettingsProvider.Instance.SaveSettings(SettingsInstance);
         }
 
 

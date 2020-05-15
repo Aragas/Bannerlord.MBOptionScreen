@@ -23,6 +23,7 @@ namespace MCM.Implementation.Synchronization
     [Version("e1.3.0",  1)]
     [Version("e1.3.1",  1)]
     [Version("e1.4.0",  1)]
+    [Version("e1.4.1",  1)]
     internal sealed class DefaultSynchronizationProvider : BaseSynchronizationProvider
     {
         private static readonly ConcurrentDictionary<string, object?> _set = new ConcurrentDictionary<string, object?>();

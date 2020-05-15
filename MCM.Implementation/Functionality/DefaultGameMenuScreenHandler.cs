@@ -34,6 +34,7 @@ namespace MCM.Implementation.Functionality
     [Version("e1.3.0",  1)]
     [Version("e1.3.1",  1)]
     [Version("e1.4.0",  1)]
+    [Version("e1.4.1",  1)]
     internal sealed class DefaultGameMenuScreenHandler : BaseGameMenuScreenHandler
     {
         private static readonly WeakReference<InitialMenuVM> _instance = new WeakReference<InitialMenuVM>(null!);
@@ -58,7 +59,7 @@ namespace MCM.Implementation.Functionality
             {
                 var (index, screenFactory, text) = pair.Value;
 
-                var insertIndex = ____menuOptions.FindIndex(i => i.InitialStateOption.OrderIndex > index);
+                var insertIndex = TaleWorlds.Library.Extensions.FindIndex(____menuOptions, i => i.InitialStateOption.OrderIndex > index);
                 ____menuOptions.Insert(insertIndex, new InitialMenuOptionVM(new InitialStateOption(
                     pair.Key,
                     text,
@@ -77,7 +78,7 @@ namespace MCM.Implementation.Functionality
         {
             if (_instance.TryGetTarget(out var instance))
             {
-                var insertIndex = instance.MenuOptions.FindIndex(i => i.InitialStateOption.OrderIndex > index);
+                var insertIndex = TaleWorlds.Library.Extensions.FindIndex(instance.MenuOptions, i => i.InitialStateOption.OrderIndex > index);
                 instance.MenuOptions.Insert(insertIndex, new InitialMenuOptionVM(new InitialStateOption(
                     internalName,
                     text,

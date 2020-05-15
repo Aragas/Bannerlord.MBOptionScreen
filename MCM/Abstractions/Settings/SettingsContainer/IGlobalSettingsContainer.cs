@@ -1,6 +1,6 @@
 ﻿namespace MCM.Abstractions.Settings.SettingsContainer
 {
-    public interface IGlobalSettingsContainer : ISettingsContainer
+    public interface IGlobalSettingsContainer : ISettingsContainer, IDependencyBase
     {
 
     }

@@ -2,7 +2,7 @@
 
 namespace MCM.Abstractions.Settings.Formats
 {
-    public interface ISettingsFormat
+    public interface ISettingsFormat : IDependencyBase
     {
         IEnumerable<string> Extensions { get; }
 

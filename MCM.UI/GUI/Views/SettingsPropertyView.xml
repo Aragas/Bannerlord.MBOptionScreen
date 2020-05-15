@@ -89,9 +89,7 @@
                 <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="362" SuggestedHeight="42" HorizontalAlignment="Center"
                         IsEnabled="@IsEnabled" IsVisible="@IsDropdownVisible">
                   <Children>
-                    <RichTextWidget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                    BIsEnabled="@IsEnabled" IsVisible="@IsDropdownVisible" rush="CustomBattle.Value.Text" Text="@ValueString" />
-                    <Standard.DropdownWithHorizontalControl HorizontalAlignment="Right" Parameter.SelectorDataSource="{DropdownValue}" />
+                    <Standard.DropdownWithHorizontalControl HorizontalAlignment="Center" Parameter.SelectorDataSource="{DropdownValue}" />
                   </Children>
                 </Widget>
                 

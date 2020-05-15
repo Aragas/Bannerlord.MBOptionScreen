@@ -30,8 +30,8 @@
       </Tags>
     </SubModule>
     <SubModule>
-      <Name value="MCM ModLib Compatibility"/>
-      <DLLName value="MCM.Implementation.ModLib.v3.0.0.dll"/>
+      <Name value="MCMv3 ModLib Compatibility"/>
+      <DLLName value="MCMv3.Implementation.ModLib.v3.0.0.dll"/>
       <SubModuleClassType value="MCM.Implementation.ModLib.SubModuleV300"/>
       <Tags>
         <Tag key="DedicatedServerType" value="none" />

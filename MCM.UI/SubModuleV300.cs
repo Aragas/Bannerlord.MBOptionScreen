@@ -6,13 +6,10 @@ using MCM.Abstractions.Settings;
 using MCM.UI.Functionality.Loaders;
 using MCM.Utils;
 
-using SandBox;
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Reflection;
 
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Localization;
@@ -25,38 +22,10 @@ using TaleWorlds.MountAndBlade.View.Screen;
 namespace MCM.UI
 {
     // Load UI after Sandbox was loaded
-    internal class MBSubModuleBasePatch
-    {
-        private static bool _loaded = false;
-
-        public static MethodBase OnSubModuleLoadTargetMethod() =>
-            AccessTools.Method(typeof(MBSubModuleBase), "OnSubModuleLoad");
-        public static MethodBase OnBeforeInitialModuleScreenSetAsRootTargetMethod() =>
-            AccessTools.Method(typeof(MBSubModuleBase), "OnBeforeInitialModuleScreenSetAsRoot");
-
-        public static void OnSubModuleLoadPostfix(MBSubModuleBase __instance)
-        {
-            if (!(__instance is SandBoxSubModule)) 
-                return;
-
-            SubModuleV300.CustomOnSubModuleLoad();
-            _loaded = true;
-        }
-        public static void OnBeforeInitialModuleScreenSetAsRootPostfix()
-        {
-            if (_loaded)
-                return;
-
-            SubModuleV300.CustomOnSubModuleLoad();
-            _loaded = true;
-        }
-    }
 
     public sealed class SubModuleV300 : MBSubModuleBase
     {
-        private static readonly FieldInfo _actualViewTypesField = AccessTools.Field(typeof(ViewCreatorManager), "_actualViewTypes");
-
-        public static void CustomOnSubModuleLoad()
+        public static void SandBoxSubModuleOnSubModuleLoad()
         {
             BrushLoader.Inject(BaseResourceHandler.Instance);
             PrefabsLoader.Inject(BaseResourceHandler.Instance);
@@ -134,7 +103,7 @@ namespace MCM.UI
                     .Where(a => !a.IsDynamic)
                     .SelectMany(a => a.GetTypes())
                     .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(IOptionsWithMCMOptionsScreen)));
-                var latestImplementation = AttributeUtils.Get(ApplicationVersionUtils.GameVersion(), types);
+                var latestImplementation = AttributeUtils.GetLastImplementation(ApplicationVersionUtils.GameVersion(), types);
                 if (latestImplementation != null)
                 {
                     OverrideView(typeof(OptionsScreen), latestImplementation?.Type!);
@@ -153,7 +122,7 @@ namespace MCM.UI
                     .Where(a => !a.IsDynamic)
                     .SelectMany(a => a.GetTypes())
                     .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(IOptionsWithMCMOptionsMissionView)));
-                var latestImplementation = AttributeUtils.Get(ApplicationVersionUtils.GameVersion(), types);
+                var latestImplementation = AttributeUtils.GetLastImplementation(ApplicationVersionUtils.GameVersion(), types);
                 if (latestImplementation != null)
                 {
                     OverrideView(typeof(MissionOptionsUIHandler), latestImplementation?.Type!);
@@ -163,7 +132,7 @@ namespace MCM.UI
 
         private static void OverrideView(Type baseType, Type type)
         {
-            var actualViewTypes = (Dictionary<Type, Type>) _actualViewTypesField.GetValue(null);
+            var actualViewTypes = (Dictionary<Type, Type>) AccessTools.Field(typeof(ViewCreatorManager), "_actualViewTypes").GetValue(null);
 
             if (actualViewTypes.ContainsKey(baseType))
                 actualViewTypes[baseType] = type;

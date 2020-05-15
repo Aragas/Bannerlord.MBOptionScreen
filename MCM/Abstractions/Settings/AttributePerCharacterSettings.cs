@@ -1,4 +1,5 @@
 ﻿using MCM.Abstractions.Settings.Models;
+using MCM.Abstractions.Settings.Properties;
 using MCM.Utils;
 
 using System.Collections.Generic;
@@ -7,13 +8,19 @@ namespace MCM.Abstractions.Settings
 {
     public abstract class AttributePerCharacterSettings<T> : PerCharacterSettings<T> where T : PerCharacterSettings, new()
     {
+        protected ISettingsPropertyDiscoverer? Discoverer { get; }
+            = DI.GetImplementation<IAttributeSettingsPropertyDiscoverer, AttributeSettingsPropertyDiscovererWrapper>();
+
         protected override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups()
         {
+            //var Discoverer = DI.GetImplementation<IAttributeSettingsPropertyDiscoverer, AttributeSettingsPropertyDiscovererWrapper>();
             var groups = new List<SettingsPropertyGroupDefinition>();
-            foreach (var settingProp in SettingsUtils.GetProperties(this, Id))
+            if (Discoverer == null)
+                return groups;
+
+            foreach (var settingProp in Discoverer.GetProperties(this))
             {
-                //Find the group that the setting property should belong to. This is the default group if no group is specifically set with the SettingPropertyGroup attribute.
-                var group = GetGroupFor(settingProp, groups);
+                var group = SettingsUtils.GetGroupFor(SubGroupDelimiter, settingProp, groups);
                 group.Add(settingProp);
             }
             return groups;

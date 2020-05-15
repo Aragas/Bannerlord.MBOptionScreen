@@ -13,27 +13,31 @@ namespace MCM.Utils
     public static class AttributeUtils
     {
         // Rewrite
-        public static (Type Type, ApplicationVersion GameVersion, int ImplementationVersion)? Get(ApplicationVersion version, IEnumerable<Type>? types = null)
+        public static (Type Type, ApplicationVersion GameVersion, int ImplementationVersion)? GetLastImplementation(ApplicationVersion version, IEnumerable<Type>? types = null)
         {
             types ??= AppDomain.CurrentDomain.GetAssemblies()
-                .Where(a => !a.IsDynamic)
+                .Parallel()
+                .Filter()
+                .FilterLegacy()
                 .SelectMany(a => a.GetTypes());
 
-            var attributes = types
-                .Where(t => t.GetCustomAttributes().Any(a => a.GetType().FullName == typeof(VersionAttribute).FullName))
-                .ToDictionary(
-                    k => k,
-                    v => v.GetCustomAttributes()
-                        .Where(a => a.GetType().FullName == typeof(VersionAttribute).FullName)
-                        .Select(a => new VersionAttributeWrapper(a)));
+            var attributes = new Dictionary<Type, IEnumerable<VersionAttributeWrapper>>();
+            foreach (var type in types.AsParallel())
+            {
+                var attr = type.GetCustomAttributes()
+                    .Where(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(VersionAttribute)))
+                    .Select(a => new VersionAttributeWrapper(a))
+                    .ToList();
+                if (attr.Count > 0)
+                    attributes.Add(type, attr);
+            }
 
             (Type Type, VersionAttributeWrapper Attribute) maxMatching = default;
             foreach (var pair in attributes)
             {
-                var maxFound = pair.Value
+                var maxFound = TaleWorlds.Core.Extensions.MaxBy(pair.Value
                     .Where(a => a.GameVersion.IsSameOverride(version))
-                    .DefaultIfEmpty()
-                    .MaxBy(a => a?.ImplementationVersion);
+                    .DefaultIfEmpty(), a => a?.ImplementationVersion);
 
                 if (maxFound == null)
                     continue;
@@ -110,24 +114,28 @@ namespace MCM.Utils
         public static Dictionary<Type, (ApplicationVersion GameVersion, int ImplementationVersion)> GetMultiple(ApplicationVersion version, IEnumerable<Type>? types = null)
         {
             types ??= AppDomain.CurrentDomain.GetAssemblies()
-                .Where(a => !a.IsDynamic)
+                .Parallel()
+                .Filter()
+                .FilterLegacy()
                 .SelectMany(a => a.GetTypes());
 
-            var attributes = types
-                .Where(t => t.GetCustomAttributes().Any(a => a.GetType().FullName == typeof(VersionAttribute).FullName))
-                .ToDictionary(
-                    k => k,
-                    v => v.GetCustomAttributes()
-                        .Where(a => a.GetType().FullName == typeof(VersionAttribute).FullName)
-                        .Select(a => new VersionAttributeWrapper(a)));
+            var attributes = new Dictionary<Type, IEnumerable<VersionAttributeWrapper>>();
+            foreach (var type in types.AsParallel())
+            {
+                var attr = type.GetCustomAttributes()
+                    .Where(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(VersionAttribute)))
+                    .Select(a => new VersionAttributeWrapper(a))
+                    .ToList();
+                if (attr.Count > 0)
+                    attributes.Add(type, attr);
+            }
 
             var allMatching = new Dictionary<Type, (ApplicationVersion GameVersion, int ImplementationVersion)>();
             foreach (var pair in attributes)
             {
-                var maxFound = pair.Value
+                var maxFound = TaleWorlds.Core.Extensions.MaxBy(pair.Value
                     .Where(a => a.GameVersion.IsSameOverride(version))
-                    .DefaultIfEmpty()
-                    .MaxBy(a => a?.ImplementationVersion);
+                    .DefaultIfEmpty(), a => a?.ImplementationVersion);
 
                 if (maxFound == null)
                     continue;

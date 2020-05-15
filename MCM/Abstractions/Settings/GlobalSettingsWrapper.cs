@@ -2,7 +2,6 @@
 
 using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.Models.Wrapper;
-using MCM.Utils;
 
 using System;
 using System.Collections.Generic;
@@ -58,33 +57,10 @@ namespace MCM.Abstractions.Settings
         public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
             OnPropertyChangedMethod?.Invoke(Object, new object[] { propertyName! });
 
-        public override List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() => GetWrappedSettingPropertyGroups();
-        private List<SettingsPropertyGroupDefinition> GetWrappedSettingPropertyGroups()
-        {
-            if (GetSettingPropertyGroupsMethod == null)
-            {
-                return GetUnsortedSettingPropertyGroups()
-                    .OrderByDescending(x => x.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)
-                    .ThenByDescending(x => x.Order)
-                    .ThenByDescending(x => x.DisplayGroupName.ToString(), new AlphanumComparatorFast())
-                    .ToList();
-            }
-
-            return ((IEnumerable<object>) GetSettingPropertyGroupsMethod.Invoke(Object, Array.Empty<object>()))
-                .Select(o => new SettingsPropertyGroupDefinitionWrapper(o))
-                .Cast<SettingsPropertyGroupDefinition>()
-                .ToList();
-        }
-        protected override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups()
-        {
-            var groups = new List<SettingsPropertyGroupDefinition>();
-            foreach (var settingProp in SettingsUtils.GetProperties(Object, Id))
-            {
-                //Find the group that the setting property should belong to. This is the default group if no group is specifically set with the SettingPropertyGroup attribute.
-                var group = GetGroupFor(settingProp, groups);
-                group.Add(settingProp);
-            }
-            return groups;
-        }
+        public override List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() =>
+            ((IEnumerable<object>) (GetSettingPropertyGroupsMethod?.Invoke(Object, Array.Empty<object>()) ?? Array.Empty<object>()) )
+            .Select(o => new SettingsPropertyGroupDefinitionWrapper(o))
+            .Cast<SettingsPropertyGroupDefinition>()
+            .ToList();
     }
 }

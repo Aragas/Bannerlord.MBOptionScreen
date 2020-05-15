@@ -28,6 +28,7 @@ namespace MCM.Implementation.Settings.Formats
     [Version("e1.3.0",  1)]
     [Version("e1.3.1",  1)]
     [Version("e1.4.0",  1)]
+    [Version("e1.4.1",  1)]
     internal sealed class XmlSettingsFormat : BaseJsonSettingsFormat, IXmlSettingsFormat
     {
         public override IEnumerable<string> Extensions => new string[] { "xml" };

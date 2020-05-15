@@ -1,6 +1,6 @@
 ﻿namespace MCM.Abstractions
 {
-    public interface IMCMOptionsScreen
+    public interface IMCMOptionsScreen : IDependency
     {
 
     }
