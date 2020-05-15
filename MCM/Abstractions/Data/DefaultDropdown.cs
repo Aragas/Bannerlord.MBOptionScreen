@@ -19,16 +19,9 @@ namespace MCM.Abstractions.Data
                 if (_selector != value)
                 {
                     _selector = value;
-                    _selector.SetOnChangeAction(OnSelectionChanged);
                 }
             }
         }
-
-        private void OnSelectionChanged(SelectorVM<SelectorItemVM> obj)
-        {
-
-        }
-
         public int SelectedIndex
         {
             get => Selector.SelectedIndex;
@@ -54,7 +47,7 @@ namespace MCM.Abstractions.Data
 
         public DefaultDropdown(IEnumerable<T> values, int selectedIndex) : base(values)
         {
-            _selector = new SelectorVM<SelectorItemVM>(this.Select(x => x?.ToString() ?? "ERROR"), selectedIndex, OnSelectionChanged);
+            _selector = new SelectorVM<SelectorItemVM>(this.Select(x => x?.ToString() ?? "ERROR"), selectedIndex, o => { });
 
             if (SelectedIndex != 0 && SelectedIndex >= Count)
                 throw new Exception();

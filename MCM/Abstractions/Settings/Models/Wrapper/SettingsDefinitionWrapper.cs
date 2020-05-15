@@ -8,9 +8,6 @@
             return propInfo?.GetValue(@object) as string;
         }
 
-        public SettingsDefinitionWrapper(object @object) : base(GetSettingsId(@object) ?? "ERROR")
-        {
-            var type = @object.GetType();
-        }
+        public SettingsDefinitionWrapper(object @object) : base(GetSettingsId(@object) ?? "ERROR") { }
     }
 }

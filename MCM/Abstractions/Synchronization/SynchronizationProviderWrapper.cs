@@ -25,8 +25,12 @@ namespace MCM.Abstractions.Synchronization
             IsCorrect = NameProperty != null && IsFirstInitializationProperty != null && DisposeMethod != null;
         }
 
-        public string Name => NameProperty?.GetValue(Object) as string ?? "ERROR";
-        public bool IsFirstInitialization => IsFirstInitializationProperty?.GetValue(Object) as bool? ?? false;
-        public void Dispose() => DisposeMethod?.Invoke(Object, Array.Empty<object>());
+        public override string Name => NameProperty?.GetValue(Object) as string ?? "ERROR";
+        public override bool IsFirstInitialization => IsFirstInitializationProperty?.GetValue(Object) as bool? ?? false;
+        public new void Dispose()
+        {
+            base.Dispose();
+            DisposeMethod?.Invoke(Object, Array.Empty<object>());
+        }
     }
 }

@@ -4,7 +4,7 @@ using TaleWorlds.Core;
 
 namespace MCM.Abstractions.Settings.SettingsContainer
 {
-    public abstract class BasePerCharacterSettingsContainer : BaseSettingsContainer<PerCharacterSettings>
+    public abstract class BasePerCharacterSettingsContainer : BaseSettingsContainer<PerCharacterSettings>, IPerCharacterSettingsContainer
     {
         protected override string RootFolder { get; }
 
@@ -61,5 +61,8 @@ namespace MCM.Abstractions.Settings.SettingsContainer
 
             return base.OverrideSettings(settings);
         }
+
+        public abstract void OnGameStarted(Game game);
+        public abstract void OnGameEnded(Game game);
     }
 }

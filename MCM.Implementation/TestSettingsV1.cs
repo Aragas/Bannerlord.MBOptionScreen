@@ -4,7 +4,7 @@ using MCM.Abstractions.Data;
 
 namespace MCM.Implementation
 {
-    internal sealed class TestSettingsV1 : TestSettingsBase<TestSettingsV1>
+    internal sealed class TestSettingsV1 : BaseTestGlobalSettings<TestSettingsV1>
     {
         public override string Id => "Testing_v1";
         public override string DisplayName => "Testing v1 API";

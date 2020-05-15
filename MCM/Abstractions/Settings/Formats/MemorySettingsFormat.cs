@@ -1,8 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using MCM.Abstractions.Attributes;
+
+using System.Collections.Generic;
 
 namespace MCM.Abstractions.Settings.Formats
 {
-    public class MemorySettingsFormat : ISettingsFormat
+    [Version("e1.0.0", 1)]
+    public class MemorySettingsFormat : IMemorySettingsFormat
     {
         public IEnumerable<string> Extensions { get; } = new string[] { "memory" };
 

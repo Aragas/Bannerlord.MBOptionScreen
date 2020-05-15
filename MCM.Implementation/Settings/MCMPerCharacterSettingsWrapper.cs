@@ -33,7 +33,7 @@ namespace MCM.Implementation.Settings
     [Version("e1.3.0",  1)]
     [Version("e1.3.1",  1)]
     [Version("e1.4.0",  1)]
-    public class MCMPerCharacterSettingsWrapper : BasePerCharacterSettingsWrapper
+    public class MCMPerCharacterSettingsWrapper : BaseMCMPerCharacterSettingsWrapper
     {
         private PropertyInfo? CharacterIdProperty { get; }
         private PropertyInfo? IdProperty { get; }
@@ -44,6 +44,7 @@ namespace MCM.Implementation.Settings
         private PropertyInfo? SubGroupDelimiterProperty { get; }
         private PropertyInfo? FormatProperty { get; }
         private MethodInfo? GetSettingPropertyGroupsMethod { get; }
+        private MethodInfo? GetUnsortedSettingPropertyGroupsMethod { get; }
         private MethodInfo? OnPropertyChangedMethod { get; }
 
         public override string Id => IdProperty?.GetValue(Object) as string ?? "ERROR";
@@ -71,6 +72,7 @@ namespace MCM.Implementation.Settings
             SubGroupDelimiterProperty = AccessTools.Property(type, nameof(SubGroupDelimiter));
             FormatProperty = AccessTools.Property(type, nameof(Format));
             GetSettingPropertyGroupsMethod = AccessTools.Method(type, nameof(GetSettingPropertyGroups));
+            GetUnsortedSettingPropertyGroupsMethod = AccessTools.Method(type, nameof(GetUnsortedSettingPropertyGroups));
             OnPropertyChangedMethod = AccessTools.Method(type, nameof(OnPropertyChanged));
 
             IsCorrect = CharacterIdProperty != null && IdProperty != null && ModuleFolderNameProperty != null &&
@@ -85,7 +87,11 @@ namespace MCM.Implementation.Settings
 
         public override List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups()
         {
-            if (GetSettingPropertyGroupsMethod == null)
+            if (GetSettingPropertyGroupsMethod == null ||
+                // Performance optimization. Do not use the default implementation.
+                GetSettingPropertyGroupsMethod.DeclaringType == typeof(BaseSettings) &&
+                GetUnsortedSettingPropertyGroupsMethod?.DeclaringType?.IsGenericType == true &&
+                GetUnsortedSettingPropertyGroupsMethod.DeclaringType.GetGenericTypeDefinition() == typeof(AttributePerCharacterSettings<>))
                 return base.GetSettingPropertyGroups();
 
             return ((IEnumerable<object>) GetSettingPropertyGroupsMethod.Invoke(Object, Array.Empty<object>()) ?? new List<object>())

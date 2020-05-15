@@ -28,7 +28,7 @@ namespace MCM.Implementation.MBO.Settings.SettingsContainer
     [Version("e1.3.0",  1)]
     [Version("e1.3.1",  1)]
     [Version("e1.4.0",  1)]
-    internal sealed class MBOGlobalSettingsContainer : BaseGlobalSettingsContainer, IGlobalSettingsContainer
+    internal sealed class MBOGlobalSettingsContainer : BaseGlobalSettingsContainer, IMBOGlobalSettingsContainer
     {
         public MBOGlobalSettingsContainer()
         {

@@ -17,7 +17,7 @@ namespace MCM.Implementation.MBO
             using var synchronizationProvider = BaseSynchronizationProvider.Create("OnSubModuleLoad_MBOv3");
             if (synchronizationProvider.IsFirstInitialization)
             {
-                var harmonyV1 = new Harmony("bannerlord.mcm.v1.loaderpreventer");
+                var harmonyV1 = new Harmony("bannerlord.mcm.mbo.v1.loaderpreventer");
                 foreach (var method in v1.SettingsDatabasePatch1.TargetMethods())
                 {
                     harmonyV1.Patch(
@@ -37,7 +37,7 @@ namespace MCM.Implementation.MBO
                         prefix: new HarmonyMethod(typeof(v1.MBOptionScreenSubModulePatch2), nameof(v1.MBOptionScreenSubModulePatch2.Prefix)));
                 }
 
-                var harmonyV2 = new Harmony("bannerlord.mcm.v2.loaderpreventer");
+                var harmonyV2 = new Harmony("bannerlord.mcm.mbo.v2.loaderpreventer");
                 foreach (var method in v2.SettingsDatabasePatch1.TargetMethods())
                 {
                     harmonyV2.Patch(

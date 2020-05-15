@@ -3,7 +3,10 @@ using MCM.Abstractions.Settings.SettingsContainer;
 
 namespace MCM.Implementation.ModLib.Settings.SettingsContainer
 {
-    public sealed class ModLibDefinitionsSettingsContainerWrapper : SettingsContainerWrapper, IModLibDefinitionsSettingsContainer, IWrapper
+    /// <summary>
+    /// For DI
+    /// </summary>
+    public sealed class ModLibDefinitionsSettingsContainerWrapper : BaseSettingsContainerWrapper, IModLibDefinitionsSettingsContainer, IWrapper
     {
         public ModLibDefinitionsSettingsContainerWrapper(object @object) : base(@object) { }
     }

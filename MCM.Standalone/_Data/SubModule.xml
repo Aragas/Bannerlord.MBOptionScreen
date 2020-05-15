@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Module>
-  <Name value="Mod Configuration Menu (MCM) Beta"/>
+  <Name value="Mod Configuration Menu Beta"/>
   <Id value="Bannerlord.MBOptionScreen"/>
-  <Version value="v3.0.10"/>
-  <DefaultModule value="false"/>
+  <Version value="v3.0.12"/>
+  <DefaultModule value="true"/>
   <SingleplayerModule value="true"/>
   <MultiplayerModule value="false"/>
   <Official value="false"/>
@@ -12,7 +12,7 @@
   <SubModules>
     <SubModule>
       <Name value="MCM Integrated Loader"/>
-      <DLLName value="MCM.dll"/>
+      <DLLName value="MCMv3.dll"/>
       <SubModuleClassType value="MCM.IntegratedLoaderSubModule"/>
       <Tags>
         <Tag key="DedicatedServerType" value="none" />

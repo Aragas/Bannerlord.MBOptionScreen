@@ -6,9 +6,8 @@ namespace MCM.Abstractions.Settings
 {
     public abstract class BasePerCharacterSettingsWrapper : PerCharacterSettings, IWrapper
     {
-        public static BasePerCharacterSettingsWrapper Create(object @object) =>
-            DI.GetImplementations<BasePerCharacterSettingsWrapper, PerCharacterSettingsWrapper>(ApplicationVersionUtils.GameVersion(), @object)
-                .FirstOrDefault(w => w.IsCorrect);
+        public static BasePerCharacterSettingsWrapper Create(object @object) => DI.GetBaseInterfaceImplementations<BasePerCharacterSettingsWrapper, PerCharacterSettingsWrapper>(args: @object)
+            .FirstOrDefault(w => w.IsCorrect);
 
         public object Object { get; protected set; }
 

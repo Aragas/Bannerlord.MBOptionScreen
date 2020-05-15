@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace MCM.Abstractions.Settings.SettingsContainer
 {
-    public class SettingsContainerWrapper : IGlobalSettingsContainer, IWrapper
+    public abstract class BaseSettingsContainerWrapper : ISettingsContainer, IWrapper
     {
         public object Object { get; }
         private PropertyInfo? CreateModSettingsDefinitionsProperty { get; }
@@ -17,9 +17,9 @@ namespace MCM.Abstractions.Settings.SettingsContainer
         private MethodInfo? OverrideSettingsMethod { get; }
         private MethodInfo? ResetSettingsMethod { get; }
         private MethodInfo? SaveSettingsMethod { get; }
-        public bool IsCorrect { get; }
+        public virtual bool IsCorrect { get; }
 
-        public SettingsContainerWrapper(object @object)
+        protected BaseSettingsContainerWrapper(object @object)
         {
             Object = @object;
             var type = @object.GetType();

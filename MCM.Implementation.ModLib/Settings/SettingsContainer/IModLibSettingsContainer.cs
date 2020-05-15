@@ -2,7 +2,10 @@
 
 namespace MCM.Implementation.ModLib.Settings.SettingsContainer
 {
-    public interface IModLibSettingsContainer : ISettingsContainer
+    /// <summary>
+    /// So it can be overriden by an external library
+    /// </summary>
+    public interface IModLibSettingsContainer : IGlobalSettingsContainer
     {
 
     }

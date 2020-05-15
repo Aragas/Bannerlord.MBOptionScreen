@@ -3,7 +3,7 @@ using MCM.Abstractions.Attributes.v2;
 
 namespace MCM.Implementation
 {
-    internal sealed class TestSettingsOrder : TestSettingsBase<TestSettingsOrder>
+    internal sealed class TestSettingsOrder : BaseTestGlobalSettings<TestSettingsOrder>
     {
         public override string Id => "Testing_Order_v1";
         public override string DisplayName => "Testing Order";

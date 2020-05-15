@@ -7,6 +7,9 @@ using System.Reflection;
 
 namespace MCM.Implementation.ModLib.Functionality
 {
+    /// <summary>
+    /// For DI
+    /// </summary>
     public sealed class ModLibScreenOverriderWrapper : BaseModLibScreenOverrider, IWrapper
     {
         public object Object { get; }

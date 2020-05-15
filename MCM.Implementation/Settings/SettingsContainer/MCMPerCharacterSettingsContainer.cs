@@ -31,9 +31,9 @@ namespace MCM.Implementation.Settings.SettingsContainer
     [Version("e1.3.0",  1)]
     [Version("e1.3.1",  1)]
     [Version("e1.4.0",  1)]
-    internal sealed class MCMPerCharacterSettingsContainer : BasePerCharacterSettingsContainer, IPerCharacterContainer
+    internal sealed class MCMPerCharacterSettingsContainer : BasePerCharacterSettingsContainer, IMCMPerCharacterSettingsContainer
     {
-        public void OnGameStarted(Game game)
+        public override void OnGameStarted(Game game)
         {
             LoadedSettings.Clear();
 
@@ -62,7 +62,7 @@ namespace MCM.Implementation.Settings.SettingsContainer
                 RegisterSettings(setting);
         }
 
-        public void OnGameEnded(Game game)
+        public override void OnGameEnded(Game game)
         {
             LoadedSettings.Clear();
         }

@@ -6,15 +6,15 @@ using System.Reflection;
 
 namespace MCM.Abstractions.Settings.Formats
 {
-    public sealed class SettingFormatWrapper : ISettingsFormat, IWrapper
+    public abstract class BaseSettingFormatWrapper : ISettingsFormat, IWrapper
     {
         public object Object { get; }
         private PropertyInfo? ExtensionsProperty { get; }
         private MethodInfo? LoadMethod { get; }
         private MethodInfo? SaveMethod { get; }
-        public bool IsCorrect { get; }
+        public virtual bool IsCorrect { get; }
 
-        public SettingFormatWrapper(object @object)
+        public BaseSettingFormatWrapper(object @object)
         {
             Object = @object;
             var type = @object.GetType();

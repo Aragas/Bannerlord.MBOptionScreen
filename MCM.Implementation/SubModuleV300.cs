@@ -1,9 +1,7 @@
 ﻿using MCM.Abstractions.Settings.SettingsProvider;
 using MCM.Abstractions.Synchronization;
-using MCM.Utils;
 
 using TaleWorlds.Core;
-using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
 
 namespace MCM.Implementation
@@ -43,7 +41,6 @@ namespace MCM.Implementation
         {
             base.OnGameEnd(game);
             BaseSettingsProvider.Instance.OnGameEnded(game);
-
         }
     }
 }

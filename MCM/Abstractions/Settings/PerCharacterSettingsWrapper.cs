@@ -13,6 +13,9 @@ using System.Runtime.CompilerServices;
 
 namespace MCM.Abstractions.Settings
 {
+    /// <summary>
+    /// For DI
+    /// </summary>
     public sealed class PerCharacterSettingsWrapper : BasePerCharacterSettingsWrapper
     {
         private PropertyInfo? IdProperty { get; }

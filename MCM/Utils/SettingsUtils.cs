@@ -20,7 +20,7 @@ namespace MCM.Utils
     {
         public static IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object, string id)
         {
-            var settingPropertyDefinitionsDiscoverers = DI.GetImplementations<ISettingsPropertyDiscoverer, SettingsPropertyDiscovererWrapper>(ApplicationVersionUtils.GameVersion());
+            var settingPropertyDefinitionsDiscoverers = DI.GetBaseInterfaceImplementations<ISettingsPropertyDiscoverer>();
             return settingPropertyDefinitionsDiscoverers.SelectMany(d => d.GetProperties(@object, id));
         }
 

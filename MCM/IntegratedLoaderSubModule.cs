@@ -93,27 +93,37 @@ namespace MCM
 
         protected override void OnSubModuleLoad()
         {
+            base.OnSubModuleLoad();
+
             foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
                 _reflectionCache[subModuleType]["OnSubModuleLoad"]?.Invoke(subModule, _emptyParams);
         }
         protected override void OnSubModuleUnloaded()
         {
+            base.OnSubModuleUnloaded();
+
             foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
                 _reflectionCache[subModuleType]["OnSubModuleUnloaded"]?.Invoke(subModule, _emptyParams);
         }
         protected override void OnApplicationTick(float dt)
         {
+            base.OnApplicationTick(dt);
+
             _dtParams[0] = dt;
             foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
                 _reflectionCache[subModuleType]["OnApplicationTick"]?.Invoke(subModule, _dtParams);
         }
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
+            base.OnBeforeInitialModuleScreenSetAsRoot();
+
             foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
                 _reflectionCache[subModuleType]["OnBeforeInitialModuleScreenSetAsRoot"]?.Invoke(subModule, _emptyParams);
         }
         protected override void OnGameStart(Game game, IGameStarter gameStarterObject)
         {
+            base.OnGameStart(game, gameStarterObject);
+
             var @params = new object[] { game, gameStarterObject };
             foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
                 _reflectionCache[subModuleType]["OnGameStart"]?.Invoke(subModule, @params);
@@ -121,46 +131,63 @@ namespace MCM
 
         public override bool DoLoading(Game game)
         {
-            return _mcmImplementationSubModules.All(tuple => tuple.Item1.DoLoading(game));
+            return base.DoLoading(game) && _mcmImplementationSubModules.All(tuple => tuple.Item1.DoLoading(game));
 
         }
         public override void OnGameLoaded(Game game, object initializerObject)
         {
+            base.OnGameLoaded(game, initializerObject);
+
             foreach (var (subModule, _) in _mcmImplementationSubModules)
                 subModule.OnGameLoaded(game, initializerObject);
         }
         public override void OnCampaignStart(Game game, object starterObject)
         {
+            base.OnCampaignStart(game, starterObject);
+
             foreach (var (subModule, _) in _mcmImplementationSubModules)
                 subModule.OnCampaignStart(game, starterObject);
         }
         public override void BeginGameStart(Game game)
         {
+            base.BeginGameStart(game);
+
+
             foreach (var (subModule, _) in _mcmImplementationSubModules)
                 subModule.BeginGameStart(game);
         }
         public override void OnGameEnd(Game game)
         {
+            base.OnGameEnd(game);
+            
             foreach (var (subModule, _) in _mcmImplementationSubModules)
                 subModule.OnGameEnd(game);
         }
         public override void OnGameInitializationFinished(Game game)
         {
+            base.OnGameInitializationFinished(game);
+
             foreach (var (subModule, _) in _mcmImplementationSubModules)
                 subModule.OnGameInitializationFinished(game);
         }
         public override void OnMissionBehaviourInitialize(Mission mission)
         {
+            base.OnMissionBehaviourInitialize(mission);
+
             foreach (var (subModule, _) in _mcmImplementationSubModules)
                 subModule.OnMissionBehaviourInitialize(mission);
         }
         public override void OnMultiplayerGameStart(Game game, object starterObject)
         {
+            base.OnMultiplayerGameStart(game, starterObject);
+
             foreach (var (subModule, _) in _mcmImplementationSubModules)
                 subModule.OnMultiplayerGameStart(game, starterObject);
         }
         public override void OnNewGameCreated(Game game, object initializerObject)
         {
+            base.OnNewGameCreated(game, initializerObject);
+            
             foreach (var (subModule, _) in _mcmImplementationSubModules)
                 subModule.OnNewGameCreated(game, initializerObject);
         }

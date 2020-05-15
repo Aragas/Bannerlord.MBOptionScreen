@@ -3,6 +3,8 @@ using MCM.UI.ExtensionMethods;
 
 using System;
 using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 using TaleWorlds.Core;
 using TaleWorlds.Engine;
@@ -129,12 +131,26 @@ namespace MCM.UI.GUI.ViewModels
 
 
             ModSettingsList = new MBBindingList<SettingsVM>();
-            foreach (var viewModel in BaseSettingsProvider.Instance.CreateModSettingsDefinitions.Select(s => new SettingsVM(s, this)))
+
+            // Build the options in a separate context if possible
+            new TaskFactory().StartNew(syncContext =>
             {
-                viewModel.AddSelectCommand(ExecuteSelect);
-                ModSettingsList.Add(viewModel);
-                viewModel.RefreshValues();
-            }
+                if (!(syncContext is SynchronizationContext uiContext))
+                    return;
+
+                foreach (var viewModel in BaseSettingsProvider.Instance.CreateModSettingsDefinitions.Select(s => new SettingsVM(s, this)))
+                {
+                    uiContext.Send(o =>
+                    {
+                        if (!(o is SettingsVM vm))
+                            return;
+
+                        vm.AddSelectCommand(ExecuteSelect);
+                        ModSettingsList.Add(vm);
+                        vm.RefreshValues();
+                    }, viewModel);
+                }
+            }, SynchronizationContext.Current);
 
             RefreshValues();
         }

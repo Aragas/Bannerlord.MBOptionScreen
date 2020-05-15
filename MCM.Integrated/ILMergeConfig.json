@@ -6,7 +6,7 @@
     "AlternativeILMergePath": null,
     "InputAssemblies": [
       "MCM.Integrated.dll",
-      "MCM.dll",
+      "MCMv3.dll",
       "MCM.Implementation.v3.0.0.dll",
       "MCM.UI.v3.0.0.dll"
     ]

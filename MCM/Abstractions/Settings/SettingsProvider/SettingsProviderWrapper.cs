@@ -6,10 +6,14 @@ using MCM.Abstractions.Settings.Models.Wrapper;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+
 using TaleWorlds.Core;
 
 namespace MCM.Abstractions.Settings.SettingsProvider
 {
+    /// <summary>
+    /// For DI
+    /// </summary>
     public sealed class SettingsProviderWrapper : BaseSettingsProvider, IWrapper
     {
         public object Object { get; }

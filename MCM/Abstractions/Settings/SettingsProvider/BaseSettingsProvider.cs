@@ -11,7 +11,7 @@ namespace MCM.Abstractions.Settings.SettingsProvider
     {
         private static BaseSettingsProvider? _instance;
         public static BaseSettingsProvider Instance =>
-            _instance ??= DI.GetImplementation<BaseSettingsProvider, SettingsProviderWrapper>(ApplicationVersionUtils.GameVersion())!;
+            _instance ??= DI.GetImplementation<BaseSettingsProvider, SettingsProviderWrapper>()!;
 
         public abstract IEnumerable<SettingsDefinition> CreateModSettingsDefinitions { get; }
         public abstract BaseSettings? GetSettings(string id);

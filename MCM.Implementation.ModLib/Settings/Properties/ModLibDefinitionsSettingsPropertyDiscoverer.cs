@@ -1,6 +1,5 @@
 ﻿using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Settings.Models;
-using MCM.Abstractions.Settings.Properties;
 using MCM.Implementation.ModLib.Attributes;
 using MCM.Utils;
 
@@ -28,7 +27,7 @@ namespace MCM.Implementation.ModLib.Settings.Properties
     [Version("e1.3.0",  1)]
     [Version("e1.3.1",  1)]
     [Version("e1.4.0",  1)]
-    internal class ModLibDefinitionsSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
+    internal class ModLibDefinitionsSettingsPropertyDiscoverer : IModLibDefinitionsSettingsPropertyDiscoverer
     {
         public IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object, string id)
         {

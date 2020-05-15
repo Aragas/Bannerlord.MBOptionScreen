@@ -2,7 +2,7 @@
 
 namespace MCM.Abstractions.Settings.SettingsContainer
 {
-    public abstract class BaseGlobalSettingsContainer : BaseSettingsContainer<GlobalSettings>
+    public abstract class BaseGlobalSettingsContainer : BaseSettingsContainer<GlobalSettings>, IGlobalSettingsContainer
     {
         protected override string RootFolder { get; }
 

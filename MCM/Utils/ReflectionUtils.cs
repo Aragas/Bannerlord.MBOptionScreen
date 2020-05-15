@@ -5,11 +5,12 @@ namespace MCM.Utils
 {
     public static class ReflectionUtils
     {
-        public static bool ImplementsOrImplementsEquivalent(Type type, Type baseType) =>
-            ImplementsOrImplementsEquivalent(type, (baseType.IsGenericType ? $"{baseType.Namespace}.{baseType.Name}" : baseType.FullName));
-        public static bool ImplementsOrImplementsEquivalent(Type type, string fullBaseTypeName)
+        public static bool ImplementsOrImplementsEquivalent(Type type, Type baseType, bool includeBase = true) =>
+            ImplementsOrImplementsEquivalent(type, (baseType.IsGenericType ? $"{baseType.Namespace}.{baseType.Name}" : baseType.FullName), includeBase);
+        public static bool ImplementsOrImplementsEquivalent(Type type, string fullBaseTypeName, bool includeBase = true)
         {
-            var typeToCheck = type;
+            var typeToCheck = includeBase ? type : type.BaseType;
+            
             while (typeToCheck != null)
             {
                 if ((typeToCheck.IsGenericType ? $"{typeToCheck.Namespace}.{typeToCheck.Name}" : typeToCheck.FullName) == fullBaseTypeName) 
@@ -18,7 +19,7 @@ namespace MCM.Utils
                 typeToCheck = typeToCheck.BaseType;
             }
 
-            return type.GetInterfaces().Any(t => (t.IsGenericType ? $"{t.Namespace}.{t.Name}" : t.FullName) == fullBaseTypeName);
+            return type.GetInterfaces().Any(t => (includeBase || type != t) && (t.IsGenericType ? $"{t.Namespace}.{t.Name}" : t.FullName) == fullBaseTypeName);
         }
 
         public static bool Implements(Type type, Type baseType) => baseType.IsAssignableFrom(type);

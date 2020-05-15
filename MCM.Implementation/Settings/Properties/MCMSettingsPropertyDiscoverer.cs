@@ -3,7 +3,6 @@ using MCM.Abstractions.Attributes.v1;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
 using MCM.Abstractions.Settings.Models;
-using MCM.Abstractions.Settings.Properties;
 using MCM.Utils;
 
 using System.Collections.Generic;
@@ -30,7 +29,7 @@ namespace MCM.Implementation.Settings.Properties
     [Version("e1.3.0",  1)]
     [Version("e1.3.1",  1)]
     [Version("e1.4.0",  1)]
-    internal class MCMSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
+    internal class MCMSettingsPropertyDiscoverer : IMCMSettingsPropertyDiscoverer
     {
         public IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object, string id)
         {

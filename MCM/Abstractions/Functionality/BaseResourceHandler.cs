@@ -11,7 +11,7 @@ namespace MCM.Abstractions.Functionality
     {
         private static BaseResourceHandler? _instance;
         public static BaseResourceHandler Instance =>
-            _instance ??= DI.GetImplementation<BaseResourceHandler, ResourceHandlerWrapper>(ApplicationVersionUtils.GameVersion())!;
+            _instance ??= DI.GetImplementation<BaseResourceHandler, ResourceHandlerWrapper>()!;
 
         public abstract void InjectBrush(XmlDocument xmlDocument);
         public abstract void InjectPrefab(string prefabName, XmlDocument xmlDocument);

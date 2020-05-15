@@ -24,13 +24,14 @@ namespace MCM.Abstractions.Settings.SettingsContainer
 
         protected BaseSettingsContainer()
         {
-            foreach (var format in DI.GetImplementations<ISettingsFormat, SettingFormatWrapper>(ApplicationVersionUtils.GameVersion()))
+            foreach (var format in DI.GetBaseInterfaceImplementations<ISettingsFormat>())
             foreach (var extension in format.Extensions)
             {
                 AvailableSettingsFormats[extension] = format;
             }
 
-            AvailableSettingsFormats.Add("memory", new MemorySettingsFormat());
+            if (AvailableSettingsFormats.Count == 0)
+                AvailableSettingsFormats.Add("memory", new MemorySettingsFormat());
         }
 
         protected virtual void RegisterSettings(TSettings tSettings)

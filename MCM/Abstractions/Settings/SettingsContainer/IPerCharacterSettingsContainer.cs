@@ -2,7 +2,7 @@
 
 namespace MCM.Abstractions.Settings.SettingsContainer
 {
-    public interface IPerCharacterContainer : ISettingsContainer
+    public interface IPerCharacterSettingsContainer : ISettingsContainer
     {
         void OnGameStarted(Game game);
         void OnGameEnded(Game game);

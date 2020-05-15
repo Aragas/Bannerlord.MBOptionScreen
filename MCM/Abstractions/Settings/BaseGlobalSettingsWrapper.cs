@@ -6,9 +6,8 @@ namespace MCM.Abstractions.Settings
 {
     public abstract class BaseGlobalSettingsWrapper : GlobalSettings, IWrapper
     {
-        public static BaseGlobalSettingsWrapper Create(object @object) =>
-            DI.GetImplementations<BaseGlobalSettingsWrapper, GlobalSettingsWrapper>(ApplicationVersionUtils.GameVersion(), @object)
-                .FirstOrDefault(w => w.IsCorrect);
+        public static BaseGlobalSettingsWrapper Create(object @object) => DI.GetBaseInterfaceImplementations<BaseGlobalSettingsWrapper, GlobalSettingsWrapper>(args: @object)
+            .FirstOrDefault(w => w.IsCorrect);
 
         public object Object { get; protected set; }
 

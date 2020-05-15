@@ -9,13 +9,13 @@ using System.Reflection;
 
 namespace MCM.Abstractions.Settings.Properties
 {
-    public sealed class SettingsPropertyDiscovererWrapper : ISettingsPropertyDiscoverer, IWrapper
+    public abstract class BaseSettingsPropertyDiscovererWrapper : ISettingsPropertyDiscoverer, IWrapper
     {
         public object Object { get; }
         private MethodInfo? GetPropertiesMethod { get; }
-        public bool IsCorrect { get; }
+        public virtual bool IsCorrect { get; }
 
-        public SettingsPropertyDiscovererWrapper(object @object)
+        protected BaseSettingsPropertyDiscovererWrapper(object @object)
         {
             Object = @object;
             var type = @object.GetType();

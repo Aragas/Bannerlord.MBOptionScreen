@@ -40,7 +40,10 @@ namespace MCM.Implementation.Settings.SettingsProvider
 
         public DefaultSettingsProvider()
         {
-            SettingsContainers = DI.GetImplementations<ISettingsContainer, SettingsContainerWrapper>(ApplicationVersionUtils.GameVersion()).ToList();
+            SettingsContainers = new List<ISettingsContainer>()
+                .Concat(DI.GetBaseInterfaceImplementations<IGlobalSettingsContainer>())
+                .Concat(DI.GetBaseInterfaceImplementations<IPerCharacterSettingsContainer>())
+                .ToList();
         }
 
         public override BaseSettings? GetSettings(string id)
@@ -74,7 +77,7 @@ namespace MCM.Implementation.Settings.SettingsProvider
         {
             foreach (var settingsContainer in SettingsContainers)
             {
-                if (settingsContainer is IPerCharacterContainer perCharacterContainer)
+                if (settingsContainer is IPerCharacterSettingsContainer perCharacterContainer)
                 {
                     perCharacterContainer.OnGameStarted(game);
                 }
@@ -84,7 +87,7 @@ namespace MCM.Implementation.Settings.SettingsProvider
         {
             foreach (var settingsContainer in SettingsContainers)
             {
-                if (settingsContainer is IPerCharacterContainer perCharacterContainer)
+                if (settingsContainer is IPerCharacterSettingsContainer perCharacterContainer)
                 {
                     perCharacterContainer.OnGameEnded(game);
 

@@ -7,6 +7,9 @@ namespace MCM.Abstractions.Settings
 {
     public abstract class AttributeGlobalSettings<T> : GlobalSettings<T> where T : GlobalSettings, new()
     {
+        /// <summary>
+        /// Fallback
+        /// </summary>
         protected override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups()
         {
             var groups = new List<SettingsPropertyGroupDefinition>();

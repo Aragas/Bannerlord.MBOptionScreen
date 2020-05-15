@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 
-using MCM.Abstractions.Settings.Definitions;
-using MCM.Abstractions.Settings.Definitions.Wrapper;
+using MCM.Abstractions.Settings.Models;
+using MCM.Abstractions.Settings.Models.Wrapper;
 using MCM.Utils;
 
 using System;
@@ -10,11 +10,12 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using MCM.Abstractions.Settings.Models;
-using MCM.Abstractions.Settings.Models.Wrapper;
 
 namespace MCM.Abstractions.Settings
 {
+    /// <summary>
+    /// For DI
+    /// </summary>
     public sealed class GlobalSettingsWrapper : BaseGlobalSettingsWrapper
     {
         private PropertyInfo? IdProperty { get; }

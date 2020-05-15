@@ -96,8 +96,6 @@ namespace MCM.UI
 
         private static void UpdateOptionScreen(MCMUISettings settings)
         {
-            var gameVersion = ApplicationVersionUtils.GameVersion();
-
             if (settings.UseStandardOptionScreen)
             {
                 OverrideEscapeMenu();
@@ -114,12 +112,12 @@ namespace MCM.UI
                 BaseGameMenuScreenHandler.Instance.AddScreen(
                     "MCM_OptionScreen_v3",
                     9990,
-                    () => DI.GetImplementation(gameVersion, typeof(IMCMOptionsScreen).FullName) as ScreenBase,
+                    () => DI.GetImplementation<IMCMOptionsScreen>() as ScreenBase,
                     new TextObject("{=HiZbHGvYG}Mod Options"));
                 BaseIngameMenuScreenHandler.Instance.AddScreen(
                     "MCM_OptionScreen_v3",
                     1,
-                    () => DI.GetImplementation(gameVersion, typeof(IMCMOptionsScreen).FullName) as ScreenBase,
+                    () => DI.GetImplementation<IMCMOptionsScreen>() as ScreenBase,
                     new TextObject("{=NqarFr4P}Mod Options", null));
             }
         }

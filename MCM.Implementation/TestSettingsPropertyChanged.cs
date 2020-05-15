@@ -2,7 +2,7 @@
 
 namespace MCM.Implementation
 {
-    internal sealed class TestSettingsPropertyChanged : TestSettingsBase<TestSettingsOrder>
+    internal sealed class TestSettingsPropertyChanged : BaseTestGlobalSettings<TestSettingsOrder>
     {
         public override string Id => "Testing_PropertyChanged_v1";
         public override string DisplayName => "Testing PropertyChanged";

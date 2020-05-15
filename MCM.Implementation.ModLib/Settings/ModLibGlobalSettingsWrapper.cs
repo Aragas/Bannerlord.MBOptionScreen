@@ -1,7 +1,6 @@
 ﻿using HarmonyLib;
 
 using MCM.Abstractions.Attributes;
-using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Models;
 using MCM.Implementation.ModLib.Settings.Properties;
 
@@ -30,7 +29,7 @@ namespace MCM.Implementation.ModLib.Settings
     [Version("e1.3.0",  1)]
     [Version("e1.3.1",  1)]
     [Version("e1.4.0",  1)]
-    public class ModLibGlobalSettingsWrapper : BaseGlobalSettingsWrapper
+    public class ModLibGlobalSettingsWrapper : BaseModLibGlobalSettingsWrapper
     {
         private PropertyInfo? IDProperty { get; }
         private PropertyInfo? ModuleFolderNameProperty { get; }

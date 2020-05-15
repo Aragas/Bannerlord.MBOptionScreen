@@ -2,7 +2,6 @@
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
 using MCM.Abstractions.Settings.Models;
-using MCM.Abstractions.Settings.Properties;
 using MCM.Implementation.MBO.Attributes;
 using MCM.Implementation.MBO.Settings.Definitions;
 using MCM.Utils;
@@ -31,7 +30,7 @@ namespace MCM.Implementation.MBO.Settings.Properties
     [Version("e1.3.0",  1)]
     [Version("e1.3.1",  1)]
     [Version("e1.4.0",  1)]
-    internal class MBOSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
+    internal class MBOSettingsPropertyDiscoverer : IMBOSettingsPropertyDiscoverer
     {
         public IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object, string id)
         {
