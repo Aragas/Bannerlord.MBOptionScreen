@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <NuspecFile>MCM.NuGet.nuspec</NuspecFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MCM\MCM.csproj" />
+  </ItemGroup>
+
+</Project>

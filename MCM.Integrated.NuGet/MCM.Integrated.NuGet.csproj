@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <NuspecFile>MCM.Integrated.NuGet.nuspec</NuspecFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MCM.Implementation\MCM.Implementation.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\MCM.UI\MCM.UI.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\MCM\MCM.csproj" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

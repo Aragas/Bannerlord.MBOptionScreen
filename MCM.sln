@@ -19,16 +19,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModLib Substitute", "ModLib
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{43511F4A-5CCA-41F0-AEB4-38D8A1EFA803}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Standalone", "_Standalone", "{8CE0FC50-A411-4502-8737-6DF24C2D69AD}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Nexus", "_Nexus", "{8CE0FC50-A411-4502-8737-6DF24C2D69AD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Integrated", "_Integrated", "{CA7EC15E-2C6B-447A-825B-2AA21E7E75F3}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_NuGet", "_NuGet", "{CA7EC15E-2C6B-447A-825B-2AA21E7E75F3}"
 	ProjectSection(SolutionItems) = preProject
 		SubModule.xml = SubModule.xml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCM.Implementation.ModLib", "MCM.Implementation.ModLib\MCM.Implementation.ModLib.csproj", "{A606EEA7-A2AA-4070-86CE-1B6EF495150E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCM.Integrated", "MCM.Integrated\MCM.Integrated.csproj", "{3ED00B0D-690B-40BA-8D6D-EE37E35FA6AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCM.Integrated.NuGet", "MCM.Integrated.NuGet\MCM.Integrated.NuGet.csproj", "{3ED00B0D-690B-40BA-8D6D-EE37E35FA6AE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Root", "Root", "{6DA59EA7-D40B-4C02-B0CC-64875B4064CD}"
 	ProjectSection(SolutionItems) = preProject
@@ -42,6 +42,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MBO", "MBO", "{0D63F657-9E2B-431E-8F51-314D1E2B00C9}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCM.Standalone_old", "MCM.Standalone_old\MCM.Standalone_old.csproj", "{240D5714-BE41-4A3E-8287-AA8EC21830A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCM.NuGet", "MCM.Nuget\MCM.NuGet.csproj", "{733451EC-8556-4FC2-8429-31770126D071}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +95,10 @@ Global
 		{240D5714-BE41-4A3E-8287-AA8EC21830A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{240D5714-BE41-4A3E-8287-AA8EC21830A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{240D5714-BE41-4A3E-8287-AA8EC21830A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{733451EC-8556-4FC2-8429-31770126D071}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{733451EC-8556-4FC2-8429-31770126D071}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{733451EC-8556-4FC2-8429-31770126D071}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{733451EC-8556-4FC2-8429-31770126D071}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,6 +120,7 @@ Global
 		{8D3F0DEE-9836-4B89-A258-EC65C09837BC} = {6DA59EA7-D40B-4C02-B0CC-64875B4064CD}
 		{0D63F657-9E2B-431E-8F51-314D1E2B00C9} = {6DA59EA7-D40B-4C02-B0CC-64875B4064CD}
 		{240D5714-BE41-4A3E-8287-AA8EC21830A8} = {8CE0FC50-A411-4502-8737-6DF24C2D69AD}
+		{733451EC-8556-4FC2-8429-31770126D071} = {CA7EC15E-2C6B-447A-825B-2AA21E7E75F3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FF6EB7D0-C9CB-4A8B-AE72-0511907E6821}
