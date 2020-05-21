@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Module>
-  <Name value="Mod Configuration Menu Beta"/>
+  <Name value="Mod Configuration Menu v3"/>
   <Id value="Bannerlord.MBOptionScreen"/>
   <Version value="v3.1.0"/>
   <DefaultModule value="true"/>

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Module>
-  <Name value="MCM Beta MBO Integration"/>
+  <Name value="MCMv3 MBOv1/MCMv2 Integration"/>
   <Id value="Bannerlord.MBOptionScreen.MBO"/>
   <Version value="v3.1.0"/>
   <DefaultModule value="true"/>
