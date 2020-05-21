@@ -2,7 +2,7 @@
 
 <package>
   <metadata>
-    <id>Test.Bannerlord.MCM</id>
+    <id>Bannerlord.MCM</id>
     <version>3.1.0</version>
     <title>Mod Configuration Menu</title>
     <owners>Aragas</owners>
