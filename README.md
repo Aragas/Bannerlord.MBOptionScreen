@@ -1,8 +1,8 @@
 <p align="center">
     <a href="https://www.nuget.org/packages/Bannerlord.MCM" alt="NuGet Bannerlord.MCM">
-        <img src="https://img.shields.io/nuget/vpre/Bannerlord.MCM.svg?label=Bannerlord.MCM&colorB=blue" /></a>
+        <img src="https://img.shields.io/nuget/vpre/Bannerlord.MCM.svg?label=NuGet%20Bannerlord.MCM&colorB=blue" /></a>
     <a href="https://www.nuget.org/packages/Bannerlord.MCM.Integrated" alt="NuGet Bannerlord.MCM.Integrated">
-        <img src="https://img.shields.io/nuget/vpre/Bannerlord.MCM.Integrated.svg?label=Bannerlord.MCM.Integrated&colorB=blue" /></a>
+        <img src="https://img.shields.io/nuget/vpre/Bannerlord.MCM.Integrated.svg?label=NuGet%20Bannerlord.MCM.Integrated&colorB=blue" /></a>
 </p>
 
 AKA MBOptionScreen Standalone.  
