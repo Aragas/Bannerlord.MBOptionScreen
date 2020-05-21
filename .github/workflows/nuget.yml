@@ -26,6 +26,9 @@ jobs:
       uses: actions/setup-dotnet@master
       with:
         dotnet-version: 3.1.100
+        source-url: https://nuget.pkg.github.com/Bannerlord-Unofficial-Tools-Resources/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
     - name: Build Solution (Release)
       run: dotnet build --configuration Release
