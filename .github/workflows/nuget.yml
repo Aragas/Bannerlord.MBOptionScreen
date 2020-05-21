@@ -34,10 +34,10 @@ jobs:
       run: dotnet build --configuration Release
       
     - name: Pack MCM (Release)
-      run: dotnet pack MCM.Nuget\MCM.Nuget.csproj --configuration Release -o "./packages" 
+      run: dotnet pack MCM.Nuget/MCM.Nuget.csproj --configuration Release -o "./packages" 
       
     - name: Pack MCM.Integrated (Release)
-      run: dotnet pack MCM.Integrated.Nuget\MCM.Integrated.Nuget.csproj --configuration Release -o "./packages"
+      run: dotnet pack MCM.Integrated.Nuget/MCM.Integrated.Nuget.csproj --configuration Release -o "./packages"
       
     - name: Push with dotnet
       run: dotnet nuget push "./packages/*.nupkg" --api-key ${{ secrets.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
