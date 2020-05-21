@@ -43,7 +43,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MBO", "MBO", "{0D63F657-9E2
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCM.Standalone_old", "MCM.Standalone_old\MCM.Standalone_old.csproj", "{240D5714-BE41-4A3E-8287-AA8EC21830A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCM.NuGet", "MCM.Nuget\MCM.NuGet.csproj", "{733451EC-8556-4FC2-8429-31770126D071}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCM.NuGet", "MCM.NuGet\MCM.NuGet.csproj", "{733451EC-8556-4FC2-8429-31770126D071}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
