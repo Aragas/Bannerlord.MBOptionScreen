@@ -6,7 +6,13 @@
     </br>
         <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="Nexus Mod Configuration Menu">
         <img src="https://img.shields.io/badge/Nexus-Mod%20Configuration%20Menu-yellow.svg" /></a>
+        <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="Nexus Mod Configuration Menu">
+        <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dunique%26gameId%3D3174%26modId%3D612" /></a>
+        <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="Nexus Mod Configuration Menu">
+        <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dtotal%26gameId%3D3174%26modId%3D612" /></a>
 </p>
+
+
 
 AKA MBOptionScreen Standalone.  
   
