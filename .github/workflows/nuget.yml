@@ -28,7 +28,6 @@ jobs:
         dotnet-version: 3.1.100
         
     - name: Publish MCM on version change (Release)
-      id: publish_nuget
       uses: rohith/publish-nuget@v2
       with:
         PROJECT_FILE_PATH: MCM.Nuget\MCM.Nuget.csproj
@@ -36,7 +35,6 @@ jobs:
         NUGET_KEY: ${{secrets.NUGET_API_KEY}}
         
     - name: Publish MCM.Integrated on version change (Release)
-      id: publish_nuget
       uses: rohith/publish-nuget@v2
       with:
         PROJECT_FILE_PATH: MCM.Integrated.Nuget\MCM.Integrated.Nuget.csproj
