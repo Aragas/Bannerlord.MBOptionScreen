@@ -1,8 +1,11 @@
 <p align="center">
     <a href="https://www.nuget.org/packages/Bannerlord.MCM" alt="NuGet Bannerlord.MCM">
-        <img src="https://img.shields.io/nuget/vpre/Bannerlord.MCM.svg?label=NuGet%20Bannerlord.MCM&colorB=blue" /></a>
+        <img src="https://img.shields.io/nuget/v/Bannerlord.MCM.svg?label=NuGet%20Bannerlord.MCM&colorB=blue" /></a>
     <a href="https://www.nuget.org/packages/Bannerlord.MCM.Integrated" alt="NuGet Bannerlord.MCM.Integrated">
-        <img src="https://img.shields.io/nuget/vpre/Bannerlord.MCM.Integrated.svg?label=NuGet%20Bannerlord.MCM.Integrated&colorB=blue" /></a>
+        <img src="https://img.shields.io/nuget/v/Bannerlord.MCM.Integrated.svg?label=NuGet%20Bannerlord.MCM.Integrated&colorB=blue" /></a>
+    </br>
+        <a href="https://www.nuget.org/packages/Bannerlord.MCM" alt="NuGet Bannerlord.MCM">
+        <img src="https://img.shields.io/badge/Nexus-Mod%20Configuratio%20Menu-yellow.svg" /></a>
 </p>
 
 AKA MBOptionScreen Standalone.  
@@ -22,5 +25,3 @@ It provides 5 types of options:
 The settings can be defined at compile time by using the Attribute API and at runtime by using the Fluent Builder.  
   
 See the [Wiki](https://github.com/Aragas/Bannerlord.MBOptionScreen/wiki/MCMv3) for more details!  
-  
-Use NuGet packets [Bannerlord.MCM](https://www.nuget.org/packages/Bannerlord.MCM/) and [Bannerlord.MCM.Integrated](https://www.nuget.org/packages/Bannerlord.MCM.Integrated/)!  
