@@ -2,7 +2,7 @@
 <Module>
   <Name value="Mod Configuration Menu Beta"/>
   <Id value="Bannerlord.MBOptionScreen"/>
-  <Version value="v3.0.12"/>
+  <Version value="v3.1.0"/>
   <DefaultModule value="false"/>
   <SingleplayerModule value="true"/>
   <MultiplayerModule value="false"/>

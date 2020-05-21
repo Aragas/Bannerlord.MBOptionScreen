@@ -1,7 +1,6 @@
 ﻿using HarmonyLib;
 
 using MCM.Abstractions.Ref;
-using MCM.Utils;
 
 using System;
 using System.Reflection;

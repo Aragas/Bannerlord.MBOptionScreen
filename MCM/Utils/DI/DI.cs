@@ -24,8 +24,7 @@ namespace MCM.Utils
         public static IEnumerable<Type> GetAllTypes() => AppDomain.CurrentDomain.GetAssemblies()
             .Filter()
             .FilterLegacy()
-            .SelectMany(a => a.GetTypes())
-            .ToList();
+            .SelectMany(a => a.GetTypes());
 
 
         public static IEnumerable<TBase> GetBaseImplementations<TBase, TWrapper>(params object[] args)

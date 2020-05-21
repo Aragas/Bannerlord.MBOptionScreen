@@ -1,10 +1,11 @@
-﻿using MCM.Abstractions.Settings.SettingsProvider;
+﻿using MCM.Abstractions.Settings.Providers;
+using MCM.Utils;
 
 using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using MCM.Utils;
+
 using TaleWorlds.Core;
 using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Engine;

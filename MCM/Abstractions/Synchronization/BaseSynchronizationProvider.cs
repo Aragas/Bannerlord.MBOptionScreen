@@ -17,11 +17,6 @@ namespace MCM.Abstractions.Synchronization
         internal BaseSynchronizationProvider() { }
         protected BaseSynchronizationProvider(string name) => Name = name;
 
-        protected virtual void Dispose(bool disposing) { }
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
+        public abstract void Dispose();
     }
 }

@@ -1,6 +1,6 @@
-﻿using MCM.Abstractions.Settings;
+﻿using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Models;
-using MCM.Abstractions.Settings.SettingsProvider;
+using MCM.Abstractions.Settings.Providers;
 using MCM.UI.Actions;
 using MCM.Utils;
 

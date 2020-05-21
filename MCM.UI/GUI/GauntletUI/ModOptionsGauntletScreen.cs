@@ -1,5 +1,4 @@
-﻿using MCM.Abstractions;
-using MCM.Abstractions.Attributes;
+﻿using MCM.Abstractions.Attributes;
 using MCM.UI.GUI.ViewModels;
 
 using TaleWorlds.Engine.GauntletUI;

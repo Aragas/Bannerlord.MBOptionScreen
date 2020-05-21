@@ -1,6 +1,6 @@
 ﻿using MCM.Abstractions.FluentBuilder.Implementation;
 using MCM.Abstractions.Ref;
-using MCM.Abstractions.Settings.SettingsProvider;
+using MCM.Abstractions.Settings.Providers;
 using MCM.Abstractions.Synchronization;
 
 using TaleWorlds.Core;
@@ -54,6 +54,11 @@ namespace MCM.Implementation
 
                 var globalSettings = builder.BuildAsGlobal();
                 globalSettings.Register();
+                globalSettings.Unregister();
+
+                var perCharacterSettings = builder.BuildAsPerCharacter();
+                perCharacterSettings.Register();
+                perCharacterSettings.Unregister();
 #endif
             }
         }

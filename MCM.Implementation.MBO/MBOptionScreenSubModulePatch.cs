@@ -1,14 +1,13 @@
-﻿using HarmonyLib;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using HarmonyLib;
 
-namespace MCM.Implementation.v1
+namespace MCM.Implementation.MBO
 {
-    internal sealed class MBOptionScreenSubModulePatch1
+    internal sealed class MBOptionScreenV1SubModulePatch1
     {
         public static IEnumerable<MethodBase> TargetMethods() => AppDomain.CurrentDomain.GetAssemblies()
             .Where(a => !a.IsDynamic)
@@ -20,7 +19,7 @@ namespace MCM.Implementation.v1
         public static bool Prefix() => false;
     }
 
-    internal sealed class MBOptionScreenSubModulePatch2
+    internal sealed class MBOptionScreenV1SubModulePatch2
     {
         public static IEnumerable<MethodBase> TargetMethods() => AppDomain.CurrentDomain.GetAssemblies()
             .Where(a => !a.IsDynamic)
@@ -32,11 +31,8 @@ namespace MCM.Implementation.v1
 
         public static bool Prefix() => false;
     }
-}
 
-namespace MCM.Implementation.v2
-{
-    internal sealed class MBOptionScreenSubModulePatch1
+    internal sealed class MBOptionScreenV2SubModulePatch1
     {
         public static IEnumerable<MethodBase> TargetMethods() => AppDomain.CurrentDomain.GetAssemblies()
             .Where(a => !a.IsDynamic)
@@ -57,7 +53,7 @@ namespace MCM.Implementation.v2
         public static bool Prefix() => false;
     }
 
-    internal sealed class MBOptionScreenSubModulePatch2
+    internal sealed class MBOptionScreenV2SubModulePatch2
     {
         public static IEnumerable<MethodBase> TargetMethods() => AppDomain.CurrentDomain.GetAssemblies()
             .Where(a => !a.IsDynamic)

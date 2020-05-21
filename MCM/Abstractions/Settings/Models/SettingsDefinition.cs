@@ -1,7 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using MCM.Abstractions.Settings.SettingsProvider;
+﻿using MCM.Abstractions.Settings.Providers;
 using MCM.Utils;
+
+using System.Collections.Generic;
 
 namespace MCM.Abstractions.Settings.Models
 {

@@ -1,9 +1,8 @@
-﻿using MCM.Abstractions.Settings.Models;
+﻿using MCM.Abstractions.Settings.Base.Global;
+using MCM.Abstractions.Settings.Base.PerCharacter;
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using MCM.Abstractions.Settings;
 
 namespace MCM.Abstractions.FluentBuilder
 {

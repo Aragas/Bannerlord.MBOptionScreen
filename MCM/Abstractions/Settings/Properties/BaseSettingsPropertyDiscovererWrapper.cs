@@ -2,6 +2,7 @@
 
 using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.Models.Wrapper;
+using MCM.Utils;
 
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,11 @@ namespace MCM.Abstractions.Settings.Properties
 {
     public abstract class BaseSettingsPropertyDiscovererWrapper : ISettingsPropertyDiscoverer, IWrapper
     {
+        public static BaseSettingsPropertyDiscovererWrapper Create(object @object) =>
+            DI.GetBaseImplementations<BaseSettingsPropertyDiscovererWrapper, SettingsPropertyDiscovererWrapper>(@object)
+            .FirstOrDefault(w => w.IsCorrect);
+
+
         public object Object { get; }
         private MethodInfo? GetPropertiesMethod { get; }
         public virtual bool IsCorrect { get; }

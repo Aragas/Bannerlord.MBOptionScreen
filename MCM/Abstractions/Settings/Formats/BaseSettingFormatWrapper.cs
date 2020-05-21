@@ -1,5 +1,7 @@
 ﻿using HarmonyLib;
 
+using MCM.Abstractions.Settings.Base;
+
 using System;
 using System.Collections.Generic;
 using System.Reflection;

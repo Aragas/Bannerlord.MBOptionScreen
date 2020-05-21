@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using MCM.Abstractions.Settings.Base;
+
+using System.Collections.Generic;
 
 namespace MCM.Abstractions.Settings.Formats
 {

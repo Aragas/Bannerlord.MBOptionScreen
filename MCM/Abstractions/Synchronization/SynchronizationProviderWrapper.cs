@@ -27,10 +27,6 @@ namespace MCM.Abstractions.Synchronization
 
         public override string Name => NameProperty?.GetValue(Object) as string ?? "ERROR";
         public override bool IsFirstInitialization => IsFirstInitializationProperty?.GetValue(Object) as bool? ?? false;
-        public new void Dispose()
-        {
-            base.Dispose();
-            DisposeMethod?.Invoke(Object, Array.Empty<object>());
-        }
+        public override void Dispose() => DisposeMethod?.Invoke(Object, Array.Empty<object>());
     }
 }

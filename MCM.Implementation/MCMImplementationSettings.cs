@@ -1,4 +1,4 @@
-﻿using MCM.Abstractions.Settings;
+﻿using MCM.Abstractions.Settings.Base.Global;
 
 namespace MCM.Implementation
 {

@@ -2,7 +2,7 @@
 
 using MCM.Abstractions;
 using MCM.Abstractions.Data;
-using MCM.Abstractions.Settings;
+using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Formats;
 using MCM.Utils;
 
@@ -81,7 +81,7 @@ namespace MCM.Implementation.Settings.Formats
 
         private class DropdownJsonConverter : JsonConverter
         {
-            public override bool CanConvert(Type objectType) => ReflectionUtils.ImplementsOrImplementsEquivalent(objectType, typeof(IDropdownProvider));
+            public override bool CanConvert(Type objectType) => SettingsUtils.IsDropdown(objectType);
 
             public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
             {

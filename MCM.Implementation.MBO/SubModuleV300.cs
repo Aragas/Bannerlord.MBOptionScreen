@@ -18,43 +18,43 @@ namespace MCM.Implementation.MBO
             if (synchronizationProvider.IsFirstInitialization)
             {
                 var harmonyV1 = new Harmony("bannerlord.mcm.mbo.v1.loaderpreventer");
-                foreach (var method in v1.SettingsDatabasePatch1.TargetMethods())
+                foreach (var method in SettingsDatabaseV1Patch1.TargetMethods())
                 {
                     harmonyV1.Patch(
                         original: method,
-                        prefix: new HarmonyMethod(typeof(v1.SettingsDatabasePatch1), nameof(v1.SettingsDatabasePatch1.Prefix)));
+                        prefix: new HarmonyMethod(typeof(SettingsDatabaseV1Patch1), nameof(SettingsDatabaseV1Patch1.Prefix)));
                 }
-                foreach (var method in v1.MBOptionScreenSubModulePatch1.TargetMethods())
+                foreach (var method in MBOptionScreenV1SubModulePatch1.TargetMethods())
                 {
                     harmonyV1.Patch(
                         original: method,
-                        prefix: new HarmonyMethod(typeof(v1.MBOptionScreenSubModulePatch1), nameof(v1.MBOptionScreenSubModulePatch1.Prefix)));
+                        prefix: new HarmonyMethod(typeof(MBOptionScreenV1SubModulePatch1), nameof(MBOptionScreenV1SubModulePatch1.Prefix)));
                 }
-                foreach (var method in v1.MBOptionScreenSubModulePatch2.TargetMethods())
+                foreach (var method in MBOptionScreenV1SubModulePatch2.TargetMethods())
                 {
                     harmonyV1.Patch(
                         original: method,
-                        prefix: new HarmonyMethod(typeof(v1.MBOptionScreenSubModulePatch2), nameof(v1.MBOptionScreenSubModulePatch2.Prefix)));
+                        prefix: new HarmonyMethod(typeof(MBOptionScreenV1SubModulePatch2), nameof(MBOptionScreenV1SubModulePatch2.Prefix)));
                 }
 
                 var harmonyV2 = new Harmony("bannerlord.mcm.mbo.v2.loaderpreventer");
-                foreach (var method in v2.SettingsDatabasePatch1.TargetMethods())
+                foreach (var method in SettingsDatabaseV2Patch1.TargetMethods())
                 {
                     harmonyV2.Patch(
                         original: method,
-                        prefix: new HarmonyMethod(typeof(v2.SettingsDatabasePatch1), nameof(v2.SettingsDatabasePatch1.Prefix)));
+                        prefix: new HarmonyMethod(typeof(SettingsDatabaseV2Patch1), nameof(SettingsDatabaseV2Patch1.Prefix)));
                 }
-                foreach (var method in v2.MBOptionScreenSubModulePatch1.TargetMethods())
+                foreach (var method in MBOptionScreenV2SubModulePatch1.TargetMethods())
                 {
                     harmonyV2.Patch(
                         original: method,
-                        prefix: new HarmonyMethod(typeof(v2.MBOptionScreenSubModulePatch1), nameof(v2.MBOptionScreenSubModulePatch1.Prefix)));
+                        prefix: new HarmonyMethod(typeof(MBOptionScreenV2SubModulePatch1), nameof(MBOptionScreenV2SubModulePatch1.Prefix)));
                 }
-                foreach (var method in v2.MBOptionScreenSubModulePatch2.TargetMethods())
+                foreach (var method in MBOptionScreenV2SubModulePatch2.TargetMethods())
                 {
                     harmonyV2.Patch(
                         original: method,
-                        prefix: new HarmonyMethod(typeof(v2.MBOptionScreenSubModulePatch2), nameof(v2.MBOptionScreenSubModulePatch2.Prefix)));
+                        prefix: new HarmonyMethod(typeof(MBOptionScreenV2SubModulePatch2), nameof(MBOptionScreenV2SubModulePatch2.Prefix)));
                 }
             }
         }

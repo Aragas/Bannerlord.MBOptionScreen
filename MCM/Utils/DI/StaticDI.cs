@@ -44,7 +44,7 @@ namespace MCM.Utils
                 var types = DI.GetAllTypes()
                     .Where(t => t.IsClass && !t.IsAbstract)
                     .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, @interface));
-                var tuple = AttributeUtils.GetLastImplementation(Version, types);
+                var tuple = VersionUtils.GetLastImplementation(Version, types);
                 if (tuple != null && tuple.Value.Type != null)
                     LatestImplementations.Add(@interface, tuple.Value.Type);
             }
@@ -85,7 +85,7 @@ namespace MCM.Utils
             {
                 foreach (var type in pair.Value)
                 {
-                    var tuple = AttributeUtils.GetLastImplementation(Version, types.Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, type, false)));
+                    var tuple = VersionUtils.GetLastImplementation(Version, types.Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, type, false)));
                     if (tuple != null && tuple.Value.Type != null)
                     {
                         if (!DependencyBaseLatestImplementations.ContainsKey(type))

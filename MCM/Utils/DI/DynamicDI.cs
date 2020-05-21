@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using TaleWorlds.Core;
 using TaleWorlds.Library;
 
 namespace MCM.Utils
@@ -61,7 +60,7 @@ namespace MCM.Utils
             var types = DI.GetAllTypes()
                 .Where(t => t.IsClass && !t.IsAbstract)
                 .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, baseType));
-            var tuple = AttributeUtils.GetLastImplementation(Version, types);
+            var tuple = VersionUtils.GetLastImplementation(Version, types);
             return tuple != null ? Activator.CreateInstance(tuple?.Type, args) : null;
         }
 
@@ -83,7 +82,7 @@ namespace MCM.Utils
         /// </summary>
         private static object? GetImplementationRecursive(Type baseType, Type wrapperType, object[] args, IEnumerable<Type> types)
         {
-            var tuple = AttributeUtils.GetLastImplementation(Version, types);
+            var tuple = VersionUtils.GetLastImplementation(Version, types);
             if (tuple == null || tuple?.Type == null)
                 return null;
 

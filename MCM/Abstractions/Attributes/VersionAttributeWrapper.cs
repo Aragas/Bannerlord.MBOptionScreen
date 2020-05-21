@@ -6,7 +6,7 @@ using TaleWorlds.Library;
 
 namespace MCM.Abstractions.Attributes
 {
-    internal sealed class VersionAttributeWrapper : IWrapper
+    internal sealed class VersionAttributeWrapper : IWrapper, IVersion
     {
         public object Object { get; }
         private PropertyInfo? GameVersionProperty { get; }

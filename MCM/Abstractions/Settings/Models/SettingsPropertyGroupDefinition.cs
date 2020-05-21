@@ -1,4 +1,4 @@
-﻿using MCM.Abstractions.ExtensionMethods;
+﻿using MCM.Extensions;
 using MCM.Utils;
 
 using System.Collections.Generic;
@@ -53,6 +53,10 @@ namespace MCM.Abstractions.Settings.Models
 
         public SettingsPropertyGroupDefinition? GetGroup(string groupName) => subGroups.Find(x => x.GroupName == groupName);
         public SettingsPropertyGroupDefinition? GetGroupFor(string groupName) => subGroups.GetGroup(groupName);
+        public SettingsPropertyGroupDefinition? GetGroup(IEnumerable<SettingsPropertyGroupDefinition> groupsList, string groupName)
+        {
+            return groupsList.FirstOrDefault(x => x.GroupName == groupName);
+        }
 
         public override string ToString() => $"{GroupName}";
     }

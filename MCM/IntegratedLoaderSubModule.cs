@@ -106,6 +106,7 @@ namespace MCM
             foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
                 _reflectionCache[subModuleType]["OnSubModuleUnloaded"]?.Invoke(subModule, _emptyParams);
         }
+        /*
         protected override void OnApplicationTick(float dt)
         {
             base.OnApplicationTick(dt);
@@ -114,6 +115,7 @@ namespace MCM
             foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
                 _reflectionCache[subModuleType]["OnApplicationTick"]?.Invoke(subModule, _dtParams);
         }
+        */
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
             base.OnBeforeInitialModuleScreenSetAsRoot();

@@ -1,4 +1,5 @@
-﻿using MCM.Abstractions.Settings;
+﻿using MCM.Abstractions.Settings.Base.Global;
+using MCM.Abstractions.Settings.Base.PerCharacter;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
 using MCM.Abstractions.Settings.Models;
 using MCM.Utils;
@@ -50,17 +51,9 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
         public FluentPerCharacterSettings BuildAsPerCharacter() => new FluentPerCharacterSettings(
             Id, DisplayName, FolderName, SubFolder, Format, UIVersion, SubGroupDelimiter, OnPropertyChanged, GetSettingPropertyGroups());
 
-        private IEnumerable<SettingsPropertyGroupDefinition> GetSettingPropertyGroups()
-        {
-            var groups = new List<SettingsPropertyGroupDefinition>();
-            foreach (var settingProp in GetSettingProperties())
-            {
-                var group = SettingsUtils.GetGroupFor(SubGroupDelimiter, settingProp, groups);
-                group.Add(settingProp);
-            }
+        private IEnumerable<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() =>
+            SettingsUtils.GetSettingsPropertyGroups(SubGroupDelimiter, GetSettingProperties());
 
-            return groups;
-        }
         private IEnumerable<SettingsPropertyDefinition> GetSettingProperties()
         {
             foreach (var settingsPropertyGroup in PropertyGroups.Values)

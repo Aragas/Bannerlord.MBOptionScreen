@@ -10,7 +10,7 @@ namespace MCM.Abstractions.Attributes
     /// Declares that the implementation works on the versions specified 
     /// </summary>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
-    public sealed class VersionAttribute : Attribute
+    public sealed class VersionAttribute : Attribute, IVersion
     {
         public ApplicationVersion GameVersion { get; }
         public int ImplementationVersion { get; }

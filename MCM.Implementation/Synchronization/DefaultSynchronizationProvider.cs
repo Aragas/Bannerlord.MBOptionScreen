@@ -33,9 +33,8 @@ namespace MCM.Implementation.Synchronization
             IsFirstInitialization = _set.TryAdd(name, null);
         }
 
-        protected override void Dispose(bool disposing)
+        public override void Dispose()
         {
-            base.Dispose(disposing);
             // Keep the names alive for the whole application lifetime
         }
     }

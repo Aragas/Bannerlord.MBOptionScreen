@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <Version>3.0.0</Version>
+    <Version>3.1.0</Version>
     <Authors>Aragas, mipen</Authors>
     <AssemblyName>MCMv3.Implementation.ModLib.v$(Version)</AssemblyName>
   </PropertyGroup>
@@ -20,7 +20,7 @@
     <ModuleName>Bannerlord.MBOptionScreen.ModLib</ModuleName>
   </PropertyGroup>
   <ItemGroup Condition="$(TargetFramework) == 'net472'">
-    <Libraries Include="$(TargetDir)\*.*" Exclude="$(TargetDir)\*.pdb;$(TargetDir)\*.json;$(TargetDir)\MCM.dll;" />
+    <Libraries Include="$(TargetDir)\*.*" Exclude="$(TargetDir)\*.pdb;$(TargetDir)\*.json;$(TargetDir)\MCMv3.dll;" />
     <Data Include="_Data\**\*.*" />
   </ItemGroup>
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="$(TargetFramework) == 'net472'">

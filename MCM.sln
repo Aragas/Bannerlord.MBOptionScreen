@@ -33,7 +33,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Root", "Root", "{6DA59EA7-D40B-4C02-B0CC-64875B4064CD}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
-		Directory.Build.targets = Directory.Build.targets
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModLib.Definitions Substitute", "ModLib.Definitions Substitute\ModLib.Definitions Substitute.csproj", "{3EF3A7F5-50FC-4B53-925D-6CF42FA58405}"
@@ -42,7 +41,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ModLib", "ModLib", "{8D3F0D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MBO", "MBO", "{0D63F657-9E2B-431E-8F51-314D1E2B00C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCM.Standalone_old", "MCM.Standalone_old\MCM.Standalone_old.csproj", "{240D5714-BE41-4A3E-8287-AA8EC21830A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCM.Standalone_old", "MCM.Standalone_old\MCM.Standalone_old.csproj", "{240D5714-BE41-4A3E-8287-AA8EC21830A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

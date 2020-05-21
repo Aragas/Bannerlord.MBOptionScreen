@@ -2,12 +2,14 @@
 
 using MCM.Abstractions;
 using MCM.Abstractions.Data;
-using MCM.Abstractions.ExtensionMethods;
 using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings;
+using MCM.Abstractions.Settings.Base;
+using MCM.Abstractions.Settings.Base.Global;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.Properties;
+using MCM.Extensions;
 
 using System;
 using System.Collections.Generic;
@@ -191,6 +193,16 @@ namespace MCM.Utils
         }
 
 
+        public static List<SettingsPropertyGroupDefinition> GetSettingsPropertyGroups(char subGroupDelimiter, IEnumerable<ISettingsPropertyDefinition> settingsPropertyDefinitions)
+        {
+            var groups = new List<SettingsPropertyGroupDefinition>();
+            foreach (var settingProp in settingsPropertyDefinitions)
+            {
+                var group = GetGroupFor(subGroupDelimiter, settingProp, groups);
+                group.Add(settingProp);
+            }
+            return groups;
+        }
         public static SettingsPropertyGroupDefinition GetGroupFor(char subGroupDelimiter, ISettingsPropertyDefinition sp, ICollection<SettingsPropertyGroupDefinition> rootCollection)
         {
             SettingsPropertyGroupDefinition? group;

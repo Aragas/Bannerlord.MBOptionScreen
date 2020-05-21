@@ -2,7 +2,7 @@
 <Module>
   <Name value="MCM Beta ModLib Integration"/>
   <Id value="Bannerlord.MBOptionScreen.ModLib"/>
-  <Version value="v3.0.12"/>
+  <Version value="v3.1.0"/>
   <DefaultModule value="true"/>
   <SingleplayerModule value="true"/>
   <MultiplayerModule value="false"/>

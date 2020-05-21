@@ -1,4 +1,5 @@
 ﻿using MCM.Abstractions.Settings;
+using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Models;
 using MCM.UI.Actions;
 using MCM.Utils;
