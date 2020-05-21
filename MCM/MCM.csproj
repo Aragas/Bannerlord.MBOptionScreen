@@ -3,12 +3,6 @@
   <PropertyGroup>
     <Version>3.1.0</Version>
     <Authors>Aragas, mipen</Authors>
-    <PackageId>Bannerlord.MCM</PackageId>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/Aragas/Bannerlord.MBOptionScreen</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/Aragas/Bannerlord.MBOptionScreen</PackageProjectUrl>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <AssemblyName>MCMv3</AssemblyName>
   </PropertyGroup>
 

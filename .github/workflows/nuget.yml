@@ -1,0 +1,44 @@
+name: NuGet
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build-from-push:
+    name: Requested by Push
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push'
+    steps:
+    - run: echo
+ 
+  build:
+    name: Publish to GPR
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+      
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@master
+      with:
+        dotnet-version: 3.1.100
+        
+      - name: Publish MCM on version change (Release)
+        id: publish_nuget
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: MCM.Nuget\MCM.Nuget.csproj
+          TAG_COMMIT: true
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
+
+      - name: Publish MCM.Integrated on version change (Release)
+        id: publish_nuget
+        uses: rohith/publish-nuget@v2
+        with:
+          PROJECT_FILE_PATH: MCM.Integrated.Nuget\MCM.Integrated.Nuget.csproj
+          TAG_COMMIT: true
+          NUGET_KEY: ${{secrets.NUGET_API_KEY}}
