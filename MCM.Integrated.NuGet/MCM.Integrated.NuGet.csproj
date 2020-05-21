@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MCM.Implementation\MCM.Implementation.csproj" PrivateAssets="all" />
     <ProjectReference Include="..\MCM.UI\MCM.UI.csproj" PrivateAssets="all" />
     <ProjectReference Include="..\MCM\MCM.csproj" PrivateAssets="all" />
