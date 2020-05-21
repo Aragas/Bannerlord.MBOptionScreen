@@ -51,7 +51,7 @@
     <ProjectReference Include="..\ModLib.Definitions Substitute\ModLib.Definitions Substitute.csproj" />
   </ItemGroup>
 
-  <PropertyGroup Condition="$(TargetFramework) == 'net472 AND '$(GITHUB_ACTIONS)' != 'true''">
+  <PropertyGroup Condition="$(TargetFramework) == 'net472' AND '$(GITHUB_ACTIONS)' != 'true'">
     <ModuleName>Bannerlord.MBOptionScreen</ModuleName>
   </PropertyGroup>
   <ItemGroup Condition="$(TargetFramework) == 'net472' AND '$(GITHUB_ACTIONS)' != 'true'">
