@@ -1,3 +1,10 @@
+<p align="center">
+    <a href="https://www.nuget.org/packages/Bannerlord.MCM" alt="NuGet Bannerlord.MCM">
+        <img src="https://img.shields.io/nuget/vpre/Bannerlord.MCM.svg?label=Bannerlord.MCM&colorB=blue" /></a>
+    <a href="https://www.nuget.org/packages/Bannerlord.MCM.Integrated" alt="NuGet Bannerlord.MCM.Integrated">
+        <img src="https://img.shields.io/nuget/vpre/Bannerlord.MCM.Integrated.svg?label=Bannerlord.MCM.Integrated&colorB=blue" /></a>
+</p>
+
 AKA MBOptionScreen Standalone.  
   
 MCM is a Mod Options screen library designed to let modders use its API for defining the options.  
@@ -16,4 +23,4 @@ The settings can be defined at compile time by using the Attribute API and at ru
   
 See the [Wiki](https://github.com/Aragas/Bannerlord.MBOptionScreen/wiki/MCMv3) for more details!  
   
-Use NuGet!  
+Use NuGet packets [Bannerlord.MCM](https://www.nuget.org/packages/Bannerlord.MCM/) and [Bannerlord.MCM.Integrated](https://www.nuget.org/packages/Bannerlord.MCM.Integrated/)!  
