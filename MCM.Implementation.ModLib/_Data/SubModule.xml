@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Module>
-  <Name value="MCM Beta ModLib Integration"/>
+  <Name value="MCMv3 ModLib v1/v13 Integration"/>
   <Id value="Bannerlord.MBOptionScreen.ModLib"/>
   <Version value="v3.1.0"/>
   <DefaultModule value="true"/>
