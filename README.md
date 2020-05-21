@@ -4,8 +4,8 @@
     <a href="https://www.nuget.org/packages/Bannerlord.MCM.Integrated" alt="NuGet Bannerlord.MCM.Integrated">
         <img src="https://img.shields.io/nuget/v/Bannerlord.MCM.Integrated.svg?label=NuGet%20Bannerlord.MCM.Integrated&colorB=blue" /></a>
     </br>
-        <a href="https://www.nuget.org/packages/Bannerlord.MCM" alt="NuGet Bannerlord.MCM">
-        <img src="https://img.shields.io/badge/Nexus-Mod%20Configuratio%20Menu-yellow.svg" /></a>
+        <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="Nexus Mod Configuration Menu">
+        <img src="https://img.shields.io/badge/Nexus-Mod%20Configuration%20Menu-yellow.svg" /></a>
 </p>
 
 AKA MBOptionScreen Standalone.  
