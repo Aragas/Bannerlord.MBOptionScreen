@@ -51,14 +51,14 @@
     <ProjectReference Include="..\ModLib.Definitions Substitute\ModLib.Definitions Substitute.csproj" />
   </ItemGroup>
 
-  <PropertyGroup Condition="$(TargetFramework) == 'net472'">
+  <PropertyGroup Condition="$(TargetFramework) == 'net472 AND '$(GITHUB_ACTIONS)' != 'true''">
     <ModuleName>Bannerlord.MBOptionScreen</ModuleName>
   </PropertyGroup>
-  <ItemGroup Condition="$(TargetFramework) == 'net472'">
+  <ItemGroup Condition="$(TargetFramework) == 'net472' AND '$(GITHUB_ACTIONS)' != 'true'">
     <Libraries Include="$(TargetDir)\*.*" Exclude="$(TargetDir)\*.pdb;$(TargetDir)\*.json;$(TargetDir)\MCM.Standalone.dll;" />
     <Data Include="_Data\**\*.*" />
   </ItemGroup>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="$(TargetFramework) == 'net472'">
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="$(TargetFramework) == 'net472' AND '$(GITHUB_ACTIONS)' != 'true'">
     <Exec Command="if not exist &quot;$(GameFolder)\Modules\$(ModuleName)&quot; mkdir &quot;$(GameFolder)\Modules\$(ModuleName)&quot;" />
 
     <Copy SourceFiles="@(Libraries)" DestinationFiles="@(Libraries->'$(GameFolder)\Modules\$(ModuleName)\bin\Win64_Shipping_Client\%(RecursiveDir)%(Filename)%(Extension)')" />
