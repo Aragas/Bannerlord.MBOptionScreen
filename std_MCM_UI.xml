@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" type="string">
+  <tags>
+    <tag language="English" />
+  </tags>
+  <strings>
+    <string id="EditValueVM_TitleText" text="Mod Options"/>
+
+    <string id="EditValueVM_TitleText" text="Edit &quot;{PROPERTYNAME}&quot;"/>
+    <string id="EditValueVM_DescriptionText_Numeric" text="Edit the value for &quot;{PROPERTYNAME}&quot;&#10;The minimum value is {MINVALUE} and the maximum value is {MAXVALUE}."/>
+    <string id="EditValueVM_DescriptionText_Text" text="Edit the value for &quot;{PROPERTYNAME}&quot;."/>
+
+    <string id="ModOptionsVM_NotSpecified" text="Mod Name not Specified"/>
+    <string id="ModOptionsVM_Name" text="Mod Options"/>
+    <string id="ModOptionsVM_DoneButtonText" text="Mod Name not Specified"/>
+    <string id="ModOptionsVM_ChangeToPreset" text="Change to preset '{PRESET}'"/>
+    <string id="ModOptionsVM_Discard" text="Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?"/>
+    <string id="ModOptionsVM_RestartTitle" text="Game Needs to Restart"/>
+    <string id="ModOptionsVM_RestartDesc" text="The game needs to be restarted to apply mod settings changes. Do you want to close the game now?"/>
+
+    <string id="SettingsPropertyGroupVM_Disabled" text="{GROUPNAME} (Disabled)"/>
+
+    <string id="SettingsVM_Custom" text="Custom"/>
+
+    <string id="ModOptionsPageView_Mods" text="Mods"/>
+
+    <string id="MainMenu_ModOptions" text="Mod Options"/>
+    <string id="EscapeMenu_ModOptions" text="Mod Options"/>
+
+    <string id="MCMUISettings_Name_Name" text="MCM UI Impl. {VERSION}"/>
+    <string id="MCMUISettings_Name_General" text="General"/>
+    <string id="MCMUISettings_Name_UseStandard" text="Use Standard Option Screen"/>
+    <string id="MCMUISettings_Name_UseStandardDesc" text="Use standard Options screen instead of using an external."/>
+  </strings>
+</base>

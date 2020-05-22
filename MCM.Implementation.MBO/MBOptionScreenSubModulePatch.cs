@@ -1,9 +1,10 @@
-﻿using System;
+﻿using HarmonyLib;
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using HarmonyLib;
 
 namespace MCM.Implementation.MBO
 {

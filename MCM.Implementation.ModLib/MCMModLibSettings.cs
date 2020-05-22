@@ -2,19 +2,26 @@
 using MCM.Abstractions.Attributes.v2;
 using MCM.Abstractions.Settings.Base.Global;
 
+using System.Collections.Generic;
+
+using TaleWorlds.Localization;
+
 namespace MCM.Implementation.ModLib
 {
     internal sealed class MCMModLibSettings : AttributeGlobalSettings<MCMModLibSettings>
     {
         private bool _overrideModLib = true;
 
-        public override string Id => "MCMModLib_v3";
-        public override string DisplayName => $"MCM ModLib Impl. {typeof(MCMModLibSettings).Assembly.GetName().Version.ToString(3)}";
-        public override string FolderName => "MCM";
-        public override string Format => "json";
+        public override string Id { get; } = "MCMModLib_v3";
+        public override string DisplayName { get; } = new TextObject("{=MCMModLibSettings_Name}MCM ModLib Impl. {VERSION}", new Dictionary<string, TextObject>()
+        {
+            { "VERSION", new TextObject(typeof(MCMModLibSettings).Assembly.GetName().Version.ToString(3)) }
+        }).ToString();
+        public override string FolderName { get; } = "MCM";
+        public override string Format { get; } = "json";
 
-        [SettingPropertyBool("Override ModLib Option Screen", Order = 2, RequireRestart = true, HintText = "If set, removes ModLib 'Mod Options' menu entry.")]
-        [SettingPropertyGroup("General")]
+        [SettingPropertyBool("{=MCMModLibSettings_Override}Override ModLib Option Screen", RequireRestart = true, HintText = "{=MCMModLibSettings_OverrideDesc}If set, removes ModLib 'Mod Options' menu entry.")]
+        [SettingPropertyGroup("{=MCMModLibSettings_General}General")]
         public bool OverrideModLib
         {
             get => _overrideModLib;

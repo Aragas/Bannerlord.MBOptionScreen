@@ -12,16 +12,16 @@ namespace MCM.UI
     {
         private bool _useStandardOptionScreen = false;
 
-        public override string Id => "MCMUI_v3";
-        public override string DisplayName => new TextObject("{=Settings_Name}MCM UI Impl. {VERSION}", new Dictionary<string, TextObject>()
+        public override string Id { get; } = "MCMUI_v3";
+        public override string DisplayName { get; } = new TextObject("{=MCMUISettings_Name}MCM UI Impl. {VERSION}", new Dictionary<string, TextObject>()
         {
             { "VERSION", new TextObject(typeof(MCMUISettings).Assembly.GetName().Version.ToString(3)) }
         }).ToString();
-        public override string FolderName => "MCM";
-        public override string Format => "json";
+        public override string FolderName { get; } = "MCM";
+        public override string Format { get; } = "json";
 
-        [SettingPropertyBool("{=Settings_UseStandard}Use Standard Option Screen", Order = 1, RequireRestart = false, HintText = "{=Settings_UseStandardDesc}Use standard Options screen instead of using an external.")]
-        [SettingPropertyGroup("{=Settings_General}General")]
+        [SettingPropertyBool("{=MCMUISettings_Name_UseStandard}Use Standard Option Screen", Order = 1, RequireRestart = false, HintText = "{=MCMUISettings_Name_UseStandardDesc}Use standard Options screen instead of using an external.")]
+        [SettingPropertyGroup("{=MCMUISettings_Name_General}General")]
         public bool UseStandardOptionScreen
         {
             get => _useStandardOptionScreen;
