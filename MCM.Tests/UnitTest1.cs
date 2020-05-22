@@ -1,5 +1,7 @@
 using System;
 using System.IO;
+using MCM.Abstractions.Settings.Formats;
+using MCM.Utils;
 using SandBox;
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.CampaignSystem.GameMenus;
@@ -46,22 +48,6 @@ namespace MCM.Tests
             subModule.BeginGameStart(game);
             subModule.DoLoading(game);
             */
-        }
-    }
-    public class VersionResolverTests
-    {
-        [Fact]
-        public void Test1()
-        {
-
-        }
-    }
-    public class DITests
-    {
-        [Fact]
-        public void Test1()
-        {
-
         }
     }
 }

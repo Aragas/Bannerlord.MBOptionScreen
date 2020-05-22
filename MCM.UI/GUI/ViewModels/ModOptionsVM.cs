@@ -84,7 +84,7 @@ namespace MCM.UI.GUI.ViewModels
                     OnPropertyChanged(nameof(SelectedDisplayName));
                     OnPropertyChanged(nameof(SomethingSelected));
 
-                    if (_selectedMod != null && _selectedMod.PresetsSelector != null)
+                    if (_selectedMod?.PresetsSelector != null)
                     {
                         PresetsSelector.SetOnChangeAction(null);
                         OnPropertyChanged(nameof(PresetsSelector));
