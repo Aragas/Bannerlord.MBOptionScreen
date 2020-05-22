@@ -1,8 +1,8 @@
 ﻿using MCM.Abstractions.Settings;
-using MCM.UI.ExtensionMethods;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 using TaleWorlds.GauntletUI;
@@ -55,7 +55,7 @@ namespace MCM.UI.GUI.Views
                             //Handle input for float types
                             if (key == (int)KeyCodes.Decimal)
                             {
-                                if (RealText.Count('.') >= 1)
+                                if (RealText.Count(ch => ch == '.') >= 1)
                                     continue;
                             }
                         }

@@ -103,12 +103,12 @@ namespace MCM.UI
                     "MCM_OptionScreen_v3",
                     9990,
                     () => DI.GetImplementation<IMCMOptionsScreen>() as ScreenBase,
-                    new TextObject("{=HiZbHGvYG}Mod Options"));
+                    new TextObject("{=MainMenu_ModOptions}Mod Options"));
                 BaseIngameMenuScreenHandler.Instance.AddScreen(
                     "MCM_OptionScreen_v3",
                     1,
                     () => DI.GetImplementation<IMCMOptionsScreen>() as ScreenBase,
-                    new TextObject("{=NqarFr4P}Mod Options", null));
+                    new TextObject("{=EscapeMenu_ModOptions}Mod Options", null));
             }
         }
 

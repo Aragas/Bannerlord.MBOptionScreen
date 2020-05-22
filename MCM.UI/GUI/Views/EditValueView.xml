@@ -38,7 +38,7 @@
                 <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="251" SuggestedHeight="64"
                               HorizontalAlignment="Left" VerticalAlignment="Center" Brush="ModLib.Cancel.Button_v3" Command.Click="ExecuteCancel">
                   <Children>
-                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="Cancel" />
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="@CancelButtonText" />
                   </Children>
                 </ButtonWidget>
 
@@ -47,7 +47,7 @@
                               SuggestedHeight="64" HorizontalAlignment="Right" VerticalAlignment="Center" Brush="ModLib.Done.Button_v3"
                               Command.Click="ExecuteDone">
                   <Children>
-                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="Done" />
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="@DoneButtonText" />
                   </Children>
                 </ButtonWidget>
 

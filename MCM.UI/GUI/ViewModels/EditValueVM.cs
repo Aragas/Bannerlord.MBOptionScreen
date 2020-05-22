@@ -1,8 +1,12 @@
 ﻿using MCM.Abstractions.Settings;
 using MCM.UI.Actions;
 
+using System.Collections.Generic;
+
+using TaleWorlds.Core;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
+using TaleWorlds.Localization;
 
 namespace MCM.UI.GUI.ViewModels
 {
@@ -11,6 +15,8 @@ namespace MCM.UI.GUI.ViewModels
         private string _textInput = "";
         private string _titleText = "title";
         private string _descriptionText = "description";
+        private string _cancelButtonText = "";
+        private string _doneButtonText = "";
 
         public SettingsPropertyVM SettingProperty { get; set; }
 
@@ -59,27 +65,59 @@ namespace MCM.UI.GUI.ViewModels
         public float MinValue => (float) SettingProperty.SettingPropertyDefinition.EditableMinValue;
         [DataSourceProperty]
         public float MaxValue => (float) SettingProperty.SettingPropertyDefinition.EditableMaxValue;
+        [DataSourceProperty]
+        public string DoneButtonText
+        {
+            get => _doneButtonText;
+            set
+            {
+                _doneButtonText = value;
+                OnPropertyChanged(nameof(DoneButtonText));
+            }
+        }
+        [DataSourceProperty]
+        public string CancelButtonText
+        {
+            get => _cancelButtonText; set
+            {
+                _cancelButtonText = value;
+                OnPropertyChanged(nameof(CancelButtonText));
+            }
+        }
 
         public EditValueVM(SettingsPropertyVM settingProperty)
         {
             SettingProperty = settingProperty;
 
-            TitleText = $"Edit \"{SettingProperty.Name}\"";
+            TitleText = new TextObject("{=EditValueVM_TitleText}Edit \"{PROPERTYNAME}\"", new Dictionary<string, TextObject>()
+            {
+                {"PROPERTYNAME", new TextObject(SettingProperty.Name)}
+            }).ToString();
             switch (SettingType)
             {
                 case SettingType.Int:
                 case SettingType.Float:
                 {
                     var format = SettingProperty.SettingType == SettingType.Int ? "0" : "0.00";
-                    DescriptionText = $"Edit the value for \"{SettingProperty.Name}\".\nThe minimum value is {SettingProperty.SettingPropertyDefinition.EditableMinValue.ToString(format)} and the maximum value is {SettingProperty.SettingPropertyDefinition.EditableMaxValue.ToString(format)}.";
+                    DescriptionText = new TextObject("{=EditValueVM_DescriptionText_Numeric}Edit the value for \"{PROPERTYNAME}\".\nThe minimum value is {MINVALUE} and the maximum value is {MAXVALUE}.", new Dictionary<string, TextObject>()
+                    {
+                        {"PROPERTYNAME", new TextObject(SettingProperty.Name)},
+                        {"MINVALUE", new TextObject(SettingProperty.SettingPropertyDefinition.EditableMinValue.ToString(format))},
+                        {"MAXVALUE", new TextObject(SettingProperty.SettingPropertyDefinition.EditableMaxValue.ToString(format))},
+                    }).ToString();
                     break;
                 }
                 case SettingType.String:
                 {
-                    DescriptionText = $"Edit the value for \"{SettingProperty.Name}\".";
+                    DescriptionText = new TextObject("{=EditValueVM_DescriptionText_Text}Edit the value for \"{PROPERTYNAME}\".", new Dictionary<string, TextObject>()
+                    {
+                        {"PROPERTYNAME", new TextObject(SettingProperty.Name)},
+                    }).ToString();
                     break;
                 }
             }
+            DoneButtonText = new TextObject("{=WiNRdfsm}Done").ToString();
+            CancelButtonText = new TextObject("{=3CpNUnVl}Cancel").ToString();
 
             RefreshValues();
         }

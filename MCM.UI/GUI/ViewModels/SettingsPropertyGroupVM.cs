@@ -1,9 +1,11 @@
 ﻿using MCM.Abstractions.Settings.Models;
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using TaleWorlds.Library;
+using TaleWorlds.Localization;
 
 namespace MCM.UI.GUI.ViewModels
 {
@@ -41,7 +43,12 @@ namespace MCM.UI.GUI.ViewModels
         public bool AnyChildSettingSatisfiesSearch => SettingProperties.Any(x => x.SatisfiesSearch) || SettingPropertyGroups.Any(x => x.SatisfiesSearch);
 
         [DataSourceProperty]
-        public string GroupNameDisplay => GroupToggle ? GroupName : $"{GroupName} (Disabled)";
+        public string GroupNameDisplay => GroupToggle
+            ? GroupName
+            : new TextObject("{=SettingsPropertyGroupVM_Disabled}{GROUPNAME} (Disabled)", new Dictionary<string, TextObject>()
+            {
+                {"GROUPNAME", new TextObject(GroupName)}
+            }).ToString();
         [DataSourceProperty]
         public MBBindingList<SettingsPropertyVM> SettingProperties { get; } = new MBBindingList<SettingsPropertyVM>();
         [DataSourceProperty]

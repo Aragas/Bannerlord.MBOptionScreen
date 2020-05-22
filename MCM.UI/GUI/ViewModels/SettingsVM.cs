@@ -11,6 +11,7 @@ using System.Linq;
 
 using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Library;
+using TaleWorlds.Localization;
 
 namespace MCM.UI.GUI.ViewModels
 {
@@ -66,7 +67,7 @@ namespace MCM.UI.GUI.ViewModels
             //{
                 _cachedPresets = SettingsInstance.GetAvailablePresets().ToDictionary(pair => pair.Key, pair => pair.Value());
 
-                PresetsSelector = new SelectorVM<SelectorItemVM>(new List<string> { "Custom" }.Concat(_cachedPresets.Keys), -1, null);
+                PresetsSelector = new SelectorVM<SelectorItemVM>(new List<string> { new TextObject("{=SettingsVM_Custom}Custom").ToString() }.Concat(_cachedPresets.Keys), -1, null);
                 PresetsSelector.ItemList[0].CanBeSelected = false;
 
                 RecalculateIndex();
@@ -177,6 +178,7 @@ namespace MCM.UI.GUI.ViewModels
         }
         public void ResetSettings()
         {
+            // TODO: Localizable
             ChangePreset("Default");
         }
         public void SaveSettings()

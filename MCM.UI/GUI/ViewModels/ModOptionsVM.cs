@@ -2,6 +2,7 @@
 using MCM.Utils;
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -20,6 +21,7 @@ namespace MCM.UI.GUI.ViewModels
         private string _titleLabel = "";
         private string _cancelButtonText = "";
         private string _doneButtonText = "";
+        private string _modsText = "";
         private SettingsVM? _selectedMod;
         private MBBindingList<SettingsVM> _modSettingsList = new MBBindingList<SettingsVM>();
         private string _hintText = "";
@@ -54,6 +56,15 @@ namespace MCM.UI.GUI.ViewModels
             {
                 _cancelButtonText = value;
                 OnPropertyChanged(nameof(CancelButtonText));
+            }
+        }
+        [DataSourceProperty]
+        public string ModsText
+        {
+            get => _modsText; set
+            {
+                _modsText = value;
+                OnPropertyChanged(nameof(ModsText));
             }
         }
         [DataSourceProperty]
@@ -100,7 +111,7 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
         [DataSourceProperty]
-        public string SelectedDisplayName => SelectedMod == null ? "Mod Name not Specified" : SelectedMod.DisplayName;
+        public string SelectedDisplayName => SelectedMod == null ? new TextObject("{=ModOptionsVM_NotSpecified}Mod Name not Specified.").ToString() : SelectedMod.DisplayName;
         [DataSourceProperty]
         public bool SomethingSelected => SelectedMod != null;
         [DataSourceProperty]
@@ -144,10 +155,10 @@ namespace MCM.UI.GUI.ViewModels
 
         public ModOptionsVM()
         {
-            // TODO:
-            Name = new TextObject("{=XiGPhfsm}Mod Options").ToString();
+            Name = new TextObject("{=ModOptionsVM_Name}Mod Options").ToString();
             DoneButtonText = new TextObject("{=WiNRdfsm}Done").ToString();
             CancelButtonText = new TextObject("{=3CpNUnVl}Cancel").ToString();
+            ModsText = new TextObject("{=ModOptionsPageView_Mods}Mods").ToString();
             SearchText = "";
 
             ModSettingsList = new MBBindingList<SettingsVM>();
@@ -196,10 +207,16 @@ namespace MCM.UI.GUI.ViewModels
 
         private void OnPresetsSelectorChange(SelectorVM<SelectorItemVM> selector)
         {
-            // TODO:
-            InformationManager.ShowInquiry(new InquiryData($"Change to preset '{selector.SelectedItem.StringItem}'",
-                $"Are you sure you wish to discard the current settings for {SelectedMod!.DisplayName} to '{selector.SelectedItem.StringItem}'?",
-                true, true, "Yes", "No",
+            InformationManager.ShowInquiry(new InquiryData(new TextObject("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new Dictionary<string, TextObject>()
+                {
+                    { "PRESET", new TextObject(selector.SelectedItem.StringItem) }
+                }).ToString(), 
+                new TextObject("{=ModOptionsVM_Discard}Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?", new Dictionary<string, TextObject>()
+                {
+                    { "NAME", new TextObject(SelectedMod!.DisplayName) },
+                    { "ITEM", new TextObject(selector.SelectedItem.StringItem) }
+                }).ToString(), 
+                true, true, new TextObject("{=aeouhelq}Yes").ToString(), new TextObject("{=8OkPHu4f}No").ToString(),
                 () =>
                 {
                     SelectedMod!.ChangePreset(PresetsSelector.SelectedItem.StringItem);
@@ -261,10 +278,9 @@ namespace MCM.UI.GUI.ViewModels
             var requireRestart = ModSettingsList.Any(x => x.RestartRequired());
             if (requireRestart)
             {
-                // TODO:
-                InformationManager.ShowInquiry(new InquiryData("Game Needs to Restart",
-                    "The game needs to be restarted to apply mod settings changes. Do you want to close the game now?",
-                    true, true, "Yes", "Cancel",
+                InformationManager.ShowInquiry(new InquiryData(new TextObject("{=ModOptionsVM_RestartTitle}Game Needs to Restart").ToString(),
+                    new TextObject("{=ModOptionsVM_RestartDesc}The game needs to be restarted to apply mod settings changes. Do you want to close the game now?").ToString(), 
+                    true, true, new TextObject("{=aeouhelq}Yes").ToString(), new TextObject("{=3CpNUnVl}Cancel").ToString(),
                     () =>
                     {
                         foreach (var changedModSetting in changedModSettings)

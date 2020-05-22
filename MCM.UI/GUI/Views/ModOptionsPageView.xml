@@ -20,7 +20,7 @@
               <Children>
 
                 <!-- Title -->
-                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" Brush="ModLib.Title.Text_v3" Text="Mods"
+                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" Brush="ModLib.Title.Text_v3" Text="@ModsText"
                                 HorizontalAlignment="Center" VerticalAlignment="Top" MarginRight="19" PositionYOffset="-10"/>
 
                 <!-- Mods Listing Section Inner Panel-->
