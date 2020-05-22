@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Module>
-  <Name value="MCMv3 MBOv1/MCMv2 Integration"/>
+  <Name value="MCMv3 MBO/MCMv2 Integration"/>
   <Id value="Bannerlord.MBOptionScreen.MBO"/>
   <Version value="v3.1.0"/>
   <DefaultModule value="true"/>
@@ -13,7 +13,7 @@
   <SubModules>
     <SubModule>
       <Name value="MCMv3 MBO Compatibility"/>
-      <DLLName value="MCMv3.Implementation.MBO.v3.0.0.dll"/>
+      <DLLName value="MCMv3.Implementation.MBO.v3.1.0.dll"/>
       <SubModuleClassType value="MCM.Implementation.MBO.SubModuleV300"/>
       <Tags>
         <Tag key="DedicatedServerType" value="none" />
