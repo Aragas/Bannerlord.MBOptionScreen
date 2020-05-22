@@ -1,4 +1,7 @@
 <p align="center">
+    <a href="https://github.com/Bannerlord.MBOptionScreen" alt="Lines Of Code">
+        <img src="https://tokei.rs/b1/github/Aragas/Bannerlord.MBOptionScreen?category=code" /></a>
+    </br>
     <a href="https://www.nuget.org/packages/Bannerlord.MCM" alt="NuGet Bannerlord.MCM">
         <img src="https://img.shields.io/nuget/v/Bannerlord.MCM.svg?label=NuGet%20Bannerlord.MCM&colorB=blue" /></a>
     <a href="https://www.nuget.org/packages/Bannerlord.MCM.Integrated" alt="NuGet Bannerlord.MCM.Integrated">
@@ -13,8 +16,6 @@
         <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="Nexus Mod Configuration Menu">
         <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dtotal%26gameId%3D3174%26modId%3D612" /></a>
 </p>
-
-
 
 AKA MBOptionScreen Standalone.  
   
