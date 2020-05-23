@@ -3,11 +3,11 @@
 <package>
   <metadata>
     <id>Bannerlord.MCM</id>
-    <version>3.1.0</version>
+    <version>3.1.1</version>
     <title>Mod Configuration Menu</title>
     <owners>Aragas</owners>
     <authors>Aragas, mipen</authors>
-    <description>Test</description>
+    <description>A library for easy Setting integration. Contains the abstraction library, requires the Standalone dependency to work!</description>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <license type="expression">MIT</license>
     <repository type="git" url="https://github.com/Aragas/Bannerlord.MBOptionScreen.git" />
