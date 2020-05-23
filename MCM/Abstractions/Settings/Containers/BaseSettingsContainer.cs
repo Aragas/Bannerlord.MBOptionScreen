@@ -21,7 +21,6 @@ namespace MCM.Abstractions.Settings.Containers
 
         public virtual List<SettingsDefinition> CreateModSettingsDefinitions => LoadedSettings.Keys.ToList()
             .Select(id => new SettingsDefinition(id))
-            .OrderByDescending(a => a.DisplayName)
             .ToList();
 
         protected BaseSettingsContainer()

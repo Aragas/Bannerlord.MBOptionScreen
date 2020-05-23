@@ -20,24 +20,13 @@ namespace MCM.Abstractions.Settings.Models
         public string GroupName { get; }
         public TextObject DisplayGroupName => _groupNameOverride.Length > 0 ? _groupNameOverride : _groupName;
         public int Order { get; }
-        public IEnumerable<SettingsPropertyGroupDefinition> SubGroups
-        {
-            get
-            {
-                return subGroups
-                    .OrderByDescending(x => x.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)
-                    .ThenByDescending(x => x.Order)
-                    .ThenByDescending(x => x.DisplayGroupName.ToString(), new AlphanumComparatorFast());
-            }
-        }
-        public IEnumerable<ISettingsPropertyDefinition> SettingProperties => settingProperties
-            .OrderBy(x => x.Order)
-            .ThenBy(x => x.DisplayName.ToString(), new AlphanumComparatorFast());
+        public IEnumerable<SettingsPropertyGroupDefinition> SubGroups => subGroups.SortDefault();
+        public IEnumerable<ISettingsPropertyDefinition> SettingProperties => settingProperties.SortDefault();
 
         public SettingsPropertyGroupDefinition(string groupName, string groupNameOverride = "", int order = -1)
         {
-            _groupName = new TextObject(groupName, null);
-            _groupNameOverride = new TextObject(groupNameOverride ?? "", null);
+            _groupName = new TextObject(groupName);
+            _groupNameOverride = new TextObject(groupNameOverride ?? "");
             GroupName = string.IsNullOrWhiteSpace(groupNameOverride) ? groupName : groupNameOverride!;
             Order = order;
         }

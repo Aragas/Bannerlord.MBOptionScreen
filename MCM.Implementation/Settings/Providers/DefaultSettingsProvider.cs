@@ -38,9 +38,8 @@ namespace MCM.Implementation.Settings.Providers
     {
         private List<ISettingsContainer> SettingsContainers { get; }
 
-        public override IEnumerable<SettingsDefinition> CreateModSettingsDefinitions =>
-            SettingsContainers.SelectMany(sp => sp.CreateModSettingsDefinitions)
-                .OrderByDescending(x => x.DisplayName, new AlphanumComparatorFast());
+        public override IEnumerable<SettingsDefinition> CreateModSettingsDefinitions => SettingsContainers
+            .SelectMany(sp => sp.CreateModSettingsDefinitions);
 
         public DefaultSettingsProvider()
         {

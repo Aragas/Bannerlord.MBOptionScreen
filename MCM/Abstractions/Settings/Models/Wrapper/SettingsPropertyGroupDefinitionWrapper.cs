@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 
+using MCM.Extensions;
 using MCM.Utils;
 
 using System.Collections;
@@ -20,18 +21,19 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
             var propInfo = @object.GetType().GetProperty("GroupNameOverride");
             return propInfo?.GetValue(@object) as string;
         }
+        private static int? GetGroupOrder(object @object)
+        {
+            var propInfo = @object.GetType().GetProperty(nameof(Order));
+            return propInfo?.GetValue(@object) as int?;
+        }
 
         public SettingsPropertyGroupDefinitionWrapper(object @object) : base(
             GetGroupName(@object) ?? "ERROR",
-            GetGroupNameOverride(@object) ?? "")
+            GetGroupNameOverride(@object) ?? "",
+            GetGroupOrder(@object) ?? -1)
         {
-            subGroups.AddRange(GetSubGroups(@object)
-                .OrderByDescending(x => x.GroupName == DefaultGroupName)
-                .ThenByDescending(x => x.Order)
-                .ThenByDescending(x => x.DisplayGroupName.ToString(), new AlphanumComparatorFast()));
-            settingProperties.AddRange(GetSettingProperties(@object)
-                .OrderBy(x => x.Order)
-                .ThenBy(x => x.DisplayName.ToString(), new AlphanumComparatorFast()));
+            subGroups.AddRange(GetSubGroups(@object).SortDefault());
+            settingProperties.AddRange(GetSettingProperties(@object).SortDefault());
         }
 
         private IEnumerable<SettingsPropertyGroupDefinition> GetSubGroups(object @object)

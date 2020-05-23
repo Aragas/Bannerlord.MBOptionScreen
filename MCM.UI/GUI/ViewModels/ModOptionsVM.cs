@@ -1,4 +1,6 @@
-﻿using MCM.Abstractions.Settings.Providers;
+﻿using ComparerExtensions;
+
+using MCM.Abstractions.Settings.Providers;
 using MCM.Utils;
 
 using System;
@@ -183,6 +185,14 @@ namespace MCM.UI.GUI.ViewModels
                         vm.RefreshValues();
                     }, viewModel);
                 }
+
+                // Yea, I imported a whole library that converts LINQ style order to IComparer
+                // because I wasn't able to recreate the logic via IComparer. TODO: Fix that
+                ModSettingsList.Sort(KeyComparer<SettingsVM>
+                    .OrderByDescending(x => x.SettingsDefinition.SettingsId.StartsWith("MCM") ||
+                                            x.SettingsDefinition.SettingsId.StartsWith("Testing") ||
+                                            x.SettingsDefinition.SettingsId.StartsWith("ModLib"))
+                    .ThenByDescending(x => x.DisplayName, new AlphanumComparatorFast()));
             }, SynchronizationContext.Current);
 
             RefreshValues();

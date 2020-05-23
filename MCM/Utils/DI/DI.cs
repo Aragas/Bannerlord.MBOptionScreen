@@ -20,7 +20,7 @@ namespace MCM.Utils
         public static IEnumerable<Assembly> FilterLegacy(this IEnumerable<Assembly> enumerable) => enumerable
             .Where(a => !a.FullName.StartsWith("MBOptionScreen"));
         public static IEnumerable<T> Parallel<T>(this IEnumerable<T> enumerable) => enumerable
-            .AsParallel().WithExecutionMode(ParallelExecutionMode.ForceParallelism);
+            .AsParallel().AsOrdered().WithExecutionMode(ParallelExecutionMode.ForceParallelism);
         public static IEnumerable<Type> GetAllTypes() => AppDomain.CurrentDomain.GetAssemblies()
             .Filter()
             .FilterLegacy()

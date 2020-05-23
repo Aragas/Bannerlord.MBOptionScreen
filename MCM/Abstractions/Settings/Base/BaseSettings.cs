@@ -2,6 +2,7 @@
 
 using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.Properties;
+using MCM.Extensions;
 using MCM.Utils;
 
 using System;
@@ -49,9 +50,7 @@ namespace MCM.Abstractions.Settings.Base
         };
 
         public virtual List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() => GetUnsortedSettingPropertyGroups()
-            .OrderByDescending(x => x.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)
-            .ThenByDescending(x => x.Order)
-            .ThenByDescending(x => x.DisplayGroupName.ToString(), new AlphanumComparatorFast())
+            .SortDefault()
             .ToList();
 
         protected virtual IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups() =>
