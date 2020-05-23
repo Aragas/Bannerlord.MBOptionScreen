@@ -45,6 +45,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCM.NuGet", "MCM.NuGet\MCM.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Localization", "_Localization", "{FCD88090-9290-4DEF-8AFE-F84D99D03C4A}"
 	ProjectSection(SolutionItems) = preProject
+		std_MCM.xml = std_MCM.xml
 		std_MCM_Implementation.xml = std_MCM_Implementation.xml
 		std_MCM_MBO.xml = std_MCM_MBO.xml
 		std_MCM_ModLib.xml = std_MCM_ModLib.xml

@@ -179,7 +179,7 @@ namespace MCM.UI.GUI.ViewModels
         public void ResetSettings()
         {
             // TODO: Localizable
-            ChangePreset("Default");
+            ChangePreset(new TextObject("{=BaseSettings_Default}Default").ToString());
         }
         public void SaveSettings()
         {

@@ -10,7 +10,7 @@ namespace MCM.Abstractions.Settings.Models
 {
     public class SettingsPropertyGroupDefinition
     {
-        public const string DefaultGroupName = "Misc";
+        public static readonly string DefaultGroupName = new TextObject("{=SettingsPropertyGroupDefinition_Misc}Misc").ToString();
 
         protected readonly TextObject _groupName;
         protected readonly TextObject _groupNameOverride;

@@ -52,10 +52,10 @@ namespace MCM.Abstractions.Settings.Models
             {
                 if (propertyDefinition is IPropertyDefinitionBase propertyBase)
                 {
-                    DisplayName = new TextObject(propertyBase.DisplayName, null).ToString();
+                    DisplayName = new TextObject(propertyBase.DisplayName).ToString();
                     Order = propertyBase.Order;
                     RequireRestart = propertyBase.RequireRestart;
-                    HintText = new TextObject(propertyBase.HintText, null).ToString();
+                    HintText = new TextObject(propertyBase.HintText).ToString();
                 }
                 if (propertyDefinition is SettingPropertyAttribute settingPropertyAttribute) // v1
                 {
