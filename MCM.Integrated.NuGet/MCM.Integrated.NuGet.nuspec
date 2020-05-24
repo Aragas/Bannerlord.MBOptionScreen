@@ -15,7 +15,7 @@
   </metadata>
   <files>
     <file src="bin/Release/net472/MCMv3.dll" target="lib/net472" />
-    <file src="bin/Release/net472/MCMv3.Implementation.v3.1.1.dll" target="lib/net472" />
-    <file src="bin/Release/net472/MCMv3.UI.v3.1.1.dll" target="lib/net472" />
+    <file src="bin/Release/net472/MCMv3.Implementation.v3.1.2.dll" target="lib/net472" />
+    <file src="bin/Release/net472/MCMv3.UI.v3.1.2.dll" target="lib/net472" />
   </files>
 </package>
