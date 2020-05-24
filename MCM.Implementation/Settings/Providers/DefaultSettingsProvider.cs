@@ -54,7 +54,11 @@ namespace MCM.Implementation.Settings.Providers
             foreach (var settingsContainer in SettingsContainers)
             {
                 if (settingsContainer.GetSettings(id) is {} settings)
-                    return settings is BaseSettings baseSettings ? baseSettings : BaseGlobalSettingsWrapper.Create(settings);
+                    return settings is BaseSettings baseSettings 
+                        ? baseSettings 
+                        : settings is MCM.Abstractions.IWrapper wrapper
+                            ? BaseGlobalSettingsWrapper.Create(wrapper.Object)
+                            : null;
             }
             return null;
         }

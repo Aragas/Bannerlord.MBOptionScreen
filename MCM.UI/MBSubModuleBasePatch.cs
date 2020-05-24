@@ -5,8 +5,6 @@ using MCM.Abstractions.Settings.Base;
 using MCM.UI.Functionality.Loaders;
 using MCM.Utils;
 
-using SandBox;
-
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,16 +29,16 @@ namespace MCM.UI
     {
         private static bool _loaded = false;
 
-        public static MethodBase OnSubModuleLoadTargetMethod() =>
-            AccessTools.Method(typeof(MBSubModuleBase), "OnSubModuleLoad");
+        public static MethodBase OnGauntletUISubModuleSubModuleLoadTargetMethod() =>
+            AccessTools.Method(typeof(GauntletUISubModule), "OnSubModuleLoad");
         public static MethodBase OnSubModuleUnloadedTargetMethod() =>
             AccessTools.Method(typeof(MBSubModuleBase), "OnSubModuleUnloaded");
         public static MethodBase OnBeforeInitialModuleScreenSetAsRootTargetMethod() =>
             AccessTools.Method(typeof(MBSubModuleBase), "OnBeforeInitialModuleScreenSetAsRoot");
 
-        public static void OnSubModuleLoadPostfix(MBSubModuleBase __instance)
+        public static void OnGauntletUISubModuleSubModuleLoadPostfix(MBSubModuleBase __instance)
         {
-            if (!(__instance is SandBoxSubModule)) 
+            if (!(__instance is GauntletUISubModule)) 
                 return;
 
             SandBoxSubModuleOnSubModuleLoad();
@@ -53,7 +51,7 @@ namespace MCM.UI
         }
         public static void OnBeforeInitialModuleScreenSetAsRootPostfix()
         {
-            // SandBoxSubModule.OnSubModuleLoad wont hit if it is loading before MCM, fallback
+            // GauntletUISubModule.OnSubModuleLoad wont hit if it is loading before MCM, fallback
             if (_loaded)
                 return;
 
