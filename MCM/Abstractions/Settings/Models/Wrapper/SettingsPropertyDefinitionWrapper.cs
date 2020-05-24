@@ -19,31 +19,33 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
         private PropertyInfo? OrderProperty { get; }
         private PropertyInfo? RequireRestartProperty { get; }
         private PropertyInfo? GroupNameProperty { get; }
+        private PropertyInfo? GroupOrderProperty { get; }
         private PropertyInfo? IsMainToggleProperty { get; }
         private PropertyInfo? MinValueProperty { get; }
         private PropertyInfo? MaxValueProperty { get; }
         private PropertyInfo? EditableMinValueProperty { get; }
         private PropertyInfo? EditableMaxValueProperty { get; }
         private PropertyInfo? SelectedIndexProperty { get; }
+        private PropertyInfo? ValueFormatProperty { get; }
 
         public string SettingsId { get; }
         public IRef PropertyReference { get; }
         public SettingType SettingType { get; }
         public string DisplayName { get; }
-        public int Order { get; } = -1;
-        public bool RequireRestart { get; } = true;
-        public string HintText { get; } //= new TextObject("");
-        public decimal MaxValue { get; } = 0m;
-        public decimal MinValue { get; } = 0m;
-        public decimal EditableMinValue { get; } = 0m;
-        public decimal EditableMaxValue { get; } = 0m;
-        public int SelectedIndex { get; } = 0;
-        public string ValueFormat { get; } = "";
-        public string GroupName { get; } = SettingsPropertyGroupDefinition.DefaultGroupName;
-        public bool IsMainToggle { get; } = false;
-        public int GroupOrder { get; } = -1;
+        public int Order { get; }
+        public bool RequireRestart { get; }
+        public string HintText { get; }
+        public decimal MaxValue { get; }
+        public decimal MinValue { get; }
+        public decimal EditableMinValue { get; }
+        public decimal EditableMaxValue { get; }
+        public int SelectedIndex { get; }
+        public string ValueFormat { get; }
+        public string GroupName { get; }
+        public bool IsMainToggle { get; }
+        public int GroupOrder { get; }
 
-        public SettingsPropertyDefinitionWrapper(object @object) : base()
+        public SettingsPropertyDefinitionWrapper(object @object)
         {
             var type = @object.GetType();
 
@@ -55,12 +57,14 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
             OrderProperty = AccessTools.Property(type, nameof(Order));
             RequireRestartProperty = AccessTools.Property(type, nameof(RequireRestart));
             GroupNameProperty = AccessTools.Property(type, nameof(GroupName));
+            GroupOrderProperty = AccessTools.Property(type, nameof(GroupOrder));
             IsMainToggleProperty = AccessTools.Property(type, nameof(IsMainToggle));
             MinValueProperty = AccessTools.Property(type, nameof(MinValue));
             MaxValueProperty = AccessTools.Property(type, nameof(MaxValue));
             EditableMinValueProperty = AccessTools.Property(type, nameof(EditableMinValue));
             EditableMaxValueProperty = AccessTools.Property(type, nameof(EditableMaxValue));
             SelectedIndexProperty = AccessTools.Property(type, nameof(SelectedIndex));
+            ValueFormatProperty = AccessTools.Property(type, nameof(ValueFormat));
 
 
             SettingsId = SettingsIdProperty?.GetValue(@object) as string ?? "ERROR";
@@ -89,6 +93,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
             RequireRestart = RequireRestartProperty?.GetValue(@object) as bool? ?? true;
 
             GroupName = GroupNameProperty?.GetValue(@object) as string ?? "";
+            GroupOrder = GroupOrderProperty?.GetValue(@object) as int? ?? -1;
             IsMainToggle = IsMainToggleProperty?.GetValue(@object) as bool? ?? false;
 
             MinValue = MinValueProperty?.GetValue(@object) is { } minVal ? minVal as decimal? ?? 0 : 0;
@@ -97,6 +102,13 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
             EditableMaxValue = EditableMaxValueProperty?.GetValue(@object) is { } eMaxValue ? eMaxValue as decimal? ?? 0 : 0;
 
             SelectedIndex = SelectedIndexProperty?.GetValue(@object) as int? ?? 0;
+
+            ValueFormat = ValueFormatProperty?.GetValue(@object) as string ?? SettingType switch
+            {
+                SettingType.Int => "0",
+                SettingType.Float => "0.00",
+                _ => ""
+            };
         }
     }
 }
