@@ -30,7 +30,7 @@ namespace MCM.Implementation.MBO
 
         public static bool Prefix(ref object? __result, string id)
         {
-            __result = SettingsUtils.UnwrapSettings(BaseSettingsProvider.Instance.GetSettings(id));
+            __result = BaseSettingsProvider.Instance.GetSettingsObject(id);
             return false;
         }
     }

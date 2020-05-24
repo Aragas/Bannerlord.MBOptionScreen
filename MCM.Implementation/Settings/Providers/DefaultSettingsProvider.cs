@@ -63,6 +63,20 @@ namespace MCM.Implementation.Settings.Providers
             }
             return null;
         }
+        public override object? GetSettingsObject(string id)
+        {
+            foreach (var settingsContainer in SettingsContainers)
+            {
+                if (settingsContainer.GetSettings(id) is { } settings)
+                    return settings switch
+                    {
+                        IWrapper wrapper => wrapper.Object,
+                        _ => settings
+                    };
+            }
+            return null;
+        }
+
         public override void SaveSettings(BaseSettings settings)
         {
             foreach (var settingsContainer in SettingsContainers)
