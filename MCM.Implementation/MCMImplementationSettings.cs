@@ -9,7 +9,7 @@ namespace MCM.Implementation
     internal sealed class MCMImplementationSettings : AttributeGlobalSettings<MCMImplementationSettings>
     {
         public override string Id { get; } = "MCMImplementation_v3";
-        public override string DisplayName { get; } = new TextObject("{=MCMImplementationSettings_Name}MCM Impl. {VERSION}", new Dictionary<string, TextObject>()
+        public override string DisplayName => new TextObject("{=MCMImplementationSettings_Name}MCM Impl. {VERSION}", new Dictionary<string, TextObject>()
         {
             { "VERSION", new TextObject(typeof(MCMImplementationSettings).Assembly.GetName().Version.ToString(3)) }
         }).ToString();

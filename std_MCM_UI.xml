@@ -12,7 +12,6 @@
 
     <string id="ModOptionsVM_NotSpecified" text="Mod Name not Specified"/>
     <string id="ModOptionsVM_Name" text="Mod Options"/>
-    <string id="ModOptionsVM_DoneButtonText" text="Mod Name not Specified"/>
     <string id="ModOptionsVM_ChangeToPreset" text="Change to preset '{PRESET}'"/>
     <string id="ModOptionsVM_Discard" text="Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?"/>
     <string id="ModOptionsVM_RestartTitle" text="Game Needs to Restart"/>
@@ -27,7 +26,7 @@
     <string id="MainMenu_ModOptions" text="Mod Options"/>
     <string id="EscapeMenu_ModOptions" text="Mod Options"/>
 
-    <string id="MCMUISettings_Name_Name" text="MCM UI Impl. {VERSION}"/>
+    <string id="MCMUISettings_Name" text="MCM UI Impl. {VERSION}"/>
     <string id="MCMUISettings_Name_General" text="General"/>
     <string id="MCMUISettings_Name_UseStandard" text="Use Standard Option Screen"/>
     <string id="MCMUISettings_Name_UseStandardDesc" text="Use standard Options screen instead of using an external."/>

@@ -13,7 +13,7 @@ namespace MCM.Implementation.ModLib
         private bool _overrideModLib = true;
 
         public override string Id { get; } = "MCMModLib_v3";
-        public override string DisplayName { get; } = new TextObject("{=MCMModLibSettings_Name}MCM ModLib Impl. {VERSION}", new Dictionary<string, TextObject>()
+        public override string DisplayName => new TextObject("{=MCMModLibSettings_Name}MCM ModLib Impl. {VERSION}", new Dictionary<string, TextObject>()
         {
             { "VERSION", new TextObject(typeof(MCMModLibSettings).Assembly.GetName().Version.ToString(3)) }
         }).ToString();

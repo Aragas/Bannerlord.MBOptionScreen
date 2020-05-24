@@ -9,7 +9,7 @@ namespace MCM.Implementation.MBO
     internal sealed class MCMMBOSettings : AttributeGlobalSettings<MCMMBOSettings>
     {
         public override string Id { get; } = "MCMMBO_v3";
-        public override string DisplayName { get; } = new TextObject("{=MCMMBOSettings_Name}MCM MBO Impl. {VERSION}", new Dictionary<string, TextObject>()
+        public override string DisplayName => new TextObject("{=MCMMBOSettings_Name}MCM MBO Impl. {VERSION}", new Dictionary<string, TextObject>()
         {
             { "VERSION", new TextObject(typeof(MCMMBOSettings).Assembly.GetName().Version.ToString(3)) }
         }).ToString();
