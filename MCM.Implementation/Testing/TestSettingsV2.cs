@@ -41,6 +41,10 @@ namespace MCM.Implementation.Testing
         [SettingPropertyGroup("Int")]
         public int PropertyIntWithHint { get; set; }
 
+        [SettingPropertyInteger("Property Int With Format", 0, 100, "0 Denars", RequireRestart = false)]
+        [SettingPropertyGroup("Int")]
+        public int PropertyIntWithFormat { get; set; }
+
 
         [SettingPropertyFloatingInteger("Property Float Default 0f", 0f, 100f, RequireRestart = false)]
         [SettingPropertyGroup("Float")]
