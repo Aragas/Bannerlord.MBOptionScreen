@@ -57,10 +57,13 @@ namespace MCM
                 if (assemblyDirectory == null || !assemblyDirectory.Exists)
                     continue;
                 var matches = assemblyDirectory.GetFiles("MCMv3.dll")
-                    .Concat(assemblyDirectory.GetFiles("MCMv3.Implementation.*.dll"))
-                    .Concat(assemblyDirectory.GetFiles("MCMv3.UI.v*.dll"))
-                    // Might be useful later
-                    .Concat(assemblyDirectory.GetFiles("MCMv3.Custom.*.dll"))
+                    .Concat(assemblyDirectory.GetFiles("MCMv3.Implementation.*.dll")
+                        .Where(f => f.Name != "MCMv3.Implementation.v3.1.0.dll")
+                        .Where(f => f.Name != "MCMv3.Implementation.v3.1.1.dll")) // Ignore 3.1.0 and 3.1.1
+                    .Concat(assemblyDirectory.GetFiles("MCMv3.UI.v*.dll")
+                        .Where(f => f.Name != "MCMv3.UI.v3.1.0.dll")
+                        .Where(f => f.Name != "MCMv3.UI.v3.1.1.dll")) // Ignore 3.1.0 and 3.1.0
+                    .Concat(assemblyDirectory.GetFiles("MCMv3.Custom.*.dll")) // Might be useful later
                     // ModLib is required at a more early stage, needs SubModule.xml definition entry
                     //.Concat(assemblyDirectory.GetFiles("ModLib.dll"))
                     .ToList();
