@@ -4,6 +4,7 @@ using System.Reflection;
 using HarmonyLib;
 
 using MCM.Abstractions.Synchronization;
+
 using TaleWorlds.GauntletUI;
 using TaleWorlds.GauntletUI.PrefabSystem;
 using TaleWorlds.MountAndBlade;
