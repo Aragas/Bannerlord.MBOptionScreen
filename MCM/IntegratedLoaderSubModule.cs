@@ -1,4 +1,6 @@
-﻿using HarmonyLib;
+﻿#define Tick_
+
+using HarmonyLib;
 
 using MCM.Abstractions.Loader;
 using MCM.Utils;
@@ -12,8 +14,6 @@ using System.Reflection;
 using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
 
-using Path = System.IO.Path;
-
 namespace MCM
 {
     // Find all MCM.Implementation.dll
@@ -26,21 +26,20 @@ namespace MCM
     {
         private static void LoadAllImplementationAssemblies()
         {
-            var _mcmReferencingAssemblies = new List<Assembly>();
-            var _mcmImplementationAssemblies = new List<Assembly>();
+            var mcmReferencingAssemblies = new List<Assembly>();
             var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(a => !a.IsDynamic).ToList();
             foreach (var assembly in assemblies.Where(assembly => assembly.GetName().Name == "MCMv3"))
             {
-                _mcmReferencingAssemblies.Add(assembly);
+                mcmReferencingAssemblies.Add(assembly);
             }
             foreach (var assembly in assemblies)
             {
                 var referencedAssemblies = assembly.GetReferencedAssemblies();
                 if (referencedAssemblies.All(r => r.Name != "MCMv3"))
                     continue;
-                _mcmReferencingAssemblies.Add(assembly);
+                mcmReferencingAssemblies.Add(assembly);
             }
-            foreach (var assembly in _mcmReferencingAssemblies)
+            foreach (var assembly in mcmReferencingAssemblies)
             {
                 var assemblyFile = new FileInfo(assembly.Location);
                 if (!assemblyFile.Exists)
@@ -50,16 +49,12 @@ namespace MCM
                 if (assemblyDirectory == null || !assemblyDirectory.Exists)
                     continue;
 
-                var matches = assemblyDirectory.GetFiles("MCMv3.Implementation.*.dll")
-                    .Where(f => f.Name != "MCMv3.Implementation.v3.1.0.dll")
-                    .Where(f => f.Name != "MCMv3.Implementation.v3.1.1.dll")
-                    .ToList();
+                var matches = assemblyDirectory.GetFiles("MCMv3.Implementation.*.dll");
                 if (!matches.Any())
                     continue;
 
-                _mcmImplementationAssemblies.AddRange(matches
-                    .Where(m => assemblies.All(a => Path.GetFileNameWithoutExtension(a.Location) != Path.GetFileNameWithoutExtension(m.Name)))
-                    .Select(match => Assembly.LoadFrom(match.FullName)));
+                foreach (var match in matches.Where(m => assemblies.All(a => Path.GetFileNameWithoutExtension(a.Location) != Path.GetFileNameWithoutExtension(m.Name))))
+                    Assembly.LoadFrom(match.FullName);
             }
         }
 
@@ -67,16 +62,15 @@ namespace MCM
         private readonly IIntegratedLoader _loader;
         private readonly Dictionary<Type, Dictionary<string, MethodInfo?>> _reflectionCache = new Dictionary<Type, Dictionary<string, MethodInfo?>>();
         private readonly object[] _emptyParams = Array.Empty<object>();
+#if Tick
         private readonly object[] _dtParams = new object[1];
+#endif
 
         public IntegratedLoaderSubModule()
         {
             LoadAllImplementationAssemblies();
             _loader = DI.GetImplementation<IIntegratedLoader, IntegratedLoaderWrapper>()!;
             _loader.Load();
-            StaticDI.Update();
-            var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(a => !a.IsDynamic).ToList();
-
 
             foreach (var (_, subModuleType) in _loader.MCMImplementationSubModules)
             {
@@ -105,16 +99,16 @@ namespace MCM
             foreach (var (subModule, subModuleType) in _loader.MCMImplementationSubModules)
                 _reflectionCache[subModuleType]["OnSubModuleUnloaded"]?.Invoke(subModule, _emptyParams);
         }
-        /*
+#if Tick
         protected override void OnApplicationTick(float dt)
         {
             base.OnApplicationTick(dt);
 
             _dtParams[0] = dt;
-            foreach (var (subModule, subModuleType) in _mcmImplementationSubModules)
+            foreach (var (subModule, subModuleType) in _loader.MCMImplementationSubModules)
                 _reflectionCache[subModuleType]["OnApplicationTick"]?.Invoke(subModule, _dtParams);
         }
-        */
+#endif
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
             base.OnBeforeInitialModuleScreenSetAsRoot();

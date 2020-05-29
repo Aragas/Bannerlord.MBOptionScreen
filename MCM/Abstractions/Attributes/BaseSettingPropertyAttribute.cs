@@ -25,11 +25,11 @@ namespace MCM.Abstractions.Attributes
         /// <summary>
         /// The hint text that is displayed at the bottom of the screen when the user hovers over the setting in the settings menu.
         /// </summary>
-        public string HintText { get => _hintText; set => _hintText = new TextObject(value, null).ToString(); }
+        public string HintText { get => _hintText; set => _hintText = new TextObject(value).ToString(); }
 
         protected BaseSettingPropertyAttribute(string displayName, int order = -1, bool requireRestart = true, string hintText = "")
         {
-            DisplayName = new TextObject(displayName, null).ToString();
+            DisplayName = new TextObject(displayName).ToString();
             Order = order;
             RequireRestart = requireRestart;
             HintText = hintText;

@@ -1,7 +1,6 @@
 ﻿using HarmonyLib;
 
 using MCM.Abstractions;
-using MCM.Abstractions.Data;
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Formats;
 using MCM.Utils;
@@ -26,7 +25,7 @@ namespace MCM.Implementation.Settings.Formats
             Converters = { new DropdownJsonConverter() }
         };
 
-        public virtual IEnumerable<string> Extensions => new string[] { "json" };
+        public virtual IEnumerable<string> Extensions => new [] { "json" };
 
         public virtual bool Save(BaseSettings settings, string path)
         {

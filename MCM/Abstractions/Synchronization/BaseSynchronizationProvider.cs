@@ -8,7 +8,7 @@ namespace MCM.Abstractions.Synchronization
     {
         private static BaseSynchronizationProvider? _instance;
         public static BaseSynchronizationProvider Create(string name) =>
-            _instance ??= DI.GetImplementation<BaseSynchronizationProvider, SynchronizationProviderWrapper>(args: name)!;
+            _instance ??= DI.GetImplementation<BaseSynchronizationProvider, SynchronizationProviderWrapper>(name)!;
 
 
         public virtual string Name { get; } = "";

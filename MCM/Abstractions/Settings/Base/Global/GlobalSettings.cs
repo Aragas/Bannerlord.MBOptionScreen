@@ -11,9 +11,9 @@ namespace MCM.Abstractions.Settings.Base.Global
         {
             get
             {
-                if (!_cache.ContainsKey(typeof(T)))
-                    _cache.TryAdd(typeof(T), new T().Id);
-                return BaseSettingsProvider.Instance.GetSettingsObject(_cache[typeof(T)]) as T;
+                if (!Cache.ContainsKey(typeof(T)))
+                    Cache.TryAdd(typeof(T), new T().Id);
+                return BaseSettingsProvider.Instance.GetSettingsObject(Cache[typeof(T)]) as T;
 
             }
         }
@@ -21,6 +21,6 @@ namespace MCM.Abstractions.Settings.Base.Global
 
     public abstract class GlobalSettings : BaseSettings
     {
-        protected static readonly ConcurrentDictionary<Type, string> _cache = new ConcurrentDictionary<Type, string>();
+        protected static readonly ConcurrentDictionary<Type, string> Cache = new ConcurrentDictionary<Type, string>();
     }
 }

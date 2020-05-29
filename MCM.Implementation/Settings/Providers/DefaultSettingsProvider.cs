@@ -1,7 +1,6 @@
 ﻿using MCM.Abstractions;
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Settings.Base;
-using MCM.Abstractions.Settings.Base.Global;
 using MCM.Abstractions.Settings.Containers;
 using MCM.Abstractions.Settings.Containers.Global;
 using MCM.Abstractions.Settings.Containers.PerCharacter;

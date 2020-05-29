@@ -117,6 +117,14 @@ namespace MCM.Implementation.Testing
             "Test2",
             "Test3",
         }, 0);
+        [SettingPropertyDropdown("Property Dropdown With Localization", RequireRestart = false)]
+        [SettingPropertyGroup("Dropdown")]
+        public DefaultDropdown<string> PropertyDropdownWithLocalization { get; set; } = new DefaultDropdown<string>(new string[]
+        {
+            "{=NoPeRandoM}Test1",
+            "{=BaseSettings_Default}ERROR",
+            "Test3",
+        }, 0);
 
 
         [SettingPropertyDropdown("Property Dropdown Custom SelectedIndex 0", RequireRestart = false)]

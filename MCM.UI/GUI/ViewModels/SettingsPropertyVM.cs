@@ -11,16 +11,17 @@ using System.ComponentModel;
 using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
+using TaleWorlds.Localization;
 
 namespace MCM.UI.GUI.ViewModels
 {
-    internal class SettingsPropertyVM : ViewModel
+    public sealed class SettingsPropertyVM : ViewModel
     {
         public ModOptionsVM MainView => SettingsVM.MainView;
         public SettingsVM SettingsVM { get; }
         public SettingsPropertyGroupVM Group { get; set; } = default!;
 
-        public UndoRedoStack URS => SettingsVM.URS;
+        internal UndoRedoStack URS => SettingsVM.URS;
 
         public ISettingsPropertyDefinition SettingPropertyDefinition { get; }
         public IRef PropertyReference => SettingPropertyDefinition.PropertyReference;
@@ -55,7 +56,7 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public bool IsEnabled => Group?.GroupToggle != false;
         [DataSourceProperty]
-        public bool HasEditableText => SettingType == SettingType.Int || SettingType == SettingType.Float;
+        public bool HasEditableText => IsIntVisible || IsFloatVisible;
         [DataSourceProperty]
         public bool IsSettingVisible
         {
@@ -63,23 +64,22 @@ namespace MCM.UI.GUI.ViewModels
             {
                 if (Group != null && SettingPropertyDefinition.IsMainToggle)
                     return false;
-                else if (Group?.GroupToggle == false)
+                if (Group?.GroupToggle == false)
                     return false;
-                else if (Group?.IsExpanded == false)
+                if (Group?.IsExpanded == false)
                     return false;
-                else if (!SatisfiesSearch)
+                if (!SatisfiesSearch)
                     return false;
-                else
-                    return true;
+                return true;
             }
         }
         [DataSourceProperty]
         public float FloatValue
         {
-            get => SettingType == SettingType.Float ? (float) PropertyReference.Value : 0f;
+            get => IsFloatVisible ? (float) PropertyReference.Value : 0f;
             set
             {
-                if (SettingType == SettingType.Float && FloatValue != value)
+                if (IsFloatVisible && FloatValue != value)
                 {
                     URS.Do(new SetValueTypeAction<float>(PropertyReference, value));
                     OnPropertyChanged(nameof(FloatValue));
@@ -90,10 +90,10 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public int IntValue
         {
-            get => SettingType == SettingType.Int ? (int) PropertyReference.Value : 0;
+            get => IsIntVisible ? (int) PropertyReference.Value : 0;
             set
             {
-                if (SettingType == SettingType.Int && IntValue != value)
+                if (IsIntVisible && IntValue != value)
                 {
                     URS.Do(new SetValueTypeAction<int>(PropertyReference, value));
                     OnPropertyChanged(nameof(IntValue));
@@ -104,10 +104,10 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public bool BoolValue
         {
-            get => SettingType == SettingType.Bool && (bool) PropertyReference.Value;
+            get => IsBoolVisible && (bool) PropertyReference.Value;
             set
             {
-                if (SettingType == SettingType.Bool && BoolValue != value)
+                if (IsBoolVisible && BoolValue != value)
                 {
                     URS.Do(new SetValueTypeAction<bool>(PropertyReference, value));
                     OnPropertyChanged(nameof(BoolValue));
@@ -118,10 +118,10 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public string StringValue
         {
-            get => SettingType == SettingType.String ? (string) PropertyReference.Value : "";
+            get => IsStringVisible ? (string) PropertyReference.Value : "";
             set
             {
-                if (SettingType == SettingType.String && StringValue != value)
+                if (IsStringVisible && StringValue != value)
                 {
                     URS.Do(new SetStringAction(PropertyReference, value));
                     OnPropertyChanged(nameof(StringValue));
@@ -132,10 +132,10 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public SelectorVM<SelectorItemVM> DropdownValue
         {
-            get => SettingType == SettingType.Dropdown ? SettingsUtils.GetSelector(PropertyReference.Value) : new SelectorVM<SelectorItemVM>(0, null);
+            get => IsDropdownVisible ? SettingsUtils.GetSelector(PropertyReference.Value) : new SelectorVM<SelectorItemVM>(0, null);
             set
             {
-                if (SettingType == SettingType.Dropdown && DropdownValue != value)
+                if (IsDropdownVisible && DropdownValue != value)
                 {
                     URS.Do(new ComplexReferenceTypeAction<SelectorVM<SelectorItemVM>>(PropertyReference, selector =>
                     {
@@ -168,10 +168,6 @@ namespace MCM.UI.GUI.ViewModels
             SettingType.Dropdown => DropdownValue?.SelectedItem?.StringItem ?? "",
             _ => ""
         };
-        [DataSourceProperty]
-        public Action OnHoverAction => OnHover;
-        [DataSourceProperty]
-        public Action OnHoverEndAction => OnHoverEnd;
 
         public SettingsPropertyVM(ISettingsPropertyDefinition definition, SettingsVM settingsVM)
         {
@@ -180,7 +176,7 @@ namespace MCM.UI.GUI.ViewModels
 
             PropertyReference.PropertyChanged += PropertyReference_OnPropertyChanged;
 
-            if (SettingType == SettingType.Dropdown)
+            if (IsDropdownVisible)
                 DropdownValue.PropertyChanged += DropdownValue_PropertyChanged;
 
             RefreshValues();
@@ -189,7 +185,7 @@ namespace MCM.UI.GUI.ViewModels
         {
             PropertyReference.PropertyChanged -= PropertyReference_OnPropertyChanged;
 
-            if (SettingType == SettingType.Dropdown)
+            if (IsDropdownVisible)
                 DropdownValue.PropertyChanged -= DropdownValue_PropertyChanged;
 
             base.OnFinalize();
@@ -239,20 +235,20 @@ namespace MCM.UI.GUI.ViewModels
         {
             PropertyReference.PropertyChanged -= PropertyReference_OnPropertyChanged;
 
-            if (SettingType == SettingType.Dropdown)
+            if (IsDropdownVisible)
                 DropdownValue.PropertyChanged -= DropdownValue_PropertyChanged;
         }
         public void OnResetEnd()
         {
             PropertyReference.PropertyChanged += PropertyReference_OnPropertyChanged;
 
-            if (SettingType == SettingType.Dropdown)
+            if (IsDropdownVisible)
                 DropdownValue.PropertyChanged += DropdownValue_PropertyChanged;
 
             RefreshValues();
         }
-        public void OnHover() { if (MainView != null) MainView.HintText = HintText; }
-        public void OnHoverEnd() { if (MainView != null) MainView.HintText = ""; }
+        private void OnHover() { if (MainView != null) MainView.HintText = HintText; }
+        private void OnHoverEnd() { if (MainView != null) MainView.HintText = ""; }
         private void OnValueClick() => ScreenManager.PushScreen(new EditValueGauntletScreen(this));
 
         public override string ToString() => Name;

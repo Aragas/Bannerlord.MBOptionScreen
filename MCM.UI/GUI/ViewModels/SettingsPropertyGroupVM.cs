@@ -9,12 +9,12 @@ using TaleWorlds.Localization;
 
 namespace MCM.UI.GUI.ViewModels
 {
-    internal class SettingsPropertyGroupVM : ViewModel
+    public sealed class SettingsPropertyGroupVM : ViewModel
     {
         private bool _isExpanded = true;
 
-        protected ModOptionsVM MainView => SettingsVM.MainView;
-        protected SettingsVM SettingsVM { get; }
+        private ModOptionsVM MainView => SettingsVM.MainView;
+        private SettingsVM SettingsVM { get; }
 
         public SettingsPropertyGroupDefinition SettingPropertyGroupDefinition { get; }
         public string GroupName => SettingPropertyGroupDefinition.DisplayGroupName.ToString();

@@ -10,8 +10,13 @@
             <!-- Property Name Section -->
             <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="Fixed" HorizontalAlignment="Left" SuggestedWidth="500">
               <Children>
-                <HoverRichTextWidget_v3 Text="@Name" HeightSizePolicy="StretchToParent" WidthSizePolicy="CoverChildren" HorizontalAlignment="Right" IsEnabled="@IsEnabled"
-                                         Brush="ModLib.Text_v3" HoverBegin="@OnHoverAction" HoverEnd="@OnHoverEndAction"/>
+                <RichTextWidget HeightSizePolicy="StretchToParent" WidthSizePolicy="CoverChildren" HorizontalAlignment="Right" IsEnabled="@IsEnabled"
+                                Brush="ModLib.Text" Text="@Name">
+                  <Children>
+                    <HintWidget HeightSizePolicy="StretchToParent" WidthSizePolicy="CoverChildren" HorizontalAlignment="Right" IsEnabled="@IsEnabled"
+                                Command.HoverBegin="OnHover" Command.HoverEnd="OnHoverEnd"/>
+                  </Children>
+                </RichTextWidget>
               </Children>
             </Widget>
 
@@ -81,12 +86,12 @@
                               IsEnabled="@IsEnabled" IsVisible="@IsStringVisible" Sprite="SPOptions\standart_slider_canvas" Command.Click="OnValueClick">
                   <Children>
                     <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                    IsEnabled="@IsEnabled" IsVisible="@IsStringVisible" Text="@ValueString" Brush="ModLib.Text_v3"/>
+                                    IsEnabled="@IsEnabled" IsVisible="@IsStringVisible" Text="@ValueString" Brush="ModLib.Text"/>
                   </Children>
                 </ButtonWidget>
 
                 <!-- Dropdown list -->
-                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="362" SuggestedHeight="42" HorizontalAlignment="Center"
+                <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="362" SuggestedHeight="42" HorizontalAlignment="Center" VerticalAlignment="Center"
                         IsEnabled="@IsEnabled" IsVisible="@IsDropdownVisible">
                   <Children>
                     <Standard.DropdownWithHorizontalControl HorizontalAlignment="Center" Parameter.SelectorDataSource="{DropdownValue}" />
@@ -99,10 +104,10 @@
 
             <!-- Value text/button -->
             <ButtonWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" MarginLeft="60" HorizontalAlignment="Right" VerticalAlignment="Center" DoNotPassEventsToChildren="true"
-                          IsEnabled="@IsEnabled" IsVisible="@HasEditableText" Brush="ModLib.Value.Display_v3" Command.Click="OnValueClick" >
+                          IsEnabled="@IsEnabled" IsVisible="@HasEditableText" Brush="ModLib.Value.Display" Command.Click="OnValueClick" >
               <Children>
                 <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                IsEnabled="@IsEnabled" IsVisible="@HasEditableText" Text="@ValueString" Brush="ModLib.Settings.Text_v3"/>
+                                IsEnabled="@IsEnabled" IsVisible="@HasEditableText" Text="@ValueString" Brush="ModLib.Settings.Text"/>
               </Children>
             </ButtonWidget>
 

@@ -76,7 +76,7 @@ namespace MCM.Implementation.ModLib.Settings.Containers.v1
             if (ModLibSettingsDatabase == null || !(settings is ModLibGlobalSettingsWrapper settingsWrapper))
                 return false;
 
-            AccessTools.Method(ModLibSettingsDatabase, "SaveSettings")?.Invoke(null, new object[] { settingsWrapper.Object });
+            AccessTools.Method(ModLibSettingsDatabase, "SaveSettings")?.Invoke(null, new[] { settingsWrapper.Object });
             return true;
         }
 

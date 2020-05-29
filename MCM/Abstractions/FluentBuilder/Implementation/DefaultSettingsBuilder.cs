@@ -21,7 +21,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
         private string Format { get; set; } = "memory";
         private int UIVersion { get; set; } = 1;
         private char SubGroupDelimiter { get; set; } = '/';
-        private PropertyChangedEventHandler? OnPropertyChanged;
+        private PropertyChangedEventHandler? OnPropertyChanged { get; set; }
 
         public DefaultSettingsBuilder(string id, string displayName)
         {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-using MCM.UI.ExtensionMethods;
+using MCM.UI.Extensions;
 
 namespace MCM.UI.Actions
 {
@@ -99,7 +99,7 @@ namespace MCM.UI.Actions
         /// <summary>
         /// Adds the action to the InitialStack. This stack is undone when UndoAll is called.
         /// </summary>
-        /// <param name="action"></param>
+        /// <param name="initial"></param>
         public void SetInitial(IInitial initial)
         {
             InitialStack.Push(initial);

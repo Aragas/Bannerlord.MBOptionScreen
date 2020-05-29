@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using TaleWorlds.Core.ViewModelCollection;
+using TaleWorlds.Localization;
 
 namespace MCM.Abstractions.Data
 {
@@ -56,7 +57,9 @@ namespace MCM.Abstractions.Data
 
         public DefaultDropdown(IEnumerable<T> values, int selectedIndex) : base(values)
         {
-            _selector = new SelectorVM<SelectorItemVM>(this.Select(x => x?.ToString() ?? "ERROR"), selectedIndex, OnSelectionChanged);
+            _selector = new SelectorVM<SelectorItemVM>(this.Select(x =>new TextObject(x?.ToString() ?? "ERROR").ToString()),
+                selectedIndex,
+                OnSelectionChanged);
 
             if (SelectedIndex != 0 && SelectedIndex >= Count)
                 throw new Exception();

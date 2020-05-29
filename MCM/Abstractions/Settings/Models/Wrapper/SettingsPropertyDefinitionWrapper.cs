@@ -75,7 +75,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
                 : SettingType.NONE;
             PropertyReference = PropertyProperty?.GetValue(@object) is { } value 
                 ? value is IRef @ref ? @ref : new RefWrapper(value)
-                : null;
+                : new ProxyRef<object?>(() => null, o => { });
 
             DisplayName = DisplayNameProperty?.GetValue(@object) switch
             {

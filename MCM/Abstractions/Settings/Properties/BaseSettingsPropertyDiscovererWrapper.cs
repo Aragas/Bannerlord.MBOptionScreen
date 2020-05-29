@@ -32,7 +32,7 @@ namespace MCM.Abstractions.Settings.Properties
         }
 
         public IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object) =>
-            ((IEnumerable<object>) (GetPropertiesMethod?.Invoke(Object, new object[] { @object }) ?? new List<object>()))
+            ((IEnumerable<object>) (GetPropertiesMethod?.Invoke(Object, new [] { @object }) ?? new List<object>()))
             .Select(o => new SettingsPropertyDefinitionWrapper(o));
     }
 }

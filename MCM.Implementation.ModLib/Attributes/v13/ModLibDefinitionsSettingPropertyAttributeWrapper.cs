@@ -22,8 +22,8 @@ namespace MCM.Implementation.ModLib.Attributes.v13
         {
             var type = @object.GetType();
 
-            DisplayName = new TextObject((type.GetProperty("DisplayName") ?? type.GetProperty("Name"))?.GetValue(@object) as string ?? "ERROR", null).ToString();
-            HintText = new TextObject(type.GetProperty("HintText")?.GetValue(@object) as string ?? "ERROR", null).ToString();
+            DisplayName = new TextObject((type.GetProperty("DisplayName") ?? type.GetProperty("Name"))?.GetValue(@object) as string ?? "ERROR").ToString();
+            HintText = new TextObject(type.GetProperty("HintText")?.GetValue(@object) as string ?? "ERROR").ToString();
             Order = -1;
             RequireRestart = true;
 

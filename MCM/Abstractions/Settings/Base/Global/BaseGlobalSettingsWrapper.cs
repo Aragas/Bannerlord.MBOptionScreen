@@ -9,7 +9,7 @@ namespace MCM.Abstractions.Settings.Base.Global
 {
     public abstract class BaseGlobalSettingsWrapper : GlobalSettings, IDependencyBase, IWrapper
     {
-        public static BaseGlobalSettingsWrapper Create(object @object) => DI.GetBaseImplementations<BaseGlobalSettingsWrapper, GlobalSettingsWrapper>(args: @object)
+        public static BaseGlobalSettingsWrapper Create(object @object) => DI.GetBaseImplementations<BaseGlobalSettingsWrapper, GlobalSettingsWrapper>(@object)
             .FirstOrDefault(w => w.IsCorrect);
 
         public object Object { get; protected set; }

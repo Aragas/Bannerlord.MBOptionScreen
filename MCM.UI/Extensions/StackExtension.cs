@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MCM.UI.ExtensionMethods
+namespace MCM.UI.Extensions
 {
     internal static class StackExtension
     {

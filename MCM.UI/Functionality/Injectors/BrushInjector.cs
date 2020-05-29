@@ -22,7 +22,7 @@ namespace MCM.UI.Functionality.Injectors
             var brushes = (IDictionary) BrushesField.GetValue(UIResourceManager.BrushFactory);
             foreach (var brushNode in xmlDocument.SelectSingleNode("Brushes").ChildNodes)
             {
-                var brush = (Brush) LoadBrushFromMethod.Invoke(UIResourceManager.BrushFactory, new object[] { brushNode });
+                var brush = (Brush) LoadBrushFromMethod.Invoke(UIResourceManager.BrushFactory, new [] { brushNode });
 
                 if (brushes.Contains(brush.Name))
                     brushes[brush.Name] = brush;

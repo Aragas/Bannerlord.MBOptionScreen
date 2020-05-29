@@ -1,8 +1,7 @@
-﻿using MCM.Abstractions.Settings.Containers.PerCharacter;
-using MCM.Abstractions.Settings.Models;
-using MCM.Utils;
+﻿using MCM.Abstractions.Settings.Models;
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -11,6 +10,9 @@ namespace MCM.Abstractions.Settings.Base.PerCharacter
 {
     public class FluentPerCharacterSettings : PerCharacterSettings
     {
+        public static readonly string ContainerId = "MCM_PerCharacter_FluentStorage";
+
+
         public sealed override string Id { get; }
         public sealed override string DisplayName { get; }
         public sealed override string FolderName { get; }
@@ -38,17 +40,23 @@ namespace MCM.Abstractions.Settings.Base.PerCharacter
 
         public void Register()
         {
-            var container = DI.GetImplementation<IFluentPerCharacterSettingsContainer, FluentPerCharacterSettingsContainerWrapper>();
-            container!.Register(this);
+            if (AppDomain.CurrentDomain.GetData(ContainerId) == null)
+                AppDomain.CurrentDomain.SetData(ContainerId, new Dictionary<string, FluentPerCharacterSettings>());
+
+            if (AppDomain.CurrentDomain.GetData(ContainerId) is IDictionary dict && !dict.Contains(Id))
+                dict.Add(Id, this);
         }
         public void Unregister()
         {
-            var container = DI.GetImplementation<IFluentPerCharacterSettingsContainer, FluentPerCharacterSettingsContainerWrapper>();
-            container!.Unregister(this);
+            if (AppDomain.CurrentDomain.GetData(ContainerId) == null)
+                AppDomain.CurrentDomain.SetData(ContainerId, new Dictionary<string, FluentPerCharacterSettings>());
+
+            if (AppDomain.CurrentDomain.GetData(ContainerId) is IDictionary dict && dict.Contains(Id))
+                dict.Remove(Id);
         }
 
-        protected override BaseSettings CreateNew() => null;
-        protected override BaseSettings CopyAsNew() => null;
+        protected override BaseSettings CreateNew() => null!;
+        protected override BaseSettings CopyAsNew() => null!;
         public override IDictionary<string, Func<BaseSettings>> GetAvailablePresets() => new Dictionary<string, Func<BaseSettings>>();
 
         protected sealed override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups() => SettingPropertyGroups;

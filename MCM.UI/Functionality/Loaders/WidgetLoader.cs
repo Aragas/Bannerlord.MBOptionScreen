@@ -12,8 +12,7 @@ namespace MCM.UI.Functionality.Loaders
     {
         public static void Inject(BaseResourceHandler resourceInjector)
         {
-            resourceInjector.InjectWidget(typeof(EditValueTextWidget_v3));
-            resourceInjector.InjectWidget(typeof(HoverRichTextWidget_v3));
+            resourceInjector.InjectWidget(typeof(EditValueTextWidget));
             WidgetInfo.ReLoad();
         }
     }
