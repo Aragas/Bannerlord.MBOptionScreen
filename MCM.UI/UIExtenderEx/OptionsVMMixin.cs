@@ -19,7 +19,7 @@ namespace MCM.UI.UIExtenderEx
     [ViewModelMixin]
     public class OptionsVMMixin : BaseViewModelMixin<OptionsVM>
     {
-        private static readonly Harmony _harmony = new Harmony("bannerlord.mcm.ui.optionsvmmixin");
+        private static readonly Harmony _harmony = new Harmony("bannerlord.mcm.ui.optionsvm");
         private static readonly AccessTools.FieldRef<ViewModel, Dictionary<string, PropertyInfo>> _propertyInfosField =
             AccessTools.FieldRefAccess<ViewModel, Dictionary<string, PropertyInfo>>("_propertyInfos");
         static OptionsVMMixin()

@@ -84,6 +84,10 @@ namespace MCM.Abstractions.Settings.Models
                 {
                     ValueFormat = propertyDefinitionWithFormat.ValueFormat;
                 }
+                if (propertyDefinition is IPropertyDefinitionWithActionFormat propertyDefinitionWithActionFormat)
+                {
+                    // TODO:
+                }
                 if (propertyDefinition is IPropertyDefinitionText propertyDefinitionText)
                 {
 
