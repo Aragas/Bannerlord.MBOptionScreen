@@ -26,11 +26,10 @@
                 
                 <!-- Boolean switch widget -->
                 <Widget WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="362" VerticalAlignment="Center" HorizontalAlignment="Center"
-                        IsVisible="@IsBoolVisible" UpdateChildrenStates="true"  IsEnabled="@IsEnabled">
+                        IsVisible="@IsBoolVisible" UpdateChildrenStates="true" IsEnabled="@IsEnabled">
                   <Children>
-                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" HorizontalAlignment="Center"
-                                  Brush="SPOptions.Checkbox.Empty.Button" ButtonType="Toggle" IsSelected="@BoolValue"
-                                  ToggleIndicator="ToggleIndicator" UpdateChildrenStates="true" IsEnabled="@IsEnabled">
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                  Brush="SPOptions.Checkbox.Empty.Button" ButtonType="Toggle" IsSelected="@BoolValue" ToggleIndicator="ToggleIndicator" UpdateChildrenStates="true" IsEnabled="@IsEnabled">
                       <Children>
                         <ImageWidget Id="ToggleIndicator" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center"
                                      IsEnabled="@IsEnabled" Brush="SPOptions.Checkbox.Full.Button"/>
@@ -41,42 +40,42 @@
 
                 <!-- Float Slider -->
                 <SliderWidget SuggestedWidth="338" SuggestedHeight="42" VerticalAlignment="Center" HorizontalAlignment="Center"
-                              DoNotUpdateHandleSize="true" Filler="Filler" Handle="SliderHandle" IsDiscrete="false" MaxValueFloat="@MaxValue"
-                              MinValueFloat="@MinValue" ValueFloat="@FloatValue" IsEnabled="@IsEnabled" IsVisible="@IsFloatVisible">
+                              Filler="Filler" Handle="SliderHandle" MaxValueFloat="@MaxValue" MinValueFloat="@MinValue" ValueFloat="@FloatValue"
+                              IsEnabled="@IsEnabled" IsVisible="@IsFloatVisible" IsDiscrete="false" DoNotUpdateHandleSize="true">
                   <Children>
-                    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="362" SuggestedHeight="38" HorizontalAlignment="Center"
-                            VerticalAlignment="Center" Sprite="SPOptions\standart_slider_canvas" IsEnabled="false" />
-                    <Widget Id="Filler" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="345" SuggestedHeight="35"
-                            VerticalAlignment="Center" ClipContents="true" Sprite="SPOptions\standart_slider_fill" >
+                    <Widget SuggestedWidth="362" SuggestedHeight="38" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            Sprite="SPOptions\standart_slider_canvas" IsEnabled="false" />
+                    <Widget Id="Filler" SuggestedWidth="345" SuggestedHeight="35" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            Sprite="SPOptions\standart_slider_fill" ClipContents="true" >
                       <Children>
-                        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="345" SuggestedHeight="35" HorizontalAlignment="Left"
-                                VerticalAlignment="Center" Sprite="SPOptions\standart_slider_fill"/>
+                        <Widget SuggestedWidth="345" SuggestedHeight="35" VerticalAlignment="Center" HorizontalAlignment="Left"
+                                Sprite="SPOptions\standart_slider_fill"/>
                       </Children>
                     </Widget>
-                    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="400" SuggestedHeight="65" HorizontalAlignment="Center"
-                            VerticalAlignment="Center" Sprite="SPOptions\standart_slider_frame" IsEnabled="false" />
-                    <Widget Id="SliderHandle" DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="14" SuggestedHeight="38"
-                            HorizontalAlignment="Left" VerticalAlignment="Center" Brush="SPOptions.Slider.Handle" />
+                    <Widget SuggestedWidth="400" SuggestedHeight="65" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            IsEnabled="false" Sprite="SPOptions\standart_slider_frame" />
+                    <Widget Id="SliderHandle" SuggestedWidth="14" SuggestedHeight="38" VerticalAlignment="Center" HorizontalAlignment="Left"
+                             Brush="SPOptions.Slider.Handle" DoNotAcceptEvents="true" />
                   </Children>
                 </SliderWidget>
 
                 <!-- Int Slider -->
                 <SliderWidget SuggestedWidth="338" SuggestedHeight="42" VerticalAlignment="Center" HorizontalAlignment="Center"
-                              DoNotUpdateHandleSize="true" Filler="Filler" Handle="SliderHandle" IsDiscrete="false" MaxValueFloat="@MaxValue"
-                              MinValueFloat="@MinValue" ValueInt="@IntValue" IsEnabled="@IsEnabled" IsVisible="@IsIntVisible">
+                              Filler="Filler" Handle="SliderHandle" MaxValueFloat="@MaxValue" MinValueFloat="@MinValue" ValueInt="@IntValue"
+                              IsEnabled="@IsEnabled" IsVisible="@IsIntVisible" IsDiscrete="false" DoNotUpdateHandleSize="true">
                   <Children>
-                    <Widget SuggestedWidth="362" SuggestedHeight="38" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    <Widget SuggestedWidth="362" SuggestedHeight="38" VerticalAlignment="Center" HorizontalAlignment="Center"
                             Sprite="SPOptions\standart_slider_canvas" IsEnabled="false" />
-                    <Widget Id="Filler" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="345" SuggestedHeight="35"
-                            VerticalAlignment="Center" Sprite="SPOptions\standart_slider_fill" ClipContents="true">
+                    <Widget Id="Filler" SuggestedWidth="345" SuggestedHeight="35" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            Sprite="SPOptions\standart_slider_fill" ClipContents="true">
                       <Children>
-                        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="345" SuggestedHeight="35" HorizontalAlignment="Center" VerticalAlignment="Center"
+                        <Widget SuggestedWidth="345" SuggestedHeight="35" VerticalAlignment="Center" HorizontalAlignment="Left"
                                 Sprite="SPOptions\standart_slider_fill" />
                       </Children>
                     </Widget>
-                    <Widget SuggestedWidth="400" SuggestedHeight="65" HorizontalAlignment="Center" VerticalAlignment="Center"
-                            Sprite="SPOptions\standart_slider_frame" IsEnabled="false" />
-                    <Widget Id="SliderHandle" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="14" SuggestedHeight="38" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    <Widget SuggestedWidth="400" SuggestedHeight="65" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            IsEnabled="false" Sprite="SPOptions\standart_slider_frame" />
+                    <Widget Id="SliderHandle" SuggestedWidth="14" SuggestedHeight="38" VerticalAlignment="Center" HorizontalAlignment="Left"
                             Brush="SPOptions.Slider.Handle" DoNotAcceptEvents="true" />
                   </Children>
                 </SliderWidget>
@@ -85,7 +84,7 @@
                 <ButtonWidget SuggestedWidth="362" SuggestedHeight="42" VerticalAlignment="Center" HorizontalAlignment="Center"
                               IsEnabled="@IsEnabled" IsVisible="@IsStringVisible" DoNotPassEventsToChildren="true" Brush="SPOptions.Dropdown.Center" Command.Click="OnValueClick">
                   <Children>
-                    <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" VerticalAlignment="Center"
+                    <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center"
                                     IsEnabled="@IsEnabled" IsVisible="@IsStringVisible" Text="@StringValue" Brush="ModLib.Text" />
                   </Children>
                 </ButtonWidget>
@@ -94,7 +93,7 @@
                 <Widget SuggestedWidth="362" SuggestedHeight="42" VerticalAlignment="Center" HorizontalAlignment="Center"
                         IsEnabled="@IsEnabled" IsVisible="@IsDropdownVisible">
                   <Children>
-                    <Standard.DropdownWithHorizontalControl HorizontalAlignment="Center" Parameter.SelectorDataSource="{DropdownValue}" />
+                    <Standard.DropdownWithHorizontalControl VerticalAlignment="Center" HorizontalAlignment="Center" Parameter.SelectorDataSource="{DropdownValue}" />
                   </Children>
                 </Widget>
 
