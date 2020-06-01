@@ -15,7 +15,7 @@ using TaleWorlds.Localization;
 
 namespace MCM.UI.GUI.ViewModels
 {
-    public sealed class SettingsVM : ViewModel
+    internal sealed class SettingsVM : ViewModel
     {
         private bool _isSelected;
         private Action<SettingsVM> _executeSelect = default!;
@@ -23,7 +23,7 @@ namespace MCM.UI.GUI.ViewModels
         private readonly IDictionary<string, BaseSettings>? _cachedPresets;
 
         public ModOptionsVM MainView { get; }
-        internal UndoRedoStack URS { get; } = new UndoRedoStack();
+        public UndoRedoStack URS { get; } = new UndoRedoStack();
 
         public SettingsDefinition SettingsDefinition { get; }
         public BaseSettings SettingsInstance => BaseSettingsProvider.Instance.GetSettings(SettingsDefinition.SettingsId)!;

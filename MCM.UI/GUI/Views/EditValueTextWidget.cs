@@ -36,9 +36,8 @@ namespace MCM.UI.GUI.Views
 
             if (lastKeysPressed.Count > 0)
             {
-                for (var i = 0; i < lastKeysPressed.Count; i++)
+                foreach (var key in lastKeysPressed)
                 {
-                    var key = lastKeysPressed[i];
                     if (SettingType == SettingType.String)
                     {
                         base.HandleInput(lastKeysPressed);

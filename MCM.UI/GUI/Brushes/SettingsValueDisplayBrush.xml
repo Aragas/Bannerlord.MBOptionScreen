@@ -23,10 +23,11 @@
     </Styles>
   </Brush>
 
-  <Brush Name="ModLib.Value.Display" BaseBrush="ModLib.Button.Base">
+  <Brush Name="ModLib.Value.Display">
     <Layers>
       <BrushLayer Name="Default" Sprite="BlankWhiteSquare_9" IsHidden="true"/>
       <BrushLayer Name="Hovered" Sprite="BlankWhiteSquare_9" IsHidden="true"/>
+      <BrushLayer Name="Disabled" IsHidden="true"/>
     </Layers>
     <Styles>
       <Style Name="Default">
@@ -42,7 +43,7 @@
         <BrushLayer Name="Hovered" Color="#FFFFFFFF" AlphaFactor="0.5" IsHidden="false"/>
       </Style>
       <Style Name="Disabled">
-        <BrushLayer Name="Hovered" Color="#FFFFFFFF" AlphaFactor="0.5" IsHidden="false"/>
+        <BrushLayer Name="Disabled" Color="#FFFFFFFF" AlphaFactor="1.0" IsHidden="false"/>
       </Style>
     </Styles>
   </Brush>

@@ -18,7 +18,7 @@ using TaleWorlds.Localization;
 
 namespace MCM.UI.GUI.ViewModels
 {
-    public sealed class ModOptionsVM : ViewModel
+    internal sealed class ModOptionsVM : ViewModel
     {
         private string _titleLabel = "";
         private string _cancelButtonText = "";

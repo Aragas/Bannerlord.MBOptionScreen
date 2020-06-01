@@ -17,7 +17,7 @@ namespace MCM.UI.UIExtenderEx
 {
     // TODO: Needs to be public, maybe InternalsVisibleTo?
     [ViewModelMixin]
-    public class OptionsVMMixin : BaseViewModelMixin<OptionsVM>
+    internal class OptionsVMMixin : BaseViewModelMixin<OptionsVM>
     {
         private static readonly Harmony _harmony = new Harmony("bannerlord.mcm.ui.optionsvm");
         private static readonly AccessTools.FieldRef<ViewModel, Dictionary<string, PropertyInfo>> _propertyInfosField =

@@ -6,7 +6,7 @@ using System.Xml;
 namespace MCM.UI.UIExtenderEx
 {
     [PrefabExtension("Options", "descendant::OptionsScreenWidget[@Id='Options']/Children/Standard.TopPanel/Children/ListPanel/Children")]
-    public class OptionsPrefabExtension1 : PrefabExtensionInsertPatch
+    internal class OptionsPrefabExtension1 : PrefabExtensionInsertPatch
     {
         public override string Id => "Options1";
         public override int Position => 3;
@@ -21,7 +21,7 @@ namespace MCM.UI.UIExtenderEx
     }
 
     [PrefabExtension("Options", "descendant::TabControl[@Id='TabControl']/Children")]
-    public class OptionsPrefabExtension2 : PrefabExtensionInsertPatch
+    internal class OptionsPrefabExtension2 : PrefabExtensionInsertPatch
     {
         public override string Id => "Options2";
         public override int Position => 3;
@@ -36,7 +36,7 @@ namespace MCM.UI.UIExtenderEx
     }
 
     [PrefabExtension("Options", "descendant::OptionsScreenWidget[@Id='Options']/Children/ListPanel[@Id='MainSectionListPanel']/Children/Widget[@Id='DescriptionsRightPanel']")]
-    public class OptionsPrefabExtension3 : PrefabExtensionReplacePatch
+    internal class OptionsPrefabExtension3 : PrefabExtensionReplacePatch
     {
         public override string Id => "Options3";
         private XmlDocument XmlDocument { get; } = new XmlDocument();

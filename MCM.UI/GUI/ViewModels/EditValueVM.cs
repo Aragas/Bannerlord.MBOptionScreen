@@ -125,7 +125,13 @@ namespace MCM.UI.GUI.ViewModels
         {
             base.RefreshValues();
 
-            TextInput = SettingProperty.ValueString ?? "";
+            TextInput = SettingProperty.SettingType switch
+            {
+                SettingType.Int => SettingProperty.IntValue.ToString(),
+                SettingType.Float => SettingProperty.FloatValue.ToString(),
+                SettingType.String => SettingProperty.StringValue,
+                _ => "",
+            };
         }
 
         public void ExecuteDone()

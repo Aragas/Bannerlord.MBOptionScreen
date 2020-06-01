@@ -11,17 +11,16 @@ using System.ComponentModel;
 using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
-using TaleWorlds.Localization;
 
 namespace MCM.UI.GUI.ViewModels
 {
-    public sealed class SettingsPropertyVM : ViewModel
+    internal sealed class SettingsPropertyVM : ViewModel
     {
         public ModOptionsVM MainView => SettingsVM.MainView;
         public SettingsVM SettingsVM { get; }
         public SettingsPropertyGroupVM Group { get; set; } = default!;
 
-        internal UndoRedoStack URS => SettingsVM.URS;
+        public UndoRedoStack URS => SettingsVM.URS;
 
         public ISettingsPropertyDefinition SettingPropertyDefinition { get; }
         public IRef PropertyReference => SettingPropertyDefinition.PropertyReference;
@@ -164,8 +163,8 @@ namespace MCM.UI.GUI.ViewModels
             SettingType.Float => string.IsNullOrWhiteSpace(ValueFormat)
                 ? ((float) PropertyReference.Value).ToString("0.00")
                 : ((float) PropertyReference.Value).ToString(ValueFormat),
-            SettingType.String => (string) PropertyReference.Value,
-            SettingType.Dropdown => DropdownValue?.SelectedItem?.StringItem ?? "",
+            //SettingType.String => (string) PropertyReference.Value,
+            //SettingType.Dropdown => DropdownValue?.SelectedItem?.StringItem ?? "",
             _ => ""
         };
 

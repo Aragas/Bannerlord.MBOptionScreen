@@ -9,7 +9,7 @@ using TaleWorlds.Localization;
 
 namespace MCM.UI.GUI.ViewModels
 {
-    public sealed class SettingsPropertyGroupVM : ViewModel
+    internal sealed class SettingsPropertyGroupVM : ViewModel
     {
         private bool _isExpanded = true;
 

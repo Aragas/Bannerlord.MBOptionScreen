@@ -13,10 +13,12 @@ namespace MCM.Abstractions.Attributes.v2
         /// The minimum value the setting can be set to. Used by the slider control.
         /// </summary>
         public decimal MinValue { get; }
+
         /// <summary>
         /// The maximum value the setting can be set to. Used by the slider control.
         /// </summary>
         public decimal MaxValue { get; }
+
         /// <summary>
         /// The format in which the slider's value will be displayed in.
         /// </summary>
