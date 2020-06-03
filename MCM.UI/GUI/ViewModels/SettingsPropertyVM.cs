@@ -27,6 +27,7 @@ namespace MCM.UI.GUI.ViewModels
         public SettingType SettingType => SettingPropertyDefinition.SettingType;
         public string HintText => SettingPropertyDefinition.HintText.Length > 0 ? $"{Name}: {SettingPropertyDefinition.HintText}" : "";
         public string ValueFormat => SettingPropertyDefinition.ValueFormat;
+        public IFormatProvider? ValueFormatProvider { get; }
         
         public bool SatisfiesSearch
         {
@@ -82,7 +83,7 @@ namespace MCM.UI.GUI.ViewModels
                 {
                     URS.Do(new SetValueTypeAction<float>(PropertyReference, value));
                     OnPropertyChanged(nameof(FloatValue));
-                    OnPropertyChanged(nameof(ValueString));
+                    OnPropertyChanged(nameof(TextBoxValue));
                 }
             }
         }
@@ -96,7 +97,7 @@ namespace MCM.UI.GUI.ViewModels
                 {
                     URS.Do(new SetValueTypeAction<int>(PropertyReference, value));
                     OnPropertyChanged(nameof(IntValue));
-                    OnPropertyChanged(nameof(ValueString));
+                    OnPropertyChanged(nameof(TextBoxValue));
                 }
             }
         }
@@ -110,7 +111,6 @@ namespace MCM.UI.GUI.ViewModels
                 {
                     URS.Do(new SetValueTypeAction<bool>(PropertyReference, value));
                     OnPropertyChanged(nameof(BoolValue));
-                    OnPropertyChanged(nameof(ValueString));
                 }
             }
         }
@@ -124,7 +124,6 @@ namespace MCM.UI.GUI.ViewModels
                 {
                     URS.Do(new SetStringAction(PropertyReference, value));
                     OnPropertyChanged(nameof(StringValue));
-                    OnPropertyChanged(nameof(ValueString));
                 }
             }
         }
@@ -146,7 +145,6 @@ namespace MCM.UI.GUI.ViewModels
                         selector.SelectedIndex = DropdownValue.SelectedIndex;
                     }));
                     OnPropertyChanged(nameof(DropdownValue));
-                    OnPropertyChanged(nameof(ValueString));
                 }
             }
         }
@@ -155,16 +153,14 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public float MinValue => (float) SettingPropertyDefinition.MinValue;
         [DataSourceProperty]
-        public string? ValueString => SettingType switch
+        public string? TextBoxValue => SettingType switch
         {
             SettingType.Int => string.IsNullOrWhiteSpace(ValueFormat)
-                ? ((int) PropertyReference.Value).ToString("0")
-                : ((int) PropertyReference.Value).ToString(ValueFormat),
+                ? string.Format(ValueFormatProvider, "{0}", ((int) PropertyReference.Value).ToString("0"))
+                : string.Format(ValueFormatProvider, "{0}", ((int) PropertyReference.Value).ToString(ValueFormat)),
             SettingType.Float => string.IsNullOrWhiteSpace(ValueFormat)
-                ? ((float) PropertyReference.Value).ToString("0.00")
-                : ((float) PropertyReference.Value).ToString(ValueFormat),
-            //SettingType.String => (string) PropertyReference.Value,
-            //SettingType.Dropdown => DropdownValue?.SelectedItem?.StringItem ?? "",
+                ? string.Format(ValueFormatProvider, "{0}", ((float) PropertyReference.Value).ToString("0:00"))
+                : string.Format(ValueFormatProvider, "{0}", ((float) PropertyReference.Value).ToString(ValueFormat)),
             _ => ""
         };
 
@@ -172,6 +168,9 @@ namespace MCM.UI.GUI.ViewModels
         {
             SettingsVM = settingsVM;
             SettingPropertyDefinition = definition;
+            ValueFormatProvider = SettingPropertyDefinition.CustomFormatter!= null
+                ? Activator.CreateInstance(SettingPropertyDefinition.CustomFormatter) as IFormatProvider
+                : null;
 
             PropertyReference.PropertyChanged += PropertyReference_OnPropertyChanged;
 
@@ -226,7 +225,7 @@ namespace MCM.UI.GUI.ViewModels
                     OnPropertyChanged(nameof(DropdownValue));
                     break;
             }
-            OnPropertyChanged(nameof(ValueString));
+            OnPropertyChanged(nameof(TextBoxValue));
         }
 
 

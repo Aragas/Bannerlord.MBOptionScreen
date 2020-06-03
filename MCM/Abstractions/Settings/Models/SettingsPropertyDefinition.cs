@@ -1,4 +1,5 @@
-﻿using MCM.Abstractions.Attributes.v1;
+﻿using System;
+using MCM.Abstractions.Attributes.v1;
 using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Utils;
@@ -23,6 +24,7 @@ namespace MCM.Abstractions.Settings.Models
         public decimal EditableMaxValue { get; }
         public int SelectedIndex { get; }
         public string ValueFormat { get; } = "";
+        public Type? CustomFormatter { get; }
         public string GroupName { get; }
         public bool IsMainToggle { get; }
         public int GroupOrder { get; }
@@ -83,6 +85,10 @@ namespace MCM.Abstractions.Settings.Models
                 if (propertyDefinition is IPropertyDefinitionWithFormat propertyDefinitionWithFormat)
                 {
                     ValueFormat = propertyDefinitionWithFormat.ValueFormat;
+                }
+                if (propertyDefinition is IPropertyDefinitionWithCustomFormatter propertyDefinitionWithCustomFormatter)
+                {
+                    CustomFormatter = propertyDefinitionWithCustomFormatter.CustomFormatter;
                 }
                 if (propertyDefinition is IPropertyDefinitionWithActionFormat propertyDefinitionWithActionFormat)
                 {

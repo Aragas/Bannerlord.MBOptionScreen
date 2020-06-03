@@ -27,6 +27,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
         private PropertyInfo? EditableMaxValueProperty { get; }
         private PropertyInfo? SelectedIndexProperty { get; }
         private PropertyInfo? ValueFormatProperty { get; }
+        private PropertyInfo? CustomFormatterProperty { get; }
 
         public string SettingsId { get; }
         public IRef PropertyReference { get; }
@@ -41,6 +42,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
         public decimal EditableMaxValue { get; }
         public int SelectedIndex { get; }
         public string ValueFormat { get; }
+        public Type? CustomFormatter { get; }
         public string GroupName { get; }
         public bool IsMainToggle { get; }
         public int GroupOrder { get; }
@@ -65,6 +67,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
             EditableMaxValueProperty = AccessTools.Property(type, nameof(EditableMaxValue));
             SelectedIndexProperty = AccessTools.Property(type, nameof(SelectedIndex));
             ValueFormatProperty = AccessTools.Property(type, nameof(ValueFormat));
+            CustomFormatterProperty = AccessTools.Property(type, nameof(CustomFormatter));
 
 
             SettingsId = SettingsIdProperty?.GetValue(@object) as string ?? "ERROR";
@@ -109,6 +112,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
                 SettingType.Float => "0.00",
                 _ => ""
             };
+            CustomFormatter = CustomFormatterProperty?.GetValue(@object) as Type;
         }
     }
 }

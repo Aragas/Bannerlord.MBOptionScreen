@@ -3,6 +3,8 @@ using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
 using MCM.Abstractions.Data;
 
+using System;
+
 namespace MCM.Implementation.Testing
 {
     internal sealed class TestSettingsV2 : BaseTestGlobalSettings<TestSettingsV2>
@@ -45,6 +47,10 @@ namespace MCM.Implementation.Testing
         [SettingPropertyGroup("Int")]
         public int PropertyIntWithFormat { get; set; }
 
+        [SettingPropertyInteger("Property Int With Custom Formatter", 0, 100, "0 Denars", RequireRestart = false, CustomFormatter = typeof(TestIntFormatter))]
+        [SettingPropertyGroup("Int")]
+        public int PropertyIntWithCustomFormatter { get; set; }
+
 
         [SettingPropertyFloatingInteger("Property Float Default 0f", 0f, 100f, RequireRestart = false)]
         [SettingPropertyGroup("Float")]
@@ -79,7 +85,7 @@ namespace MCM.Implementation.Testing
 
         [SettingPropertyDropdown("Property Dropdown SelectedIndex 0", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown")]
-        public DefaultDropdown<string> PropertyDropdownSelectedIndex0 { get; set; } = new DefaultDropdown<string>(new string[]
+        public DefaultDropdown<string> PropertyDropdownSelectedIndex0 { get; set; } = new DefaultDropdown<string>(new []
         {
             "Test1",
             "Test2",
@@ -87,7 +93,7 @@ namespace MCM.Implementation.Testing
         }, 0);
         [SettingPropertyDropdown("Property Dropdown SelectedIndex 1", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown")]
-        public DefaultDropdown<string> PropertyDropdownSelectedIndex1 { get; set; } = new DefaultDropdown<string>(new string[]
+        public DefaultDropdown<string> PropertyDropdownSelectedIndex1 { get; set; } = new DefaultDropdown<string>(new []
         {
             "Test1",
             "Test2",
@@ -95,7 +101,7 @@ namespace MCM.Implementation.Testing
         }, 1);
         [SettingPropertyDropdown("Property Dropdown SelectedIndex 2", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown")]
-        public DefaultDropdown<string> PropertyDropdownSelectedIndex2 { get; set; } = new DefaultDropdown<string>(new string[]
+        public DefaultDropdown<string> PropertyDropdownSelectedIndex2 { get; set; } = new DefaultDropdown<string>(new []
         {
             "Test1",
             "Test2",
@@ -103,7 +109,7 @@ namespace MCM.Implementation.Testing
         }, 2);
         [SettingPropertyDropdown("Property Dropdown Require Restart")]
         [SettingPropertyGroup("Dropdown")]
-        public DefaultDropdown<string> PropertyDropdownRequireRestart { get; set; } = new DefaultDropdown<string>(new string[]
+        public DefaultDropdown<string> PropertyDropdownRequireRestart { get; set; } = new DefaultDropdown<string>(new []
         {
             "Test1",
             "Test2",
@@ -111,7 +117,7 @@ namespace MCM.Implementation.Testing
         }, 0);
         [SettingPropertyDropdown("Property Dropdown With Hint", RequireRestart = false, HintText = "Hint Text")]
         [SettingPropertyGroup("Dropdown")]
-        public DefaultDropdown<string> PropertyDropdownWithHint { get; set; } = new DefaultDropdown<string>(new string[]
+        public DefaultDropdown<string> PropertyDropdownWithHint { get; set; } = new DefaultDropdown<string>(new []
         {
             "Test1",
             "Test2",
@@ -119,7 +125,7 @@ namespace MCM.Implementation.Testing
         }, 0);
         [SettingPropertyDropdown("Property Dropdown With Localization", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown")]
-        public DefaultDropdown<string> PropertyDropdownWithLocalization { get; set; } = new DefaultDropdown<string>(new string[]
+        public DefaultDropdown<string> PropertyDropdownWithLocalization { get; set; } = new DefaultDropdown<string>(new []
         {
             "{=NoPeRandoM}Test1",
             "{=BaseSettings_Default}ERROR",
@@ -129,7 +135,7 @@ namespace MCM.Implementation.Testing
 
         [SettingPropertyDropdown("Property Dropdown Custom SelectedIndex 0", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown Custom")]
-        public DefaultDropdown<CustomObject> PropertyDropdownCustomSelectedIndex0 { get; set; } = new DefaultDropdown<CustomObject>(new CustomObject[]
+        public DefaultDropdown<CustomObject> PropertyDropdownCustomSelectedIndex0 { get; set; } = new DefaultDropdown<CustomObject>(new []
         {
             new CustomObject("Test1"),
             new CustomObject("Test2"),
@@ -137,7 +143,7 @@ namespace MCM.Implementation.Testing
         }, 0);
         [SettingPropertyDropdown("Property Dropdown Custom SelectedIndex 1", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown Custom")]
-        public DefaultDropdown<CustomObject> PropertyDropdownCustomSelectedIndex1 { get; set; } = new DefaultDropdown<CustomObject>(new CustomObject[]
+        public DefaultDropdown<CustomObject> PropertyDropdownCustomSelectedIndex1 { get; set; } = new DefaultDropdown<CustomObject>(new []
         {
             new CustomObject("Test1"),
             new CustomObject("Test2"),
@@ -145,7 +151,7 @@ namespace MCM.Implementation.Testing
         }, 1);
         [SettingPropertyDropdown("Property Dropdown Custom SelectedIndex 2", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown Custom")]
-        public DefaultDropdown<CustomObject> PropertyDropdownCustomSelectedIndex2 { get; set; } = new DefaultDropdown<CustomObject>(new CustomObject[]
+        public DefaultDropdown<CustomObject> PropertyDropdownCustomSelectedIndex2 { get; set; } = new DefaultDropdown<CustomObject>(new []
         {
             new CustomObject("Test1"),
             new CustomObject("Test2"),
@@ -153,7 +159,7 @@ namespace MCM.Implementation.Testing
         }, 2);
         [SettingPropertyDropdown("Property Dropdown Custom Require Restart")]
         [SettingPropertyGroup("Dropdown Custom")]
-        public DefaultDropdown<CustomObject> PropertyDropdownCustomRequireRestart { get; set; } = new DefaultDropdown<CustomObject>(new CustomObject[]
+        public DefaultDropdown<CustomObject> PropertyDropdownCustomRequireRestart { get; set; } = new DefaultDropdown<CustomObject>(new []
         {
             new CustomObject("Test1"),
             new CustomObject("Test2"),
@@ -161,7 +167,7 @@ namespace MCM.Implementation.Testing
         }, 0);
         [SettingPropertyDropdown("Property Dropdown Custom With Hint", RequireRestart = false, HintText = "Hint Text")]
         [SettingPropertyGroup("Dropdown Custom")]
-        public DefaultDropdown<CustomObject> PropertyDropdownCustomWithHint { get; set; } = new DefaultDropdown<CustomObject>(new CustomObject[]
+        public DefaultDropdown<CustomObject> PropertyDropdownCustomWithHint { get; set; } = new DefaultDropdown<CustomObject>(new []
         {
             new CustomObject("Test1"),
             new CustomObject("Test2"),
@@ -172,6 +178,16 @@ namespace MCM.Implementation.Testing
             private readonly string _value;
             public CustomObject(string value) => _value = value;
             public override string ToString() => _value;
+        }
+
+        public class TestIntFormatter : IFormatProvider, ICustomFormatter
+        {
+            public object? GetFormat(Type formatType) => formatType == typeof(ICustomFormatter) ? this : null;
+
+            public string Format(string format, object arg, IFormatProvider formatProvider)
+            {
+                return (-1).ToString();
+            }
         }
     }
 }

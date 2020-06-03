@@ -10,6 +10,7 @@ namespace MCM.Abstractions.Settings.Models
         IPropertyDefinitionWithMinMax,
         IPropertyDefinitionWithEditableMinMax,
         IPropertyDefinitionWithFormat,
+        IPropertyDefinitionWithCustomFormatter,
         IPropertyDefinitionText,
         IPropertyGroupDefinition
     {

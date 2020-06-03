@@ -50,6 +50,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
             new PropertyDefinitionWithMinMaxWrapper(this),
             new PropertyDefinitionWithFormatWrapper(this),
             new PropertyDefinitionWithActionFormatWrapper(this), 
+            new PropertyDefinitionWithCustomFormatterWrapper(this), 
         };
     }
 }

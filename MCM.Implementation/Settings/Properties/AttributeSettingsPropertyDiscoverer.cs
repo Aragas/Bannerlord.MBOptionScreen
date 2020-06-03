@@ -73,6 +73,14 @@ namespace MCM.Implementation.Settings.Properties
                 if (propAttr != null)
                     propertyDefinitions.Add(new PropertyDefinitionWithFormatWrapper(propAttr));
 
+                propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionWithActionFormat)));
+                if (propAttr != null)
+                    propertyDefinitions.Add(new PropertyDefinitionWithActionFormatWrapper(propAttr));
+
+                propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionWithCustomFormatter)));
+                if (propAttr != null)
+                    propertyDefinitions.Add(new PropertyDefinitionWithCustomFormatterWrapper(propAttr));
+
                 propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionText)));
                 if (propAttr != null)
                     propertyDefinitions.Add(new PropertyDefinitionTextWrapper(propAttr));

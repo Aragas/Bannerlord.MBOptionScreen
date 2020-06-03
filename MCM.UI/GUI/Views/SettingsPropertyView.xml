@@ -105,7 +105,7 @@
                           IsEnabled="@HasEditableText" DoNotPassEventsToChildren="true" Brush="ModLib.Value.Display" Command.Click="OnValueClick" >
               <Children>
                 <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" VerticalAlignment="Center"
-                                Text="@ValueString" Brush="ModLib.Settings.Text"/>
+                                Text="@TextBoxValue" Brush="ModLib.Settings.Text"/>
               </Children>
             </ButtonWidget>
 
