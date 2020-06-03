@@ -104,7 +104,7 @@ namespace MCM.Utils
             }
         }
 
-        public static IEnumerable<TBase> GetBaseImplementations<TBase, TWrapper>(params object[] args) 
+        internal static IEnumerable<TBase> GetBaseImplementations<TBase, TWrapper>(params object[] args) 
             where TBase : class, IDependencyBase
             where TWrapper : TBase, IWrapper
         {
@@ -124,7 +124,7 @@ namespace MCM.Utils
             }
         }
 
-        public static IEnumerable<TBase> GetBaseImplementations<TBase>(params object[] args)
+        internal static IEnumerable<TBase> GetBaseImplementations<TBase>(params object[] args)
             where TBase : class, IDependencyBase
         {
             if (!DependencyBases.ContainsKey(typeof(TBase).FullName())) yield break;
@@ -148,10 +148,10 @@ namespace MCM.Utils
             }
         }
 
-        public static TBase? GetImplementation<TBase>(params object[] args)
+        internal static TBase? GetImplementation<TBase>(params object[] args)
             where TBase : class, IDependency =>
             GetImplementation(typeof(TBase), args) as TBase;
-        public static object? GetImplementation(Type baseType, params object[] args)
+        internal static object? GetImplementation(Type baseType, params object[] args)
         {
             if (!LatestImplementations.ContainsKey(baseType.FullName())) return null;
 
@@ -159,11 +159,11 @@ namespace MCM.Utils
             return Activator.CreateInstance(latestImplementationType, args);
         }
 
-        public static TBase? GetImplementation<TBase, TWrapper>(params object[] args)
+        internal static TBase? GetImplementation<TBase, TWrapper>(params object[] args)
             where TBase : class, IDependency
             where TWrapper : TBase, IWrapper
             => GetImplementation(typeof(TBase), typeof(TWrapper), args) as TBase;
-        public static object?  GetImplementation(Type baseType, Type wrapperType, params object[] args)
+        internal static object?  GetImplementation(Type baseType, Type wrapperType, params object[] args)
         {
             if (!LatestImplementations.ContainsKey(baseType.FullName())) return null;
             

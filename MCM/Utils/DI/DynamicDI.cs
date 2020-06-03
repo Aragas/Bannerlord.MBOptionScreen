@@ -12,7 +12,7 @@ namespace MCM.Utils
     {
         private static ApplicationVersion Version { get; } = ApplicationVersionUtils.GameVersion();
 
-        public static IEnumerable<TBase> GetBaseImplementations<TBase, TWrapper>(params object[] args)
+        internal static IEnumerable<TBase> GetBaseImplementations<TBase, TWrapper>(params object[] args)
             where TBase : class, IDependencyBase
             where TWrapper : TBase, IWrapper
         {
@@ -31,7 +31,7 @@ namespace MCM.Utils
             }
         }
 
-        public static IEnumerable<TBase> GetBaseImplementations<TBase>(params object[] args)
+        internal static IEnumerable<TBase> GetBaseImplementations<TBase>(params object[] args)
             where TBase : class, IDependencyBase
         {
             var baseTypes = TaleWorlds.Core.Extensions.DistinctBy(DI.GetAllTypes()
@@ -52,10 +52,10 @@ namespace MCM.Utils
             }
         }
 
-        public static TBase? GetImplementation<TBase>(params object[] args)
+        internal static TBase? GetImplementation<TBase>(params object[] args)
             where TBase : class, IDependency
             => GetImplementation(typeof(TBase), args) as TBase;
-        public static object? GetImplementation(Type baseType, params object[] args)
+        internal static object? GetImplementation(Type baseType, params object[] args)
         {
             var types = DI.GetAllTypes()
                 .Where(t => t.IsClass && !t.IsAbstract)
@@ -64,11 +64,11 @@ namespace MCM.Utils
             return tuple != null ? Activator.CreateInstance(tuple?.Type, args) : null;
         }
 
-        public static TBase? GetImplementation<TBase, TWrapper>(params object[] args)
+        internal static TBase? GetImplementation<TBase, TWrapper>(params object[] args)
             where TBase : class, IDependency
             where TWrapper : TBase, IWrapper
             => GetImplementation(typeof(TBase), typeof(TWrapper), args) as TBase;
-        public static object? GetImplementation(Type baseType, Type wrapperType, params object[] args)
+        internal static object? GetImplementation(Type baseType, Type wrapperType, params object[] args)
         {
             var types = DI.GetAllTypes()
                 .Where(t => t.IsClass && !t.IsAbstract)
