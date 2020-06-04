@@ -21,13 +21,13 @@ namespace MCM.UI
             {
                 var harmony = new Harmony("bannerlord.mcm.ui.loading");
                 harmony.Patch(
-                    MBSubModuleBasePatch.OnGauntletUISubModuleSubModuleLoadTargetMethod(),
+                    MBSubModuleBasePatch.OnGauntletUISubModuleSubModuleLoadTargetMethod,
                     postfix: new HarmonyMethod(typeof(MBSubModuleBasePatch), nameof(MBSubModuleBasePatch.OnGauntletUISubModuleSubModuleLoadPostfix)));
                 harmony.Patch(
-                    MBSubModuleBasePatch.OnSubModuleUnloadedTargetMethod(),
+                    MBSubModuleBasePatch.OnSubModuleUnloadedTargetMethod,
                     postfix: new HarmonyMethod(typeof(MBSubModuleBasePatch), nameof(MBSubModuleBasePatch.OnSubModuleUnloadedPostfix)));
                 harmony.Patch(
-                    MBSubModuleBasePatch.OnBeforeInitialModuleScreenSetAsRootTargetMethod(),
+                    MBSubModuleBasePatch.OnBeforeInitialModuleScreenSetAsRootTargetMethod,
                     postfix: new HarmonyMethod(typeof(MBSubModuleBasePatch), nameof(MBSubModuleBasePatch.OnBeforeInitialModuleScreenSetAsRootPostfix)));
             }
         }

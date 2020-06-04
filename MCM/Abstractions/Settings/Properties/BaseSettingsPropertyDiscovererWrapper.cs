@@ -14,7 +14,7 @@ namespace MCM.Abstractions.Settings.Properties
     {
         public static BaseSettingsPropertyDiscovererWrapper Create(object @object) =>
             DI.GetBaseImplementations<BaseSettingsPropertyDiscovererWrapper, SettingsPropertyDiscovererWrapper>(@object)
-            .FirstOrDefault(w => w.IsCorrect);
+                .FirstOrDefault(w => w.IsCorrect);
 
 
         public object Object { get; }

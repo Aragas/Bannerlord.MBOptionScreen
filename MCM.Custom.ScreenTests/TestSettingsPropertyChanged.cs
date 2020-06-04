@@ -1,7 +1,6 @@
-﻿#if DEBUG
-using MCM.Abstractions.Attributes.v2;
+﻿using MCM.Abstractions.Attributes.v2;
 
-namespace MCM.Implementation.Testing
+namespace MCM.Custom.ScreenTests
 {
     internal sealed class TestSettingsPropertyChanged : BaseTestGlobalSettings<TestSettingsOrder>
     {
@@ -26,4 +25,3 @@ namespace MCM.Implementation.Testing
         }
     }
 }
-#endif

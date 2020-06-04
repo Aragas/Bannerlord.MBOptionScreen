@@ -1,11 +1,10 @@
-﻿#if DEBUG
-using MCM.Abstractions.Attributes.v2;
+﻿using MCM.Abstractions.Attributes.v2;
 using MCM.Abstractions.Settings.Base;
 
 using System;
 using System.Collections.Generic;
 
-namespace MCM.Implementation.Testing
+namespace MCM.Custom.ScreenTests
 {
     internal sealed class TestSettingsPresets : BaseTestGlobalSettings<TestSettingsPresets>
     {
@@ -42,4 +41,3 @@ namespace MCM.Implementation.Testing
         }
     }
 }
-#endif

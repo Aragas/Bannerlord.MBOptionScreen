@@ -1,8 +1,7 @@
-﻿#if DEBUG
-using MCM.Abstractions.Attributes;
+﻿using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
 
-namespace MCM.Implementation.Testing
+namespace MCM.Custom.ScreenTests
 {
     internal sealed class TestSettingsOrder : BaseTestGlobalSettings<TestSettingsOrder>
     {
@@ -80,4 +79,3 @@ namespace MCM.Implementation.Testing
         public bool SubGroup_E { get; set; } = true;
     }
 }
-#endif

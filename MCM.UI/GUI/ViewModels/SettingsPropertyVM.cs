@@ -159,7 +159,7 @@ namespace MCM.UI.GUI.ViewModels
                 ? string.Format(ValueFormatProvider, "{0}", ((int) PropertyReference.Value).ToString("0"))
                 : string.Format(ValueFormatProvider, "{0}", ((int) PropertyReference.Value).ToString(ValueFormat)),
             SettingType.Float => string.IsNullOrWhiteSpace(ValueFormat)
-                ? string.Format(ValueFormatProvider, "{0}", ((float) PropertyReference.Value).ToString("0:00"))
+                ? string.Format(ValueFormatProvider, "{0}", ((float) PropertyReference.Value).ToString("0.00"))
                 : string.Format(ValueFormatProvider, "{0}", ((float) PropertyReference.Value).ToString(ValueFormat)),
             _ => ""
         };

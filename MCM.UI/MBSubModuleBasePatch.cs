@@ -23,11 +23,11 @@ namespace MCM.UI
     {
         private static bool _loaded = false;
 
-        public static MethodBase OnGauntletUISubModuleSubModuleLoadTargetMethod() =>
+        public static MethodBase OnGauntletUISubModuleSubModuleLoadTargetMethod { get; } =
             AccessTools.Method(typeof(GauntletUISubModule), "OnSubModuleLoad");
-        public static MethodBase OnSubModuleUnloadedTargetMethod() =>
+        public static MethodBase OnSubModuleUnloadedTargetMethod { get; } =
             AccessTools.Method(typeof(MBSubModuleBase), "OnSubModuleUnloaded");
-        public static MethodBase OnBeforeInitialModuleScreenSetAsRootTargetMethod() =>
+        public static MethodBase OnBeforeInitialModuleScreenSetAsRootTargetMethod { get; } =
             AccessTools.Method(typeof(MBSubModuleBase), "OnBeforeInitialModuleScreenSetAsRoot");
 
         public static void OnGauntletUISubModuleSubModuleLoadPostfix(MBSubModuleBase __instance)

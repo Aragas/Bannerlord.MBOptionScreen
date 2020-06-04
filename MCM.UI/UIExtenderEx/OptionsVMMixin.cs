@@ -50,7 +50,10 @@ namespace MCM.UI.UIExtenderEx
                 propertyInfo.SetValue(__instance, false);
         }
 
-        private readonly ModOptionsVM _modOptions;
+        private static readonly MethodInfo ExecuteDoneMethod = AccessTools.Method(typeof(OptionsVM), "ExecuteDone");
+        private static readonly MethodInfo ExecuteCancelMethod = AccessTools.Method(typeof(OptionsVM), "ExecuteCancel");
+
+        private readonly ModOptionsVM _modOptions = new ModOptionsVM();
         private bool _modOptionsSelected;
         private int _descriptionWidth = 650;
 
@@ -94,8 +97,6 @@ namespace MCM.UI.UIExtenderEx
 
         public OptionsVMMixin(OptionsVM vm) : base(vm)
         {
-            _modOptions = new ModOptionsVM();
-
             vm.PropertyChanged += OptionsVM_PropertyChanged;
         }
 
@@ -125,7 +126,7 @@ namespace MCM.UI.UIExtenderEx
             ModOptions.ExecuteDoneInternal(false, () =>
             {
                 if (ViewModel != null)
-                    AccessTools.Method(typeof(OptionsVM), "ExecuteDone").Invoke(ViewModel, Array.Empty<object>());
+                    ExecuteDoneMethod.Invoke(ViewModel, Array.Empty<object>());
             });
         }
 
@@ -135,7 +136,7 @@ namespace MCM.UI.UIExtenderEx
             ModOptions.ExecuteCancelInternal(false, () =>
             {
                 if (ViewModel != null)
-                    AccessTools.Method(typeof(OptionsVM), "ExecuteCancel").Invoke(ViewModel, Array.Empty<object>());
+                    ExecuteCancelMethod.Invoke(ViewModel, Array.Empty<object>());
             });
         }
     }
