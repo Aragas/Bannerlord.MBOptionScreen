@@ -1,5 +1,7 @@
 ﻿using HarmonyLib;
 
+using System;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 
@@ -10,6 +12,22 @@ namespace MCM.Utils
 {
     public static class ApplicationVersionUtils
     {
+        private static readonly MethodInfo? GetVersionStrMethod = AccessTools.Method(typeof(Managed), "GetVersionStr");
+        private static string GetGameVersion()
+        {
+            if (GetVersionStrMethod == null)
+                return "e1.0.0";
+
+            var @params = GetVersionStrMethod.GetParameters();
+            if (!@params.Any())
+                return GetVersionStrMethod.Invoke(null, Array.Empty<object>()) as string ?? "e1.0.0";
+            if (@params.Length == 1 && @params[0].ParameterType == typeof(string))
+                return GetVersionStrMethod.Invoke(null, new object[] { "Singleplayer" }) as string ?? "e1.0.0";
+
+            return "e1.0.0";
+        }
+
+
         private static ConstructorInfo? ApplicationVersionConstructorV1 { get; } = AccessTools.Constructor(typeof(ApplicationVersion), new[]
         {
             typeof(ApplicationVersionType),
@@ -84,6 +102,6 @@ namespace MCM.Utils
                    @this.Revision == other.Revision;
         }
 
-        public static ApplicationVersion GameVersion() => TryParse(Managed.GetVersionStr(), out var v) ? v : default;
+        public static ApplicationVersion GameVersion() => TryParse(GetGameVersion(), out var v) ? v : default;
     }
 }

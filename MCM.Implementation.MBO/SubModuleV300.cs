@@ -24,6 +24,7 @@ namespace MCM.Implementation.MBO
                         method,
                         prefix: new HarmonyMethod(typeof(SettingsDatabaseV1Patch1), nameof(SettingsDatabaseV1Patch1.Prefix)));
                 }
+                /*
                 foreach (var method in MBOptionScreenV1SubModulePatch1.TargetMethods())
                 {
                     harmonyV1.Patch(
@@ -36,6 +37,7 @@ namespace MCM.Implementation.MBO
                         method,
                         prefix: new HarmonyMethod(typeof(MBOptionScreenV1SubModulePatch2), nameof(MBOptionScreenV1SubModulePatch2.Prefix)));
                 }
+                */
 
                 var harmonyV2 = new Harmony("bannerlord.mcm.mbo.v2.loaderpreventer");
                 foreach (var method in SettingsDatabaseV2Patch1.TargetMethods())
@@ -44,6 +46,7 @@ namespace MCM.Implementation.MBO
                         method,
                         prefix: new HarmonyMethod(typeof(SettingsDatabaseV2Patch1), nameof(SettingsDatabaseV2Patch1.Prefix)));
                 }
+                /*
                 foreach (var method in MBOptionScreenV2SubModulePatch1.TargetMethods())
                 {
                     harmonyV2.Patch(
@@ -56,6 +59,7 @@ namespace MCM.Implementation.MBO
                         method,
                         prefix: new HarmonyMethod(typeof(MBOptionScreenV2SubModulePatch2), nameof(MBOptionScreenV2SubModulePatch2.Prefix)));
                 }
+                */
             }
         }
 
