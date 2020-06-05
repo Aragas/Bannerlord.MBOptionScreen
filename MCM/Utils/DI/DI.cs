@@ -24,6 +24,7 @@ namespace MCM.Utils
         public static IEnumerable<Type> GetAllTypes() => AppDomain.CurrentDomain.GetAssemblies()
             .Filter()
             .FilterLegacy()
+            .Where(a => !a.IsDynamic)
             .SelectMany(a => a.GetTypes());
 
 

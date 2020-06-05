@@ -47,7 +47,7 @@ namespace MCM.Implementation.Functionality
             {
                 var harmony = new Harmony("bannerlord.mcm.mainmenuscreeninjection_v3");
                 harmony.Patch(
-                    original: AccessTools.Constructor(typeof(InitialMenuVM), Type.EmptyTypes),
+                    AccessTools.Constructor(typeof(InitialMenuVM), Type.EmptyTypes),
                     postfix: new HarmonyMethod(AccessTools.Method(typeof(DefaultGameMenuScreenHandler), nameof(Constructor)), 300));
             }
         }

@@ -45,7 +45,7 @@ namespace MCM.Implementation.MBO
 
     internal class SettingsDatabaseV2Patch1 : BaseSettingsDatabaseV2Patch
     {
-        public static IEnumerable<MethodBase> TargetMethods() => Enumerable.Select<Type, MethodInfo>(GetSettingsDatabaseTypes(), type => AccessTools.Method(type, "GetSettings"))
+        public static IEnumerable<MethodBase> TargetMethods() => GetSettingsDatabaseTypes().Select(type => AccessTools.Method(type, "GetSettings"))
             .Where(m => m != null);
 
         public static bool Prefix(ref object? __result, string id)

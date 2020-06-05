@@ -13,7 +13,7 @@ namespace MCM.UI
         private bool _useStandardOptionScreen = false;
 
         public override string Id { get; } = "MCMUI_v3";
-        public override string DisplayName { get; } = new TextObject("{=MCMUISettings_Name}MCM UI Impl. {VERSION}", new Dictionary<string, TextObject>()
+        public override string DisplayName => new TextObject("{=MCMUISettings_Name}MCM UI Impl. {VERSION}", new Dictionary<string, TextObject>()
         {
             { "VERSION", new TextObject(typeof(MCMUISettings).Assembly.GetName().Version.ToString(3)) }
         }).ToString();

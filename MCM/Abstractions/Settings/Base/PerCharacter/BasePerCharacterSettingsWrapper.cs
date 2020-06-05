@@ -15,7 +15,7 @@ namespace MCM.Abstractions.Settings.Base.PerCharacter
 {
     public abstract class BasePerCharacterSettingsWrapper : PerCharacterSettings, IDependencyBase, IWrapper
     {
-        public static BasePerCharacterSettingsWrapper Create(object @object) => DI.GetBaseImplementations<BasePerCharacterSettingsWrapper, PerCharacterSettingsWrapper>(args: @object)
+        public static BasePerCharacterSettingsWrapper Create(object @object) => DI.GetBaseImplementations<BasePerCharacterSettingsWrapper, PerCharacterSettingsWrapper>(@object)
             .FirstOrDefault(w => w.IsCorrect);
 
         public object Object { get; protected set; }

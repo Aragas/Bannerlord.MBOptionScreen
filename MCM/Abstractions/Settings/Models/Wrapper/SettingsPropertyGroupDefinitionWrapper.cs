@@ -1,11 +1,9 @@
 ﻿using HarmonyLib;
 
 using MCM.Extensions;
-using MCM.Utils;
 
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MCM.Abstractions.Settings.Models.Wrapper
 {
@@ -36,7 +34,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
             settingProperties.AddRange(GetSettingProperties(@object).SortDefault());
         }
 
-        private IEnumerable<SettingsPropertyGroupDefinition> GetSubGroups(object @object)
+        private static IEnumerable<SettingsPropertyGroupDefinition> GetSubGroups(object @object)
         {
             var subGroupsProperty = AccessTools.Property(@object.GetType(), nameof(SubGroups)) ??
                                     AccessTools.Property(@object.GetType(), "SettingPropertyGroups");
@@ -44,7 +42,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
                 foreach (var obj in list)
                     yield return new SettingsPropertyGroupDefinitionWrapper(obj);
         }
-        private IEnumerable<ISettingsPropertyDefinition> GetSettingProperties(object @object)
+        private static IEnumerable<ISettingsPropertyDefinition> GetSettingProperties(object @object)
         {
             var settingPropertiesProperty = AccessTools.Property(@object.GetType(), nameof(SettingProperties));
             if (settingPropertiesProperty?.GetValue(@object) is IEnumerable list)

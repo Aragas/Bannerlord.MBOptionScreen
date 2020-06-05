@@ -49,7 +49,7 @@ namespace MCM.UI.GUI.GauntletUI
             _spriteCategoryEncyclopedia.Load(resourceContext, uiresourceDepot);
             _dataSource = new ModOptionsVM();
             _gauntletLayer = new GauntletLayer(4000, "GauntletLayer");
-            _gauntletMovie = _gauntletLayer.LoadMovie("ModOptionsView_v3", _dataSource);
+            _gauntletMovie = _gauntletLayer.LoadMovie("ModOptionsView", _dataSource);
             _gauntletLayer.Input.RegisterHotKeyCategory(HotKeyManager.GetCategory("GenericPanelGameKeyCategory"));
             _gauntletLayer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);
             _gauntletLayer.IsFocusLayer = true;

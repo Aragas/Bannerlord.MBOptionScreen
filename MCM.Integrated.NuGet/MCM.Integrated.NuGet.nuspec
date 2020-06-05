@@ -3,7 +3,7 @@
 <package>
   <metadata>
     <id>Bannerlord.MCM.Integrated</id>
-    <version>3.1.4</version>
+    <version>3.1.5</version>
     <title>Mod Configuration Menu</title>
     <owners>Aragas</owners>
     <authors>Aragas, mipen</authors>
@@ -15,11 +15,12 @@
   </metadata>
   <files>
     <file src="bin/Release/net472/MCMv3.dll" target="lib/net472" />
-    <file src="bin/Release/net472/MCMv3.Implementation.v3.1.4.dll" target="lib/net472" />
-    <file src="bin/Release/net472/MCMv3.UI.v3.1.4.dll" target="lib/net472" />
+    <file src="bin/Release/net472/MCMv3.Implementation.v3.1.5.dll" target="lib/net472" />
+    <file src="bin/Release/net472/MCMv3.UI.v3.1.5.dll" target="lib/net472" />
+    <file src="bin/Release/net472/Bannerlord.UIExtenderEx.dll" target="lib/net472" />
 
     <file src="bin/Release/net472/MCMv3.pdb" target="lib/net472" />
-    <file src="bin/Release/net472/MCMv3.Implementation.v3.1.4.pdb" target="lib/net472" />
-    <file src="bin/Release/net472/MCMv3.UI.v3.1.4.pdb" target="lib/net472" />
+    <file src="bin/Release/net472/MCMv3.Implementation.v3.1.5.pdb" target="lib/net472" />
+    <file src="bin/Release/net472/MCMv3.UI.v3.1.5.pdb" target="lib/net472" />
   </files>
 </package>

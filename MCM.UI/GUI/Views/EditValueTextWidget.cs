@@ -12,7 +12,7 @@ using TaleWorlds.TwoDimension;
 
 namespace MCM.UI.GUI.Views
 {
-    internal class EditValueTextWidget_v3 : EditableTextWidget
+    internal class EditValueTextWidget : EditableTextWidget
     {
         private readonly EditableText _editableWidget;
 
@@ -23,7 +23,7 @@ namespace MCM.UI.GUI.Views
         [DataSourceProperty]
         public float MinValue { get; set; } = 0f;
 
-        public EditValueTextWidget_v3(UIContext context) : base(context)
+        public EditValueTextWidget(UIContext context) : base(context)
         {
             _editableWidget = (EditableText) typeof(EditableTextWidget).GetField("_editableText", BindingFlags.Instance | BindingFlags.NonPublic)
                 .GetValue(this);
@@ -36,9 +36,8 @@ namespace MCM.UI.GUI.Views
 
             if (lastKeysPressed.Count > 0)
             {
-                for (var i = 0; i < lastKeysPressed.Count; i++)
+                foreach (var key in lastKeysPressed)
                 {
-                    var key = lastKeysPressed[i];
                     if (SettingType == SettingType.String)
                     {
                         base.HandleInput(lastKeysPressed);

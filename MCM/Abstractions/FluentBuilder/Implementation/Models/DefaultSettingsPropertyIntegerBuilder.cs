@@ -3,6 +3,7 @@ using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
 
+using System;
 using System.Collections.Generic;
 
 namespace MCM.Abstractions.FluentBuilder.Implementation.Models
@@ -11,12 +12,14 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
         BaseDefaultSettingsPropertyBuilder<ISettingsPropertyIntegerBuilder>,
         ISettingsPropertyIntegerBuilder,
         IPropertyDefinitionWithMinMax,
-        IPropertyDefinitionWithFormat
+        IPropertyDefinitionWithFormat,
+        IPropertyDefinitionWithActionFormat
     {
         public decimal MinValue { get; }
         public decimal MaxValue { get; }
         public string ValueFormat { get; private set; } = "";
-
+        public Func<object, string> ValueFormatFunc { get; private set; }
+        
         internal DefaultSettingsPropertyIntegerBuilder(string name, int minValue, int maxValue, IRef @ref)
             : base(name, @ref)
         {
@@ -27,7 +30,18 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
 
         public ISettingsPropertyBuilder AddValueFormat(string value)
         {
+            if (ValueFormatFunc != null)
+                throw new InvalidOperationException("AddActionValueFormat was already called!");
+
             ValueFormat = value;
+            return SettingsPropertyBuilder;
+        }
+        public ISettingsPropertyBuilder AddActionValueFormat(Func<int, string> value)
+        {
+            if (ValueFormat != "")
+                throw new InvalidOperationException("AddValueFormat was already called!");
+
+            ValueFormatFunc = obj => value((int) obj);
             return SettingsPropertyBuilder;
         }
 
@@ -35,6 +49,8 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
         {
             new PropertyDefinitionWithMinMaxWrapper(this),
             new PropertyDefinitionWithFormatWrapper(this), 
+            new PropertyDefinitionWithActionFormatWrapper(this),
+            new PropertyDefinitionWithCustomFormatterWrapper(this), 
         };
     }
 }

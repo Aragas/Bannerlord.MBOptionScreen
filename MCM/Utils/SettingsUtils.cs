@@ -82,12 +82,6 @@ namespace MCM.Utils
         public static void OverrideSettings(BaseSettings settings, BaseSettings overrideSettings)
         {
             OverrideValues(settings, overrideSettings);
-            /*
-            if (settings is IWrapper wrapper && overrideSettings is IWrapper overrideWrapper)
-                CopyProperties(wrapper.Object, overrideWrapper.Object);
-            else
-                CopyProperties(settings, overrideSettings);
-            */
         }
 
 
@@ -128,21 +122,21 @@ namespace MCM.Utils
                 case SettingType.Int:
                 case SettingType.Float:
                 case SettingType.String:
-                    {
-                        var original = currentDefinition.PropertyReference.Value;
-                        var @new = newDefinition.PropertyReference.Value;
-                        return original.Equals(@new);
-                    }
+                {
+                    var original = currentDefinition.PropertyReference.Value;
+                    var @new = newDefinition.PropertyReference.Value;
+                    return original.Equals(@new);
+                }
                 case SettingType.Dropdown:
-                    {
-                        var original = GetSelector(currentDefinition.PropertyReference.Value);
-                        var @new = GetSelector(newDefinition.PropertyReference.Value);
-                        return original.SelectedIndex.Equals(@new.SelectedIndex);
-                    }
+                {
+                    var original = GetSelector(currentDefinition.PropertyReference.Value);
+                    var @new = GetSelector(newDefinition.PropertyReference.Value);
+                    return original.SelectedIndex.Equals(@new.SelectedIndex);
+                }
                 default:
-                    {
-                        return false;
-                    }
+                {
+                    return false;
+                }
             }
         }
 

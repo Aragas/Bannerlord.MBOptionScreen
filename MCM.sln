@@ -33,6 +33,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Root", "Root", "{6DA59EA7-D40B-4C02-B0CC-64875B4064CD}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
+		LICENSE.txt = LICENSE.txt
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModLib.Definitions Substitute", "ModLib.Definitions Substitute\ModLib.Definitions Substitute.csproj", "{3EF3A7F5-50FC-4B53-925D-6CF42FA58405}"
@@ -45,12 +48,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCM.NuGet", "MCM.NuGet\MCM.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Localization", "_Localization", "{FCD88090-9290-4DEF-8AFE-F84D99D03C4A}"
 	ProjectSection(SolutionItems) = preProject
+		localization.xsd = localization.xsd
 		std_MCM.xml = std_MCM.xml
 		std_MCM_Implementation.xml = std_MCM_Implementation.xml
 		std_MCM_MBO.xml = std_MCM_MBO.xml
 		std_MCM_ModLib.xml = std_MCM_ModLib.xml
 		std_MCM_UI.xml = std_MCM_UI.xml
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCM.Custom.ScreenTests", "MCM.Custom.ScreenTests\MCM.Custom.ScreenTests.csproj", "{93218C18-364B-4ADA-8878-65A0D4F6F589}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -102,6 +108,10 @@ Global
 		{733451EC-8556-4FC2-8429-31770126D071}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{733451EC-8556-4FC2-8429-31770126D071}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{733451EC-8556-4FC2-8429-31770126D071}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93218C18-364B-4ADA-8878-65A0D4F6F589}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93218C18-364B-4ADA-8878-65A0D4F6F589}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93218C18-364B-4ADA-8878-65A0D4F6F589}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93218C18-364B-4ADA-8878-65A0D4F6F589}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -124,6 +134,7 @@ Global
 		{0D63F657-9E2B-431E-8F51-314D1E2B00C9} = {6DA59EA7-D40B-4C02-B0CC-64875B4064CD}
 		{733451EC-8556-4FC2-8429-31770126D071} = {CA7EC15E-2C6B-447A-825B-2AA21E7E75F3}
 		{FCD88090-9290-4DEF-8AFE-F84D99D03C4A} = {6DA59EA7-D40B-4C02-B0CC-64875B4064CD}
+		{93218C18-364B-4ADA-8878-65A0D4F6F589} = {6DA59EA7-D40B-4C02-B0CC-64875B4064CD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FF6EB7D0-C9CB-4A8B-AE72-0511907E6821}

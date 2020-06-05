@@ -1,7 +1,6 @@
-﻿#if DEBUG
-using MCM.Abstractions.Settings.Base.Global;
+﻿using MCM.Abstractions.Settings.Base.Global;
 
-namespace MCM.Implementation.Testing
+namespace MCM.Custom.ScreenTests
 {
     public abstract class BaseTestGlobalSettings<T> : AttributeGlobalSettings<T> where T : GlobalSettings, new()
     {
@@ -9,4 +8,3 @@ namespace MCM.Implementation.Testing
 
     }
 }
-#endif

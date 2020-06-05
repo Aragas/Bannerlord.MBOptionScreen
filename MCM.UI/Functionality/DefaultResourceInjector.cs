@@ -49,12 +49,12 @@ namespace MCM.UI.Functionality
         {
             if (Interlocked.Exchange(ref _initialized, 1) == 0)
             {
-                var harmony = new Harmony("bannerlord.mcm.recourceinjector_v3");
+                var harmony = new Harmony("bannerlord.mcm.recourceinjector");
                 harmony.Patch(
-                    original: AccessTools.Method(typeof(GauntletMovie), "LoadMovie"),
+                    AccessTools.Method(typeof(GauntletMovie), "LoadMovie"),
                     prefix: new HarmonyMethod(AccessTools.Method(typeof(DefaultResourceInjector), nameof(LoadMovieHarmony))));
                 harmony.Patch(
-                    original: AccessTools.Method(typeof(BrushFactory), "LoadBrushes"),
+                    AccessTools.Method(typeof(BrushFactory), "LoadBrushes"),
                     postfix: new HarmonyMethod(AccessTools.Method(typeof(DefaultResourceInjector), nameof(LoadBrushesHarmony))));
             }
         }
@@ -68,7 +68,7 @@ namespace MCM.UI.Functionality
 
             var widgetCreationData = new WidgetCreationData(__instance.Context, __instance.WidgetFactory);
             widgetCreationData.AddExtensionData(__instance);
-            RootViewProperty.SetValue(__instance, WidgetInstantiationResultDatabindingExtension.GetGauntletView(movie.Instantiate(widgetCreationData)));
+            RootViewProperty.SetValue(__instance, movie.Instantiate(widgetCreationData).GetGauntletView());
             ____movieRootNode.AddChild(__instance.RootView.Target);
             __instance.RootView.RefreshBindingWithChildren();
             return false;
@@ -95,9 +95,9 @@ namespace MCM.UI.Functionality
             WidgetInjector.InjectWidget(widgetType);
         public override WidgetPrefab? MovieRequested(string movie) => movie switch
         {
-            "ModOptionsView_v3" => PrefabsLoader.LoadModOptionsView(),
-            "EditValueView_v3" => PrefabsLoader.LoadEditValueView(),
-            "OptionsWithModOptionsView_v3" => PrefabsLoader.LoadOptionsWithModOptionsView(),
+            "ModOptionsView" => PrefabsLoader.LoadModOptionsView(),
+            "EditValueView" => PrefabsLoader.LoadEditValueView(),
+            "OptionsWithModOptionsView" => PrefabsLoader.LoadOptionsWithModOptionsView(),
             _ => null
         };
     }

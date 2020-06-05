@@ -1,14 +1,16 @@
-﻿using System;
+﻿using MCM.Utils;
 
-using MCM.Utils;
+using System;
+using System.Collections.Concurrent;
 
 namespace MCM.Abstractions.Synchronization
 {
     public abstract class BaseSynchronizationProvider : IDependency, IDisposable
     {
-        private static BaseSynchronizationProvider? _instance;
+        private static readonly ConcurrentDictionary<string, BaseSynchronizationProvider> _instances =
+            new ConcurrentDictionary<string, BaseSynchronizationProvider>();
         public static BaseSynchronizationProvider Create(string name) =>
-            _instance ??= DI.GetImplementation<BaseSynchronizationProvider, SynchronizationProviderWrapper>(args: name)!;
+            _instances.GetOrAdd(name, n => DI.GetImplementation<BaseSynchronizationProvider, SynchronizationProviderWrapper>(n)!);
 
 
         public virtual string Name { get; } = "";

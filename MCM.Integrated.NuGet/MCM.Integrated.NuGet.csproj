@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MCM.Implementation\MCM.Implementation.csproj" PrivateAssets="all" />
-    <ProjectReference Include="..\MCM.UI\MCM.UI.csproj" PrivateAssets="all" />
-    <ProjectReference Include="..\MCM\MCM.csproj" PrivateAssets="all" />
+    <ProjectReference Include="..\MCM.Implementation\MCM.Implementation.csproj" />
+    <ProjectReference Include="..\MCM.UI\MCM.UI.csproj" />
+    <ProjectReference Include="..\MCM\MCM.csproj" />
   </ItemGroup>
 
 </Project>

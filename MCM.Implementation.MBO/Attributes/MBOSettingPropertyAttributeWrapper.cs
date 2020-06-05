@@ -27,8 +27,8 @@ namespace MCM.Implementation.MBO.Attributes
         {
             var type = @object.GetType();
 
-            DisplayName = new TextObject((type.GetProperty("DisplayName") ?? type.GetProperty("Name"))?.GetValue(@object) as string ?? "ERROR", null).ToString();
-            HintText = new TextObject(type.GetProperty("HintText")?.GetValue(@object) as string ?? "ERROR", null).ToString();
+            DisplayName = new TextObject((type.GetProperty("DisplayName") ?? type.GetProperty("Name"))?.GetValue(@object) as string ?? "ERROR").ToString();
+            HintText = new TextObject(type.GetProperty("HintText")?.GetValue(@object) as string ?? "ERROR").ToString();
             Order = type.GetProperty("Order")?.GetValue(@object) as int? ?? 0;
             RequireRestart = type.GetProperty("RequireRestart")?.GetValue(@object) as bool? ?? true;
 

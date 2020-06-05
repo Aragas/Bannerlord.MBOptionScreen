@@ -18,7 +18,7 @@ using TaleWorlds.Localization;
 
 namespace MCM.UI.GUI.ViewModels
 {
-    internal class ModOptionsVM : ViewModel
+    internal sealed class ModOptionsVM : ViewModel
     {
         private string _titleLabel = "";
         private string _cancelButtonText = "";
@@ -40,7 +40,7 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
         [DataSourceProperty]
-        public bool ChangesMade => ModSettingsList.Any(x => x.URS.ChangesMade());
+        public bool ChangesMade => ModSettingsList.Any(x => x.URS.ChangesMade);
         [DataSourceProperty]
         public string DoneButtonText
         {
@@ -274,7 +274,7 @@ namespace MCM.UI.GUI.ViewModels
         public void ExecuteDone() => ExecuteDoneInternal(true);
         public void ExecuteDoneInternal(bool popScreen, Action? onClose = null)
         {
-            if (!ModSettingsList.Any(x => x.URS.ChangesMade()))
+            if (!ModSettingsList.Any(x => x.URS.ChangesMade))
             {
                 OnFinalize();
                 if (popScreen) ScreenManager.PopScreen();
@@ -283,7 +283,7 @@ namespace MCM.UI.GUI.ViewModels
             }
 
             //Save the changes to file.
-            var changedModSettings = ModSettingsList.Where(x => x.URS.ChangesMade()).ToList();
+            var changedModSettings = ModSettingsList.Where(x => x.URS.ChangesMade).ToList();
 
             var requireRestart = ModSettingsList.Any(x => x.RestartRequired());
             if (requireRestart)

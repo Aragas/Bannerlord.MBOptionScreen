@@ -3,14 +3,13 @@ using MCM.UI.Actions;
 
 using System.Collections.Generic;
 
-using TaleWorlds.Core;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
 
 namespace MCM.UI.GUI.ViewModels
 {
-    internal class EditValueVM : ViewModel
+    internal sealed class EditValueVM : ViewModel
     {
         private string _textInput = "";
         private string _titleText = "title";
@@ -98,7 +97,7 @@ namespace MCM.UI.GUI.ViewModels
                 case SettingType.Int:
                 case SettingType.Float:
                 {
-                    var format = SettingProperty.SettingType == SettingType.Int ? "0" : "0.00";
+                    var format = SettingProperty.IsIntVisible ? "0" : "0.00";
                     DescriptionText = new TextObject("{=EditValueVM_DescriptionText_Numeric}Edit the value for \"{PROPERTYNAME}\".\nThe minimum value is {MINVALUE} and the maximum value is {MAXVALUE}.", new Dictionary<string, TextObject>()
                     {
                         {"PROPERTYNAME", new TextObject(SettingProperty.Name)},
@@ -126,7 +125,13 @@ namespace MCM.UI.GUI.ViewModels
         {
             base.RefreshValues();
 
-            TextInput = SettingProperty.ValueString ?? "";
+            TextInput = SettingProperty.SettingType switch
+            {
+                SettingType.Int => SettingProperty.IntValue.ToString(),
+                SettingType.Float => SettingProperty.FloatValue.ToString(),
+                SettingType.String => SettingProperty.StringValue,
+                _ => "",
+            };
         }
 
         public void ExecuteDone()

@@ -50,7 +50,7 @@ namespace MCM.Implementation.Functionality
                 var harmony = new Harmony("bannerlord.mcm.escapemenuinjection_v3");
 
                 harmony.Patch(
-                    original: AccessTools.Method(typeof(MapScreen), "GetEscapeMenuItems"),
+                    AccessTools.Method(typeof(MapScreen), "GetEscapeMenuItems"),
                     postfix: new HarmonyMethod(AccessTools.Method(typeof(DefaultIngameMenuScreenHandler), nameof(MapScreen_GetEscapeMenuItems)), 300));
 
                 // TODO: We can't replace MissionSingleplayerEscapeMenu at runtime because it's injected in the MissionView[] 
@@ -58,13 +58,13 @@ namespace MCM.Implementation.Functionality
                 var actualViewTypes = (Dictionary<Type, Type>) (AccessTools.Field(typeof(ViewCreatorManager), "_actualViewTypes")?.GetValue(null) ?? new Dictionary<Type, Type>());
                 var overrideType = actualViewTypes[typeof(MissionSingleplayerEscapeMenu)];
                 harmony.Patch(
-                    original: AccessTools.DeclaredMethod(overrideType, "GetEscapeMenuItems"),
+                    AccessTools.DeclaredMethod(overrideType, "GetEscapeMenuItems"),
                     postfix: new HarmonyMethod(AccessTools.Method(typeof(DefaultIngameMenuScreenHandler), nameof(MissionSingleplayerEscapeMenu_GetEscapeMenuItems)), 300));
                 harmony.Patch(
-                    original: AccessTools.DeclaredMethod(overrideType, "OnMissionScreenInitialize"),
+                    AccessTools.DeclaredMethod(overrideType, "OnMissionScreenInitialize"),
                     postfix: new HarmonyMethod(AccessTools.Method(typeof(DefaultIngameMenuScreenHandler), nameof(OnMissionScreenInitialize)), 300));
                 harmony.Patch(
-                    original: AccessTools.DeclaredMethod(overrideType, "OnMissionScreenFinalize") ?? AccessTools.DeclaredMethod(typeof(GauntletMissionEscapeMenuBase), "OnMissionScreenFinalize"),
+                    AccessTools.DeclaredMethod(overrideType, "OnMissionScreenFinalize") ?? AccessTools.DeclaredMethod(typeof(GauntletMissionEscapeMenuBase), "OnMissionScreenFinalize"),
                     postfix: new HarmonyMethod(AccessTools.Method(typeof(DefaultIngameMenuScreenHandler), nameof(OnMissionScreenFinalize)), 300));
             }
         }

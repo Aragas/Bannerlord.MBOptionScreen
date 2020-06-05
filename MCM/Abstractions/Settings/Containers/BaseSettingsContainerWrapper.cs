@@ -43,10 +43,10 @@ namespace MCM.Abstractions.Settings.Containers
                 ? settings is BaseSettings settingsBase ? settingsBase : BaseGlobalSettingsWrapper.Create(settings)
                 : default;
         public bool OverrideSettings(BaseSettings settings) =>
-            OverrideSettingsMethod?.Invoke(Object, new object[] { settings is IWrapper wrapper ? wrapper.Object : settings }) as bool? ?? false;
+            OverrideSettingsMethod?.Invoke(Object, new [] { settings is IWrapper wrapper ? wrapper.Object : settings }) as bool? ?? false;
         public bool ResetSettings(BaseSettings settings) =>
-            ResetSettingsMethod?.Invoke(Object, new object[] { settings is IWrapper wrapper ? wrapper.Object : settings }) as bool? ?? false;
+            ResetSettingsMethod?.Invoke(Object, new [] { settings is IWrapper wrapper ? wrapper.Object : settings }) as bool? ?? false;
         public bool SaveSettings(BaseSettings settings) =>
-            SaveSettingsMethod?.Invoke(Object, new object[] { settings is IWrapper wrapper ? wrapper.Object : settings }) as bool? ?? false;
+            SaveSettingsMethod?.Invoke(Object, new [] { settings is IWrapper wrapper ? wrapper.Object : settings }) as bool? ?? false;
     }
 }

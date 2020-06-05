@@ -5,19 +5,13 @@ using MCM.Abstractions.Settings.Base;
 using MCM.UI.Functionality.Loaders;
 using MCM.Utils;
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Reflection;
 
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.MountAndBlade.GauntletUI;
-using TaleWorlds.MountAndBlade.LegacyGUI.Missions.Multiplayer;
-using TaleWorlds.MountAndBlade.View.Missions;
-using TaleWorlds.MountAndBlade.View.Screen;
 
 namespace MCM.UI
 {
@@ -29,11 +23,11 @@ namespace MCM.UI
     {
         private static bool _loaded = false;
 
-        public static MethodBase OnGauntletUISubModuleSubModuleLoadTargetMethod() =>
+        public static MethodBase OnGauntletUISubModuleSubModuleLoadTargetMethod { get; } =
             AccessTools.Method(typeof(GauntletUISubModule), "OnSubModuleLoad");
-        public static MethodBase OnSubModuleUnloadedTargetMethod() =>
+        public static MethodBase OnSubModuleUnloadedTargetMethod { get; } =
             AccessTools.Method(typeof(MBSubModuleBase), "OnSubModuleUnloaded");
-        public static MethodBase OnBeforeInitialModuleScreenSetAsRootTargetMethod() =>
+        public static MethodBase OnBeforeInitialModuleScreenSetAsRootTargetMethod { get; } =
             AccessTools.Method(typeof(MBSubModuleBase), "OnBeforeInitialModuleScreenSetAsRoot");
 
         public static void OnGauntletUISubModuleSubModuleLoadPostfix(MBSubModuleBase __instance)
@@ -46,8 +40,8 @@ namespace MCM.UI
         }
         public static void OnSubModuleUnloadedPostfix(MBSubModuleBase __instance)
         {
-            if (__instance is SubModuleV300)
-                OnSubModuleLoad();
+            if (__instance is MCMUISubModule)
+                SubModuleV300SubModuleLoad();
         }
         public static void OnBeforeInitialModuleScreenSetAsRootPostfix()
         {
@@ -62,6 +56,8 @@ namespace MCM.UI
 
         private static void SandBoxSubModuleOnSubModuleLoad()
         {
+            MCMUISubModule._extender.Register();
+
             BrushLoader.Inject(BaseResourceHandler.Instance);
             PrefabsLoader.Inject(BaseResourceHandler.Instance);
             WidgetLoader.Inject(BaseResourceHandler.Instance);
@@ -69,7 +65,7 @@ namespace MCM.UI
             UpdateOptionScreen(MCMUISettings.Instance!);
             MCMUISettings.Instance!.PropertyChanged += MCMSettings_PropertyChanged;
         }
-        private static void OnSubModuleLoad()
+        private static void SubModuleV300SubModuleLoad()
         {
             MCMUISettings.Instance!.PropertyChanged -= MCMSettings_PropertyChanged;
         }
@@ -86,77 +82,26 @@ namespace MCM.UI
         {
             if (settings.UseStandardOptionScreen)
             {
-                OverrideEscapeMenu();
-                OverrideMissionEscapeMenu();
+                MCMUISubModule._extender.Enable();
 
-                BaseGameMenuScreenHandler.Instance.RemoveScreen("MCM_OptionScreen_v3");
-                BaseIngameMenuScreenHandler.Instance.RemoveScreen("MCM_OptionScreen_v3");
+                BaseGameMenuScreenHandler.Instance.RemoveScreen("MCM_OptionScreen");
+                BaseIngameMenuScreenHandler.Instance.RemoveScreen("MCM_OptionScreen");
             }
             else
             {
-                OverrideEscapeMenu(true);
-                OverrideMissionEscapeMenu(true);
+                MCMUISubModule._extender.Disable();
 
                 BaseGameMenuScreenHandler.Instance.AddScreen(
-                    "MCM_OptionScreen_v3",
+                    "MCM_OptionScreen",
                     9990,
                     () => DI.GetImplementation<IMCMOptionsScreen>() as ScreenBase,
                     new TextObject("{=MainMenu_ModOptions}Mod Options"));
                 BaseIngameMenuScreenHandler.Instance.AddScreen(
-                    "MCM_OptionScreen_v3",
+                    "MCM_OptionScreen",
                     1,
                     () => DI.GetImplementation<IMCMOptionsScreen>() as ScreenBase,
-                    new TextObject("{=EscapeMenu_ModOptions}Mod Options", null));
+                    new TextObject("{=EscapeMenu_ModOptions}Mod Options"));
             }
-        }
-
-        private static void OverrideEscapeMenu(bool returnDefault = false)
-        {
-            if (returnDefault)
-            {
-                OverrideView(typeof(OptionsScreen), typeof(OptionsGauntletScreen));
-            }
-            else
-            {
-                var types = AppDomain.CurrentDomain.GetAssemblies()
-                    .Where(a => !a.IsDynamic)
-                    .SelectMany(a => a.GetTypes())
-                    .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(IOptionsWithMCMOptionsScreen)));
-                var latestImplementation = VersionUtils.GetLastImplementation(ApplicationVersionUtils.GameVersion(), types);
-                if (latestImplementation != null)
-                {
-                    OverrideView(typeof(OptionsScreen), latestImplementation?.Type!);
-                }
-            }
-        }
-        private static void OverrideMissionEscapeMenu(bool returnDefault = false)
-        {
-            if (returnDefault)
-            {
-                OverrideView(typeof(MissionOptionsUIHandler), typeof(MissionGauntletOptionsUIHandler));
-            }
-            else
-            {
-                var types = AppDomain.CurrentDomain.GetAssemblies()
-                    .Where(a => !a.IsDynamic)
-                    .SelectMany(a => a.GetTypes())
-                    .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(IOptionsWithMCMOptionsMissionView)));
-                var latestImplementation = VersionUtils.GetLastImplementation(ApplicationVersionUtils.GameVersion(), types);
-                if (latestImplementation != null)
-                {
-                    OverrideView(typeof(MissionOptionsUIHandler), latestImplementation?.Type!);
-                }
-            }
-        }
-
-        private static void OverrideView(Type baseType, Type type)
-        {
-            var actualViewTypes = (Dictionary<Type, Type>)AccessTools.Field(typeof(ViewCreatorManager), "_actualViewTypes").GetValue(null);
-
-            if (actualViewTypes.ContainsKey(baseType))
-                actualViewTypes[baseType] = type;
-            else
-                actualViewTypes.Add(baseType, type);
         }
     }
 }

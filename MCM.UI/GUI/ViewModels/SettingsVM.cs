@@ -15,7 +15,7 @@ using TaleWorlds.Localization;
 
 namespace MCM.UI.GUI.ViewModels
 {
-    internal class SettingsVM : ViewModel
+    internal sealed class SettingsVM : ViewModel
     {
         private bool _isSelected;
         private Action<SettingsVM> _executeSelect = default!;
@@ -128,29 +128,10 @@ namespace MCM.UI.GUI.ViewModels
 
         private void ExecuteSelect() => _executeSelect?.Invoke(this);
 
-        public bool RestartRequired()
-        {
-            var properties = SettingPropertyGroups.SelectMany(GetAllSettingPropertyDefinitions)
-                .Where(p => p.RequireRestart);
+        public bool RestartRequired() => SettingPropertyGroups.SelectMany(GetAllSettingPropertyDefinitions)
+            .Where(p => p.RequireRestart)
+            .Any(p => URS.RefChanged(p.PropertyReference));
 
-            foreach (var property in properties)
-            {
-                var stack = URS.UndoStack.Where(s => s.Context == property.PropertyReference).ToList();
-                if (stack.Count == 0)
-                    continue;
-                else
-                {
-                    var firstChange = stack.First();
-                    var lastChange = stack.Last();
-                    var originalValue = firstChange.Original;
-                    var currentValue = lastChange.Value;
-                    if (!originalValue.Equals(currentValue))
-                        return true;
-                }
-            }
-
-            return false;
-        }
         private static IEnumerable<ISettingsPropertyDefinition> GetAllSettingPropertyDefinitions(SettingsPropertyGroupVM settingPropertyGroup1)
         {
             foreach (var settingProperty in settingPropertyGroup1.SettingProperties)

@@ -1,24 +1,36 @@
-﻿using System.Collections.Generic;
+﻿using MCM.Abstractions.Ref;
 
-using MCM.UI.ExtensionMethods;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MCM.UI.Actions
 {
     internal sealed class UndoRedoStack
     {
-        public Stack<IAction> UndoStack { get; }
-        public Stack<IAction> RedoStack { get; }
-        public Stack<IInitial> InitialStack { get; }
+        private Stack<IAction> UndoStack { get; }
+        private Stack<IAction> RedoStack { get; }
 
         public bool CanUndo => UndoStack.Count > 0;
         public bool CanRedo => RedoStack.Count > 0;
-        public bool HasInitials => InitialStack.Count > 0;
+        public bool ChangesMade => UndoStack.Count > 0;
 
         public UndoRedoStack()
         {
             UndoStack = new Stack<IAction>();
             RedoStack = new Stack<IAction>();
-            InitialStack = new Stack<IInitial>();
+        }
+
+        public bool RefChanged(IRef @ref)
+        {
+            var stack = UndoStack.Where(s => s.Context == @ref).ToList();
+            if (stack.Count == 0)
+                return false;
+
+            var firstChange = stack.First();
+            var lastChange = stack.Last();
+            var originalValue = firstChange.Original;
+            var currentValue = lastChange.Value;
+            return !originalValue.Equals(currentValue);
         }
 
         /// <summary>
@@ -28,12 +40,6 @@ namespace MCM.UI.Actions
         public void Do(IAction action)
         {
             action.DoAction();
-            UndoStack.Push(action);
-            RedoStack.Clear();
-        }
-
-        public void DoWithoutDo(IAction action)
-        {
             UndoStack.Push(action);
             RedoStack.Clear();
         }
@@ -77,65 +83,12 @@ namespace MCM.UI.Actions
                     a.UndoAction();
                 }
             }
-            if (HasInitials)
-            {
-                while (InitialStack.Count > 0)
-                {
-                    var i = InitialStack.Pop();
-                    i.Reset();
-                }
-            }
-        }
-
-        /// <summary>
-        /// Merges the UndoStack with given UndoRedoStack's UndoStack.
-        /// </summary>
-        /// <param name="urs">Foreign UndoRedoStack to add to top of UndoStack</param>
-        public void MergeURStack(UndoRedoStack urs)
-        {
-            UndoStack.AppendToTop(urs.UndoStack);
-        }
-
-        /// <summary>
-        /// Adds the action to the InitialStack. This stack is undone when UndoAll is called.
-        /// </summary>
-        /// <param name="action"></param>
-        public void SetInitial(IInitial initial)
-        {
-            InitialStack.Push(initial);
-        }
-
-        /// <summary>
-        /// Checks the initial setup actions for changes.
-        /// </summary>
-        /// <returns>Returns True if there are any changes made.</returns>
-        public bool CheckInitials()
-        {
-            if (!HasInitials)
-                return false;
-            var i = InitialStack.ToArray();
-            foreach (var x in i)
-            {
-                if (x.Changed()) return true;
-            }
-            return false;
         }
 
         public void ClearStack()
         {
             UndoStack.Clear();
             RedoStack.Clear();
-            InitialStack.Clear();
-        }
-
-        public bool ChangesMade()
-        {
-            if (UndoStack.Count > 0)
-                return true;
-            if (CheckInitials())
-                return true;
-
-            return false;
         }
     }
 }

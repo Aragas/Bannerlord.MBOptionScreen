@@ -17,7 +17,7 @@ namespace MCM.Abstractions.Settings.Containers
     {
         protected virtual string RootFolder { get; } = Path.Combine(Utilities.GetConfigsPath(), "ModSettings");
         protected Dictionary<string, ISettingsFormat> AvailableSettingsFormats { get; } = new Dictionary<string, ISettingsFormat>();
-        protected Dictionary<string, TSettings> LoadedSettings { get; } = new Dictionary<string, TSettings>();
+        protected virtual Dictionary<string, TSettings> LoadedSettings { get; } = new Dictionary<string, TSettings>();
 
         public virtual List<SettingsDefinition> CreateModSettingsDefinitions => LoadedSettings.Keys.ToList()
             .Select(id => new SettingsDefinition(id))
