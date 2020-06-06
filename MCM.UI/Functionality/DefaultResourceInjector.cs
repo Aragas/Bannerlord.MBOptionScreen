@@ -95,9 +95,9 @@ namespace MCM.UI.Functionality
             WidgetInjector.InjectWidget(widgetType);
         public override WidgetPrefab? MovieRequested(string movie) => movie switch
         {
-            "ModOptionsView" => PrefabsLoader.LoadModOptionsView(),
-            "EditValueView" => PrefabsLoader.LoadEditValueView(),
-            "OptionsWithModOptionsView" => PrefabsLoader.LoadOptionsWithModOptionsView(),
+            "ModOptionsView_MCMv3" => PrefabsLoader.LoadModOptionsView_MCMv3(),
+            "EditValueView_MCMv3" => PrefabsLoader.LoadEditValueView_MCMv3(),
+            "OptionsWithModOptionsView_MCMv3" => PrefabsLoader.LoadOptionsWithModOptionsView_MCMv3(),
             _ => null
         };
     }

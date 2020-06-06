@@ -18,9 +18,9 @@ namespace MCM.UI.Functionality.Loaders
         public static XmlDocument SettingsPropertyGroupView() => Load("MCM.UI.GUI.Views.SettingsPropertyGroupView.xml");
         public static XmlDocument SettingsView() => Load("MCM.UI.GUI.Views.SettingsView.xml");
 
-        public static WidgetPrefab LoadOptionsWithModOptionsView() => PrefabInjector.InjectDocumentAndCreate("OptionsWithModOptionsView", Load("MCM.UI.GUI.Views.OptionsWithModOptionsView.xml"));
-        public static WidgetPrefab LoadModOptionsView() => PrefabInjector.InjectDocumentAndCreate("ModOptionsView", Load("MCM.UI.GUI.Views.ModOptionsView.xml"));
-        public static WidgetPrefab LoadEditValueView() => PrefabInjector.InjectDocumentAndCreate("EditValueView", Load("MCM.UI.GUI.Views.EditValueView.xml"));
+        public static WidgetPrefab LoadOptionsWithModOptionsView_MCMv3() => PrefabInjector.InjectDocumentAndCreate("OptionsWithModOptionsView_MCMv3", Load("MCM.UI.GUI.Views.OptionsWithModOptionsView.xml"));
+        public static WidgetPrefab LoadModOptionsView_MCMv3() => PrefabInjector.InjectDocumentAndCreate("ModOptionsView_MCMv3", Load("MCM.UI.GUI.Views.ModOptionsView.xml"));
+        public static WidgetPrefab LoadEditValueView_MCMv3() => PrefabInjector.InjectDocumentAndCreate("EditValueView_MCMv3", Load("MCM.UI.GUI.Views.EditValueView.xml"));
 
         private static XmlDocument Load(string embedPath)
         {
@@ -32,11 +32,11 @@ namespace MCM.UI.Functionality.Loaders
 
         public static void Inject(BaseResourceHandler resourceInjector)
         {
-            resourceInjector.InjectPrefab("ModOptionsPageView", ModOptionsPageView());
-            resourceInjector.InjectPrefab("SettingsItemView", SettingsItemView());
-            resourceInjector.InjectPrefab("SettingsPropertyGroupView", SettingsPropertyGroupView());
-            resourceInjector.InjectPrefab("SettingsPropertyView", SettingsPropertyView());
-            resourceInjector.InjectPrefab("SettingsView", SettingsView());
+            resourceInjector.InjectPrefab("ModOptionsPageView_MCMv3", ModOptionsPageView());
+            resourceInjector.InjectPrefab("SettingsItemView_MCMv3", SettingsItemView());
+            resourceInjector.InjectPrefab("SettingsPropertyGroupView_MCMv3", SettingsPropertyGroupView());
+            resourceInjector.InjectPrefab("SettingsPropertyView_MCMv3", SettingsPropertyView());
+            resourceInjector.InjectPrefab("SettingsView_MCMv3", SettingsView());
         }
     }
 }

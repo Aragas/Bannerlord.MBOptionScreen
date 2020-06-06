@@ -1,4 +1,4 @@
-﻿<Prefab>
+﻿  <Prefab>
   <Window>
     <Widget HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" VerticalAlignment="Top" HorizontalAlignment="Left">
       <Children>
@@ -6,7 +6,7 @@
         <ListPanel Id="SettingPropertiesList" DataSource="{SettingPropertyGroups}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent"
                    LayoutImp.LayoutMethod="VerticalTopToBottom" VerticalAlignment="Top">
           <ItemTemplate>
-            <SettingsPropertyGroupView />
+            <SettingsPropertyGroupView_MCMv3 />
           </ItemTemplate>
         </ListPanel>
 

@@ -26,7 +26,8 @@ namespace MCM.Custom.ScreenTests
                 .SetSubFolder("")
                 .CreateGroup("Testing 1", groupBuilder => groupBuilder
                     .AddBool("Check Box", new ProxyRef<bool>(() => _boolValue, o => _boolValue = o), boolBuilder => boolBuilder
-                        .SetHintText("Test")))
+                        .SetHintText("Test")
+                        .SetRequireRestart(false)))
                 .CreateGroup("Testing 2", groupBuilder => groupBuilder
                     .AddInteger("Integer", 0, 10, new ProxyRef<int>(() => _intValue, o => _intValue = o), integerBuilder => integerBuilder
                         .SetHintText("Testing"))
