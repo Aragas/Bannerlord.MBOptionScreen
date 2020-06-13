@@ -1,5 +1,6 @@
 ﻿using MCM.UI.GUI.ViewModels;
 
+using TaleWorlds.Engine;
 using TaleWorlds.Engine.GauntletUI;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.GauntletUI.Data;
@@ -36,6 +37,7 @@ namespace MCM.UI.GUI.GauntletUI
         protected override void OnFrameTick(float dt)
         {
             base.OnFrameTick(dt);
+            LoadingWindow.DisableGlobalLoadingWindow();
             // || gauntletLayer.Input.IsGameKeyReleased(34)
             if (_gauntletLayer.Input.IsHotKeyReleased("Exit"))
             {
