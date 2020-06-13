@@ -28,6 +28,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
         private PropertyInfo? SelectedIndexProperty { get; }
         private PropertyInfo? ValueFormatProperty { get; }
         private PropertyInfo? CustomFormatterProperty { get; }
+        private PropertyInfo? IdProperty { get; }
 
         public string SettingsId { get; }
         public IRef PropertyReference { get; }
@@ -46,6 +47,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
         public string GroupName { get; }
         public bool IsMainToggle { get; }
         public int GroupOrder { get; }
+        public string Id { get; }
 
         public SettingsPropertyDefinitionWrapper(object @object)
         {
@@ -68,6 +70,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
             SelectedIndexProperty = AccessTools.Property(type, nameof(SelectedIndex));
             ValueFormatProperty = AccessTools.Property(type, nameof(ValueFormat));
             CustomFormatterProperty = AccessTools.Property(type, nameof(CustomFormatter));
+            IdProperty = AccessTools.Property(type, nameof(Id));
 
 
             SettingsId = SettingsIdProperty?.GetValue(@object) as string ?? "ERROR";
@@ -82,20 +85,20 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
 
             DisplayName = DisplayNameProperty?.GetValue(@object) switch
             {
-                string str => str,
+                string str => new TextObject(str).ToString(),
                 TextObject to => to.ToString(),
                 _ => DisplayName
             };
             HintText = HintTextProperty?.GetValue(@object) switch
             {
-                string str => str,
+                string str => new TextObject(str).ToString(),
                 TextObject to => to.ToString(),
                 _ => HintText
             };
             Order = OrderProperty?.GetValue(@object) as int? ?? -1;
             RequireRestart = RequireRestartProperty?.GetValue(@object) as bool? ?? true;
 
-            GroupName = GroupNameProperty?.GetValue(@object) as string ?? "";
+            GroupName = new TextObject(GroupNameProperty?.GetValue(@object) as string ?? "").ToString();
             GroupOrder = GroupOrderProperty?.GetValue(@object) as int? ?? -1;
             IsMainToggle = IsMainToggleProperty?.GetValue(@object) as bool? ?? false;
 
@@ -113,6 +116,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
                 _ => ""
             };
             CustomFormatter = CustomFormatterProperty?.GetValue(@object) as Type;
+            Id = IdProperty?.GetValue(@object) as string ?? "";
         }
     }
 }

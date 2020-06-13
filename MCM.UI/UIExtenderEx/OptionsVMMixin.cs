@@ -15,7 +15,6 @@ using TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions;
 
 namespace MCM.UI.UIExtenderEx
 {
-    // TODO: Needs to be public, maybe InternalsVisibleTo?
     [ViewModelMixin]
     internal class OptionsVMMixin : BaseViewModelMixin<OptionsVM>
     {

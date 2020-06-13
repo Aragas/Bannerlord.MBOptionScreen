@@ -74,6 +74,7 @@ namespace MCM.Implementation.Loader
                         .Where(f => f.Name != "MCMv3.Implementation.v3.1.3.dll")
                         .Where(f => f.Name != "MCMv3.Implementation.v3.1.4.dll")
                         .Where(f => f.Name != "MCMv3.Implementation.v3.1.5.dll")
+                        .Where(f => f.Name != "MCMv3.Implementation.v3.1.6.dll")
                     ) // Ignore 3.1.0 and 3.1.1
                     .Concat(assemblyDirectory.GetFiles("MCMv3.UI.v*.dll")
                         .Where(f => f.Name != "MCMv3.UI.v3.1.0.dll")
@@ -82,6 +83,7 @@ namespace MCM.Implementation.Loader
                         .Where(f => f.Name != "MCMv3.UI.v3.1.3.dll")
                         .Where(f => f.Name != "MCMv3.UI.v3.1.4.dll")
                         .Where(f => f.Name != "MCMv3.UI.v3.1.5.dll")
+                        .Where(f => f.Name != "MCMv3.UI.v3.1.6.dll")
                     ) // Ignore 3.1.0 and 3.1.0
                     .Concat(assemblyDirectory.GetFiles("MCMv3.Custom.*.dll")) // Might be useful later
                     .ToList();

@@ -6,9 +6,7 @@ using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Base.Global;
-using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Models;
-using MCM.Abstractions.Settings.Properties;
 using MCM.Extensions;
 
 using System;
@@ -21,12 +19,6 @@ namespace MCM.Utils
 {
     public static class SettingsUtils
     {
-        public static IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object)
-        {
-            var settingPropertyDefinitionsDiscoverers = DI.GetBaseImplementations<ISettingsPropertyDiscoverer>();
-            return settingPropertyDefinitionsDiscoverers.SelectMany(d => d.GetProperties(@object));
-        }
-
         public static void CheckIsValid(ISettingsPropertyDefinition prop, object settings)
         {
             // TODO:
@@ -64,13 +56,6 @@ namespace MCM.Utils
         public static GlobalSettings? WrapSettings(object? settingsObj) => settingsObj is { } settings
             ? settings is GlobalSettings settingsBase ? settingsBase : BaseGlobalSettingsWrapper.Create(settings)
             : null;
-
-        // TODO:
-        public static bool PropertyIsSetting(IEnumerable<Attribute> attributes) => attributes.Any(a =>
-                ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), "ModLib.Attributes.SettingPropertyAttribute") ||
-                ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), "MBOptionScreen.Attributes.BaseSettingPropertyAttribute") ||
-                ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), "MCM.Abstractions.Settings.Definitions.IPropertyDefinitionBase") ||
-                ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionBase)));
 
         public static void ResetSettings(BaseSettings settings)
         {
@@ -145,7 +130,7 @@ namespace MCM.Utils
             foreach (var newSettingPropertyGroup in @new.GetSettingPropertyGroups())
             {
                 var settingPropertyGroup = current.GetSettingPropertyGroups()
-                    .FirstOrDefault(x => x.DisplayGroupName.ToString() == newSettingPropertyGroup.DisplayGroupName.ToString());
+                    .FirstOrDefault(x => x.GroupName == newSettingPropertyGroup.GroupName);
                 OverrideValues(settingPropertyGroup, newSettingPropertyGroup);
             }
         }
@@ -154,7 +139,7 @@ namespace MCM.Utils
             foreach (var newSettingPropertyGroup in @new.SubGroups)
             {
                 var settingPropertyGroup = current.SubGroups
-                    .FirstOrDefault(x => x.DisplayGroupName.ToString() == newSettingPropertyGroup.DisplayGroupName.ToString());
+                    .FirstOrDefault(x => x.GroupName == newSettingPropertyGroup.GroupName);
                 OverrideValues(settingPropertyGroup, newSettingPropertyGroup);
             }
             foreach (var newSettingProperty in @new.SettingProperties)

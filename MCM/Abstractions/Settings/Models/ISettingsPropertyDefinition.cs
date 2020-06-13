@@ -14,6 +14,9 @@ namespace MCM.Abstractions.Settings.Models
         IPropertyDefinitionText,
         IPropertyGroupDefinition
     {
+        // TODO: v4
+        //string Id { get; }
+
         IRef PropertyReference { get; }
 
         SettingType SettingType { get; }

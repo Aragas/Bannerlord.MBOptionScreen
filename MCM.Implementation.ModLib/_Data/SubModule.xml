@@ -2,7 +2,7 @@
 <Module>
   <Name value="MCMv3 ModLib v1/v13 Integration"/>
   <Id value="Bannerlord.MBOptionScreen.ModLib"/>
-  <Version value="v3.1.6"/>
+  <Version value="v3.1.7"/>
   <DefaultModule value="true"/>
   <SingleplayerModule value="true"/>
   <MultiplayerModule value="false"/>
@@ -31,7 +31,7 @@
     </SubModule>
     <SubModule>
       <Name value="MCMv3 ModLib Compatibility"/>
-      <DLLName value="MCMv3.Implementation.ModLib.v3.1.6.dll"/>
+      <DLLName value="MCMv3.Implementation.ModLib.v3.1.7.dll"/>
       <SubModuleClassType value="MCM.Implementation.ModLib.SubModuleV300"/>
       <Tags>
         <Tag key="DedicatedServerType" value="none" />

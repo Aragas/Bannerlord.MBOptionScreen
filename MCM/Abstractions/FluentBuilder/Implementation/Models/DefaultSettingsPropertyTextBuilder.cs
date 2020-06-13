@@ -12,15 +12,16 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
         ISettingsPropertyTextBuilder,
         IPropertyDefinitionText
     {
-        internal DefaultSettingsPropertyTextBuilder(string name, IRef @ref)
-            : base(name, @ref)
+        internal DefaultSettingsPropertyTextBuilder(string id, string name, IRef @ref)
+            : base(id, name, @ref)
         {
             SettingsPropertyBuilder = this;
         }
 
         public override IEnumerable<IPropertyDefinitionBase> GetDefinitions() => new IPropertyDefinitionBase[]
         {
-            new PropertyDefinitionTextWrapper(this), 
+            new PropertyDefinitionTextWrapper(this),
+            new PropertyDefinitionWithIdWrapper(this),
         };
     }
 }

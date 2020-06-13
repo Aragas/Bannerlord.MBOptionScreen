@@ -57,14 +57,12 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
         private IEnumerable<SettingsPropertyDefinition> GetSettingProperties()
         {
             foreach (var settingsPropertyGroup in PropertyGroups.Values)
+            foreach (var settingsProperty in settingsPropertyGroup.Properties.Values)
             {
-                foreach (var settingsProperty in settingsPropertyGroup.Properties.Values)
-                {
-                    yield return new SettingsPropertyDefinition(
-                        settingsProperty.GetDefinitions(),
-                        new PropertyGroupDefinitionWrapper(settingsPropertyGroup.GetPropertyGroupDefinition()),
-                        settingsProperty.PropertyReference);
-                }
+                yield return new SettingsPropertyDefinition(
+                    settingsProperty.GetDefinitions(),
+                    new PropertyGroupDefinitionWrapper(settingsPropertyGroup.GetPropertyGroupDefinition()),
+                    settingsProperty.PropertyReference);
             }
         }
     }

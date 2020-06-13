@@ -27,19 +27,11 @@ namespace MCM.Abstractions.Settings.Models
             SettingPropertyGroups = settingsPropertyGroups;
         }
 
-        public SettingsDefinition(string id, string displayName, List<SettingsPropertyDefinition> settingsProperties)
+        public SettingsDefinition(string id, string displayName, IEnumerable<SettingsPropertyDefinition> settingsProperties)
         {
             SettingsId = id;
             DisplayName = displayName;
-            var groups = new List<SettingsPropertyGroupDefinition>();
-            foreach (var settingProp in settingsProperties)
-            {
-                // TODO:
-                //Find the group that the setting property should belong to. This is the default group if no group is specifically set with the SettingPropertyGroup attribute.
-                var group = SettingsUtils.GetGroupFor('/', settingProp, groups);
-                group.Add(settingProp);
-            }
-            SettingPropertyGroups = groups;
+            SettingPropertyGroups = SettingsUtils.GetSettingsPropertyGroups('/', settingsProperties);
         }
     }
 }

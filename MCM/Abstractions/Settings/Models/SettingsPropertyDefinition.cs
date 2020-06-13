@@ -1,9 +1,9 @@
-﻿using System;
-using MCM.Abstractions.Attributes.v1;
+﻿using MCM.Abstractions.Attributes.v1;
 using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Utils;
 
+using System;
 using System.Collections.Generic;
 
 using TaleWorlds.Localization;
@@ -12,6 +12,7 @@ namespace MCM.Abstractions.Settings.Models
 {
     public sealed class SettingsPropertyDefinition : ISettingsPropertyDefinition
     {
+        public string Id { get; }
         public IRef PropertyReference { get; }
         public SettingType SettingType { get; }
         public string DisplayName { get; } = "";
@@ -33,11 +34,14 @@ namespace MCM.Abstractions.Settings.Models
             : this(new []{ propertyDefinition }, propertyGroupDefinition, propertyReference) { }
         public SettingsPropertyDefinition(IEnumerable<IPropertyDefinitionBase> propertyDefinitions, IPropertyGroupDefinition propertyGroupDefinition, IRef propertyReference)
         {
-            GroupName = propertyGroupDefinition.GroupName;
+            GroupName = new TextObject(propertyGroupDefinition.GroupName).ToString();
             IsMainToggle = propertyGroupDefinition.IsMainToggle;
             GroupOrder = propertyGroupDefinition.GroupOrder;
 
             PropertyReference = propertyReference;
+
+            if (PropertyReference is PropertyRef propertyRef)
+                Id = propertyRef.PropertyInfo.Name;
 
             if (PropertyReference.Type == typeof(bool))
                 SettingType = SettingType.Bool;
@@ -101,6 +105,10 @@ namespace MCM.Abstractions.Settings.Models
                 if (propertyDefinition is IPropertyDefinitionDropdown propertyDefinitionDropdown)
                 {
                     SelectedIndex = propertyDefinitionDropdown.SelectedIndex;
+                }
+                if (propertyDefinition is IPropertyDefinitionWithId propertyDefinitionWithId)
+                {
+                    Id = propertyDefinitionWithId.Id;
                 }
             }
         }
