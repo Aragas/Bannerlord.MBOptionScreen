@@ -123,14 +123,14 @@
 
 
                         <!-- Search box -->
-                        <Widget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="200" VerticalAlignment="Center" SuggestedHeight="40"
-                                HorizontalAlignment="Right" MarginLeft="40" MarginRight="20" ClipContents="true" Sprite="SaveLoad\load_tuple_selected" Brush.ColorFactor="0.2">
+                        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="200" SuggestedHeight="40" VerticalAlignment="Center" HorizontalAlignment="Right" MarginLeft="40" MarginRight="20"
+                                DoNotAcceptEvents="true" Sprite="SaveLoad\load_tuple_selected" Brush="SPOptions.Dropdown.Center">
                           <Children>
-                            <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" MarginLeft="10" MarginRight="10"
-                                                VerticalAlignment="Center" Brush="Encyclopedia.Search.TextBox" RealText="@SearchText" IsObfuscationEnabled="false"/>
+                            <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center" MarginLeft="10" MarginRight="10"
+                                                Brush="MCMv3.Text" RealText="@SearchText" IsObfuscationEnabled="false"/>
                             
-                            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="25" SuggestedHeight="24" Sprite="Encyclopedia\icon_search"
-                                    VerticalAlignment="Center" HorizontalAlignment="Right" IsDisabled="true" MarginRight="5"/>
+                            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="25" SuggestedHeight="24" VerticalAlignment="Center" HorizontalAlignment="Right" MarginRight="5"
+                                    Sprite="Encyclopedia\icon_search" IsDisabled="true"/>
                           </Children>
                         </Widget>
 
