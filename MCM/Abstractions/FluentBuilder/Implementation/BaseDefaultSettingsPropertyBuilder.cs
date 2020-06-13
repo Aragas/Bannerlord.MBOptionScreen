@@ -7,12 +7,14 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
 {
     public abstract class BaseDefaultSettingsPropertyBuilder<TSettingsPropertyBuilder> :
         ISettingsPropertyBuilder<TSettingsPropertyBuilder>,
-        IPropertyDefinitionBase
+        IPropertyDefinitionBase,
+        IPropertyDefinitionWithId
         where TSettingsPropertyBuilder : ISettingsPropertyBuilder
     {
         protected TSettingsPropertyBuilder SettingsPropertyBuilder { get; set; } = default!;
 
         public string Name { get; }
+        public string Id { get; }
         public IRef PropertyReference { get; }
 
         public string DisplayName => Name;
@@ -20,8 +22,9 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
         public bool RequireRestart { get; private set; }
         public string HintText { get; private set; } = "";
 
-        protected BaseDefaultSettingsPropertyBuilder(string name, IRef @ref)
+        protected BaseDefaultSettingsPropertyBuilder(string id, string name, IRef @ref)
         {
+            Id = id;
             Name = name;
             PropertyReference = @ref;
         }

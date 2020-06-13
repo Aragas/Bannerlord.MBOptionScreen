@@ -14,8 +14,8 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
     {
         public int SelectedIndex { get; }
 
-        internal DefaultSettingsPropertyDropdownBuilder(string name, int selectedIndex, IRef @ref)
-            : base(name, @ref)
+        internal DefaultSettingsPropertyDropdownBuilder(string id, string name, int selectedIndex, IRef @ref)
+            : base(id, name, @ref)
         {
             SettingsPropertyBuilder = this;
             SelectedIndex = selectedIndex;
@@ -23,7 +23,8 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
 
         public override IEnumerable<IPropertyDefinitionBase> GetDefinitions() => new IPropertyDefinitionBase[]
         {
-            new PropertyDefinitionDropdownWrapper(this), 
+            new PropertyDefinitionDropdownWrapper(this),
+            new PropertyDefinitionWithIdWrapper(this),
         };
     }
 }

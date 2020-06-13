@@ -1,8 +1,8 @@
 <Prefab>
   <Constants>
 
-    <Constant Name="CancelButton.Width" BrushLayer="Default" BrushName="ModLib.Cancel.Button" BrushValueType="Width" />
-    <Constant Name="CancelButton.Height" BrushLayer="Default" BrushName="ModLib.Cancel.Button" BrushValueType="Height" />
+    <Constant Name="CancelButton.Width" BrushLayer="Default" BrushName="MCMv3.Cancel.Button" BrushValueType="Width" />
+    <Constant Name="CancelButton.Height" BrushLayer="Default" BrushName="MCMv3.Cancel.Button" BrushValueType="Height" />
 
   </Constants>
   <Window>
@@ -20,7 +20,7 @@
               <Children>
 
                 <!-- Title -->
-                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" Brush="ModLib.Title.Text" Text="@ModsText"
+                <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" Brush="MCMv3.Title.Text" Text="@ModsText"
                                 HorizontalAlignment="Center" VerticalAlignment="Top" MarginRight="19" PositionYOffset="-10"/>
 
                 <!-- Mods Listing Section Inner Panel-->
@@ -45,7 +45,7 @@
                             <ListPanel Id="ModList" DataSource="{ModSettingsList}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren"
                                        HorizontalAlightment="Left" LayoutImp.LayoutMethod="VerticalTopToBottom">
                               <ItemTemplate>
-                                <SettingsItemView />
+                                <SettingsItemView_MCMv3 />
                               </ItemTemplate>
                             </ListPanel>
 
@@ -68,7 +68,7 @@
 
             <!-- Selected Mod Settings Section on the right -->
             <Widget WidthSizePolicy="Fixed" HeightSizePolicy="StretchToParent" MarginLeft="40" IsVisible="@SomethingSelected"
-                    SuggestedWidth="1270" HorizontalAlignment="Right" VerticalAlignment="Top" MarginRight="10" MarginBottom="10">
+                    SuggestedWidth="1270" HorizontalAlignment="Right" VerticalAlignment="Top" MarginRight="10" MarginBottom="50">
               <Children>
 
                 <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" LayoutImp.LayoutMethod="VerticalBottomToTop">
@@ -87,25 +87,25 @@
                         </Widget>
 
                         <!-- Title -->
-                        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="80" Brush="ModLib.Title.Text"
+                        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="80" Brush="MCMv3.Title.Text"
                                         Text="@SelectedDisplayName" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
                         <!-- Search box -->
-                        <Widget DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="300" VerticalAlignment="Center" SuggestedHeight="40"
-                                HorizontalAlignment="Right" MarginLeft="40" MarginRight="20" ClipContents="true" Sprite="SaveLoad\load_tuple_selected" Brush.ColorFactor="0.2">
+                        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="200" SuggestedHeight="40" VerticalAlignment="Center" HorizontalAlignment="Right" MarginLeft="40" MarginRight="20"
+                                DoNotAcceptEvents="true" Sprite="SaveLoad\load_tuple_selected" Brush="SPOptions.Dropdown.Center">
                           <Children>
-                            <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" MarginLeft="10" MarginRight="10"
-                                                VerticalAlignment="Center" Brush="Encyclopedia.Search.TextBox" RealText="@SearchText" IsObfuscationEnabled="false"/>
+                            <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center" MarginLeft="10" MarginRight="10"
+                                                Brush="MCMv3.Text" RealText="@SearchText" IsObfuscationEnabled="false"/>
                             
-                            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="25" SuggestedHeight="24" Sprite="Encyclopedia\icon_search"
-                                    VerticalAlignment="Center" HorizontalAlignment="Right" IsDisabled="true" MarginRight="5"/>
+                            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="25" SuggestedHeight="24" VerticalAlignment="Center" HorizontalAlignment="Right" MarginRight="5"
+                                    Sprite="Encyclopedia\icon_search" IsDisabled="true"/>
                           </Children>
                         </Widget>
 
                       </Children>
                     </ListPanel>
                     <!-- Separator -->
-                    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="ModLib.Divider.Yellow"
+                    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="MCMv3.Divider.Yellow"
                             MarginLeft="15" MarginRight="15"/>
 
                     <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="30" MarginLeft="30">
@@ -121,7 +121,7 @@
                                 <Widget Id="SettingsInnerPanel" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren">
                                   <Children>
 
-                                    <SettingsView DataSource="{SelectedMod}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" />
+                                    <SettingsView_MCMv3 DataSource="{SelectedMod}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" />
 
                                   </Children>
                                 </Widget>
@@ -143,11 +143,11 @@
                                LayoutImp.LayoutMethod="VerticalBottomToTop" MarginTop="1">
                       <Children>
 
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="ModLib.Divider.Yellow"
+                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="MCMv3.Divider.Yellow"
                                 MarginLeft="15" MarginRight="15" MarginBottom="2"/>
 
                         <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Text="@HintText" IsVisible="@IsHintVisible"
-                                    HorizontalAlignment="Left" VerticalAlignment="Center" MarginLeft="20" MarginRight="10" Brush="ModLib.Hint.Text"/>
+                                    HorizontalAlignment="Left" VerticalAlignment="Center" MarginLeft="20" MarginRight="10" Brush="MCMv3.Hint.Text"/>
 
                       </Children>
                     </ListPanel>

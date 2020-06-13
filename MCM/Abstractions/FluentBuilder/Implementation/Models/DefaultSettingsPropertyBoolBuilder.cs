@@ -12,8 +12,8 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
         ISettingsPropertyBoolBuilder,
         IPropertyDefinitionBool
     {
-        internal DefaultSettingsPropertyBoolBuilder(string name, IRef @ref)
-            : base(name, @ref)
+        internal DefaultSettingsPropertyBoolBuilder(string id, string name, IRef @ref)
+            : base(id, name, @ref)
         {
             SettingsPropertyBuilder = this;
         }
@@ -21,6 +21,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
         public override IEnumerable<IPropertyDefinitionBase> GetDefinitions() => new IPropertyDefinitionBase[]
         {
             new PropertyDefinitionBoolWrapper(this),
+            new PropertyDefinitionWithIdWrapper(this),
         };
     }
 }

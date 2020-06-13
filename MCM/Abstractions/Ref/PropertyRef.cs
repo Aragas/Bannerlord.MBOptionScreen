@@ -18,8 +18,11 @@ namespace MCM.Abstractions.Ref
             get => PropertyInfo.GetValue(Instance);
             set
             {
-                PropertyInfo.SetValue(Instance, value);
-                OnPropertyChanged(nameof(Value));
+                if (PropertyInfo.CanWrite)
+                {
+                    PropertyInfo.SetValue(Instance, value);
+                    OnPropertyChanged(nameof(Value));
+                }
             }
         }
 

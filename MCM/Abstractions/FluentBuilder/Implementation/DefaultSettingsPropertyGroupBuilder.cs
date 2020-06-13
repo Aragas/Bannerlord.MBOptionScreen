@@ -27,38 +27,38 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
         public ISettingsPropertyGroupBuilder SetIsMainToggle(bool value) { IsMainToggle = value; return this; }
         public ISettingsPropertyGroupBuilder SetGroupOrder(int value) { GroupOrder = value; return this; }
 
-        public ISettingsPropertyGroupBuilder AddBool(string name, IRef @ref, Action<ISettingsPropertyBoolBuilder>? builder)
+        public ISettingsPropertyGroupBuilder AddBool(string id, string name, IRef @ref, Action<ISettingsPropertyBoolBuilder>? builder)
         {
             if (!Properties.ContainsKey(name))
-                Properties[name] = new DefaultSettingsPropertyBoolBuilder(name, @ref);
+                Properties[name] = new DefaultSettingsPropertyBoolBuilder(id, name, @ref);
             builder?.Invoke((ISettingsPropertyBoolBuilder) Properties[name]);
             return this;
         }
-        public ISettingsPropertyGroupBuilder AddDropdown(string name, int selectedIndex, IRef @ref, Action<ISettingsPropertyDropdownBuilder>? builder)
+        public ISettingsPropertyGroupBuilder AddDropdown(string id, string name, int selectedIndex, IRef @ref, Action<ISettingsPropertyDropdownBuilder>? builder)
         {
             if (!Properties.ContainsKey(name))
-                Properties[name] = new DefaultSettingsPropertyDropdownBuilder(name, selectedIndex, @ref);
+                Properties[name] = new DefaultSettingsPropertyDropdownBuilder(id, name, selectedIndex, @ref);
             builder?.Invoke((ISettingsPropertyDropdownBuilder) Properties[name]);
             return this;
         }
-        public ISettingsPropertyGroupBuilder AddInteger(string name, int minValue, int maxValue, IRef @ref, Action<ISettingsPropertyIntegerBuilder>? builder)
+        public ISettingsPropertyGroupBuilder AddInteger(string id, string name, int minValue, int maxValue, IRef @ref, Action<ISettingsPropertyIntegerBuilder>? builder)
         {
             if (!Properties.ContainsKey(name))
-                Properties[name] = new DefaultSettingsPropertyIntegerBuilder(name, minValue, maxValue, @ref);
+                Properties[name] = new DefaultSettingsPropertyIntegerBuilder(id, name, minValue, maxValue, @ref);
             builder?.Invoke((ISettingsPropertyIntegerBuilder) Properties[name]);
             return this;
         }
-        public ISettingsPropertyGroupBuilder AddFloatingInteger(string name, float minValue, float maxValue, IRef @ref, Action<ISettingsPropertyFloatingIntegerBuilder>? builder)
+        public ISettingsPropertyGroupBuilder AddFloatingInteger(string id, string name, float minValue, float maxValue, IRef @ref, Action<ISettingsPropertyFloatingIntegerBuilder>? builder)
         {
             if (!Properties.ContainsKey(name))
-                Properties[name] = new DefaultSettingsPropertyFloatingIntegerBuilder(name, minValue, maxValue, @ref);
+                Properties[name] = new DefaultSettingsPropertyFloatingIntegerBuilder(id, name, minValue, maxValue, @ref);
             builder?.Invoke((ISettingsPropertyFloatingIntegerBuilder) Properties[name]);
             return this;
         }
-        public ISettingsPropertyGroupBuilder AddText(string name, IRef @ref, Action<ISettingsPropertyTextBuilder>? builder)
+        public ISettingsPropertyGroupBuilder AddText(string id, string name, IRef @ref, Action<ISettingsPropertyTextBuilder>? builder)
         {
             if (!Properties.ContainsKey(name))
-                Properties[name] = new DefaultSettingsPropertyTextBuilder(name, @ref);
+                Properties[name] = new DefaultSettingsPropertyTextBuilder(id, name, @ref);
             builder?.Invoke((ISettingsPropertyTextBuilder) Properties[name]);
             return this;
         }

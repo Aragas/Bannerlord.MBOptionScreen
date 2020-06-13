@@ -31,19 +31,18 @@ namespace MCM.Implementation.Settings.Formats.Xml
     [Version("e1.4.1",  1)]
     internal sealed class XmlSettingsFormat : BaseJsonSettingsFormat, IXmlSettingsFormat
     {
-        public override IEnumerable<string> Extensions => new string[] { "xml" };
+        public override IEnumerable<string> Extensions => new[] { "xml" };
 
         public override bool Save(BaseSettings settings, string path)
         {
-            var content = settings is IWrapper wrapper
-                ? JsonConvert.SerializeObject(wrapper.Object, JsonSerializerSettings)
-                : JsonConvert.SerializeObject(settings, JsonSerializerSettings);
+            var content = SaveJson(settings);
             var xmlDocument = JsonConvert.DeserializeXmlNode(content, settings is IWrapper wrapper1 ? wrapper1.Object.GetType().Name : settings.GetType().Name);
 
             var file = new FileInfo(path);
             file.Directory?.Create();
-            using var writer = file.CreateText();
+            var writer = file.CreateText();
             xmlDocument.Save(writer);
+            writer.Dispose();
 
             return true;
         }
@@ -53,22 +52,16 @@ namespace MCM.Implementation.Settings.Formats.Xml
             var file = new FileInfo(path);
             if (file.Exists)
             {
-                try
-                {
-                    using var reader = file.OpenText();
-                    var xmlDocument = new XmlDocument();
-                    xmlDocument.Load(reader);
-                    var content = JsonConvert.SerializeXmlNode(xmlDocument);
+                var xmlDocument = new XmlDocument();
+                var reader = file.OpenText();
+                xmlDocument.Load(reader);
+                reader.Dispose();
 
-                    if (settings is IWrapper wrapper)
-                        JsonConvert.PopulateObject(content, wrapper.Object, JsonSerializerSettings);
-                    else
-                        JsonConvert.PopulateObject(content, settings, JsonSerializerSettings);
-                }
-                catch (JsonException)
-                {
+                var content = JsonConvert.SerializeXmlNode(xmlDocument);
+
+                var set = LoadFromJson(settings, content);
+                if (set == null)
                     Save(settings, path);
-                }
             }
             else
             {

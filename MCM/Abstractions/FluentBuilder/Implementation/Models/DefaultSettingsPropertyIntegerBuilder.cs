@@ -20,8 +20,8 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
         public string ValueFormat { get; private set; } = "";
         public Func<object, string> ValueFormatFunc { get; private set; }
         
-        internal DefaultSettingsPropertyIntegerBuilder(string name, int minValue, int maxValue, IRef @ref)
-            : base(name, @ref)
+        internal DefaultSettingsPropertyIntegerBuilder(string id, string name, int minValue, int maxValue, IRef @ref)
+            : base(id, name, @ref)
         {
             SettingsPropertyBuilder = this;
             MinValue = (decimal) minValue;
@@ -48,9 +48,10 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
         public override IEnumerable<IPropertyDefinitionBase> GetDefinitions() => new IPropertyDefinitionBase[]
         {
             new PropertyDefinitionWithMinMaxWrapper(this),
-            new PropertyDefinitionWithFormatWrapper(this), 
+            new PropertyDefinitionWithFormatWrapper(this),
             new PropertyDefinitionWithActionFormatWrapper(this),
-            new PropertyDefinitionWithCustomFormatterWrapper(this), 
+            new PropertyDefinitionWithCustomFormatterWrapper(this),
+            new PropertyDefinitionWithIdWrapper(this),
         };
     }
 }

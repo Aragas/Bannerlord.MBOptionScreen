@@ -26,7 +26,7 @@ namespace MCM.Abstractions.Settings.Models
         {
             _groupName = new TextObject(groupName);
             _groupNameOverride = new TextObject(groupNameOverride ?? "");
-            GroupName = string.IsNullOrWhiteSpace(groupNameOverride) ? groupName : groupNameOverride!;
+            GroupName = DisplayGroupName.ToString();
             Order = order;
         }
 
@@ -41,9 +41,7 @@ namespace MCM.Abstractions.Settings.Models
 
         public SettingsPropertyGroupDefinition? GetGroup(string groupName) => subGroups.Find(x => x.GroupName == groupName);
         public SettingsPropertyGroupDefinition? GetGroupFor(string groupName) => subGroups.GetGroup(groupName);
-        public SettingsPropertyGroupDefinition? GetGroup(IEnumerable<SettingsPropertyGroupDefinition> groupsList, string groupName) =>
-            groupsList.FirstOrDefault(x => x.GroupName == groupName);
 
-        public override string ToString() => $"{GroupName}";
+        public override string ToString() => GroupName;
     }
 }

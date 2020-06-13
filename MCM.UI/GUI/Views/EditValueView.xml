@@ -14,11 +14,11 @@
 
             <!-- Title -->
             <RichTextWidget HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" Text="@TitleText" VerticalAlignment="Top" HorizontalAlignment="Center"
-                            Brush="ModLib.Title.Text" MarginTop="15" MarginRight="10" MarginLeft="10"/>
+                            Brush="MCMv3.Title.Text" MarginTop="15" MarginRight="10" MarginLeft="10"/>
 
             <!-- Description -->
             <RichTextWidget HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" Text="@DescriptionText" VerticalAlignment="Top"
-                            HorizontalAlignment="Center" Brush="ModLib.EditValue.Description" MarginTop="15" MarginRight="10" MarginLeft="10"/>
+                            HorizontalAlignment="Center" Brush="MCMv3.EditValue.Description" MarginTop="15" MarginRight="10" MarginLeft="10"/>
 
             <!-- Text Input -->
             <Widget DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="70" MarginRight="30" MarginLeft="30"
@@ -36,7 +36,7 @@
 
                 <!-- Cancel button -->
                 <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="251" SuggestedHeight="64"
-                              HorizontalAlignment="Left" VerticalAlignment="Center" Brush="ModLib.Cancel.Button" Command.Click="ExecuteCancel">
+                              HorizontalAlignment="Left" VerticalAlignment="Center" Brush="MCMv3.Cancel.Button" Command.Click="ExecuteCancel">
                   <Children>
                     <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="@CancelButtonText" />
                   </Children>
@@ -44,7 +44,7 @@
 
                 <!-- Done button -->
                 <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="251"
-                              SuggestedHeight="64" HorizontalAlignment="Right" VerticalAlignment="Center" Brush="ModLib.Done.Button"
+                              SuggestedHeight="64" HorizontalAlignment="Right" VerticalAlignment="Center" Brush="MCMv3.Done.Button"
                               Command.Click="ExecuteDone">
                   <Children>
                     <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="@DoneButtonText" />

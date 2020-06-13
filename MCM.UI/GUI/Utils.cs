@@ -21,7 +21,7 @@ namespace MCM.UI.GUI
             foreach (var newSettingPropertyGroup in @new.GetSettingPropertyGroups())
             {
                 var settingPropertyGroup = current.GetSettingPropertyGroups()
-                    .FirstOrDefault(x => x.DisplayGroupName.ToString() == newSettingPropertyGroup.DisplayGroupName.ToString());
+                    .FirstOrDefault(x => x.GroupName == newSettingPropertyGroup.GroupName);
                 OverrideValues(urs, settingPropertyGroup, newSettingPropertyGroup);
             }
         }
@@ -30,7 +30,7 @@ namespace MCM.UI.GUI
             foreach (var newSettingPropertyGroup in @new.SubGroups)
             {
                 var settingPropertyGroup = current.SubGroups
-                    .FirstOrDefault(x => x.DisplayGroupName.ToString() == newSettingPropertyGroup.DisplayGroupName.ToString());
+                    .FirstOrDefault(x => x.GroupName == newSettingPropertyGroup.GroupName);
                 OverrideValues(urs, settingPropertyGroup, newSettingPropertyGroup);
             }
             foreach (var newSettingProperty in @new.SettingProperties)
