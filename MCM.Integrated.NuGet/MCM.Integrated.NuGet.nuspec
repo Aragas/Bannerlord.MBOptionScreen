@@ -15,10 +15,6 @@
   </metadata>
   <files>
     <file src="bin/Release/net472/MCMv3.dll" target="lib/net472" />
-    <file src="bin/Release/net472/MCMv3.Implementation.v3.1.8.dll" target="lib/net472" />
-    <file src="bin/Release/net472/MCMv3.UI.v3.1.8.dll" target="lib/net472" />
-    <file src="bin/Release/net472/Bannerlord.UIExtenderEx.dll" target="lib/net472" />
-
     <file src="bin/Release/net472/MCMv3.pdb" target="lib/net472" />
     <file src="bin/Release/net472/MCMv3.Implementation.v3.1.8.pdb" target="lib/net472" />
     <file src="bin/Release/net472/MCMv3.UI.v3.1.8.pdb" target="lib/net472" />
