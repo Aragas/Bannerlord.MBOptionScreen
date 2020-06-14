@@ -1,6 +1,7 @@
 ﻿using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Models;
+using MCM.Extensions;
 using MCM.UI.Actions;
 using MCM.Utils;
 
@@ -18,9 +19,9 @@ namespace MCM.UI.GUI
         /// <param name="new"></param>
         public static void OverrideValues(UndoRedoStack urs, BaseSettings current, BaseSettings @new)
         {
-            foreach (var newSettingPropertyGroup in @new.GetSettingPropertyGroups())
+            foreach (var newSettingPropertyGroup in @new.GetAllSettingPropertyGroupDefinitions())
             {
-                var settingPropertyGroup = current.GetSettingPropertyGroups()
+                var settingPropertyGroup = current.GetAllSettingPropertyGroupDefinitions()
                     .FirstOrDefault(x => x.GroupName == newSettingPropertyGroup.GroupName);
                 OverrideValues(urs, settingPropertyGroup, newSettingPropertyGroup);
             }

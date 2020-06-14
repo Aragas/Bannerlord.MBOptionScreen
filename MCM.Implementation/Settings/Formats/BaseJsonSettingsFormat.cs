@@ -4,6 +4,7 @@ using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Formats;
 using MCM.Abstractions.Settings.Models;
+using MCM.Extensions;
 using MCM.Utils;
 
 using Newtonsoft.Json;
@@ -12,7 +13,6 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace MCM.Implementation.Settings.Formats
 {
@@ -47,7 +47,7 @@ namespace MCM.Implementation.Settings.Formats
             var jo = new JObject();
             var serializer = JsonSerializer.CreateDefault(JsonSerializerSettings);
 
-            foreach (var definition in settings.GetSettingPropertyGroups().SelectMany(spg => spg.SettingProperties))
+            foreach (var definition in settings.GetAllSettingPropertyDefinitions())
             {
                 var id = GetPropertyDefinitionId(definition);
 
@@ -71,7 +71,7 @@ namespace MCM.Implementation.Settings.Formats
                 var serializer = JsonSerializer.CreateDefault(JsonSerializerSettings);
 
                 _existingObjects.Clear();
-                foreach (var definition in settings.GetSettingPropertyGroups().SelectMany(spg => spg.SettingProperties))
+                foreach (var definition in settings.GetAllSettingPropertyDefinitions())
                 {
                     var id = GetPropertyDefinitionId(definition);
 

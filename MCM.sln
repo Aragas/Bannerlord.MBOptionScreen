@@ -32,6 +32,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCM.Integrated.NuGet", "MCM
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Root", "Root", "{6DA59EA7-D40B-4C02-B0CC-64875B4064CD}"
 	ProjectSection(SolutionItems) = preProject
+		CONTRIBUTORS.md = CONTRIBUTORS.md
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
 		LICENSE.txt = LICENSE.txt
@@ -56,7 +57,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Localization", "_Localizat
 		std_MCM_UI.xml = std_MCM_UI.xml
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCM.Custom.ScreenTests", "MCM.Custom.ScreenTests\MCM.Custom.ScreenTests.csproj", "{93218C18-364B-4ADA-8878-65A0D4F6F589}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCM.Custom.ScreenTests", "MCM.Custom.ScreenTests\MCM.Custom.ScreenTests.csproj", "{93218C18-364B-4ADA-8878-65A0D4F6F589}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

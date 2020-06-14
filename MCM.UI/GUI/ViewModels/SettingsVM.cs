@@ -128,22 +128,10 @@ namespace MCM.UI.GUI.ViewModels
 
         private void ExecuteSelect() => _executeSelect?.Invoke(this);
 
-        public bool RestartRequired() => SettingPropertyGroups.SelectMany(GetAllSettingPropertyDefinitions)
+        public bool RestartRequired() => SettingPropertyGroups
+            .SelectMany(x => SettingsUtils.GetAllSettingPropertyDefinitions(x.SettingPropertyGroupDefinition))
             .Where(p => p.RequireRestart)
             .Any(p => URS.RefChanged(p.PropertyReference));
-
-        private static IEnumerable<ISettingsPropertyDefinition> GetAllSettingPropertyDefinitions(SettingsPropertyGroupVM settingPropertyGroup1)
-        {
-            foreach (var settingProperty in settingPropertyGroup1.SettingProperties)
-                yield return settingProperty.SettingPropertyDefinition;
-
-            foreach (var settingPropertyGroup in settingPropertyGroup1.SettingPropertyGroups)
-            foreach (var settingProperty in GetAllSettingPropertyDefinitions(settingPropertyGroup))
-            {
-                yield return settingProperty;
-            }
-        }
-
 
         public void ChangePreset(string presetName)
         {
