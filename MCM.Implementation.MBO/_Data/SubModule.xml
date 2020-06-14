@@ -2,7 +2,7 @@
 <Module>
   <Name value="MCMv3 MBO/MCMv2 Integration"/>
   <Id value="Bannerlord.MBOptionScreen.MBO"/>
-  <Version value="v3.1.7"/>
+  <Version value="v3.1.8"/>
   <DefaultModule value="true"/>
   <SingleplayerModule value="true"/>
   <MultiplayerModule value="false"/>
@@ -13,7 +13,7 @@
   <SubModules>
     <SubModule>
       <Name value="MCMv3 MBO Compatibility"/>
-      <DLLName value="MCMv3.Implementation.MBO.v3.1.7.dll"/>
+      <DLLName value="MCMv3.Implementation.MBO.v3.1.8.dll"/>
       <SubModuleClassType value="MCM.Implementation.MBO.SubModuleV300"/>
       <Tags>
         <Tag key="DedicatedServerType" value="none" />

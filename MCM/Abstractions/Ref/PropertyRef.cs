@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace MCM.Abstractions.Ref
 {
-    public class PropertyRef : IRef
+    public class PropertyRef : IRef, IEquatable<PropertyRef>
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -34,5 +34,27 @@ namespace MCM.Abstractions.Ref
 
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != GetType()) return false;
+            return Equals((PropertyRef) obj);
+        }
+        public bool Equals(PropertyRef? other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return PropertyInfo.Equals(other.PropertyInfo) && Instance.Equals(other.Instance);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (PropertyInfo.GetHashCode() * 397) ^ Instance.GetHashCode();
+            }
+        }
     }
 }

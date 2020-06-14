@@ -285,7 +285,7 @@ namespace MCM.UI.GUI.ViewModels
             //Save the changes to file.
             var changedModSettings = ModSettingsList.Where(x => x.URS.ChangesMade).ToList();
 
-            var requireRestart = ModSettingsList.Any(x => x.RestartRequired());
+            var requireRestart = changedModSettings.Any(x => x.RestartRequired());
             if (requireRestart)
             {
                 InformationManager.ShowInquiry(new InquiryData(new TextObject("{=ModOptionsVM_RestartTitle}Game Needs to Restart").ToString(),

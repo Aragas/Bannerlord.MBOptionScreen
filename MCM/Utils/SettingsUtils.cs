@@ -72,8 +72,8 @@ namespace MCM.Utils
 
         public static bool Equals(BaseSettings settings1, BaseSettings settings2)
         {
-            var set1 = settings1.GetSettingPropertyGroups().SelectMany(GetAllSettingPropertyDefinitions).ToList();
-            var set2 = settings2.GetSettingPropertyGroups().SelectMany(GetAllSettingPropertyDefinitions).ToList();
+            var set1 = settings1.GetAllSettingPropertyDefinitions().ToList();
+            var set2 = settings2.GetAllSettingPropertyDefinitions().ToList();
 
             foreach (var settingsPropertyDefinition1 in set1)
             {
@@ -86,17 +86,6 @@ namespace MCM.Utils
             }
 
             return true;
-        }
-        private static IEnumerable<ISettingsPropertyDefinition> GetAllSettingPropertyDefinitions(SettingsPropertyGroupDefinition settingPropertyGroup1)
-        {
-            foreach (var settingProperty in settingPropertyGroup1.SettingProperties)
-                yield return settingProperty;
-
-            foreach (var settingPropertyGroup in settingPropertyGroup1.SubGroups)
-            foreach (var settingProperty in GetAllSettingPropertyDefinitions(settingPropertyGroup))
-            {
-                yield return settingProperty;
-            }
         }
         public static bool Equals(ISettingsPropertyDefinition currentDefinition, ISettingsPropertyDefinition newDefinition)
         {
@@ -171,6 +160,24 @@ namespace MCM.Utils
                 : (SelectorVM<SelectorItemVM>) selectorProperty.GetValue(dropdown);
         }
 
+        public static IEnumerable<ISettingsPropertyDefinition> GetAllSettingPropertyDefinitions(SettingsPropertyGroupDefinition settingPropertyGroup1)
+        {
+            foreach (var settingProperty in settingPropertyGroup1.SettingProperties)
+                yield return settingProperty;
+
+            foreach (var settingPropertyGroup in settingPropertyGroup1.SubGroups)
+            foreach (var settingProperty in GetAllSettingPropertyDefinitions(settingPropertyGroup))
+            {
+                yield return settingProperty;
+            }
+        }
+        public static IEnumerable<SettingsPropertyGroupDefinition> GetAllSettingPropertyGroupDefinitions(SettingsPropertyGroupDefinition settingPropertyGroup1)
+        {
+            yield return settingPropertyGroup1;
+
+            foreach (var settingPropertyGroup in settingPropertyGroup1.SubGroups)
+                yield return settingPropertyGroup;
+        }
 
         public static List<SettingsPropertyGroupDefinition> GetSettingsPropertyGroups(char subGroupDelimiter, IEnumerable<ISettingsPropertyDefinition> settingsPropertyDefinitions)
         {

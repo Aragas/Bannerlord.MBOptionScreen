@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace MCM.Abstractions.Ref
 {
-    public class ProxyRef<T> : IRef
+    public class ProxyRef<T> : IRef, IEquatable<ProxyRef<T>>
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -33,5 +33,27 @@ namespace MCM.Abstractions.Ref
 
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+        public bool Equals(ProxyRef<T>? other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return _getter.Equals(other._getter) && Equals(_setter, other._setter);
+        }
+        public override bool Equals(object? obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((ProxyRef<T>) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return (_getter.GetHashCode() * 397) ^ (_setter != null ? _setter.GetHashCode() : 0);
+            }
+        }
     }
 }

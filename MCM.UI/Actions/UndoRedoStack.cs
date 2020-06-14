@@ -22,7 +22,7 @@ namespace MCM.UI.Actions
 
         public bool RefChanged(IRef @ref)
         {
-            var stack = UndoStack.Where(s => s.Context == @ref).ToList();
+            var stack = UndoStack.Where(s => Equals(s.Context, @ref)).ToList();
             if (stack.Count == 0)
                 return false;
 
