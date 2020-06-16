@@ -5,7 +5,7 @@ using MCM.Utils;
 
 using System;
 using System.Collections.Generic;
-
+using System.Linq;
 using TaleWorlds.Localization;
 
 namespace MCM.Abstractions.Settings.Models
@@ -30,11 +30,13 @@ namespace MCM.Abstractions.Settings.Models
         public bool IsMainToggle { get; }
         public int GroupOrder { get; }
 
-        public SettingsPropertyDefinition(IPropertyDefinitionBase propertyDefinition, IPropertyGroupDefinition propertyGroupDefinition, IRef propertyReference)
-            : this(new []{ propertyDefinition }, propertyGroupDefinition, propertyReference) { }
-        public SettingsPropertyDefinition(IEnumerable<IPropertyDefinitionBase> propertyDefinitions, IPropertyGroupDefinition propertyGroupDefinition, IRef propertyReference)
+        public SettingsPropertyDefinition(IPropertyDefinitionBase propertyDefinition, IPropertyGroupDefinition propertyGroupDefinition, IRef propertyReference, char subGroupDelimiter)
+            : this(new []{ propertyDefinition }, propertyGroupDefinition, propertyReference, subGroupDelimiter) { }
+        public SettingsPropertyDefinition(IEnumerable<IPropertyDefinitionBase> propertyDefinitions, IPropertyGroupDefinition propertyGroupDefinition, IRef propertyReference, char subGroupDelimiter)
         {
-            GroupName = new TextObject(propertyGroupDefinition.GroupName).ToString();
+            var SubGroupDelimiter = '/';
+            var groups = propertyGroupDefinition.GroupName.Split(SubGroupDelimiter);
+            GroupName = string.Join(SubGroupDelimiter.ToString(), groups.Select(x => new TextObject(x).ToString()));
             IsMainToggle = propertyGroupDefinition.IsMainToggle;
             GroupOrder = propertyGroupDefinition.GroupOrder;
 

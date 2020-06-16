@@ -62,7 +62,8 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
                 yield return new SettingsPropertyDefinition(
                     settingsProperty.GetDefinitions(),
                     new PropertyGroupDefinitionWrapper(settingsPropertyGroup.GetPropertyGroupDefinition()),
-                    settingsProperty.PropertyReference);
+                    settingsProperty.PropertyReference,
+                    SubGroupDelimiter);
             }
         }
     }
