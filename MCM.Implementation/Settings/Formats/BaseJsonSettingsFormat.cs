@@ -110,11 +110,17 @@ namespace MCM.Implementation.Settings.Formats
 
                 var set = LoadFromJson(settings, content);
                 if (set == null)
+                {
                     Save(settings, path);
+                    return settings;
+                }
+                else
+                    return set;
             }
             else
             {
                 Save(settings, path);
+                return settings;
             }
             return settings;
         }

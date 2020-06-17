@@ -172,7 +172,11 @@ namespace MCM.UI.GUI.ViewModels
 
                 var settingsVM = BaseSettingsProvider.Instance.CreateModSettingsDefinitions
                     .Parallel()
-                    .Select(s => new SettingsVM(s, this));
+                    .Select(s =>
+                    {
+                        try { return new SettingsVM(s, this); }
+                        catch (Exception) { return null; } // TODO: Logging
+                    });
                 foreach (var viewModel in settingsVM)
                 {
                     uiContext.Send(o =>
