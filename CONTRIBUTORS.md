@@ -1,4 +1,4 @@
-﻿GENERAL:  
+GENERAL:  
 Reaperrz 'Custard' McButtfuck  
 Katarn  
 Adonnay  
@@ -19,6 +19,12 @@ hvora70
 DeltaScorch105  
 Pbpro  
 Ping827  
+
+TRANSLATIONS:  
+Velkhla  
+Gyular  
+luckysky426  
+daedalus1pl  
 
 CHINESE DISTRUBUTION:  
 dontkillchicken  
