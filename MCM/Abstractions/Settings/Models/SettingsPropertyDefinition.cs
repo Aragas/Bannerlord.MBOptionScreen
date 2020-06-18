@@ -34,10 +34,8 @@ namespace MCM.Abstractions.Settings.Models
             : this(new []{ propertyDefinition }, propertyGroupDefinition, propertyReference, subGroupDelimiter) { }
         public SettingsPropertyDefinition(IEnumerable<IPropertyDefinitionBase> propertyDefinitions, IPropertyGroupDefinition propertyGroupDefinition, IRef propertyReference, char subGroupDelimiter)
         {
-            var SubGroupDelimiter = '/';
-            var groups = propertyGroupDefinition.GroupName.Split(SubGroupDelimiter);
-            GroupName = string.Join(SubGroupDelimiter.ToString(), groups.Select(x => new TextObject(x).ToString()));
-            IsMainToggle = propertyGroupDefinition.IsMainToggle;
+            var groups = propertyGroupDefinition.GroupName.Split(subGroupDelimiter);
+            GroupName = string.Join(subGroupDelimiter.ToString(), groups.Select(x => new TextObject(x).ToString()));
             GroupOrder = propertyGroupDefinition.GroupOrder;
 
             PropertyReference = propertyReference;
