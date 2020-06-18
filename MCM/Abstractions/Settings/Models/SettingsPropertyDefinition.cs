@@ -27,7 +27,9 @@ namespace MCM.Abstractions.Settings.Models
         public string ValueFormat { get; } = "";
         public Type? CustomFormatter { get; }
         public string GroupName { get; }
+        [Obsolete("Will be removed", true)]
         public bool IsMainToggle { get; }
+        public bool IsToggle { get; }
         public int GroupOrder { get; }
 
         public SettingsPropertyDefinition(IPropertyDefinitionBase propertyDefinition, IPropertyGroupDefinition propertyGroupDefinition, IRef propertyReference, char subGroupDelimiter)
@@ -109,6 +111,10 @@ namespace MCM.Abstractions.Settings.Models
                 if (propertyDefinition is IPropertyDefinitionWithId propertyDefinitionWithId)
                 {
                     Id = propertyDefinitionWithId.Id;
+                }
+                if (propertyDefinition is IPropertyDefinitionGroupToggle propertyDefinitionGroupToggle)
+                {
+                    IsToggle = propertyDefinitionGroupToggle.IsToggle;
                 }
             }
         }

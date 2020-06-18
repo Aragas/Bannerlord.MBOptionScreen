@@ -12,6 +12,7 @@ namespace MCM.Abstractions.Settings.Models
         IPropertyDefinitionWithFormat,
         IPropertyDefinitionWithCustomFormatter,
         IPropertyDefinitionText,
+        IPropertyDefinitionGroupToggle,
         IPropertyGroupDefinition
     {
         // TODO: v4

@@ -62,7 +62,7 @@ namespace MCM.UI.GUI.ViewModels
         {
             get
             {
-                if (Group != null && SettingPropertyDefinition.IsMainToggle)
+                if (Group != null && SettingPropertyDefinition.IsToggle)
                     return false;
                 if (Group?.GroupToggle == false)
                     return false;

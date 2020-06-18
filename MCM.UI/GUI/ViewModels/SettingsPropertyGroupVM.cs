@@ -155,7 +155,7 @@ namespace MCM.UI.GUI.ViewModels
             SettingProperties.Add(sp);
             sp.Group = this;
 
-            if (sp.SettingPropertyDefinition.IsMainToggle)
+            if (sp.SettingPropertyDefinition.IsToggle)
             {
                 if (HasGroupToggle)
                     throw new Exception($"Tried to add a group toggle to Setting Property Group {GroupName} but it already has a group toggle: {GroupToggleSettingProperty.Name}. A Setting Property Group can only have one group toggle.");

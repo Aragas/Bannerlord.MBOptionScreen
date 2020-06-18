@@ -20,7 +20,6 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
         private PropertyInfo? RequireRestartProperty { get; }
         private PropertyInfo? GroupNameProperty { get; }
         private PropertyInfo? GroupOrderProperty { get; }
-        private PropertyInfo? IsMainToggleProperty { get; }
         private PropertyInfo? MinValueProperty { get; }
         private PropertyInfo? MaxValueProperty { get; }
         private PropertyInfo? EditableMinValueProperty { get; }
@@ -29,6 +28,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
         private PropertyInfo? ValueFormatProperty { get; }
         private PropertyInfo? CustomFormatterProperty { get; }
         private PropertyInfo? IdProperty { get; }
+        private PropertyInfo? IsToggleProperty { get; }
 
         public string SettingsId { get; }
         public IRef PropertyReference { get; }
@@ -45,9 +45,11 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
         public string ValueFormat { get; }
         public Type? CustomFormatter { get; }
         public string GroupName { get; }
+        [Obsolete("Will be removed", true)]
         public bool IsMainToggle { get; }
         public int GroupOrder { get; }
         public string Id { get; }
+        public bool IsToggle { get; }
 
         public SettingsPropertyDefinitionWrapper(object @object)
         {
@@ -62,7 +64,6 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
             RequireRestartProperty = AccessTools.Property(type, nameof(RequireRestart));
             GroupNameProperty = AccessTools.Property(type, nameof(GroupName));
             GroupOrderProperty = AccessTools.Property(type, nameof(GroupOrder));
-            IsMainToggleProperty = AccessTools.Property(type, nameof(IsMainToggle));
             MinValueProperty = AccessTools.Property(type, nameof(MinValue));
             MaxValueProperty = AccessTools.Property(type, nameof(MaxValue));
             EditableMinValueProperty = AccessTools.Property(type, nameof(EditableMinValue));
@@ -71,6 +72,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
             ValueFormatProperty = AccessTools.Property(type, nameof(ValueFormat));
             CustomFormatterProperty = AccessTools.Property(type, nameof(CustomFormatter));
             IdProperty = AccessTools.Property(type, nameof(Id));
+            IsToggleProperty= AccessTools.Property(type, nameof(IsToggle));
 
 
             SettingsId = SettingsIdProperty?.GetValue(@object) as string ?? "ERROR";
@@ -100,7 +102,6 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
 
             GroupName = new TextObject(GroupNameProperty?.GetValue(@object) as string ?? "").ToString();
             GroupOrder = GroupOrderProperty?.GetValue(@object) as int? ?? -1;
-            IsMainToggle = IsMainToggleProperty?.GetValue(@object) as bool? ?? false;
 
             MinValue = MinValueProperty?.GetValue(@object) is { } minVal ? minVal as decimal? ?? 0 : 0;
             MaxValue = MaxValueProperty?.GetValue(@object) is { } maxVal ? maxVal as decimal? ?? 0 : 0;
@@ -117,6 +118,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
             };
             CustomFormatter = CustomFormatterProperty?.GetValue(@object) as Type;
             Id = IdProperty?.GetValue(@object) as string ?? "";
+            IsToggle = IsToggleProperty?.GetValue(@object) as bool? ?? false;
         }
     }
 }

@@ -9,31 +9,33 @@ using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.Properties;
 using MCM.Utils;
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using MCM.Implementation.Attributes;
 
 namespace MCM.Implementation.Settings.Properties
 {
-    [Version("e1.0.0",  2)]
-    [Version("e1.0.1",  2)]
-    [Version("e1.0.2",  2)]
-    [Version("e1.0.3",  2)]
-    [Version("e1.0.4",  2)]
-    [Version("e1.0.5",  2)]
-    [Version("e1.0.6",  2)]
-    [Version("e1.0.7",  2)]
-    [Version("e1.0.8",  2)]
-    [Version("e1.0.9",  2)]
-    [Version("e1.0.10", 2)]
-    [Version("e1.0.11", 2)]
-    [Version("e1.1.0",  2)]
-    [Version("e1.2.0",  2)]
-    [Version("e1.2.1",  2)]
-    [Version("e1.3.0",  2)]
-    [Version("e1.3.1",  2)]
-    [Version("e1.4.0",  2)]
-    [Version("e1.4.1",  2)]
+    [Version("e1.0.0",  3)]
+    [Version("e1.0.1",  3)]
+    [Version("e1.0.2",  3)]
+    [Version("e1.0.3",  3)]
+    [Version("e1.0.4",  3)]
+    [Version("e1.0.5",  3)]
+    [Version("e1.0.6",  3)]
+    [Version("e1.0.7",  3)]
+    [Version("e1.0.8",  3)]
+    [Version("e1.0.9",  3)]
+    [Version("e1.0.10", 3)]
+    [Version("e1.0.11", 3)]
+    [Version("e1.1.0",  3)]
+    [Version("e1.2.0",  3)]
+    [Version("e1.2.1",  3)]
+    [Version("e1.3.0",  3)]
+    [Version("e1.3.1",  3)]
+    [Version("e1.4.0",  3)]
+    [Version("e1.4.1",  3)]
     internal class AttributeSettingsPropertyDiscoverer : IAttributeSettingsPropertyDiscoverer
     {
         public IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object)
@@ -57,43 +59,19 @@ namespace MCM.Implementation.Settings.Properties
 
                 object? groupAttrObj = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyGroupDefinition)));
                 var groupDefinition = groupAttrObj != null
-                    ? new PropertyGroupDefinitionWrapper(groupAttrObj)
+                    ? new AttributePropertyGroupDefinitionWrapper(groupAttrObj)
                     : SettingPropertyGroupAttribute.Default;
 
                 var propertyDefinitions = new List<IPropertyDefinitionBase>();
 
-                object? propAttr = null;
-                propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(SettingPropertyAttribute)));
-                if (propAttr != null)
-                    propertyDefinitions.Add(new SettingPropertyAttributeWrapper(propAttr));
+                var propertyDefinitionWrappers = GetPropertyDefinitionWrappers(attributes).ToList();
+                if (propertyDefinitionWrappers.Count > 0)
+                {
+                    propertyDefinitions.AddRange(propertyDefinitionWrappers);
 
-                propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionBool)));
-                if (propAttr != null)
-                    propertyDefinitions.Add(new PropertyDefinitionBoolWrapper(propAttr));
-
-                propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionWithMinMax)));
-                if (propAttr != null)
-                    propertyDefinitions.Add(new PropertyDefinitionWithMinMaxWrapper(propAttr));
-
-                propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionWithFormat)));
-                if (propAttr != null)
-                    propertyDefinitions.Add(new PropertyDefinitionWithFormatWrapper(propAttr));
-
-                propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionWithActionFormat)));
-                if (propAttr != null)
-                    propertyDefinitions.Add(new PropertyDefinitionWithActionFormatWrapper(propAttr));
-
-                propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionWithCustomFormatter)));
-                if (propAttr != null)
-                    propertyDefinitions.Add(new PropertyDefinitionWithCustomFormatterWrapper(propAttr));
-
-                propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionText)));
-                if (propAttr != null)
-                    propertyDefinitions.Add(new PropertyDefinitionTextWrapper(propAttr));
-
-                propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionDropdown)));
-                if (propAttr != null)
-                    propertyDefinitions.Add(new PropertyDefinitionDropdownWrapper(propAttr));
+                    if (groupDefinition is AttributePropertyGroupDefinitionWrapper groupWrapper && groupWrapper.IsMainToggle)
+                        propertyDefinitions.Add(new AttributePropertyDefinitionGroupToggleWrapper(propertyDefinitions.First()));
+                }
 
                 if(propertyDefinitions.Count > 0)
                     yield return new SettingsPropertyDefinition(
@@ -102,6 +80,42 @@ namespace MCM.Implementation.Settings.Properties
                         new PropertyRef(property, @object),
                         subGroupDelimiter);
             }
+        }
+
+        private static IEnumerable<IPropertyDefinitionBase> GetPropertyDefinitionWrappers(IReadOnlyCollection<Attribute> attributes)
+        {
+            object? propAttr = null;
+            propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(SettingPropertyAttribute)));
+            if (propAttr != null)
+                yield return new SettingPropertyAttributeWrapper(propAttr);
+
+            propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionBool)));
+            if (propAttr != null)
+                yield return new PropertyDefinitionBoolWrapper(propAttr);
+
+            propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionWithMinMax)));
+            if (propAttr != null)
+                yield return new PropertyDefinitionWithMinMaxWrapper(propAttr);
+
+            propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionWithFormat)));
+            if (propAttr != null)
+                yield return new PropertyDefinitionWithFormatWrapper(propAttr);
+
+            propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionWithActionFormat)));
+            if (propAttr != null)
+                yield return new PropertyDefinitionWithActionFormatWrapper(propAttr);
+
+            propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionWithCustomFormatter)));
+            if (propAttr != null)
+                yield return new PropertyDefinitionWithCustomFormatterWrapper(propAttr);
+
+            propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionText)));
+            if (propAttr != null)
+                yield return new PropertyDefinitionTextWrapper(propAttr);
+
+            propAttr = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsOrImplementsEquivalent(a.GetType(), typeof(IPropertyDefinitionDropdown)));
+            if (propAttr != null)
+                yield return new PropertyDefinitionDropdownWrapper(propAttr);
         }
     }
 }

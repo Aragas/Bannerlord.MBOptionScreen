@@ -37,7 +37,7 @@ namespace MCM.Utils
 
                 if (prop.SettingType != SettingType.Bool)
                 {
-                    if (prop.IsMainToggle)
+                    if (prop.IsToggle)
                         throw new Exception($"Property {propertyRef.PropertyInfo.Name} in {settings.GetType().FullName} is marked as the main toggle for the group but is a numeric type. The main toggle must be a boolean type.");
                 }
             }

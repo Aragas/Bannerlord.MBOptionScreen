@@ -16,16 +16,32 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
         public Dictionary<string, ISettingsPropertyBuilder> Properties { get; } = new Dictionary<string, ISettingsPropertyBuilder>();
 
         public string GroupName { get; }
+        [Obsolete("Will be removed", true)]
         public bool IsMainToggle { get; private set; }
         public int GroupOrder { get; private set; }
+        private bool HasGroupToggle { get; set; }
 
         public DefaultSettingsPropertyGroupBuilder(string name)
         {
             GroupName = name;
         }
 
-        public ISettingsPropertyGroupBuilder SetIsMainToggle(bool value) { IsMainToggle = value; return this; }
+        public ISettingsPropertyGroupBuilder SetIsMainToggle(bool value) { return this; }
         public ISettingsPropertyGroupBuilder SetGroupOrder(int value) { GroupOrder = value; return this; }
+
+        public ISettingsPropertyGroupBuilder AddToggle(string id, string name, IRef @ref, Action<ISettingsPropertyGroupToggleBuilder>? builder)
+        {
+            if (HasGroupToggle)
+                throw new InvalidOperationException("There already exists a group toggle property!");
+
+            HasGroupToggle = true;
+
+            if (!Properties.ContainsKey(name))
+                Properties[name] = new DefaultSettingsPropertyGroupToggleBuilder(id, name, @ref);
+            builder?.Invoke((ISettingsPropertyGroupToggleBuilder) Properties[name]);
+            return this;
+
+        }
 
         public ISettingsPropertyGroupBuilder AddBool(string id, string name, IRef @ref, Action<ISettingsPropertyBoolBuilder>? builder)
         {
