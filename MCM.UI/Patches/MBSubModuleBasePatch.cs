@@ -13,7 +13,7 @@ using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.MountAndBlade.GauntletUI;
 
-namespace MCM.UI
+namespace MCM.UI.Patches
 {
     /// <summary>
     /// Instead of having a direct dependency of Sandbox Module, hook to OnSubModuleLoad to check when it's

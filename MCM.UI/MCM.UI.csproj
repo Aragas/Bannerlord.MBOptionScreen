@@ -29,7 +29,7 @@
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Native.EarlyAccess" Version="1.4.0.229571-e" />
     <PackageReference Include="Bannerlord.ReferenceAssemblies.SandBox.EarlyAccess" Version="1.4.0.229571-e" />
     <PackageReference Include="Bannerlord.UIExtenderEx" Version="0.0.11.13" />
-    <PackageReference Include="Lib.Harmony" Version="2.0.0.10" />
+    <PackageReference Include="Lib.Harmony" Version="2.0.1" />
   </ItemGroup>
 
 
