@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <NuspecFile>MCM.Integrated.NuGet.nuspec</NuspecFile>
+    <NuspecProperties>version=$(Version)</NuspecProperties>
   </PropertyGroup>
 
   <ItemGroup>

@@ -28,6 +28,8 @@
     <Copy SourceFiles="@(Libraries)" DestinationFiles="@(Libraries->'$(GameFolder)\Modules\$(ModuleName)\bin\Win64_Shipping_Client\%(RecursiveDir)%(Filename)%(Extension)')" />
 
     <Copy SourceFiles="@(Data)" DestinationFiles="@(Data->'$(GameFolder)\Modules\$(ModuleName)\%(RecursiveDir)%(Filename)%(Extension)')" />
+
+    <ReplaceFileText File="$(GameFolder)\Modules\$(ModuleName)\SubModule.xml" Regex="\$version\$" ReplacementText="$(Version)" />
   </Target>
 
 </Project>
