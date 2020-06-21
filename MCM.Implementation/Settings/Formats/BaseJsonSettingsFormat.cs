@@ -122,7 +122,6 @@ namespace MCM.Implementation.Settings.Formats
                 Save(settings, path);
                 return settings;
             }
-            return settings;
         }
 
         private object? FindExistingValue(string path) => _existingObjects.TryGetValue(path, out var value) ? value : null;

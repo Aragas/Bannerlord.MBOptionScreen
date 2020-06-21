@@ -12,9 +12,9 @@ namespace MCM.Tests.SettingsFormat
         protected float _floatValue;
         protected string _stringValue = "";
 
-        protected ISettingsFormat Format { get; set; }
-        protected FluentGlobalSettings Settings { get; set; }
-        protected string Path { get; set;}
+        protected ISettingsFormat Format { get; set; } = default!;
+        protected FluentGlobalSettings Settings { get; set; } = default!;
+        protected string Path { get; set;} = default!;
 
         [SetUp]
         public void Setup()

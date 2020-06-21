@@ -6,7 +6,8 @@ using System.Reflection;
 
 namespace MCM.UI.Utils
 {
-     internal sealed class WrappedPropertyInfo : PropertyInfo
+    // https://github.com/BUTR/Bannerlord.UIExtenderEx/blob/rewrite/Bannerlord.UIExtenderEx/ViewModels/WrappedPropertyInfo.cs
+    internal sealed class WrappedPropertyInfo : PropertyInfo
     {
         private readonly object _instance;
         private readonly PropertyInfo _propertyInfoImplementation;

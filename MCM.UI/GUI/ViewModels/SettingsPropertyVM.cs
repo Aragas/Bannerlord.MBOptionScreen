@@ -138,7 +138,7 @@ namespace MCM.UI.GUI.ViewModels
         {
             get =>  new SelectorVMWrapper(IsDropdownVisible 
                 ? SettingsUtils.GetSelector(PropertyReference.Value)
-                : (object) new MCMSelectorVM<MCMSelectorItemVM>(0, null));
+                : (object) new MCMSelectorVM<MCMSelectorItemVM>(null));
             set
             {
                 if (IsDropdownVisible && DropdownValue != value)

@@ -5,6 +5,7 @@ using System.Reflection;
 
 namespace MCM.UI.Utils
 {
+    // https://github.com/BUTR/Bannerlord.UIExtenderEx/blob/rewrite/Bannerlord.UIExtenderEx/ViewModels/WrappedMethodInfo.cs
     internal sealed class WrappedMethodInfo : MethodInfo
     {
         private readonly object _instance;

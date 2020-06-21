@@ -76,7 +76,7 @@ namespace MCM.Abstractions.Data
         }
 
 
-        public MCMSelectorVM(int selectedIndex, Action<MCMSelectorVM<TSelectorItemVM>>? onChange)
+        public MCMSelectorVM(Action<MCMSelectorVM<TSelectorItemVM>>? onChange)
         {
             HasSingleItem = true;
             _onChange = onChange;

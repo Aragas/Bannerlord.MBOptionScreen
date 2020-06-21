@@ -38,7 +38,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
         }
         public ISettingsPropertyBuilder AddActionValueFormat(Func<float, string> value)
         {
-            if (ValueFormat != "")
+            if (!string.IsNullOrEmpty(ValueFormat))
                 throw new InvalidOperationException("AddValueFormat was already called!");
 
             ValueFormatFunc = obj => value((int) obj);

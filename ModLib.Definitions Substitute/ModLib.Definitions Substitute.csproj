@@ -5,6 +5,7 @@
     <Authors>mipen, Aragas</Authors>
     <RootNamespace>ModLib.Definitions</RootNamespace>
     <AssemblyName>ModLib.Definitions</AssemblyName>
+    <WarningLevel>0</WarningLevel>
   </PropertyGroup>
 
   <ItemGroup>

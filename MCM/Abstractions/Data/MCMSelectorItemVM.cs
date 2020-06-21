@@ -35,7 +35,7 @@ namespace MCM.Abstractions.Data
             get => _canBeSelected;
             set
             {
-                if (!value.Equals(_canBeSelected))
+                if (value != _canBeSelected)
                 {
                     _canBeSelected = value;
                     OnPropertyChanged(nameof(CanBeSelected));
@@ -76,9 +76,7 @@ namespace MCM.Abstractions.Data
             _stringItem = Ref.Value.ToString();
 
             if (_hintObj != null)
-            {
                 _hint = new HintViewModel(_hintObj.ToString());
-            }
         }
     }
 
@@ -97,8 +95,14 @@ namespace MCM.Abstractions.Data
             }
         }
 
-        public MCMSelectorItemVM(IRef @ref) : base(@ref) { }
-        public MCMSelectorItemVM(IRef @ref, TextObject hint): base(@ref, hint) { }
+        public MCMSelectorItemVM(IRef @ref) : base(@ref)
+        {
+            _value = (T) Ref.Value;
+        }
+        public MCMSelectorItemVM(IRef @ref, TextObject hint) : base(@ref, hint)
+        {
+            _value = (T) Ref.Value;
+        }
 
         public override void RefreshValues()
         {
