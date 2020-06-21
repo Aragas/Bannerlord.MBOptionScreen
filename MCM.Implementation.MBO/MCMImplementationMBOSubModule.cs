@@ -7,7 +7,7 @@ using TaleWorlds.MountAndBlade;
 namespace MCM.Implementation.MBO
 {
     // Do not provide assembly substitutes
-    public sealed class SubModuleV300 : MBSubModuleBase
+    public sealed class MCMImplementationMBOSubModule : MBSubModuleBase
     {
         /// <summary>
         /// Start initialization

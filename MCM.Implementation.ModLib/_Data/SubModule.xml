@@ -31,8 +31,8 @@
     </SubModule>
     <SubModule>
       <Name value="MCMv3 ModLib Compatibility"/>
-      <SubModuleClassType value="MCM.Implementation.ModLib.SubModuleV300"/>
       <DLLName value="MCMv3.Implementation.ModLib.v$version$.dll"/>
+      <SubModuleClassType value="MCM.Implementation.ModLib.MCMImplementationModLibSubModule"/>
       <Tags>
         <Tag key="DedicatedServerType" value="none" />
         <Tag key="IsNoRenderModeElement" value="false" />

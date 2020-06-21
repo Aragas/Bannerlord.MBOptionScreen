@@ -5,7 +5,7 @@ using TaleWorlds.MountAndBlade;
 
 namespace MCM.Implementation.ModLib
 {
-    public sealed class SubModuleV300 : MBSubModuleBase
+    public sealed class MCMImplementationModLibSubModule : MBSubModuleBase
     {
         /// <summary>
         /// Start initialization

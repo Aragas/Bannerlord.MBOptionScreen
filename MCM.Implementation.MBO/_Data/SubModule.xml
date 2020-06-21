@@ -13,8 +13,8 @@
   <SubModules>
     <SubModule>
       <Name value="MCMv3 MBO Compatibility"/>
-      <SubModuleClassType value="MCM.Implementation.MBO.SubModuleV300"/>
       <DLLName value="MCMv3.Implementation.MBO.v$version$.dll"/>
+      <SubModuleClassType value="MCM.Implementation.MBO.MCMImplementationMBOSubModule"/>
       <Tags>
         <Tag key="DedicatedServerType" value="none" />
         <Tag key="IsNoRenderModeElement" value="false" />
