@@ -8,10 +8,10 @@ namespace MCM.Abstractions.Data
 {
     public class MCMSelectorItemVM : ViewModel
     {
-        private string _stringItem;
+        private string _stringItem = "";
         private bool _canBeSelected = true;
-        private TextObject _hintObj;
-        private HintViewModel _hint;
+        private TextObject? _hintObj;
+        private HintViewModel? _hint;
 
         public IRef Ref { get; }
 
@@ -44,7 +44,7 @@ namespace MCM.Abstractions.Data
         }
 
         [DataSourceProperty]
-        public HintViewModel Hint
+        public HintViewModel? Hint
         {
             get => _hint;
             set

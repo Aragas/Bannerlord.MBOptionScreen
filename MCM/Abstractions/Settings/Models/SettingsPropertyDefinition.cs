@@ -6,13 +6,14 @@ using MCM.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using TaleWorlds.Localization;
 
 namespace MCM.Abstractions.Settings.Models
 {
     public sealed class SettingsPropertyDefinition : ISettingsPropertyDefinition
     {
-        public string Id { get; }
+        public string Id { get; } = "";
         public IRef PropertyReference { get; }
         public SettingType SettingType { get; }
         public string DisplayName { get; } = "";

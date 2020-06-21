@@ -18,7 +18,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
         public decimal MinValue { get; }
         public decimal MaxValue { get; }
         public string ValueFormat { get; private set; } = "";
-        public Func<object, string> ValueFormatFunc { get; private set; }
+        public Func<object, string>? ValueFormatFunc { get; private set; }
 
         internal DefaultSettingsPropertyFloatingIntegerBuilder(string id, string name, float minValue, float maxValue, IRef @ref)
             : base(id, name, @ref)
