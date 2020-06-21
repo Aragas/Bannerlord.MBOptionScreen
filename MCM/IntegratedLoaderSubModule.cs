@@ -10,9 +10,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
+
+[assembly: InternalsVisibleTo("MCM.Custom.ScreenTests")]
+[assembly: InternalsVisibleTo("MCM.Tests")]
 
 namespace MCM
 {

@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>MCMv3.Custom.ScreenTests</AssemblyName>
+    <AssemblyName>MCM.Custom.ScreenTests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,8 +1,13 @@
 ﻿using MCM.Abstractions.Settings.Providers;
 using MCM.Abstractions.Synchronization;
 
+using System.Runtime.CompilerServices;
+
 using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
+
+[assembly: InternalsVisibleTo("MCM.Custom.ScreenTests")]
+[assembly: InternalsVisibleTo("MCM.Tests")]
 
 namespace MCM.Implementation
 {

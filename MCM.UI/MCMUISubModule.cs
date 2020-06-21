@@ -5,7 +5,12 @@ using HarmonyLib;
 using MCM.Abstractions.Synchronization;
 using MCM.UI.Patches;
 
+using System.Runtime.CompilerServices;
+
 using TaleWorlds.MountAndBlade;
+
+[assembly: InternalsVisibleTo("MCM.Custom.ScreenTests")]
+[assembly: InternalsVisibleTo("MCM.Tests")]
 
 namespace MCM.UI
 {
