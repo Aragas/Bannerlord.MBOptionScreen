@@ -3,13 +3,14 @@ using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Models;
 using MCM.Extensions;
 using MCM.UI.Actions;
+using MCM.UI.Data;
 using MCM.Utils;
 
 using System.Linq;
 
-namespace MCM.UI.GUI
+namespace MCM.UI.Utils
 {
-    internal static class Utils
+    internal static class UISettingsUtils
     {
         /// <summary>
         /// Mimics the same method in SettingsUtils, but it registers every action in URS
@@ -61,7 +62,7 @@ namespace MCM.UI.GUI
                     urs.Do(new SetStringAction(current.PropertyReference, (string) @new.PropertyReference.Value));
                     break;
                 case SettingType.Dropdown:
-                    urs.Do(new SetDropdownIndexAction(current.PropertyReference, SettingsUtils.GetSelector(@new.PropertyReference.Value)));
+                    urs.Do(new SetDropdownIndexAction(current.PropertyReference, new SelectorWrapper(@new.PropertyReference.Value)));
                     break;
             }
         }

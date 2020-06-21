@@ -32,7 +32,10 @@ namespace MCM.UI.GUI.Views
         public override void HandleInput(IReadOnlyList<int> lastKeysPressed)
         {
             if (Input.IsKeyDown(InputKey.LeftControl) && Input.IsKeyPressed(InputKey.V))
+            {
+                base.HandleInput(lastKeysPressed);
                 return;
+            }
 
             if (lastKeysPressed.Count > 0)
             {

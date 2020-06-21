@@ -1,10 +1,15 @@
 ﻿using HarmonyLib;
 
+using MCM.Abstractions;
+
 using System.Reflection;
 
-namespace MCM.Abstractions.Data
+namespace MCM.UI.Data
 {
-    public class DropdownWrapper : IDropdownProvider, IWrapper
+    /// <summary>
+    /// A simple wrapper that is used to get SelectedIndex
+    /// </summary>
+    public class SelectorWrapper : IWrapper
     {
         public object Object { get; }
         private PropertyInfo? SelectedIndexProperty { get; }
@@ -16,13 +21,13 @@ namespace MCM.Abstractions.Data
             set => SelectedIndexProperty?.SetValue(Object, value);
         }
 
-        public DropdownWrapper(object @object)
+        public SelectorWrapper(object @object)
         {
             Object = @object;
             var type = @object.GetType();
 
             SelectedIndexProperty = AccessTools.Property(type, nameof(SelectedIndex));
-
+   
             IsCorrect = SelectedIndexProperty != null;
         }
     }

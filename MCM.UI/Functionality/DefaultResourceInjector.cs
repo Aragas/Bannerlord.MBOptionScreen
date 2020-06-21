@@ -19,8 +19,6 @@ namespace MCM.UI.Functionality
 {
     /// <summary>
     /// Can be easily replaced once a less hacky solution is found
-    /// I would gladly use UIExtenderLib, but it LGPL-3 does not allow static linking.
-    /// Wanted to incorporate the .dll via ILMerge to reduce the total binary count.
     /// </summary>
     [Version("e1.0.0",  1)]
     [Version("e1.0.1",  1)]

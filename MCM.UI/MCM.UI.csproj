@@ -22,6 +22,7 @@
     <EmbeddedResource Include="GUI\Views\SettingsPropertyGroupView.xml" />
     <EmbeddedResource Include="GUI\Views\SettingsPropertyView.xml" />
     <EmbeddedResource Include="GUI\Views\SettingsView.xml" />
+    <EmbeddedResource Include="GUI\Views\DropdownWithHorizontalControl.Checkbox.xml" />
   </ItemGroup>
 
   <ItemGroup>

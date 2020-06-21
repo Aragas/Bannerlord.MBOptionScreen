@@ -91,9 +91,17 @@
 
                 <!-- Dropdown list -->
                 <Widget SuggestedWidth="362" SuggestedHeight="42" VerticalAlignment="Center" HorizontalAlignment="Center"
-                        IsEnabled="@IsEnabled" IsVisible="@IsDropdownVisible">
+                        IsEnabled="@IsEnabled" IsVisible="@IsDropdownDefaultVisible">
                   <Children>
                     <Standard.DropdownWithHorizontalControl VerticalAlignment="Center" HorizontalAlignment="Center" Parameter.SelectorDataSource="{DropdownValue}" />
+                  </Children>
+                </Widget>
+
+                <!-- Checkbox Dropdown list -->
+                <Widget SuggestedWidth="362" SuggestedHeight="42" VerticalAlignment="Center" HorizontalAlignment="Center"
+                        IsEnabled="@IsEnabled" IsVisible="@IsDropdownCheckboxVisible">
+                  <Children>
+                    <DropdownWithHorizontalControlCheckboxView_MCMv3 VerticalAlignment="Center" HorizontalAlignment="Center" Parameter.SelectorDataSource="{DropdownValue}" />
                   </Children>
                 </Widget>
 

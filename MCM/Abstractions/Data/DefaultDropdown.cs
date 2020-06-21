@@ -7,12 +7,13 @@ using TaleWorlds.Localization;
 
 namespace MCM.Abstractions.Data
 {
-    public class DefaultDropdown<T> : List<T>, IDropdownProvider, IEqualityComparer<DefaultDropdown<T>>
+    public class DefaultDropdown<T> : List<T>, IDefaultDropdown, IDropdownProvider, IEqualityComparer<DefaultDropdown<T>>
     {
         public static DefaultDropdown<T> Empty => new DefaultDropdown<T>(Array.Empty<T>(), 0);
 
         private SelectorVM<SelectorItemVM> _selector;
         private int _selectedIndex;
+
         public SelectorVM<SelectorItemVM> Selector
         {
             get => _selector;
@@ -25,12 +26,6 @@ namespace MCM.Abstractions.Data
                 }
             }
         }
-
-        private void OnSelectionChanged(SelectorVM<SelectorItemVM> obj)
-        {
-            _selectedIndex = obj.SelectedIndex;
-        }
-
         public int SelectedIndex
         {
             get => _selectedIndex;
@@ -43,27 +38,17 @@ namespace MCM.Abstractions.Data
                 }
             }
         }
-        public T SelectedValue
-        {
-            get => this[SelectedIndex];
-            set
-            {
-                var index = IndexOf(value);
-                if (index == -1)
-                    return;
-                SelectedIndex = index;
-            }
-        }
 
         public DefaultDropdown(IEnumerable<T> values, int selectedIndex) : base(values)
         {
-            _selector = new SelectorVM<SelectorItemVM>(this.Select(x =>new TextObject(x?.ToString() ?? "ERROR").ToString()),
-                selectedIndex,
-                OnSelectionChanged);
+            var select = this.Select(x => new TextObject(x?.ToString() ?? "ERROR").ToString());
+            _selector = new SelectorVM<SelectorItemVM>(select, selectedIndex, OnSelectionChanged);
 
             if (SelectedIndex != 0 && SelectedIndex >= Count)
                 throw new Exception();
         }
+
+        private void OnSelectionChanged(SelectorVM<SelectorItemVM> obj) => _selectedIndex = obj.SelectedIndex;
 
         public bool Equals(DefaultDropdown<T> x, DefaultDropdown<T> y) => x.SelectedIndex == y.SelectedIndex;
         public int GetHashCode(DefaultDropdown<T> obj) => obj.SelectedIndex;

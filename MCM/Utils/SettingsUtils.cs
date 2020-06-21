@@ -13,8 +13,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using TaleWorlds.Core.ViewModelCollection;
-
 namespace MCM.Utils
 {
     public static class SettingsUtils
@@ -103,8 +101,8 @@ namespace MCM.Utils
                 }
                 case SettingType.Dropdown:
                 {
-                    var original = GetSelector(currentDefinition.PropertyReference.Value);
-                    var @new = GetSelector(newDefinition.PropertyReference.Value);
+                    var original = new DropdownWrapper(currentDefinition.PropertyReference.Value);
+                    var @new = new DropdownWrapper(newDefinition.PropertyReference.Value);
                     return original.SelectedIndex.Equals(@new.SelectedIndex);
                 }
                 default:
@@ -147,17 +145,24 @@ namespace MCM.Utils
         }
 
 
-        public static bool IsDropdown(Type type)
-        {
-            return ReflectionUtils.ImplementsOrImplementsEquivalent(type, typeof(IDropdownProvider)) ||
-                   ReflectionUtils.ImplementsOrImplementsEquivalent(type, "MBOptionScreen.Data.IDropdownProvider");
-        }
-        public static SelectorVM<SelectorItemVM> GetSelector(object dropdown)
+        public static bool IsDropdown(Type type) =>
+            ReflectionUtils.ImplementsOrImplementsEquivalent(type, typeof(IDropdownProvider)) ||
+            ReflectionUtils.ImplementsOrImplementsEquivalent(type, "MBOptionScreen.Data.IDropdownProvider");
+        public static bool IsDefaultDropdown(Type type) =>
+            ReflectionUtils.ImplementsOrImplementsEquivalent(type, typeof(IDefaultDropdown)) ||
+            (IsDropdown(type) && !IsCheckboxDropdown(type));
+        public static bool IsCheckboxDropdown(Type type) =>
+            ReflectionUtils.ImplementsOrImplementsEquivalent(type, typeof(ICheckboxDropdown));
+
+        public static bool IsDefaultDropdown(object obj)=> IsDefaultDropdown(obj.GetType());
+        public static bool IsCheckboxDropdown(object obj) => IsCheckboxDropdown(obj.GetType());
+
+        public static object GetSelector(object dropdown)
         {
             var selectorProperty = AccessTools.Property(dropdown.GetType(), "Selector");
             return selectorProperty == null
-                ? new SelectorVM<SelectorItemVM>(0, _ => { })
-                : (SelectorVM<SelectorItemVM>) selectorProperty.GetValue(dropdown);
+                ? new MCMSelectorVM<MCMSelectorItemVM>(0, _ => { })
+                : selectorProperty.GetValue(dropdown);
         }
 
         public static IEnumerable<ISettingsPropertyDefinition> GetAllSettingPropertyDefinitions(SettingsPropertyGroupDefinition settingPropertyGroup1)

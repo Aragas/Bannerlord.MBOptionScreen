@@ -17,6 +17,7 @@ namespace MCM.UI.Functionality.Loaders
         public static XmlDocument SettingsPropertyView() => Load("MCM.UI.GUI.Views.SettingsPropertyView.xml");
         public static XmlDocument SettingsPropertyGroupView() => Load("MCM.UI.GUI.Views.SettingsPropertyGroupView.xml");
         public static XmlDocument SettingsView() => Load("MCM.UI.GUI.Views.SettingsView.xml");
+        public static XmlDocument DropdownWithHorizontalControlCheckboxView() => Load("MCM.UI.GUI.Views.DropdownWithHorizontalControl.Checkbox.xml");
 
         public static WidgetPrefab LoadOptionsWithModOptionsView_MCMv3() => PrefabInjector.InjectDocumentAndCreate("OptionsWithModOptionsView_MCMv3", Load("MCM.UI.GUI.Views.OptionsWithModOptionsView.xml"));
         public static WidgetPrefab LoadModOptionsView_MCMv3() => PrefabInjector.InjectDocumentAndCreate("ModOptionsView_MCMv3", Load("MCM.UI.GUI.Views.ModOptionsView.xml"));
@@ -25,13 +26,15 @@ namespace MCM.UI.Functionality.Loaders
         private static XmlDocument Load(string embedPath)
         {
             using var stream = typeof(PrefabsLoader).Assembly.GetManifestResourceStream(embedPath);
+            using var xmlReader = XmlReader.Create(stream, new XmlReaderSettings {IgnoreComments = true});
             var doc = new XmlDocument();
-            doc.Load(stream);
+            doc.Load(xmlReader);
             return doc;
         }
 
         public static void Inject(BaseResourceHandler resourceInjector)
         {
+            resourceInjector.InjectPrefab("DropdownWithHorizontalControlCheckboxView_MCMv3", DropdownWithHorizontalControlCheckboxView());
             resourceInjector.InjectPrefab("ModOptionsPageView_MCMv3", ModOptionsPageView());
             resourceInjector.InjectPrefab("SettingsItemView_MCMv3", SettingsItemView());
             resourceInjector.InjectPrefab("SettingsPropertyGroupView_MCMv3", SettingsPropertyGroupView());

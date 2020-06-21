@@ -2,6 +2,7 @@
 using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.Providers;
 using MCM.UI.Actions;
+using MCM.UI.Utils;
 using MCM.Utils;
 
 using System;
@@ -141,7 +142,7 @@ namespace MCM.UI.GUI.ViewModels
             var settings = SettingsInstance;
 
             if (_cachedPresets.TryGetValue(presetName, out var preset))
-                Utils.OverrideValues(URS, settings, preset);
+                UISettingsUtils.OverrideValues(URS, settings, preset);
 
             RecalculateIndex();
         }

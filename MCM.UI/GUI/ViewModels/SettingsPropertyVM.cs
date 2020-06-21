@@ -1,7 +1,9 @@
-﻿using MCM.Abstractions.Ref;
+﻿using MCM.Abstractions.Data;
+using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Models;
 using MCM.UI.Actions;
+using MCM.UI.Data;
 using MCM.UI.GUI.GauntletUI;
 using MCM.Utils;
 
@@ -52,7 +54,11 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public bool IsStringVisible => SettingType == SettingType.String;
         [DataSourceProperty]
-        public bool IsDropdownVisible => SettingType == SettingType.Dropdown;
+        public bool IsDropdownVisible => IsDropdownDefaultVisible || IsDropdownCheckboxVisible;
+        [DataSourceProperty]
+        public bool IsDropdownDefaultVisible => SettingType == SettingType.Dropdown && SettingsUtils.IsDefaultDropdown(PropertyReference.Value);
+        [DataSourceProperty]
+        public bool IsDropdownCheckboxVisible => SettingType == SettingType.Dropdown && SettingsUtils.IsCheckboxDropdown(PropertyReference.Value);
         [DataSourceProperty]
         public bool IsEnabled => Group?.GroupToggle != false;
         [DataSourceProperty]
@@ -128,20 +134,23 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
         [DataSourceProperty]
-        public SelectorVM<SelectorItemVM> DropdownValue
+        public SelectorVMWrapper DropdownValue
         {
-            get => IsDropdownVisible ? SettingsUtils.GetSelector(PropertyReference.Value) : new SelectorVM<SelectorItemVM>(0, null);
+            get =>  new SelectorVMWrapper(IsDropdownVisible 
+                ? SettingsUtils.GetSelector(PropertyReference.Value)
+                : (object) new MCMSelectorVM<MCMSelectorItemVM>(0, null));
             set
             {
                 if (IsDropdownVisible && DropdownValue != value)
                 {
-                    URS.Do(new ComplexReferenceTypeAction<SelectorVM<SelectorItemVM>>(PropertyReference, selector =>
+                    // TODO
+                    URS.Do(new ComplexReferenceTypeAction<SelectorWrapper>(PropertyReference, selector =>
                     {
-                        selector.ItemList = DropdownValue.ItemList;
+                        //selector.ItemList = DropdownValue.ItemList;
                         selector.SelectedIndex = DropdownValue.SelectedIndex;
                     }, selector =>
                     {
-                        selector.ItemList = DropdownValue.ItemList;
+                        //selector.ItemList = DropdownValue.ItemList;
                         selector.SelectedIndex = DropdownValue.SelectedIndex;
                     }));
                     OnPropertyChanged(nameof(DropdownValue));
@@ -198,7 +207,7 @@ namespace MCM.UI.GUI.ViewModels
         {
             if (args.PropertyName == nameof(SelectorVM<SelectorItemVM>.SelectedIndex))
             {
-                URS.Do(new SetDropdownIndexAction(PropertyReference, (SelectorVM<SelectorItemVM>) obj));
+                URS.Do(new SetDropdownIndexAction(PropertyReference, new SelectorWrapper(obj)));
                 SettingsVM.RecalculateIndex();
             }
         }

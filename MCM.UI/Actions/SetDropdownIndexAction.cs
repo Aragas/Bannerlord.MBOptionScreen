@@ -2,6 +2,7 @@
 
 using MCM.Abstractions.Data;
 using MCM.Abstractions.Ref;
+using MCM.UI.Data;
 
 using System.Reflection;
 
@@ -18,6 +19,22 @@ namespace MCM.UI.Actions
         public object Original { get; }
 
         public SetDropdownIndexAction(IRef context, SelectorVM<SelectorItemVM> value)
+        {
+            DropdownContext = context;
+            SelectedIndexProperty = AccessTools.Property(DropdownContext.Value.GetType(), nameof(IDropdownProvider.SelectedIndex));
+            Context = new ProxyRef<object>(() => SelectedIndexProperty.GetValue(DropdownContext.Value), o => SelectedIndexProperty.SetValue(DropdownContext.Value, o));
+            Value = value.SelectedIndex;
+            Original = Context.Value;
+        }
+        public SetDropdownIndexAction(IRef context, MCMSelectorVM<MCMSelectorItemVM> value)
+        {
+            DropdownContext = context;
+            SelectedIndexProperty = AccessTools.Property(DropdownContext.Value.GetType(), nameof(IDropdownProvider.SelectedIndex));
+            Context = new ProxyRef<object>(() => SelectedIndexProperty.GetValue(DropdownContext.Value), o => SelectedIndexProperty.SetValue(DropdownContext.Value, o));
+            Value = value.SelectedIndex;
+            Original = Context.Value;
+        }
+        public SetDropdownIndexAction(IRef context, SelectorWrapper value)
         {
             DropdownContext = context;
             SelectedIndexProperty = AccessTools.Property(DropdownContext.Value.GetType(), nameof(IDropdownProvider.SelectedIndex));
