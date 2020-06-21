@@ -49,12 +49,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCM.NuGet", "MCM.NuGet\MCM.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Localization", "_Localization", "{FCD88090-9290-4DEF-8AFE-F84D99D03C4A}"
 	ProjectSection(SolutionItems) = preProject
-		localization.xsd = localization.xsd
-		std_MCM.xml = std_MCM.xml
-		std_MCM_Implementation.xml = std_MCM_Implementation.xml
-		std_MCM_MBO.xml = std_MCM_MBO.xml
-		std_MCM_ModLib.xml = std_MCM_ModLib.xml
-		std_MCM_UI.xml = std_MCM_UI.xml
+		Localization\localization.xsd = Localization\localization.xsd
+		Localization\std_MCM.xml = Localization\std_MCM.xml
+		Localization\std_MCM_Implementation.xml = Localization\std_MCM_Implementation.xml
+		Localization\std_MCM_MBO.xml = Localization\std_MCM_MBO.xml
+		Localization\std_MCM_ModLib.xml = Localization\std_MCM_ModLib.xml
+		Localization\std_MCM_UI.xml = Localization\std_MCM_UI.xml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCM.Custom.ScreenTests", "MCM.Custom.ScreenTests\MCM.Custom.ScreenTests.csproj", "{93218C18-364B-4ADA-8878-65A0D4F6F589}"
