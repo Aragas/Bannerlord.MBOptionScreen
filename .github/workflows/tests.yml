@@ -11,7 +11,7 @@ jobs:
 
   build:
     name: Tests
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     steps:
 
     - name: Checkout Repository
@@ -38,29 +38,12 @@ jobs:
       with:
         pathSource: depotdownloader-2.3.6.zip
         pathTarget: depotdownloader
-        
-    - name: Download NUnit Console
-      uses: dsaltares/fetch-gh-release-asset@master
-      with:
-        repo: nunit/nunit-console
-        file: NUnit.Console-3.11.1.zip
-      env:
-        GITHUB_TOKEN: "${{secrets.GITHUB_TOKEN}}"
-        
-    - name: NUnit.Console-3.11.1
-      uses: DuckSoft/extract-7z-action@v1.0
-      with:
-        pathSource: NUnit.Console-3.11.1.zip
-        pathTarget: nunit
 
     - name: Download Bannerlord binaries
       run: dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -username ${{secrets.STEAM_LOGIN}} -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord
 
     - name: Build Solution (Release)
-      run: dotnet build --configuration Release -p:GameFolder=bannerlord -p:FrameworkPathOverride=/usr/lib/mono/4.5/
-      
-    - name: Copy
-      run: find bannerlord -type f -exec cp {} MCM.Tests/bin/Release/net472 \;
-      
+      run: dotnet build --configuration Release -p:GameFolder=bannerlord
+
     - name: Test MCM
-      run: mono nunit/bin/net35/nunit3-console.exe MCM.Tests/bin/Release/net472/MCM.Tests.dll
+      run: dotnet test MCM.Tests/bin/Release/net472/MCM.Tests.dll
