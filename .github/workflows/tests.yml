@@ -44,7 +44,9 @@ jobs:
       run: dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -username ${{secrets.STEAM_LOGIN}} -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord
 
     - name: Test MCM (Debug)
-      run: dotnet test MCM.Tests/MCM.Tests.csproj --configuration Debug
+      run: dotnet test MCM.Tests/MCM.Tests.csproj --configuration Debug -p:GameFolder="$pwd/bannerlord"
+      shell: pwsh
 
     - name: Test MCM (Release)
-      run: dotnet test MCM.Tests/MCM.Tests.csproj --configuration Release
+      run: dotnet test MCM.Tests/MCM.Tests.csproj --configuration Release -p:GameFolder="$pwd/bannerlord"
+      shell: pwsh
