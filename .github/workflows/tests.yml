@@ -24,15 +24,16 @@ jobs:
         source-url: https://nuget.pkg.github.com/Bannerlord-Unofficial-Tools-Resources/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
-    - name: Download DepotDownloader_2.3.6
-      uses: Legion2/download-release-action@v2.1.0
-      with:
-        repository: SteamRE/DepotDownloader
-        tag: 'DepotDownloader_2.3.6'
-        path: ./
-        file: depotdownloader-2.3.6.zip
         
+    - name: Download DepotDownloader_2.3.6
+      uses: i3h/download-release-asset@v1
+      with:
+        owner: SteamRE
+        repo: DepotDownloader
+        tag: DepotDownloader_2.3.6
+        file: depotdownloader-2.3.6.zip
+        token: ${{secrets.GITHUB_TOKEN}}
+
     - name: DepotDownloader_2.3.6
       uses: DuckSoft/extract-7z-action@v1.0
       with:
