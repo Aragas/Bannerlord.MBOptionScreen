@@ -8,25 +8,30 @@ using MCM.Utils;
 using NUnit.Framework;
 
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace MCM.Tests
 {
     public class DITests
     {
+        private bool @bool;
+
         [SetUp]
         public void Setup()
         {
             // Force load Implementation assembly
-            var type = typeof(MCMImplementationSubModule);
+            // Avoiding compiler optimization))0)
+            @bool = typeof(MCMImplementationSubModule) != null;
         }
 
         [Test]
         public void VersionResolve_Test()
         {
             var implementations = DI.GetBaseImplementations<ISettingsFormat>().ToList();
-            Assert.True(implementations.Any(i => i is MemorySettingsFormat));
-            Assert.True(implementations.Any(i => i is JsonSettingsFormat));
-            Assert.True(implementations.Any(i => i is XmlSettingsFormat));
+            Assert.True(implementations.Any(i => i is MemorySettingsFormat), "MemorySettingsFormat missing");
+            Assert.True(implementations.Any(i => i is JsonSettingsFormat), "JsonSettingsFormat missing");
+            Assert.True(implementations.Any(i => i is XmlSettingsFormat), "XmlSettingsFormat missing");
+            Assert.True(@bool);
         }
     }
 }
