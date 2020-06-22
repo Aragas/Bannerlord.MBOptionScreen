@@ -1,0 +1,49 @@
+name: Tests
+
+on:
+  push:
+    branches:
+      - master
+      - v3
+      - v3_tests
+
+jobs:
+
+  build:
+    name: Tests
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+      
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@master
+      with:
+        dotnet-version: 3.1.300
+        source-url: https://nuget.pkg.github.com/Bannerlord-Unofficial-Tools-Resources/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+    - name: Download DepotDownloader_2.3.6
+      uses: dsaltares/fetch-gh-release-asset@master
+      with:
+        repo: "SteamRE/DepotDownloader"
+        version: "DepotDownloader_2.3.6"
+        file: "depotdownloader-2.3.6.zip"
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: DepotDownloader_2.3.6
+      uses: DuckSoft/extract-7z-action@v1.0
+      with:
+        pathSource: depotdownloader-2.3.6.zip
+        pathTarget: depotdownloader
+
+    - name: Download Bannerlord binaries
+      run: dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -username ${{secrets.STEAM_LOGIN}} -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir ./bannerlord
+
+    - name: Build Solution (Release)
+      run: dotnet build --configuration Release -p:GameFolder=./bannerlord -p:FrameworkPathOverride=/usr/lib/mono/4.5/
+      
+    - name: Test MCM
+      run: dotnet test MCM.Tests/bin/Release/net472/MCM.Tests.dll 
