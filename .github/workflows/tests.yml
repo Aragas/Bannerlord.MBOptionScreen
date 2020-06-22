@@ -28,8 +28,7 @@ jobs:
     - name: Download DepotDownloader_2.3.6
       uses: dsaltares/fetch-gh-release-asset@master
       with:
-        repo: "SteamRE/DepotDownloader"
-        version: DepotDownloader_2.3.6
+        repo: SteamRE/DepotDownloader
         file: depotdownloader-2.3.6.zip
       env:
         GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
