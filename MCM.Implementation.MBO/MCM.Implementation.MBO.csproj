@@ -16,18 +16,5 @@
   <PropertyGroup Condition="$(TargetFramework) == 'net472' AND '$(GITHUB_ACTIONS)' != 'true'">
     <ModuleName>Bannerlord.MBOptionScreen.MBO</ModuleName>
   </PropertyGroup>
-  <ItemGroup Condition="$(TargetFramework) == 'net472' AND '$(GITHUB_ACTIONS)' != 'true'">
-    <Libraries Include="$(TargetDir)\*.*" Exclude="$(TargetDir)\*.pdb;$(TargetDir)\*.json;$(TargetDir)\MCMv3.dll;" />
-    <Data Include="_Data\**\*.*" />
-  </ItemGroup>
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="$(TargetFramework) == 'net472' AND '$(GITHUB_ACTIONS)' != 'true'">
-    <Exec Command="if not exist &quot;$(GameFolder)\Modules\$(ModuleName)&quot; mkdir &quot;$(GameFolder)\Modules\$(ModuleName)&quot;" />
-
-    <Copy SourceFiles="@(Libraries)" DestinationFiles="@(Libraries->'$(GameFolder)\Modules\$(ModuleName)\bin\Win64_Shipping_Client\%(RecursiveDir)%(Filename)%(Extension)')" />
-
-    <Copy SourceFiles="@(Data)" DestinationFiles="@(Data->'$(GameFolder)\Modules\$(ModuleName)\%(RecursiveDir)%(Filename)%(Extension)')" />
-
-    <ReplaceFileText File="$(GameFolder)\Modules\$(ModuleName)\SubModule.xml" Regex="\$version\$" ReplacementText="$(Version)" />
-  </Target>
 
 </Project>
