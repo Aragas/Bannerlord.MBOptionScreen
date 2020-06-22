@@ -2,7 +2,8 @@ using NUnit.Framework;
 
 using System;
 using System.Runtime.Serialization;
-
+using MCM.Implementation;
+using MCM.UI;
 using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
 
@@ -10,6 +11,16 @@ namespace MCM.Tests
 {
     public class IntegratedLoaderSubModuleTests
     {
+        private bool @bool;
+
+        [SetUp]
+        public void Setup()
+        {
+            // Force load Implementation assembly
+            // Avoiding compiler optimization))0)
+            @bool = typeof(MCMImplementationSubModule) != null && typeof(MCMUISubModule) != null;
+        }
+
         [Test]
         public void LoadsExternalAssemblies()
         {
@@ -45,6 +56,8 @@ namespace MCM.Tests
             subModule.OnGameEnd(game);
             subModule.BeginGameStart(game);
             subModule.DoLoading(game);
+
+            Assert.True(@bool);
         }
     }
 }
