@@ -60,4 +60,4 @@ jobs:
       run: dotnet build --configuration Release -p:GameFolder=./bannerlord -p:FrameworkPathOverride=/usr/lib/mono/4.5/
       
     - name: Test MCM
-      run: mono ./bin/net45/nunitlite-runner.exe ./MCM.Tests/bin/Release/net472/MCM.Tests.dll
+      run: mono ./nunit/bin/net45/nunitlite-runner.exe ./MCM.Tests/bin/Release/net472/MCM.Tests.dll
