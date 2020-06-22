@@ -26,12 +26,12 @@ jobs:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
     - name: Download DepotDownloader_2.3.6
-      uses: dsaltares/fetch-gh-release-asset@master
+      uses: Legion2/download-release-action@v2.1.0
       with:
-        repo: SteamRE/DepotDownloader
+        repository: SteamRE/DepotDownloader
+        tag: 'DepotDownloader_2.3.6'
+        path: ./
         file: depotdownloader-2.3.6.zip
-      env:
-        GITHUB_TOKEN: "${{secrets.GITHUB_TOKEN}}"
         
     - name: DepotDownloader_2.3.6
       uses: DuckSoft/extract-7z-action@v1.0
