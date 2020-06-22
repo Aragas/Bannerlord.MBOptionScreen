@@ -31,7 +31,7 @@ jobs:
         repo: "SteamRE/DepotDownloader"
         version: "DepotDownloader_2.3.6"
         file: "depotdownloader-2.3.6.zip"
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{secrets.GITHUB_TOKEN}}
         
     - name: DepotDownloader_2.3.6
       uses: DuckSoft/extract-7z-action@v1.0
