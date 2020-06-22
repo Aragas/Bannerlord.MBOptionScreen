@@ -43,14 +43,8 @@ jobs:
     - name: Download Bannerlord binaries
       run: dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -username ${{secrets.STEAM_LOGIN}} -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord
 
-    - name: Build MCM.Tests (Release)
-      run: dotnet build MCM.Tests/MCM.Tests.csproj --configuration Release -p:GameFolder=bannerlord
+    - name: Test MCM (Debug)
+      run: dotnet test MCM.Tests/MCM.Tests.csproj --configuration Debug
 
-    - name: Test MCM
-      run: dotnet test MCM.Tests/bin/Release/net472/MCM.Tests.dll
-
-    - name: Test MCM
-      run: dotnet vstest MCM.Tests/bin/Release/net472/MCM.Tests.dll
-
-    - name: Test MCM
-      run: dotnet test MCM.Tests/bin/Debug/net472/MCM.Tests.dll /platform:x64 /framework:'.NETFramework,Version=v4.7.2'
+    - name: Test MCM (Release)
+      run: dotnet test MCM.Tests/MCM.Tests.csproj --configuration Release
