@@ -25,7 +25,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@master
       with:
-        dotnet-version: 3.1.100
+        dotnet-version: 3.1.300
         source-url: https://nuget.pkg.github.com/Bannerlord-Unofficial-Tools-Resources/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
