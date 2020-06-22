@@ -34,7 +34,7 @@ jobs:
         file: depotdownloader-2.3.6.zip
         token: ${{secrets.GITHUB_TOKEN}}
 
-    - name: DepotDownloader_2.3.6
+    - name: Extract DepotDownloader_2.3.6
       uses: DuckSoft/extract-7z-action@v1.0
       with:
         pathSource: depotdownloader-2.3.6.zip
@@ -42,6 +42,7 @@ jobs:
 
     - name: Download Bannerlord binaries
       run: dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -username ${{secrets.STEAM_LOGIN}} -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord
+      shell: pwsh
 
     - name: Test MCM (Debug)
       run: dotnet test MCM.Tests/MCM.Tests.csproj --configuration Debug -p:GameFolder="$pwd/bannerlord"
