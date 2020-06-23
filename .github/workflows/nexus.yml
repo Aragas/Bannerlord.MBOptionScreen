@@ -9,7 +9,7 @@ on:
 jobs:
 
   build:
-    name: Publish to nexusmods
+    name: Publish to GitHub Actions as Artifact
     runs-on: ubuntu-latest
     steps:
 
@@ -40,4 +40,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: MCM.Standalone.zip
-        path: bannerlord/Modules
+        path: bannerlord
