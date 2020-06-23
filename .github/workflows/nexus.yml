@@ -37,12 +37,12 @@ jobs:
       shell: pwsh
 
     - name: Zip MCM.Standalone
-      uses: DuckSoft/create-7z-action@v1.0
+      uses: papeloto/action-zip@v1
       with:
-        pathSource: bannerlord/Modules/
-        pathTarget: MCM.Standalone.zip
+        files: bannerlord/Modules
+        dest: MCM.Standalone.zip
 
-    - name: Upload MCM.Standalone.zip as Artifact
+    - name: Upload MCM.Standalone.zip Artifact
       uses: actions/upload-artifact@v2
       with:
         name: MCM.Standalone.zip
@@ -54,7 +54,8 @@ jobs:
     needs: artifact
     steps:
 
-    - uses: actions/download-artifact@v2
+    - name: Download MCM.Standalone.zip Artifact
+      uses: actions/download-artifact@v2
       with:
         name: MCM.Standalone.zip
     
