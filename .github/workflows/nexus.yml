@@ -39,7 +39,7 @@ jobs:
     - name: Zip MCM.Standalone
       uses: papeloto/action-zip@v1
       with:
-        files: bannerlord/Modules
+        files: bannerlord
         dest: MCM.Standalone.zip
 
     - name: Upload MCM.Standalone.zip Artifact
