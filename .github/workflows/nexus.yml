@@ -8,7 +8,7 @@ on:
 
 jobs:
 
-  build:
+  artifact:
     name: Publish to GitHub Actions as Artifact
     runs-on: ubuntu-latest
     steps:
@@ -41,3 +41,16 @@ jobs:
       with:
         name: MCM.Standalone.zip
         path: bannerlord
+
+  nexusmods:
+    name: Publish to nexusmods
+    runs-on: ubuntu-latest
+    needs: artifact
+    steps:
+
+    - uses: actions/download-artifact@v2
+      with:
+        name: MCM.Standalone.zip
+    
+    - name: Display structure of downloaded files
+      run: ls -R
