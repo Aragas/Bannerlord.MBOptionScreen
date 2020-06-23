@@ -36,11 +36,17 @@ jobs:
       run: dotnet build MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false"
       shell: pwsh
 
+    - name: Zip MCM.Standalone
+      uses: DuckSoft/create-7z-action@v1.0
+      with:
+        pathSource: bannerlord
+        pathTarget: MCM.Standalone.zip
+
     - name: Upload MCM.Standalone.zip as Artifact
       uses: actions/upload-artifact@v2
       with:
         name: MCM.Standalone.zip
-        path: bannerlord
+        path: MCM.Standalone.zip
 
   nexusmods:
     name: Publish to nexusmods
