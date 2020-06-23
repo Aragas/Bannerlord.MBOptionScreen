@@ -24,8 +24,16 @@ jobs:
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-    - name: Build Solution (Release)
-      run: dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$pwd/bannerlord"
+    - name: Build MCM.Standalone (Release)
+      run: dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false"
+      shell: pwsh
+    
+    - name: Build MCM.Implementation.MBO (Release)
+      run: dotnet build MCM.Implementation.MBO/MCM.Implementation.MBO.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false"
+      shell: pwsh
+    
+    - name: Build MCM.Implementation.ModLib (Release)
+      run: dotnet build MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false"
       shell: pwsh
 
     - name: Zip MCM.Standalone
