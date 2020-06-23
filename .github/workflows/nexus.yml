@@ -1,1 +1,30 @@
+name: Nexusmods Deployment
+
+on:
+  push:
+    branches:
+      - master
+      - v3_nexusmods
+
+jobs:
+
+  build:
+    name: Publish to nexusmods
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+      
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@master
+      with:
+        dotnet-version: 3.1.300
+        source-url: https://nuget.pkg.github.com/Bannerlord-Unofficial-Tools-Resources/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+    - name: Build Solution (Release)
+      run: dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$pwd/bannerlord"
+      shell: pwsh
 
