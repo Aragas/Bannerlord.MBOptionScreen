@@ -39,7 +39,7 @@ jobs:
     - name: Zip MCM.Standalone
       uses: DuckSoft/create-7z-action@v1.0
       with:
-        pathSource: bannerlord/Modules
+        pathSource: bannerlord/Modules/
         pathTarget: MCM.Standalone.zip
 
     - name: Upload MCM.Standalone.zip as Artifact
