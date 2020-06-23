@@ -28,3 +28,14 @@ jobs:
       run: dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$pwd/bannerlord"
       shell: pwsh
 
+    - name: Zip MCM.Standalone
+      uses: DuckSoft/create-7z-action@v1.0
+      with:
+        pathSource: bannerlord/Modules
+        pathTarget: MCM.Standalone.zip
+
+    - name: Upload MCM.Standalone.zip as Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: MCM.Standalone.zip
+        path: MCM.Standalone.zip
