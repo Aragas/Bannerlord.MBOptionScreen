@@ -58,14 +58,32 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: MCM.Standalone.zip
+        
+    - name: Checkout Repository
+      uses: actions/checkout@v2
 
-    - name: Start Selenoid
-      uses: Xotabu4/selenoid-github-action@v1
+    #- name: Start Selenoid
+    #  uses: Xotabu4/selenoid-github-action@v1
 
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
+        source-url: https://nuget.pkg.github.com/Bannerlord-Unofficial-Tools-Resources/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        
+    - name: Install Bannerlord.ChangelogParser
+      run: dotnet tool install -g Bannerlord.ChangelogParser
+      shell: pwsh
+
+    - name: Run Bannerlord.ChangelogParser
+      run: bannerlord_changelog_parser getversion -f "changelog.txt"
+      shell: pwsh
+
+    - name: Run Bannerlord.ChangelogParser
+      run: bannerlord_changelog_parser getdescription -f "changelog.txt"
+      shell: pwsh
 
     #- name: Checkout nexusmodsuploader
     #  uses: actions/checkout@master
