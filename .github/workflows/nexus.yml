@@ -58,6 +58,22 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: MCM.Standalone.zip
-    
-    - name: Display structure of downloaded files
-      run: ls -R
+
+    - name: Start Selenoid
+      uses: Xotabu4/selenoid-github-action@v1
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.101
+
+    #- name: Checkout nexusmodsuploader
+    #  uses: actions/checkout@master
+    #  with:
+    #    repository: aragas/nexusmodsuploader
+
+    #- name: Run
+    #  run: dotnet run --project NexusmodsUploader/NexusmodsUploader/NexusmodsUploader.csproj --configuration Release -- -u mountandblade2bannerlord -m 612 -n "Mod Configuration Menu" -v "$modVersion" -l true -e true -d "$modDescription" -p "$pwd/MCM.Standalone.zip"
+    #  shell: pwsh
+    #  env:
+    #    NEXUSMODS_COOKIES_JSON: ${{secrets.NEXUSMODS_COOKIES_JSON}}
