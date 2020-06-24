@@ -1,11 +1,6 @@
   name: NexusMods Deployment
 
   on:
-    push:
-      branches:
-        - master
-        - v3_tests
-        - v3_nexusmods
     repository_dispatch:
       types:
         - publish-on-nexusmods
