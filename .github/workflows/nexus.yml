@@ -50,9 +50,6 @@
           files: bannerlord
           dest: MCM.Standalone.zip
 
-      - name: Start Selenoid
-        uses: Xotabu4/selenoid-github-action@v1
-
       - name: Install Bannerlord.ChangelogParser
         run: dotnet tool install -g Bannerlord.ChangelogParser
         shell: pwsh
@@ -60,6 +57,9 @@
       - name: Install Bannerlord.NexusmodsUploader
         run: dotnet tool install -g Bannerlord.NexusmodsUploader
         shell: pwsh
+
+      - name: Start Selenoid
+        uses: Xotabu4/selenoid-github-action@v1
 
       - name: Run NexusmodsUploader
         run: $modVersion = bannerlord_changelog_parser getversion -f "changelog.txt"; $modDescription = bannerlord_changelog_parser getdescription -f "changelog.txt"; bannerlord_nexusmods_uploader upload -g mountandblade2bannerlord -m 1873 -n "Mod Configuration Menu" -v "$modVersion" -l true -e true -d "$modDescription" -p "$pwd/MCM.Standalone.zip";
