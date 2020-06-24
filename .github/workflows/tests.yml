@@ -34,7 +34,9 @@ jobs:
         pathTarget: depotdownloader
 
     - name: Download Bannerlord binaries
-      run: dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -username ${{secrets.STEAM_LOGIN}} -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord
+      run: >-
+        dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -username ${{secrets.STEAM_LOGIN}}
+        -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord
       shell: pwsh
 
     - name: Test MCM (Debug)
