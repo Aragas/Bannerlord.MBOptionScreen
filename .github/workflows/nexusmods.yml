@@ -1,80 +1,79 @@
-  # Will only be triggered on the master branch by any workflow that uses repository dispatch
-  name: NexusMods Deployment
+# Will only be triggered on the master branch by any workflow that uses repository dispatch
+name: NexusMods Deployment
 
-  on:
-    repository_dispatch:
-      types:
-        - publish-on-nexusmods
+on:
+  repository_dispatch:
+    types:
+      - publish-on-nexusmods
 
-  jobs:
-    publish-on-nexusmods:
-      name: NexusMods publish requested by ${{github.workflow}} workflow
-      runs-on: ubuntu-latest
-      if: github.repository == ${{github.repository}}
-      steps:
+jobs:
+  publish-on-nexusmods:
+    name: NexusMods publish requested by ${{github.workflow}} workflow
+    runs-on: ubuntu-latest
+    if: github.repository == ${{github.repository}}
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
 
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@master
+      with:
+        dotnet-version: 3.1.300
+        source-url: https://nuget.pkg.github.com/Bannerlord-Unofficial-Tools-Resources/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@master
-        with:
-          dotnet-version: 3.1.300
-          source-url: https://nuget.pkg.github.com/Bannerlord-Unofficial-Tools-Resources/index.json
-        env:
-          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@master
+      with:
+        dotnet-version: 3.1.300
+        source-url: https://nuget.pkg.github.com/Aragas/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@master
-        with:
-          dotnet-version: 3.1.300
-          source-url: https://nuget.pkg.github.com/Aragas/index.json
-        env:
-          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: Build MCM.Standalone (Release)
+      run: dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false"
+      shell: pwsh
 
-      - name: Build MCM.Standalone (Release)
-        run: dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false"
-        shell: pwsh
+    - name: Build MCM.Implementation.MBO (Release)
+      run: dotnet build MCM.Implementation.MBO/MCM.Implementation.MBO.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false"
+      shell: pwsh
 
-      - name: Build MCM.Implementation.MBO (Release)
-        run: dotnet build MCM.Implementation.MBO/MCM.Implementation.MBO.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false"
-        shell: pwsh
+    - name: Build MCM.Implementation.ModLib (Release)
+      run: dotnet build MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false"
+      shell: pwsh
 
-      - name: Build MCM.Implementation.ModLib (Release)
-        run: dotnet build MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false"
-        shell: pwsh
+    - name: Zip MCM.Standalone
+      run: 7z a -tzip MCM.Standalone.zip ./bannerlord/*
 
-      - name: Zip MCM.Standalone
-        run: 7z a -tzip MCM.Standalone.zip ./bannerlord/*
-        
-      - name: Upload MCM.Standalone Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: MCM.Standalone
-          path: MCM.Standalone.zip
+    - name: Upload MCM.Standalone Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: MCM.Standalone
+        path: MCM.Standalone.zip
 
-      - name: Install Bannerlord.ChangelogParser
-        run: dotnet tool install -g Bannerlord.ChangelogParser
-        shell: pwsh
+    - name: Install Bannerlord.ChangelogParser
+      run: dotnet tool install -g Bannerlord.ChangelogParser
+      shell: pwsh
 
-      - name: Install Bannerlord.NexusmodsUploader
-        run: dotnet tool install -g Bannerlord.NexusmodsUploader
-        shell: pwsh
+    - name: Install Bannerlord.NexusmodsUploader
+      run: dotnet tool install -g Bannerlord.NexusmodsUploader
+      shell: pwsh
 
-      - name: Start Selenoid
-        uses: Xotabu4/selenoid-github-action@v1
+    - name: Start Selenoid
+      uses: Xotabu4/selenoid-github-action@v1
 
-      - name: Run NexusmodsUploader
-        run: $modVersion = bannerlord_changelog_parser getversion -f "$pwd/changelog.txt"; $modDescription = bannerlord_changelog_parser getdescription -f "$pwd/changelog.txt"; bannerlord_nexusmods_uploader upload -g mountandblade2bannerlord -m 612 -n "Mod Configuration Menu" -v "$modVersion" -l true -e true -d "$modDescription" -p "$pwd/MCM.Standalone.zip";
-        shell: pwsh
-        env:
-          NEXUSMODS_COOKIES_JSON: ${{secrets.NEXUSMODS_COOKIES_JSON}}
-          
-      - name: Password protect Screenshots
-        run: 7z a -p${{secrets.SCREENSHOTS_PASSWORD}} Screenshots.7z ./Screenshots/*
-        
-      - name: Upload Screenshots Artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: Screenshots
-          path: Screenshots.7z
+    - name: Run NexusmodsUploader
+      run: $modVersion = bannerlord_changelog_parser getversion -f "$pwd/changelog.txt"; $modDescription = bannerlord_changelog_parser getdescription -f "$pwd/changelog.txt"; bannerlord_nexusmods_uploader upload -g mountandblade2bannerlord -m 612 -n "Mod Configuration Menu" -v "$modVersion" -l true -e true -d "$modDescription" -p "$pwd/MCM.Standalone.zip";
+      shell: pwsh
+      env:
+        NEXUSMODS_COOKIES_JSON: ${{secrets.NEXUSMODS_COOKIES_JSON}}
+
+    - name: Password protect Screenshots
+      run: 7z a -p${{secrets.SCREENSHOTS_PASSWORD}} Screenshots.7z ./Screenshots/*
+
+    - name: Upload Screenshots Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: Screenshots
+        path: Screenshots.7z
