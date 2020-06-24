@@ -3,6 +3,7 @@
   <PropertyGroup>
     <Authors>Aragas, mipen</Authors>
     <AssemblyName>MCMv3.Implementation.ModLib.v$(Version)</AssemblyName>
+    <ModuleName>Bannerlord.MBOptionScreen.ModLib</ModuleName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -14,9 +15,5 @@
     <ProjectReference Include="..\ModLib Substitute\ModLib Substitute.csproj" />
     <ProjectReference Include="..\ModLib.Definitions Substitute\ModLib.Definitions Substitute.csproj" />
   </ItemGroup>
-
-  <PropertyGroup Condition="$(TargetFramework) == 'net472' AND '$(GITHUB_ACTIONS)' != 'true'">
-    <ModuleName>Bannerlord.MBOptionScreen.ModLib</ModuleName>
-  </PropertyGroup>
 
 </Project>
