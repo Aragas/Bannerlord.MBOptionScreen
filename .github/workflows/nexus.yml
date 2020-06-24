@@ -45,10 +45,13 @@
         shell: pwsh
 
       - name: Zip MCM.Standalone
-        uses: papeloto/action-zip@v1
+        run: zip MCM.Standalone.zip bannerlord/
+        
+      - name: Upload MCM.Standalone Artifact
+        uses: actions/upload-artifact@v2
         with:
-          files: bannerlord
-          dest: MCM.Standalone.zip
+          name: MCM.Standalone
+          path: MCM.Standalone.zip
 
       - name: Install Bannerlord.ChangelogParser
         run: dotnet tool install -g Bannerlord.ChangelogParser
@@ -67,9 +70,12 @@
         env:
           NEXUSMODS_COOKIES_JSON: ${{secrets.NEXUSMODS_COOKIES_JSON}}
           
+      - name: Password protect Screenshots
+        run: zip -p ${{secrets.SCREENSHOTS_PASSWORD}} Screenshots.zip Screenshots/
+        
       - name: Upload Screenshots Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: Screenshots.zip
-          path: Screenshots
+          name: Screenshots
+          path: Screenshots.zip
 
