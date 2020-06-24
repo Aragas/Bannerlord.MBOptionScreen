@@ -4,6 +4,9 @@ on:
   push:
     branches: 
       - v3
+  pull_request:
+    branches: 
+      - v3
 
 jobs:
   test:
