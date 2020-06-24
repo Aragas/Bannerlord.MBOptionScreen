@@ -2,9 +2,6 @@
 name: NexusMods Deployment
 
 on:
-  push:
-    branches: 
-      - v3_github
   repository_dispatch:
     types:
       - publish-on-nexusmods
