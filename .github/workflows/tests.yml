@@ -5,6 +5,7 @@ on:
     branches: 
       - master
       - v3
+      - v3_github
 
 jobs:
   build:
