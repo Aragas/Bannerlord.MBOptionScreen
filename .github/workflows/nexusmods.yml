@@ -2,6 +2,9 @@
 name: NexusMods Deployment
 
 on:
+  push:
+    branches: 
+      - v3_github
   repository_dispatch:
     types:
       - publish-on-nexusmods
@@ -28,7 +31,7 @@ jobs:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
     - name: Build MCM (Release)
-      run: >-
+      run: |
         dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false";
         dotnet build MCM.Implementation.MBO/MCM.Implementation.MBO.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false";
         dotnet build MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false";
