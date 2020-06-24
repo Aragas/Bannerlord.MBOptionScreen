@@ -4,7 +4,7 @@
     <SourceRoot Include="$(NuGetPackageRoot)" Condition="'$(NuGetPackageRoot)' != ''" />
   </ItemGroup>  
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="$(ModuleName) != '' AND $(GITHUB_ACTIONS) == ''">
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="$(ModuleName) != ''">
     <CreateDirectory Directory="$(GameFolder)/Modules/$(ModuleName)/bin/Win64_Shipping_Client" />
     
     <CopyFolder FromDirectory="$(TargetDir)" ToDirectory="$(GameFolder)/Modules/$(ModuleName)/bin/Win64_Shipping_Client" Regex="^(?!MCM.Standalone).*\.dll$" Clean="true" />
