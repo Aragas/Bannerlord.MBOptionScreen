@@ -56,6 +56,6 @@ jobs:
     - name: Trigger NexusMods workflow
       uses: peter-evans/repository-dispatch@v1
       with:
-        token: ${{secrets.GITHUB_TOKEN_REPO}}
+        token: ${{secrets.REPO_ACCESS_TOKEN}}
         event-type: publish-on-nexusmods
         client-payload: '{"github": ${{ toJson(github) }}}'
