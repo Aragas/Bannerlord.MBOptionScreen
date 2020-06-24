@@ -6,6 +6,7 @@ on:
       - master
       - v3
       - v3_tests
+      - v3_nexusmods
 
 jobs:
 
@@ -51,3 +52,10 @@ jobs:
     - name: Test MCM (Release)
       run: dotnet test MCM.Tests/MCM.Tests.csproj --configuration Release -p:GameFolder="$pwd/bannerlord"
       shell: pwsh
+
+    - name: Trigger NexusMods workflow
+      uses: peter-evans/repository-dispatch@v1
+      with:
+        token: ${{secrets.GITHUB_TOKEN_REPO}}
+        event-type: publish-on-nexusmods
+        client-payload: '{"github": ${{ toJson(github) }}}'
