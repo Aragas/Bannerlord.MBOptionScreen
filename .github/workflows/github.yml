@@ -35,12 +35,18 @@ jobs:
         dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
         dotnet build MCM.Implementation.MBO/MCM.Implementation.MBO.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
         dotnet build MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Zip MCM.Standalone
       run: 7z a -tzip MCM.Standalone.zip ./bannerlord/*
 
     - name: Install Bannerlord.ChangelogParser and Bannerlord.NexusmodsUploader
       run: dotnet tool install -g Bannerlord.ChangelogParser; dotnet tool install -g Bannerlord.NexusmodsUploader
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Run ChangelogParser
       id: changelog
