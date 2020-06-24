@@ -46,14 +46,17 @@ jobs:
 
     - name: Install Bannerlord.ChangelogParser and Bannerlord.NexusmodsUploader
       run: dotnet tool install -g Bannerlord.ChangelogParser; dotnet tool install -g Bannerlord.NexusmodsUploader
-      shell: pwsh
 
     - name: Run ChangelogParser
       id: changelog
-      run: >-
-        Write-Output "::set-output name=mod_version::$(bannerlord_changelog_parser getversion -f "$pwd/changelog.txt")";
-        Write-Output "::set-output name=mod_description::$(bannerlord_changelog_parser getdescription -f "$pwd/changelog.txt")";
-      shell: pwsh
+      run: |
+        vers="$(bannerlord_changelog_parser getversion -f 'changelog.txt')"
+        echo "::set-output name=mod_version::$vers"
+        desc="$(bannerlord_changelog_parser getdescription -f 'changelog.txt')"
+        desc="${desc//'%'/'%25'}"
+        desc="${desc//$'\n'/'%0A'}"
+        desc="${desc//$'\r'/'%0D'}"
+        echo "::set-output name=mod_description::$desc"
 
     - name: Create Release
       uses: actions/create-release@v1
