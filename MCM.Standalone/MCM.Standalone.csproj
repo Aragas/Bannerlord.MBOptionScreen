@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <Authors>Aragas, mipen</Authors>
+    <ModuleName>Bannerlord.MBOptionScreen</ModuleName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,9 +18,5 @@
   <ItemGroup Condition="$(Configuration) == 'Debug'">
     <ProjectReference Include="..\MCM.Custom.ScreenTests\MCM.Custom.ScreenTests.csproj" />
   </ItemGroup>
-
-  <PropertyGroup Condition="$(TargetFramework) == 'net472' AND '$(GITHUB_ACTIONS)' != 'true'">
-    <ModuleName>Bannerlord.MBOptionScreen</ModuleName>
-  </PropertyGroup>
 
 </Project>

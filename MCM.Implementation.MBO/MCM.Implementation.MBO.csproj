@@ -3,6 +3,7 @@
   <PropertyGroup>
     <Authors>Aragas, mipen</Authors>
     <AssemblyName>MCMv3.Implementation.MBO.v$(Version)</AssemblyName>
+    <ModuleName>Bannerlord.MBOptionScreen.MBO</ModuleName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,9 +13,5 @@
   <ItemGroup>
     <ProjectReference Include="..\MCM\MCM.csproj" />
   </ItemGroup>
-
-  <PropertyGroup Condition="$(TargetFramework) == 'net472' AND '$(GITHUB_ACTIONS)' != 'true'">
-    <ModuleName>Bannerlord.MBOptionScreen.MBO</ModuleName>
-  </PropertyGroup>
 
 </Project>

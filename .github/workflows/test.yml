@@ -1,0 +1,65 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - v3
+  pull_request:
+    branches:
+      - v3
+
+jobs:
+  test:
+    name: Test
+    runs-on: windows-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@master
+      with:
+        dotnet-version: 3.1.300
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Setup BUTR GPR
+      uses: actions/setup-dotnet@master
+      with:
+        source-url: https://nuget.pkg.github.com/BUTR/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Download DepotDownloader_2.3.6
+      uses: i3h/download-release-asset@v1
+      with:
+        owner: SteamRE
+        repo: DepotDownloader
+        tag: DepotDownloader_2.3.6
+        file: depotdownloader-2.3.6.zip
+        token: ${{secrets.GITHUB_TOKEN}}
+
+    - name: Extract DepotDownloader_2.3.6
+      uses: DuckSoft/extract-7z-action@v1.0
+      with:
+        pathSource: depotdownloader-2.3.6.zip
+        pathTarget: depotdownloader
+
+    - name: Download Bannerlord binaries
+      run: >-
+        dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -username ${{secrets.STEAM_LOGIN}}
+        -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord
+    - name: Test MCM (Debug)
+      run: dotnet test MCM.Tests/MCM.Tests.csproj --configuration Debug -p:GameFolder="$PWD/bannerlord"
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Test MCM (Release)
+      run: dotnet test MCM.Tests/MCM.Tests.csproj --configuration Release -p:GameFolder="$PWD/bannerlord"
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1

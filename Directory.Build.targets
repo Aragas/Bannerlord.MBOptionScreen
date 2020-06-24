@@ -5,11 +5,13 @@
   </ItemGroup>  
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="$(ModuleName) != ''">
-    <CopyFolder FromDirectory="$(TargetDir)" ToDirectory="$(GameFolder)\Modules\$(ModuleName)\bin\Win64_Shipping_Client" Regex="^(?!MCM.Standalone).*\.dll$" Clean="true" />
+    <CreateDirectory Directory="$(GameFolder)/Modules/$(ModuleName)/bin/Win64_Shipping_Client" />
+    
+    <CopyFolder FromDirectory="$(TargetDir)" ToDirectory="$(GameFolder)/Modules/$(ModuleName)/bin/Win64_Shipping_Client" Regex="^(?!MCM.Standalone).*\.dll$" Clean="true" />
 
-    <CopyFolder FromDirectory="$(ProjectDir)\_Module" ToDirectory="$(GameFolder)\Modules\$(ModuleName)" Regex="^.*$" Clean="false" />
+    <CopyFolder FromDirectory="$(ProjectDir)/_Module" ToDirectory="$(GameFolder)/Modules/$(ModuleName)" Regex="^.*$" Clean="false" />
 
-    <ReplaceFileText File="$(GameFolder)\Modules\$(ModuleName)\SubModule.xml" Regex="\$version\$" ReplacementText="$(Version)" />
+    <ReplaceFileText File="$(GameFolder)/Modules/$(ModuleName)/SubModule.xml" Regex="\$version\$" ReplacementText="$(Version)" />
   </Target>
 
   <UsingTask
