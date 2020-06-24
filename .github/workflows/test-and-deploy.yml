@@ -76,7 +76,7 @@ jobs:
 #          NUGET          #
 ###########################
   publish-on-nuget:
-    name: NuGet publish 
+    name: Publish on NuGet 
     runs-on: ubuntu-latest
     needs: test
     steps:
@@ -128,7 +128,7 @@ jobs:
 #          NEXUS          #
 ###########################
   publish-on-nexusmods:
-    name: NexusMods publish requested by ${{github.event.client_payload.github.workflow}} workflow
+    name: Publish on NexusMods
     runs-on: ubuntu-latest
     needs: test
     steps:
@@ -164,12 +164,6 @@ jobs:
     - name: Zip MCM.Standalone
       run: 7z a -tzip MCM.Standalone.zip ./bannerlord/*
 
-    - name: Upload MCM.Standalone Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: MCM.Standalone
-        path: MCM.Standalone.zip
-
     - name: Install Bannerlord.ChangelogParser and Bannerlord.NexusmodsUploader
       run: dotnet tool install -g Bannerlord.ChangelogParser; dotnet tool install -g Bannerlord.NexusmodsUploader
       env:
@@ -191,7 +185,7 @@ jobs:
 #         GITHUB          #
 ###########################
   publish-on-github:
-    name: GitHub publish requested by ${{github.event.client_payload.github.workflow}} workflow
+    name: Publish on GitHub
     runs-on: ubuntu-latest
     needs: test
     steps:
