@@ -1,0 +1,293 @@
+name: Test and Deploy
+
+on:
+  push:
+    branches: 
+      - master
+
+jobs:
+  test:
+    name: Test
+    runs-on: windows-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@master
+      with:
+        dotnet-version: 3.1.300
+
+    - name: Setup BUTR GPR
+      uses: actions/setup-dotnet@master
+      with:
+        source-url: https://nuget.pkg.github.com/BUTR/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+    - name: Download DepotDownloader_2.3.6
+      uses: i3h/download-release-asset@v1
+      with:
+        owner: SteamRE
+        repo: DepotDownloader
+        tag: DepotDownloader_2.3.6
+        file: depotdownloader-2.3.6.zip
+        token: ${{secrets.GITHUB_TOKEN}}
+
+    - name: Extract DepotDownloader_2.3.6
+      uses: DuckSoft/extract-7z-action@v1.0
+      with:
+        pathSource: depotdownloader-2.3.6.zip
+        pathTarget: depotdownloader
+
+    - name: Download Bannerlord binaries
+      run: >-
+        dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -username ${{secrets.STEAM_LOGIN}}
+        -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord
+    - name: Test MCM (Debug)
+      run: dotnet test MCM.Tests/MCM.Tests.csproj --configuration Debug -p:GameFolder="$pwd/bannerlord"
+
+    - name: Test MCM (Release)
+      run: dotnet test MCM.Tests/MCM.Tests.csproj --configuration Release -p:GameFolder="$pwd/bannerlord"
+
+    - name: Trigger NuGet workflow
+      uses: peter-evans/repository-dispatch@v1
+      with:
+        token: ${{secrets.REPO_ACCESS_TOKEN}}
+        event-type: publish-on-nuget
+        client-payload: '{"github": ${{ toJson(github) }}}'
+
+    - name: Trigger NexusMods workflow
+      uses: peter-evans/repository-dispatch@v1
+      with:
+        token: ${{secrets.REPO_ACCESS_TOKEN}}
+        event-type: publish-on-nexusmods
+        client-payload: '{"github": ${{ toJson(github) }}}'
+
+    - name: Trigger GitHub workflow
+      uses: peter-evans/repository-dispatch@v1
+      with:
+        token: ${{secrets.REPO_ACCESS_TOKEN}}
+        event-type: publish-on-github
+        client-payload: '{"github": ${{ toJson(github) }}}'
+
+###########################
+#          NUGET          #
+###########################
+  publish-on-nuget:
+    name: NuGet publish 
+    runs-on: ubuntu-latest
+    if: github.repository == ${{github.event.client_payload.github.repository}}
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@master
+      with:
+        dotnet-version: 3.1.300
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Setup BUTR GPR
+      uses: actions/setup-dotnet@master
+      with:
+        source-url: https://nuget.pkg.github.com/BUTR/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Install Bannerlord.ChangelogParser
+      run: dotnet tool install -g Bannerlord.ChangelogParser
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Run ChangelogParser
+      id: changelog
+      run: |
+        vers="$(bannerlord_changelog_parser getversion -f "$PWD/changelog.txt")"
+        echo "::set-output name=mod_version::$vers"
+        desc="$(bannerlord_changelog_parser getdescription -f "$PWD/changelog.txt")"
+        desc="${desc//'%'/'%25'}"
+        desc="${desc//$'\n'/'%0A'}"
+        desc="${desc//$'\r'/'%0D'}"
+        echo "::set-output name=mod_description::$desc"
+    - name: Pack MCM (Release)
+      run: >-
+        dotnet pack MCM.NuGet/MCM.NuGet.csproj --configuration Release -o "./packages";
+        dotnet pack MCM.Integrated.NuGet/MCM.Integrated.NuGet.csproj --configuration Release -o "./packages"
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Push with dotnet
+      run: dotnet nuget push "./packages/*.nupkg" -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+###########################
+#          NEXUS          #
+###########################
+  publish-on-nexusmods:
+    name: NexusMods publish requested by ${{github.event.client_payload.github.workflow}} workflow
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@master
+      with:
+        dotnet-version: 3.1.300
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Setup BUTR GPR
+      uses: actions/setup-dotnet@master
+      with:
+        source-url: https://nuget.pkg.github.com/BUTR/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Build MCM (Release)
+      run: >-
+        dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
+        dotnet build MCM.Implementation.MBO/MCM.Implementation.MBO.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
+        dotnet build MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Zip MCM.Standalone
+      run: 7z a -tzip MCM.Standalone.zip ./bannerlord/*
+
+    - name: Upload MCM.Standalone Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: MCM.Standalone
+        path: MCM.Standalone.zip
+
+    - name: Install Bannerlord.ChangelogParser and Bannerlord.NexusmodsUploader
+      run: dotnet tool install -g Bannerlord.ChangelogParser; dotnet tool install -g Bannerlord.NexusmodsUploader
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Run ChangelogParser
+      id: changelog
+      run: |
+        vers="$(bannerlord_changelog_parser getversion -f "$PWD/changelog.txt")"
+        echo "::set-output name=mod_version::$vers"
+        desc="$(bannerlord_changelog_parser getdescription -f "$PWD/changelog.txt")"
+        desc="${desc//'%'/'%25'}"
+        desc="${desc//$'\n'/'%0A'}"
+        desc="${desc//$'\r'/'%0D'}"
+        echo "::set-output name=mod_description::$desc"
+    - name: Start Selenoid
+      uses: Xotabu4/selenoid-github-action@v1
+
+    - name: Run NexusmodsUploader
+      run: >-
+        bannerlord_nexusmods_uploader upload -g mountandblade2bannerlord -m 612 -n "Mod Configuration Menu"
+        -v "${{steps.changelog.outputs.mod_version}}" -l true -e true -d "${{steps.changelog.outputs.mod_description}}"
+        -p "$PWD/MCM.Standalone.zip";
+      env:
+        NEXUSMODS_COOKIES_JSON: '${{secrets.NEXUSMODS_COOKIES_JSON}}'
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Password protect Screenshots
+      run: 7z a -p${{secrets.SCREENSHOTS_PASSWORD}} Screenshots.7z ./Screenshots/*
+
+    - name: Upload Screenshots Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: Screenshots
+        path: Screenshots.7z
+
+###########################
+#         GITHUB          #
+###########################
+  publish-on-github:
+    name: GitHub publish requested by ${{github.event.client_payload.github.workflow}} workflow
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@master
+      with:
+        dotnet-version: 3.1.300
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Setup BUTR GPR
+      uses: actions/setup-dotnet@master
+      with:
+        source-url: https://nuget.pkg.github.com/BUTR/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Build MCM (Release)
+      run: >-
+        dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
+        dotnet build MCM.Implementation.MBO/MCM.Implementation.MBO.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
+        dotnet build MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Zip MCM.Standalone
+      run: 7z a -tzip MCM.Standalone.zip ./bannerlord/*
+
+    - name: Install Bannerlord.ChangelogParser and Bannerlord.NexusmodsUploader
+      run: dotnet tool install -g Bannerlord.ChangelogParser; dotnet tool install -g Bannerlord.NexusmodsUploader
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Run ChangelogParser
+      id: changelog
+      run: |
+        vers="$(bannerlord_changelog_parser getversion -f "$PWD/changelog.txt")"
+        echo "::set-output name=mod_version::$vers"
+        desc="$(bannerlord_changelog_parser getdescription -f "$PWD/changelog.txt")"
+        desc="${desc//'%'/'%25'}"
+        desc="${desc//$'\n'/'%0A'}"
+        desc="${desc//$'\r'/'%0D'}"
+        echo "::set-output name=mod_description::$desc"
+    - name: Create Release
+      uses: actions/create-release@v1
+      id: create_release
+      with:
+        tag_name: v${{steps.changelog.outputs.mod_version}}
+        release_name: Release ${{steps.changelog.outputs.mod_version}}
+        body: ${{steps.changelog.outputs.mod_description}}
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{steps.create_release.outputs.upload_url}}
+        asset_path: ./MCM.Standalone.zip
+        asset_name: MCM.Standalone.zip
+        asset_content_type: application/zip
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
