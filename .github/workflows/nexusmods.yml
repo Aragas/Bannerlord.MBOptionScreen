@@ -66,9 +66,9 @@ jobs:
     - name: Run ChangelogParser
       id: changelog
       run: |
-        vers="$(bannerlord_changelog_parser getversion -f '$(pwd)/changelog.txt')"
+        vers="$(bannerlord_changelog_parser getversion -f "$(pwd)/changelog.txt")"
         echo "::set-output name=mod_version::$vers"
-        desc="$(bannerlord_changelog_parser getdescription -f '$(pwd)/changelog.txt')"
+        desc="$(bannerlord_changelog_parser getdescription -f "$(pwd)/changelog.txt")"
         desc="${desc//'%'/'%25'}"
         desc="${desc//$'\n'/'%0A'}"
         desc="${desc//$'\r'/'%0D'}"
