@@ -1,91 +1,60 @@
-name: Nexusmods Deployment
+  name: Nexusmods Deployment
 
-on:
-  push:
-    branches:
-      - master
-      - v3_nexusmods
+  on:
+    push:
+      branches:
+        - master
+        - v3_nexusmods
 
-jobs:
+  jobs:
 
-  artifact:
-    name: Publish to GitHub Actions as Artifact
-    runs-on: ubuntu-latest
-    steps:
+    artifact:
+      name: Publish to nexusmods
+      runs-on: ubuntu-latest
+      steps:
 
-    - name: Checkout Repository
-      uses: actions/checkout@v2
-      
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@master
-      with:
-        dotnet-version: 3.1.300
-        source-url: https://nuget.pkg.github.com/Bannerlord-Unofficial-Tools-Resources/index.json
-      env:
-        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-    - name: Build MCM.Standalone (Release)
-      run: dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false"
-      shell: pwsh
-    
-    - name: Build MCM.Implementation.MBO (Release)
-      run: dotnet build MCM.Implementation.MBO/MCM.Implementation.MBO.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false"
-      shell: pwsh
-    
-    - name: Build MCM.Implementation.ModLib (Release)
-      run: dotnet build MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false"
-      shell: pwsh
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@master
+        with:
+          dotnet-version: 3.1.300
+          source-url: https://nuget.pkg.github.com/Bannerlord-Unofficial-Tools-Resources/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-    - name: Zip MCM.Standalone
-      uses: papeloto/action-zip@v1
-      with:
-        files: bannerlord
-        dest: MCM.Standalone.zip
+      - name: Build MCM.Standalone (Release)
+        run: dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false"
+        shell: pwsh
 
-    - name: Upload MCM.Standalone.zip Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: MCM.Standalone.zip
-        path: MCM.Standalone.zip
+      - name: Build MCM.Implementation.MBO (Release)
+        run: dotnet build MCM.Implementation.MBO/MCM.Implementation.MBO.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false"
+        shell: pwsh
 
-  nexusmods:
-    name: Publish to nexusmods
-    runs-on: ubuntu-latest
-    needs: artifact
-    steps:
+      - name: Build MCM.Implementation.ModLib (Release)
+        run: dotnet build MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false"
+        shell: pwsh
 
-    - name: Download MCM.Standalone.zip Artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: MCM.Standalone.zip
+      - name: Zip MCM.Standalone
+        uses: papeloto/action-zip@v1
+        with:
+          files: bannerlord
+          dest: MCM.Standalone.zip
 
-    - name: Display structure of downloaded files
-      run: ls -R
-        
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+      - name: Start Selenoid
+        uses: Xotabu4/selenoid-github-action@v1
 
-    - name: Start Selenoid
-      uses: Xotabu4/selenoid-github-action@v1
+      - name: Install Bannerlord.ChangelogParser
+        run: dotnet tool install -g Bannerlord.ChangelogParser
+        shell: pwsh
 
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: 3.1.101
-        source-url: https://nuget.pkg.github.com/Aragas/index.json
-      env:
-        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        
-    - name: Install Bannerlord.ChangelogParser
-      run: dotnet tool install -g Bannerlord.ChangelogParser
-      shell: pwsh
-      
-    - name: Install Bannerlord.NexusmodsUploader
-      run: dotnet tool install -g Bannerlord.NexusmodsUploader
-      shell: pwsh
+      - name: Install Bannerlord.NexusmodsUploader
+        run: dotnet tool install -g Bannerlord.NexusmodsUploader
+        shell: pwsh
 
-    - name: Run NexusmodsUploader
-      run: $modVersion = bannerlord_changelog_parser getversion -f "changelog.txt"; $modDescription = bannerlord_changelog_parser getdescription -f "changelog.txt"; bannerlord_nexusmods_uploader upload -g mountandblade2bannerlord -m 1873 -n "Mod Configuration Menu" -v "$modVersion" -l true -e true -d "$modDescription" -p "$pwd/MCM.Standalone.zip";
-      shell: pwsh
-      env:
-        NEXUSMODS_COOKIES_JSON: ${{secrets.NEXUSMODS_COOKIES_JSON}}
+      - name: Run NexusmodsUploader
+        run: $modVersion = bannerlord_changelog_parser getversion -f "changelog.txt"; $modDescription = bannerlord_changelog_parser getdescription -f "changelog.txt"; bannerlord_nexusmods_uploader upload -g mountandblade2bannerlord -m 1873 -n "Mod Configuration Menu" -v "$modVersion" -l true -e true -d "$modDescription" -p "$pwd/MCM.Standalone.zip";
+        shell: pwsh
+        env:
+          NEXUSMODS_COOKIES_JSON: ${{secrets.NEXUSMODS_COOKIES_JSON}}
