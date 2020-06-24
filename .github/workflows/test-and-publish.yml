@@ -51,13 +51,13 @@ jobs:
         -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord
 
     - name: Test MCM (Debug)
-      run: dotnet test MCM.Tests/MCM.Tests.csproj --configuration Debug -p:GameFolder="$pwd/bannerlord"
+      run: dotnet test MCM.Tests/MCM.Tests.csproj --configuration Debug -p:GameFolder="$PWD/bannerlord"
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Test MCM (Release)
-      run: dotnet test MCM.Tests/MCM.Tests.csproj --configuration Release -p:GameFolder="$pwd/bannerlord"
+      run: dotnet test MCM.Tests/MCM.Tests.csproj --configuration Release -p:GameFolder="$PWD/bannerlord"
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
