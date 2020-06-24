@@ -67,9 +67,9 @@
         env:
           NEXUSMODS_COOKIES_JSON: ${{secrets.NEXUSMODS_COOKIES_JSON}}
           
-      - name: Upload MCM.Standalone.zip Artifact
+      - name: Upload Screenshots Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: MCM.Standalone.zip
+          name: Screenshots.zip
           path: Screenshots
 
