@@ -8,7 +8,7 @@
 
   jobs:
     publish-on-nexusmods:
-      name: Requested by ${{github.workflow}} workflow
+      name: NexusMods publish requested by ${{github.workflow}} workflow
       runs-on: ubuntu-latest
       if: github.repository == ${{github.repository}}
       steps:
