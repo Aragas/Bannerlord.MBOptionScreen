@@ -34,6 +34,17 @@ jobs:
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
+    - name: Run ChangelogParser
+      id: changelog
+      run: |
+        vers="$(bannerlord_changelog_parser getversion -f 'changelog.txt')"
+        echo "::set-output name=mod_version::$vers"
+        desc="$(bannerlord_changelog_parser getdescription -f 'changelog.txt')"
+        desc="${desc//'%'/'%25'}"
+        desc="${desc//$'\n'/'%0A'}"
+        desc="${desc//$'\r'/'%0D'}"
+        echo "::set-output name=mod_description::$desc"
+
     - name: Pack MCM (Release)
       run: >-
         dotnet pack MCM.NuGet/MCM.NuGet.csproj --configuration Release -o "./packages";
