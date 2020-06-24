@@ -2,6 +2,7 @@
     <a href="https://github.com/Bannerlord.MBOptionScreen" alt="Lines Of Code">
         <img src="https://tokei.rs/b1/github/Aragas/Bannerlord.MBOptionScreen?category=code" /></a>
     <a href="https://www.codefactor.io/repository/github/aragas/bannerlord.mboptionscreen"><img src="https://www.codefactor.io/repository/github/aragas/bannerlord.mboptionscreen/badge" alt="CodeFactor" /></a>
+    <a href="https://www.codefactor.io/repository/github/aragas/bannerlord.mboptionscreen"><img src="https://github.com/Aragas/Bannerlord.MBOptionScreen/workflows/Test/badge.svg?branch=v3&event=push" alt="Test" /></a>
     </br>
     <a href="https://www.nuget.org/packages/Bannerlord.MCM" alt="NuGet Bannerlord.MCM">
         <img src="https://img.shields.io/nuget/v/Bannerlord.MCM.svg?label=NuGet%20Bannerlord.MCM&colorB=blue" /></a>
