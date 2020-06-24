@@ -1,27 +1,20 @@
-name: NuGet
+# Will only be triggered on the master branch by any workflow that uses repository dispatch
+name: NuGet Publish
 
 on:
-  push:
-    branches:
-      - master
+  repository_dispatch:
+    types:
+      - publish-on-nuget
 
 jobs:
-  build-from-push:
-    name: Requested by Push
-    needs: build
+  publish-on-nuget:
+    name: NuGet publish requested by ${{github.workflow}} workflow
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
+    if: github.repository == ${{github.repository}}
     steps:
-    - run: echo
- 
-  build:
-    name: Publish to NuGet
-    runs-on: ubuntu-latest
-    steps:
-
     - name: Checkout Repository
       uses: actions/checkout@v2
-      
+
     - name: Setup .NET Core
       uses: actions/setup-dotnet@master
       with:
@@ -32,12 +25,12 @@ jobs:
 
     - name: Build Solution (Release)
       run: dotnet build --configuration Release
-      
+
     - name: Pack MCM (Release)
       run: dotnet pack MCM.NuGet/MCM.NuGet.csproj --configuration Release -o "./packages" 
-      
+
     - name: Pack MCM.Integrated (Release)
       run: dotnet pack MCM.Integrated.NuGet/MCM.Integrated.NuGet.csproj --configuration Release -o "./packages"
-      
+
     - name: Push with dotnet
       run: dotnet nuget push "./packages/*.nupkg" -k ${{ secrets.NUGET_API_KEY }} -s https://api.nuget.org/v3/index.json
