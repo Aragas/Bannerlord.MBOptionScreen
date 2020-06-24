@@ -19,18 +19,25 @@ jobs:
       uses: actions/setup-dotnet@master
       with:
         dotnet-version: 3.1.300
+
+    - name: Setup BUTR GPR
+      uses: actions/setup-dotnet@master
+      with:
         source-url: https://nuget.pkg.github.com/BUTR/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-    - name: Build Solution (Release)
-      run: dotnet build --configuration Release
+    - name: Setup Aragas GPR
+      uses: actions/setup-dotnet@master
+      with:
+        source-url: https://nuget.pkg.github.com/Aragas/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
     - name: Pack MCM (Release)
-      run: dotnet pack MCM.NuGet/MCM.NuGet.csproj --configuration Release -o "./packages" 
-
-    - name: Pack MCM.Integrated (Release)
-      run: dotnet pack MCM.Integrated.NuGet/MCM.Integrated.NuGet.csproj --configuration Release -o "./packages"
+      run: >-
+        dotnet pack MCM.NuGet/MCM.NuGet.csproj --configuration Release -o "./packages";
+        dotnet pack MCM.Integrated.NuGet/MCM.Integrated.NuGet.csproj --configuration Release -o "./packages"
 
     - name: Push with dotnet
       run: dotnet nuget push "./packages/*.nupkg" -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
