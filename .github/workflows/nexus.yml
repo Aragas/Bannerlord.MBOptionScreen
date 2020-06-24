@@ -58,6 +58,9 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: MCM.Standalone.zip
+
+    - name: Display structure of downloaded files
+      run: ls -R
         
     - name: Checkout Repository
       uses: actions/checkout@v2
