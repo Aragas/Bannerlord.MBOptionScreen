@@ -56,10 +56,14 @@ jobs:
 
     - name: Run ChangelogParser
       id: changelog
-      run: >-
-        Write-Output "::set-output name=mod_version::$(bannerlord_changelog_parser getversion -f "$pwd/changelog.txt")";
-        Write-Output "::set-output name=mod_description::$(bannerlord_changelog_parser getdescription -f "$pwd/changelog.txt")";
-      shell: pwsh
+      run: |
+        vers="$(bannerlord_changelog_parser getversion -f 'changelog.txt')"
+        echo "::set-output name=mod_version::$vers"
+        desc="$(bannerlord_changelog_parser getdescription -f 'changelog.txt')"
+        desc="${desc//'%'/'%25'}"
+        desc="${desc//$'\n'/'%0A'}"
+        desc="${desc//$'\r'/'%0D'}"
+        echo "::set-output name=mod_description::$desc"
 
     - name: Start Selenoid
       uses: Xotabu4/selenoid-github-action@v1
