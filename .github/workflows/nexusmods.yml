@@ -52,22 +52,28 @@ jobs:
         name: MCM.Standalone
         path: MCM.Standalone.zip
 
-    - name: Install Bannerlord.ChangelogParser
-      run: dotnet tool install -g Bannerlord.ChangelogParser
+    - name: Install Bannerlord.ChangelogParser and Bannerlord.NexusmodsUploader
+      run: dotnet tool install -g Bannerlord.ChangelogParser; dotnet tool install -g Bannerlord.NexusmodsUploader
       shell: pwsh
 
-    - name: Install Bannerlord.NexusmodsUploader
-      run: dotnet tool install -g Bannerlord.NexusmodsUploader
+    - name: Run ChangelogParser
+      id: changelog
+      run: >-
+        Write-Output "::set-output name=mod_version::$(bannerlord_changelog_parser getversion -f "$pwd/changelog.txt")";
+        Write-Output "::set-output name=mod_description::$(bannerlord_changelog_parser getdescription -f "$pwd/changelog.txt")";
       shell: pwsh
 
     - name: Start Selenoid
       uses: Xotabu4/selenoid-github-action@v1
 
     - name: Run NexusmodsUploader
-      run: $modVersion = bannerlord_changelog_parser getversion -f "$pwd/changelog.txt"; $modDescription = bannerlord_changelog_parser getdescription -f "$pwd/changelog.txt"; bannerlord_nexusmods_uploader upload -g mountandblade2bannerlord -m 612 -n "Mod Configuration Menu" -v "$modVersion" -l true -e true -d "$modDescription" -p "$pwd/MCM.Standalone.zip";
+      run: >-
+        bannerlord_nexusmods_uploader upload -g mountandblade2bannerlord -m 612 -n "Mod Configuration Menu"
+        -v "${{steps.changelog.outputs.mod_version}}" -l true -e true -d "${{steps.changelog.outputs.mod_description}}"
+        -p "$pwd/MCM.Standalone.zip";
       shell: pwsh
       env:
-        NEXUSMODS_COOKIES_JSON: ${{secrets.NEXUSMODS_COOKIES_JSON}}
+        NEXUSMODS_COOKIES_JSON: '${{secrets.NEXUSMODS_COOKIES_JSON}}'
 
     - name: Password protect Screenshots
       run: 7z a -p${{secrets.SCREENSHOTS_PASSWORD}} Screenshots.7z ./Screenshots/*
