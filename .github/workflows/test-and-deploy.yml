@@ -78,7 +78,7 @@ jobs:
   publish-on-nuget:
     name: NuGet publish 
     runs-on: ubuntu-latest
-    if: github.repository == ${{github.event.client_payload.github.repository}}
+    needs: test
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
