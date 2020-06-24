@@ -82,7 +82,7 @@ jobs:
       shell: pwsh
 
     - name: Run NexusmodsUploader
-      run: $modVersion = bannerlord_changelog_parser getversion -f "changelog.txt"; $modDescription = bannerlord_changelog_parser getdescription -f "changelog.txt"; bannerlord_nexusmods_uploader upload -u mountandblade2bannerlord -m 1873 -n "Mod Configuration Menu" -v "$modVersion" -l true -e true -d "$modDescription" -p "$pwd/MCM.Standalone.zip";
+      run: $modVersion = bannerlord_changelog_parser getversion -f "changelog.txt"; $modDescription = bannerlord_changelog_parser getdescription -f "changelog.txt"; bannerlord_nexusmods_uploader upload -g mountandblade2bannerlord -m 1873 -n "Mod Configuration Menu" -v "$modVersion" -l true -e true -d "$modDescription" -p "$pwd/MCM.Standalone.zip";
       shell: pwsh
       env:
         NEXUSMODS_COOKIES_JSON: ${{secrets.NEXUSMODS_COOKIES_JSON}}
