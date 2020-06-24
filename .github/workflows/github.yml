@@ -1,5 +1,5 @@
 # Will only be triggered on the master branch by any workflow that uses repository dispatch
-name: NexusMods Deployment
+name: GitHub Release
 
 on:
   repository_dispatch:
