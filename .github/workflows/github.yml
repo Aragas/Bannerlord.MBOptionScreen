@@ -19,28 +19,26 @@ jobs:
       uses: actions/setup-dotnet@master
       with:
         dotnet-version: 3.1.300
+
+    - name: Setup BUTR GPR
+      uses: actions/setup-dotnet@master
+      with:
         source-url: https://nuget.pkg.github.com/BUTR/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-    - name: Setup .NET Core
+    - name: Setup Aragas GPR
       uses: actions/setup-dotnet@master
       with:
-        dotnet-version: 3.1.300
         source-url: https://nuget.pkg.github.com/Aragas/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-    - name: Build MCM.Standalone (Release)
-      run: dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false"
-      shell: pwsh
-
-    - name: Build MCM.Implementation.MBO (Release)
-      run: dotnet build MCM.Implementation.MBO/MCM.Implementation.MBO.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false"
-      shell: pwsh
-
-    - name: Build MCM.Implementation.ModLib (Release)
-      run: dotnet build MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false"
+    - name: Build MCM (Release)
+      run: >-
+        dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false";
+        dotnet build MCM.Implementation.MBO/MCM.Implementation.MBO.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false";
+        dotnet build MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false";
       shell: pwsh
 
     - name: Zip MCM.Standalone
