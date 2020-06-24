@@ -31,19 +31,19 @@ jobs:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
     - name: Build MCM (Release)
-      run: dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
+      run: dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$(pwd)/bannerlord";
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Build MCM (Release)
-      run: dotnet build MCM.Implementation.MBO/MCM.Implementation.MBO.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
+      run: dotnet build MCM.Implementation.MBO/MCM.Implementation.MBO.csproj --configuration Release -p:GameFolder="$(pwd)/bannerlord";
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Build MCM (Release)
-      run: dotnet build MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
+      run: dotnet build MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$(pwd)/bannerlord";
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -66,9 +66,9 @@ jobs:
     - name: Run ChangelogParser
       id: changelog
       run: |
-        vers="$(bannerlord_changelog_parser getversion -f '$PWD/changelog.txt')"
+        vers="$(bannerlord_changelog_parser getversion -f '$(pwd)/changelog.txt')"
         echo "::set-output name=mod_version::$vers"
-        desc="$(bannerlord_changelog_parser getdescription -f '$PWD/changelog.txt')"
+        desc="$(bannerlord_changelog_parser getdescription -f '$(pwd)/changelog.txt')"
         desc="${desc//'%'/'%25'}"
         desc="${desc//$'\n'/'%0A'}"
         desc="${desc//$'\r'/'%0D'}"
