@@ -1,16 +1,21 @@
-  name: Nexusmods Deployment
+  name: NexusMods Deployment
 
   on:
     push:
       branches:
         - master
+        - v3_tests
         - v3_nexusmods
+    repository_dispatch:
+      types:
+        - publish-on-nexusmods
 
   jobs:
 
-    artifact:
-      name: Publish to nexusmods
+    publish-on-nexusmods:
+      name: Requested by ${{github.workflow}} workflow
       runs-on: ubuntu-latest
+      if: github.event_name == 'repository_dispatch' && github.repository == ${{github.repository}}
       steps:
 
       - name: Checkout Repository
@@ -78,4 +83,3 @@
         with:
           name: Screenshots
           path: Screenshots.7z
-
