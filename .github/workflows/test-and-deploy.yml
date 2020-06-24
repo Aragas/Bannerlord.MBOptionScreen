@@ -1,10 +1,9 @@
-name: Test and Deploy
+name: Test and Publish
 
 on:
   push:
     branches: 
       - master
-      - v3_github
 
 jobs:
   test:
@@ -18,6 +17,9 @@ jobs:
       uses: actions/setup-dotnet@master
       with:
         dotnet-version: 3.1.300
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Setup BUTR GPR
       uses: actions/setup-dotnet@master
@@ -25,6 +27,8 @@ jobs:
         source-url: https://nuget.pkg.github.com/BUTR/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Download DepotDownloader_2.3.6
       uses: i3h/download-release-asset@v1
@@ -45,32 +49,18 @@ jobs:
       run: >-
         dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -username ${{secrets.STEAM_LOGIN}}
         -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord
+
     - name: Test MCM (Debug)
       run: dotnet test MCM.Tests/MCM.Tests.csproj --configuration Debug -p:GameFolder="$pwd/bannerlord"
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Test MCM (Release)
       run: dotnet test MCM.Tests/MCM.Tests.csproj --configuration Release -p:GameFolder="$pwd/bannerlord"
-
-    - name: Trigger NuGet workflow
-      uses: peter-evans/repository-dispatch@v1
-      with:
-        token: ${{secrets.REPO_ACCESS_TOKEN}}
-        event-type: publish-on-nuget
-        client-payload: '{"github": ${{ toJson(github) }}}'
-
-    - name: Trigger NexusMods workflow
-      uses: peter-evans/repository-dispatch@v1
-      with:
-        token: ${{secrets.REPO_ACCESS_TOKEN}}
-        event-type: publish-on-nexusmods
-        client-payload: '{"github": ${{ toJson(github) }}}'
-
-    - name: Trigger GitHub workflow
-      uses: peter-evans/repository-dispatch@v1
-      with:
-        token: ${{secrets.REPO_ACCESS_TOKEN}}
-        event-type: publish-on-github
-        client-payload: '{"github": ${{ toJson(github) }}}'
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
 ###########################
 #          NUGET          #
@@ -120,6 +110,12 @@ jobs:
       run: >-
         dotnet pack MCM.NuGet/MCM.NuGet.csproj --configuration Release -o "./packages";
         dotnet pack MCM.Integrated.NuGet/MCM.Integrated.NuGet.csproj --configuration Release -o "./packages"
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Push with dotnet
+      run: dotnet nuget push "./packages/*.nupkg" -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -181,6 +177,28 @@ jobs:
         desc="${desc//$'\r'/'%0D'}"
         echo "::set-output name=mod_description::$desc"
 
+    - name: Start Selenoid
+      uses: Xotabu4/selenoid-github-action@v1
+
+    - name: Run NexusmodsUploader
+      run: >-
+        bannerlord_nexusmods_uploader upload -g mountandblade2bannerlord -m 612 -n "Mod Configuration Menu"
+        -v "${{steps.changelog.outputs.mod_version}}" -l true -e true -d "${{steps.changelog.outputs.mod_description}}"
+        -p "$PWD/MCM.Standalone.zip";
+      env:
+        NEXUSMODS_COOKIES_JSON: '${{secrets.NEXUSMODS_COOKIES_JSON}}'
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Password protect Screenshots
+      run: 7z a -p${{secrets.SCREENSHOTS_PASSWORD}} Screenshots.7z ./Screenshots/*
+
+    - name: Upload Screenshots Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: Screenshots
+        path: Screenshots.7z
+
 ###########################
 #         GITHUB          #
 ###########################
@@ -237,3 +255,26 @@ jobs:
         desc="${desc//$'\n'/'%0A'}"
         desc="${desc//$'\r'/'%0D'}"
         echo "::set-output name=mod_description::$desc"
+
+    - name: Create Release
+      uses: actions/create-release@v1
+      id: create_release
+      with:
+        tag_name: v${{steps.changelog.outputs.mod_version}}
+        release_name: Release ${{steps.changelog.outputs.mod_version}}
+        body: ${{steps.changelog.outputs.mod_description}}
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+    - name: Upload Release Asset
+      id: upload-release-asset 
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{steps.create_release.outputs.upload_url}}
+        asset_path: ./MCM.Standalone.zip
+        asset_name: MCM.Standalone.zip
+        asset_content_type: application/zip
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
