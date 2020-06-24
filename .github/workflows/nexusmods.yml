@@ -31,7 +31,7 @@ jobs:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
     - name: Build MCM (Release)
-      run: dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false";
+      run: dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release --nologo -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false";
 
     - name: Build MCM (Release)
       run: dotnet build MCM.Implementation.MBO/MCM.Implementation.MBO.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false";
