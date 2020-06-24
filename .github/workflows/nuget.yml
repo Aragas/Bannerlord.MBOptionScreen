@@ -46,5 +46,5 @@ jobs:
         dotnet pack MCM.NuGet/MCM.NuGet.csproj --configuration Release -o "./packages";
         dotnet pack MCM.Integrated.NuGet/MCM.Integrated.NuGet.csproj --configuration Release -o "./packages"
 
-    - name: Push with dotnet
-      run: dotnet nuget push "./packages/*.nupkg" -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
+    #- name: Push with dotnet
+    #  run: dotnet nuget push "./packages/*.nupkg" -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
