@@ -27,12 +27,8 @@ jobs:
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-    - name: Setup Aragas GPR
-      uses: actions/setup-dotnet@master
-      with:
-        source-url: https://nuget.pkg.github.com/Aragas/index.json
-      env:
-        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - name: Install Bannerlord.ChangelogParser
+      run: dotnet tool install -g Bannerlord.ChangelogParser
 
     - name: Run ChangelogParser
       id: changelog
