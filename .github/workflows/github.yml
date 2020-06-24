@@ -2,6 +2,9 @@
 name: GitHub Release
 
 on:
+  push:
+    branches: 
+      - v3_github
   repository_dispatch:
     types:
       - publish-on-github
@@ -29,9 +32,9 @@ jobs:
 
     - name: Build MCM (Release)
       run: >-
-        dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false";
-        dotnet build MCM.Implementation.MBO/MCM.Implementation.MBO.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false";
-        dotnet build MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false";
+        dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
+        dotnet build MCM.Implementation.MBO/MCM.Implementation.MBO.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
+        dotnet build MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
 
     - name: Zip MCM.Standalone
       run: 7z a -tzip MCM.Standalone.zip ./bannerlord/*
@@ -42,9 +45,9 @@ jobs:
     - name: Run ChangelogParser
       id: changelog
       run: |
-        vers="$(bannerlord_changelog_parser getversion -f 'changelog.txt')"
+        vers="$(bannerlord_changelog_parser getversion -f "$PWD/changelog.txt")"
         echo "::set-output name=mod_version::$vers"
-        desc="$(bannerlord_changelog_parser getdescription -f 'changelog.txt')"
+        desc="$(bannerlord_changelog_parser getdescription -f "$PWD/changelog.txt")"
         desc="${desc//'%'/'%25'}"
         desc="${desc//$'\n'/'%0A'}"
         desc="${desc//$'\r'/'%0D'}"
