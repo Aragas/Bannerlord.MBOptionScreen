@@ -45,7 +45,7 @@
         shell: pwsh
 
       - name: Zip MCM.Standalone
-        run: zip -r MCM.Standalone.zip bannerlord/
+        run: zip -r MCM.Standalone.zip bannerlord/Modules
         
       - name: Upload MCM.Standalone Artifact
         uses: actions/upload-artifact@v2
@@ -71,11 +71,11 @@
           NEXUSMODS_COOKIES_JSON: ${{secrets.NEXUSMODS_COOKIES_JSON}}
           
       - name: Password protect Screenshots
-        run: zip -r -p ${{secrets.SCREENSHOTS_PASSWORD}} Screenshots.zip Screenshots/
+        run: 7z a -p ${{secrets.SCREENSHOTS_PASSWORD}} Screenshots.7z Screenshots
         
       - name: Upload Screenshots Artifact
         uses: actions/upload-artifact@v2
         with:
           name: Screenshots
-          path: Screenshots.zip
+          path: Screenshots.7z
 
