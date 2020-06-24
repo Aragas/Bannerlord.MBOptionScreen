@@ -45,7 +45,7 @@
         shell: pwsh
 
       - name: Zip MCM.Standalone
-        run: zip -r MCM.Standalone.zip bannerlord/Modules
+        run: 7z a -tzip MCM.Standalone.zip bannerlord
         
       - name: Upload MCM.Standalone Artifact
         uses: actions/upload-artifact@v2
