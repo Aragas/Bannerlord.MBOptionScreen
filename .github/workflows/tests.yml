@@ -18,7 +18,11 @@ jobs:
       uses: actions/setup-dotnet@master
       with:
         dotnet-version: 3.1.300
-        source-url: https://nuget.pkg.github.com/Bannerlord-Unofficial-Tools-Resources/index.json
+
+    - name: Setup BUTR GPR
+      uses: actions/setup-dotnet@master
+      with:
+        source-url: https://nuget.pkg.github.com/BUTR/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
@@ -41,15 +45,12 @@ jobs:
       run: >-
         dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -username ${{secrets.STEAM_LOGIN}}
         -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord
-      shell: pwsh
 
     - name: Test MCM (Debug)
       run: dotnet test MCM.Tests/MCM.Tests.csproj --configuration Debug -p:GameFolder="$pwd/bannerlord"
-      shell: pwsh
 
     - name: Test MCM (Release)
       run: dotnet test MCM.Tests/MCM.Tests.csproj --configuration Release -p:GameFolder="$pwd/bannerlord"
-      shell: pwsh
 
     - name: Trigger NuGet workflow
       uses: peter-evans/repository-dispatch@v1
