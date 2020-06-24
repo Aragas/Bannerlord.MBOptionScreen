@@ -33,19 +33,19 @@ jobs:
     - name: Build MCM (Release)
       run: dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false";
       env:
-        DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+        DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Build MCM (Release)
       run: dotnet build MCM.Implementation.MBO/MCM.Implementation.MBO.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false";
       env:
-        DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+        DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Build MCM (Release)
       run: dotnet build MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$pwd/bannerlord" -p:GITHUB_ACTIONS="false";
       env:
-        DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+        DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Zip MCM.Standalone
@@ -60,7 +60,7 @@ jobs:
     - name: Install Bannerlord.ChangelogParser and Bannerlord.NexusmodsUploader
       run: dotnet tool install -g Bannerlord.ChangelogParser; dotnet tool install -g Bannerlord.NexusmodsUploader
       env:
-        DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+        DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Run ChangelogParser
@@ -84,7 +84,7 @@ jobs:
     #    -p "$pwd/MCM.Standalone.zip";
     #  env:
     #    NEXUSMODS_COOKIES_JSON: '${{secrets.NEXUSMODS_COOKIES_JSON}}'
-    #    DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
+    #    DOTNET_NOLOGO: 1
     #    DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Password protect Screenshots
