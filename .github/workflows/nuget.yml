@@ -2,6 +2,9 @@
 name: NuGet Publish
 
 on:
+  push:
+    branches: 
+      - v3_github
   repository_dispatch:
     types:
       - publish-on-nuget
@@ -19,6 +22,9 @@ jobs:
       uses: actions/setup-dotnet@master
       with:
         dotnet-version: 3.1.300
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Setup BUTR GPR
       uses: actions/setup-dotnet@master
@@ -26,9 +32,14 @@ jobs:
         source-url: https://nuget.pkg.github.com/BUTR/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Install Bannerlord.ChangelogParser
       run: dotnet tool install -g Bannerlord.ChangelogParser
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Run ChangelogParser
       id: changelog
@@ -45,6 +56,12 @@ jobs:
       run: >-
         dotnet pack MCM.NuGet/MCM.NuGet.csproj --configuration Release -o "./packages";
         dotnet pack MCM.Integrated.NuGet/MCM.Integrated.NuGet.csproj --configuration Release -o "./packages"
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     #- name: Push with dotnet
     #  run: dotnet nuget push "./packages/*.nupkg" -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
+    #  env:
+    #    DOTNET_NOLOGO: 1
+    #    DOTNET_CLI_TELEMETRY_OPTOUT: 1
