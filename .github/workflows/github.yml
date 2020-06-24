@@ -8,9 +8,9 @@ on:
 
 jobs:
   publish-on-github:
-    name: GitHub publish requested by ${{github.workflow}} workflow
+    name: GitHub publish requested by ${{github.event.client_payload.github.workflow}} workflow
     runs-on: ubuntu-latest
-    if: github.repository == ${{github.repository}}
+    if: github.repository == ${{github.event.client_payload.github.repository}}
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
@@ -19,7 +19,7 @@ jobs:
       uses: actions/setup-dotnet@master
       with:
         dotnet-version: 3.1.300
-        source-url: https://nuget.pkg.github.com/Bannerlord-Unofficial-Tools-Resources/index.json
+        source-url: https://nuget.pkg.github.com/BUTR/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
