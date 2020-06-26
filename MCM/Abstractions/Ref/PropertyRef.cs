@@ -5,6 +5,9 @@ using System.Runtime.CompilerServices;
 
 namespace MCM.Abstractions.Ref
 {
+    /// <summary>
+    /// Wraps a class property for MCM to get/set its value
+    /// </summary>
     public class PropertyRef : IRef, IEquatable<PropertyRef>
     {
         public event PropertyChangedEventHandler? PropertyChanged;
