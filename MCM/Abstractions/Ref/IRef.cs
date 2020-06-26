@@ -8,7 +8,11 @@ namespace MCM.Abstractions.Ref
     /// </summary>
     public interface IRef : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Undelying type of the value
+        /// </summary>
         Type Type { get; }
+        
         object Value { get; set; }
     }
 }
