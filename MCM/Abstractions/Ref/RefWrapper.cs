@@ -6,6 +6,10 @@ using System.Reflection;
 
 namespace MCM.Abstractions.Ref
 {
+    /// <summary>
+    /// Wrapper around any type that implements <see cref="IRef"/>.
+    /// We don't use casting because it might not be safe.
+    /// </summary>
     public class RefWrapper : IRef, IWrapper
     {
         public object Object { get; }
