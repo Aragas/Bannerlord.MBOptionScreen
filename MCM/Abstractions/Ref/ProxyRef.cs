@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 namespace MCM.Abstractions.Ref
 {
     /// <summary>
-    /// A more generic wrapper. Uses functions for getting/setting the value
+    /// A broader wrapper. Uses functions for getting/setting the value
     /// </summary>
     public class ProxyRef<T> : IRef, IEquatable<ProxyRef<T>>
     {
