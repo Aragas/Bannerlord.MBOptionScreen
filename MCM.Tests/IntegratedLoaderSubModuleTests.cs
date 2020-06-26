@@ -1,9 +1,11 @@
+using MCM.Implementation;
+using MCM.UI;
+
 using NUnit.Framework;
 
 using System;
 using System.Runtime.Serialization;
-using MCM.Implementation;
-using MCM.UI;
+
 using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
 

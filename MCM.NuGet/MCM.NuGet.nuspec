@@ -9,12 +9,16 @@
     <authors>Aragas, mipen</authors>
     <description>A library for easy Setting integration. Contains the abstraction library, requires the Standalone dependency to work!</description>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <icon>icon.png</icon>
+    <iconUrl>https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/master/MCM-128-w-2.png?raw=true</iconUrl>
     <license type="expression">MIT</license>
     <repository type="git" url="https://github.com/Aragas/Bannerlord.MBOptionScreen.git" />
     <tags></tags>
   </metadata>
   <files>
-    <file src="bin/Release/net472/MCMv3.dll" target="lib/net472" />
-    <file src="bin/Release/net472/MCMv3.pdb" target="lib/net472" />
+    <file src="bin/$configuration$/$targetframework$/MCM-128-w-2.png" target="icon.png" />
+
+    <file src="bin/$configuration$/$targetframework$/MCMv3.dll" target="lib/$targetframework$" />
+    <file src="bin/$configuration$/$targetframework$/MCMv3.pdb" target="lib/$targetframework$" />
   </files>
 </package>

@@ -1,9 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <NuspecFile>MCM.NuGet.nuspec</NuspecFile>
-    <NuspecProperties>version=$(Version)</NuspecProperties>
+    <NuspecProperties>version=$(Version);configuration=$(Configuration);targetframework=net472</NuspecProperties>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\MCM-128-w-2.png" Link="MCM-128-w-2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MCM\MCM.csproj" />

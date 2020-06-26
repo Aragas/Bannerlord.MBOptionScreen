@@ -9,18 +9,22 @@
     <authors>Aragas, mipen</authors>
     <description>A library for easy Setting integration. Includes the necessary implementations to run without the standalone package. MBOv1/MCMv2/ModLib integration not included.</description>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <icon>icon.png</icon>
+    <iconUrl>https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/master/MCM-128-w-2.png?raw=true</iconUrl>
     <license type="expression">MIT</license>
     <repository type="git" url="https://github.com/Aragas/Bannerlord.MBOptionScreen.git" />
     <tags></tags>
   </metadata>
   <files>
-    <file src="bin/Release/net472/MCMv3.dll" target="lib/net472" />
-    <file src="bin/Release/net472/MCMv3.Implementation.v$version$.dll" target="lib/net472" />
-    <file src="bin/Release/net472/MCMv3.UI.v$version$.dll" target="lib/net472" />
-    <file src="bin/Release/net472/Bannerlord.UIExtenderEx.dll" target="lib/net472" />
+    <file src="bin/$configuration$/$targetframework$/MCM-128-w-2.png" target="icon.png" />
 
-    <file src="bin/Release/net472/MCMv3.pdb" target="lib/net472" />
-    <file src="bin/Release/net472/MCMv3.Implementation.v$version$.pdb" target="lib/net472" />
-    <file src="bin/Release/net472/MCMv3.UI.v$version$.pdb" target="lib/net472" />
+    <file src="bin/$configuration$/$targetframework$/MCMv3.dll" target="lib/$targetframework$" />
+    <file src="bin/$configuration$/$targetframework$/MCMv3.Implementation.v$version$.dll" target="lib/$targetframework$" />
+    <file src="bin/$configuration$/$targetframework$/MCMv3.UI.v$version$.dll" target="lib/$targetframework$" />
+    <file src="bin/$configuration$/$targetframework$/Bannerlord.UIExtenderEx.dll" target="lib/$targetframework$" />
+
+    <file src="bin/$configuration$/$targetframework$/MCMv3.pdb" target="lib/$targetframework$" />
+    <file src="bin/$configuration$/$targetframework$/MCMv3.Implementation.v$version$.pdb" target="lib/$targetframework$" />
+    <file src="bin/$configuration$/$targetframework$/MCMv3.UI.v$version$.pdb" target="lib/$targetframework$" />
   </files>
 </package>
