@@ -31,13 +31,14 @@ jobs:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
+    - name: DocFX Install
+      run: choco install docfx -y;
+
     - name: DocFX
       run: >-
-        choco install docfx -y;
+        $env:DOCFX = 'true';
         docfx metadata docs/docfx.json;
         docfx build docs/docfx.json;
-      env:
-        DOCFX: true
 
     - name: Deploy DocFX
       uses: crazy-max/ghaction-github-pages@v2
