@@ -1,0 +1,40 @@
+name: DocFX
+
+on:
+  push:
+    branches:
+      - v3_docs
+
+jobs:
+  docfx:
+    name: DocFX documentation
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@master
+      with:
+        dotnet-version: 3.1.300
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Generate API
+      uses: nikeee/docfx-action@master
+      with:
+        args: metadata docs/docfx.json
+
+    - name: Compile DocFX
+      uses: nikeee/docfx-action@master
+      with:
+        args: build docs/docfx.json
+
+    - name: Deploy DocFX
+      uses: crazy-max/ghaction-github-pages@v2
+      with:
+        target_branch: gh-pages
+        build_dir: doc/_site
+      env:
+        GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
