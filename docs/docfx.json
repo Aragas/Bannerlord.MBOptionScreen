@@ -71,7 +71,10 @@
     ],
     "dest": "_site",
     "globalMetadata": {
-      "_enableSearch": "true"
+      "_enableSearch": "true",
+	  
+	  "_appTitle": "MCM Documentation",
+	  "_appFooter": "© 2020 Aragas",
     },
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],

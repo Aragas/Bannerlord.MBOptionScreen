@@ -1,20 +1,3 @@
-# Table of contents
-1. [Overview](#overview)
-2. [Supported API](#supported_api)
-3. [Using with your mods](#using)
-4. [Settings Types](#settings_types)
-5. [Settings Formats](#settings_formats)
-6. [Settings Presets](#settings_presets)
-7. [Settings Localization](#settings_localization)
-8. [INotifyPropertyChanged](#inotifypropertychanged)
-9. [IRef](#iref)
-10. [Defining Settings](#settings_defining)
-11. [Settings Example](#settings_example)
-    1. [Attribute API](#example_attribute_api)
-    2. [Fluent API](#example_fluent_api)
-12. [Translating MCM](#translating_mcm)
-13. [Migrating to v3](#migrating_to_v3)
-
 ## Overview <a name="overview"></a>
 MCMv3 consists of three core libraries:
 * **MCMv3** - abstraction layer. Includes v1/v2 Attribute API and a Fluent Builder API that allows to define settings at runtime.

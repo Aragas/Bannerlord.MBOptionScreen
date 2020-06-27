@@ -1,4 +1,5 @@
 - name: MCMv3
-  href: mcmv3.md
+  href: intro.md
+
 - name: For Contributors
   href: contributors.md
