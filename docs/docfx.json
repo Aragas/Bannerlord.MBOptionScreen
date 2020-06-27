@@ -23,6 +23,8 @@
 			"**/MCM.Standalone/**",
 			
 			"**/MCM.Custom.ScreenTests/**",
+			"**/MCM.Tests/**",
+			"**/MCM.Tests.Integration/**",
 		  ],
         }
       ],
