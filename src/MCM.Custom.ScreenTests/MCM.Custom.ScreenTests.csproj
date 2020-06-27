@@ -5,7 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MCM\MCM.csproj" />
+    <ProjectReference Include="..\..\src\MCM\MCM.csproj" />
   </ItemGroup>
+
+  <Import Project="..\..\build\common.targets" />
 
 </Project>

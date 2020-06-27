@@ -1,12 +1,8 @@
 <Project>
-  <!-- Workaround for https://github.com/NuGet/Home/issues/9431 -->
-  <ItemGroup>
-    <SourceRoot Include="$(NuGetPackageRoot)" Condition="'$(NuGetPackageRoot)' != ''" />
-  </ItemGroup>  
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="$(ModuleName) != ''">
     <CreateDirectory Directory="$(GameFolder)/Modules/$(ModuleName)/bin/Win64_Shipping_Client" />
-    
+
     <CopyFolder FromDirectory="$(TargetDir)" ToDirectory="$(GameFolder)/Modules/$(ModuleName)/bin/Win64_Shipping_Client" Regex="^(?!MCM.Standalone).*\.dll$" Clean="true" />
 
     <CopyFolder FromDirectory="$(ProjectDir)/_Module" ToDirectory="$(GameFolder)/Modules/$(ModuleName)" Regex="^.*$" Clean="false" />
@@ -87,4 +83,5 @@
       </Code>
     </Task>
   </UsingTask>
+
 </Project>

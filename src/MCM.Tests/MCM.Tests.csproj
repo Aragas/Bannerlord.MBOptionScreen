@@ -40,4 +40,6 @@
     <ProjectReference Include="..\MCM\MCM.csproj" />
   </ItemGroup>
 
+  <Import Project="..\..\build\common.targets" />
+
 </Project>

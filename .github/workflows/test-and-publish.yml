@@ -51,13 +51,13 @@ jobs:
         -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord
 
     - name: Test MCM (Debug)
-      run: dotnet test MCM.Tests/MCM.Tests.csproj --configuration Debug -p:GameFolder="$PWD/bannerlord"
+      run: dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Debug -p:GameFolder="$PWD/bannerlord"
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Test MCM (Release)
-      run: dotnet test MCM.Tests/MCM.Tests.csproj --configuration Release -p:GameFolder="$PWD/bannerlord"
+      run: dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Release -p:GameFolder="$PWD/bannerlord"
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -108,8 +108,8 @@ jobs:
         echo "::set-output name=mod_description::$desc"
     - name: Pack MCM (Release)
       run: >-
-        dotnet pack MCM.NuGet/MCM.NuGet.csproj --configuration Release -o "./packages";
-        dotnet pack MCM.Integrated.NuGet/MCM.Integrated.NuGet.csproj --configuration Release -o "./packages"
+        dotnet pack src/MCM.NuGet/MCM.NuGet.csproj --configuration Release -o "./packages";
+        dotnet pack src/MCM.Integrated.NuGet/MCM.Integrated.NuGet.csproj --configuration Release -o "./packages"
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -157,9 +157,9 @@ jobs:
 
     - name: Build MCM (Release)
       run: >-
-        dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
-        dotnet build MCM.Implementation.MBO/MCM.Implementation.MBO.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
-        dotnet build MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
+        dotnet build src/MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
+        dotnet build src/MCM.Implementation.MBO/MCM.Implementation.MBO.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
+        dotnet build src/MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -168,7 +168,9 @@ jobs:
       run: 7z a -tzip MCM.Standalone.zip ./bannerlord/*
 
     - name: Install Bannerlord.ChangelogParser and Bannerlord.NexusmodsUploader
-      run: dotnet tool install -g Bannerlord.ChangelogParser; dotnet tool install -g Bannerlord.NexusmodsUploader
+      run: >-
+        dotnet tool install -g Bannerlord.ChangelogParser;
+        dotnet tool install -g Bannerlord.NexusmodsUploader;
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -236,9 +238,9 @@ jobs:
 
     - name: Build MCM (Release)
       run: >-
-        dotnet build MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
-        dotnet build MCM.Implementation.MBO/MCM.Implementation.MBO.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
-        dotnet build MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
+        dotnet build src/MCM.Standalone/MCM.Standalone.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
+        dotnet build src/MCM.Implementation.MBO/MCM.Implementation.MBO.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
+        dotnet build src/MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -247,7 +249,9 @@ jobs:
       run: 7z a -tzip MCM.Standalone.zip ./bannerlord/*
 
     - name: Install Bannerlord.ChangelogParser and Bannerlord.NexusmodsUploader
-      run: dotnet tool install -g Bannerlord.ChangelogParser; dotnet tool install -g Bannerlord.NexusmodsUploader
+      run: >-
+        dotnet tool install -g Bannerlord.ChangelogParser;
+        dotnet tool install -g Bannerlord.NexusmodsUploader;
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
