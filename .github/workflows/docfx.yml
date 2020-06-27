@@ -36,9 +36,10 @@ jobs:
 
     - name: DocFX
       run: >-
-        $env:DOCFX = 'true';
         docfx metadata docs/docfx.json;
         docfx build docs/docfx.json;
+      env:
+        DOCFX: true
 
     - name: Deploy DocFX
       uses: crazy-max/ghaction-github-pages@v2

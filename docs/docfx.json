@@ -28,7 +28,7 @@
 		  ],
         }
       ],
-      "dest": "api_generated",
+      "dest": "api",
       "disableGitFeatures": false,
       "disableDefaultFilter": false
     }
@@ -38,7 +38,6 @@
       {
         "files": [
           "api/**.yml",
-		  "api_generated/**.yml",
           "api/index.md"
         ]
       },
