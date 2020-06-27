@@ -36,6 +36,8 @@ jobs:
         choco install docfx -y;
         docfx metadata docs/docfx.json;
         docfx build docs/docfx.json;
+      env:
+        DOCFX: true
 
     - name: Deploy DocFX
       uses: crazy-max/ghaction-github-pages@v2
