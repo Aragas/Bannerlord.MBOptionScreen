@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - v3
+      - v3_codecov
   pull_request:
     branches:
       - v3
@@ -52,14 +53,44 @@ jobs:
       run: >-
         dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -username ${{secrets.STEAM_LOGIN}}
         -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Install opencover
+      uses: crazy-max/ghaction-chocolatey@v1
+      with: 
+        args: install opencover.portable
+
     - name: Test MCM (Debug)
-      run: dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Debug -p:GameFolder="$PWD/bannerlord"
+      run: dotnet test --configuration Debug -p:GameFolder="$PWD/bannerlord" --collect:"XPlat Code Coverage" ./src
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Test MCM (Release)
-      run: dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Release -p:GameFolder="$PWD/bannerlord"
+      run: dotnet test --configuration Release -p:GameFolder="$PWD/bannerlord" --collect:"XPlat Code Coverage" ./src
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Collect result with ReportGenerator
+      uses: danielpalme/ReportGenerator-GitHub-Action@4.6.1
+      with:
+        reports: '**/TestResults/*/coverage.cobertura.xml'
+        targetdir: 'coveragereport'
+        reporttypes: 'HtmlInline;Cobertura'
+        tag: '${{ github.run_number }}_${{ github.run_id }}'
+
+    - name: Upload ReportGenerator to GitHub
+      uses: actions/upload-artifact@v1
+      with:
+        name: coverage-report
+        path: coveragereport
+
+    - name: Upload ReportGenerator to CodeCov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
+        file: coveragereport/Cobertura.xml
+        fail_ci_if_error: true

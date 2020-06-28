@@ -1,13 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>MCM.Custom.ScreenTests</AssemblyName>
+    <AssemblyName>MCMv3.Custom.ScreenTests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\MCM\MCM.csproj" />
   </ItemGroup>
-
-  <Import Project="..\..\build\common.targets" />
 
 </Project>
