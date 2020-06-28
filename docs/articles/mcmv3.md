@@ -182,10 +182,10 @@ perCharacterSettings.Unregister();
 
 ## Translating MCM <a name="translating_mcm"></a>
 Just create a module and include in the module folder root folders ``ModuleData/Languages`` and include the translations of the following files:  
-* [std_MCM.xml](https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/v3/std_MCM.xml)  
-* [std_MCM_Implementation.xml](https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/v3/std_MCM_Implementation.xml)  
-* [std_MCM_MBO.xml](https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/v3/std_MCM_MBO.xml)  
-* [std_MCM_ModLib.xml](https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/v3/std_MCM_ModLib.xml)  
+* [std_MCM.xml](https://github.com/Aragas/Bannerlord.MBOptionScreen/tree/v3/src/Localization/std_MCM.xml)  
+* [std_MCM_Implementation.xml](https://github.com/Aragas/Bannerlord.MBOptionScreen/tree/v3/src/Localization/std_MCM_Implementation.xml)  
+* [std_MCM_MBO.xml](https://github.com/Aragas/Bannerlord.MBOptionScreen/tree/v3/src/Localization/std_MCM_MBO.xml)  
+* [std_MCM_ModLib.xml](https://github.com/Aragas/Bannerlord.MBOptionScreen/tree/v3/src/Localization/std_MCM_ModLib.xml)  
 * [std_MCM_UI.xml](https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/v3/std_MCM_UI.xml)  
 
 The game will load them automatically!  
