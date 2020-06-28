@@ -6,26 +6,26 @@
           "src": "../src",
           "files": ["**/*.csproj"],
           "exclude": [
-		    "**/bin/**",
-			"**/obj/**",
-			
-			"**/ModLib Substitute/**",
-			"**/ModLib.Definitions Substitute/**",
-			
-			"**/MCM.Implementation/**",
-			"**/MCM.Implementation.MBO/**",
-			"**/MCM.Implementation.ModLib/**",
-			"**/MCM.UI/**",
-			
-			"**/MCM.NuGet/**",
-			"**/MCM.Integrated.NuGet/**",
-			
-			"**/MCM.Standalone/**",
-			
-			"**/MCM.Custom.ScreenTests/**",
-			"**/MCM.Tests/**",
-			"**/MCM.Tests.Integration/**",
-		  ],
+            "**/bin/**",
+            "**/obj/**",
+
+            "**/ModLib Substitute/**",
+            "**/ModLib.Definitions Substitute/**",
+
+            "**/MCM.Implementation/**",
+            "**/MCM.Implementation.MBO/**",
+            "**/MCM.Implementation.ModLib/**",
+            "**/MCM.UI/**",
+
+            "**/MCM.NuGet/**",
+            "**/MCM.Integrated.NuGet/**",
+
+            "**/MCM.Standalone/**",
+
+            "**/MCM.Custom.ScreenTests/**",
+            "**/MCM.Tests/**",
+            "**/MCM.Tests.Integration/**",
+          ],
         }
       ],
       "dest": "api",
@@ -54,7 +54,7 @@
       {
         "files": [
           "images/**",
-		  "CNAME"
+          "CNAME"
         ]
       }
     ],
@@ -72,14 +72,14 @@
     "dest": "_site",
     "globalMetadata": {
       "_enableSearch": "true",
-	  
-	  "_appTitle": "MCM Documentation",
-	  "_appFooter": "© 2020 Aragas",
+      "_appTitle": "MCM Documentation",
+      "_appFooter": "© 2020 Aragas",
     },
     "globalMetadataFiles": [],
     "fileMetadataFiles": [],
     "template": [
-      "default"
+      "default",
+      "custom"
     ],
     "postProcessors": ["ExtractSearchIndex"],
     "markdownEngineName": "markdig",
