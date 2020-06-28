@@ -5,7 +5,7 @@
   article h1:first-of-type:before {
     height: 0;
     margin-top: 0;
-  }  
+  }
 }
 
 #search {
@@ -36,8 +36,8 @@
 }
 
 .sidetoc,
-.sidefilter { 
-  width: 330px; 
+.sidefilter {
+  width: 330px;
 }
 
 .sidenav,
@@ -95,7 +95,7 @@ article h4 {
     width: 40px;
     height: 40px;
     text-align: center;
-    padding: 11px 0 0 0;
+    padding: 11px 0 0;
     border: none;
     outline: none;
     color: #FFF;
@@ -128,20 +128,20 @@ article h4 {
 /* active & hover links */
 .affix ul > li > a:hover,
 .affix ul > li.active > a,
-.affix ul > li > a:focus {              
-  text-decoration: none;          
-  background-color: transparent;  
+.affix ul > li > a:focus {
+  text-decoration: none;
+  background-color: transparent;
 }
 
 /* all active links */
-.affix ul > li.active > a, 
+.affix ul > li.active > a,
 .affix ul > li.active:hover > a,
 .affix ul > li.active:focus >a {
     font-weight: 700;
 }
 
 /* nested active links */
-.affix ul ul > li.active > a, 
+.affix ul ul > li.active > a,
 .affix ul ul > li.active:hover > a,
 .affix ul ul > li.active:focus > a {
     font-weight: 500;
