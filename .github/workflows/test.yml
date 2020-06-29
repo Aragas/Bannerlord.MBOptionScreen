@@ -72,10 +72,28 @@ jobs:
         pathSource: opencover.4.7.922.zip
         pathTarget: opencover
 
+    - name: Download NUnit.Console-3.11.1
+      uses: i3h/download-release-asset@v1
+      with:
+        owner: nunit
+        repo: nunit-console
+        tag: v3.11.1
+        file: NUnit.Console-3.11.1.zip
+        token: ${{secrets.GITHUB_TOKEN}}
+
+    - name: Extract NUnit.Console-3.11.1
+      uses: DuckSoft/extract-7z-action@v1.0
+      with:
+        pathSource: NUnit.Console-3.11.1
+        pathTarget: NUnit.Console
+
     - name: Test MCM
       run: >-
-          opencover/OpenCover.Console.exe -filter:"+[MCMv3.*]*" -register:user -target:"dotnet.exe" -targetargs:"test src/MCM.sln --configuration Debug -p:DebugType=`"full`" -p:GameFolder=`"$PWD/bannerlord`"" -output:coverage_mcm_debug.xml -mergebyhash -skipautoprops;
-          opencover/OpenCover.Console.exe -filter:"+[MCMv3.*]*" -register:user -target:"dotnet.exe" -targetargs:"test src/MCM.sln --configuration Release -p:DebugType=`"full`" -p:GameFolder=`"$PWD/bannerlord`"" -output:coverage_mcm_release.xml -mergebyhash -skipautoprops;
+          dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Debug -p:GameFolder="$PWD/bannerlord";
+          dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
+          
+          opencover/OpenCover.Console.exe -filter:"+[MCMv3.*]*" -register:user -target:"NUnit.Console/bin/net35/nunit3-console.exe" -targetargs:"/domain:single src/MCM.Tests/bin/Debug/net472/MCM.Tests.dll" -output:coverage_mcm_debug.xml -mergebyhash -skipautoprops;
+          opencover/OpenCover.Console.exe -filter:"+[MCMv3.*]*" -register:user -target:"NUnit.Console/bin/net35/nunit3-console.exe" -targetargs:"/domain:single src/MCM.Tests/bin/Release/net472/MCM.Tests.dll" -output:coverage_mcm_release.xml -mergebyhash -skipautoprops;
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
