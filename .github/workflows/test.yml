@@ -74,8 +74,8 @@ jobs:
 
     - name: Test MCM
       run: >-
-          opencover/OpenCover.Console.exe -filter:"+[MCMv3.*]*" -register:user -target:"dotnet.exe" -targetargs:"test src/MCM.sln --configuration Debug" -output:coverage_mcm_debug.xml -mergebyhash -skipautoprops;
-          opencover/OpenCover.Console.exe -filter:"+[MCMv3.*]*" -register:user -target:"dotnet.exe" -targetargs:"test src/MCM.sln --configuration Release" -output:coverage_mcm_release.xml -mergebyhash -skipautoprops;
+          opencover/OpenCover.Console.exe -filter:"+[MCMv3.*]*" -register:user -target:"dotnet.exe" -targetargs:"test src/MCM.sln --configuration Debug -p:GameFolder=`"$PWD/bannerlord`"" -output:coverage_mcm_debug.xml -mergebyhash -skipautoprops;
+          opencover/OpenCover.Console.exe -filter:"+[MCMv3.*]*" -register:user -target:"dotnet.exe" -targetargs:"test src/MCM.sln --configuration Release -p:GameFolder=`"$PWD/bannerlord`"" -output:coverage_mcm_release.xml -mergebyhash -skipautoprops;
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
