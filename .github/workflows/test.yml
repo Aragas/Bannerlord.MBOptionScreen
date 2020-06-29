@@ -74,7 +74,7 @@ jobs:
     - name: Collect result with ReportGenerator
       run: >-
           dotnet tool install -g dotnet-reportgenerator-globaltool;
-          reportgenerator -reports:"$PWD\tests\**\coverage.opencover.xml" -targetdir:./coveragereport -reporttypes:"HtmlInline;Cobertura" -tag:${{github.run_number}}_${{github.run_id}};
+          reportgenerator -reports:"tests\*\coverage.opencover.xml" -targetdir:./coveragereport -reporttypes:"HtmlInline;Cobertura" -tag:${{github.run_number}}_${{github.run_id}};
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
