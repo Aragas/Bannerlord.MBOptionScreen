@@ -58,14 +58,14 @@ jobs:
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Test MCM (Debug)
-      run: dotnet test src/MCM.sln --configuration Debug --logger trx --results-directory "$PWD/tests" --collect:"XPlat Code Coverage" -p:GameFolder="$PWD/bannerlord"
+      run: dotnet test src/MCM.sln --configuration Debug --logger trx --results-directory "$PWD/tests" --collect:"XPlat Code Coverage" --settings "$PWD/build/coverletArgs.runsettings" -p:GameFolder="$PWD/bannerlord"
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
       shell: pwsh
 
     - name: Test MCM (Release)
-      run: dotnet test src/MCM.sln --configuration Release --logger trx --results-directory "$PWD/tests" --collect:"XPlat Code Coverage" -p:GameFolder="$PWD/bannerlord"
+      run: dotnet test src/MCM.sln --configuration Release --logger trx --results-directory "$PWD/tests" --collect:"XPlat Code Coverage" --settings "$PWD/build/coverletArgs.runsettings" -p:GameFolder="$PWD/bannerlord"
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
