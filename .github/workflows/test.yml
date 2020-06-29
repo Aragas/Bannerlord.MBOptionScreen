@@ -96,7 +96,7 @@ jobs:
         reports: 'coverage_mcm_debug.xml;coverage_mcm_release.xml'
         targetdir: 'coveragereport'
         reporttypes: 'HtmlInline;Cobertura'
-        sourcedirs: '$PWD'
+        sourcedirs: './'
         tag: '${{ github.run_number }}_${{ github.run_id }}' # Optional tag or build version.
 
     - name: Upload ReportGenerator to GitHub
