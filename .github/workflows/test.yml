@@ -41,7 +41,6 @@ jobs:
         repo: DepotDownloader
         tag: DepotDownloader_2.3.6
         file: depotdownloader-2.3.6.zip
-        token: ${{secrets.GITHUB_TOKEN}}
 
     - name: Extract DepotDownloader_2.3.6
       uses: DuckSoft/extract-7z-action@v1.0
@@ -64,7 +63,6 @@ jobs:
         repo: opencover
         tag: 4.7.922
         file: opencover.4.7.922.zip
-        token: ${{secrets.GITHUB_TOKEN}}
 
     - name: Extract opencover.4.7.922
       uses: DuckSoft/extract-7z-action@v1.0
