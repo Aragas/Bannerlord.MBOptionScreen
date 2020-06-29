@@ -57,19 +57,25 @@ jobs:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
-    - name: Test MCM (Debug)
-      run: >-
-          dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Debug --results-directory "$PWD/tests" --collect "XPlat Code Coverage" --settings "$PWD/build/coverletArgs.runsettings" -p:GameFolder="$PWD/bannerlord";
-          dotnet test src/MCM.Tests.Integration/MCM.Tests.Integration.csproj --configuration Debug --results-directory "$PWD/tests" --collect "XPlat Code Coverage" --settings "$PWD/build/coverletArgs.runsettings" -p:GameFolder="$PWD/bannerlord";
-      env:
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
-      shell: pwsh
+    - name: Download opencover.4.7.922
+      uses: i3h/download-release-asset@v1
+      with:
+        owner: OpenCover
+        repo: opencover
+        tag: 4.7.922
+        file: opencover.4.7.922.zip
+        token: ${{secrets.GITHUB_TOKEN}}
 
-    - name: Test MCM (Release)
+    - name: Extract opencover.4.7.922
+      uses: DuckSoft/extract-7z-action@v1.0
+      with:
+        pathSource: opencover.4.7.922.zip
+        pathTarget: opencover
+
+    - name: Test MCM
       run: >-
-          dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Release --results-directory "$PWD/tests" --collect "XPlat Code Coverage" --settings "$PWD/build/coverletArgs.runsettings" -p:GameFolder="$PWD/bannerlord";
-          dotnet test src/MCM.Tests.Integration/MCM.Tests.Integration.csproj --configuration Release --results-directory "$PWD/tests" --collect "XPlat Code Coverage" --settings "$PWD/build/coverletArgs.runsettings" -p:GameFolder="$PWD/bannerlord";
+          opencover/OpenCover.Console.exe -filter:"+[MCMv3.*]*" -register:user -target:"dotnet.exe" -targetargs:"test src/MCM.sln --configuration Debug" -output:coverage_mcm_debug.xml -mergebyhash -skipautoprops;
+          opencover/OpenCover.Console.exe -filter:"+[MCMv3.*]*" -register:user -target:"dotnet.exe" -targetargs:"test src/MCM.sln --configuration Release" -output:coverage_mcm_release.xml -mergebyhash -skipautoprops;
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -78,7 +84,7 @@ jobs:
     - name: Collect result with ReportGenerator
       run: >-
           dotnet tool install -g dotnet-reportgenerator-globaltool;
-          reportgenerator -reports:"**/tests/*/coverage.opencover.xml" -targetdir:./coveragereport -reporttypes:"HtmlInline;Cobertura" -tag:${{github.run_number}}_${{github.run_id}};
+          reportgenerator -reports:"coverage_mcm_debug.xml;coverage_mcm_release.xml;" -targetdir:./coveragereport -reporttypes:"HtmlInline;Cobertura"-tag:${{github.run_number}}_${{github.run_id}};
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
