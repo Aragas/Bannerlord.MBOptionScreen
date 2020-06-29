@@ -59,8 +59,8 @@ jobs:
 
     - name: Test MCM (Debug)
       run: >-
-          dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Debug --results-directory "$PWD/tests" --collect "XPlat Code Coverage" --settings "$PWD/build/coverletArgs.runsettings" -p:GameFolder="$PWD/bannerlord"
-          dotnet test src/MCM.Tests.Integration/MCM.Tests.Integration.csproj --configuration Debug --results-directory "$PWD/tests" --collect "XPlat Code Coverage" --settings "$PWD/build/coverletArgs.runsettings" -p:GameFolder="$PWD/bannerlord"
+          dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Debug --results-directory "$PWD/tests" --collect "XPlat Code Coverage" --settings "$PWD/build/coverletArgs.runsettings" -p:GameFolder="$PWD/bannerlord";
+          dotnet test src/MCM.Tests.Integration/MCM.Tests.Integration.csproj --configuration Debug --results-directory "$PWD/tests" --collect "XPlat Code Coverage" --settings "$PWD/build/coverletArgs.runsettings" -p:GameFolder="$PWD/bannerlord";
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -68,8 +68,8 @@ jobs:
 
     - name: Test MCM (Release)
       run: >-
-          dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Release --results-directory "$PWD/tests" --collect "XPlat Code Coverage" --settings "$PWD/build/coverletArgs.runsettings" -p:GameFolder="$PWD/bannerlord"
-          dotnet test src/MCM.Tests.Integration/MCM.Tests.Integration.csproj --configuration Release --results-directory "$PWD/tests" --collect "XPlat Code Coverage" --settings "$PWD/build/coverletArgs.runsettings" -p:GameFolder="$PWD/bannerlord"
+          dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Release --results-directory "$PWD/tests" --collect "XPlat Code Coverage" --settings "$PWD/build/coverletArgs.runsettings" -p:GameFolder="$PWD/bannerlord";
+          dotnet test src/MCM.Tests.Integration/MCM.Tests.Integration.csproj --configuration Release --results-directory "$PWD/tests" --collect "XPlat Code Coverage" --settings "$PWD/build/coverletArgs.runsettings" -p:GameFolder="$PWD/bannerlord";
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
