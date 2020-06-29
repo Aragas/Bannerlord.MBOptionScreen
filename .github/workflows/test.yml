@@ -77,7 +77,9 @@ jobs:
           dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Debug -p:GameFolder="$PWD/bannerlord";
           dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
           
-          opencover/OpenCover.Console.exe -register:user -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"test src/MCM.sln --configuration Debug --no-build" -filter:"+[MCMv3.*]* -[MCM.*.Tests.*]*" -output:".\MCM_coverage.xml" -oldstyle
+          opencover/OpenCover.Console.exe -register:path32 -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"test src/MCM.sln --configuration Debug --no-build" -filter:"+[MCMv3.*]* -[MCM.*.Tests.*]*" -output:".\MCM_coverage.xml" -oldstyle;
+          opencover/OpenCover.Console.exe -register:path64 -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"test src/MCM.sln --configuration Debug --no-build" -filter:"+[MCMv3.*]* -[MCM.*.Tests.*]*" -output:".\MCM_coverage.xml" -oldstyle;
+          opencover/OpenCover.Console.exe -register -target:"C:/Program Files/dotnet/dotnet.exe" -targetargs:"test src/MCM.sln --configuration Debug --no-build" -filter:"+[MCMv3.*]* -[MCM.*.Tests.*]*" -output:".\MCM_coverage.xml" -oldstyle;
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
