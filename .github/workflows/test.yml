@@ -84,7 +84,7 @@ jobs:
     - name: Extract NUnit.Console-3.11.1
       uses: DuckSoft/extract-7z-action@v1.0
       with:
-        pathSource: NUnit.Console-3.11.1
+        pathSource: NUnit.Console-3.11.1.zip
         pathTarget: NUnit.Console
 
     - name: Test MCM
