@@ -58,21 +58,23 @@ jobs:
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Test MCM (Debug)
-      run: dotnet test --configuration Debug -p:GameFolder="$PWD/bannerlord" --collect:"XPlat Code Coverage" ./src
+      run: dotnet test src/MCM.sln --configuration Debug --logger trx --results-directory ./tests --collect:"XPlat Code Coverage" -p:GameFolder="$PWD/bannerlord"
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      shell: pwsh
 
     - name: Test MCM (Release)
-      run: dotnet test --configuration Release -p:GameFolder="$PWD/bannerlord" --collect:"XPlat Code Coverage" ./src
+      run: dotnet test src/MCM.sln --configuration Release --logger trx --results-directory ./tests --collect:"XPlat Code Coverage" -p:GameFolder="$PWD/bannerlord"
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      shell: pwsh
 
     - name: Collect result with ReportGenerator
       run: >-
           dotnet tool install -g dotnet-reportgenerator-globaltool;
-          reportgenerator -reports:**/TestResults/*/coverage.cobertura.xml -targetdir:coveragereport -reporttypes:"HtmlInline;Cobertura" -tag:${{github.run_number}}_${{github.run_id}};
+          reportgenerator -reports:./tests/**/coverage.opencover.xml -targetdir:./coveragereport -reporttypes:"HtmlInline;Cobertura" -tag:${{github.run_number}}_${{github.run_id}};
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
