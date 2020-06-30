@@ -5,6 +5,10 @@ on:
     branches:
       - master
       - v3_docs
+    paths:
+      - '.github/workflows/docfx.yml'
+      - 'src/MCM/**.cs'
+      - 'docs/**'
 
 jobs:
   docfx:
