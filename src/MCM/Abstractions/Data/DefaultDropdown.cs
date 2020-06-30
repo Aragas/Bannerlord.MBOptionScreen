@@ -38,6 +38,17 @@ namespace MCM.Abstractions.Data
                 }
             }
         }
+        public T SelectedValue
+        {
+            get => this[SelectedIndex];
+            set
+            {
+                var index = IndexOf(value);
+                if (index == -1)
+                    return;
+                SelectedIndex = index;
+            }
+        }
 
         public DefaultDropdown(IEnumerable<T> values, int selectedIndex) : base(values)
         {
