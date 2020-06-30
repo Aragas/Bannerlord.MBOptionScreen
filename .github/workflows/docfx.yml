@@ -36,6 +36,7 @@ jobs:
       with:
         owner: dotnet
         repo: docfx
+        tag: latest
         file: docfx.zip
 
     - name: Extract docfx
