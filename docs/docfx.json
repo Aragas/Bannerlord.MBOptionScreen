@@ -4,27 +4,12 @@
       "src": [
         {
           "src": "../src",
-          "files": ["**/*.csproj"],
+          "files": [
+            "**/MCM/*.csproj"
+          ],
           "exclude": [
             "**/bin/**",
-            "**/obj/**",
-
-            "**/ModLib Substitute/**",
-            "**/ModLib.Definitions Substitute/**",
-
-            "**/MCM.Implementation/**",
-            "**/MCM.Implementation.MBO/**",
-            "**/MCM.Implementation.ModLib/**",
-            "**/MCM.UI/**",
-
-            "**/MCM.NuGet/**",
-            "**/MCM.Integrated.NuGet/**",
-
-            "**/MCM.Standalone/**",
-
-            "**/MCM.Custom.ScreenTests/**",
-            "**/MCM.Tests/**",
-            "**/MCM.Tests.Integration/**",
+            "**/obj/**"
           ],
         }
       ],
