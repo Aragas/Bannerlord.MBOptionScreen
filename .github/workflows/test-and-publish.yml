@@ -50,17 +50,59 @@ jobs:
         dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -username ${{secrets.STEAM_LOGIN}}
         -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord
 
-    - name: Test MCM (Debug)
-      run: dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Debug -p:GameFolder="$PWD/bannerlord"
-      env:
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+    - name: Download opencover.4.7.922
+      uses: i3h/download-release-asset@v1
+      with:
+        owner: OpenCover
+        repo: opencover
+        tag: 4.7.922
+        file: opencover.4.7.922.zip
 
-    - name: Test MCM (Release)
-      run: dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Release -p:GameFolder="$PWD/bannerlord"
+    - name: Extract opencover.4.7.922
+      uses: DuckSoft/extract-7z-action@v1.0
+      with:
+        pathSource: opencover.4.7.922.zip
+        pathTarget: opencover
+
+    - name: Test
+      run: >-
+          dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Debug -p:GameFolder="$PWD/bannerlord";
+          dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      shell: pwsh
+
+    - name: Test Coverage
+      run: >-
+          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test src/MCM.sln --configuration Debug --no-build" -filter:"+[MCMv3.*]*" -output:coverage_mcm_debug.xml -mergebyhash;
+          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test src/MCM.sln --configuration Release --no-build" -filter:"+[MCMv3.*]*" -output:coverage_mcm_release.xml -mergebyhash;
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      shell: pwsh
+
+    - name: ReportGenerator
+      uses: danielpalme/ReportGenerator-GitHub-Action@4.6.1
+      with:
+        reports: 'coverage_mcm_debug.xml;coverage_mcm_release.xml'
+        targetdir: 'coveragereport'
+        reporttypes: 'HtmlInline;Cobertura'
+        sourcedirs: './'
+        tag: '${{ github.run_number }}_${{ github.run_id }}' # Optional tag or build version.
+
+    - name: Upload ReportGenerator to GitHub
+      uses: actions/upload-artifact@v1
+      with:
+        name: coverage-report
+        path: coveragereport
+
+    - name: Upload ReportGenerator to CodeCov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{secrets.CODECOV_TOKEN}}
+        file: coveragereport/Cobertura.xml
+        fail_ci_if_error: true
 
 ###########################
 #        NUGET/GPR        #
