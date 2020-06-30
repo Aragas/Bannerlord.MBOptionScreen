@@ -3,8 +3,9 @@ name: DocFX
 on:
   push:
     branches:
-      - master
-      - v3_docs
+      #- master
+      # documentation will cover the dev branch for now
+      - v3
     paths:
       - '.github/workflows/docfx.yml'
       - 'src/MCM/**.cs'
