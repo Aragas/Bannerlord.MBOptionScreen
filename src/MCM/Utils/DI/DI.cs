@@ -34,8 +34,8 @@ namespace MCM.Utils
             StaticDI.GetBaseImplementations<TBase, TWrapper>(args);
 
         /// <summary>
-        /// Searches for interfaces that implements the <TBase> interface.
-        /// Basically, the <TBase> interface is only a marker.
+        /// Searches for interfaces that implements the <typeparamref name="TBase"/> interface.
+        /// Basically, the <typeparamref name="TBase"/> interface is only a marker.
         /// This way if I declare IModLibSettingsContainer it will be ensured that only one implementation
         /// of the interface will be returned
         /// </summary>
@@ -44,7 +44,7 @@ namespace MCM.Utils
             StaticDI.GetBaseImplementations<TBase>(args);
 
         /// <summary>
-        /// Return implementations that are directly castable to <TBase>, so withing this assembly.
+        /// Return implementations that are directly castable to <typeparamref name="TBase"/>, so withing this assembly.
         /// </summary>
         public static TBase? GetImplementation<TBase>(params object[] args)
             where TBase : class, IDependency =>
@@ -53,7 +53,7 @@ namespace MCM.Utils
             StaticDI.GetImplementation(baseType, args);
 
         /// <summary>
-        /// Return implementations that are directly castable to <TBase> or wraps them into a wrapper
+        /// Return implementations that are directly castable to <typeparamref name="TBase"/> or wraps them into a wrapper
         /// </summary>
         public static TBase? GetImplementation<TBase, TWrapper>(params object[] args)
             where TBase : class, IDependency
