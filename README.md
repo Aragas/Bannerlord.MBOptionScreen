@@ -1,5 +1,5 @@
 <p align="center">
-   <a href="https://github.com/Bannerlord.MBOptionScreen" alt="Lines Of Code">
+   <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen" alt="Lines Of Code">
    <img src="https://tokei.rs/b1/github/Aragas/Bannerlord.MBOptionScreen?category=code" /></a>
    <a href="https://www.codefactor.io/repository/github/aragas/bannerlord.mboptionscreen"><img src="https://www.codefactor.io/repository/github/aragas/bannerlord.mboptionscreen/badge" alt="CodeFactor" /></a>
    </br>
