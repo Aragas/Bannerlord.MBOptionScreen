@@ -11,6 +11,8 @@ on:
   pull_request:
     branches:
       - v3
+    # will be triggereg when undrafting or requesting review
+    types: [review_requested, ready_for_review]
     paths:
       - '.github/workflows/test.yml'
       - 'src/**'
