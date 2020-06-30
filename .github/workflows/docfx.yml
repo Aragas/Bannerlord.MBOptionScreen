@@ -31,9 +31,6 @@ jobs:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
-    - name: DocFX Install
-      run: choco install docfx -y;
-
     - name: Download docfx
       uses: i3h/download-release-asset@v1
       with:
