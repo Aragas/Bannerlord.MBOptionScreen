@@ -34,10 +34,23 @@ jobs:
     - name: DocFX Install
       run: choco install docfx -y;
 
+    - name: Download docfx
+      uses: i3h/download-release-asset@v1
+      with:
+        owner: dotnet
+        repo: docfx
+        file: docfx.zip
+
+    - name: Extract docfx
+      uses: DuckSoft/extract-7z-action@v1.0
+      with:
+        pathSource: docfx.zip
+        pathTarget: docfx
+
     - name: DocFX
       run: >-
-        docfx metadata docs/docfx.json;
-        docfx build docs/docfx.json;
+        docfx/docfx.exe metadata docs/docfx.json;
+        docfx/docfx.exe build docs/docfx.json;
       env:
         DOCFX: true
 
