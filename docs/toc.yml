@@ -1,7 +1,9 @@
+- name: MCM
+  href: ../README.md
 - name: Articles
   href: articles/
   homepage: articles/mcmv3.md
-- name: Api Documentation
+- name: API Documentation
   href: api/
   homepage: api/index.md
 - name: Bannerlord Documentation
