@@ -1,4 +1,7 @@
-
+<!--
+Default codefactor ruleset from https://github.com/codefactor-io/default-configs/blob/master/Settings.StyleCop
+Disabled 3 rules: 'CodeMustNotContainMultipleBlankLinesInARow', 'OpeningCurlyBracketsMustNotBePrecededByBlankLine', 'ClosingCurlyBracketsMustNotBePrecededByBlankLine'
+-->
 <StyleCopSettings Version="105">
   <GlobalSettings>
     <CollectionProperty Name="DeprecatedWords">
