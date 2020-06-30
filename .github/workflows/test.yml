@@ -4,10 +4,17 @@ on:
   push:
     branches:
       - v3
-      - v3_codecov
+    paths:
+      - '.github/workflows/test.yml'
+      - 'src/**'
+      - 'build/**'
   pull_request:
     branches:
       - v3
+    paths:
+      - '.github/workflows/test.yml'
+      - 'src/**'
+      - 'build/**'
 
 jobs:
   test:
