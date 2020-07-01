@@ -6,8 +6,5 @@ namespace MCM.Implementation.MBO.Settings.Properties
     /// <summary>
     /// So it can be overriden by an external library
     /// </summary>
-    public interface IMBOSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer, IDependency
-    {
-
-    }
+    public interface IMBOSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer, IDependency { }
 }

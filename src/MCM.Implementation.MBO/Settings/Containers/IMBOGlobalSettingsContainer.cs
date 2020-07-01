@@ -6,8 +6,5 @@ namespace MCM.Implementation.MBO.Settings.Containers
     /// <summary>
     /// So it can be overriden by an external library
     /// </summary>
-    public interface IMBOGlobalSettingsContainer : IGlobalSettingsContainer, IDependency
-    {
-
-    }
+    public interface IMBOGlobalSettingsContainer : IGlobalSettingsContainer, IDependency { }
 }

@@ -6,8 +6,5 @@ namespace MCM.Implementation.ModLib.Settings.Properties.v1
     /// <summary>
     /// So it can be overriden by an external library
     /// </summary>
-    public interface IModLibSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer, IDependency
-    {
-
-    }
+    public interface IModLibSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer, IDependency { }
 }

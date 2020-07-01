@@ -2,8 +2,5 @@
 
 namespace MCM.UI
 {
-    public interface IMCMOptionsScreen : IDependency
-    {
-
-    }
+    public interface IMCMOptionsScreen : IDependency { }
 }

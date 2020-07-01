@@ -6,8 +6,5 @@ namespace MCM.Implementation.Settings.Containers.PerCharacter
     /// <summary>
     /// So it can be overriden by an external library
     /// </summary>
-    public interface IMCMPerCharacterSettingsContainer : IPerCharacterSettingsContainer, IDependency
-    {
-
-    }
+    public interface IMCMPerCharacterSettingsContainer : IPerCharacterSettingsContainer, IDependency { }
 }
