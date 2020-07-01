@@ -60,7 +60,7 @@ namespace MCM.UI.Functionality
         private static PropertyInfo RootViewProperty { get; } = AccessTools.Property(typeof(GauntletMovie), nameof(GauntletMovie.RootView));
         private static bool LoadMovieHarmony(GauntletMovie __instance, Widget ____movieRootNode)
         {
-            var movie =  Instance.MovieRequested(__instance.MovieName);
+            var movie = Instance.MovieRequested(__instance.MovieName);
             if (movie == null)
                 return true;
 

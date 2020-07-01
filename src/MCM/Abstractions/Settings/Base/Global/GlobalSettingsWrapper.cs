@@ -30,13 +30,13 @@ namespace MCM.Abstractions.Settings.Base.Global
         /// <inheritdoc/>
         public override string Id => IdProperty?.GetValue(Object) as string ?? "ERROR";
         /// <inheritdoc/>
-        public override string FolderName => ModuleFolderNameProperty?.GetValue(Object) as string ?? "";
+        public override string FolderName => ModuleFolderNameProperty?.GetValue(Object) as string ?? string.Empty;
         /// <inheritdoc/>
         public override string DisplayName => DisplayNameProperty?.GetValue(Object) as string ?? "ERROR";
         /// <inheritdoc/>
         public override int UIVersion => UIVersionProperty?.GetValue(Object) as int? ?? 1;
         /// <inheritdoc/>
-        public override string SubFolder => SubFolderProperty?.GetValue(Object) as string ?? "";
+        public override string SubFolder => SubFolderProperty?.GetValue(Object) as string ?? string.Empty;
         /// <inheritdoc/>
         protected override char SubGroupDelimiter => SubGroupDelimiterProperty?.GetValue(Object) as char? ?? '/';
         /// <inheritdoc/>
@@ -68,7 +68,7 @@ namespace MCM.Abstractions.Settings.Base.Global
 
         /// <inheritdoc/>
         public override List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() =>
-            ((IEnumerable<object>) (GetSettingPropertyGroupsMethod?.Invoke(Object, Array.Empty<object>()) ?? Array.Empty<object>()) )
+            ((IEnumerable<object>) (GetSettingPropertyGroupsMethod?.Invoke(Object, Array.Empty<object>()) ?? Array.Empty<object>()))
             .Select(o => new SettingsPropertyGroupDefinitionWrapper(o))
             .Cast<SettingsPropertyGroupDefinition>()
             .ToList();

@@ -14,7 +14,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
     {
         /// <inheritdoc/>
         public bool IsToggle { get; } = true;
-        
+
         internal DefaultSettingsPropertyGroupToggleBuilder(string id, string name, IRef @ref)
             : base(id, name, @ref)
         {

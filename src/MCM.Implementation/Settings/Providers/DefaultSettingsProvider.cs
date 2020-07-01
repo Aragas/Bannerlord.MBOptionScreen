@@ -53,7 +53,7 @@ namespace MCM.Implementation.Settings.Providers
         {
             foreach (var settingsContainer in SettingsContainers)
             {
-                if (settingsContainer.GetSettings(id) is {} settings)
+                if (settingsContainer.GetSettings(id) is { } settings)
                     return settings;
             }
             return null;
@@ -107,7 +107,6 @@ namespace MCM.Implementation.Settings.Providers
                 if (settingsContainer is IPerCharacterSettingsContainer perCharacterContainer)
                 {
                     perCharacterContainer.OnGameEnded(game);
-
                 }
             }
         }

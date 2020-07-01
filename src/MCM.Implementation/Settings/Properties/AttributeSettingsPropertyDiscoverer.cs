@@ -7,13 +7,13 @@ using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
 using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.Properties;
+using MCM.Implementation.Attributes;
 using MCM.Utils;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using MCM.Implementation.Attributes;
 
 namespace MCM.Implementation.Settings.Properties
 {
@@ -73,7 +73,7 @@ namespace MCM.Implementation.Settings.Properties
                         propertyDefinitions.Add(new AttributePropertyDefinitionGroupToggleWrapper(propertyDefinitions.First()));
                 }
 
-                if(propertyDefinitions.Count > 0)
+                if (propertyDefinitions.Count > 0)
                     yield return new SettingsPropertyDefinition(
                         propertyDefinitions,
                         groupDefinition,

@@ -14,19 +14,19 @@ namespace MCM.Abstractions.Settings.Models
     public sealed class SettingsPropertyDefinition : ISettingsPropertyDefinition
     {
         /// <inheritdoc/>
-        public string Id { get; } = "";
+        public string Id { get; } = string.Empty;
         /// <inheritdoc/>
         public IRef PropertyReference { get; }
         /// <inheritdoc/>
         public SettingType SettingType { get; }
         /// <inheritdoc/>
-        public string DisplayName { get; } = "";
+        public string DisplayName { get; } = string.Empty;
         /// <inheritdoc/>
         public int Order { get; } = -1;
         /// <inheritdoc/>
         public bool RequireRestart { get; } = true;
         /// <inheritdoc/>
-        public string HintText { get; } = "";
+        public string HintText { get; } = string.Empty;
         /// <inheritdoc/>
         public decimal MaxValue { get; }
         /// <inheritdoc/>
@@ -38,7 +38,7 @@ namespace MCM.Abstractions.Settings.Models
         /// <inheritdoc/>
         public int SelectedIndex { get; }
         /// <inheritdoc/>
-        public string ValueFormat { get; } = "";
+        public string ValueFormat { get; } = string.Empty;
         /// <inheritdoc/>
         public Type? CustomFormatter { get; }
         /// <inheritdoc/>
@@ -52,7 +52,7 @@ namespace MCM.Abstractions.Settings.Models
         public int GroupOrder { get; }
 
         public SettingsPropertyDefinition(IPropertyDefinitionBase propertyDefinition, IPropertyGroupDefinition propertyGroupDefinition, IRef propertyReference, char subGroupDelimiter)
-            : this(new []{ propertyDefinition }, propertyGroupDefinition, propertyReference, subGroupDelimiter) { }
+            : this(new [] { propertyDefinition }, propertyGroupDefinition, propertyReference, subGroupDelimiter) { }
         public SettingsPropertyDefinition(IEnumerable<IPropertyDefinitionBase> propertyDefinitions, IPropertyGroupDefinition propertyGroupDefinition, IRef propertyReference, char subGroupDelimiter)
         {
             var groups = propertyGroupDefinition.GroupName.Split(subGroupDelimiter);
@@ -93,7 +93,7 @@ namespace MCM.Abstractions.Settings.Models
                 }
                 if (propertyDefinition is IPropertyDefinitionBool propertyDefinitionBool) // v2
                 {
-
+                    // Do nothing
                 }
                 if (propertyDefinition is IPropertyDefinitionWithMinMax propertyDefinitionWithMinMax)
                 {
@@ -121,7 +121,7 @@ namespace MCM.Abstractions.Settings.Models
                 }
                 if (propertyDefinition is IPropertyDefinitionText propertyDefinitionText)
                 {
-
+                    // Do nothing
                 }
                 if (propertyDefinition is IPropertyDefinitionDropdown propertyDefinitionDropdown)
                 {

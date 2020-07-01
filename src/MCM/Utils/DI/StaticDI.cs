@@ -104,7 +104,7 @@ namespace MCM.Utils
             }
         }
 
-        internal static IEnumerable<TBase> GetBaseImplementations<TBase, TWrapper>(params object[] args) 
+        internal static IEnumerable<TBase> GetBaseImplementations<TBase, TWrapper>(params object[] args)
             where TBase : class, IDependencyBase
             where TWrapper : TBase, IWrapper
         {
@@ -163,10 +163,10 @@ namespace MCM.Utils
             where TBase : class, IDependency
             where TWrapper : TBase, IWrapper
             => GetImplementation(typeof(TBase), typeof(TWrapper), args) as TBase;
-        internal static object?  GetImplementation(Type baseType, Type wrapperType, params object[] args)
+        internal static object? GetImplementation(Type baseType, Type wrapperType, params object[] args)
         {
             if (!LatestImplementations.ContainsKey(baseType.FullName())) return null;
-            
+
             var latestImplementationType = LatestImplementations[baseType.FullName()];
             var obj = Activator.CreateInstance(latestImplementationType, args);
             return baseType.IsAssignableFrom(latestImplementationType)

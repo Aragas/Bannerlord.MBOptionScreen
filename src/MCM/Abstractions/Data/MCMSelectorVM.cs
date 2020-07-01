@@ -12,13 +12,13 @@ namespace MCM.Abstractions.Data
     public class MCMSelectorVM<TSelectorItemVM> : ViewModel where TSelectorItemVM : MCMSelectorItemVM
     {
         private Action<MCMSelectorVM<TSelectorItemVM>>? _onChange;
-        private MBBindingList<TSelectorItemVM> _itemList = new MBBindingList<TSelectorItemVM>(); 
+        private MBBindingList<TSelectorItemVM> _itemList = new MBBindingList<TSelectorItemVM>();
         private int _selectedIndex = -1;
         private TSelectorItemVM? _selectedItem;
         private bool _hasSingleItem;
 
         [DataSourceProperty]
-        public MBBindingList<TSelectorItemVM> ItemList 
+        public MBBindingList<TSelectorItemVM> ItemList
         {
             get => _itemList;
             set
@@ -125,14 +125,14 @@ namespace MCM.Abstractions.Data
         public void AddItem(TSelectorItemVM item)
         {
             ItemList.Add(item);
-            HasSingleItem = (ItemList.Count <= 1);
+            HasSingleItem = ItemList.Count <= 1;
         }
 
         public void ExecuteRandomize()
         {
-            if (ItemList != null && (ItemList.Count(i => i.CanBeSelected) > 0))
+            if (ItemList != null && ItemList.Count(i => i.CanBeSelected) > 0)
             {
-                var randomElement = (ItemList.Where(i => i.CanBeSelected)).GetRandomElement();
+                var randomElement = ItemList.Where(i => i.CanBeSelected).GetRandomElement();
                 SelectedIndex = ItemList.IndexOf(randomElement);
             }
         }
@@ -156,7 +156,7 @@ namespace MCM.Abstractions.Data
         {
             if (ItemList != null && ItemList.Count > 0)
             {
-                for (var num = (SelectedIndex - 1 >= 0) ? (SelectedIndex - 1) : (ItemList.Count - 1); num != SelectedIndex; num = ((num - 1 >= 0) ? (num - 1) : (ItemList.Count - 1)))
+                for (var num = SelectedIndex - 1 >= 0 ? SelectedIndex - 1 : ItemList.Count - 1; num != SelectedIndex; num = num - 1 >= 0 ? num - 1 : ItemList.Count - 1)
                 {
                     if (ItemList[num].CanBeSelected)
                     {

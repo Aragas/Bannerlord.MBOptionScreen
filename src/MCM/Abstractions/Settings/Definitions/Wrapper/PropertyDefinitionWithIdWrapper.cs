@@ -11,7 +11,7 @@ namespace MCM.Abstractions.Settings.Definitions.Wrapper
         {
             var type = @object.GetType();
 
-            Id = AccessTools.Property(type, nameof(Id))?.GetValue(@object) as string ?? "";
+            Id = AccessTools.Property(type, nameof(Id))?.GetValue(@object) as string ?? string.Empty;
         }
     }
 }

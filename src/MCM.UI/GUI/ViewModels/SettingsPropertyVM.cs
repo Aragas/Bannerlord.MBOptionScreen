@@ -255,7 +255,7 @@ namespace MCM.UI.GUI.ViewModels
             RefreshValues();
         }
         private void OnHover() { if (MainView != null) MainView.HintText = HintText; }
-        private void OnHoverEnd() { if (MainView != null) MainView.HintText = ""; }
+        private void OnHoverEnd() { if (MainView != null) MainView.HintText = string.Empty; }
         private void OnValueClick() => ScreenManager.PushScreen(new EditValueGauntletScreen(this));
 
         public override string ToString() => Name;

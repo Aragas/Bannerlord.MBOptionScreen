@@ -27,7 +27,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
 
         public SettingsPropertyGroupDefinitionWrapper(object @object) : base(
             GetGroupName(@object) ?? "ERROR",
-            GetGroupNameOverride(@object) ?? "",
+            GetGroupNameOverride(@object) ?? string.Empty,
             GetGroupOrder(@object) ?? -1)
         {
             subGroups.AddRange(GetSubGroups(@object).SortDefault());

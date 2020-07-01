@@ -46,7 +46,7 @@ namespace MCM.Tests.SettingsFormat
             Path = System.IO.Path.Combine(
                 AppDomain.CurrentDomain.BaseDirectory,
                 Settings.FolderName,
-                Settings.SubFolder ?? "",
+                Settings.SubFolder ?? string.Empty,
                 $"{Settings.Id}.{Settings.Format}");
         }
 

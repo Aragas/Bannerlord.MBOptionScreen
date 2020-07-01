@@ -54,7 +54,7 @@ namespace MCM.UI.GUI.Views
                         }
                         else if (SettingType == SettingType.Float)
                         {
-                            //Handle input for float types
+                            // Handle input for float types
                             if (key == (int)KeyCodes.Decimal)
                             {
                                 if (RealText.Count(ch => ch == '.') >= 1)
@@ -63,7 +63,7 @@ namespace MCM.UI.GUI.Views
                         }
                         else if (SettingType == SettingType.Int)
                         {
-                            //Handle input for int types.
+                            // Handle input for int types.
                             if (key == (int)KeyCodes.Decimal)
                                 continue;
                         }

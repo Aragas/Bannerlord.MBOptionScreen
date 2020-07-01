@@ -47,7 +47,6 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
                 Properties[name] = new DefaultSettingsPropertyGroupToggleBuilder(id, name, @ref);
             builder?.Invoke((ISettingsPropertyGroupToggleBuilder) Properties[name]);
             return this;
-
         }
 
         /// <inheritdoc/>
@@ -91,7 +90,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
             return this;
         }
         /// <inheritdoc/>
-        public ISettingsPropertyGroupBuilder AddCustom<TSettingsPropertyBuilder>(ISettingsPropertyBuilder<TSettingsPropertyBuilder> builder) where TSettingsPropertyBuilder : ISettingsPropertyBuilder
+        public ISettingsPropertyGroupBuilder AddCustom<TSettingsPropertyBuilder>(ISettingsPropertyBuilder<TSettingsPropertyBuilder> builder)where TSettingsPropertyBuilder : ISettingsPropertyBuilder
         {
             if (!Properties.ContainsKey(builder.Name))
                 Properties[builder.Name] = builder;

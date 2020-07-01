@@ -31,7 +31,7 @@ namespace MCM.Implementation.Settings.Containers.Global
     [Version("e1.4.0",  3)]
     [Version("e1.4.1",  3)]
     public class FluentGlobalSettingsContainer : BaseSettingsContainer<FluentGlobalSettings>, IFluentGlobalSettingsContainer
-    { 
+    {
         protected override string RootFolder { get; }
 
         public override List<SettingsDefinition> CreateModSettingsDefinitions
@@ -64,7 +64,6 @@ namespace MCM.Implementation.Settings.Containers.Global
                 if (!LoadedSettings.ContainsKey(fluentGlobalSettings.Key))
                     RegisterSettings(fluentGlobalSettings.Value);
             }
-
         }
     }
 }

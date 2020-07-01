@@ -1,7 +1,4 @@
 ﻿namespace MCM.Abstractions.Data
 {
-    public interface IDefaultDropdown : IDropdownProvider
-    {
-
-    }
+    public interface IDefaultDropdown : IDropdownProvider { }
 }

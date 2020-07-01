@@ -64,15 +64,15 @@ namespace MCM.UI.GUI.ViewModels
             SettingsDefinition = definition;
             MainView = mainView;
 
-            //new TaskFactory().StartNew(() =>
-            //{
+            // new TaskFactory().StartNew(() =>
+            // {
                 _cachedPresets = SettingsInstance.GetAvailablePresets().ToDictionary(pair => pair.Key, pair => pair.Value());
 
                 PresetsSelector = new SelectorVM<SelectorItemVM>(new List<string> { new TextObject("{=SettingsVM_Custom}Custom").ToString() }.Concat(_cachedPresets.Keys), -1, null);
                 PresetsSelector.ItemList[0].CanBeSelected = false;
 
                 RecalculateIndex();
-            //});
+            // });
 
             // Can easily backfire as I do not hold the reference
             if (SettingsInstance is INotifyPropertyChanged notifyPropertyChanged)

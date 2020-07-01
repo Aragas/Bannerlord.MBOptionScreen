@@ -27,7 +27,7 @@ namespace MCM.UI.Data
             var type = @object.GetType();
 
             SelectedIndexProperty = AccessTools.Property(type, nameof(SelectedIndex));
-   
+
             IsCorrect = SelectedIndexProperty != null;
         }
     }

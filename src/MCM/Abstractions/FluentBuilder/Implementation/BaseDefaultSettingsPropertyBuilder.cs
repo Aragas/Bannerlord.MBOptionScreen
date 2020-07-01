@@ -27,7 +27,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
         /// <inheritdoc/>
         public bool RequireRestart { get; private set; }
         /// <inheritdoc/>
-        public string HintText { get; private set; } = "";
+        public string HintText { get; private set; } = string.Empty;
 
         protected BaseDefaultSettingsPropertyBuilder(string id, string name, IRef @ref)
         {

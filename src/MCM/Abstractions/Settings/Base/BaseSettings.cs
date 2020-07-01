@@ -30,11 +30,11 @@ namespace MCM.Abstractions.Settings.Base
         /// The display name of the setting in the settings menu.
         /// </summary>
         public abstract string DisplayName { get; }
-        public virtual string FolderName { get; } = "";
+        public virtual string FolderName { get; } = string.Empty;
         /// <summary>
         /// If you want this settings file stored inside a subfolder, set this to the name of the subfolder.
         /// </summary>
-        public virtual string SubFolder => "";
+        public virtual string SubFolder => string.Empty;
         public virtual string Format => "json";
         public virtual int UIVersion => 1;
         protected virtual char SubGroupDelimiter => '/';
@@ -58,7 +58,7 @@ namespace MCM.Abstractions.Settings.Base
         }
         public virtual IDictionary<string, Func<BaseSettings>> GetAvailablePresets() => new Dictionary<string, Func<BaseSettings>>()
         {
-            {new TextObject("{=BaseSettings_Default}Default").ToString(), CreateNew}
+            { new TextObject("{=BaseSettings_Default}Default").ToString(), CreateNew }
         };
 
         public virtual List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() => GetUnsortedSettingPropertyGroups()

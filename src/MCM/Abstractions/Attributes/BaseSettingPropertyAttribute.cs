@@ -8,7 +8,7 @@ namespace MCM.Abstractions.Attributes
 {
     public abstract class BaseSettingPropertyAttribute : Attribute, IPropertyDefinitionBase
     {
-        private string _hintText = "";
+        private string _hintText = string.Empty;
 
         /// <inheritdoc/>
         public string DisplayName { get; }

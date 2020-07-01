@@ -54,10 +54,10 @@ namespace MCM.Implementation.Settings.Base.Global
         private MethodInfo? OnPropertyChangedMethod { get; }
 
         public override string Id => IdProperty?.GetValue(Object) as string ?? "ERROR";
-        public override string FolderName => ModuleFolderNameProperty?.GetValue(Object) as string ?? "";
+        public override string FolderName => ModuleFolderNameProperty?.GetValue(Object) as string ?? string.Empty;
         public override string DisplayName => DisplayNameProperty?.GetValue(Object) as string ?? "ERROR";
         public override int UIVersion => UIVersionProperty?.GetValue(Object) as int? ?? 1;
-        public override string SubFolder => SubFolderProperty?.GetValue(Object) as string ?? "";
+        public override string SubFolder => SubFolderProperty?.GetValue(Object) as string ?? string.Empty;
         protected override char SubGroupDelimiter => SubGroupDelimiterProperty?.GetValue(Object) as char? ?? '/';
         public override string Format => FormatProperty?.GetValue(Object) as string ?? "json";
         public override event PropertyChangedEventHandler? PropertyChanged
@@ -117,9 +117,9 @@ namespace MCM.Implementation.Settings.Base.Global
         {
             if (GetSettingPropertyGroupsMethod == null ||
                 // Performance optimization. Do not use the default implementation.
-                GetSettingPropertyGroupsMethod.DeclaringType == typeof(BaseSettings) &&
+                (GetSettingPropertyGroupsMethod.DeclaringType == typeof(BaseSettings) &&
                 GetUnsortedSettingPropertyGroupsMethod?.DeclaringType?.IsGenericType == true &&
-                GetUnsortedSettingPropertyGroupsMethod.DeclaringType.GetGenericTypeDefinition() == typeof(AttributeGlobalSettings<>))
+                GetUnsortedSettingPropertyGroupsMethod.DeclaringType.GetGenericTypeDefinition() == typeof(AttributeGlobalSettings<>)))
                 return base.GetSettingPropertyGroups();
 
             return ((IEnumerable<object>) GetSettingPropertyGroupsMethod.Invoke(Object, Array.Empty<object>()) ?? new List<object>())

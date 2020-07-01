@@ -96,11 +96,11 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
 
             SettingsId = SettingsIdProperty?.GetValue(@object) as string ?? "ERROR";
             SettingType = SettingTypeProperty?.GetValue(@object) is { } settingTypeObject
-                ? Enum.TryParse<SettingType>(settingTypeObject.ToString(), out var resultEnum) 
+                ? Enum.TryParse<SettingType>(settingTypeObject.ToString(), out var resultEnum)
                     ? resultEnum
                     : SettingType.NONE
                 : SettingType.NONE;
-            PropertyReference = PropertyProperty?.GetValue(@object) is { } value 
+            PropertyReference = PropertyProperty?.GetValue(@object) is { } value
                 ? value is IRef @ref ? @ref : new RefWrapper(value)
                 : new ProxyRef<object?>(() => null, o => { });
 
@@ -119,7 +119,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
             Order = OrderProperty?.GetValue(@object) as int? ?? -1;
             RequireRestart = RequireRestartProperty?.GetValue(@object) as bool? ?? true;
 
-            GroupName = new TextObject(GroupNameProperty?.GetValue(@object) as string ?? "").ToString();
+            GroupName = new TextObject(GroupNameProperty?.GetValue(@object) as string ?? string.Empty).ToString();
             GroupOrder = GroupOrderProperty?.GetValue(@object) as int? ?? -1;
 
             MinValue = MinValueProperty?.GetValue(@object) is { } minVal ? minVal as decimal? ?? 0 : 0;
@@ -133,10 +133,10 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
             {
                 SettingType.Int => "0",
                 SettingType.Float => "0.00",
-                _ => ""
+                _ => string.Empty
             };
             CustomFormatter = CustomFormatterProperty?.GetValue(@object) as Type;
-            Id = IdProperty?.GetValue(@object) as string ?? "";
+            Id = IdProperty?.GetValue(@object) as string ?? string.Empty;
             IsToggle = IsToggleProperty?.GetValue(@object) as bool? ?? false;
         }
     }

@@ -10,7 +10,7 @@ namespace MCM.Tests.SettingsFormat
         protected bool _boolValue;
         protected int _intValue;
         protected float _floatValue;
-        protected string _stringValue = "";
+        protected string _stringValue = string.Empty;
 
         protected ISettingsFormat Format { get; set; } = default!;
         protected FluentGlobalSettings Settings { get; set; } = default!;
@@ -22,7 +22,7 @@ namespace MCM.Tests.SettingsFormat
             _boolValue = false;
             _intValue = 0;
             _floatValue = 0F;
-            _stringValue = "";
+            _stringValue = string.Empty;
         }
     }
 }

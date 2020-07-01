@@ -20,14 +20,14 @@ namespace MCM.UI.GUI.ViewModels
 {
     internal sealed class ModOptionsVM : ViewModel
     {
-        private string _titleLabel = "";
-        private string _cancelButtonText = "";
-        private string _doneButtonText = "";
-        private string _modsText = "";
+        private string _titleLabel = string.Empty;
+        private string _cancelButtonText = string.Empty;
+        private string _doneButtonText = string.Empty;
+        private string _modsText = string.Empty;
         private SettingsVM? _selectedMod;
         private MBBindingList<SettingsVM> _modSettingsList = new MBBindingList<SettingsVM>();
-        private string _hintText = "";
-        private string _searchText = "";
+        private string _hintText = string.Empty;
+        private string _searchText = string.Empty;
 
         [DataSourceProperty]
         public string Name
@@ -161,7 +161,7 @@ namespace MCM.UI.GUI.ViewModels
             DoneButtonText = new TextObject("{=WiNRdfsm}Done").ToString();
             CancelButtonText = new TextObject("{=3CpNUnVl}Cancel").ToString();
             ModsText = new TextObject("{=ModOptionsPageView_Mods}Mods").ToString();
-            SearchText = "";
+            SearchText = string.Empty;
 
             ModSettingsList = new MBBindingList<SettingsVM>();
             // Fancy
@@ -224,12 +224,12 @@ namespace MCM.UI.GUI.ViewModels
             InformationManager.ShowInquiry(new InquiryData(new TextObject("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new Dictionary<string, TextObject>()
                 {
                     { "PRESET", new TextObject(selector.SelectedItem.StringItem) }
-                }).ToString(), 
+                }).ToString(),
                 new TextObject("{=ModOptionsVM_Discard}Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?", new Dictionary<string, TextObject>()
                 {
                     { "NAME", new TextObject(SelectedMod!.DisplayName) },
                     { "ITEM", new TextObject(selector.SelectedItem.StringItem) }
-                }).ToString(), 
+                }).ToString(),
                 true, true, new TextObject("{=aeouhelq}Yes").ToString(), new TextObject("{=8OkPHu4f}No").ToString(),
                 () =>
                 {
@@ -286,14 +286,14 @@ namespace MCM.UI.GUI.ViewModels
                 return;
             }
 
-            //Save the changes to file.
+            // Save the changes to file.
             var changedModSettings = ModSettingsList.Where(x => x.URS.ChangesMade).ToList();
 
             var requireRestart = changedModSettings.Any(x => x.RestartRequired());
             if (requireRestart)
             {
                 InformationManager.ShowInquiry(new InquiryData(new TextObject("{=ModOptionsVM_RestartTitle}Game Needs to Restart").ToString(),
-                    new TextObject("{=ModOptionsVM_RestartDesc}The game needs to be restarted to apply mod settings changes. Do you want to close the game now?").ToString(), 
+                    new TextObject("{=ModOptionsVM_RestartDesc}The game needs to be restarted to apply mod settings changes. Do you want to close the game now?").ToString(),
                     true, true, new TextObject("{=aeouhelq}Yes").ToString(), new TextObject("{=3CpNUnVl}Cancel").ToString(),
                     () =>
                     {

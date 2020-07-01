@@ -186,7 +186,7 @@ namespace ModLib
         {
             using (XmlReader reader = XmlReader.Create(filePath))
             {
-                string nodeData = "";
+                string nodeData = string.Empty;
                 try
                 {
                     //Find the type name
@@ -339,8 +339,8 @@ namespace ModLib
 
         private class TypeData
         {
-            public string AssemblyName { get; private set; } = "";
-            public string TypeName { get; private set; } = "";
+            public string AssemblyName { get; private set; } = string.Empty;
+            public string TypeName { get; private set; } = string.Empty;
             public string FullName => $"{TypeName}, {AssemblyName}";
             private Type _type = null;
             public Type Type

@@ -21,8 +21,5 @@ namespace MCM.Implementation.Settings.Formats.Json
     [Version("e1.3.1",  2)]
     [Version("e1.4.0",  2)]
     [Version("e1.4.1",  2)]
-    internal class JsonSettingsFormat : BaseJsonSettingsFormat, IJsonSettingsFormat
-    {
-
-    }
+    internal class JsonSettingsFormat : BaseJsonSettingsFormat, IJsonSettingsFormat { }
 }

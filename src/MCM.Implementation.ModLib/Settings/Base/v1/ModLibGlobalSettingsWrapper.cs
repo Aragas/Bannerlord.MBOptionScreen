@@ -38,10 +38,10 @@ namespace MCM.Implementation.ModLib.Settings.Base.v1
         private PropertyInfo? SubFolderProperty { get; }
 
         public override string Id => IDProperty?.GetValue(Object) as string ?? "ERROR";
-        public override string FolderName => ModuleFolderNameProperty?.GetValue(Object) as string ?? "";
+        public override string FolderName => ModuleFolderNameProperty?.GetValue(Object) as string ?? string.Empty;
         public override string DisplayName => ModNameProperty?.GetValue(Object) as string ?? "ERROR";
         public override int UIVersion => 1;
-        public override string SubFolder => SubFolderProperty?.GetValue(Object) as string ?? "";
+        public override string SubFolder => SubFolderProperty?.GetValue(Object) as string ?? string.Empty;
         protected override char SubGroupDelimiter => '/';
         public override string Format => "json";
         public override event PropertyChangedEventHandler? PropertyChanged { add { } remove { } }

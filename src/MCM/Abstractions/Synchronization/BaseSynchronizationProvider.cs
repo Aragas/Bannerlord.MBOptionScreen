@@ -13,7 +13,7 @@ namespace MCM.Abstractions.Synchronization
             _instances.GetOrAdd(name, n => DI.GetImplementation<BaseSynchronizationProvider, SynchronizationProviderWrapper>(n)!);
 
 
-        public virtual string Name { get; } = "";
+        public virtual string Name { get; } = string.Empty;
         public virtual bool IsFirstInitialization { get; protected set; }
 
         internal BaseSynchronizationProvider() { }

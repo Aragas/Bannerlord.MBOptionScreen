@@ -95,6 +95,11 @@ namespace MCM.Utils
 
             return (type != ChunkType.Alphanumeric || !char.IsDigit(ch)) && (type != ChunkType.Numeric || char.IsDigit(ch));
         }
-        private enum ChunkType { Alphanumeric, Numeric }
+
+        private enum ChunkType
+        {
+            Alphanumeric,
+            Numeric
+        }
     }
 }

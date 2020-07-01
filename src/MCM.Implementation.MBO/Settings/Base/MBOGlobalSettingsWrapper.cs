@@ -42,10 +42,10 @@ namespace MCM.Implementation.MBO.Settings.Base
         private MethodInfo? OnPropertyChangedMethod { get; }
 
         public override string Id => IdProperty?.GetValue(Object) as string ?? "ERROR";
-        public override string FolderName => ModuleFolderNameProperty?.GetValue(Object) as string ?? "";
+        public override string FolderName => ModuleFolderNameProperty?.GetValue(Object) as string ?? string.Empty;
         public override string DisplayName => ModNameProperty?.GetValue(Object) as string ?? "ERROR";
         public override int UIVersion => UIVersionProperty?.GetValue(Object) as int? ?? 1;
-        public override string SubFolder => SubFolderProperty?.GetValue(Object) as string ?? "";
+        public override string SubFolder => SubFolderProperty?.GetValue(Object) as string ?? string.Empty;
         protected override char SubGroupDelimiter => SubGroupDelimiterProperty?.GetValue(Object) as char? ?? '/';
         public override string Format => FormatProperty?.GetValue(Object) as string ?? "json";
         public override event PropertyChangedEventHandler? PropertyChanged

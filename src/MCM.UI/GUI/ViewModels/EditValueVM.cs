@@ -11,11 +11,11 @@ namespace MCM.UI.GUI.ViewModels
 {
     internal sealed class EditValueVM : ViewModel
     {
-        private string _textInput = "";
+        private string _textInput = string.Empty;
         private string _titleText = "title";
         private string _descriptionText = "description";
-        private string _cancelButtonText = "";
-        private string _doneButtonText = "";
+        private string _cancelButtonText = string.Empty;
+        private string _doneButtonText = string.Empty;
 
         public SettingsPropertyVM SettingProperty { get; set; }
 

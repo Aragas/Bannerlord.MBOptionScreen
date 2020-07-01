@@ -154,7 +154,7 @@ namespace MCM.Utils
         public static bool IsCheckboxDropdown(Type type) =>
             ReflectionUtils.ImplementsOrImplementsEquivalent(type, typeof(ICheckboxDropdown));
 
-        public static bool IsDefaultDropdown(object obj)=> IsDefaultDropdown(obj.GetType());
+        public static bool IsDefaultDropdown(object obj) => IsDefaultDropdown(obj.GetType());
         public static bool IsCheckboxDropdown(object obj) => IsCheckboxDropdown(obj.GetType());
 
         public static object GetSelector(object dropdown)
@@ -197,10 +197,10 @@ namespace MCM.Utils
         public static SettingsPropertyGroupDefinition GetGroupFor(char subGroupDelimiter, ISettingsPropertyDefinition sp, ICollection<SettingsPropertyGroupDefinition> rootCollection)
         {
             SettingsPropertyGroupDefinition? group;
-            //Check if the intended group is a sub group
+            // Check if the intended group is a sub group
             if (sp.GroupName.Contains(subGroupDelimiter))
             {
-                //Intended group is a sub group. Must find it. First get the top group.
+                // Intended group is a sub group. Must find it. First get the top group.
                 var topGroupName = GetTopGroupName(subGroupDelimiter, sp.GroupName, out var truncatedGroupName);
                 var topGroup = rootCollection.GetGroup(topGroupName);
                 if (topGroup == null)
@@ -209,12 +209,12 @@ namespace MCM.Utils
                     topGroup = new SettingsPropertyGroupDefinition(sp.GroupName, topGroupName);
                     rootCollection.Add(topGroup);
                 }
-                //Find the sub group
+                // Find the sub group
                 group = GetGroupForRecursive(subGroupDelimiter, truncatedGroupName, topGroup, sp);
             }
             else
             {
-                //Group is not a subgroup, can find it in the main list of groups.
+                // Group is not a subgroup, can find it in the main list of groups.
                 group = rootCollection.GetGroup(sp.GroupName);
                 if (group == null)
                 {
@@ -230,7 +230,7 @@ namespace MCM.Utils
             {
                 if (groupName.Contains(subGroupDelimiter))
                 {
-                    //Need to go deeper
+                    // Need to go deeper
                     var topGroupName = GetTopGroupName(subGroupDelimiter, groupName, out var truncatedGroupName);
                     var topGroup = sgp.GetGroupFor(topGroupName);
                     if (topGroup == null)
@@ -245,7 +245,7 @@ namespace MCM.Utils
                 }
                 else
                 {
-                    //Reached the bottom level, can return the final group.
+                    // Reached the bottom level, can return the final group.
                     var group = sgp.GetGroup(groupName);
                     if (group == null)
                     {

@@ -4,7 +4,7 @@
     {
         /// <inheritdoc/>
         public bool IsToggle { get; } = true;
-        
+
         public AttributePropertyDefinitionGroupToggleWrapper(object @object) : base(@object) { }
     }
 }

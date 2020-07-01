@@ -15,9 +15,6 @@ namespace MCM.Abstractions.Settings.Definitions
         [Obsolete("Will be removed", true)]
         bool IsMainToggle { get; }
 
-        /// <summary>
-        ///
-        /// </summary>
         int GroupOrder { get; }
     }
 }

@@ -43,7 +43,7 @@ namespace MCM.Abstractions.Settings.Containers
 
             LoadedSettings.Add(tSettings.Id, tSettings);
 
-            var path = Path.Combine(RootFolder, tSettings.FolderName, tSettings.SubFolder ?? "", $"{tSettings.Id}.{tSettings.Format}");
+            var path = Path.Combine(RootFolder, tSettings.FolderName, tSettings.SubFolder ?? string.Empty, $"{tSettings.Id}.{tSettings.Format}");
             if (AvailableSettingsFormats.ContainsKey(tSettings.Format))
                 AvailableSettingsFormats[tSettings.Format].Load(tSettings, path);
             else
@@ -58,7 +58,7 @@ namespace MCM.Abstractions.Settings.Containers
             if (!(settings is TSettings tSettings) || !LoadedSettings.ContainsKey(tSettings.Id))
                 return false;
 
-            var path = Path.Combine(RootFolder, tSettings.FolderName, tSettings.SubFolder ?? "", $"{tSettings.Id}.{tSettings.Format}");
+            var path = Path.Combine(RootFolder, tSettings.FolderName, tSettings.SubFolder ?? string.Empty, $"{tSettings.Id}.{tSettings.Format}");
             if (AvailableSettingsFormats.ContainsKey(tSettings.Format))
                 AvailableSettingsFormats[tSettings.Format].Save(tSettings, path);
             else

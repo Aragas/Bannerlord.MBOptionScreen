@@ -34,7 +34,7 @@ namespace MCM.Implementation.Functionality
     [Version("e1.1.0",  1)]
     [Version("e1.2.0",  1)]
     [Version("e1.2.1",  1)]
-    [Version("e1.3.0",  1)] 
+    [Version("e1.3.0",  1)]
     [Version("e1.3.1",  1)]
     [Version("e1.4.0",  1)]
     [Version("e1.4.1",  1)]
@@ -54,7 +54,7 @@ namespace MCM.Implementation.Functionality
                     AccessTools.Method(typeof(MapScreen), "GetEscapeMenuItems"),
                     postfix: new HarmonyMethod(AccessTools.Method(typeof(DefaultIngameMenuScreenHandler), nameof(MapScreen_GetEscapeMenuItems)), 300));
 
-                // TODO: We can't replace MissionSingleplayerEscapeMenu at runtime because it's injected in the MissionView[] 
+                // TODO: We can't replace MissionSingleplayerEscapeMenu at runtime because it's injected in the MissionView[]
                 // TODO: Won't work if the type is replaced at runtime
                 var actualViewTypes = (Dictionary<Type, Type>) (AccessTools.Field(typeof(ViewCreatorManager), "_actualViewTypes")?.GetValue(null) ?? new Dictionary<Type, Type>());
                 var overrideType = actualViewTypes[typeof(MissionSingleplayerEscapeMenu)];
@@ -82,7 +82,7 @@ namespace MCM.Implementation.Functionality
                         var screen = screenFactory();
                         if (screen != null)
                         {
-                            AccessTools.Method(typeof(MapScreen), "OnEscapeMenuToggled")?.Invoke(__instance, new object[] {false});
+                            AccessTools.Method(typeof(MapScreen), "OnEscapeMenuToggled")?.Invoke(__instance, new object[] { false });
                             ScreenManager.PushScreen(screen);
                         }
                     },
@@ -101,7 +101,7 @@ namespace MCM.Implementation.Functionality
                         var screen = screenFactory();
                         if (screen != null)
                         {
-                            AccessTools.Method(typeof(GauntletMissionEscapeMenuBase), "OnEscapeMenuToggled")?.Invoke(__instance, new object[] {false});
+                            AccessTools.Method(typeof(GauntletMissionEscapeMenuBase), "OnEscapeMenuToggled")?.Invoke(__instance, new object[] { false });
                             ScreenManager.PushScreen(screen);
                         }
                     },

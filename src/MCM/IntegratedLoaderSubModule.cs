@@ -133,7 +133,6 @@ namespace MCM
         public override bool DoLoading(Game game)
         {
             return base.DoLoading(game) && _loader.MCMImplementationSubModules.All(tuple => tuple.Item1.DoLoading(game));
-
         }
         /// <exclude/>
         public override void OnGameLoaded(Game game, object initializerObject)
@@ -164,7 +163,7 @@ namespace MCM
         public override void OnGameEnd(Game game)
         {
             base.OnGameEnd(game);
-            
+
             foreach (var (subModule, _) in _loader.MCMImplementationSubModules)
                 subModule.OnGameEnd(game);
         }
@@ -196,7 +195,7 @@ namespace MCM
         public override void OnNewGameCreated(Game game, object initializerObject)
         {
             base.OnNewGameCreated(game, initializerObject);
-            
+
             foreach (var (subModule, _) in _loader.MCMImplementationSubModules)
                 subModule.OnNewGameCreated(game, initializerObject);
         }

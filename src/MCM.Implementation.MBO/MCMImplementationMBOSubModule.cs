@@ -69,10 +69,7 @@ namespace MCM.Implementation.MBO
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
             using var synchronizationProvider = BaseSynchronizationProvider.Create("OnBeforeInitialModuleScreenSetAsRoot_MBOv3");
-            if (synchronizationProvider.IsFirstInitialization)
-            {
-
-            }
+            if (synchronizationProvider.IsFirstInitialization) { }
         }
     }
 }

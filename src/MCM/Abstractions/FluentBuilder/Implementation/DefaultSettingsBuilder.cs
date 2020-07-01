@@ -13,11 +13,11 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
     public class DefaultSettingsBuilder : ISettingsBuilder
     {
         private Dictionary<string, ISettingsPropertyGroupBuilder> PropertyGroups { get; } = new Dictionary<string, ISettingsPropertyGroupBuilder>();
-        
+
         private string Id { get; }
         private string DisplayName { get; }
-        private string FolderName { get; set; } = "";
-        private string SubFolder { get; set; } = "";
+        private string FolderName { get; set; } = string.Empty;
+        private string SubFolder { get; set; } = string.Empty;
         private string Format { get; set; } = "memory";
         private int UIVersion { get; set; } = 1;
         private char SubGroupDelimiter { get; set; } = '/';

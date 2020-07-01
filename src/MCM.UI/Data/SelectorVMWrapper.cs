@@ -33,13 +33,13 @@ namespace MCM.UI.Data
             var type = @object.GetType();
 
             SelectedIndexProperty = AccessTools.Property(type, nameof(SelectedIndex));
-   
+
             IsCorrect = SelectedIndexProperty != null;
 
             // Copy Object properties
             var field = AccessTools.Field(typeof(ViewModel), "_propertyInfos");
             var propsObject = field.GetValue(Object) as Dictionary<string, PropertyInfo> ?? new Dictionary<string, PropertyInfo>();
-            var propsThis = field.GetValue(this) as Dictionary<string, PropertyInfo>?? new Dictionary<string, PropertyInfo>();
+            var propsThis = field.GetValue(this) as Dictionary<string, PropertyInfo> ?? new Dictionary<string, PropertyInfo>();
             foreach (var (key, value) in propsObject)
             {
                 if (propsThis.ContainsKey(key))

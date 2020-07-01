@@ -47,7 +47,7 @@ namespace MCM.Abstractions.Attributes.v1
 
             MinValue = type.GetProperty(nameof(MinValue))?.GetValue(@object) as decimal? ?? 0;
             MaxValue = type.GetProperty(nameof(MaxValue))?.GetValue(@object) as decimal? ?? 0;
-            ValueFormat = "";
+            ValueFormat = string.Empty;
             SelectedIndex = type.GetProperty(nameof(SelectedIndex))?.GetValue(@object) as int? ?? 0;
             EditableMinValue = type.GetProperty(nameof(EditableMinValue))?.GetValue(@object) as decimal? ?? 0;
             EditableMaxValue = type.GetProperty(nameof(EditableMaxValue))?.GetValue(@object) as decimal? ?? 0;

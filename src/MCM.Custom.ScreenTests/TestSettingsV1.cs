@@ -60,16 +60,16 @@ namespace MCM.Custom.ScreenTests
 
         [SettingProperty("Property Text Default Empty", RequireRestart = false)]
         [SettingPropertyGroup("Text")]
-        public string PropertyTextDefaultEmpty { get; set; } = "";
+        public string PropertyTextDefaultEmpty { get; set; } = string.Empty;
         [SettingProperty("Property Text Default Text", RequireRestart = false)]
         [SettingPropertyGroup("Text")]
         public string PropertyTextDefaultText { get; set; } = "Text";
         [SettingProperty("Property Text Require Restart")]
         [SettingPropertyGroup("Text")]
-        public string PropertyTextRequireRestart { get; set; } = "";
+        public string PropertyTextRequireRestart { get; set; } = string.Empty;
         [SettingProperty("Property Text With Hint", RequireRestart = false, HintText = "Hint Text")]
         [SettingPropertyGroup("Text")]
-        public string PropertyTextWithHint { get; set; } = "";
+        public string PropertyTextWithHint { get; set; } = string.Empty;
 
 
         [SettingProperty("Property Dropdown SelectedIndex 0", RequireRestart = false)]

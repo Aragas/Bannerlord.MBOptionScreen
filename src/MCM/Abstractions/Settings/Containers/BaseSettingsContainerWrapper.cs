@@ -38,7 +38,7 @@ namespace MCM.Abstractions.Settings.Containers
         }
 
         /// <inheritdoc/>
-        public List<SettingsDefinition> CreateModSettingsDefinitions => 
+        public List<SettingsDefinition> CreateModSettingsDefinitions =>
             ((IEnumerable<object>) (CreateModSettingsDefinitionsProperty?.GetValue(Object) ?? new List<object>()))
             .Select(s => new SettingsDefinitionWrapper(s)).Cast<SettingsDefinition>()
             .ToList();

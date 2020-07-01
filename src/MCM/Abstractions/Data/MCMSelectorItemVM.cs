@@ -8,7 +8,7 @@ namespace MCM.Abstractions.Data
 {
     public class MCMSelectorItemVM : ViewModel
     {
-        private string _stringItem = "";
+        private string _stringItem = string.Empty;
         private bool _canBeSelected = true;
         private TextObject? _hintObj;
         private HintViewModel? _hint;
@@ -90,7 +90,7 @@ namespace MCM.Abstractions.Data
             get => _value;
             set
             {
-                _value = value; 
+                _value = value;
                 OnPropertyChanged(nameof(Value));
             }
         }

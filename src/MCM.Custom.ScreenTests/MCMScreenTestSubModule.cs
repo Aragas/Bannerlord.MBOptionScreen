@@ -11,7 +11,7 @@ namespace MCM.Custom.ScreenTests
         private bool _boolValue;
         private int _intValue;
         private float _floatValue;
-        private string _stringValue = "";
+        private string _stringValue = string.Empty;
 #endif
 
         /// <summary>

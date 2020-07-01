@@ -6,7 +6,7 @@ namespace MCM.Abstractions.Settings.Definitions.Wrapper
     {
         /// <inheritdoc/>
         public bool IsToggle { get; }
-        
+
         public PropertyDefinitionGroupToggleWrapper(object @object) : base(@object)
         {
             var type = @object.GetType();

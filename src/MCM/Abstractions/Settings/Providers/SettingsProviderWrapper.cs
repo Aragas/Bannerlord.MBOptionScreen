@@ -53,7 +53,7 @@ namespace MCM.Abstractions.Settings.Providers
             ((IEnumerable<object>) (CreateModSettingsDefinitionsProperty?.GetValue(Object) ?? new List<object>()))
             .Select(s => new SettingsDefinitionWrapper(s));
         /// <inheritdoc/>
-        public override BaseSettings? GetSettings(string id) => 
+        public override BaseSettings? GetSettings(string id) =>
             GetSettingsMethod?.Invoke(Object, new object[] { id }) as BaseSettings;
         /// <inheritdoc/>
         public override void SaveSettings(BaseSettings settings) =>

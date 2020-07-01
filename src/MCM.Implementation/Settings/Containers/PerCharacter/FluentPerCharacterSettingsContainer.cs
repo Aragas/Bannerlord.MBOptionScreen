@@ -67,10 +67,9 @@ namespace MCM.Implementation.Settings.Containers.PerCharacter
                 if (!LoadedSettings.ContainsKey(key))
                     RegisterSettings(value);
             }
-
         }
 
-        public void OnGameStarted(Game game) { LoadedSettings.Clear(); }
-        public void OnGameEnded(Game game) { LoadedSettings.Clear(); }
+        public void OnGameStarted(Game game) => LoadedSettings.Clear();
+        public void OnGameEnded(Game game) => LoadedSettings.Clear();
     }
 }

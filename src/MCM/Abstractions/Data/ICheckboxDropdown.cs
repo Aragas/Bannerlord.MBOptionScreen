@@ -1,7 +1,4 @@
 ﻿namespace MCM.Abstractions.Data
 {
-    public interface ICheckboxDropdown : IDropdownProvider
-    {
-
-    }
+    public interface ICheckboxDropdown : IDropdownProvider { }
 }

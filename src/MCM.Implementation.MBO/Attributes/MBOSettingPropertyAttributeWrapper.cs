@@ -34,7 +34,7 @@ namespace MCM.Implementation.MBO.Attributes
 
             MinValue = (decimal) (type.GetProperty("MinValue")?.GetValue(@object) as float? ?? 0);
             MaxValue = (decimal) (type.GetProperty("MaxValue")?.GetValue(@object) as float? ?? 0);
-            ValueFormat = type.GetProperty("ValueFormat")?.GetValue(@object) as string ?? "";
+            ValueFormat = type.GetProperty("ValueFormat")?.GetValue(@object) as string ?? string.Empty;
             SelectedIndex = type.GetProperty("SelectedIndex")?.GetValue(@object) as int? ?? 0;
             EditableMinValue = (decimal) (type.GetProperty("EditableMinValue")?.GetValue(@object) as float? ?? (float) MinValue);
             EditableMaxValue = (decimal) (type.GetProperty("EditableMaxValue")?.GetValue(@object) as float? ?? (float) MaxValue);
