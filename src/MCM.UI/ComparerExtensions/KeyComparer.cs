@@ -112,7 +112,7 @@ namespace ComparerExtensions
                 throw new ArgumentNullException(nameof(keySelector));
             }
 
-            return new TypedKeyComparer<T, TKey>(keySelector, Comparer<TKey>.Default) {Descending = true};
+            return new TypedKeyComparer<T, TKey>(keySelector, Comparer<TKey>.Default) { Descending = true };
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace ComparerExtensions
                 throw new ArgumentNullException(nameof(keyComparer));
             }
 
-            return new TypedKeyComparer<T, TKey>(keySelector, keyComparer) {Descending = true};
+            return new TypedKeyComparer<T, TKey>(keySelector, keyComparer) { Descending = true };
         }
 
         /// <summary>
@@ -162,7 +162,7 @@ namespace ComparerExtensions
             }
 
             var keyComparer = ComparisonWrapper<TKey>.GetComparer(keyComparison);
-            return new TypedKeyComparer<T, TKey>(keySelector, keyComparer) {Descending = true};
+            return new TypedKeyComparer<T, TKey>(keySelector, keyComparer) { Descending = true };
         }
     }
 }

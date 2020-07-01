@@ -26,8 +26,8 @@ namespace MCM.Tests.SettingsFormat
 
             Settings = new DefaultSettingsBuilder("Testing_Global_v1", "Testing Fluent Settings")
                 .SetFormat("xml")
-                .SetFolderName("")
-                .SetSubFolder("")
+                .SetFolderName(string.Empty)
+                .SetSubFolder(string.Empty)
                 .CreateGroup("Testing 1", groupBuilder => groupBuilder
                     .AddBool("prop_1", "Check Box", new ProxyRef<bool>(() => _boolValue, o => _boolValue = o), boolBuilder => boolBuilder
                         .SetHintText("Test")
@@ -57,7 +57,7 @@ namespace MCM.Tests.SettingsFormat
             Assert.AreEqual(false, _boolValue);
             Assert.AreEqual(0, _intValue);
             Assert.AreEqual(0F, _floatValue);
-            Assert.AreEqual("", _stringValue);
+            Assert.AreEqual(string.Empty, _stringValue);
 
             Format.Save(Settings, Path);
             Format.Load(Settings, Path);
@@ -65,7 +65,7 @@ namespace MCM.Tests.SettingsFormat
             Assert.AreEqual(false, _boolValue);
             Assert.AreEqual(0, _intValue);
             Assert.AreEqual(0F, _floatValue);
-            Assert.AreEqual("", _stringValue);
+            Assert.AreEqual(string.Empty, _stringValue);
 
 
             _boolValue = true;
