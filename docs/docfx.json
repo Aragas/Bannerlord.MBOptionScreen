@@ -28,12 +28,6 @@
       },
       {
         "files": [
-		  "README.md"
-		],
-        "src": "../"
-      },
-      {
-        "files": [
           "articles/**.md",
           "articles/**/toc.yml",
           "toc.yml",
