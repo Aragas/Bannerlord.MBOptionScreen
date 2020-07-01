@@ -21,7 +21,6 @@ namespace MCM.Tests
                 .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(ISettingsFormat)));
 
             var impl = VersionUtils.GetLastImplementation(new ApplicationVersion(ApplicationVersionType.EarlyAccess, 1, 0, 0, 0), types);
-            ;
         }
     }
 }

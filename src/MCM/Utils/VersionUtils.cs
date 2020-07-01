@@ -41,8 +41,8 @@ namespace MCM.Utils
             {
                 var latestTypeVersion = GetLatestMatching(value, version);
                 if (latestTypeVersion == null ||
-                    latestImplementation.Attribute != null &&
-                    latestImplementation.Attribute.ImplementationVersion >= latestTypeVersion.ImplementationVersion)
+                    (latestImplementation.Attribute != null &&
+                    latestImplementation.Attribute.ImplementationVersion >= latestTypeVersion.ImplementationVersion))
                     continue;
 
                 latestImplementation.Type = key;
@@ -56,8 +56,8 @@ namespace MCM.Utils
             {
                 var latestTypeVersion = GetLatestMatchingMajorMinor(value, version);
                 if (latestTypeVersion == null ||
-                    latestImplementation.Attribute != null &&
-                    latestImplementation.Attribute.ImplementationVersion >= latestTypeVersion.ImplementationVersion) 
+                    (latestImplementation.Attribute != null &&
+                    latestImplementation.Attribute.ImplementationVersion >= latestTypeVersion.ImplementationVersion))
                     continue;
 
                 latestImplementation.Type = key;
@@ -71,8 +71,8 @@ namespace MCM.Utils
             {
                 var latestTypeVersion = GetLatest(value);
                 if (latestTypeVersion == null ||
-                    latestImplementation.Attribute != null &&
-                    latestImplementation.Attribute.ImplementationVersion >= latestTypeVersion.ImplementationVersion)
+                    (latestImplementation.Attribute != null &&
+                    latestImplementation.Attribute.ImplementationVersion >= latestTypeVersion.ImplementationVersion))
                     continue;
 
                 latestImplementation.Type = key;

@@ -50,7 +50,6 @@ namespace MCM.Abstractions.Settings.Models
         public bool IsToggle { get; }
         /// <inheritdoc/>
         public int GroupOrder { get; }
-        /// <inheritdoc/>
 
         public SettingsPropertyDefinition(IPropertyDefinitionBase propertyDefinition, IPropertyGroupDefinition propertyGroupDefinition, IRef propertyReference, char subGroupDelimiter)
             : this(new []{ propertyDefinition }, propertyGroupDefinition, propertyReference, subGroupDelimiter) { }
