@@ -24,7 +24,7 @@ namespace MCM.Abstractions.Settings.Models
         public IEnumerable<SettingsPropertyGroupDefinition> SubGroups => subGroups.SortDefault();
         public IEnumerable<ISettingsPropertyDefinition> SettingProperties => settingProperties.SortDefault();
 
-        public SettingsPropertyGroupDefinition(string groupName, string groupNameOverride = string.Empty, int order = -1)
+        public SettingsPropertyGroupDefinition(string groupName, string groupNameOverride = "", int order = -1)
         {
             _groupName = new TextObject(groupName);
             _groupNameOverride = new TextObject(groupNameOverride ?? string.Empty);
