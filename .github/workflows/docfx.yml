@@ -52,8 +52,10 @@ jobs:
 
     - name: DocFX
       run: >-
+        Copy-Item "README.md" -Destination "docs/index.md";
         docfx/docfx.exe metadata docs/docfx.json;
         docfx/docfx.exe build docs/docfx.json;
+      shell: pwsh
       env:
         DOCFX: true
 
