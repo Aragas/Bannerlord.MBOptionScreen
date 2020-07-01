@@ -41,6 +41,10 @@
           "images/**",
           "CNAME"
         ]
+      },
+      {
+        "files": [ ".github/resources/**" ],
+        "src": "../"
       }
     ],
     "overwrite": [
