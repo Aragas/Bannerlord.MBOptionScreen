@@ -1,7 +1,4 @@
 ﻿namespace MCM.Abstractions.Settings.Definitions
 {
-    public interface IPropertyDefinitionBool : IPropertyDefinitionBase
-    {
-
-    }
+    public interface IPropertyDefinitionBool : IPropertyDefinitionBase { }
 }

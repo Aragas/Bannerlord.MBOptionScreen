@@ -1,7 +1,4 @@
 ﻿namespace MCM.Abstractions
 {
-    public interface IDependency
-    {
-
-    }
+    public interface IDependency { }
 }
