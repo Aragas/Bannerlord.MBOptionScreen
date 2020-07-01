@@ -118,8 +118,8 @@ MCMv3 has two implementations:
 
 ## Defining Settings <a name="settings_defining"></a>
 ![](https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/v3/.github/resources/properties.png?raw=true)
-* Check [this page](articles/mcmv3-attributes.md) for using the Attribute definition
-* Check [this page](articles/mcmv3-fluent-builder.md) for using the Fluent Builder
+* Check [this page](mcmv3-attributes.md) for using the Attribute definition
+* Check [this page](mcmv3-fluent-builder.md) for using the Fluent Builder
 
 ## Example of Settings definition <a name="settings_example"></a>
 ### Attribute API <a name="example_attribute_api"></a>
