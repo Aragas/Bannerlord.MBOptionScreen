@@ -87,6 +87,7 @@ namespace MCM.Abstractions.Data
         }
 
 
+        /// <inheritdoc/>
         public override void RefreshValues()
         {
             base.RefreshValues();

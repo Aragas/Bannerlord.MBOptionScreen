@@ -19,6 +19,7 @@ namespace MCM.Abstractions.Settings.Containers
         protected Dictionary<string, ISettingsFormat> AvailableSettingsFormats { get; } = new Dictionary<string, ISettingsFormat>();
         protected virtual Dictionary<string, TSettings> LoadedSettings { get; } = new Dictionary<string, TSettings>();
 
+        /// <inheritdoc/>
         public virtual List<SettingsDefinition> CreateModSettingsDefinitions => LoadedSettings.Keys.ToList()
             .Select(id => new SettingsDefinition(id))
             .ToList();
@@ -49,7 +50,9 @@ namespace MCM.Abstractions.Settings.Containers
                 AvailableSettingsFormats["memory"].Load(tSettings, path);
         }
 
+        /// <inheritdoc/>
         public virtual BaseSettings? GetSettings(string id) => LoadedSettings.TryGetValue(id, out var result) ? result : null;
+        /// <inheritdoc/>
         public virtual bool SaveSettings(BaseSettings settings)
         {
             if (!(settings is TSettings tSettings) || !LoadedSettings.ContainsKey(tSettings.Id))
@@ -64,6 +67,7 @@ namespace MCM.Abstractions.Settings.Containers
             return true;
         }
 
+        /// <inheritdoc/>
         public virtual bool OverrideSettings(BaseSettings settings)
         {
             if (!(settings is TSettings tSettings) || !LoadedSettings.ContainsKey(tSettings.Id))
@@ -72,6 +76,7 @@ namespace MCM.Abstractions.Settings.Containers
             SettingsUtils.OverrideSettings(LoadedSettings[tSettings.Id], tSettings);
             return true;
         }
+        /// <inheritdoc/>
         public virtual bool ResetSettings(BaseSettings settings)
         {
             if (!(settings is TSettings tSettings) || !LoadedSettings.ContainsKey(tSettings.Id))

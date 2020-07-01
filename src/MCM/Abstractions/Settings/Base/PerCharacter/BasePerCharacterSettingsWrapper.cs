@@ -18,6 +18,7 @@ namespace MCM.Abstractions.Settings.Base.PerCharacter
         public static BasePerCharacterSettingsWrapper Create(object @object) => DI.GetBaseImplementations<BasePerCharacterSettingsWrapper, PerCharacterSettingsWrapper>(@object)
             .FirstOrDefault(w => w.IsCorrect);
 
+        /// <inheritdoc/>
         public object Object { get; protected set; }
         private PropertyInfo? IdProperty { get; }
         private PropertyInfo? ModuleFolderNameProperty { get; }
@@ -28,15 +29,24 @@ namespace MCM.Abstractions.Settings.Base.PerCharacter
         private PropertyInfo? FormatProperty { get; }
         private MethodInfo? GetSettingPropertyGroupsMethod { get; }
         private MethodInfo? OnPropertyChangedMethod { get; }
+        /// <inheritdoc/>
         public bool IsCorrect { get; protected set; }
 
+        /// <inheritdoc/>
         public override string Id => IdProperty?.GetValue(Object) as string ?? "ERROR";
+        /// <inheritdoc/>
         public override string FolderName => ModuleFolderNameProperty?.GetValue(Object) as string ?? "";
+        /// <inheritdoc/>
         public override string DisplayName => DisplayNameProperty?.GetValue(Object) as string ?? "ERROR";
+        /// <inheritdoc/>
         public override int UIVersion => UIVersionProperty?.GetValue(Object) as int? ?? 1;
+        /// <inheritdoc/>
         public override string SubFolder => SubFolderProperty?.GetValue(Object) as string ?? "";
+        /// <inheritdoc/>
         protected override char SubGroupDelimiter => SubGroupDelimiterProperty?.GetValue(Object) as char? ?? '/';
+        /// <inheritdoc/>
         public override string Format => FormatProperty?.GetValue(Object) as string ?? "json";
+        /// <inheritdoc/>
         public override event PropertyChangedEventHandler? PropertyChanged
         {
             add { if (Object is INotifyPropertyChanged notifyPropertyChanged) notifyPropertyChanged.PropertyChanged += value; }
@@ -59,20 +69,24 @@ namespace MCM.Abstractions.Settings.Base.PerCharacter
             OnPropertyChangedMethod = AccessTools.Method(type, nameof(OnPropertyChanged));
         }
         
+        /// <inheritdoc/>
         public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
             OnPropertyChangedMethod?.Invoke(Object, new object[] { propertyName! });
 
+        /// <inheritdoc/>
         protected override BaseSettings CreateNew()
         {
             var newObject = Activator.CreateInstance(Object.GetType());
             return Create(newObject);
         }
 
+        /// <inheritdoc/>
         public override List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() =>
             ((IEnumerable<object>) (GetSettingPropertyGroupsMethod?.Invoke(Object, Array.Empty<object>()) ?? Array.Empty<object>()))
             .Select(o => new SettingsPropertyGroupDefinitionWrapper(o))
             .Cast<SettingsPropertyGroupDefinition>()
             .ToList();
+        /// <inheritdoc/>
         protected override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups() =>
             SettingsUtils.GetSettingsPropertyGroups(SubGroupDelimiter, Discoverer?.GetProperties(Object) ?? Array.Empty<ISettingsPropertyDefinition>());
     }

@@ -4,9 +4,12 @@ namespace MCM.Abstractions.Settings.Definitions.Wrapper
 {
     public sealed class PropertyGroupDefinitionWrapper : IPropertyGroupDefinition
     {
+        /// <inheritdoc/>
         public string GroupName { get; }
+        /// <inheritdoc/>
         [Obsolete("Will be removed", true)]
         public bool IsMainToggle { get; }
+        /// <inheritdoc/>
         public int GroupOrder { get; }
 
         public PropertyGroupDefinitionWrapper(object @object)

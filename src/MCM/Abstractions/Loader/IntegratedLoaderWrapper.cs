@@ -10,9 +10,11 @@ namespace MCM.Abstractions.Loader
 {
     public class IntegratedLoaderWrapper : IIntegratedLoader, IWrapper
     {
+        /// <inheritdoc/>
         public object Object { get; }
         private PropertyInfo? MCMImplementationSubModulesProperty { get; }
         private MethodInfo? LoadMethod { get; }
+        /// <inheritdoc/>
         public bool IsCorrect { get; }
 
         public IntegratedLoaderWrapper(object @object)
@@ -26,8 +28,10 @@ namespace MCM.Abstractions.Loader
             IsCorrect = MCMImplementationSubModulesProperty != null && LoadMethod != null;
         }
 
+        /// <inheritdoc/>
         public List<(MBSubModuleBase, Type)> MCMImplementationSubModules =>
             MCMImplementationSubModulesProperty?.GetValue(Object) as List<(MBSubModuleBase, Type)> ?? new List<(MBSubModuleBase, Type)>();
+        /// <inheritdoc/>
         public void Load() => LoadMethod?.Invoke(Object, Array.Empty<object>());
     }
 }

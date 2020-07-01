@@ -2,9 +2,6 @@
 {
     public sealed class PropertyDefinitionBoolWrapper : BasePropertyDefinitionWrapper, IPropertyDefinitionBool
     {
-        public PropertyDefinitionBoolWrapper(object @object) : base(@object)
-        {
-
-        }
+        public PropertyDefinitionBoolWrapper(object @object) : base(@object) { }
     }
 }

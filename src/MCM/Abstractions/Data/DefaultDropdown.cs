@@ -26,6 +26,7 @@ namespace MCM.Abstractions.Data
                 }
             }
         }
+        /// <inheritdoc/>
         public int SelectedIndex
         {
             get => _selectedIndex;
@@ -61,10 +62,14 @@ namespace MCM.Abstractions.Data
 
         private void OnSelectionChanged(SelectorVM<SelectorItemVM> obj) => _selectedIndex = obj.SelectedIndex;
 
+        /// <inheritdoc/>
         public bool Equals(DefaultDropdown<T> x, DefaultDropdown<T> y) => x.SelectedIndex == y.SelectedIndex;
+        /// <inheritdoc/>
         public int GetHashCode(DefaultDropdown<T> obj) => obj.SelectedIndex;
 
+        /// <inheritdoc/>
         public override int GetHashCode() => GetHashCode(this);
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
             if (obj is DefaultDropdown<T> dropdown)

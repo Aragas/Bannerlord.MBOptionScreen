@@ -17,6 +17,7 @@ namespace MCM.Abstractions.Settings.Providers
     /// </summary>
     public sealed class SettingsProviderWrapper : BaseSettingsProvider, IWrapper
     {
+        /// <inheritdoc/>
         public object Object { get; }
         private PropertyInfo? CreateModSettingsDefinitionsProperty { get; }
         private MethodInfo? GetSettingsMethod { get; }
@@ -25,6 +26,7 @@ namespace MCM.Abstractions.Settings.Providers
         private MethodInfo? OverrideSettingsMethod { get; }
         private MethodInfo? OnGameStartedMethod { get; }
         private MethodInfo? OnGameEndedMethod { get; }
+        /// <inheritdoc/>
         public bool IsCorrect { get; }
 
         public SettingsProviderWrapper(object @object)
@@ -46,19 +48,26 @@ namespace MCM.Abstractions.Settings.Providers
                         OnGameStartedMethod != null && OnGameEndedMethod != null;
         }
 
+        /// <inheritdoc/>
         public override IEnumerable<SettingsDefinition> CreateModSettingsDefinitions =>
             ((IEnumerable<object>) (CreateModSettingsDefinitionsProperty?.GetValue(Object) ?? new List<object>()))
             .Select(s => new SettingsDefinitionWrapper(s));
+        /// <inheritdoc/>
         public override BaseSettings? GetSettings(string id) => 
             GetSettingsMethod?.Invoke(Object, new object[] { id }) as BaseSettings;
+        /// <inheritdoc/>
         public override void SaveSettings(BaseSettings settings) =>
             SaveSettingsMethod?.Invoke(Object, new object[] { settings });
+        /// <inheritdoc/>
         public override void ResetSettings(BaseSettings settings) =>
             ResetSettingsMethod?.Invoke(Object, new object[] { settings });
+        /// <inheritdoc/>
         public override void OverrideSettings(BaseSettings settings) =>
             OverrideSettingsMethod?.Invoke(Object, new object[] { settings });
+        /// <inheritdoc/>
         public override void OnGameStarted(Game game) =>
             OnGameStartedMethod?.Invoke(Object, new object[] { game });
+        /// <inheritdoc/>
         public override void OnGameEnded(Game game) =>
             OnGameEndedMethod?.Invoke(Object, new object[] { game });
     }

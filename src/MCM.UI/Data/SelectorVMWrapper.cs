@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 
 using MCM.Abstractions;
+using MCM.UI.Extensions;
 using MCM.UI.Utils;
 
 using System.Collections.Generic;
@@ -39,12 +40,12 @@ namespace MCM.UI.Data
             var field = AccessTools.Field(typeof(ViewModel), "_propertyInfos");
             var propsObject = field.GetValue(Object) as Dictionary<string, PropertyInfo> ?? new Dictionary<string, PropertyInfo>();
             var propsThis = field.GetValue(this) as Dictionary<string, PropertyInfo>?? new Dictionary<string, PropertyInfo>();
-            foreach (var pair in propsObject)
+            foreach (var (key, value) in propsObject)
             {
-                if (propsThis.ContainsKey(pair.Key))
-                    propsThis[pair.Key] = new WrappedPropertyInfo(pair.Value, Object, () => OnPropertyChanged(pair.Value.Name));
+                if (propsThis.ContainsKey(key))
+                    propsThis[key] = new WrappedPropertyInfo(value, Object, () => OnPropertyChanged(value.Name));
                 else
-                    propsThis.Add(pair.Key, new WrappedPropertyInfo(pair.Value, Object, () => OnPropertyChanged(pair.Value.Name)));
+                    propsThis.Add(key, new WrappedPropertyInfo(value, Object, () => OnPropertyChanged(value.Name)));
             }
 
             // Trigger OnPropertyChanged from Object

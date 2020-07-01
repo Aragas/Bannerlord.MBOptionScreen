@@ -10,11 +10,13 @@ namespace MCM.Abstractions.Functionality
 {
     public sealed class ResourceHandlerWrapper : BaseResourceHandler, IWrapper
     {
+        /// <inheritdoc/>
         public object Object { get; }
         private MethodInfo? InjectBrushMethod { get; }
         private MethodInfo? InjectPrefabMethod { get; }
         private MethodInfo? InjectWidgetMethod { get; }
         private MethodInfo? MovieRequestedMethod { get; }
+        /// <inheritdoc/>
         public bool IsCorrect { get; }
 
         public ResourceHandlerWrapper(object @object)
@@ -31,12 +33,16 @@ namespace MCM.Abstractions.Functionality
                         InjectWidgetMethod != null && MovieRequestedMethod != null;
         }
 
+        /// <inheritdoc/>
         public override void InjectBrush(XmlDocument xmlDocument) =>
             InjectBrushMethod?.Invoke(Object, new object[] { xmlDocument });
+        /// <inheritdoc/>
         public override void InjectPrefab(string prefabName, XmlDocument xmlDocument) =>
             InjectPrefabMethod?.Invoke(Object, new object[] { prefabName, xmlDocument });
+        /// <inheritdoc/>
         public override void InjectWidget(Type widgetType) =>
             InjectWidgetMethod?.Invoke(Object, new object[] { widgetType });
+        /// <inheritdoc/>
         public override WidgetPrefab? MovieRequested(string movie) =>
             MovieRequestedMethod?.Invoke(Object, new object[] { movie }) as WidgetPrefab;
     }

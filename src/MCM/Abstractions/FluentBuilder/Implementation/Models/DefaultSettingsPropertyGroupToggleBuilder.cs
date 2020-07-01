@@ -12,6 +12,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
         ISettingsPropertyGroupToggleBuilder,
         IPropertyDefinitionGroupToggle
     {
+        /// <inheritdoc/>
         public bool IsToggle { get; } = true;
         
         internal DefaultSettingsPropertyGroupToggleBuilder(string id, string name, IRef @ref)
@@ -20,6 +21,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
             SettingsPropertyBuilder = this;
         }
 
+        /// <inheritdoc/>
         public override IEnumerable<IPropertyDefinitionBase> GetDefinitions() => new IPropertyDefinitionBase[]
         {
             new PropertyDefinitionGroupToggleWrapper(this),

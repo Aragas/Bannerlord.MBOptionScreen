@@ -14,6 +14,7 @@ namespace MCM.Abstractions.Settings.Containers.PerCharacter
         private MethodInfo? OnGameEndedMethod { get; }
         private MethodInfo? RegisterMethod { get; }
         private MethodInfo? UnregisterMethod { get; }
+        /// <inheritdoc/>
         public override bool IsCorrect { get; }
 
         protected FluentPerCharacterSettingsContainerWrapper(object @object) : base(@object)
@@ -30,7 +31,9 @@ namespace MCM.Abstractions.Settings.Containers.PerCharacter
                         RegisterMethod != null && UnregisterMethod != null;
         }
 
+        /// <inheritdoc/>
         public void OnGameStarted(Game game) => OnGameStartedMethod?.Invoke(Object, new object[] { game });
+        /// <inheritdoc/>
         public void OnGameEnded(Game game) => OnGameEndedMethod?.Invoke(Object, new object[] { game });
         public void Register(FluentPerCharacterSettings settings) => RegisterMethod?.Invoke(Object, new object[] { settings });
         public void Unregister(FluentPerCharacterSettings settings) => UnregisterMethod?.Invoke(Object, new object[] { settings });

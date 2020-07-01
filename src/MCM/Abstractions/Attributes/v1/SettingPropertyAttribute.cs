@@ -4,26 +4,22 @@ using System;
 
 namespace MCM.Abstractions.Attributes.v1
 {
+    /// <summary>
+    /// Tells the Settings system that this property should be used for the settings menu.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class SettingPropertyAttribute : BaseSettingPropertyAttribute, IPropertyDefinitionWithMinMax
     {
-        /// <summary>
-        /// The minimum value the setting can be set to. Used by the slider control.
-        /// </summary>
+        /// <inheritdoc/>
         public decimal MinValue { get; }
-        /// <summary>
-        /// The maximum value the setting can be set to. Used by the slider control.
-        /// </summary>
+        /// <inheritdoc/>
         public decimal MaxValue { get; }
 
         /// <summary>
         /// Tells the Settings system that this property should be used for the settings menu.
         /// </summary>
         /// <param name="displayName">The name to be displayed in the settings menu for this property.</param>
-        public SettingPropertyAttribute(string displayName) : base(displayName)
-        {
-
-        }
+        public SettingPropertyAttribute(string displayName) : base(displayName) { }
 
         /// <summary>
         /// Tells the Settings system that this property should be used for the settings menu.

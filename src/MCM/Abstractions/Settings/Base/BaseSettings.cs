@@ -19,11 +19,21 @@ namespace MCM.Abstractions.Settings.Base
     public abstract class BaseSettings : INotifyPropertyChanged
     {
         public const string SaveTriggered = "SAVE_TRIGGERED";
+        /// <inheritdoc/>
         public virtual event PropertyChangedEventHandler? PropertyChanged;
 
+        /// <summary>
+        /// Unique identifier used to save to file. Make sure this is unique to your mod.
+        /// </summary>
         public abstract string Id { get; }
+        /// <summary>
+        /// The display name of the setting in the settings menu.
+        /// </summary>
         public abstract string DisplayName { get; }
         public virtual string FolderName { get; } = "";
+        /// <summary>
+        /// If you want this settings file stored inside a subfolder, set this to the name of the subfolder.
+        /// </summary>
         public virtual string SubFolder => "";
         public virtual string Format => "json";
         public virtual int UIVersion => 1;

@@ -8,12 +8,16 @@ namespace MCM.Abstractions.Attributes
 {
     internal sealed class VersionAttributeWrapper : IWrapper, IVersion
     {
+        /// <inheritdoc/>
         public object Object { get; }
         private PropertyInfo? GameVersionProperty { get; }
         private PropertyInfo? ImplementationVersionProperty { get; }
+        /// <inheritdoc/>
         public bool IsCorrect { get; }
 
+        /// <inheritdoc/>
         public ApplicationVersion GameVersion => GameVersionProperty?.GetValue(Object) as ApplicationVersion? ?? ApplicationVersion.Empty;
+        /// <inheritdoc/>
         public int ImplementationVersion => ImplementationVersionProperty?.GetValue(Object) as int? ?? 0;
 
         public VersionAttributeWrapper(object @object)

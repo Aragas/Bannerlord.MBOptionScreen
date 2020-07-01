@@ -8,11 +8,9 @@ namespace MCM.Abstractions.Attributes.v2
     public sealed class SettingPropertyDropdownAttribute : BaseSettingPropertyAttribute,
         IPropertyDefinitionDropdown
     {
+        /// <inheritdoc/>
         public int SelectedIndex { get; }
 
-        public SettingPropertyDropdownAttribute(string displayName) : base(displayName)
-        {
-
-        }
+        public SettingPropertyDropdownAttribute(string displayName) : base(displayName) { }
     }
 }

@@ -19,6 +19,7 @@ namespace MCM.Abstractions.Synchronization
         internal BaseSynchronizationProvider() { }
         protected BaseSynchronizationProvider(string name) => Name = name;
 
+        /// <inheritdoc/>
         public abstract void Dispose();
     }
 }

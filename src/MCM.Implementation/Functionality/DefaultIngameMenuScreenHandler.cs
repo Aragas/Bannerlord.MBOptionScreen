@@ -2,6 +2,7 @@
 
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Functionality;
+using MCM.Implementation.Extensions;
 
 using SandBox.View.Map;
 
@@ -71,9 +72,9 @@ namespace MCM.Implementation.Functionality
 
         private static void MapScreen_GetEscapeMenuItems(MapScreen __instance, ref List<EscapeMenuItemVM> __result)
         {
-            foreach (var pair in ScreensCache)
+            foreach (var (key, value) in ScreensCache)
             {
-                var (index, screenFactory, text) = pair.Value;
+                var (index, screenFactory, text) = value;
                 __result.Insert(index, new EscapeMenuItemVM(
                     text,
                     _ =>
@@ -85,14 +86,14 @@ namespace MCM.Implementation.Functionality
                             ScreenManager.PushScreen(screen);
                         }
                     },
-                    pair.Key, false, false));
+                    key, false, false));
             }
         }
         private static void MissionSingleplayerEscapeMenu_GetEscapeMenuItems(GauntletMissionEscapeMenuBase __instance, ref List<EscapeMenuItemVM> __result)
         {
-            foreach (var pair in ScreensCache)
+            foreach (var (key, value) in ScreensCache)
             {
-                var (index, screenFactory, text) = pair.Value;
+                var (index, screenFactory, text) = value;
                 __result.Insert(index, new EscapeMenuItemVM(
                     text,
                     _ =>
@@ -104,7 +105,7 @@ namespace MCM.Implementation.Functionality
                             ScreenManager.PushScreen(screen);
                         }
                     },
-                    pair.Key, false, false));
+                    key, false, false));
             }
         }
         private static void OnMissionScreenInitialize(MissionView __instance)

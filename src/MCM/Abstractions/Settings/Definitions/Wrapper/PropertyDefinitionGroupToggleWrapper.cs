@@ -4,6 +4,7 @@ namespace MCM.Abstractions.Settings.Definitions.Wrapper
 {
     public sealed class PropertyDefinitionGroupToggleWrapper : BasePropertyDefinitionWrapper, IPropertyDefinitionGroupToggle
     {
+        /// <inheritdoc/>
         public bool IsToggle { get; }
         
         public PropertyDefinitionGroupToggleWrapper(object @object) : base(@object)

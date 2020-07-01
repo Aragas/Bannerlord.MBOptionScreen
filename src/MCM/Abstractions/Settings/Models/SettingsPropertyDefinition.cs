@@ -13,25 +13,44 @@ namespace MCM.Abstractions.Settings.Models
 {
     public sealed class SettingsPropertyDefinition : ISettingsPropertyDefinition
     {
+        /// <inheritdoc/>
         public string Id { get; } = "";
+        /// <inheritdoc/>
         public IRef PropertyReference { get; }
+        /// <inheritdoc/>
         public SettingType SettingType { get; }
+        /// <inheritdoc/>
         public string DisplayName { get; } = "";
+        /// <inheritdoc/>
         public int Order { get; } = -1;
+        /// <inheritdoc/>
         public bool RequireRestart { get; } = true;
+        /// <inheritdoc/>
         public string HintText { get; } = "";
+        /// <inheritdoc/>
         public decimal MaxValue { get; }
+        /// <inheritdoc/>
         public decimal MinValue { get; }
+        /// <inheritdoc/>
         public decimal EditableMinValue { get; }
+        /// <inheritdoc/>
         public decimal EditableMaxValue { get; }
+        /// <inheritdoc/>
         public int SelectedIndex { get; }
+        /// <inheritdoc/>
         public string ValueFormat { get; } = "";
+        /// <inheritdoc/>
         public Type? CustomFormatter { get; }
+        /// <inheritdoc/>
         public string GroupName { get; }
+        /// <inheritdoc/>
         [Obsolete("Will be removed", true)]
         public bool IsMainToggle { get; }
+        /// <inheritdoc/>
         public bool IsToggle { get; }
+        /// <inheritdoc/>
         public int GroupOrder { get; }
+        /// <inheritdoc/>
 
         public SettingsPropertyDefinition(IPropertyDefinitionBase propertyDefinition, IPropertyGroupDefinition propertyGroupDefinition, IRef propertyReference, char subGroupDelimiter)
             : this(new []{ propertyDefinition }, propertyGroupDefinition, propertyReference, subGroupDelimiter) { }
@@ -120,6 +139,7 @@ namespace MCM.Abstractions.Settings.Models
             }
         }
 
+        /// <inheritdoc/>
         public override string ToString() => $"[{GroupName}]: {DisplayName}";
     }
 }

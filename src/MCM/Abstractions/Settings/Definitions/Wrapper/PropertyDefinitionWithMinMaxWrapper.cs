@@ -4,7 +4,9 @@ namespace MCM.Abstractions.Settings.Definitions.Wrapper
 {
     public sealed class PropertyDefinitionWithMinMaxWrapper : BasePropertyDefinitionWrapper, IPropertyDefinitionWithMinMax
     {
+        /// <inheritdoc/>
         public decimal MinValue { get; }
+        /// <inheritdoc/>
         public decimal MaxValue { get; }
 
         public PropertyDefinitionWithMinMaxWrapper(object @object) : base(@object)

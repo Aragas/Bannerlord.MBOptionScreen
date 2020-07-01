@@ -10,10 +10,12 @@ namespace MCM.Abstractions.Settings.Formats
 {
     public abstract class BaseSettingFormatWrapper : ISettingsFormat, IWrapper
     {
+        /// <inheritdoc/>
         public object Object { get; }
         private PropertyInfo? ExtensionsProperty { get; }
         private MethodInfo? LoadMethod { get; }
         private MethodInfo? SaveMethod { get; }
+        /// <inheritdoc/>
         public virtual bool IsCorrect { get; }
 
         protected BaseSettingFormatWrapper(object @object)
@@ -28,8 +30,11 @@ namespace MCM.Abstractions.Settings.Formats
             IsCorrect = ExtensionsProperty != null && LoadMethod != null && SaveMethod != null;
         }
 
+        /// <inheritdoc/>
         public IEnumerable<string> Extensions => ExtensionsProperty?.GetValue(Object) as IEnumerable<string> ?? Array.Empty<string>();
+        /// <inheritdoc/>
         public BaseSettings? Load(BaseSettings settings, string path) => LoadMethod?.Invoke(Object, new object[] { settings, path }) as BaseSettings;
+        /// <inheritdoc/>
         public bool Save(BaseSettings settings, string path) => SaveMethod?.Invoke(Object, new object[] { settings, path }) as bool? ?? false;
     }
 }

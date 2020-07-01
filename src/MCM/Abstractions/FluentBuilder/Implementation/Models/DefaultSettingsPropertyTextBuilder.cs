@@ -18,6 +18,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
             SettingsPropertyBuilder = this;
         }
 
+        /// <inheritdoc/>
         public override IEnumerable<IPropertyDefinitionBase> GetDefinitions() => new IPropertyDefinitionBase[]
         {
             new PropertyDefinitionTextWrapper(this),

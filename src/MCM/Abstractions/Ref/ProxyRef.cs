@@ -9,12 +9,15 @@ namespace MCM.Abstractions.Ref
     /// </summary>
     public class ProxyRef<T> : IRef, IEquatable<ProxyRef<T>>
     {
+        /// <inheritdoc/>
         public event PropertyChangedEventHandler? PropertyChanged;
 
         private readonly Func<T> _getter;
         private readonly Action<T>? _setter;
 
+        /// <inheritdoc/>
         public Type Type => typeof(T);
+        /// <inheritdoc/>
         public object Value
         {
             get => _getter()!;
@@ -37,12 +40,14 @@ namespace MCM.Abstractions.Ref
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
+        /// <inheritdoc/>
         public bool Equals(ProxyRef<T>? other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
             return _getter.Equals(other._getter) && Equals(_setter, other._setter);
         }
+        /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
@@ -51,6 +56,7 @@ namespace MCM.Abstractions.Ref
             return Equals((ProxyRef<T>) obj);
         }
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             unchecked

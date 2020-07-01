@@ -17,8 +17,10 @@ namespace MCM.Abstractions.Settings.Properties
                 .FirstOrDefault(w => w.IsCorrect);
 
 
+        /// <inheritdoc/>
         public object Object { get; }
         private MethodInfo? GetPropertiesMethod { get; }
+        /// <inheritdoc/>
         public virtual bool IsCorrect { get; }
 
         protected BaseSettingsPropertyDiscovererWrapper(object @object)
@@ -31,6 +33,7 @@ namespace MCM.Abstractions.Settings.Properties
             IsCorrect = GetPropertiesMethod != null;
         }
 
+        /// <inheritdoc/>
         public IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object) =>
             ((IEnumerable<object>) (GetPropertiesMethod?.Invoke(Object, new [] { @object }) ?? new List<object>()))
             .Select(o => new SettingsPropertyDefinitionWrapper(o));

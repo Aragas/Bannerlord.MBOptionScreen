@@ -15,9 +15,13 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
         IPropertyDefinitionWithFormat,
         IPropertyDefinitionWithActionFormat
     {
+        /// <inheritdoc/>
         public decimal MinValue { get; }
+        /// <inheritdoc/>
         public decimal MaxValue { get; }
+        /// <inheritdoc/>
         public string ValueFormat { get; private set; } = "";
+        /// <inheritdoc/>
         public Func<object, string>? ValueFormatFunc { get; private set; }
 
         internal DefaultSettingsPropertyFloatingIntegerBuilder(string id, string name, float minValue, float maxValue, IRef @ref)
@@ -28,6 +32,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
             MaxValue = (decimal) maxValue;
         }
 
+        /// <inheritdoc/>
         public ISettingsPropertyBuilder AddValueFormat(string value)
         {
             if (ValueFormatFunc != null)
@@ -36,6 +41,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
             ValueFormat = value;
             return SettingsPropertyBuilder;
         }
+        /// <inheritdoc/>
         public ISettingsPropertyBuilder AddActionValueFormat(Func<float, string> value)
         {
             if (!string.IsNullOrEmpty(ValueFormat))
@@ -45,6 +51,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
             return SettingsPropertyBuilder;
         }
 
+        /// <inheritdoc/>
         public override IEnumerable<IPropertyDefinitionBase> GetDefinitions() => new IPropertyDefinitionBase[]
         {
             new PropertyDefinitionWithMinMaxWrapper(this),

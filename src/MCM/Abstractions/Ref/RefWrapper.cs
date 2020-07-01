@@ -12,17 +12,22 @@ namespace MCM.Abstractions.Ref
     /// </summary>
     public class RefWrapper : IRef, IWrapper
     {
+        /// <inheritdoc/>
         public object Object { get; }
         private PropertyInfo? TypeProperty { get; }
         private PropertyInfo? ValueProperty { get; }
+        /// <inheritdoc/>
         public bool IsCorrect { get; }
 
+        /// <inheritdoc/>
         public event PropertyChangedEventHandler? PropertyChanged
         {
             add { if (Object is INotifyPropertyChanged notifyPropertyChanged) notifyPropertyChanged.PropertyChanged += value; }
             remove { if (Object is INotifyPropertyChanged notifyPropertyChanged) notifyPropertyChanged.PropertyChanged -= value; }
         }
+        /// <inheritdoc/>
         public Type Type => (Type) TypeProperty!.GetValue(Object);
+        /// <inheritdoc/>
         public object Value { get => ValueProperty!.GetValue(Object); set => ValueProperty?.SetValue(Object, value); }
 
         public RefWrapper(object @object)

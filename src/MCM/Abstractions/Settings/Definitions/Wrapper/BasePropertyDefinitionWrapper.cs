@@ -4,9 +4,13 @@ namespace MCM.Abstractions.Settings.Definitions.Wrapper
 {
     public abstract class BasePropertyDefinitionWrapper : IPropertyDefinitionBase
     {
+        /// <inheritdoc/>
         public string DisplayName { get; }
+        /// <inheritdoc/>
         public int Order { get; }
+        /// <inheritdoc/>
         public bool RequireRestart { get; }
+        /// <inheritdoc/>
         public string HintText { get; }
 
         protected BasePropertyDefinitionWrapper(object @object)

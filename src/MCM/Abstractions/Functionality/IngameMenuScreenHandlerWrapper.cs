@@ -10,9 +10,11 @@ namespace MCM.Abstractions.Functionality
 {
     public sealed class IngameMenuScreenHandlerWrapper : BaseIngameMenuScreenHandler, IWrapper
     {
+        /// <inheritdoc/>
         public object Object { get; }
         private MethodInfo? AddScreenMethod { get; }
         private MethodInfo? RemoveScreenMethod { get; }
+        /// <inheritdoc/>
         public bool IsCorrect { get; }
 
         public IngameMenuScreenHandlerWrapper(object @object)
@@ -26,8 +28,10 @@ namespace MCM.Abstractions.Functionality
             IsCorrect = AddScreenMethod != null;
         }
 
+        /// <inheritdoc/>
         public override void AddScreen(string internalName, int index, Func<ScreenBase?> screenFactory, TextObject text) =>
             AddScreenMethod?.Invoke(Object, new object[] { internalName, index, screenFactory, text });
+        /// <inheritdoc/>
         public override void RemoveScreen(string internalName) =>
             RemoveScreenMethod?.Invoke(Object, new object[] { internalName });
     }

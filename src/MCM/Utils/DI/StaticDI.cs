@@ -88,9 +88,9 @@ namespace MCM.Utils
             }
 
             var types = DI.GetAllTypes().Where(t => t.IsClass && !t.IsAbstract).ToList();
-            foreach (var pair in DependencyBases)
+            foreach (var value in DependencyBases.Values)
             {
-                foreach (var type in pair.Value)
+                foreach (var type in value)
                 {
                     var tuple = VersionUtils.GetLastImplementation(Version, types.Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, type, false)));
                     if (tuple != null && tuple.Value.Type != null)

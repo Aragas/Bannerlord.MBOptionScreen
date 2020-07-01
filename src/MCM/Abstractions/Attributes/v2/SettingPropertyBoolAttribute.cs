@@ -8,9 +8,6 @@ namespace MCM.Abstractions.Attributes.v2
     public sealed class SettingPropertyBoolAttribute : BaseSettingPropertyAttribute,
         IPropertyDefinitionBool
     {
-        public SettingPropertyBoolAttribute(string displayName) : base(displayName)
-        {
-
-        }
+        public SettingPropertyBoolAttribute(string displayName) : base(displayName) { }
     }
 }

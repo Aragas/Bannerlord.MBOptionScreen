@@ -11,16 +11,26 @@ namespace MCM.Abstractions.Attributes.v1
         IPropertyDefinitionText,
         IPropertyDefinitionDropdown
     {
+        /// <inheritdoc/>
         public object Object { get; }
+        /// <inheritdoc/>
         public bool IsCorrect { get; }
 
+        /// <inheritdoc/>
         public string DisplayName { get; }
+        /// <inheritdoc/>
         public int Order { get; }
+        /// <inheritdoc/>
         public bool RequireRestart { get; }
+        /// <inheritdoc/>
         public string HintText { get; }
+        /// <inheritdoc/>
         public decimal MinValue { get; }
+        /// <inheritdoc/>
         public decimal MaxValue { get; }
+        /// <inheritdoc/>
         public string ValueFormat { get; }
+        /// <inheritdoc/>
         public int SelectedIndex { get; }
         public decimal EditableMinValue { get; }
         public decimal EditableMaxValue { get; }

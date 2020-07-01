@@ -13,11 +13,15 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
         ISettingsPropertyGroupBuilder,
         IPropertyGroupDefinition
     {
+        /// <inheritdoc/>
         public Dictionary<string, ISettingsPropertyBuilder> Properties { get; } = new Dictionary<string, ISettingsPropertyBuilder>();
 
+        /// <inheritdoc/>
         public string GroupName { get; }
+        /// <inheritdoc/>
         [Obsolete("Will be removed", true)]
         public bool IsMainToggle { get; private set; }
+        /// <inheritdoc/>
         public int GroupOrder { get; private set; }
         private bool HasGroupToggle { get; set; }
 
@@ -26,9 +30,12 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
             GroupName = name;
         }
 
+        /// <inheritdoc/>
         public ISettingsPropertyGroupBuilder SetIsMainToggle(bool value) { return this; }
+        /// <inheritdoc/>
         public ISettingsPropertyGroupBuilder SetGroupOrder(int value) { GroupOrder = value; return this; }
 
+        /// <inheritdoc/>
         public ISettingsPropertyGroupBuilder AddToggle(string id, string name, IRef @ref, Action<ISettingsPropertyGroupToggleBuilder>? builder)
         {
             if (HasGroupToggle)
@@ -43,6 +50,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
 
         }
 
+        /// <inheritdoc/>
         public ISettingsPropertyGroupBuilder AddBool(string id, string name, IRef @ref, Action<ISettingsPropertyBoolBuilder>? builder)
         {
             if (!Properties.ContainsKey(name))
@@ -50,6 +58,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
             builder?.Invoke((ISettingsPropertyBoolBuilder) Properties[name]);
             return this;
         }
+        /// <inheritdoc/>
         public ISettingsPropertyGroupBuilder AddDropdown(string id, string name, int selectedIndex, IRef @ref, Action<ISettingsPropertyDropdownBuilder>? builder)
         {
             if (!Properties.ContainsKey(name))
@@ -57,6 +66,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
             builder?.Invoke((ISettingsPropertyDropdownBuilder) Properties[name]);
             return this;
         }
+        /// <inheritdoc/>
         public ISettingsPropertyGroupBuilder AddInteger(string id, string name, int minValue, int maxValue, IRef @ref, Action<ISettingsPropertyIntegerBuilder>? builder)
         {
             if (!Properties.ContainsKey(name))
@@ -64,6 +74,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
             builder?.Invoke((ISettingsPropertyIntegerBuilder) Properties[name]);
             return this;
         }
+        /// <inheritdoc/>
         public ISettingsPropertyGroupBuilder AddFloatingInteger(string id, string name, float minValue, float maxValue, IRef @ref, Action<ISettingsPropertyFloatingIntegerBuilder>? builder)
         {
             if (!Properties.ContainsKey(name))
@@ -71,6 +82,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
             builder?.Invoke((ISettingsPropertyFloatingIntegerBuilder) Properties[name]);
             return this;
         }
+        /// <inheritdoc/>
         public ISettingsPropertyGroupBuilder AddText(string id, string name, IRef @ref, Action<ISettingsPropertyTextBuilder>? builder)
         {
             if (!Properties.ContainsKey(name))
@@ -78,6 +90,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
             builder?.Invoke((ISettingsPropertyTextBuilder) Properties[name]);
             return this;
         }
+        /// <inheritdoc/>
         public ISettingsPropertyGroupBuilder AddCustom<TSettingsPropertyBuilder>(ISettingsPropertyBuilder<TSettingsPropertyBuilder> builder) where TSettingsPropertyBuilder : ISettingsPropertyBuilder
         {
             if (!Properties.ContainsKey(builder.Name))
@@ -85,6 +98,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
             return this;
         }
 
+        /// <inheritdoc/>
         public IPropertyGroupDefinition GetPropertyGroupDefinition() => new PropertyGroupDefinitionWrapper(this);
     }
 }

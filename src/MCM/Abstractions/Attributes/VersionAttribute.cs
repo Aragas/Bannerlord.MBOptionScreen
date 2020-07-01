@@ -12,7 +12,9 @@ namespace MCM.Abstractions.Attributes
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
     public sealed class VersionAttribute : Attribute, IVersion
     {
+        /// <inheritdoc/>
         public ApplicationVersion GameVersion { get; }
+        /// <inheritdoc/>
         public int ImplementationVersion { get; }
 
         public VersionAttribute(string gameVersion, int implementationVersion)

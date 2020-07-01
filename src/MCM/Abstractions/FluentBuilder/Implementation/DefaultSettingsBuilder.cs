@@ -31,13 +31,20 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
             CreateGroup(SettingsPropertyGroupDefinition.DefaultGroupName, builder => { });
         }
 
+        /// <inheritdoc/>
         public ISettingsBuilder SetFolderName(string value) { FolderName = value; return this; }
+        /// <inheritdoc/>
         public ISettingsBuilder SetSubFolder(string value) { SubFolder = value; return this; }
+        /// <inheritdoc/>
         public ISettingsBuilder SetFormat(string value) { Format = value; return this; }
+        /// <inheritdoc/>
         public ISettingsBuilder SetUIVersion(int value) { UIVersion = value; return this; }
+        /// <inheritdoc/>
         public ISettingsBuilder SetSubGroupDelimiter(char value) { SubGroupDelimiter = value; return this; }
+        /// <inheritdoc/>
         public ISettingsBuilder SetOnPropertyChanged(PropertyChangedEventHandler value) { OnPropertyChanged = value; return this; }
 
+        /// <inheritdoc/>
         public ISettingsBuilder CreateGroup(string name, Action<ISettingsPropertyGroupBuilder> action)
         {
             if (!PropertyGroups.ContainsKey(name))
@@ -46,8 +53,10 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
             return this;
         }
 
+        /// <inheritdoc/>
         public FluentGlobalSettings BuildAsGlobal() => new FluentGlobalSettings(
             Id, DisplayName, FolderName, SubFolder, Format, UIVersion, SubGroupDelimiter, OnPropertyChanged, GetSettingPropertyGroups());
+        /// <inheritdoc/>
         public FluentPerCharacterSettings BuildAsPerCharacter() => new FluentPerCharacterSettings(
             Id, DisplayName, FolderName, SubFolder, Format, UIVersion, SubGroupDelimiter, OnPropertyChanged, GetSettingPropertyGroups());
 

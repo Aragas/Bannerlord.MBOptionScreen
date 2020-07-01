@@ -5,6 +5,9 @@ using System;
 
 namespace MCM.Abstractions.Attributes
 {
+    /// <summary>
+    /// Tells the settings menu that this setting property should be in a group. All settings will automatically be grouped together if they have a SettingPropertyGroupAttribute with the same GroupName.
+    /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class SettingPropertyGroupAttribute : Attribute, IPropertyGroupDefinition
     {
@@ -13,17 +16,11 @@ namespace MCM.Abstractions.Attributes
         /// </summary>
         public static IPropertyGroupDefinition Default => new SettingPropertyGroupAttribute(SettingsPropertyGroupDefinition.DefaultGroupName);
 
-        /// <summary>
-        /// The name of the settings group. Includes SubGroup notation if present.
-        /// </summary>
+        /// <inheritdoc/>
         public string GroupName { get; }
-        /// <summary>
-        /// If true, the boolean setting property that this attribute is attached to will be set as the main toggle switch for the entire group. It will not appear in the settings menu, but rather cause a toggle button to appear next to the group's display name in the settings menu.
-        /// </summary>
+        /// <inheritdoc/>
         public bool IsMainToggle { get; set; }
-        /// <summary>
-        ///
-        /// </summary>
+        /// <inheritdoc/>
         public int GroupOrder { get; set; }
 
         /// <summary>

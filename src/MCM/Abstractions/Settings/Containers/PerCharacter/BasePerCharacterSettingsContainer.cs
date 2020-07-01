@@ -9,6 +9,7 @@ namespace MCM.Abstractions.Settings.Containers.PerCharacter
 {
     public abstract class BasePerCharacterSettingsContainer : BaseSettingsContainer<PerCharacterSettings>, IPerCharacterSettingsContainer
     {
+        /// <inheritdoc/>
         protected override string RootFolder { get; }
 
         protected BasePerCharacterSettingsContainer()
@@ -16,6 +17,7 @@ namespace MCM.Abstractions.Settings.Containers.PerCharacter
             RootFolder = Path.Combine(base.RootFolder, "PerCharacter");
         }
 
+        /// <inheritdoc/>
         protected override void RegisterSettings(PerCharacterSettings tSettings)
         {
             if (Game.Current?.PlayerTroop?.StringId == null)
@@ -33,6 +35,7 @@ namespace MCM.Abstractions.Settings.Containers.PerCharacter
                 AvailableSettingsFormats["memory"].Load(tSettings, path);
         }
 
+        /// <inheritdoc/>
         public override bool SaveSettings(BaseSettings settings)
         {
             if (Game.Current?.PlayerTroop?.StringId == null)
@@ -50,6 +53,7 @@ namespace MCM.Abstractions.Settings.Containers.PerCharacter
             return true;
         }
 
+        /// <inheritdoc/>
         public override bool ResetSettings(BaseSettings settings)
         {
             if (Game.Current?.PlayerTroop?.StringId == null)
@@ -57,6 +61,7 @@ namespace MCM.Abstractions.Settings.Containers.PerCharacter
 
             return base.ResetSettings(settings);
         }
+        /// <inheritdoc/>
         public override bool OverrideSettings(BaseSettings settings)
         {
             if (Game.Current?.PlayerTroop?.StringId == null)
@@ -65,7 +70,9 @@ namespace MCM.Abstractions.Settings.Containers.PerCharacter
             return base.OverrideSettings(settings);
         }
 
+        /// <inheritdoc/>
         public abstract void OnGameStarted(Game game);
+        /// <inheritdoc/>
         public abstract void OnGameEnded(Game game);
     }
 }

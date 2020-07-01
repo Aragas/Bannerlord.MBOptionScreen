@@ -8,6 +8,7 @@ namespace MCM.Abstractions.Settings.Containers.Global
     {
         private MethodInfo? RegisterMethod { get; }
         private MethodInfo? UnregisterMethod { get; }
+        /// <inheritdoc/>
         public override bool IsCorrect { get; }
 
         protected FluentGlobalSettingsContainerWrapper(object @object) : base(@object)

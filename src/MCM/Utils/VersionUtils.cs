@@ -1,5 +1,6 @@
 ﻿using MCM.Abstractions;
 using MCM.Abstractions.Attributes;
+using MCM.Extensions;
 
 using System;
 using System.Collections.Generic;
@@ -36,45 +37,45 @@ namespace MCM.Utils
             var attributes = types.ToDictionary(type => type, GetVersions);
             var latestImplementation = default((Type Type, IVersion Attribute));
 
-            foreach (var pair in attributes)
+            foreach (var (key, value) in attributes)
             {
-                var latestTypeVersion = GetLatestMatching(pair.Value, version);
+                var latestTypeVersion = GetLatestMatching(value, version);
                 if (latestTypeVersion == null ||
                     latestImplementation.Attribute != null &&
                     latestImplementation.Attribute.ImplementationVersion >= latestTypeVersion.ImplementationVersion)
                     continue;
 
-                latestImplementation.Type = pair.Key;
+                latestImplementation.Type = key;
                 latestImplementation.Attribute = latestTypeVersion;
             }
             if (latestImplementation.Type != null)
                 return latestImplementation;
 
 
-            foreach (var pair in attributes) // no matching game version, using the latest major.minor.ANY
+            foreach (var (key, value) in attributes) // no matching game version, using the latest major.minor.ANY
             {
-                var latestTypeVersion = GetLatestMatchingMajorMinor(pair.Value, version);
+                var latestTypeVersion = GetLatestMatchingMajorMinor(value, version);
                 if (latestTypeVersion == null ||
                     latestImplementation.Attribute != null &&
                     latestImplementation.Attribute.ImplementationVersion >= latestTypeVersion.ImplementationVersion) 
                     continue;
 
-                latestImplementation.Type = pair.Key;
+                latestImplementation.Type = key;
                 latestImplementation.Attribute = latestTypeVersion;
             }
             if (latestImplementation.Type != null)
                 return latestImplementation;
 
 
-            foreach (var pair in attributes) // no matching major.minor game version, using the latest
+            foreach (var (key, value) in attributes) // no matching major.minor game version, using the latest
             {
-                var latestTypeVersion = GetLatest(pair.Value);
+                var latestTypeVersion = GetLatest(value);
                 if (latestTypeVersion == null ||
                     latestImplementation.Attribute != null &&
                     latestImplementation.Attribute.ImplementationVersion >= latestTypeVersion.ImplementationVersion)
                     continue;
 
-                latestImplementation.Type = pair.Key;
+                latestImplementation.Type = key;
                 latestImplementation.Attribute = latestTypeVersion;
             }
             return latestImplementation;

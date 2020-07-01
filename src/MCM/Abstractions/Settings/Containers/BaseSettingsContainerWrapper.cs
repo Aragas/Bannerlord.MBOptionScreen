@@ -13,12 +13,14 @@ namespace MCM.Abstractions.Settings.Containers
 {
     public abstract class BaseSettingsContainerWrapper : ISettingsContainer, IWrapper
     {
+        /// <inheritdoc/>
         public object Object { get; }
         private PropertyInfo? CreateModSettingsDefinitionsProperty { get; }
         private MethodInfo? GetSettingsMethod { get; }
         private MethodInfo? OverrideSettingsMethod { get; }
         private MethodInfo? ResetSettingsMethod { get; }
         private MethodInfo? SaveSettingsMethod { get; }
+        /// <inheritdoc/>
         public virtual bool IsCorrect { get; }
 
         protected BaseSettingsContainerWrapper(object @object)
@@ -35,17 +37,22 @@ namespace MCM.Abstractions.Settings.Containers
                         OverrideSettingsMethod != null && ResetSettingsMethod != null && SaveSettingsMethod != null;
         }
 
+        /// <inheritdoc/>
         public List<SettingsDefinition> CreateModSettingsDefinitions => 
             ((IEnumerable<object>) (CreateModSettingsDefinitionsProperty?.GetValue(Object) ?? new List<object>()))
             .Select(s => new SettingsDefinitionWrapper(s)).Cast<SettingsDefinition>()
             .ToList();
+        /// <inheritdoc/>
         public BaseSettings? GetSettings(string id) => GetSettingsMethod?.Invoke(Object, new object[] { id }) is { } settings
                 ? settings is BaseSettings settingsBase ? settingsBase : BaseGlobalSettingsWrapper.Create(settings)
                 : default;
+        /// <inheritdoc/>
         public bool OverrideSettings(BaseSettings settings) =>
             OverrideSettingsMethod?.Invoke(Object, new [] { settings is IWrapper wrapper ? wrapper.Object : settings }) as bool? ?? false;
+        /// <inheritdoc/>
         public bool ResetSettings(BaseSettings settings) =>
             ResetSettingsMethod?.Invoke(Object, new [] { settings is IWrapper wrapper ? wrapper.Object : settings }) as bool? ?? false;
+        /// <inheritdoc/>
         public bool SaveSettings(BaseSettings settings) =>
             SaveSettingsMethod?.Invoke(Object, new [] { settings is IWrapper wrapper ? wrapper.Object : settings }) as bool? ?? false;
     }

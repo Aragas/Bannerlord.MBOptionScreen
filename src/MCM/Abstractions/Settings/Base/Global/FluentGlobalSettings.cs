@@ -14,13 +14,21 @@ namespace MCM.Abstractions.Settings.Base.Global
     {
         public static readonly string ContainerId = "MCM_Global_FluentStorage";
 
+        /// <inheritdoc/>
         public sealed override string Id { get; }
+        /// <inheritdoc/>
         public sealed override string DisplayName { get; }
+        /// <inheritdoc/>
         public sealed override string FolderName { get; }
+        /// <inheritdoc/>
         public sealed override string SubFolder { get; }
+        /// <inheritdoc/>
         public sealed override string Format { get; }
+        /// <inheritdoc/>
         public sealed override int UIVersion { get; }
+        /// <inheritdoc/>
         protected sealed override char SubGroupDelimiter { get; }
+        /// <inheritdoc/>
         public sealed override event PropertyChangedEventHandler? PropertyChanged { add => base.PropertyChanged += value; remove => base.PropertyChanged -= value; }
         private List<SettingsPropertyGroupDefinition> SettingPropertyGroups { get; }
 
@@ -56,10 +64,14 @@ namespace MCM.Abstractions.Settings.Base.Global
                 dict.Remove(Id);
         }
 
+        /// <inheritdoc/>
         protected override BaseSettings CreateNew() => null!;
+        /// <inheritdoc/>
         protected override BaseSettings CopyAsNew() => null!;
+        /// <inheritdoc/>
         public override IDictionary<string, Func<BaseSettings>> GetAvailablePresets() => new Dictionary<string, Func<BaseSettings>>();
 
+        /// <inheritdoc/>
         protected sealed override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups() => SettingPropertyGroups;
     }
 }

@@ -7,7 +7,9 @@ namespace MCM.Utils
 {
     public class AlphanumComparatorFast : IComparer<string?>, IComparer
     {
+        /// <inheritdoc/>
         public int Compare(object? x, object? y) => Compare(x as string, y as string);
+        /// <inheritdoc/>
         public int Compare(string? s1, string? s2)
         {
             if (s1 == null && s2 == null)

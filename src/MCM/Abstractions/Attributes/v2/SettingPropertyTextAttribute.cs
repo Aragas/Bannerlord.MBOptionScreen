@@ -9,9 +9,6 @@ namespace MCM.Abstractions.Attributes.v2
         IPropertyDefinitionText
     {
         public SettingPropertyTextAttribute(string displayName, int order = -1, bool requireRestart = true, string hintText = "")
-            : base(displayName, order, requireRestart, hintText)
-        {
-
-        }
+            : base(displayName, order, requireRestart, hintText) { }
     }
 }

@@ -3,6 +3,7 @@ using MCM.Abstractions.Settings.Base.PerCharacter;
 using MCM.Abstractions.Settings.Containers;
 using MCM.Abstractions.Settings.Containers.PerCharacter;
 using MCM.Abstractions.Settings.Models;
+using MCM.Implementation.Extensions;
 
 using System;
 using System.Collections.Generic;
@@ -61,10 +62,10 @@ namespace MCM.Implementation.Settings.Containers.PerCharacter
 
             var storage = (AppDomain.CurrentDomain.GetData(FluentPerCharacterSettings.ContainerId) as Dictionary<string, FluentPerCharacterSettings>)!;
 
-            foreach (var fluentGlobalSettings in storage)
+            foreach (var (key, value) in storage)
             {
-                if (!LoadedSettings.ContainsKey(fluentGlobalSettings.Key))
-                    RegisterSettings(fluentGlobalSettings.Value);
+                if (!LoadedSettings.ContainsKey(key))
+                    RegisterSettings(value);
             }
 
         }

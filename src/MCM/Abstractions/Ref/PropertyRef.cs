@@ -10,12 +10,15 @@ namespace MCM.Abstractions.Ref
     /// </summary>
     public class PropertyRef : IRef, IEquatable<PropertyRef>
     {
+        /// <inheritdoc/>
         public event PropertyChangedEventHandler? PropertyChanged;
 
         public PropertyInfo PropertyInfo { get; }
         public object Instance { get; }
 
+        /// <inheritdoc/>
         public Type Type => PropertyInfo.PropertyType;
+        /// <inheritdoc/>
         public object Value
         {
             get => PropertyInfo.GetValue(Instance);
@@ -38,6 +41,7 @@ namespace MCM.Abstractions.Ref
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
+        /// <inheritdoc/>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
@@ -45,6 +49,7 @@ namespace MCM.Abstractions.Ref
             if (obj.GetType() != GetType()) return false;
             return Equals((PropertyRef) obj);
         }
+        /// <inheritdoc/>
         public bool Equals(PropertyRef? other)
         {
             if (ReferenceEquals(null, other)) return false;
@@ -52,6 +57,7 @@ namespace MCM.Abstractions.Ref
             return PropertyInfo.Equals(other.PropertyInfo) && Instance.Equals(other.Instance);
         }
 
+        /// <inheritdoc/>
         public override int GetHashCode()
         {
             unchecked

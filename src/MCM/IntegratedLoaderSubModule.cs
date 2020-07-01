@@ -129,11 +129,13 @@ namespace MCM
                 _reflectionCache[subModuleType]["OnGameStart"]?.Invoke(subModule, @params);
         }
 
+        /// <exclude/>
         public override bool DoLoading(Game game)
         {
             return base.DoLoading(game) && _loader.MCMImplementationSubModules.All(tuple => tuple.Item1.DoLoading(game));
 
         }
+        /// <exclude/>
         public override void OnGameLoaded(Game game, object initializerObject)
         {
             base.OnGameLoaded(game, initializerObject);
@@ -141,6 +143,7 @@ namespace MCM
             foreach (var (subModule, _) in _loader.MCMImplementationSubModules)
                 subModule.OnGameLoaded(game, initializerObject);
         }
+        /// <exclude/>
         public override void OnCampaignStart(Game game, object starterObject)
         {
             base.OnCampaignStart(game, starterObject);
@@ -148,6 +151,7 @@ namespace MCM
             foreach (var (subModule, _) in _loader.MCMImplementationSubModules)
                 subModule.OnCampaignStart(game, starterObject);
         }
+        /// <exclude/>
         public override void BeginGameStart(Game game)
         {
             base.BeginGameStart(game);
@@ -156,6 +160,7 @@ namespace MCM
             foreach (var (subModule, _) in _loader.MCMImplementationSubModules)
                 subModule.BeginGameStart(game);
         }
+        /// <exclude/>
         public override void OnGameEnd(Game game)
         {
             base.OnGameEnd(game);
@@ -163,6 +168,7 @@ namespace MCM
             foreach (var (subModule, _) in _loader.MCMImplementationSubModules)
                 subModule.OnGameEnd(game);
         }
+        /// <exclude/>
         public override void OnGameInitializationFinished(Game game)
         {
             base.OnGameInitializationFinished(game);
@@ -170,6 +176,7 @@ namespace MCM
             foreach (var (subModule, _) in _loader.MCMImplementationSubModules)
                 subModule.OnGameInitializationFinished(game);
         }
+        /// <exclude/>
         public override void OnMissionBehaviourInitialize(Mission mission)
         {
             base.OnMissionBehaviourInitialize(mission);
@@ -177,6 +184,7 @@ namespace MCM
             foreach (var (subModule, _) in _loader.MCMImplementationSubModules)
                 subModule.OnMissionBehaviourInitialize(mission);
         }
+        /// <exclude/>
         public override void OnMultiplayerGameStart(Game game, object starterObject)
         {
             base.OnMultiplayerGameStart(game, starterObject);
@@ -184,6 +192,7 @@ namespace MCM
             foreach (var (subModule, _) in _loader.MCMImplementationSubModules)
                 subModule.OnMultiplayerGameStart(game, starterObject);
         }
+        /// <exclude/>
         public override void OnNewGameCreated(Game game, object initializerObject)
         {
             base.OnNewGameCreated(game, initializerObject);

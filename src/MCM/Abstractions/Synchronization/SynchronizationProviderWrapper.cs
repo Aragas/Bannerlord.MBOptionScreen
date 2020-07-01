@@ -7,10 +7,12 @@ namespace MCM.Abstractions.Synchronization
 {
     public sealed class SynchronizationProviderWrapper : BaseSynchronizationProvider, IWrapper
     {
+        /// <inheritdoc/>
         public object Object { get; }
         private PropertyInfo? NameProperty { get; }
         private PropertyInfo? IsFirstInitializationProperty { get; }
         private MethodInfo? DisposeMethod { get; }
+        /// <inheritdoc/>
         public bool IsCorrect { get; }
 
         public SynchronizationProviderWrapper(object @object)
@@ -25,8 +27,11 @@ namespace MCM.Abstractions.Synchronization
             IsCorrect = NameProperty != null && IsFirstInitializationProperty != null && DisposeMethod != null;
         }
 
+        /// <inheritdoc/>
         public override string Name => NameProperty?.GetValue(Object) as string ?? "ERROR";
+        /// <inheritdoc/>
         public override bool IsFirstInitialization => IsFirstInitializationProperty?.GetValue(Object) as bool? ?? false;
+        /// <inheritdoc/>
         public override void Dispose() => DisposeMethod?.Invoke(Object, Array.Empty<object>());
     }
 }

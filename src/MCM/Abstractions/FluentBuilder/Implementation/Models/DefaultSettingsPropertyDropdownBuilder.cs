@@ -12,6 +12,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
         ISettingsPropertyDropdownBuilder,
         IPropertyDefinitionDropdown
     {
+        /// <inheritdoc/>
         public int SelectedIndex { get; }
 
         internal DefaultSettingsPropertyDropdownBuilder(string id, string name, int selectedIndex, IRef @ref)
@@ -21,6 +22,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
             SelectedIndex = selectedIndex;
         }
 
+        /// <inheritdoc/>
         public override IEnumerable<IPropertyDefinitionBase> GetDefinitions() => new IPropertyDefinitionBase[]
         {
             new PropertyDefinitionDropdownWrapper(this),

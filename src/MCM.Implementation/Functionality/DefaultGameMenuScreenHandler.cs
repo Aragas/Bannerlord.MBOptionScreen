@@ -2,6 +2,7 @@
 
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Functionality;
+using MCM.Implementation.Extensions;
 
 using System;
 using System.Collections.Generic;
@@ -55,13 +56,13 @@ namespace MCM.Implementation.Functionality
         private static void Constructor(InitialMenuVM __instance, ref MBBindingList<InitialMenuOptionVM> ____menuOptions)
         {
             _instance.SetTarget(__instance);
-            foreach (var pair in ScreensCache)
+            foreach (var (key, value) in ScreensCache)
             {
-                var (index, screenFactory, text) = pair.Value;
+                var (index, screenFactory, text) = value;
 
-                var insertIndex = TaleWorlds.Library.Extensions.FindIndex(____menuOptions, i => i.InitialStateOption.OrderIndex > index);
+                var insertIndex = ____menuOptions.FindIndex(i => i.InitialStateOption.OrderIndex > index);
                 ____menuOptions.Insert(insertIndex, new InitialMenuOptionVM(new InitialStateOption(
-                    pair.Key,
+                    key,
                     text,
                     9000,
                     () =>
@@ -78,7 +79,7 @@ namespace MCM.Implementation.Functionality
         {
             if (_instance.TryGetTarget(out var instance))
             {
-                var insertIndex = TaleWorlds.Library.Extensions.FindIndex(instance.MenuOptions, i => i.InitialStateOption.OrderIndex > index);
+                var insertIndex = instance.MenuOptions.FindIndex(i => i.InitialStateOption.OrderIndex > index);
                 instance.MenuOptions.Insert(insertIndex, new InitialMenuOptionVM(new InitialStateOption(
                     internalName,
                     text,

@@ -30,25 +30,44 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
         private PropertyInfo? IdProperty { get; }
         private PropertyInfo? IsToggleProperty { get; }
 
+        /// <inheritdoc/>
         public string SettingsId { get; }
+        /// <inheritdoc/>
         public IRef PropertyReference { get; }
+        /// <inheritdoc/>
         public SettingType SettingType { get; }
+        /// <inheritdoc/>
         public string DisplayName { get; }
+        /// <inheritdoc/>
         public int Order { get; }
+        /// <inheritdoc/>
         public bool RequireRestart { get; }
+        /// <inheritdoc/>
         public string HintText { get; }
+        /// <inheritdoc/>
         public decimal MaxValue { get; }
+        /// <inheritdoc/>
         public decimal MinValue { get; }
+        /// <inheritdoc/>
         public decimal EditableMinValue { get; }
+        /// <inheritdoc/>
         public decimal EditableMaxValue { get; }
+        /// <inheritdoc/>
         public int SelectedIndex { get; }
+        /// <inheritdoc/>
         public string ValueFormat { get; }
+        /// <inheritdoc/>
         public Type? CustomFormatter { get; }
+        /// <inheritdoc/>
         public string GroupName { get; }
+        /// <inheritdoc/>
         [Obsolete("Will be removed", true)]
         public bool IsMainToggle { get; }
+        /// <inheritdoc/>
         public int GroupOrder { get; }
+        /// <inheritdoc/>
         public string Id { get; }
+        /// <inheritdoc/>
         public bool IsToggle { get; }
 
         public SettingsPropertyDefinitionWrapper(object @object)

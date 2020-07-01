@@ -8,6 +8,9 @@ namespace MCM.Abstractions.Settings.Models
 {
     public class SettingsPropertyGroupDefinition
     {
+        /// <summary>
+        /// The default group used for settings that don't have a group explicitly set.
+        /// </summary>
         public static readonly string DefaultGroupName = new TextObject("{=SettingsPropertyGroupDefinition_Misc}Misc").ToString();
 
         protected readonly TextObject _groupName;
@@ -41,6 +44,7 @@ namespace MCM.Abstractions.Settings.Models
         public SettingsPropertyGroupDefinition? GetGroup(string groupName) => subGroups.Find(x => x.GroupName == groupName);
         public SettingsPropertyGroupDefinition? GetGroupFor(string groupName) => subGroups.GetGroup(groupName);
 
+        /// <inheritdoc/>
         public override string ToString() => GroupName;
     }
 }
