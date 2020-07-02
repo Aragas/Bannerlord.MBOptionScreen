@@ -23,7 +23,7 @@
    </br>
    <img src="https://staticdelivery.nexusmods.com/mods/3174/images/headers/612_1592411190.jpg" width="800">
    </br>
-   <img src="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/v3/.github/resources/main.png?raw=true" width="800">
+   <img src="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/v3/resources/main.png?raw=true" width="800">
 </p>
 
 

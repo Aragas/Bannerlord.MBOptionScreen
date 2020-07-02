@@ -62,7 +62,7 @@ internal class YamlSettingsFormat : IYamlSettingsFormat
 
 ## Presets <a name="settings_presets"></a>
 The setting support custom presets!  
-![](https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/v3/.github/resources/presets.png?raw=true)
+![](../resources/presets.png)
 ### Attribute API
 The Attribute API based settings will provide a 'Default' preset that can be used to revert the options to their default values.  
 To override the 'Default' preset or add your custom presets, override ``GetAvailablePresets()``, here's an example.
@@ -117,7 +117,7 @@ MCMv3 has two implementations:
 * **ProxyRef<T>**  - links to get/set actions (``ProxyRef(Func<T> getter, Action<T>? setter)``) that will set/return whatever you want.
 
 ## Defining Settings <a name="settings_defining"></a>
-![](https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/v3/.github/resources/properties.png?raw=true)
+![](../resources/properties.png)
 * Check [this page](mcmv3-attributes.md) for using the Attribute definition
 * Check [this page](mcmv3-fluent-builder.md) for using the Fluent Builder
 
