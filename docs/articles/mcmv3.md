@@ -104,7 +104,7 @@ You also can use the localization system for nested groups!
 ```  
 
 ## INotifyPropertyChanged <a name="inotifypropertychanged"></a>
-The settings implement the <xref href="System.ComponentModel.INotifyPropertyChanged?alt=INotifyPropertyChanged"/> interface.  
+The settings implement the @"System.ComponentModel.INotifyPropertyChanged?text=INotifyPropertyChanged" interface.  
   
 MCM subscribes to it and will refresh the UI if any value has changed.  
   
