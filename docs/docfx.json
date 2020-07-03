@@ -6,20 +6,15 @@
           "src": "../src",
           "files": [
             "MCM/*.csproj"
-          ],
-          "exclude": [
-            "**/bin/**",
-            "**/obj/**"
-          ],
+          ]
         }
       ],
-      "dest": "api",
-      "disableGitFeatures": false,
-      "disableDefaultFilter": false
+      "dest": "api"
     }
   ],
   "build": {
     "xref": [
+      "xrefs/Newtonsoft.Json-xrefmap.yml",
       "https://butr.github.io/Bannerlord.ReferenceAssemblies.Documentation/xrefmap.yml"
     ],
     "xrefService": [
@@ -49,20 +44,11 @@
         ]
       },
       {
-        "files": [ "resources/**" ],
-        "src": "../"
+        "src": "../",
+        "files": [ "resources/**" ]
       }
     ],
-    "overwrite": [
-      {
-        "files": [
-          "apidoc/**.md"
-        ],
-        "exclude": [
-          "_site/**"
-        ]
-      }
-    ],
+    "overwrite": [ ],
     "dest": "_site",
     "globalMetadata": {
       "_enableSearch": "true",
@@ -76,10 +62,6 @@
       "custom"
     ],
     "postProcessors": ["ExtractSearchIndex"],
-    "markdownEngineName": "markdig",
-    "noLangKeyword": false,
-    "keepFileLink": false,
-    "cleanupCacheHistory": false,
-    "disableGitFeatures": false
+    "markdownEngineName": "markdig"
   }
 }
