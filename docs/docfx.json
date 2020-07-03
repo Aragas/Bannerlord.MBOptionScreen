@@ -19,9 +19,13 @@
     }
   ],
   "build": {
+    "xref": [
+      "xrefs/Newtonsoft.Json-xrefmap.yml",
+      "https://butr.github.io/Bannerlord.ReferenceAssemblies.Documentation/xrefmap.yml"
+    ],
     "xrefService": [
-	  "https://xref.docs.microsoft.com/query?uid={uid}"
-	],
+      "https://xref.docs.microsoft.com/query?uid={uid}",
+    ],
     "content": [
       {
         "files": [
@@ -56,7 +60,6 @@
           "apidoc/**.md"
         ],
         "exclude": [
-          "obj/**",
           "_site/**"
         ]
       }

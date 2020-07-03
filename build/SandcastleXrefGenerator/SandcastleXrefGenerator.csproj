@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net472</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- It's this dependency that forces us to use the full framework. Replace when we can... -->
+    <PackageReference Include="Microsoft.DocAsCode.Build.Engine" Version="2.41.0" />
+    <PackageReference Include="Mono.Cecil" Version="0.10.0-beta5" />
+    <PackageReference Include="MoreLinq" Version="2.3.0" />
+    <PackageReference Include="SharpCompress" Version="0.24.0" />
+    <PackageReference Include="YamlDotNet" Version="6.0.0" />
+    <Reference Include="System.Net.Http" />
+
+    <!-- Make sure we can build on non-Windows, even though we can't run. -->
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies"
+                  Version="1.0.0-preview.1"
+                  PrivateAssets="All" />
+  </ItemGroup>
+
+</Project>

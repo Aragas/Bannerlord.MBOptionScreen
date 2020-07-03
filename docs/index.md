@@ -1,6 +1,6 @@
 <p align="center">
   <a href="/" alt="Lines Of Code">
-    <img src="../.github/resources/mcm-transparent.png" />
+    <img src="../resources/mcm-transparent.png" />
   </a>
 
 <p>AKA MBOptionScreen Standalone.
