@@ -47,7 +47,7 @@ MCMv3 introduces a second type of settings - **_PerCharacter_**, it will be uniq
 
 ## Included Settings Formats and implementing your own <a name="settings_formats"></a>
 **MCMv3.Implementation** provides ``json`` and ``xml`` file formats.  
-You can define your own file formats and take full control of how the settings are saved/loaded by implementing an interface that... implements ``ISettingsFormat`` and ``IDependency``.
+You can define your own file formats and take full control of how the settings are saved/loaded by implementing an interface that... implements @"MCM.Abstractions.Settings.Formats.ISettingsFormat?text=ISettingsFormat" and @"MCM.Abstractions.IDependency?text=IDependency".
 ```csharp
 public interface IYamlSettingsFormat : ISettingsFormat, IDependency
 {
@@ -104,7 +104,7 @@ You also can use the localization system for nested groups!
 ```  
 
 ## INotifyPropertyChanged <a name="inotifypropertychanged"></a>
-The settings implement the INotifyPropertyChanged interface.  
+The settings implement the @"System.ComponentModel.INotifyPropertyChanged?text=INotifyPropertyChanged" interface.  
   
 MCM subscribes to it and will refresh the UI if any value has changed.  
   
@@ -113,8 +113,8 @@ MCM will also trigger PropertyChanged event when the setting are saved by provid
 ## IRef <a name="iref"></a>
 **IRef** is an interface that acts as a link to the actual values that classes like Fluent Builder uses.  
 MCMv3 has two implementations:
-* **PropertyRef** - links to an actual property (``PropertyRef(PropertyInfo propInfo, object instance)``).
-* **ProxyRef<T>**  - links to get/set actions (``ProxyRef(Func<T> getter, Action<T>? setter)``) that will set/return whatever you want.
+* @"MCM.Abstractions.Ref.PropertyRef?text=PropertyRef" - links to an actual property (``PropertyRef(PropertyInfo propInfo, object instance)``).
+* @"MCM.Abstractions.Ref.ProxyRef-1?text=ProxyRef" - links to get/set actions (``ProxyRef(Func<T> getter, Action<T>? setter)``) that will set/return whatever you want.
 
 ## Defining Settings <a name="settings_defining"></a>
 ![](../resources/properties.png)
