@@ -1,5 +1,5 @@
 Each setting you want to add to the menu has to be marked with an attribute.
-You can additionally group settings by adding the ``SettingPropertyGroup`` attribute. ``'/'`` is used as the default separator.  
+You can additionally group settings by adding the @"MCM.Abstractions.Attributes.SettingPropertyGroupAttribute?text=SettingPropertyGroupAttribute" attribute. ``'/'`` is used as the default separator.  
 
 Right now, the mod provides these types in the setting menu:
 * Bool
