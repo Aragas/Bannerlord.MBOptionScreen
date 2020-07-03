@@ -5,7 +5,7 @@
         {
           "src": "../src",
           "files": [
-            "**/MCM/*.csproj"
+            "MCM/*.csproj"
           ],
           "exclude": [
             "**/bin/**",
@@ -24,7 +24,7 @@
       "https://butr.github.io/Bannerlord.ReferenceAssemblies.Documentation/xrefmap.yml"
     ],
     "xrefService": [
-      "https://xref.docs.microsoft.com/query?uid={uid}",
+      "https://xref.docs.microsoft.com/query?uid={uid}"
     ],
     "content": [
       {
