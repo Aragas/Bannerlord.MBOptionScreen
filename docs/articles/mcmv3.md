@@ -114,7 +114,7 @@ MCM will also trigger PropertyChanged event when the setting are saved by provid
 **IRef** is an interface that acts as a link to the actual values that classes like Fluent Builder uses.  
 MCMv3 has two implementations:
 * @"MCM.Abstractions.Ref.PropertyRef?text=PropertyRef" - links to an actual property (``PropertyRef(PropertyInfo propInfo, object instance)``).
-* @"MCM.Abstractions.Ref.ProxyRef-1?text=ProxyRef" - links to get/set actions (``ProxyRef(Func<T> getter, Action<T>? setter)``) that will set/return whatever you want.
+* @"MCM.Abstractions.Ref.ProxyRef`1?text=ProxyRef" - links to get/set actions (``ProxyRef(Func<T> getter, Action<T>? setter)``) that will set/return whatever you want.
 
 ## Defining Settings <a name="settings_defining"></a>
 ![](../resources/properties.png)
