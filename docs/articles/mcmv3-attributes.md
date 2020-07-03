@@ -12,8 +12,8 @@ Right now, the mod provides these types in the setting menu:
 With v1 of the API, @"MCM.Abstractions.Attributes.v1.SettingPropertyAttribute?text=SettingProperty" has multiple constructors, each designed for the specific value it represents.
 #### Bool
 ```csharp
-[@"MCM.Abstractions.Attributes.v1.SettingPropertyAttribute?text=SettingProperty"("Setting Name", RequireRestart = false, HintText = "Setting explanation.")]
-[@"MCM.Abstractions.Attributes.SettingPropertyGroupAttribute?text=SettingPropertyGroup"("Main Group Name/Nested Group Name/Second Nested Group Name")]
+[SettingProperty("Setting Name", RequireRestart = false, HintText = "Setting explanation.")]
+[SettingPropertyGroup("Main Group Name/Nested Group Name/Second Nested Group Name")]
 public bool SettingVariableName { get; set; } = true;
 ```
 
@@ -40,14 +40,14 @@ public string SettingVariableName { get; set; } = "The textbox data is here";
 
 ## v2
 With v2 of the API, there's multiple types of setting properties to make using them less confusing, and the settings can also be ordered by indexing them. It's also possible to format the display of the numerical values for the int and float sliders.
-#### Bool
+#### Bool (@"MCM.Abstractions.Attributes.v2.SettingPropertyBoolAttribute?text=SettingPropertyBool")
 ```csharp
 [SettingPropertyBool("Setting Name", Order = 0, RequireRestart = false, HintText = "Setting explanation.")]
 [SettingPropertyGroup("Main Group Name/Nested Group Name/Second Nested Group Name")]
 public bool SettingVariableName { get; set; } = true;
 ```
 
-#### Int
+#### Int (@"MCM.Abstractions.Attributes.v2.SettingPropertyIntegerAttribute?text=SettingPropertyInteger")
 ```csharp
 // Value is displayed as "X Denars"
 [SettingPropertyInteger("Setting Name", 0, 100, "0 Denars", Order = 1, RequireRestart = false, HintText = "Setting explanation.")]
@@ -55,7 +55,7 @@ public bool SettingVariableName { get; set; } = true;
 public int SettingVariableName { get; set; } = 25;
 ```
 
-#### Float
+#### Float (@"MCM.Abstractions.Attributes.v2.SettingPropertyFloatingIntegerAttribute?text=SettingPropertyFloatingInteger")
 ```csharp
 // Value is displayed as a percentage
 [SettingPropertyFloatingInteger("Setting Name", 0f, 1f, "#0%", Order = 2, RequireRestart = false, HintText = "Setting explanation.")]
@@ -63,7 +63,7 @@ public int SettingVariableName { get; set; } = 25;
 public bool SettingVariableName { get; set; } = 0.75;
 ```
 
-#### String
+#### String (@"MCM.Abstractions.Attributes.v2.SettingPropertyTextAttribute?text=SettingPropertyText")
 ```csharp
 // Value is displayed as a percentage
 [SettingPropertyText("Setting Name", Order = 3, RequireRestart = false, HintText = "Setting Explanation")]
@@ -72,7 +72,7 @@ public string SettingVariableName { get; set; } = "The textbox data is here";
 ```
 To understand how to format the strings take a look at [this](https://docs.microsoft.com/en-us/dotnet/standard/base-types/custom-numeric-format-strings) page for information and examples (specifically the ToString version).
   
-#### Dropdown
+#### Dropdown (@"MCM.Abstractions.Attributes.v2.SettingPropertyDropdownAttribute?text=SettingPropertyDropdown")
 ```csharp
 [SettingPropertyDropdown("Setting Name")]
 [SettingPropertyGroup("Main Group Name/Nested Group Name/Second Nested Group Name")]
