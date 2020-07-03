@@ -15,72 +15,66 @@ using YamlDotNet.Serialization;
 
 namespace SandcastleXrefGenerator
 {
-    class Program
+    public static class Program
     {
-        static async Task<int> Main(string[] args)
+        public static async Task<int> Main(string[] args)
         {
-            if (args.Length != 4)
+            if (args.Length != 5)
             {
-                Console.WriteLine("Usage: <nuget package> <version> <tfm> <baseUrl>");
+                Console.WriteLine("Usage: <nuget package> <version> <tfm> <baseUrl> <outputFile>");
                 return 1;
             }
 
-            Stream packageStream = await DownloadPackage(args[0], args[1]);
+            var packageStream = await DownloadPackage(args[0], args[1]);
             var module = LoadModule(packageStream, args[2]);
 
             var map = BuildXRefMap(module, args[3]);
             var serializer = new SerializerBuilder().Build();
-            var yaml = serializer.Serialize(map);
-            Console.WriteLine(yaml);
+            var file = new FileInfo(args[4]);
+            file.Directory!.Create();
+            serializer.Serialize(file.CreateText(), map);
             return 0;
         }
 
-        static async Task<Stream> DownloadPackage(string package, string version)
+        private static async Task<Stream> DownloadPackage(string package, string version)
         {
             var client = new HttpClient();
-            byte[] bytes = await client.GetByteArrayAsync($"https://www.nuget.org/api/v2/package/{package}/{version}");
+            var bytes = await client.GetByteArrayAsync($"https://www.nuget.org/api/v2/package/{package}/{version}");
             return new MemoryStream(bytes);
         }
 
-        static ModuleDefinition LoadModule(Stream package, string tfm)
+        private static ModuleDefinition LoadModule(Stream package, string tfm)
         {
-            string prefix = $"lib/{tfm}";
-            using (var zip = ZipArchive.Open(package))
+            var prefix = $"lib/{tfm}";
+            using var zip = ZipArchive.Open(package);
+            foreach (var entry in zip.Entries)
             {
-                foreach (var entry in zip.Entries)
+                // We assume there's just one assembly, for simplicity.
+                if (entry.Key.StartsWith(prefix) && entry.Key.EndsWith(".dll"))
                 {
-                    // We assume there's just one assembly, for simplicity.
-                    if (entry.Key.StartsWith(prefix) && entry.Key.EndsWith(".dll"))
-                    {
-                        using (var stream = entry.OpenEntryStream())
-                        {
-                            // Mono.Cecil requires the stream to be seekable. It's simplest
-                            // just to copy the whole DLL to a MemoryStream and pass that to Cecil.
-                            var ms = new MemoryStream();
-                            stream.CopyTo(ms);
-                            ms.Position = 0;
-                            return ModuleDefinition.ReadModule(ms);
-                        }
-                    }
+                    using var stream = entry.OpenEntryStream();
+                    // Mono.Cecil requires the stream to be seekable. It's simplest
+                    // just to copy the whole DLL to a MemoryStream and pass that to Cecil.
+                    var ms = new MemoryStream();
+                    stream.CopyTo(ms);
+                    ms.Position = 0;
+                    return ModuleDefinition.ReadModule(ms);
                 }
             }
+
             throw new Exception($"No file found in package starting with '{prefix}'");
         }
 
-        static XRefMap BuildXRefMap(ModuleDefinition module, string baseUrl)
+        private static XRefMap BuildXRefMap(ModuleDefinition module, string baseUrl) => new XRefMap
         {
-            var map = new XRefMap
-            {
-                BaseUrl = baseUrl,
-                References = module.Types
-                    .Select(CreateXRefSpec)
-                    .Where(spec => spec != null)
-                    .ToList()
-            };
-            return map;
-        }
+            BaseUrl = baseUrl,
+            References = module.Types
+                .Select(CreateXRefSpec)
+                .Where(spec => spec != null)
+                .ToList()
+        };
 
-        static XRefSpec CreateXRefSpec(TypeDefinition type)
+        private static XRefSpec CreateXRefSpec(TypeDefinition type)
         {
             if (!type.IsPublic)
             {

@@ -55,7 +55,7 @@ jobs:
         dotnet run -p build/SandcastleXrefGenerator -- `
             Newtonsoft.Json 11.0.2 netstandard2.0 `
             https://www.newtonsoft.com/json/help/html/ `
-            > docs/xrefs/Newtonsoft.Json-xrefmap.yml
+            $PDW/docs/xrefs/Newtonsoft.Json-xrefmap.yml
       shell: pwsh
 
     - name: Copy root README
