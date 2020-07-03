@@ -20,7 +20,6 @@
   ],
   "build": {
     "xref": [
-      "xrefs/Newtonsoft.Json-xrefmap.yml",
       "https://butr.github.io/Bannerlord.ReferenceAssemblies.Documentation/xrefmap.yml"
     ],
     "xrefService": [
