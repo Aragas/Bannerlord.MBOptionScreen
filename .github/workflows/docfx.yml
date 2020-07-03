@@ -63,6 +63,11 @@ jobs:
       shell: pwsh
 
     - name: DocFX metadata
+      run: dotnet build src/MCM.sln
+      env:
+        DOCFX: true
+
+    - name: DocFX metadata
       run: docfx/docfx.exe metadata docs/docfx.json
       env:
         DOCFX: true
