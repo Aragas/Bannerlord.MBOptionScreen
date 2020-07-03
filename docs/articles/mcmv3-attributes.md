@@ -1,5 +1,5 @@
 Each setting you want to add to the menu has to be marked with an attribute.
-You can additionally group settings by adding the @"MCM.Abstractions.Attributes.SettingPropertyGroupAttribute?text=SettingPropertyGroupAttribute" attribute. ``'/'`` is used as the default separator.  
+You can additionally group settings by adding the @"MCM.Abstractions.Attributes.SettingPropertyGroupAttribute?text=SettingPropertyGroup" attribute. ``'/'`` is used as the default separator.  
 
 Right now, the mod provides these types in the setting menu:
 * Bool
@@ -9,11 +9,11 @@ Right now, the mod provides these types in the setting menu:
 * Dropdown
 
 ## v1
-With v1 of the API, ``SettingProperty`` has multiple constructors, each designed for the specific value it represents.
+With v1 of the API, @"MCM.Abstractions.Attributes.v1.SettingPropertyAttribute?text=SettingProperty" has multiple constructors, each designed for the specific value it represents.
 #### Bool
 ```csharp
-[SettingProperty("Setting Name", RequireRestart = false, HintText = "Setting explanation.")]
-[SettingPropertyGroup("Main Group Name/Nested Group Name/Second Nested Group Name")]
+[@"MCM.Abstractions.Attributes.v1.SettingPropertyAttribute?text=SettingProperty"("Setting Name", RequireRestart = false, HintText = "Setting explanation.")]
+[@"MCM.Abstractions.Attributes.SettingPropertyGroupAttribute?text=SettingPropertyGroup"("Main Group Name/Nested Group Name/Second Nested Group Name")]
 public bool SettingVariableName { get; set; } = true;
 ```
 
