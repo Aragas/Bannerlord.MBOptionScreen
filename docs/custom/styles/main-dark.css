@@ -92,10 +92,6 @@ article h4 {
     border-radius: 0;
 }
 
-.toc .level1>li {
-    font-weight: 400;
-}
-
 .toc .nav>li>a {
     color: #ccd5dc;
 }
