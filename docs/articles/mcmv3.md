@@ -192,37 +192,37 @@ The game will load them automatically!
 
 ## Migrating to v3 <a name="migrating_to_v3"></a>
 ### ModLib v1 (1.0.0-1.0.2) 
-* [<xref href="System.Xml.XmlElement?alt=XmlElement"/>] attribute is not required  
-* Namespace of ``SettingPropertyAttribute`` changed to ``MCM.Abstractions.Attributes.v1``  
-* ``SettingPropertyAttribute.EditableMinValue`` and ``SettingPropertyAttribute.EditableMaxValue `` were removed   
+* [@"System.Xml.XmlElement?text=XmlElement"] attribute is not required  
+* Namespace of ``SettingPropertyAttribute`` changed to @"MCM.Abstractions.Attributes.v1?text=MCM.Abstractions.Attributes.v1"  
+* ``SettingPropertyAttribute.EditableMinValue`` and ``SettingPropertyAttribute.EditableMaxValue `` were removed  
 * ``SettingPropertyAttribute.HintText`` is an attribute optional parameter  
 * MCM's ``SettingPropertyAttribute`` introduces new properties ``Order`` and ``RequireRestart``  
 * Namespace of ``SettingPropertyGroupAttribute`` changed to ``MCM.Abstractions.Attributes``  
 * ``SettingPropertyGroupAttribute.IsMainToggle`` is an attribute optional parameter  
-* ``ModLib.SettingsBase`` needs to be changed to ``MCM.Abstractions.Settings.Base.Global.AttributeGlobalSettings<T>``
-* ``ModName`` was renamed to ``DisplayName``
-* ``ModuleFolderName`` was renamed to ``FolderName``, no longer required
+* ``ModLib.SettingsBase`` needs to be changed to @"MCM.Abstractions.Settings.Base.Global.AttributeGlobalSettings<T>?text=AttributeGlobalSettings<T>"  
+* ``ModName`` was renamed to ``DisplayName``  
+* ``ModuleFolderName`` was renamed to ``FolderName``, no longer required  
 ### ModLib v13 (1.3 and beyond)
-* ``[XmlElement]`` attribute is not required  
-* Namespace of ``SettingPropertyAttribute`` changed to ``MCM.Abstractions.Attributes.v1``  
-* ``SettingPropertyAttribute.EditableMinValue`` and ``SettingPropertyAttribute.EditableMaxValue `` were removed   
+* [@"System.Xml.XmlElement?text=XmlElement"] attribute is not required  
+* Namespace of ``SettingPropertyAttribute`` changed to @"MCM.Abstractions.Attributes.v1?text=MCM.Abstractions.Attributes.v1"  
+* ``SettingPropertyAttribute.EditableMinValue`` and ``SettingPropertyAttribute.EditableMaxValue `` were removed  
 * ``SettingPropertyAttribute.HintText`` is an attribute optional parameter  
 * MCM's ``SettingPropertyAttribute`` introduces new properties ``Order`` and ``RequireRestart``  
-* Namespace of ``SettingPropertyGroupAttribute`` changed to ``MCM.Abstractions.Attributes`` 
-* ``SettingPropertyGroupAttribute.IsMainToggle`` is an attribute optional parameter   
-* ``ModLib.Definitions.SettingsBase`` needs to be changed to ``MCM.Abstractions.Settings.Base.Global.AttributeGlobalSettings<T>``
-* ``ModName`` was renamed to ``DisplayName``
-* ``ModuleFolderName`` was renamed to ``FolderName``, no longer required
+* Namespace of ``SettingPropertyGroupAttribute`` changed to ``MCM.Abstractions.Attributes``  
+* ``SettingPropertyGroupAttribute.IsMainToggle`` is an attribute optional parameter  
+* ``ModLib.Definitions.SettingsBase`` needs to be changed to @"MCM.Abstractions.Settings.Base.Global.AttributeGlobalSettings<T>?text=AttributeGlobalSettings<T>"  
+* ``ModName`` was renamed to ``DisplayName``  
+* ``ModuleFolderName`` was renamed to ``FolderName``, no longer required  
 ### MBOv1 (MBO 1.0.15 or lower)
 * Attributes changed its namespace from ``MBOptionScreen.Attributes`` to ``MCM.Abstractions.Attributes``  
-* ``MBOptionScreen.Settings.AttributeSettings<T>`` needs to be changed to ``MCM.Abstractions.Settings.Base.Global.AttributeGlobalSettings<T>``
-* ``ModName`` was renamed to ``DisplayName``
-* ``ModuleFolderName`` was renamed to ``FolderName``, no longer required
+* ``MBOptionScreen.Settings.AttributeSettings<T>`` needs to be changed to @"MCM.Abstractions.Settings.Base.Global.AttributeGlobalSettings<T>?text=AttributeGlobalSettings<T>"  
+* ``ModName`` was renamed to ``DisplayName``  
+* ``ModuleFolderName`` was renamed to ``FolderName``, no longer required  
 ### MCMv2 (MCM v2.0.10 or lower)
 * Attributes changed its namespace from ``MBOptionScreen.Attributes`` to ``MCM.Abstractions.Attributes``  
-* ``MBOptionScreen.Settings.AttributeSettings<T>`` needs to be changed to ``MCM.Abstractions.Settings.Base.Global.AttributeGlobalSettings<T>``  
-* ``ModName`` was renamed to ``DisplayName``
-* ``ModuleFolderName`` was renamed to ``FolderName``, no longer required
+* ``MBOptionScreen.Settings.AttributeSettings<T>`` needs to be changed to @"MCM.Abstractions.Settings.Base.Global.AttributeGlobalSettings<T>?text=AttributeGlobalSettings<T>"  
+* ``ModName`` was renamed to ``DisplayName``  
+* ``ModuleFolderName`` was renamed to ``FolderName``, no longer required  
 
 ## Implementing your own compatibility layer
 TODO
