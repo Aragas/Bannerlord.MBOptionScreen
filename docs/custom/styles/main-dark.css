@@ -28,7 +28,7 @@ h3 {
 
 h5 {
     font-size: 14px;
-    padding: 10px 0px;
+    padding: 10px 0;
 }
 
 article h1,
@@ -199,7 +199,7 @@ pre {
     font-size: 13px;
     word-break: break-all;
     word-wrap: break-word;
-    background-color: #1e1e1e;;
+    background-color: #1e1e1e;
     border-radius: 0;
     border: none;
 }
@@ -237,7 +237,7 @@ code{
     font-weight: normal;
     font-size: 85%;
     display: inline;
-    padding: 0 .6em 0;
+    padding: 0 .6em;
     line-height: 1;
     text-align: center;
     white-space: nowrap;
