@@ -192,7 +192,7 @@ The game will load them automatically!
 
 ## Migrating to v3 <a name="migrating_to_v3"></a>
 ### ModLib v1 (1.0.0-1.0.2) 
-* ``[XmlElement]`` attribute is not required  
+* ``[<xref href="System.Xml.XmlElement?alt=XmlElement"/>]`` attribute is not required  
 * Namespace of ``SettingPropertyAttribute`` changed to ``MCM.Abstractions.Attributes.v1``  
 * ``SettingPropertyAttribute.EditableMinValue`` and ``SettingPropertyAttribute.EditableMaxValue `` were removed   
 * ``SettingPropertyAttribute.HintText`` is an attribute optional parameter  
