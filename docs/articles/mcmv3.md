@@ -194,33 +194,33 @@ The game will load them automatically!
 ### ModLib v1 (1.0.0-1.0.2) 
 * [@"System.Xml.XmlElement?text=XmlElement"] attribute is not required  
 * Namespace of ``SettingPropertyAttribute`` changed to @"MCM.Abstractions.Attributes.v1?text=MCM.Abstractions.Attributes.v1"  
-* ``SettingPropertyAttribute.EditableMinValue`` and ``SettingPropertyAttribute.EditableMaxValue `` were removed  
+* ``SettingPropertyAttribute.EditableMinValue`` and ``SettingPropertyAttribute.EditableMaxValue`` were removed  
 * ``SettingPropertyAttribute.HintText`` is an attribute optional parameter  
 * MCM's ``SettingPropertyAttribute`` introduces new properties ``Order`` and ``RequireRestart``  
-* Namespace of ``SettingPropertyGroupAttribute`` changed to ``MCM.Abstractions.Attributes``  
+* Namespace of ``SettingPropertyGroupAttribute`` changed to @"MCM.Abstractions.Attributes?text=MCM.Abstractions.Attributes"   
 * ``SettingPropertyGroupAttribute.IsMainToggle`` is an attribute optional parameter  
-* ``ModLib.SettingsBase`` needs to be changed to @"MCM.Abstractions.Settings.Base.Global.AttributeGlobalSettings<T>?text=AttributeGlobalSettings<T>"  
+* ``ModLib.SettingsBase`` needs to be changed to @"MCM.Abstractions.Settings.Base.Global.AttributeGlobalSettings`1?text=AttributeGlobalSettings<T>"  
 * ``ModName`` was renamed to ``DisplayName``  
 * ``ModuleFolderName`` was renamed to ``FolderName``, no longer required  
 ### ModLib v13 (1.3 and beyond)
 * [@"System.Xml.XmlElement?text=XmlElement"] attribute is not required  
 * Namespace of ``SettingPropertyAttribute`` changed to @"MCM.Abstractions.Attributes.v1?text=MCM.Abstractions.Attributes.v1"  
-* ``SettingPropertyAttribute.EditableMinValue`` and ``SettingPropertyAttribute.EditableMaxValue `` were removed  
+* ``SettingPropertyAttribute.EditableMinValue`` and ``SettingPropertyAttribute.EditableMaxValue`` were removed  
 * ``SettingPropertyAttribute.HintText`` is an attribute optional parameter  
 * MCM's ``SettingPropertyAttribute`` introduces new properties ``Order`` and ``RequireRestart``  
-* Namespace of ``SettingPropertyGroupAttribute`` changed to ``MCM.Abstractions.Attributes``  
+* Namespace of ``SettingPropertyGroupAttribute`` changed to @"MCM.Abstractions.Attributes?text=MCM.Abstractions.Attributes"  
 * ``SettingPropertyGroupAttribute.IsMainToggle`` is an attribute optional parameter  
-* ``ModLib.Definitions.SettingsBase`` needs to be changed to @"MCM.Abstractions.Settings.Base.Global.AttributeGlobalSettings<T>?text=AttributeGlobalSettings<T>"  
+* ``ModLib.Definitions.SettingsBase`` needs to be changed to @"MCM.Abstractions.Settings.Base.Global.AttributeGlobalSettings`1?text=AttributeGlobalSettings<T>"  
 * ``ModName`` was renamed to ``DisplayName``  
 * ``ModuleFolderName`` was renamed to ``FolderName``, no longer required  
 ### MBOv1 (MBO 1.0.15 or lower)
 * Attributes changed its namespace from ``MBOptionScreen.Attributes`` to ``MCM.Abstractions.Attributes``  
-* ``MBOptionScreen.Settings.AttributeSettings<T>`` needs to be changed to @"MCM.Abstractions.Settings.Base.Global.AttributeGlobalSettings<T>?text=AttributeGlobalSettings<T>"  
+* ``MBOptionScreen.Settings.AttributeSettings<T>`` needs to be changed to @"MCM.Abstractions.Settings.Base.Global.AttributeGlobalSettings`1?text=AttributeGlobalSettings<T>"  
 * ``ModName`` was renamed to ``DisplayName``  
 * ``ModuleFolderName`` was renamed to ``FolderName``, no longer required  
 ### MCMv2 (MCM v2.0.10 or lower)
-* Attributes changed its namespace from ``MBOptionScreen.Attributes`` to ``MCM.Abstractions.Attributes``  
-* ``MBOptionScreen.Settings.AttributeSettings<T>`` needs to be changed to @"MCM.Abstractions.Settings.Base.Global.AttributeGlobalSettings<T>?text=AttributeGlobalSettings<T>"  
+* Attributes changed its namespace from ``MBOptionScreen.Attributes`` to @"MCM.Abstractions.Attributes?text=MCM.Abstractions.Attributes"  
+* ``MBOptionScreen.Settings.AttributeSettings<T>`` needs to be changed to @"MCM.Abstractions.Settings.Base.Global.AttributeGlobalSettings`1?text=AttributeGlobalSettings<T>"  
 * ``ModName`` was renamed to ``DisplayName``  
 * ``ModuleFolderName`` was renamed to ``FolderName``, no longer required  
 
