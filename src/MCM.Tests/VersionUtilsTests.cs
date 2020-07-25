@@ -20,7 +20,7 @@ namespace MCM.Tests
                 .SelectMany(a => a.GetTypes())
                 .Where(t => ReflectionUtils.ImplementsOrImplementsEquivalent(t, typeof(ISettingsFormat)));
 
-            var impl = VersionUtils.GetLastImplementation(new ApplicationVersion(ApplicationVersionType.EarlyAccess, 1, 0, 0, 0), types);
+            var impl = VersionUtils.GetLastImplementation(ApplicationVersionUtils.TryParse("e1.0.0", out var v) ? v : default, types);
         }
     }
 }

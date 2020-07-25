@@ -6,8 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bannerlord.ReferenceAssemblies.Native.EarlyAccess" Version="1.4.0.229571-e" />
-    <PackageReference Include="Bannerlord.ReferenceAssemblies.SandBox.EarlyAccess" Version="1.4.0.229571-e" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Native.EarlyAccess" Version="1.4.0.230377" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.SandBox.EarlyAccess" Version="1.4.0.230377" />
     <PackageReference Include="Lib.Harmony" Version="2.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" PrivateAssets="All" />
   </ItemGroup>

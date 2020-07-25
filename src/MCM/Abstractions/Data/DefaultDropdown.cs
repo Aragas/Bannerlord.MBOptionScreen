@@ -16,7 +16,11 @@ namespace MCM.Abstractions.Data
 
         public SelectorVM<SelectorItemVM> Selector
         {
-            get => _selector;
+            get
+            {
+                _selector.Refresh(this.Select(x => new TextObject(x?.ToString() ?? "ERROR").ToString()), SelectedIndex, OnSelectionChanged);
+                return _selector;
+            }
             set
             {
                 if (_selector != value)
@@ -26,6 +30,7 @@ namespace MCM.Abstractions.Data
                 }
             }
         }
+
         /// <inheritdoc/>
         public int SelectedIndex
         {
