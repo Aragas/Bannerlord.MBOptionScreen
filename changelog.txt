@@ -1,10 +1,15 @@
 ---------------------------------------------------------------------------------------------------
-Version: 3.1.10
+Version: 3.1.11
 Game Versions: e1.4.0,e1.4.1,e1.4.2
 * Fixed GroupToggle in Fluent API
 * Better Prefab loading
 * Fixed Ctrl+V in Edit Box
 * Fixed 'random' crash in Edit Box
+* Dixed Preset and Dropdown translation
+---------------------------------------------------------------------------------------------------
+Version: 3.1.10
+Game Versions: e1.4.0,e1.4.1,e1.4.2
+* Non existing because of a release error
 ---------------------------------------------------------------------------------------------------
 Version: 3.1.9
 Game Versions: e1.4.0,e1.4.1,e1.4.2
