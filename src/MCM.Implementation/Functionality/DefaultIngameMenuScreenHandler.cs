@@ -101,7 +101,7 @@ namespace MCM.Implementation.Functionality
                         var screen = screenFactory();
                         if (screen != null)
                         {
-                            AccessTools.Method(typeof(GauntletMissionEscapeMenuBase), "OnEscapeMenuToggled")?.Invoke(__instance, new object[] { false });
+                            AccessTools.Method(typeof(GauntletMissionEscapeMenuBase), "OnEscapeMenuToggled")?.Invoke(__instance, new object[] { true });
                             ScreenManager.PushScreen(screen);
                         }
                     },
