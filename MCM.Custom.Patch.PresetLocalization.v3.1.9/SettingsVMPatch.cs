@@ -1,11 +1,11 @@
-﻿using System;
+﻿using HarmonyLib;
+
+using MCM.Abstractions.Settings.Base;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-
-using HarmonyLib;
-
-using MCM.Abstractions.Settings.Base;
 
 using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Localization;
@@ -23,13 +23,7 @@ namespace MCM.Custom.Patch.v319
 
         public static void Postfix(object __instance)
         {
-            var type = Type.GetType("MCM.UI.GUI.ViewModels.SettingsVM, MCMv3.UI.v3.1.9");
-            if (__instance.GetType() != type)
-                return;
-
-
-            var tt = CachedPresetsField.GetValue(__instance);
-            var cachedPresets = (IDictionary<string, BaseSettings>) tt;
+            var cachedPresets = (IDictionary<string, BaseSettings>) CachedPresetsField.GetValue(__instance);
 
             var presetsSelector = new SelectorVM<SelectorItemVM>(new List<string> { new TextObject("{=SettingsVM_Custom}Custom").ToString() }.Concat(cachedPresets.Keys.Select(x => new TextObject(x).ToString())), -1, null);
             presetsSelector.ItemList[0].CanBeSelected = false;

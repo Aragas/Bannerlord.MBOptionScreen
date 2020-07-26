@@ -1,8 +1,7 @@
-﻿using System;
-using System.Linq;
-using HarmonyLib;
+﻿using HarmonyLib;
 
-using MCM.Utils;
+using System;
+using System.Linq;
 
 using TaleWorlds.MountAndBlade;
 

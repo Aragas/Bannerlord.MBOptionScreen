@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using HarmonyLib;
+
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection.Emit;
-
-using HarmonyLib;
 
 namespace MCM.Custom.Patch.v319
 {
