@@ -16,13 +16,13 @@ namespace MCM.Custom.Patch.v319
             if (defaultIngameMenuScreenHandlerType != null)
             {
                 harmony.Patch(
-                    AccessTools.Method(defaultIngameMenuScreenHandlerType, "MapScreen_GetEscapeMenuItems"),
+                    AccessTools.Method(defaultIngameMenuScreenHandlerType.GetNestedType("<>c__DisplayClass6_1", AccessTools.all), "<MapScreen_GetEscapeMenuItems>b__0"),
                     transpiler: new HarmonyMethod(
                         typeof(DefaultIngameMenuScreenHandlerPatch),
                         nameof(DefaultIngameMenuScreenHandlerPatch.Transpiler)));
 
                 harmony.Patch(
-                    AccessTools.Method(defaultIngameMenuScreenHandlerType, "MissionSingleplayerEscapeMenu_GetEscapeMenuItems"),
+                    AccessTools.Method(defaultIngameMenuScreenHandlerType.GetNestedType("<>c__DisplayClass7_1", AccessTools.all), "<MissionSingleplayerEscapeMenu_GetEscapeMenuItems>b__0"),
                     transpiler: new HarmonyMethod(
                         typeof(DefaultIngameMenuScreenHandlerPatch),
                         nameof(DefaultIngameMenuScreenHandlerPatch.Transpiler)));
