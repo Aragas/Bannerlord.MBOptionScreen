@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>MCM.Custom.Patch.v319</RootNamespace>
+    <AssemblyName>MCMv3.Custom.Patch.PresetLocalization.v3.1.9</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="1.4.0.229571-e" />
+    <PackageReference Include="Lib.Harmony" Version="2.0.0.10" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MCM.UI\MCM.UI.csproj" />
+  </ItemGroup>
+
+</Project>

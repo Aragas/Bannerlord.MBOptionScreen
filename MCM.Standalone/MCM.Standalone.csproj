@@ -9,6 +9,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MCM.Custom.Patch.DropdownLocalization.v3.1.9\MCM.Custom.Patch.DropdownLocalization.v3.1.9.csproj" />
+    <ProjectReference Include="..\MCM.Custom.Patch.InGamePause.v3.1.9\MCM.Custom.Patch.InGamePause.v3.1.9.csproj" />
+    <ProjectReference Include="..\MCM.Custom.Patch.PresetLocalization.v3.1.9\MCM.Custom.Patch.PresetLocalization.v3.1.9.csproj" />
     <ProjectReference Include="..\MCM.Implementation\MCM.Implementation.csproj" />
     <ProjectReference Include="..\MCM.UI\MCM.UI.csproj" />
     <ProjectReference Include="..\MCM\MCM.csproj" />
