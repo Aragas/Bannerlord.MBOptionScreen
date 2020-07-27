@@ -9,7 +9,7 @@ on:
 
 jobs:
   verify-nexusmods-cookies:
-    name: Publish on NexusMods
+    name: Verify NexusMods Cookies
     runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
@@ -33,8 +33,7 @@ jobs:
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Run NexusmodsUploader
-      run: >-
-        bannerlord_nexusmods_uploader verifycookies";
+      run: bannerlord_nexusmods_uploader verifycookies;
       env:
         NEXUSMODS_COOKIES_JSON: '${{secrets.NEXUSMODS_COOKIES_JSON}}'
         DOTNET_NOLOGO: 1
