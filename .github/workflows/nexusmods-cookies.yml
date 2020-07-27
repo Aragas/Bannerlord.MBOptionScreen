@@ -32,6 +32,12 @@ jobs:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
+    - name: Install Bannerlord.ChangelogParser and Bannerlord.NexusmodsUploader
+      run: dotnet tool install -g Bannerlord.NexusmodsUploader
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
     - name: Run NexusmodsUploader
       run: bannerlord_nexusmods_uploader verifycookies;
       env:
