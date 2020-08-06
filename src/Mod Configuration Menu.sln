@@ -27,6 +27,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCM.Integrated.NuGet", "MCM.Integrated.NuGet\MCM.Integrated.NuGet.csproj", "{3ED00B0D-690B-40BA-8D6D-EE37E35FA6AE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{6DA59EA7-D40B-4C02-B0CC-64875B4064CD}"
+	ProjectSection(SolutionItems) = preProject
+		..\changelog.txt = ..\changelog.txt
+		..\Settings.StyleCop = ..\Settings.StyleCop
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModLib.Definitions Substitute", "ModLib.Definitions Substitute\ModLib.Definitions Substitute.csproj", "{3EF3A7F5-50FC-4B53-925D-6CF42FA58405}"
 EndProject
@@ -57,16 +61,12 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{013467E6-5CC6-4899-B549-EC5441CB3AB6}"
 	ProjectSection(SolutionItems) = preProject
 		Directory.Build.props = Directory.Build.props
-		MCM-128-w-2.png = MCM-128-w-2.png
-		MCM-128.png = MCM-128.png
 		nuget.config = nuget.config
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{8A92126A-70CA-47BF-B208-E49E47A9E707}"
 	ProjectSection(SolutionItems) = preProject
 		..\build\common.props = ..\build\common.props
-		..\build\common.targets = ..\build\common.targets
-		..\build\github-actions.props = ..\build\github-actions.props
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SandcastleXrefGenerator", "..\build\SandcastleXrefGenerator\SandcastleXrefGenerator.csproj", "{B35C9E54-F9D2-4CDB-B039-87E7DC9CC93B}"
