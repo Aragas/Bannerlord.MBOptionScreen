@@ -7,7 +7,7 @@
 
   <ItemGroup>
     <PackageReference Include="Bannerlord.BuildResources" Version="1.0.0.1" />
-    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="1.4.0.230377" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="1.4.0.*" />
   </ItemGroup>
 
 </Project>
