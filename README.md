@@ -11,6 +11,9 @@
    <img src="https://img.shields.io/nuget/v/Bannerlord.MCM.svg?label=NuGet%20Bannerlord.MCM&colorB=blue" /></a>
    <a href="https://www.nuget.org/packages/Bannerlord.MCM.Integrated" alt="NuGet Bannerlord.MCM.Integrated">
    <img src="https://img.shields.io/nuget/v/Bannerlord.MCM.Integrated.svg?label=NuGet%20Bannerlord.MCM.Integrated&colorB=blue" /></a>
+   <a href="https://mcm.bannerlord.aragas.org/">
+	<img src="https://img.shields.io/badge/Documentation-%F0%9F%94%8D-blue?style=flat" />
+	</a>
    </br>
    <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="Nexus Mod Configuration Menu">
    <img src="https://img.shields.io/badge/Nexus-Mod%20Configuration%20Menu-yellow.svg" /></a>
