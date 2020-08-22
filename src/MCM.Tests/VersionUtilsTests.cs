@@ -1,3 +1,5 @@
+using Bannerlord.ButterLib.Common.Helpers;
+
 using MCM.Abstractions.Settings.Formats;
 using MCM.Utils;
 
@@ -5,8 +7,6 @@ using NUnit.Framework;
 
 using System;
 using System.Linq;
-
-using TaleWorlds.Library;
 
 namespace MCM.Tests
 {

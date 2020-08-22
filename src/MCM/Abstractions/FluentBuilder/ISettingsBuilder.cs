@@ -1,6 +1,6 @@
 ﻿using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Base.Global;
-using MCM.Abstractions.Settings.Base.PerCharacter;
+using MCM.Abstractions.Settings.Base.PerCampaign;
 
 using System;
 using System.ComponentModel;
@@ -66,11 +66,11 @@ namespace MCM.Abstractions.FluentBuilder
         /// <returns></returns>
         FluentGlobalSettings BuildAsGlobal();
         /// <summary>
-        /// Returns a PerCharacter setting instance.
+        /// Returns a PerCampaign setting instance.
         /// Use Register and Unregister for MCM to use it.
         /// The registered settings will be cleared before and after player joins the campaign, so do the register thing when the campaign was already joined in.
         /// </summary>
         /// <returns></returns>
-        FluentPerCharacterSettings BuildAsPerCharacter();
+        FluentPerCampaignSettings BuildAsPerCampaign();
     }
 }

@@ -1,9 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net472</TargetFramework>
-    <langversion>8.0</langversion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -16,9 +16,7 @@
     <Reference Include="System.Net.Http" />
 
     <!-- Make sure we can build on non-Windows, even though we can't run. -->
-    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies"
-                  Version="1.0.0-preview.1"
-                  PrivateAssets="All" />
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="*" PrivateAssets="All" />
   </ItemGroup>
 
 </Project>

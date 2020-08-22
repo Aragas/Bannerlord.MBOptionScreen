@@ -1,0 +1,76 @@
+﻿using Bannerlord.ButterLib.Common.Extensions;
+
+using MCM.Abstractions.Attributes;
+using MCM.Abstractions.Settings.Base.PerCampaign;
+using MCM.Abstractions.Settings.Containers;
+using MCM.Abstractions.Settings.Containers.PerCampaign;
+using MCM.Abstractions.Settings.Models;
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+using TaleWorlds.Core;
+
+namespace MCM.Implementation.Settings.Containers.PerCampaign
+{
+    [Version("e1.0.0",  3)]
+    [Version("e1.0.1",  3)]
+    [Version("e1.0.2",  3)]
+    [Version("e1.0.3",  3)]
+    [Version("e1.0.4",  3)]
+    [Version("e1.0.5",  3)]
+    [Version("e1.0.6",  3)]
+    [Version("e1.0.7",  3)]
+    [Version("e1.0.8",  3)]
+    [Version("e1.0.9",  3)]
+    [Version("e1.0.10", 3)]
+    [Version("e1.0.11", 3)]
+    [Version("e1.1.0",  3)]
+    [Version("e1.2.0",  3)]
+    [Version("e1.2.1",  3)]
+    [Version("e1.3.0",  3)]
+    [Version("e1.3.1",  3)]
+    [Version("e1.4.0",  3)]
+    [Version("e1.4.1",  3)]
+    public class FluentPerCampaignSettingsContainer : BaseSettingsContainer<FluentPerCampaignSettings>, IFluentPerCampaignSettingsContainer
+    {
+        protected override string RootFolder { get; }
+
+        public override List<SettingsDefinition> CreateModSettingsDefinitions
+        {
+            get
+            {
+                ReloadAll();
+
+                return LoadedSettings.Keys
+                    .Select(id => new SettingsDefinition(id))
+                    .OrderByDescending(a => a.DisplayName)
+                    .ToList();
+            }
+        }
+
+        public FluentPerCampaignSettingsContainer()
+        {
+            RootFolder = Path.Combine(base.RootFolder, "PerCampaign");
+        }
+
+        private void ReloadAll()
+        {
+            if (AppDomain.CurrentDomain.GetData(FluentPerCampaignSettings.ContainerId) == null)
+                AppDomain.CurrentDomain.SetData(FluentPerCampaignSettings.ContainerId, new Dictionary<string, FluentPerCampaignSettings>());
+
+            var storage = (AppDomain.CurrentDomain.GetData(FluentPerCampaignSettings.ContainerId) as Dictionary<string, FluentPerCampaignSettings>)!;
+
+            foreach (var (key, value) in storage)
+            {
+                if (!LoadedSettings.ContainsKey(key))
+                    RegisterSettings(value);
+            }
+        }
+
+        public void OnGameStarted(Game game) => LoadedSettings.Clear();
+        public void OnGameEnded(Game game) => LoadedSettings.Clear();
+    }
+}

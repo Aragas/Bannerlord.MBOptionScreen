@@ -1,5 +1,15 @@
-﻿using MCM.Abstractions.Synchronization;
+﻿using Bannerlord.ButterLib.Common.Extensions;
+
+using MCM.Extensions;
 using MCM.Implementation.ModLib.Functionality;
+using MCM.Implementation.ModLib.Settings.Base.v1;
+using MCM.Implementation.ModLib.Settings.Base.v13;
+using MCM.Implementation.ModLib.Settings.Containers.v1;
+using MCM.Implementation.ModLib.Settings.Containers.v13;
+using MCM.Implementation.ModLib.Settings.Properties.v1;
+using MCM.Implementation.ModLib.Settings.Properties.v13;
+
+using Microsoft.Extensions.DependencyInjection;
 
 using TaleWorlds.MountAndBlade;
 
@@ -7,29 +17,28 @@ namespace MCM.Implementation.ModLib
 {
     public sealed class MCMImplementationModLibSubModule : MBSubModuleBase
     {
-        /// <summary>
-        /// Start initialization
-        /// </summary>
         protected override void OnSubModuleLoad()
         {
-            using var synchronizationProvider = BaseSynchronizationProvider.Create("OnSubModuleLoad_ModLibv3");
-            if (synchronizationProvider.IsFirstInitialization)
-            {
+            base.OnSubModuleLoad();
 
-            }
+            var services = this.GetServices();
+
+            services.AddTransient<BaseModLibScreenOverrider, DefaultModLibScreenOverrider>();
+
+            services.AddSettingsContainerWrapper<BaseModLibGlobalSettingsWrapper, ModLibGlobalSettingsWrapper>();
+            services.AddSettingsContainerWrapper<BaseModLibDefinitionsGlobalSettingsWrapper, ModLibDefinitionsGlobalSettingsWrapper>();
+            
+            services.AddSettingsContainer<IModLibSettingsContainer, ModLibSettingsContainer>();
+            services.AddSettingsContainer<IModLibDefinitionsSettingsContainer, ModLibDefinitionsSettingsContainer>();
+
+            services.AddSettingsPropertyDiscoverer<IModLibSettingsPropertyDiscoverer, ModLibSettingsPropertyDiscoverer>();
+            services.AddSettingsPropertyDiscoverer<IModLibDefinitionsSettingsPropertyDiscoverer, ModLibDefinitionsSettingsPropertyDiscoverer>();
         }
 
-        /// <summary>
-        /// End initialization
-        /// </summary>
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
-            using var synchronizationProvider = BaseSynchronizationProvider.Create("OnBeforeInitialModuleScreenSetAsRoot_ModLibv3");
-            if (synchronizationProvider.IsFirstInitialization)
-            {
-                if (MCMModLibSettings.Instance!.OverrideModLib)
-                    BaseModLibScreenOverrider.Instance.OverrideModLibScreen();
-            }
+            if (MCMModLibSettings.Instance!.OverrideModLib)
+                BaseModLibScreenOverrider.Instance.OverrideModLibScreen();
         }
     }
 }

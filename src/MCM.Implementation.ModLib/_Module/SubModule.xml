@@ -8,6 +8,8 @@
   <MultiplayerModule value="false"/>
   <Official value="false"/>
   <DependedModules>
+    <DependedModule Id="Bannerlord.Harmony" />
+    <DependedModule Id="Bannerlord.ButterLib" />
     <DependedModule Id="Bannerlord.MBOptionScreen"/>
   </DependedModules>
   <SubModules>

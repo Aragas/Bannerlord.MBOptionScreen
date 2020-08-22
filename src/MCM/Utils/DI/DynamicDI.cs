@@ -1,16 +1,17 @@
-﻿using MCM.Abstractions;
+﻿using Bannerlord.ButterLib.Common.Helpers;
+
+using MCM.Abstractions;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using TaleWorlds.Library;
 
 namespace MCM.Utils
 {
     public static class DynamicDI
     {
-        private static ApplicationVersion Version { get; } = ApplicationVersionUtils.GameVersion();
+        private static ApplicationVersion Version { get; } = ApplicationVersionUtils.GameVersion() ?? default; // TODO
 
         internal static IEnumerable<TBase> GetBaseImplementations<TBase, TWrapper>(params object[] args)
             where TBase : class, IDependencyBase

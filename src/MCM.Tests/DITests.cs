@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using MCM.Abstractions.Settings.Formats;
 using MCM.Abstractions.Settings.Formats.Memory;
 using MCM.Implementation;
@@ -9,6 +10,9 @@ using NUnit.Framework;
 
 using System.Linq;
 using System.Runtime.CompilerServices;
+using Bannerlord.ButterLib;
+using Bannerlord.ButterLib.Common.Extensions;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MCM.Tests
 {
@@ -27,7 +31,8 @@ namespace MCM.Tests
         [Test]
         public void VersionResolve_Test()
         {
-            var implementations = DI.GetBaseImplementations<ISettingsFormat>().ToList();
+            var implementations = ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<IEnumerable<ISettingsFormat>>().ToList();
+            //var implementations = DI.GetBaseImplementations<ISettingsFormat>().ToList();
             Assert.True(implementations.Any(i => i is MemorySettingsFormat), "MemorySettingsFormat missing");
             Assert.True(implementations.Any(i => i is JsonSettingsFormat), "JsonSettingsFormat missing");
             Assert.True(implementations.Any(i => i is XmlSettingsFormat), "XmlSettingsFormat missing");

@@ -1,4 +1,6 @@
-﻿using ComparerExtensions;
+﻿using Bannerlord.ButterLib.Common.Helpers;
+
+using ComparerExtensions;
 
 using MCM.Abstractions.Settings.Providers;
 using MCM.Utils;

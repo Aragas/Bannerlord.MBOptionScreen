@@ -3,22 +3,30 @@
   <Name value="Mod Configuration Menu v3"/>
   <Id value="Bannerlord.MBOptionScreen"/>
   <Version value="v$version$"/>
-  <DefaultModule value="true"/>
+  <Official value="false"/>
   <SingleplayerModule value="true"/>
   <MultiplayerModule value="false"/>
-  <Official value="false"/>
   <DependedModules>
     <DependedModule Id="Bannerlord.Harmony" />
+    <DependedModule Id="Bannerlord.ButterLib" />
   </DependedModules>
   <SubModules>
     <SubModule>
-      <Name value="MCMv3 Integrated Loader"/>
-      <DLLName value="MCMv3.dll"/>
+      <Name value="MCMv4"/>
+      <DLLName value="MCMv4.dll"/>
+      <SubModuleClassType value="MCM.MCMSubModule"/>
+      <Tags/>
+    </SubModule>
+    <SubModule>
+      <Name value="MCMv4 Integrated Loader"/>
+      <DLLName value="MCMv4.dll"/>
       <SubModuleClassType value="MCM.IntegratedLoaderSubModule"/>
-      <Tags>
-        <Tag key="DedicatedServerType" value="none" />
-        <Tag key="IsNoRenderModeElement" value="false" />
-      </Tags>
+      <!--
+      <Assemblies>
+        <Assembly value="Microsoft.Bcl.HashCode.dll"/>
+      </Assemblies>
+      -->
+      <Tags/>
     </SubModule>
   </SubModules>
 </Module>

@@ -1,8 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<!--EXTERNAL_PROPERTIES: Version;GameVersion;ButterLibVersion;HarmonyVersion;UIExtenderExVersion-->
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Authors>Aragas, mipen</Authors>
-    <AssemblyName>MCMv3.UI.v$(Version)</AssemblyName>
+    <AssemblyName>MCMv4.UI.v$(Version)</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,12 +27,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bannerlord.ReferenceAssemblies.Native.EarlyAccess" Version="1.4.0.*" />
-    <PackageReference Include="Bannerlord.ReferenceAssemblies.SandBox.EarlyAccess" Version="1.4.0.*" />
-    <PackageReference Include="Bannerlord.UIExtenderEx" Version="0.0.11.*" IncludeAssets="compile" />
-    <PackageReference Include="Lib.Harmony" Version="2.0.1" IncludeAssets="compile" />
+    <InternalsVisibleTo Include="MCMv4.Custom.ScreenTests" />
+    <InternalsVisibleTo Include="MCM.Tests" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Bannerlord.ButterLib" Version="$(ButterLibVersion)" IncludeAssets="compile" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Native.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.SandBox.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
+    <PackageReference Include="Bannerlord.UIExtenderEx" Version="$(UIExtenderExVersion)" />
+    <!--<PackageReference Include="Bannerlord.UIExtenderEx" Version="$(UIExtenderExVersion)" IncludeAssets="compile" />-->
+    <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" IncludeAssets="compile" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\MCM\MCM.csproj" />

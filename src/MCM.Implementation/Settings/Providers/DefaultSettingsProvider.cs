@@ -3,14 +3,16 @@ using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Containers;
 using MCM.Abstractions.Settings.Containers.Global;
-using MCM.Abstractions.Settings.Containers.PerCharacter;
+using MCM.Abstractions.Settings.Containers.PerCampaign;
 using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.Providers;
 using MCM.Utils;
 
 using System.Collections.Generic;
 using System.Linq;
-
+using Bannerlord.ButterLib;
+using Bannerlord.ButterLib.Common.Extensions;
+using Microsoft.Extensions.DependencyInjection;
 using TaleWorlds.Core;
 
 namespace MCM.Implementation.Settings.Providers
@@ -44,8 +46,10 @@ namespace MCM.Implementation.Settings.Providers
         public DefaultSettingsProvider()
         {
             SettingsContainers = new List<ISettingsContainer>()
-                .Concat(DI.GetBaseImplementations<IGlobalSettingsContainer>())
-                .Concat(DI.GetBaseImplementations<IPerCharacterSettingsContainer>())
+                .Concat(ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<IEnumerable<IGlobalSettingsContainer>>())
+                .Concat(ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<IEnumerable<IPerCampaignSettingsContainer>>())
+                //.Concat(DI.GetBaseImplementations<IGlobalSettingsContainer>())
+                //.Concat(DI.GetBaseImplementations<IPerCampaignSettingsContainer>())
                 .ToList();
         }
 
@@ -94,9 +98,9 @@ namespace MCM.Implementation.Settings.Providers
         {
             foreach (var settingsContainer in SettingsContainers)
             {
-                if (settingsContainer is IPerCharacterSettingsContainer perCharacterContainer)
+                if (settingsContainer is IPerCampaignSettingsContainer perCampaignContainer)
                 {
-                    perCharacterContainer.OnGameStarted(game);
+                    perCampaignContainer.OnGameStarted(game);
                 }
             }
         }
@@ -104,9 +108,9 @@ namespace MCM.Implementation.Settings.Providers
         {
             foreach (var settingsContainer in SettingsContainers)
             {
-                if (settingsContainer is IPerCharacterSettingsContainer perCharacterContainer)
+                if (settingsContainer is IPerCampaignSettingsContainer perCampaignContainer)
                 {
-                    perCharacterContainer.OnGameEnded(game);
+                    perCampaignContainer.OnGameEnded(game);
                 }
             }
         }

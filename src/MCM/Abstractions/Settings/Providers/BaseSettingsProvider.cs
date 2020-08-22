@@ -1,6 +1,9 @@
-﻿using MCM.Abstractions.Settings.Base;
+﻿using Bannerlord.ButterLib;
+using Bannerlord.ButterLib.Common.Extensions;
+
+using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Models;
-using MCM.Utils;
+using MCM.Extensions;
 
 using System.Collections.Generic;
 
@@ -11,8 +14,9 @@ namespace MCM.Abstractions.Settings.Providers
     public abstract class BaseSettingsProvider : IDependency
     {
         private static BaseSettingsProvider? _instance;
-        public static BaseSettingsProvider Instance =>
-            _instance ??= DI.GetImplementation<BaseSettingsProvider, SettingsProviderWrapper>()!;
+        public static BaseSettingsProvider Instance => _instance ??=
+            ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<BaseSettingsProvider, SettingsProviderWrapper>();
+            //DI.GetImplementation<BaseSettingsProvider, SettingsProviderWrapper>()!;
 
         public abstract IEnumerable<SettingsDefinition> CreateModSettingsDefinitions { get; }
         public abstract BaseSettings? GetSettings(string id);

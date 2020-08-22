@@ -6,7 +6,9 @@ using MCM.Utils;
 
 using System.Collections.Generic;
 using System.Linq;
-
+using Bannerlord.ButterLib;
+using Bannerlord.ButterLib.Common.Extensions;
+using Microsoft.Extensions.DependencyInjection;
 using TaleWorlds.Engine;
 
 using Path = System.IO.Path;
@@ -26,7 +28,8 @@ namespace MCM.Abstractions.Settings.Containers
 
         protected BaseSettingsContainer()
         {
-            foreach (var format in DI.GetBaseImplementations<ISettingsFormat>())
+            foreach (var format in ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<IEnumerable<ISettingsFormat>>())
+            //foreach (var format in DI.GetBaseImplementations<ISettingsFormat>())
             foreach (var extension in format.Extensions)
             {
                 AvailableSettingsFormats[extension] = format;

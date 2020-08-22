@@ -2,21 +2,23 @@
 
 using HarmonyLib;
 
-using MCM.Abstractions.Loader;
-using MCM.Utils;
+using MCM.Loader;
 
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-
+using Bannerlord.ButterLib;
+using Bannerlord.ButterLib.Assemblies;
+using Bannerlord.ButterLib.Common.Extensions;
+using Bannerlord.ButterLib.Common.Helpers;
+using Bannerlord.ButterLib.SubModuleWrappers;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using TaleWorlds.Core;
+using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade;
-
-[assembly: InternalsVisibleTo("MCMv3.Custom.ScreenTests")]
-[assembly: InternalsVisibleTo("MCM.Tests")]
 
 namespace MCM
 {
@@ -26,20 +28,21 @@ namespace MCM
     /// <summary>
     /// Will search for any MCM.Implementation assembly and use it for loading if the standalone module was didn't load before
     /// </summary>
-    public class IntegratedLoaderSubModule : MBSubModuleBase
+    public class IntegratedLoaderSubModule : MBSubModuleBaseListWrapper
     {
-        private static void LoadAllImplementationAssemblies()
+        /*
+        private static IEnumerable<MBSubModuleBase> LoadAllImplementations()
         {
             var mcmReferencingAssemblies = new List<Assembly>();
             var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(a => !a.IsDynamic).ToList();
-            foreach (var assembly in assemblies.Where(assembly => assembly.GetName().Name == "MCMv3"))
+            foreach (var assembly in assemblies.Where(assembly => assembly.GetName().Name == "MCMv4"))
             {
                 mcmReferencingAssemblies.Add(assembly);
             }
             foreach (var assembly in assemblies)
             {
                 var referencedAssemblies = assembly.GetReferencedAssemblies();
-                if (referencedAssemblies.All(r => r.Name != "MCMv3"))
+                if (referencedAssemblies.All(r => r.Name != "MCMv4"))
                     continue;
                 mcmReferencingAssemblies.Add(assembly);
             }
@@ -53,7 +56,7 @@ namespace MCM
                 if (assemblyDirectory == null || !assemblyDirectory.Exists)
                     continue;
 
-                var matches = assemblyDirectory.GetFiles("MCMv3.Implementation.*.dll");
+                var matches = assemblyDirectory.GetFiles("MCMv4.Implementation.*.dll");
                 if (!matches.Any())
                     continue;
 
@@ -61,143 +64,328 @@ namespace MCM
                     Assembly.LoadFrom(match.FullName);
             }
         }
+        */
 
-
-        private readonly IIntegratedLoader _loader;
-        private readonly Dictionary<Type, Dictionary<string, MethodInfo?>> _reflectionCache = new Dictionary<Type, Dictionary<string, MethodInfo?>>();
-        private readonly object[] _emptyParams = Array.Empty<object>();
-#if Tick
-        private readonly object[] _dtParams = new object[1];
-#endif
-
-        public IntegratedLoaderSubModule()
+        private static IEnumerable<MBSubModuleBase> LoadAllImplementations1(ILogger? logger = null)
         {
-            LoadAllImplementationAssemblies();
-            _loader = DI.GetImplementation<IIntegratedLoader, IntegratedLoaderWrapper>()!;
-            _loader.Load();
+            logger?.LogInformation("Loading implementations...");
 
-            foreach (var (_, subModuleType) in _loader.MCMImplementationSubModules)
+            var implementationAssemblies = new List<Assembly>();
+
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(a => !a.IsDynamic).ToList();
+
+            var thisAssembly = typeof(IntegratedLoaderSubModule).Assembly;
+
+            var assemblyFile = new FileInfo(thisAssembly.Location);
+            if (!assemblyFile.Exists)
             {
-                if (!_reflectionCache.ContainsKey(subModuleType))
-                    _reflectionCache.Add(subModuleType, new Dictionary<string, MethodInfo?>());
+                logger?.LogError("Assembly file does not exists!");
+                yield break;
+            }
 
-                _reflectionCache[subModuleType]["OnSubModuleLoad"] = AccessTools.Method(subModuleType, "OnSubModuleLoad");
-                _reflectionCache[subModuleType]["OnSubModuleUnloaded"] = AccessTools.Method(subModuleType, "OnSubModuleUnloaded");
-                _reflectionCache[subModuleType]["OnApplicationTick"] = AccessTools.Method(subModuleType, "OnApplicationTick");
-                _reflectionCache[subModuleType]["OnBeforeInitialModuleScreenSetAsRoot"] = AccessTools.Method(subModuleType, "OnBeforeInitialModuleScreenSetAsRoot");
-                _reflectionCache[subModuleType]["OnGameStart"] = AccessTools.Method(subModuleType, "OnGameStart");
+            var assemblyDirectory = assemblyFile.Directory;
+            if (assemblyDirectory?.Exists != true)
+            {
+                logger?.LogError("Assembly directory does not exists!");
+                yield break;
+            }
+
+            var implementations = assemblyDirectory.GetFiles("MCMv4.UI.*.dll");
+            if (implementations.Length == 0)
+            {
+                logger?.LogError("No implementations found.");
+                yield break;
+            }
+
+            var gameVersion = ApplicationVersionUtils.TryParse(ApplicationVersionUtils.GameVersionStr(), out var v) ? v : (ApplicationVersion?)null;
+            if (gameVersion == null)
+            {
+                logger?.LogError("Failed to get Game version!");
+                yield break;
+            }
+
+
+            var implementationsFiles = implementations.Where(x => assemblies.All(a => Path.GetFileNameWithoutExtension(a.Location) != Path.GetFileNameWithoutExtension(x.Name)));
+            var implementationsWithVersions = GetImplementations(implementationsFiles, logger).ToList();
+            if (implementationsWithVersions.Count == 0)
+            {
+                logger?.LogError("No compatible implementations were found!");
+                yield break;
+            }
+
+            var implementationsForGameVersion = ImplementationForGameVersion(gameVersion.Value, implementationsWithVersions).ToList();
+            switch (implementationsForGameVersion.Count)
+            {
+                case { } i when i > 1:
+                {
+                    logger?.LogInformation("Found multiple matching implementations:");
+                    foreach (var (implementation1, version1) in implementationsForGameVersion)
+                        logger?.LogInformation("Implementation {name} for game {gameVersion}.", implementation1.Name, version1);
+
+
+                    logger?.LogInformation("Loading the latest available.");
+
+                    var (implementation, version) = ImplementationLatest(implementationsForGameVersion);
+                    logger?.LogInformation("Implementation {name} for game {gameVersion} is loaded.", implementation.Name, version);
+                    implementationAssemblies.Add(Assembly.LoadFrom(implementation.FullName));
+                    break;
+                }
+
+                case { } i when i == 1:
+                {
+                    logger?.LogInformation("Found matching implementation. Loading it.");
+
+                    var (implementation, version) = implementationsForGameVersion[0];
+                    logger?.LogInformation("Implementation {name} for game {gameVersion} is loaded.", implementation.Name, version);
+                    implementationAssemblies.Add(Assembly.LoadFrom(implementation.FullName));
+                    break;
+                }
+
+                case { } i when i == 0:
+                {
+                    logger?.LogInformation("Found no matching implementations. Loading the latest available.");
+
+                    var (implementation, version) = ImplementationLatest(implementationsWithVersions);
+                    logger?.LogInformation("Implementation {name} for game {gameVersion} is loaded.", implementation.Name, version);
+                    implementationAssemblies.Add(Assembly.LoadFrom(implementation.FullName));
+                    break;
+                }
+            }
+
+            var subModules = implementationAssemblies.SelectMany(a =>
+            {
+                try
+                {
+                    return a.GetTypes().Where(t => typeof(MBSubModuleBase).IsAssignableFrom(t));
+                }
+                catch (Exception e) when (e is ReflectionTypeLoadException)
+                {
+                    logger?.LogError("Implementation {name} is not compatible with the current game!", Path.GetFileName(a.Location));
+                    return Enumerable.Empty<Type>();
+                }
+            }).ToList();
+
+            if (subModules.Count == 0)
+                logger?.LogError("No implementation was initialized!");
+
+            foreach (var subModuleType in subModules)
+            {
+                var constructor = subModuleType.GetConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.CreateInstance, null, Type.EmptyTypes, null);
+                if (constructor == null)
+                {
+                    logger?.LogError("SubModule {subModuleType} is missing a default constructor!", subModuleType);
+                    continue;
+                }
+
+                if (constructor.Invoke(Array.Empty<object>()) is MBSubModuleBase subModule)
+                    yield return subModule;
+            }
+
+            logger?.LogInformation("Finished loading implementations.");
+        }
+        private static IEnumerable<MBSubModuleBase> LoadAllImplementations2(ILogger? logger = null)
+        {
+            logger?.LogInformation("Loading implementations...");
+
+            var implementationAssemblies = new List<Assembly>();
+
+            var assemblies = AppDomain.CurrentDomain.GetAssemblies().Where(a => !a.IsDynamic).ToList();
+
+            var thisAssembly = typeof(IntegratedLoaderSubModule).Assembly;
+
+            var assemblyFile = new FileInfo(thisAssembly.Location);
+            if (!assemblyFile.Exists)
+            {
+                logger?.LogError("Assembly file does not exists!");
+                yield break;
+            }
+
+            var assemblyDirectory = assemblyFile.Directory;
+            if (assemblyDirectory?.Exists != true)
+            {
+                logger?.LogError("Assembly directory does not exists!");
+                yield break;
+            }
+
+            var implementations = assemblyDirectory.GetFiles("MCMv4.Implementation.*.dll");
+            if (implementations.Length == 0)
+            {
+                logger?.LogError("No implementations found.");
+                yield break;
+            }
+
+            var gameVersion = ApplicationVersionUtils.TryParse(ApplicationVersionUtils.GameVersionStr(), out var v) ? v : (ApplicationVersion?)null;
+            if (gameVersion == null)
+            {
+                logger?.LogError("Failed to get Game version!");
+                yield break;
+            }
+
+
+            var implementationsFiles = implementations.Where(x => assemblies.All(a => Path.GetFileNameWithoutExtension(a.Location) != Path.GetFileNameWithoutExtension(x.Name)));
+            var implementationsWithVersions = GetImplementations(implementationsFiles, logger).ToList();
+            if (implementationsWithVersions.Count == 0)
+            {
+                logger?.LogError("No compatible implementations were found!");
+                yield break;
+            }
+
+            var implementationsForGameVersion = ImplementationForGameVersion(gameVersion.Value, implementationsWithVersions).ToList();
+            switch (implementationsForGameVersion.Count)
+            {
+                case { } i when i > 1:
+                {
+                    logger?.LogInformation("Found multiple matching implementations:");
+                    foreach (var (implementation1, version1) in implementationsForGameVersion)
+                        logger?.LogInformation("Implementation {name} for game {gameVersion}.", implementation1.Name, version1);
+
+
+                    logger?.LogInformation("Loading the latest available.");
+
+                    var (implementation, version) = ImplementationLatest(implementationsForGameVersion);
+                    logger?.LogInformation("Implementation {name} for game {gameVersion} is loaded.", implementation.Name, version);
+                    implementationAssemblies.Add(Assembly.LoadFrom(implementation.FullName));
+                    break;
+                }
+
+                case { } i when i == 1:
+                {
+                    logger?.LogInformation("Found matching implementation. Loading it.");
+
+                    var (implementation, version) = implementationsForGameVersion[0];
+                    logger?.LogInformation("Implementation {name} for game {gameVersion} is loaded.", implementation.Name, version);
+                    implementationAssemblies.Add(Assembly.LoadFrom(implementation.FullName));
+                    break;
+                }
+
+                case { } i when i == 0:
+                {
+                    logger?.LogInformation("Found no matching implementations. Loading the latest available.");
+
+                    var (implementation, version) = ImplementationLatest(implementationsWithVersions);
+                    logger?.LogInformation("Implementation {name} for game {gameVersion} is loaded.", implementation.Name, version);
+                    implementationAssemblies.Add(Assembly.LoadFrom(implementation.FullName));
+                    break;
+                }
+            }
+
+            var subModules = implementationAssemblies.SelectMany(a =>
+            {
+                try
+                {
+                    return a.GetTypes().Where(t => typeof(MBSubModuleBase).IsAssignableFrom(t));
+                }
+                catch (Exception e) when (e is ReflectionTypeLoadException)
+                {
+                    logger?.LogError("Implementation {name} is not compatible with the current game!", Path.GetFileName(a.Location));
+                    return Enumerable.Empty<Type>();
+                }
+            }).ToList();
+
+            if (subModules.Count == 0)
+                logger?.LogError("No implementation was initialized!");
+
+            foreach (var subModuleType in subModules)
+            {
+                var constructor = subModuleType.GetConstructor(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.CreateInstance, null, Type.EmptyTypes, null);
+                if (constructor == null)
+                {
+                    logger?.LogError("SubModule {subModuleType} is missing a default constructor!", subModuleType);
+                    continue;
+                }
+
+                if (constructor.Invoke(Array.Empty<object>()) is MBSubModuleBase subModule)
+                    yield return subModule;
+            }
+
+            logger?.LogInformation("Finished loading implementations.");
+        }
+
+        private static IEnumerable<(FileInfo Implementation, ApplicationVersion Version)> GetImplementations(IEnumerable<FileInfo> implementations, ILogger? logger = null)
+        {
+            using var assemblyVerifier = new AssemblyVerifier("ButterLib");
+            var assemblyLoader = assemblyVerifier.GetLoader(out var exception);
+            if (assemblyLoader == null)
+            {
+                if (exception != null)
+                    logger?.LogError(0, exception, "AssemblyLoadProxy could not be initialized.");
+                else
+                    logger?.LogError("AssemblyLoadProxy could not be initialized.");
+
+                yield break;
+            }
+
+            // Load all current assemblies
+            foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies().Where(a => !a.FullName.StartsWith("mscorlib") && !a.IsDynamic && !string.IsNullOrEmpty(a.Location)))
+                assemblyLoader.LoadFile(assembly.Location);
+
+            foreach (var implementation in implementations)
+            {
+                logger?.LogInformation("Found implementation {name}.", implementation.Name);
+
+                var result = assemblyLoader.LoadFileAndTest(implementation.FullName);
+                if (!result)
+                {
+                    logger?.LogError("Implementation {name} is not compatible with the current game!", implementation.Name);
+                    continue;
+                }
+
+                var assembly = Assembly.ReflectionOnlyLoadFrom(implementation.FullName);
+
+                var metadataList = assembly.GetCustomAttributesData();
+                var implementationGameVersionStr = (string?) metadataList.FirstOrDefault(x => x.ConstructorArguments.Count == 2 && (string?) x.ConstructorArguments[0].Value == "GameVersion")?.ConstructorArguments[1].Value;
+                if (string.IsNullOrEmpty(implementationGameVersionStr))
+                {
+                    logger?.LogError("Implementation {name} is missing GameVersion AssemblyMetadataAttribute!", implementation.Name);
+                    continue;
+                }
+
+                if (!ApplicationVersionUtils.TryParse(implementationGameVersionStr, out var implementationGameVersion))
+                {
+                    logger?.LogError("Implementation {name} has invalid GameVersion AssemblyMetadataAttribute!", implementation.Name);
+                    continue;
+                }
+
+                yield return (implementation, implementationGameVersion);
             }
         }
 
+        private static IEnumerable<(FileInfo Implementation, ApplicationVersion Version)> ImplementationForGameVersion(ApplicationVersion gameVersion, IEnumerable<(FileInfo Implementation, ApplicationVersion Verion)> implementations)
+        {
+            foreach (var (implementation, version) in implementations)
+            {
+                if (version.Revision == -1) // Implementation does not specify the revision
+                {
+                    if (gameVersion.IsSameWithoutRevision(version))
+                    {
+                        yield return (implementation, version);
+                    }
+                }
+                else // Implementation specified the revision
+                {
+                    if (gameVersion.IsSameWithRevision(version))
+                    {
+                        yield return (implementation, version);
+                    }
+                }
+            }
+        }
+        private static (FileInfo Implementation, ApplicationVersion Version) ImplementationLatest(IEnumerable<(FileInfo Implementation, ApplicationVersion Version)> implementations)
+        {
+            return implementations.MaxBy(x => x.Version);
+        }
+
+        private ILogger _logger = default!;
+
         protected override void OnSubModuleLoad()
         {
+            _logger = ButterLibSubModule.Instance.GetTempServiceProvider().GetRequiredService<ILogger<IntegratedLoaderSubModule>>();
+
+            var t1 = LoadAllImplementations1(_logger).Select(x => new MBSubModuleBaseWrapper(x)).ToList();
+            var t2 = LoadAllImplementations2(_logger).Select(x => new MBSubModuleBaseWrapper(x)).ToList();
+            SubModules.AddRange(t1.Concat(t2));
+
             base.OnSubModuleLoad();
-
-            foreach (var (subModule, subModuleType) in _loader.MCMImplementationSubModules)
-                _reflectionCache[subModuleType]["OnSubModuleLoad"]?.Invoke(subModule, _emptyParams);
-        }
-        protected override void OnSubModuleUnloaded()
-        {
-            base.OnSubModuleUnloaded();
-
-            foreach (var (subModule, subModuleType) in _loader.MCMImplementationSubModules)
-                _reflectionCache[subModuleType]["OnSubModuleUnloaded"]?.Invoke(subModule, _emptyParams);
-        }
-#if Tick
-        protected override void OnApplicationTick(float dt)
-        {
-            base.OnApplicationTick(dt);
-
-            _dtParams[0] = dt;
-            foreach (var (subModule, subModuleType) in _loader.MCMImplementationSubModules)
-                _reflectionCache[subModuleType]["OnApplicationTick"]?.Invoke(subModule, _dtParams);
-        }
-#endif
-        protected override void OnBeforeInitialModuleScreenSetAsRoot()
-        {
-            base.OnBeforeInitialModuleScreenSetAsRoot();
-
-            foreach (var (subModule, subModuleType) in _loader.MCMImplementationSubModules)
-                _reflectionCache[subModuleType]["OnBeforeInitialModuleScreenSetAsRoot"]?.Invoke(subModule, _emptyParams);
-        }
-        protected override void OnGameStart(Game game, IGameStarter gameStarterObject)
-        {
-            base.OnGameStart(game, gameStarterObject);
-
-            var @params = new object[] { game, gameStarterObject };
-            foreach (var (subModule, subModuleType) in _loader.MCMImplementationSubModules)
-                _reflectionCache[subModuleType]["OnGameStart"]?.Invoke(subModule, @params);
-        }
-
-        /// <exclude/>
-        public override bool DoLoading(Game game)
-        {
-            return base.DoLoading(game) && _loader.MCMImplementationSubModules.All(tuple => tuple.Item1.DoLoading(game));
-        }
-        /// <exclude/>
-        public override void OnGameLoaded(Game game, object initializerObject)
-        {
-            base.OnGameLoaded(game, initializerObject);
-
-            foreach (var (subModule, _) in _loader.MCMImplementationSubModules)
-                subModule.OnGameLoaded(game, initializerObject);
-        }
-        /// <exclude/>
-        public override void OnCampaignStart(Game game, object starterObject)
-        {
-            base.OnCampaignStart(game, starterObject);
-
-            foreach (var (subModule, _) in _loader.MCMImplementationSubModules)
-                subModule.OnCampaignStart(game, starterObject);
-        }
-        /// <exclude/>
-        public override void BeginGameStart(Game game)
-        {
-            base.BeginGameStart(game);
-
-
-            foreach (var (subModule, _) in _loader.MCMImplementationSubModules)
-                subModule.BeginGameStart(game);
-        }
-        /// <exclude/>
-        public override void OnGameEnd(Game game)
-        {
-            base.OnGameEnd(game);
-
-            foreach (var (subModule, _) in _loader.MCMImplementationSubModules)
-                subModule.OnGameEnd(game);
-        }
-        /// <exclude/>
-        public override void OnGameInitializationFinished(Game game)
-        {
-            base.OnGameInitializationFinished(game);
-
-            foreach (var (subModule, _) in _loader.MCMImplementationSubModules)
-                subModule.OnGameInitializationFinished(game);
-        }
-        /// <exclude/>
-        public override void OnMissionBehaviourInitialize(Mission mission)
-        {
-            base.OnMissionBehaviourInitialize(mission);
-
-            foreach (var (subModule, _) in _loader.MCMImplementationSubModules)
-                subModule.OnMissionBehaviourInitialize(mission);
-        }
-        /// <exclude/>
-        public override void OnMultiplayerGameStart(Game game, object starterObject)
-        {
-            base.OnMultiplayerGameStart(game, starterObject);
-
-            foreach (var (subModule, _) in _loader.MCMImplementationSubModules)
-                subModule.OnMultiplayerGameStart(game, starterObject);
-        }
-        /// <exclude/>
-        public override void OnNewGameCreated(Game game, object initializerObject)
-        {
-            base.OnNewGameCreated(game, initializerObject);
-
-            foreach (var (subModule, _) in _loader.MCMImplementationSubModules)
-                subModule.OnNewGameCreated(game, initializerObject);
         }
     }
 }

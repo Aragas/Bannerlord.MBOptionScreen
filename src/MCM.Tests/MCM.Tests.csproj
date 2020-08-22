@@ -1,4 +1,5 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<!--EXTERNAL_PROPERTIES: GameFolder;ButterLibVersion;HarmonyVersion;UIExtenderExVersion-->
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net472</TargetFrameworks>
@@ -11,6 +12,10 @@
     <PackageReference Include="nunit" Version="3.12.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
+
+    <PackageReference Include="Bannerlord.ButterLib" Version="$(ButterLibVersion)" />
+    <PackageReference Include="Bannerlord.UIExtenderEx" Version="$(UIExtenderExVersion)" />
+    <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
   </ItemGroup>

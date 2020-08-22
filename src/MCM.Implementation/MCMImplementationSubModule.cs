@@ -1,41 +1,53 @@
-﻿using MCM.Abstractions.Settings.Providers;
-using MCM.Abstractions.Synchronization;
+﻿using Bannerlord.ButterLib.Common.Extensions;
 
-using System.Runtime.CompilerServices;
+using MCM.Abstractions.Functionality;
+using MCM.Abstractions.Settings.Properties;
+using MCM.Abstractions.Settings.Providers;
+using MCM.Extensions;
+using MCM.Implementation.Functionality;
+using MCM.Implementation.Settings.Base.Global;
+using MCM.Implementation.Settings.Base.PerCampaign;
+using MCM.Implementation.Settings.Containers.Global;
+using MCM.Implementation.Settings.Containers.PerCampaign;
+using MCM.Implementation.Settings.Formats.Json;
+using MCM.Implementation.Settings.Formats.Xml;
+using MCM.Implementation.Settings.Properties;
+using MCM.Implementation.Settings.Providers;
+
+using Microsoft.Extensions.DependencyInjection;
 
 using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
-
-[assembly: InternalsVisibleTo("MCM.Custom.ScreenTests")]
-[assembly: InternalsVisibleTo("MCM.Tests")]
 
 namespace MCM.Implementation
 {
     public sealed class MCMImplementationSubModule : MBSubModuleBase
     {
-        /// <summary>
-        /// Start initialization
-        /// </summary>
         protected override void OnSubModuleLoad()
         {
-            using var synchronizationProvider = BaseSynchronizationProvider.Create("OnSubModuleLoad_MCMv3");
-            if (synchronizationProvider.IsFirstInitialization)
-            {
+            base.OnSubModuleLoad();
 
-            }
+            var services = this.GetServices();
+
+            services.AddTransient<BaseGameMenuScreenHandler, DefaultGameMenuScreenHandler>();
+            services.AddTransient<BaseIngameMenuScreenHandler, DefaultIngameMenuScreenHandler>();
+
+            services.AddSettingsContainerWrapper<BaseMCMGlobalSettingsWrapper, MCMGlobalSettingsWrapper>();
+            services.AddSettingsContainerWrapper<BaseMCMPerCampaignSettingsWrapper, MCMPerCampaignSettingsWrapper>();
+
+            services.AddSettingsContainer<FluentGlobalSettingsContainer>();
+            services.AddSettingsContainer<IMCMGlobalSettingsContainer, MCMGlobalSettingsContainer>();
+            services.AddSettingsContainer<FluentPerCampaignSettingsContainer>();
+            services.AddSettingsContainer<IMCMPerCampaignSettingsContainer, MCMPerCampaignSettingsContainer>();
+
+            services.AddSettingsFormat<IJsonSettingsFormat, JsonSettingsFormat>();
+            services.AddSettingsFormat<IXmlSettingsFormat, XmlSettingsFormat>();
+
+            services.AddSettingsPropertyDiscoverer<IAttributeSettingsPropertyDiscoverer, AttributeSettingsPropertyDiscoverer>();
+
+            services.AddSettingsProvider<DefaultSettingsProvider>();
         }
 
-        /// <summary>
-        /// End initialization
-        /// </summary>
-        protected override void OnBeforeInitialModuleScreenSetAsRoot()
-        {
-            using var synchronizationProvider = BaseSynchronizationProvider.Create("OnBeforeInitialModuleScreenSetAsRoot_MCMv3");
-            if (synchronizationProvider.IsFirstInitialization)
-            {
-
-            }
-        }
 
         protected override void OnGameStart(Game game, IGameStarter gameStarter)
         {

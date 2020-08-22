@@ -1,5 +1,5 @@
 ﻿using MCM.Abstractions.Settings.Base.Global;
-using MCM.Abstractions.Settings.Base.PerCharacter;
+using MCM.Abstractions.Settings.Base.PerCampaign;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
 using MCM.Abstractions.Settings.Models;
 using MCM.Utils;
@@ -57,7 +57,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
         public FluentGlobalSettings BuildAsGlobal() => new FluentGlobalSettings(
             Id, DisplayName, FolderName, SubFolder, Format, UIVersion, SubGroupDelimiter, OnPropertyChanged, GetSettingPropertyGroups());
         /// <inheritdoc/>
-        public FluentPerCharacterSettings BuildAsPerCharacter() => new FluentPerCharacterSettings(
+        public FluentPerCampaignSettings BuildAsPerCampaign() => new FluentPerCampaignSettings(
             Id, DisplayName, FolderName, SubFolder, Format, UIVersion, SubGroupDelimiter, OnPropertyChanged, GetSettingPropertyGroups());
 
         private IEnumerable<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() =>

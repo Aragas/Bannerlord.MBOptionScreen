@@ -1,6 +1,8 @@
-﻿using MCM.Abstractions;
+﻿using Bannerlord.ButterLib.Common.Extensions;
+using Bannerlord.ButterLib.Common.Helpers;
+
+using MCM.Abstractions;
 using MCM.Abstractions.Attributes;
-using MCM.Extensions;
 
 using System;
 using System.Collections.Generic;
@@ -18,7 +20,7 @@ namespace MCM.Utils
             .Select(a => new VersionAttributeWrapper(a));
 
         private static IVersion? GetLatestMatching(IEnumerable<IVersion> versions, ApplicationVersion gameVersion) =>
-            versions.Where(a => a.GameVersion.IsSameOverride(gameVersion))
+            versions.Where(a => a.GameVersion.IsSameWithoutRevision(gameVersion))
                 .OrderByDescending(a => a.ImplementationVersion)
                 .ThenByDescending(a => a.GameVersion, new ApplicationVersionComparer())
                 .FirstOrDefault();
@@ -85,7 +87,7 @@ namespace MCM.Utils
         {
             public int Compare(ApplicationVersion x, ApplicationVersion y)
             {
-                if (x.IsSameOverride(y))
+                if (x.IsSameWithRevision(y))
                     return 0;
                 else
                     return

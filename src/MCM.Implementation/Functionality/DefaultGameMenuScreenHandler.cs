@@ -1,8 +1,9 @@
-﻿using HarmonyLib;
+﻿using Bannerlord.ButterLib.Common.Extensions;
+
+using HarmonyLib;
 
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Functionality;
-using MCM.Implementation.Extensions;
 
 using System;
 using System.Collections.Generic;

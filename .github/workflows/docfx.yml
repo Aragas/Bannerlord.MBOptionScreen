@@ -18,6 +18,9 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
+      with:
+        submodules: recursive
+        fetch-depth: 0
 
     - name: Setup .NET Core
       uses: actions/setup-dotnet@master
@@ -71,6 +74,10 @@ jobs:
         DOCFX: true
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Build DocFx.Plugin.LastModified
+      run: dotnet build build/DocFx.Plugin.LastModified/DocFx.Plugin.LastModified --configuration Release --output docs/_template/last-modified/plugins
+      shell: pwsh
 
     - name: DocFX metadata
       run: docfx/docfx.exe metadata docs/docfx.json

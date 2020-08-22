@@ -41,9 +41,9 @@ namespace MCM.Custom.ScreenTests
             globalSettings.Register();
             //globalSettings.Unregister();
 
-            //var perCharacterSettings = builder.BuildAsPerCharacter();
-            //perCharacterSettings.Register();
-            //perCharacterSettings.Unregister();
+            //var perCampaignSettings = builder.BuildAsPerCampaign();
+            //perCampaignSettings.Register();
+            //perCampaignSettings.Unregister();
 #endif
         }
     }

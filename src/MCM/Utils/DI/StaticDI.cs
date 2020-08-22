@@ -1,4 +1,6 @@
-﻿using MCM.Abstractions;
+﻿using Bannerlord.ButterLib.Common.Helpers;
+
+using MCM.Abstractions;
 
 using System;
 using System.Collections.Generic;
@@ -21,7 +23,7 @@ namespace MCM.Utils
             ? type.GetInterfaces()
             : type.GetInterfaces().Except(type.BaseType.GetInterfaces());
 
-        private static ApplicationVersion Version { get; } = ApplicationVersionUtils.GameVersion();
+        private static ApplicationVersion Version { get; } = ApplicationVersionUtils.GameVersion() ?? default; // TODO
         private static Dictionary<string, Type> LatestImplementations { get; } = new Dictionary<string, Type>();
         private static Dictionary<string, HashSet<string>> DependencyBases { get; } = new Dictionary<string, HashSet<string>>();
         private static Dictionary<string, Type> DependencyBaseLatestImplementations { get; } = new Dictionary<string, Type>();

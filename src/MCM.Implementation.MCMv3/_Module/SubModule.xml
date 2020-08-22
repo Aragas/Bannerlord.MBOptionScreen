@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Module>
+  <Name value="MCMv4 MCMv3 Integration"/>
+  <Id value="Bannerlord.MBOptionScreen.MCMv3"/>
+  <Version value="v$version$"/>
+  <DefaultModule value="true"/>
+  <SingleplayerModule value="true"/>
+  <MultiplayerModule value="false"/>
+  <Official value="false"/>
+  <DependedModules>
+    <DependedModule Id="Bannerlord.Harmony" />
+    <DependedModule Id="Bannerlord.ButterLib" />
+    <DependedModule Id="Bannerlord.MBOptionScreen"/>
+  </DependedModules>
+  <SubModules>
+    <SubModule>
+      <Name value="MCMv4 MCMv3 Compatibility"/>
+      <DLLName value="MCMv4.Implementation.MCMv3.v$version$.dll"/>
+      <SubModuleClassType value="MCM.Implementation.MCMv3.MCMImplementationMCMv3SubModule"/>
+      <Tags>
+        <Tag key="DedicatedServerType" value="none" />
+        <Tag key="IsNoRenderModeElement" value="false" />
+      </Tags>
+    </SubModule>
+  </SubModules>
+</Module>

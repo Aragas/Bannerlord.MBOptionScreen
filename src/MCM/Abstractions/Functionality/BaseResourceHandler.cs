@@ -1,4 +1,7 @@
-﻿using MCM.Utils;
+﻿using Bannerlord.ButterLib;
+using Bannerlord.ButterLib.Common.Extensions;
+
+using MCM.Extensions;
 
 using System;
 using System.Xml;
@@ -10,8 +13,9 @@ namespace MCM.Abstractions.Functionality
     public abstract class BaseResourceHandler : IDependency
     {
         private static BaseResourceHandler? _instance;
-        public static BaseResourceHandler Instance =>
-            _instance ??= DI.GetImplementation<BaseResourceHandler, ResourceHandlerWrapper>()!;
+        public static BaseResourceHandler Instance => _instance ??=
+            ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<BaseResourceHandler, ResourceHandlerWrapper>();
+            //DI.GetImplementation<BaseResourceHandler, ResourceHandlerWrapper>()!;
 
         public abstract void InjectBrush(XmlDocument xmlDocument);
         public abstract void InjectPrefab(string prefabName, XmlDocument xmlDocument);

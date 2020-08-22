@@ -4,9 +4,7 @@
       "src": [
         {
           "src": "../src",
-          "files": [
-            "MCM/*.csproj"
-          ]
+          "files": [ "MCM/*.csproj" ]
         }
       ],
       "dest": "api"
@@ -39,6 +37,7 @@
     "resource": [
       {
         "files": [
+		  "langwordMapping.yml",
           "images/**",
           "CNAME"
         ]
@@ -59,9 +58,10 @@
     "fileMetadataFiles": [],
     "template": [
       "default",
-      "custom"
+      "_template/dark-theme",
+      "_template/last-modified"
     ],
-    "postProcessors": ["ExtractSearchIndex"],
+    "postProcessors": ["ExtractSearchIndex", "LastModifiedPostProcessor"],
     "markdownEngineName": "markdig"
   }
 }
