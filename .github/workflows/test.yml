@@ -1,16 +1,21 @@
 name: Test
 
 on:
+  repository_dispatch:
+    types:
+      # If a new version of the game is released, test the repo against it.
+      # This way we will always know if the repo is broken on a new update.
+      - game_version_update
   push:
     branches:
-      - v3
+      - dev
     paths:
       - '.github/workflows/test.yml'
       - 'src/**'
       - 'build/**'
   pull_request:
     branches:
-      - v3
+      - dev
     # will be triggereg when undrafting or requesting review
     types: [review_requested, ready_for_review]
     paths:
