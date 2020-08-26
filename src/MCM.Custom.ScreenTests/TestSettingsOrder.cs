@@ -54,8 +54,8 @@ namespace MCM.Custom.ScreenTests
         public bool Group_E { get; set; } = true;
 
 
-        [SettingPropertyBool("Group Order Toggle")]
-        [SettingPropertyGroup("Group Order", IsMainToggle = true)]
+        [SettingPropertyBool("Group Order Toggle", IsToggle = true)] // TODO: cover in docs
+        [SettingPropertyGroup("Group Order")]
         public bool SubGroup_Toggle { get; set; } = true;
 
         [SettingPropertyBool("A")]

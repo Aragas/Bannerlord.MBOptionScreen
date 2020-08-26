@@ -1,8 +1,9 @@
-﻿using HarmonyLib;
+﻿using Bannerlord.ButterLib.Common.Helpers;
+
+using HarmonyLib;
 
 using System;
 using System.ComponentModel;
-using System.Reflection;
 
 namespace MCM.Abstractions.Ref
 {
@@ -12,12 +13,16 @@ namespace MCM.Abstractions.Ref
     /// </summary>
     public class RefWrapper : IRef, IWrapper
     {
+        private delegate Type GetTypeDelegate();
+        private delegate object GetValueDelegate();
+        private delegate void SetValueDelegate(object value);
+
+        private readonly GetTypeDelegate? _getTypeDelegate;
+        private readonly GetValueDelegate? _getValueDelegate;
+        private readonly SetValueDelegate? _setValueDelegate;
+
         /// <inheritdoc/>
         public object Object { get; }
-        private PropertyInfo? TypeProperty { get; }
-        private PropertyInfo? ValueProperty { get; }
-        /// <inheritdoc/>
-        public bool IsCorrect { get; }
 
         /// <inheritdoc/>
         public event PropertyChangedEventHandler? PropertyChanged
@@ -26,19 +31,21 @@ namespace MCM.Abstractions.Ref
             remove { if (Object is INotifyPropertyChanged notifyPropertyChanged) notifyPropertyChanged.PropertyChanged -= value; }
         }
         /// <inheritdoc/>
-        public Type Type => (Type) TypeProperty!.GetValue(Object);
+        public Type Type => _getTypeDelegate!.Invoke();
         /// <inheritdoc/>
-        public object Value { get => ValueProperty!.GetValue(Object); set => ValueProperty?.SetValue(Object, value); }
+        public object Value { get => _getValueDelegate!.Invoke(); set => _setValueDelegate?.Invoke(value); }
 
         public RefWrapper(object @object)
         {
             Object = @object;
             var type = @object.GetType();
 
-            TypeProperty = AccessTools.Property(type, nameof(Type));
-            ValueProperty = AccessTools.Property(type, nameof(Value));
+            var typeProperty = AccessTools.Property(type, nameof(Type));
+            var valueProperty = AccessTools.Property(type, nameof(Value));
 
-            IsCorrect = TypeProperty != null && ValueProperty != null;
+            _getTypeDelegate = AccessTools2.GetDelegate<GetTypeDelegate>(@object, typeProperty.GetGetMethod());
+            _getValueDelegate = AccessTools2.GetDelegate<GetValueDelegate>(@object, valueProperty.GetGetMethod());
+            _setValueDelegate = AccessTools2.GetDelegate<SetValueDelegate>(@object, valueProperty.GetSetMethod());
         }
     }
 }

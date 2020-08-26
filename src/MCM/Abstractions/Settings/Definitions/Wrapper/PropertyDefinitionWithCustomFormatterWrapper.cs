@@ -1,5 +1,6 @@
-﻿using System;
-using HarmonyLib;
+﻿using HarmonyLib;
+
+using System;
 
 namespace MCM.Abstractions.Settings.Definitions.Wrapper
 {

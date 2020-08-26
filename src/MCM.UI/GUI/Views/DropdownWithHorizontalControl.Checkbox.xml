@@ -38,12 +38,11 @@
                                 <ListPanel HeightSizePolicy="Fixed" WidthSizePolicy="StretchToParent" SuggestedHeight="50" VerticalAlignment="Bottom" HorizontalAlignment="Center" LayoutImp.LayoutMethod="HorizontalLeftToRight" UpdateChildrenStates="true" IsEnabled="@CanBeSelected" >
                                   <Children>
                                     <RichTextWidget HeightSizePolicy="Fixed" WidthSizePolicy="StretchToParent" SuggestedWidth="40" SuggestedHeight="100" HorizontalAlignment="Left" VerticalAlignment="Center" Brush="SPOptions.Dropdown.Center.Text" Text="@StringItem"/>
-                                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" VerticalAlignment="Center" HorizontalAlignment="Right" Brush="SPOptions.Checkbox.Empty.Button" ButtonType="Toggle" IsSelected="@BoolValue" ToggleIndicator="ToggleIndicator" UpdateChildrenStates="true" MarginRight="25">
+                                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" VerticalAlignment="Center" HorizontalAlignment="Right" Brush="SPOptions.Checkbox.Empty.Button" ButtonType="Toggle" IsSelected="@IsSelected" ToggleIndicator="ToggleIndicator" UpdateChildrenStates="true" MarginRight="25">
                                       <Children>
                                         <ImageWidget Id="ToggleIndicator" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="SPOptions.Checkbox.Full.Button"/>
                                       </Children>
                                     </ButtonWidget>
-                                    <RichTextWidget HeightSizePolicy="Fixed" WidthSizePolicy="StretchToParent" SuggestedWidth="1" SuggestedHeight="40" HorizontalAlignment="Left" VerticalAlignment="Center" Brush="SPOptions.Dropdown.Center.Text" Text="@StringItem"/>
                                   </Children>
                                 </ListPanel>
                               </ItemTemplate>

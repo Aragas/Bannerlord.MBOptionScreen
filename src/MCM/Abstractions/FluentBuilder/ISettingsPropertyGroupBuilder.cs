@@ -17,8 +17,6 @@ namespace MCM.Abstractions.FluentBuilder
         /// </summary>
         Dictionary<string, ISettingsPropertyBuilder> Properties { get; }
 
-        [Obsolete("Use AddToggle()", true)]
-        ISettingsPropertyGroupBuilder SetIsMainToggle(bool value);
         /// <inheritdoc cref="IPropertyGroupDefinition.GroupOrder"/>
         /// <param name="value">The value.</param>
         /// <returns>The settings property group builder.</returns>

@@ -44,9 +44,6 @@ namespace MCM.Abstractions.Settings.Models
         /// <inheritdoc/>
         public string GroupName { get; }
         /// <inheritdoc/>
-        [Obsolete("Will be removed", true)]
-        public bool IsMainToggle { get; }
-        /// <inheritdoc/>
         public bool IsToggle { get; }
         /// <inheritdoc/>
         public int GroupOrder { get; }
@@ -72,7 +69,7 @@ namespace MCM.Abstractions.Settings.Models
                 SettingType = SettingType.Float;
             else if (PropertyReference.Type == typeof(string))
                 SettingType = SettingType.String;
-            else if (SettingsUtils.IsDropdown(PropertyReference.Type))
+            else if (SettingsUtils.IsForGenericDropdown(PropertyReference.Type))
                 SettingType = SettingType.Dropdown;
 
             foreach (var propertyDefinition in propertyDefinitions)

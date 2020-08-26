@@ -1,14 +1,16 @@
-﻿using MCM.Abstractions.Settings.Base;
+﻿using Bannerlord.ButterLib;
+using Bannerlord.ButterLib.Common.Extensions;
+
+using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Formats;
-using MCM.Abstractions.Settings.Formats.Memory;
 using MCM.Abstractions.Settings.Models;
 using MCM.Utils;
 
+using Microsoft.Extensions.DependencyInjection;
+
 using System.Collections.Generic;
 using System.Linq;
-using Bannerlord.ButterLib;
-using Bannerlord.ButterLib.Common.Extensions;
-using Microsoft.Extensions.DependencyInjection;
+
 using TaleWorlds.Engine;
 
 using Path = System.IO.Path;
@@ -29,14 +31,10 @@ namespace MCM.Abstractions.Settings.Containers
         protected BaseSettingsContainer()
         {
             foreach (var format in ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<IEnumerable<ISettingsFormat>>())
-            //foreach (var format in DI.GetBaseImplementations<ISettingsFormat>())
             foreach (var extension in format.Extensions)
             {
                 AvailableSettingsFormats[extension] = format;
             }
-
-            if (AvailableSettingsFormats.Count == 0)
-                AvailableSettingsFormats.Add("memory", new MemorySettingsFormat());
         }
 
         protected virtual void RegisterSettings(TSettings tSettings)

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MCM.Abstractions.Settings.Formats
 {
-    public interface ISettingsFormat : IDependencyBase
+    public interface ISettingsFormat
     {
         IEnumerable<string> Extensions { get; }
 

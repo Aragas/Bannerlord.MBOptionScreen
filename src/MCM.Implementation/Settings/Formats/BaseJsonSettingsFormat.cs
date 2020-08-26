@@ -136,7 +136,7 @@ namespace MCM.Implementation.Settings.Formats
                 _settingsFormat = settingsFormat;
             }
 
-            public override bool CanConvert(Type objectType) => SettingsUtils.IsDropdown(objectType);
+            public override bool CanConvert(Type objectType) => SettingsUtils.IsForGenericDropdown(objectType);
 
             public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
             {

@@ -131,8 +131,7 @@ namespace MCM.UI.GUI.ViewModels
 
         public bool RestartRequired() => SettingPropertyGroups
             .SelectMany(x => SettingsUtils.GetAllSettingPropertyDefinitions(x.SettingPropertyGroupDefinition))
-            .Where(p => p.RequireRestart)
-            .Any(p => URS.RefChanged(p.PropertyReference));
+            .Any(p => p.RequireRestart && URS.RefChanged(p.PropertyReference));
 
         public void ChangePreset(string presetName)
         {

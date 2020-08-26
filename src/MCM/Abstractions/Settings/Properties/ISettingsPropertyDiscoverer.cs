@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MCM.Abstractions.Settings.Properties
 {
-    public interface ISettingsPropertyDiscoverer : IDependencyBase
+    public interface ISettingsPropertyDiscoverer
     {
         IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object);
     }

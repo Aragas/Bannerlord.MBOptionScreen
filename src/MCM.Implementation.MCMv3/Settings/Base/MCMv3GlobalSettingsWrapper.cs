@@ -1,55 +1,55 @@
-﻿extern alias v4;
+﻿extern alias v3;
+extern alias v4;
+
+using Bannerlord.ButterLib;
+using Bannerlord.ButterLib.Common.Extensions;
+using Bannerlord.ButterLib.Common.Helpers;
 
 using HarmonyLib;
 
+using MCM.Implementation.MCMv3.Settings.Properties;
+
+using Microsoft.Extensions.DependencyInjection;
+
 using System;
 using System.ComponentModel;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 
-using v4::MCM.Abstractions.Attributes;
 using v4::MCM.Abstractions.Settings.Base;
+using v4::MCM.Abstractions.Settings.Base.Global;
+using v4::MCM.Abstractions.Settings.Properties;
+
+using LegacyBaseSettings = v3::MCM.Abstractions.Settings.Base.BaseSettings;
 
 namespace MCM.Implementation.MCMv3.Settings.Base
 {
-    [Version("e1.0.0",  1)]
-    [Version("e1.0.1",  1)]
-    [Version("e1.0.2",  1)]
-    [Version("e1.0.3",  1)]
-    [Version("e1.0.4",  1)]
-    [Version("e1.0.5",  1)]
-    [Version("e1.0.6",  1)]
-    [Version("e1.0.7",  1)]
-    [Version("e1.0.8",  1)]
-    [Version("e1.0.9",  1)]
-    [Version("e1.0.10", 1)]
-    [Version("e1.0.11", 1)]
-    [Version("e1.1.0",  1)]
-    [Version("e1.2.0",  1)]
-    [Version("e1.2.1",  1)]
-    [Version("e1.3.0",  1)]
-    [Version("e1.3.1",  1)]
-    [Version("e1.4.0",  1)]
-    [Version("e1.4.1",  1)]
-    public class MCMv3GlobalSettingsWrapper : BaseMCMv3GlobalSettingsWrapper
+    public class MCMv3GlobalSettingsWrapper : BaseGlobalSettingsWrapper
     {
-        private PropertyInfo? IdProperty { get; }
-        private PropertyInfo? ModuleFolderNameProperty { get; }
-        private PropertyInfo? ModNameProperty { get; }
-        private PropertyInfo? UIVersionProperty { get; }
-        private PropertyInfo? SubFolderProperty { get; }
-        private PropertyInfo? SubGroupDelimiterProperty { get; }
-        private PropertyInfo? FormatProperty { get; }
-        private MethodInfo? GetSettingPropertyGroupsMethod { get; }
-        private MethodInfo? OnPropertyChangedMethod { get; }
+        private delegate string GetIdDelegate();
+        private delegate string GetFolderNameDelegate();
+        private delegate string GetDisplayNameDelegate();
+        private delegate int GetUIVersionDelegate();
+        private delegate string GetSubFolderDelegate();
+        private delegate char GetSubGroupDelimiterDelegate();
+        private delegate string GetFormatDelegate();
+        private delegate void OnPropertyChangedDelegate(string? propertyName);
 
-        public override string Id => IdProperty?.GetValue(Object) as string ?? "ERROR";
-        public override string FolderName => ModuleFolderNameProperty?.GetValue(Object) as string ?? string.Empty;
-        public override string DisplayName => ModNameProperty?.GetValue(Object) as string ?? "ERROR";
-        public override int UIVersion => UIVersionProperty?.GetValue(Object) as int? ?? 1;
-        public override string SubFolder => SubFolderProperty?.GetValue(Object) as string ?? string.Empty;
-        protected override char SubGroupDelimiter => SubGroupDelimiterProperty?.GetValue(Object) as char? ?? '/';
-        public override string Format => FormatProperty?.GetValue(Object) as string ?? "json";
+        private readonly GetIdDelegate? _getIdDelegate;
+        private readonly GetFolderNameDelegate? _getFolderNameDelegate;
+        private readonly GetDisplayNameDelegate? _getDisplayNameDelegate;
+        private readonly GetUIVersionDelegate? _getUIVersionDelegate;
+        private readonly GetSubFolderDelegate? _getSubFolderDelegate;
+        private readonly GetSubGroupDelimiterDelegate? _getSubGroupDelimiterDelegate;
+        private readonly GetFormatDelegate? _getFormatDelegate;
+        private readonly OnPropertyChangedDelegate? _methodOnPropertyChangedDelegate;
+
+        public override string Id => _getIdDelegate?.Invoke() ?? "ERROR";
+        public override string FolderName => _getFolderNameDelegate?.Invoke() ?? string.Empty;
+        public override string DisplayName => _getDisplayNameDelegate?.Invoke() ?? "ERROR";
+        public override int UIVersion => _getUIVersionDelegate?.Invoke() ?? 1;
+        public override string SubFolder => _getSubFolderDelegate?.Invoke() ?? string.Empty;
+        protected override char SubGroupDelimiter => _getSubGroupDelimiterDelegate?.Invoke() ?? '/';
+        public override string Format => _getFormatDelegate?.Invoke() ?? "json";
         public override event PropertyChangedEventHandler? PropertyChanged
         {
             add { if (Object is INotifyPropertyChanged notifyPropertyChanged) notifyPropertyChanged.PropertyChanged += value; }
@@ -59,27 +59,22 @@ namespace MCM.Implementation.MCMv3.Settings.Base
         public MCMv3GlobalSettingsWrapper(object @object) : base(@object)
         {
             var type = @object.GetType();
-            IdProperty = AccessTools.Property(type, "Id");
-            ModuleFolderNameProperty = AccessTools.Property(type, "ModuleFolderName");
-            ModNameProperty = AccessTools.Property(type, "ModName");
-            UIVersionProperty = AccessTools.Property(type, "UIVersion");
-            SubFolderProperty = AccessTools.Property(type, "SubFolder");
-            SubGroupDelimiterProperty = AccessTools.Property(type, "SubGroupDelimiter");
-            FormatProperty = AccessTools.Property(type, "Format");
-            GetSettingPropertyGroupsMethod = AccessTools.Method(type, "GetSettingPropertyGroups");
-            OnPropertyChangedMethod = AccessTools.Method(type, "OnPropertyChanged");
 
-            IsCorrect = IdProperty != null && ModuleFolderNameProperty != null &&
-                        ModNameProperty != null && UIVersionProperty != null &&
-                        SubFolderProperty != null && SubGroupDelimiterProperty != null &&
-                        GetSettingPropertyGroupsMethod != null
-                        // Not present in v1
-                        /* FormatProperty != null &&
-                        OnPropertyChangedMethod != null*/;
+            _getIdDelegate = AccessTools2.GetDelegate<GetIdDelegate>(@object, AccessTools.Property(type, nameof(LegacyBaseSettings.Id)).GetMethod);
+            _getFolderNameDelegate = AccessTools2.GetDelegate<GetFolderNameDelegate>(@object, AccessTools.Property(type, nameof(LegacyBaseSettings.FolderName)).GetMethod);
+            _getDisplayNameDelegate = AccessTools2.GetDelegate<GetDisplayNameDelegate>(@object, AccessTools.Property(type, nameof(LegacyBaseSettings.DisplayName)).GetMethod);
+            _getUIVersionDelegate = AccessTools2.GetDelegate<GetUIVersionDelegate>(@object, AccessTools.Property(type, nameof(LegacyBaseSettings.UIVersion)).GetMethod);
+            _getSubFolderDelegate = AccessTools2.GetDelegate<GetSubFolderDelegate>(@object, AccessTools.Property(type, nameof(LegacyBaseSettings.SubFolder)).GetMethod);
+            _getSubGroupDelimiterDelegate = AccessTools2.GetDelegate<GetSubGroupDelimiterDelegate>(@object, AccessTools.Property(type, "SubGroupDelimiter").GetMethod);
+            _getFormatDelegate = AccessTools2.GetDelegate<GetFormatDelegate>(@object, AccessTools.Property(type, nameof(LegacyBaseSettings.Format)).GetMethod);
+            _methodOnPropertyChangedDelegate = AccessTools2.GetDelegate<OnPropertyChangedDelegate>(@object, AccessTools.Method(type, nameof(LegacyBaseSettings.OnPropertyChanged)));
         }
 
+        protected override ISettingsPropertyDiscoverer? Discoverer { get; } =
+            ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<IMCMv3SettingsPropertyDiscoverer>();
+
         public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
-            OnPropertyChangedMethod?.Invoke(Object, new object[] { propertyName! });
+            _methodOnPropertyChangedDelegate?.Invoke(propertyName);
 
         protected override BaseSettings CreateNew() => new MCMv3GlobalSettingsWrapper(Activator.CreateInstance(Object.GetType()));
     }

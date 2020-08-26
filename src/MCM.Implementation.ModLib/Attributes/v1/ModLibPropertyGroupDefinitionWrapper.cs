@@ -1,4 +1,8 @@
-﻿using MCM.Abstractions.Settings.Definitions;
+﻿extern alias v1;
+
+using MCM.Abstractions.Settings.Definitions;
+
+using LegacyAttribute = v1::ModLib.Attributes.SettingPropertyGroupAttribute;
 
 namespace MCM.Implementation.ModLib.Attributes.v1
 {
@@ -12,8 +16,8 @@ namespace MCM.Implementation.ModLib.Attributes.v1
         {
             var type = @object.GetType();
 
-            GroupName = type.GetProperty("GroupName")?.GetValue(@object) as string ?? "ERROR";
-            IsMainToggle = type.GetProperty("IsMainToggle")?.GetValue(@object) as bool? ?? false;
+            GroupName = type.GetProperty(nameof(LegacyAttribute.GroupName))?.GetValue(@object) as string ?? "ERROR";
+            IsMainToggle = type.GetProperty(nameof(LegacyAttribute.IsMainToggle))?.GetValue(@object) as bool? ?? false;
             GroupOrder = -1;
         }
     }

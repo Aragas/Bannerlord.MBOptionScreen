@@ -3,5 +3,5 @@
     /// <summary>
     /// So it can be overriden by an external library
     /// </summary>
-    public interface IAttributeSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer, IDependency { }
+    public interface IAttributeSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer { }
 }

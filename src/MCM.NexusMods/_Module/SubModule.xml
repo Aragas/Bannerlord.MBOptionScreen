@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Module>
-  <Name value="Mod Configuration Menu v3"/>
+  <Name value="Mod Configuration Menu v4"/>
   <Id value="Bannerlord.MBOptionScreen"/>
   <Version value="v$version$"/>
   <Official value="false"/>
@@ -9,6 +9,7 @@
   <DependedModules>
     <DependedModule Id="Bannerlord.Harmony" />
     <DependedModule Id="Bannerlord.ButterLib" />
+    <DependedModule Id="Bannerlord.UIExtenderEx" />
   </DependedModules>
   <SubModules>
     <SubModule>
@@ -20,13 +21,16 @@
     <SubModule>
       <Name value="MCMv4 Integrated Loader"/>
       <DLLName value="MCMv4.dll"/>
-      <SubModuleClassType value="MCM.IntegratedLoaderSubModule"/>
-      <!--
-      <Assemblies>
-        <Assembly value="Microsoft.Bcl.HashCode.dll"/>
-      </Assemblies>
-      -->
+      <SubModuleClassType value="MCM.ImplementationLoaderSubModule"/>
       <Tags/>
     </SubModule>
+    <!--
+    <SubModule>
+      <Name value="MCMv4 Tests"/>
+      <DLLName value="MCMv4.Custom.ScreenTests.dll"/>
+      <SubModuleClassType value="MCM.Custom.ScreenTests.MCMScreenTestSubModule"/>
+      <Tags/>
+    </SubModule>
+    -->
   </SubModules>
 </Module>

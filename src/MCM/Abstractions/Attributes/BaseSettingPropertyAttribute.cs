@@ -1,11 +1,13 @@
 ﻿using MCM.Abstractions.Settings.Definitions;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 using TaleWorlds.Localization;
 
 namespace MCM.Abstractions.Attributes
 {
+    [SuppressMessage("Design", "RCS1203:Use AttributeUsageAttribute.", Justification = "Implemented in the derived attributes.")]
     public abstract class BaseSettingPropertyAttribute : Attribute, IPropertyDefinitionBase
     {
         private string _hintText = string.Empty;

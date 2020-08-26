@@ -1,4 +1,4 @@
 ﻿namespace MCM.Abstractions.Settings.Containers.PerCampaign
 {
-    public interface IFluentPerCampaignSettingsContainer : IPerCampaignSettingsContainer, IDependency { }
+    public interface IFluentPerCampaignSettingsContainer : IPerCampaignSettingsContainer { }
 }

@@ -88,9 +88,9 @@ namespace MCM.UI.GUI.ViewModels
         {
             SettingProperty = settingProperty;
 
-            TitleText = new TextObject("{=EditValueVM_TitleText}Edit \"{PROPERTYNAME}\"", new Dictionary<string, TextObject>()
+            TitleText = new TextObject("{=EditValueVM_TitleText}Edit \"{PROPERTYNAME}\"", new Dictionary<string, TextObject>
             {
-                {"PROPERTYNAME", new TextObject(SettingProperty.Name)}
+                { "PROPERTYNAME", new TextObject(SettingProperty.Name) }
             }).ToString();
             switch (SettingType)
             {
@@ -98,19 +98,19 @@ namespace MCM.UI.GUI.ViewModels
                 case SettingType.Float:
                 {
                     var format = SettingProperty.IsIntVisible ? "0" : "0.00";
-                    DescriptionText = new TextObject("{=EditValueVM_DescriptionText_Numeric}Edit the value for \"{PROPERTYNAME}\".\nThe minimum value is {MINVALUE} and the maximum value is {MAXVALUE}.", new Dictionary<string, TextObject>()
+                    DescriptionText = new TextObject("{=EditValueVM_DescriptionText_Numeric}Edit the value for \"{PROPERTYNAME}\".\nThe minimum value is {MINVALUE} and the maximum value is {MAXVALUE}.", new Dictionary<string, TextObject>
                     {
-                        {"PROPERTYNAME", new TextObject(SettingProperty.Name)},
-                        {"MINVALUE", new TextObject(SettingProperty.SettingPropertyDefinition.EditableMinValue.ToString(format))},
-                        {"MAXVALUE", new TextObject(SettingProperty.SettingPropertyDefinition.EditableMaxValue.ToString(format))},
+                        { "PROPERTYNAME", new TextObject(SettingProperty.Name) },
+                        { "MINVALUE", new TextObject(SettingProperty.SettingPropertyDefinition.EditableMinValue.ToString(format)) },
+                        { "MAXVALUE", new TextObject(SettingProperty.SettingPropertyDefinition.EditableMaxValue.ToString(format)) },
                     }).ToString();
                     break;
                 }
                 case SettingType.String:
                 {
-                    DescriptionText = new TextObject("{=EditValueVM_DescriptionText_Text}Edit the value for \"{PROPERTYNAME}\".", new Dictionary<string, TextObject>()
+                    DescriptionText = new TextObject("{=EditValueVM_DescriptionText_Text}Edit the value for \"{PROPERTYNAME}\".", new Dictionary<string, TextObject>
                     {
-                        {"PROPERTYNAME", new TextObject(SettingProperty.Name)},
+                        { "PROPERTYNAME", new TextObject(SettingProperty.Name) },
                     }).ToString();
                     break;
                 }

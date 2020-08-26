@@ -43,7 +43,7 @@ namespace MCM.Tests
 
             var mission = (Mission) FormatterServices.GetUninitializedObject(typeof(Mission));
 
-            var subModule = new IntegratedLoaderSubModule();
+            var subModule = new ImplementationLoaderSubModule();
             subModule.GetType().GetMethod("OnSubModuleLoad")?.Invoke(subModule, Array.Empty<object>());
             subModule.GetType().GetMethod("OnSubModuleUnloaded")?.Invoke(subModule, Array.Empty<object>());
             subModule.GetType().GetMethod("OnApplicationTick")?.Invoke(subModule, new object[] { 0.1f });

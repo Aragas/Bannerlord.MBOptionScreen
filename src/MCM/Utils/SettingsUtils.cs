@@ -1,7 +1,8 @@
 ﻿using HarmonyLib;
 
 using MCM.Abstractions;
-using MCM.Abstractions.Data;
+using MCM.Abstractions.Common;
+using MCM.Abstractions.Dropdown;
 using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Base;
@@ -41,25 +42,15 @@ namespace MCM.Utils
             }
         }
 
-        public static object? UnwrapSettings(object? settings)
-        {
-            while (settings != null && ReflectionUtils.ImplementsOrImplementsEquivalent(settings.GetType(), typeof(BaseGlobalSettingsWrapper)))
-            {
-                var prop = AccessTools.Property(settings.GetType(), "_object") ??
-                           AccessTools.Property(settings.GetType(), nameof(IWrapper.Object));
-                settings = prop?.GetValue(settings);
-            }
-            return settings;
-        }
-        public static GlobalSettings? WrapSettings(object? settingsObj) => settingsObj is { } settings
-            ? settings is GlobalSettings settingsBase ? settingsBase : BaseGlobalSettingsWrapper.Create(settings)
-            : null;
-
         public static void ResetSettings(BaseSettings settings)
         {
-            var newSettings = settings is IWrapper wrapper
-                    ? BaseGlobalSettingsWrapper.Create(Activator.CreateInstance(wrapper.Object.GetType()))
-                    : (GlobalSettings) Activator.CreateInstance(settings.GetType());
+            GlobalSettings newSettings;
+            if (settings is IWrapper wrapper)
+            {
+                newSettings = (GlobalSettings) Activator.CreateInstance(wrapper.GetType(), Activator.CreateInstance(wrapper.Object.GetType()));
+            }
+            else
+                newSettings = (GlobalSettings) Activator.CreateInstance(settings.GetType());
             OverrideSettings(settings, newSettings);
         }
         public static void OverrideSettings(BaseSettings settings, BaseSettings overrideSettings)
@@ -75,7 +66,7 @@ namespace MCM.Utils
 
             foreach (var settingsPropertyDefinition1 in set1)
             {
-                var settingsPropertyDefinition2 = set2.FirstOrDefault(x =>
+                var settingsPropertyDefinition2 = set2.Find(x =>
                     x.DisplayName == settingsPropertyDefinition1.DisplayName &&
                     x.GroupName == settingsPropertyDefinition1.GroupName);
 
@@ -101,8 +92,8 @@ namespace MCM.Utils
                 }
                 case SettingType.Dropdown:
                 {
-                    var original = new DropdownWrapper(currentDefinition.PropertyReference.Value);
-                    var @new = new DropdownWrapper(newDefinition.PropertyReference.Value);
+                    var original = new SelectedIndexWrapper(currentDefinition.PropertyReference.Value);
+                    var @new = new SelectedIndexWrapper(newDefinition.PropertyReference.Value);
                     return original.SelectedIndex.Equals(@new.SelectedIndex);
                 }
                 default:
@@ -117,7 +108,7 @@ namespace MCM.Utils
             foreach (var newSettingPropertyGroup in @new.GetSettingPropertyGroups())
             {
                 var settingPropertyGroup = current.GetSettingPropertyGroups()
-                    .FirstOrDefault(x => x.GroupName == newSettingPropertyGroup.GroupName);
+                    .Find(x => x.GroupName == newSettingPropertyGroup.GroupName);
                 OverrideValues(settingPropertyGroup, newSettingPropertyGroup);
             }
         }
@@ -145,24 +136,28 @@ namespace MCM.Utils
         }
 
 
-        public static bool IsDropdown(Type type) =>
-            ReflectionUtils.ImplementsOrImplementsEquivalent(type, typeof(IDropdownProvider)) ||
-            ReflectionUtils.ImplementsOrImplementsEquivalent(type, "MBOptionScreen.Data.IDropdownProvider");
-        public static bool IsDefaultDropdown(Type type) =>
-            ReflectionUtils.ImplementsOrImplementsEquivalent(type, typeof(IDefaultDropdown)) ||
-            (IsDropdown(type) && !IsCheckboxDropdown(type));
-        public static bool IsCheckboxDropdown(Type type) =>
-            ReflectionUtils.ImplementsOrImplementsEquivalent(type, typeof(ICheckboxDropdown));
+        public static bool IsForGenericDropdown(Type type)
+        {
+            var implementsList = type.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IList<>));
+            var hasSelectedIndex = AccessTools.Property(type, "SelectedIndex") != null;
+            return implementsList && hasSelectedIndex;
+        }
 
-        public static bool IsDefaultDropdown(object obj) => IsDefaultDropdown(obj.GetType());
-        public static bool IsCheckboxDropdown(object obj) => IsCheckboxDropdown(obj.GetType());
+        public static bool IsForTextDropdown(Type type) =>
+            IsForGenericDropdown(type) && type.IsGenericType && AccessTools.Property(type.GenericTypeArguments[0], "IsSelected") == null;
+
+        public static bool IsForCheckboxDropdown(Type type) =>
+            IsForGenericDropdown(type) && type.IsGenericType && AccessTools.Property(type.GenericTypeArguments[0], "IsSelected") != null;
+
+        public static bool IsForTextDropdown(object obj) => IsForTextDropdown(obj.GetType());
+        public static bool IsForCheckboxDropdown(object obj) => IsForCheckboxDropdown(obj.GetType());
 
         public static object GetSelector(object dropdown)
         {
             var selectorProperty = AccessTools.Property(dropdown.GetType(), "Selector");
-            return selectorProperty == null
-                ? new MCMSelectorVM<MCMSelectorItemVM>(null)
-                : selectorProperty.GetValue(dropdown);
+            return selectorProperty != null
+                ? selectorProperty.GetValue(dropdown)
+                : MCMSelectorVM<MCMSelectorItemVM>.Empty;
         }
 
         public static IEnumerable<ISettingsPropertyDefinition> GetAllSettingPropertyDefinitions(SettingsPropertyGroupDefinition settingPropertyGroup1)

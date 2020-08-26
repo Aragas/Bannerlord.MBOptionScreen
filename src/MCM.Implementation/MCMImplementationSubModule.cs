@@ -5,8 +5,6 @@ using MCM.Abstractions.Settings.Properties;
 using MCM.Abstractions.Settings.Providers;
 using MCM.Extensions;
 using MCM.Implementation.Functionality;
-using MCM.Implementation.Settings.Base.Global;
-using MCM.Implementation.Settings.Base.PerCampaign;
 using MCM.Implementation.Settings.Containers.Global;
 using MCM.Implementation.Settings.Containers.PerCampaign;
 using MCM.Implementation.Settings.Formats.Json;
@@ -31,9 +29,6 @@ namespace MCM.Implementation
 
             services.AddTransient<BaseGameMenuScreenHandler, DefaultGameMenuScreenHandler>();
             services.AddTransient<BaseIngameMenuScreenHandler, DefaultIngameMenuScreenHandler>();
-
-            services.AddSettingsContainerWrapper<BaseMCMGlobalSettingsWrapper, MCMGlobalSettingsWrapper>();
-            services.AddSettingsContainerWrapper<BaseMCMPerCampaignSettingsWrapper, MCMPerCampaignSettingsWrapper>();
 
             services.AddSettingsContainer<FluentGlobalSettingsContainer>();
             services.AddSettingsContainer<IMCMGlobalSettingsContainer, MCMGlobalSettingsContainer>();

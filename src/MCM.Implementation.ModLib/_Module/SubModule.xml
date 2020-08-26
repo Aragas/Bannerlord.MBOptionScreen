@@ -1,12 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Module>
-  <Name value="MCMv3 ModLib v1/v13 Integration"/>
+  <Name value="MCMv4 ModLib v1/v13 Integration"/>
   <Id value="Bannerlord.MBOptionScreen.ModLib"/>
   <Version value="v$version$"/>
-  <DefaultModule value="true"/>
+  <Official value="false"/>
   <SingleplayerModule value="true"/>
   <MultiplayerModule value="false"/>
-  <Official value="false"/>
   <DependedModules>
     <DependedModule Id="Bannerlord.Harmony" />
     <DependedModule Id="Bannerlord.ButterLib" />
@@ -17,28 +16,19 @@
       <Name value="ModLib Substitute"/>
       <DLLName value="ModLib.dll"/>
       <SubModuleClassType value="ModLib.ModLibSubModule"/>
-      <Tags>
-        <Tag key="DedicatedServerType" value="none" />
-        <Tag key="IsNoRenderModeElement" value="false" />
-      </Tags>
+      <Tags/>
     </SubModule>
     <SubModule>
       <Name value="ModLib.Definitions Substitute"/>
       <DLLName value="ModLib.Definitions.dll"/>
       <SubModuleClassType value="ModLib.Definitions.ModLibSubModule"/>
-      <Tags>
-        <Tag key="DedicatedServerType" value="none" />
-        <Tag key="IsNoRenderModeElement" value="false" />
-      </Tags>
+      <Tags/>
     </SubModule>
     <SubModule>
-      <Name value="MCMv3 ModLib Compatibility"/>
-      <DLLName value="MCMv3.Implementation.ModLib.v$version$.dll"/>
-      <SubModuleClassType value="MCM.Implementation.ModLib.MCMImplementationModLibSubModule"/>
-      <Tags>
-        <Tag key="DedicatedServerType" value="none" />
-        <Tag key="IsNoRenderModeElement" value="false" />
-      </Tags>
+      <Name value="MCMv4 ModLib Compatibility"/>
+      <DLLName value="MCMv4.Implementation.ModLib.v$version$.dll"/>
+      <SubModuleClassType value="MCM.Implementation.ModLib.MCMModLibSubModule"/>
+      <Tags/>
     </SubModule>
   </SubModules>
 </Module>

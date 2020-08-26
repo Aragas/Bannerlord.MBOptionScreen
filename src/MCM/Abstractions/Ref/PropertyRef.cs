@@ -58,12 +58,6 @@ namespace MCM.Abstractions.Ref
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (PropertyInfo.GetHashCode() * 397) ^ Instance.GetHashCode();
-            }
-        }
+        public override int GetHashCode() => HashCode.Combine(PropertyInfo, Instance);
     }
 }

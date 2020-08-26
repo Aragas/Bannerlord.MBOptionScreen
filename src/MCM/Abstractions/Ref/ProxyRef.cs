@@ -52,17 +52,11 @@ namespace MCM.Abstractions.Ref
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((ProxyRef<T>) obj);
         }
 
         /// <inheritdoc/>
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                return (_getter.GetHashCode() * 397) ^ (_setter != null ? _setter.GetHashCode() : 0);
-            }
-        }
+        public override int GetHashCode() => HashCode.Combine(_getter, _setter);
     }
 }

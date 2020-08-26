@@ -1,4 +1,5 @@
-﻿using MCM.Abstractions.Data;
+﻿using MCM.Abstractions.Common;
+using MCM.Abstractions.Dropdown;
 using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Models;
@@ -9,8 +10,7 @@ using MCM.Utils;
 
 using System;
 using System.ComponentModel;
-
-using TaleWorlds.Core.ViewModelCollection;
+using System.Diagnostics.CodeAnalysis;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
 
@@ -18,6 +18,8 @@ namespace MCM.UI.GUI.ViewModels
 {
     internal sealed class SettingsPropertyVM : ViewModel
     {
+        private SelectorVMWrapper? _selectorVMWrapper;
+
         public ModOptionsVM MainView => SettingsVM.MainView;
         public SettingsVM SettingsVM { get; }
         public SettingsPropertyGroupVM Group { get; set; } = default!;
@@ -27,52 +29,46 @@ namespace MCM.UI.GUI.ViewModels
         public ISettingsPropertyDefinition SettingPropertyDefinition { get; }
         public IRef PropertyReference => SettingPropertyDefinition.PropertyReference;
         public SettingType SettingType => SettingPropertyDefinition.SettingType;
-        public string HintText => SettingPropertyDefinition.HintText.Length > 0 ? $"{Name}: {SettingPropertyDefinition.HintText}" : "";
+        public string HintText => SettingPropertyDefinition.HintText.Length > 0
+            ? $"{Name}: {SettingPropertyDefinition.HintText}"
+            : string.Empty;
         public string ValueFormat => SettingPropertyDefinition.ValueFormat;
         public IFormatProvider? ValueFormatProvider { get; }
-        
-        public bool SatisfiesSearch
-        {
-            get
-            {
-                if (MainView == null || string.IsNullOrEmpty(MainView.SearchText))
-                    return true;
 
-                return Name.IndexOf(MainView.SearchText, StringComparison.OrdinalIgnoreCase) >= 0;
-            }
-        }
+        public bool SatisfiesSearch => string.IsNullOrEmpty(MainView.SearchText) ||
+                                       Name.IndexOf(MainView.SearchText, StringComparison.OrdinalIgnoreCase) >= 0;
 
         [DataSourceProperty]
         public string Name => SettingPropertyDefinition.DisplayName;
 
         [DataSourceProperty]
-        public bool IsIntVisible => SettingType == SettingType.Int;
+        public bool IsIntVisible { get; }
         [DataSourceProperty]
-        public bool IsFloatVisible => SettingType == SettingType.Float;
+        public bool IsFloatVisible { get; }
         [DataSourceProperty]
-        public bool IsBoolVisible => SettingType == SettingType.Bool;
+        public bool IsBoolVisible { get; }
         [DataSourceProperty]
-        public bool IsStringVisible => SettingType == SettingType.String;
+        public bool IsStringVisible{ get; }
         [DataSourceProperty]
-        public bool IsDropdownVisible => IsDropdownDefaultVisible || IsDropdownCheckboxVisible;
+        public bool IsDropdownVisible { get; }
         [DataSourceProperty]
-        public bool IsDropdownDefaultVisible => SettingType == SettingType.Dropdown && SettingsUtils.IsDefaultDropdown(PropertyReference.Value);
+        public bool IsDropdownDefaultVisible { get; }
         [DataSourceProperty]
-        public bool IsDropdownCheckboxVisible => SettingType == SettingType.Dropdown && SettingsUtils.IsCheckboxDropdown(PropertyReference.Value);
+        public bool IsDropdownCheckboxVisible { get; }
         [DataSourceProperty]
-        public bool IsEnabled => Group?.GroupToggle != false;
+        public bool IsEnabled => Group.GroupToggle;
         [DataSourceProperty]
-        public bool HasEditableText => IsIntVisible || IsFloatVisible;
+        public bool HasEditableText { get; }
         [DataSourceProperty]
         public bool IsSettingVisible
         {
             get
             {
-                if (Group != null && SettingPropertyDefinition.IsToggle)
+                if (SettingPropertyDefinition.IsToggle)
                     return false;
-                if (Group?.GroupToggle == false)
+                if (!Group.GroupToggle)
                     return false;
-                if (Group?.IsExpanded == false)
+                if (!Group.IsExpanded)
                     return false;
                 if (!SatisfiesSearch)
                     return false;
@@ -136,15 +132,15 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public SelectorVMWrapper DropdownValue
         {
-            get =>  new SelectorVMWrapper(IsDropdownVisible 
-                ? SettingsUtils.GetSelector(PropertyReference.Value)
-                : (object) new MCMSelectorVM<MCMSelectorItemVM>(null));
+            get => _selectorVMWrapper ??= new SelectorVMWrapper(IsDropdownVisible
+                    ? SettingsUtils.GetSelector(PropertyReference.Value)
+                    : MCMSelectorVM<MCMSelectorItemVM>.Empty);
             set
             {
                 if (IsDropdownVisible && DropdownValue != value)
                 {
                     // TODO
-                    URS.Do(new ComplexReferenceTypeAction<SelectorWrapper>(PropertyReference, selector =>
+                    URS.Do(new ComplexReferenceTypeAction<SelectedIndexWrapper>(PropertyReference, selector =>
                     {
                         //selector.ItemList = DropdownValue.ItemList;
                         selector.SelectedIndex = DropdownValue.SelectedIndex;
@@ -157,12 +153,13 @@ namespace MCM.UI.GUI.ViewModels
                 }
             }
         }
+
         [DataSourceProperty]
         public float MaxValue => (float) SettingPropertyDefinition.MaxValue;
         [DataSourceProperty]
         public float MinValue => (float) SettingPropertyDefinition.MinValue;
         [DataSourceProperty]
-        public string? TextBoxValue => SettingType switch
+        public string TextBoxValue => SettingType switch
         {
             SettingType.Int => string.IsNullOrWhiteSpace(ValueFormat)
                 ? string.Format(ValueFormatProvider, "{0}", ((int) PropertyReference.Value).ToString("0"))
@@ -180,6 +177,17 @@ namespace MCM.UI.GUI.ViewModels
             ValueFormatProvider = SettingPropertyDefinition.CustomFormatter!= null
                 ? Activator.CreateInstance(SettingPropertyDefinition.CustomFormatter) as IFormatProvider
                 : null;
+
+            // Moved to constructor
+            IsIntVisible = SettingType == SettingType.Int;
+            IsFloatVisible = SettingType == SettingType.Float;
+            IsBoolVisible = SettingType == SettingType.Bool;
+            IsStringVisible = SettingType == SettingType.String;
+            IsDropdownDefaultVisible = SettingType == SettingType.Dropdown && SettingsUtils.IsForTextDropdown(PropertyReference.Value);
+            IsDropdownCheckboxVisible = SettingType == SettingType.Dropdown && SettingsUtils.IsForCheckboxDropdown(PropertyReference.Value);
+            IsDropdownVisible = IsDropdownDefaultVisible || IsDropdownCheckboxVisible;
+            HasEditableText = IsIntVisible || IsFloatVisible;
+            // Moved to constructor
 
             PropertyReference.PropertyChanged += PropertyReference_OnPropertyChanged;
 
@@ -205,9 +213,9 @@ namespace MCM.UI.GUI.ViewModels
         }
         private void DropdownValue_PropertyChanged(object obj, PropertyChangedEventArgs args)
         {
-            if (args.PropertyName == nameof(SelectorVM<SelectorItemVM>.SelectedIndex))
+            if (args.PropertyName == "SelectedIndex")
             {
-                URS.Do(new SetDropdownIndexAction(PropertyReference, new SelectorWrapper(obj)));
+                URS.Do(new SetSelectedIndexAction(PropertyReference, new SelectedIndexWrapper(obj)));
                 SettingsVM.RecalculateIndex();
             }
         }
@@ -254,9 +262,12 @@ namespace MCM.UI.GUI.ViewModels
 
             RefreshValues();
         }
-        private void OnHover() { if (MainView != null) MainView.HintText = HintText; }
-        private void OnHoverEnd() { if (MainView != null) MainView.HintText = string.Empty; }
-        private void OnValueClick() => ScreenManager.PushScreen(new EditValueGauntletScreen(this));
+        [SuppressMessage("Redundancy", "RCS1213:Remove unused member declaration.", Justification = "Reflection is used.")]
+        public void OnHover() => MainView.HintText = HintText;
+        [SuppressMessage("Redundancy", "RCS1213:Remove unused member declaration.", Justification = "Reflection is used.")]
+        public void OnHoverEnd() => MainView.HintText = string.Empty;
+        [SuppressMessage("Redundancy", "RCS1213:Remove unused member declaration.", Justification = "Reflection is used.")]
+        public void OnValueClick() => ScreenManager.PushScreen(new EditValueGauntletScreen(this));
 
         public override string ToString() => Name;
         public override int GetHashCode() => Name.GetHashCode();

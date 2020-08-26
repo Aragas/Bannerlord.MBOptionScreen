@@ -1,6 +1,10 @@
-﻿using MCM.Abstractions.Settings.Definitions;
+﻿extern alias v1;
+
+using MCM.Abstractions.Settings.Definitions;
 
 using TaleWorlds.Localization;
+
+using LegacyAttribute = v1::ModLib.Attributes.SettingPropertyAttribute;
 
 namespace MCM.Implementation.ModLib.Attributes.v1
 {
@@ -22,15 +26,15 @@ namespace MCM.Implementation.ModLib.Attributes.v1
         {
             var type = @object.GetType();
 
-            DisplayName = new TextObject(type.GetProperty("DisplayName")?.GetValue(@object) as string ?? "ERROR").ToString();
-            HintText = new TextObject(type.GetProperty("HintText")?.GetValue(@object) as string ?? "ERROR").ToString();
+            DisplayName = new TextObject(type.GetProperty(nameof(LegacyAttribute.DisplayName))?.GetValue(@object) as string ?? "ERROR").ToString();
+            HintText = new TextObject(type.GetProperty(nameof(LegacyAttribute.HintText))?.GetValue(@object) as string ?? "ERROR").ToString();
             Order = -1;
             RequireRestart = true;
 
-            MinValue = (decimal) (type.GetProperty("MinValue")?.GetValue(@object) as float? ?? 0);
-            MaxValue = (decimal) (type.GetProperty("MaxValue")?.GetValue(@object) as float? ?? 0);
-            EditableMinValue = (decimal) (type.GetProperty("EditableMinValue")?.GetValue(@object) as float? ?? 0);
-            EditableMaxValue = (decimal) (type.GetProperty("EditableMaxValue")?.GetValue(@object) as float? ?? 0);
+            MinValue = (decimal) (type.GetProperty(nameof(LegacyAttribute.MinValue))?.GetValue(@object) as float? ?? 0);
+            MaxValue = (decimal) (type.GetProperty(nameof(LegacyAttribute.MaxValue))?.GetValue(@object) as float? ?? 0);
+            EditableMinValue = (decimal) (type.GetProperty(nameof(LegacyAttribute.EditableMinValue))?.GetValue(@object) as float? ?? 0);
+            EditableMaxValue = (decimal) (type.GetProperty(nameof(LegacyAttribute.EditableMaxValue))?.GetValue(@object) as float? ?? 0);
         }
     }
 }

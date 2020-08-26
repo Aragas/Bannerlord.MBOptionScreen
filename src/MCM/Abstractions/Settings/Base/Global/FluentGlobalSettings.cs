@@ -1,6 +1,4 @@
-﻿using MCM.Abstractions.Settings.Containers.Global;
-using MCM.Abstractions.Settings.Models;
-using MCM.Utils;
+﻿using MCM.Abstractions.Settings.Models;
 
 using System;
 using System.Collections;
@@ -12,7 +10,7 @@ namespace MCM.Abstractions.Settings.Base.Global
 {
     public class FluentGlobalSettings : GlobalSettings
     {
-        public static readonly string ContainerId = "MCM_Global_FluentStorage";
+        public static readonly string ContainerId = "MCMv4_Global_FluentStorage";
 
         /// <inheritdoc/>
         public sealed override string Id { get; }
@@ -47,7 +45,7 @@ namespace MCM.Abstractions.Settings.Base.Global
                 PropertyChanged += onPropertyChanged;
         }
 
-        public void Register()
+        public virtual void Register()
         {
             if (AppDomain.CurrentDomain.GetData(ContainerId) == null)
                 AppDomain.CurrentDomain.SetData(ContainerId, new Dictionary<string, FluentGlobalSettings>());
@@ -55,7 +53,7 @@ namespace MCM.Abstractions.Settings.Base.Global
             if (AppDomain.CurrentDomain.GetData(ContainerId) is IDictionary dict && !dict.Contains(Id))
                 dict.Add(Id, this);
         }
-        public void Unregister()
+        public virtual void Unregister()
         {
             if (AppDomain.CurrentDomain.GetData(ContainerId) == null)
                 AppDomain.CurrentDomain.SetData(ContainerId, new Dictionary<string, FluentGlobalSettings>());

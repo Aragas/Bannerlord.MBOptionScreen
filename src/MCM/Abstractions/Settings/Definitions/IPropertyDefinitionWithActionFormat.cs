@@ -4,6 +4,6 @@ namespace MCM.Abstractions.Settings.Definitions
 {
     public interface IPropertyDefinitionWithActionFormat
     {
-        Func<object, string> ValueFormatFunc { get; }
+        Func<object, string>? ValueFormatFunc { get; }
     }
 }

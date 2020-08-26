@@ -19,7 +19,7 @@ namespace MCM.UI.GUI.ViewModels
         public SettingsPropertyGroupDefinition SettingPropertyGroupDefinition { get; }
         public string GroupName => SettingPropertyGroupDefinition.GroupName;
         public SettingsPropertyGroupVM? ParentGroup { get; }
-        public SettingsPropertyVM GroupToggleSettingProperty { get; private set; } = default!;
+        public SettingsPropertyVM? GroupToggleSettingProperty { get; private set; }
         public string HintText
         {
             get
@@ -35,7 +35,7 @@ namespace MCM.UI.GUI.ViewModels
         {
             get
             {
-                if (MainView == null || string.IsNullOrEmpty(MainView.SearchText))
+                if (string.IsNullOrEmpty(MainView.SearchText))
                     return true;
                 return GroupName.IndexOf(MainView.SearchText, StringComparison.OrdinalIgnoreCase) >= 0 || AnyChildSettingSatisfiesSearch;
             }
@@ -45,7 +45,7 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public string GroupNameDisplay => GroupToggle
             ? GroupName
-            : new TextObject("{=SettingsPropertyGroupVM_Disabled}{GROUPNAME} (Disabled)", new Dictionary<string, TextObject>()
+            : new TextObject("{=SettingsPropertyGroupVM_Disabled}{GROUPNAME} (Disabled)", new Dictionary<string, TextObject>
             {
                 { "GROUPNAME", new TextObject(GroupName) }
             }).ToString();
@@ -56,13 +56,7 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public bool GroupToggle
         {
-            get
-            {
-                if (GroupToggleSettingProperty != null)
-                    return GroupToggleSettingProperty.BoolValue;
-                else
-                    return true;
-            }
+            get => GroupToggleSettingProperty == null || GroupToggleSettingProperty.BoolValue;
             set
             {
                 if (GroupToggleSettingProperty != null && GroupToggleSettingProperty.BoolValue != value)
@@ -158,7 +152,7 @@ namespace MCM.UI.GUI.ViewModels
             if (sp.SettingPropertyDefinition.IsToggle)
             {
                 if (HasGroupToggle)
-                    throw new Exception($"Tried to add a group toggle to Setting Property Group {GroupName} but it already has a group toggle: {GroupToggleSettingProperty.Name}. A Setting Property Group can only have one group toggle.");
+                    throw new Exception($"Tried to add a group toggle to Setting Property Group {GroupName} but it already has a group toggle: {GroupToggleSettingProperty?.Name}. A Setting Property Group can only have one group toggle.");
 
                 // Attribute = sp.SettingPropertyDefinition;
                 GroupToggleSettingProperty = sp;
@@ -188,8 +182,8 @@ namespace MCM.UI.GUI.ViewModels
             foreach (var setting in SettingPropertyGroups)
                 setting.OnResetEnd();
         }
-        private void OnHover() { if (MainView != null && !string.IsNullOrWhiteSpace(HintText)) MainView.HintText = HintText; }
-        private void OnHoverEnd() { if (MainView != null) MainView.HintText = string.Empty; }
+        private void OnHover() => MainView.HintText = HintText;
+        private void OnHoverEnd() => MainView.HintText = string.Empty;
         private void OnGroupClick() => IsExpanded = !IsExpanded;
 
         public override string ToString() => GroupName;

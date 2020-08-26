@@ -2,7 +2,8 @@
 using Bannerlord.ButterLib.Common.Extensions;
 
 using MCM.Abstractions.Settings.Properties;
-using MCM.Extensions;
+
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MCM.Abstractions.Settings.Base.PerCampaign
 {
@@ -10,7 +11,6 @@ namespace MCM.Abstractions.Settings.Base.PerCampaign
     {
         /// <inheritdoc/>
         protected override ISettingsPropertyDiscoverer? Discoverer { get; } =
-            ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<IAttributeSettingsPropertyDiscoverer, AttributeSettingsPropertyDiscovererWrapper>();
-            //DI.GetImplementation<IAttributeSettingsPropertyDiscoverer, AttributeSettingsPropertyDiscovererWrapper>();
+            ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<IAttributeSettingsPropertyDiscoverer>();
     }
 }

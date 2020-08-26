@@ -19,8 +19,6 @@ namespace MCM.Abstractions.Attributes
         /// <inheritdoc/>
         public string GroupName { get; }
         /// <inheritdoc/>
-        public bool IsMainToggle { get; set; }
-        /// <inheritdoc/>
         public int GroupOrder { get; set; }
 
         /// <summary>

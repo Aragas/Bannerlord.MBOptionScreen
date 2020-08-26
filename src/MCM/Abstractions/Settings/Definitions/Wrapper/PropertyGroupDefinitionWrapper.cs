@@ -7,9 +7,6 @@ namespace MCM.Abstractions.Settings.Definitions.Wrapper
         /// <inheritdoc/>
         public string GroupName { get; }
         /// <inheritdoc/>
-        [Obsolete("Will be removed", true)]
-        public bool IsMainToggle { get; }
-        /// <inheritdoc/>
         public int GroupOrder { get; }
 
         public PropertyGroupDefinitionWrapper(object @object)

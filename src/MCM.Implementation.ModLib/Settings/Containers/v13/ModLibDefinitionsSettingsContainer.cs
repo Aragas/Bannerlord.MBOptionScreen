@@ -1,50 +1,35 @@
-﻿using HarmonyLib;
+﻿extern alias v13;
 
-using MCM.Abstractions.Attributes;
+using Bannerlord.ButterLib.Common.Helpers;
+
+using HarmonyLib;
+
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Models;
 using MCM.Implementation.ModLib.Settings.Base.v13;
 using MCM.Utils;
 
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 namespace MCM.Implementation.ModLib.Settings.Containers.v13
 {
-    [Version("e1.0.0",  1)]
-    [Version("e1.0.1",  1)]
-    [Version("e1.0.2",  1)]
-    [Version("e1.0.3",  1)]
-    [Version("e1.0.4",  1)]
-    [Version("e1.0.5",  1)]
-    [Version("e1.0.6",  1)]
-    [Version("e1.0.7",  1)]
-    [Version("e1.0.8",  1)]
-    [Version("e1.0.9",  1)]
-    [Version("e1.0.10", 1)]
-    [Version("e1.0.11", 1)]
-    [Version("e1.1.0",  1)]
-    [Version("e1.2.0",  1)]
-    [Version("e1.2.1",  1)]
-    [Version("e1.3.0",  1)]
-    [Version("e1.3.1",  1)]
-    [Version("e1.4.0",  1)]
-    [Version("e1.4.1",  1)]
     internal sealed class ModLibDefinitionsSettingsContainer : IModLibDefinitionsSettingsContainer
     {
+        private delegate Dictionary<string, v13::ModLib.Definitions.SettingsBase> GetAllSettingsDictDelegate();
+        private delegate bool SaveSettingsDelegate(v13::ModLib.Definitions.SettingsBase settings);
+
+        private static readonly GetAllSettingsDictDelegate GetAllSettingsDict =
+            AccessTools2.GetDelegate<GetAllSettingsDictDelegate>(AccessTools.Property(typeof(v13::ModLib.Definitions.SettingsDatabase), "AllSettingsDict").GetMethod)!;
+        private static readonly SaveSettingsDelegate SaveSettingsFunc =
+            AccessTools2.GetDelegate<SaveSettingsDelegate>(typeof(v13::ModLib.Definitions.SettingsDatabase), "SaveSettings")!;
+
         private Dictionary<string, ModLibDefinitionsGlobalSettingsWrapper> LoadedModLibSettings { get; } = new Dictionary<string, ModLibDefinitionsGlobalSettingsWrapper>();
-        private Type? ModLibSettingsDatabase { get; }
 
         public List<SettingsDefinition> CreateModSettingsDefinitions
         {
             get
             {
-                if (ModLibSettingsDatabase == null)
-                    return new List<SettingsDefinition>();
-
                 ReloadAll();
 
                 return LoadedModLibSettings.Keys
@@ -54,57 +39,49 @@ namespace MCM.Implementation.ModLib.Settings.Containers.v13
             }
         }
 
-        public ModLibDefinitionsSettingsContainer()
-        {
-            ModLibSettingsDatabase = AppDomain.CurrentDomain.GetAssemblies()
-                .Where(a => !a.IsDynamic)
-                .Where(a => Path.GetFileNameWithoutExtension(a.Location) == "ModLib.Definitions")
-                .SelectMany(a => a.GetTypes())
-                .FirstOrDefault(a => a.FullName == "ModLib.Definitions.SettingsDatabase");
-        }
-
         public BaseSettings? GetSettings(string id)
         {
-            if (ModLibSettingsDatabase == null)
-                return null;
-
             Reload(id);
             return LoadedModLibSettings.TryGetValue(id, out var settings) ? settings : null;
         }
         public bool SaveSettings(BaseSettings settings)
         {
-            if (ModLibSettingsDatabase == null || !(settings is ModLibDefinitionsGlobalSettingsWrapper settingsWrapper))
-                return false;
+            if (settings is ModLibDefinitionsGlobalSettingsWrapper settingsWrapper && settingsWrapper.Object is v13::ModLib.Definitions.SettingsBase modLibSettings)
+            {
+                SaveSettingsFunc(modLibSettings);
+                return true;
+            }
 
-            AccessTools.Method(ModLibSettingsDatabase, "SaveSettings")?.Invoke(null, new [] { settingsWrapper.Object });
-            return true;
+            return false;
         }
 
         public bool OverrideSettings(BaseSettings newSettings)
         {
-            if (ModLibSettingsDatabase == null || !(newSettings is ModLibDefinitionsGlobalSettingsWrapper))
-                return false;
+            if (newSettings is ModLibDefinitionsGlobalSettingsWrapper)
+            {
+                SettingsUtils.OverrideSettings(LoadedModLibSettings[newSettings.Id], newSettings);
+                return true;
+            }
 
-            SettingsUtils.OverrideSettings(LoadedModLibSettings[newSettings.Id], newSettings);
-            return true;
+            return false;
         }
         public bool ResetSettings(BaseSettings settings)
         {
-            if (ModLibSettingsDatabase == null || !(settings is ModLibDefinitionsGlobalSettingsWrapper))
-                return false;
+            if (settings is ModLibDefinitionsGlobalSettingsWrapper)
+            {
+                SettingsUtils.ResetSettings(LoadedModLibSettings[settings.Id]);
+                return true;
+            }
 
-            SettingsUtils.ResetSettings(LoadedModLibSettings[settings.Id]);
-            return true;
+            return false;
         }
 
 
         private void ReloadAll()
         {
-            var saveSettingsMethod = AccessTools.Property(ModLibSettingsDatabase, "AllSettingsDict");
-            var dict = (IDictionary) saveSettingsMethod.GetValue(null);
-            foreach (var settings in dict.Values)
+            foreach (var settings in GetAllSettingsDict().Values)
             {
-                var id = AccessTools.Property(settings.GetType(), "ID")?.GetValue(settings) as string ?? "ERROR";
+                var id = settings.ID;
                 if (!LoadedModLibSettings.ContainsKey(id))
                     LoadedModLibSettings.Add(id, new ModLibDefinitionsGlobalSettingsWrapper(settings));
                 else
@@ -113,10 +90,8 @@ namespace MCM.Implementation.ModLib.Settings.Containers.v13
         }
         private void Reload(string id)
         {
-            var saveSettingsMethod = AccessTools.Property(ModLibSettingsDatabase, "AllSettingsDict");
-            var dict = (IDictionary) saveSettingsMethod.GetValue(null);
-
-            if (dict.Contains(id))
+            var dict = GetAllSettingsDict();
+            if (dict.ContainsKey(id))
                 LoadedModLibSettings[id].UpdateReference(dict[id]);
         }
     }

@@ -1,4 +1,4 @@
 ﻿namespace MCM.Abstractions.Settings.Formats.Memory
 {
-    public interface IMemorySettingsFormat : ISettingsFormat, IDependency { }
+    public interface IMemorySettingsFormat : ISettingsFormat { }
 }

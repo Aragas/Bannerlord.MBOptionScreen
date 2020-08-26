@@ -32,19 +32,6 @@ namespace MCM.UI
         {
             base.OnSubModuleLoad();
 
-            /*
-            var loadingHarmony = new Harmony("bannerlord.mcm.ui.loading");
-            loadingHarmony.Patch(
-                MBSubModuleBasePatch.OnGauntletUISubModuleSubModuleLoadTargetMethod,
-                postfix: new HarmonyMethod(typeof(MBSubModuleBasePatch), nameof(MBSubModuleBasePatch.OnGauntletUISubModuleSubModuleLoadPostfix)));
-            loadingHarmony.Patch(
-                MBSubModuleBasePatch.OnSubModuleUnloadedTargetMethod,
-                postfix: new HarmonyMethod(typeof(MBSubModuleBasePatch), nameof(MBSubModuleBasePatch.OnSubModuleUnloadedPostfix)));
-            loadingHarmony.Patch(
-                MBSubModuleBasePatch.OnBeforeInitialModuleScreenSetAsRootTargetMethod,
-                postfix: new HarmonyMethod(typeof(MBSubModuleBasePatch), nameof(MBSubModuleBasePatch.OnBeforeInitialModuleScreenSetAsRootPostfix)));
-            */
-
             var editabletextpatchHarmony = new Harmony("bannerlord.mcm.ui.editabletextpatch");
             editabletextpatchHarmony.Patch(
                 EditableTextPatch.GetCursorPositionMethod,
@@ -55,10 +42,16 @@ namespace MCM.UI
                 ViewModelPatch.ExecuteCommandMethod,
                 prefix: new HarmonyMethod(typeof(ViewModelPatch), nameof(ViewModelPatch.ExecuteCommandPatch)));
 
-
             var services = this.GetServices();
             services.AddTransient<IMCMOptionsScreen, ModOptionsGauntletScreen>();
             services.AddTransient<BaseResourceHandler, DefaultResourceInjector>();
+
+            DelayedSubModuleManager.Register<SandBoxSubModule>();
+            DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
+                nameof(OnSubModuleLoad), SubscriptionType.AfterMethod, (s, e) =>
+                {
+                    _extender.Register();
+                });
         }
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
@@ -69,8 +62,6 @@ namespace MCM.UI
             DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
                 nameof(OnBeforeInitialModuleScreenSetAsRoot), SubscriptionType.AfterMethod, (s, e) =>
                 {
-                    _extender.Register();
-
                     BrushLoader.Inject(BaseResourceHandler.Instance);
                     PrefabsLoader.Inject(BaseResourceHandler.Instance);
                     WidgetLoader.Inject(BaseResourceHandler.Instance);

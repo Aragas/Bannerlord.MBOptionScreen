@@ -3,7 +3,7 @@
 using ComparerExtensions;
 
 using MCM.Abstractions.Settings.Providers;
-using MCM.Utils;
+using MCM.UI.Extensions;
 
 using System;
 using System.Collections.Generic;
@@ -223,11 +223,11 @@ namespace MCM.UI.GUI.ViewModels
 
         private void OnPresetsSelectorChange(SelectorVM<SelectorItemVM> selector)
         {
-            InformationManager.ShowInquiry(new InquiryData(new TextObject("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new Dictionary<string, TextObject>()
+            InformationManager.ShowInquiry(new InquiryData(new TextObject("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new Dictionary<string, TextObject>
                 {
                     { "PRESET", new TextObject(selector.SelectedItem.StringItem) }
                 }).ToString(),
-                new TextObject("{=ModOptionsVM_Discard}Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?", new Dictionary<string, TextObject>()
+                new TextObject("{=ModOptionsVM_Discard}Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?", new Dictionary<string, TextObject>
                 {
                     { "NAME", new TextObject(SelectedMod!.DisplayName) },
                     { "ITEM", new TextObject(selector.SelectedItem.StringItem) }
@@ -337,7 +337,6 @@ namespace MCM.UI.GUI.ViewModels
                     SelectedMod.IsSelected = true;
             }
         }
-
 
         public override void OnFinalize()
         {

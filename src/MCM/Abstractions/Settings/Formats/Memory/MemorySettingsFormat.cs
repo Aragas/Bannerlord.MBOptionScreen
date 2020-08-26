@@ -1,11 +1,9 @@
-﻿using MCM.Abstractions.Attributes;
-using MCM.Abstractions.Settings.Base;
+﻿using MCM.Abstractions.Settings.Base;
 
 using System.Collections.Generic;
 
 namespace MCM.Abstractions.Settings.Formats.Memory
 {
-    [Version("e1.0.0", 1)]
     public class MemorySettingsFormat : IMemorySettingsFormat
     {
         /// <inheritdoc/>

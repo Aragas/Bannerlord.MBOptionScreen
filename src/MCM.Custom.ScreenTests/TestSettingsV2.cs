@@ -1,8 +1,7 @@
 ﻿using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
-using MCM.Abstractions.Data;
-
 using System;
+using MCM.Abstractions.Dropdown;
 
 namespace MCM.Custom.ScreenTests
 {
@@ -84,7 +83,7 @@ namespace MCM.Custom.ScreenTests
 
         [SettingPropertyDropdown("Property Dropdown SelectedIndex 0", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown")]
-        public DefaultDropdown<string> PropertyDropdownSelectedIndex0 { get; set; } = new DefaultDropdown<string>(new []
+        public DropdownMCM<string> PropertyDropdownSelectedIndex0 { get; set; } = new DropdownMCM<string>(new []
         {
             "Test1",
             "Test2",
@@ -92,7 +91,7 @@ namespace MCM.Custom.ScreenTests
         }, 0);
         [SettingPropertyDropdown("Property Dropdown SelectedIndex 1", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown")]
-        public DefaultDropdown<string> PropertyDropdownSelectedIndex1 { get; set; } = new DefaultDropdown<string>(new []
+        public DropdownMCM<string> PropertyDropdownSelectedIndex1 { get; set; } = new DropdownMCM<string>(new []
         {
             "Test1",
             "Test2",
@@ -100,7 +99,7 @@ namespace MCM.Custom.ScreenTests
         }, 1);
         [SettingPropertyDropdown("Property Dropdown SelectedIndex 2", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown")]
-        public DefaultDropdown<string> PropertyDropdownSelectedIndex2 { get; set; } = new DefaultDropdown<string>(new []
+        public DropdownMCM<string> PropertyDropdownSelectedIndex2 { get; set; } = new DropdownMCM<string>(new []
         {
             "Test1",
             "Test2",
@@ -108,7 +107,7 @@ namespace MCM.Custom.ScreenTests
         }, 2);
         [SettingPropertyDropdown("Property Dropdown Require Restart")]
         [SettingPropertyGroup("Dropdown")]
-        public DefaultDropdown<string> PropertyDropdownRequireRestart { get; set; } = new DefaultDropdown<string>(new []
+        public DropdownMCM<string> PropertyDropdownRequireRestart { get; set; } = new DropdownMCM<string>(new []
         {
             "Test1",
             "Test2",
@@ -116,7 +115,7 @@ namespace MCM.Custom.ScreenTests
         }, 0);
         [SettingPropertyDropdown("Property Dropdown With Hint", RequireRestart = false, HintText = "Hint Text")]
         [SettingPropertyGroup("Dropdown")]
-        public DefaultDropdown<string> PropertyDropdownWithHint { get; set; } = new DefaultDropdown<string>(new []
+        public DropdownMCM<string> PropertyDropdownWithHint { get; set; } = new DropdownMCM<string>(new []
         {
             "Test1",
             "Test2",
@@ -124,7 +123,7 @@ namespace MCM.Custom.ScreenTests
         }, 0);
         [SettingPropertyDropdown("Property Dropdown With Localization", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown")]
-        public DefaultDropdown<string> PropertyDropdownWithLocalization { get; set; } = new DefaultDropdown<string>(new []
+        public DropdownMCM<string> PropertyDropdownWithLocalization { get; set; } = new DropdownMCM<string>(new []
         {
             "{=NoPeRandoM}Test1",
             "{=BaseSettings_Default}ERROR",
@@ -134,7 +133,7 @@ namespace MCM.Custom.ScreenTests
 
         [SettingPropertyDropdown("Property Dropdown Custom SelectedIndex 0", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown Custom")]
-        public DefaultDropdown<CustomObject> PropertyDropdownCustomSelectedIndex0 { get; set; } = new DefaultDropdown<CustomObject>(new []
+        public DropdownMCM<CustomObject> PropertyDropdownCustomSelectedIndex0 { get; set; } = new DropdownMCM<CustomObject>(new []
         {
             new CustomObject("Test1"),
             new CustomObject("Test2"),
@@ -142,7 +141,7 @@ namespace MCM.Custom.ScreenTests
         }, 0);
         [SettingPropertyDropdown("Property Dropdown Custom SelectedIndex 1", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown Custom")]
-        public DefaultDropdown<CustomObject> PropertyDropdownCustomSelectedIndex1 { get; set; } = new DefaultDropdown<CustomObject>(new []
+        public DropdownMCM<CustomObject> PropertyDropdownCustomSelectedIndex1 { get; set; } = new DropdownMCM<CustomObject>(new []
         {
             new CustomObject("Test1"),
             new CustomObject("Test2"),
@@ -150,7 +149,7 @@ namespace MCM.Custom.ScreenTests
         }, 1);
         [SettingPropertyDropdown("Property Dropdown Custom SelectedIndex 2", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown Custom")]
-        public DefaultDropdown<CustomObject> PropertyDropdownCustomSelectedIndex2 { get; set; } = new DefaultDropdown<CustomObject>(new []
+        public DropdownMCM<CustomObject> PropertyDropdownCustomSelectedIndex2 { get; set; } = new DropdownMCM<CustomObject>(new []
         {
             new CustomObject("Test1"),
             new CustomObject("Test2"),
@@ -158,7 +157,7 @@ namespace MCM.Custom.ScreenTests
         }, 2);
         [SettingPropertyDropdown("Property Dropdown Custom Require Restart")]
         [SettingPropertyGroup("Dropdown Custom")]
-        public DefaultDropdown<CustomObject> PropertyDropdownCustomRequireRestart { get; set; } = new DefaultDropdown<CustomObject>(new []
+        public DropdownMCM<CustomObject> PropertyDropdownCustomRequireRestart { get; set; } = new DropdownMCM<CustomObject>(new []
         {
             new CustomObject("Test1"),
             new CustomObject("Test2"),
@@ -166,7 +165,7 @@ namespace MCM.Custom.ScreenTests
         }, 0);
         [SettingPropertyDropdown("Property Dropdown Custom With Hint", RequireRestart = false, HintText = "Hint Text")]
         [SettingPropertyGroup("Dropdown Custom")]
-        public DefaultDropdown<CustomObject> PropertyDropdownCustomWithHint { get; set; } = new DefaultDropdown<CustomObject>(new []
+        public DropdownMCM<CustomObject> PropertyDropdownCustomWithHint { get; set; } = new DropdownMCM<CustomObject>(new []
         {
             new CustomObject("Test1"),
             new CustomObject("Test2"),

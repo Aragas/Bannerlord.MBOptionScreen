@@ -3,7 +3,8 @@ using Bannerlord.ButterLib.Common.Extensions;
 
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Models;
-using MCM.Extensions;
+
+using Microsoft.Extensions.DependencyInjection;
 
 using System.Collections.Generic;
 
@@ -11,12 +12,10 @@ using TaleWorlds.Core;
 
 namespace MCM.Abstractions.Settings.Providers
 {
-    public abstract class BaseSettingsProvider : IDependency
+    public abstract class BaseSettingsProvider
     {
-        private static BaseSettingsProvider? _instance;
-        public static BaseSettingsProvider Instance => _instance ??=
-            ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<BaseSettingsProvider, SettingsProviderWrapper>();
-            //DI.GetImplementation<BaseSettingsProvider, SettingsProviderWrapper>()!;
+        public static BaseSettingsProvider Instance =>
+            ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<BaseSettingsProvider>();
 
         public abstract IEnumerable<SettingsDefinition> CreateModSettingsDefinitions { get; }
         public abstract BaseSettings? GetSettings(string id);

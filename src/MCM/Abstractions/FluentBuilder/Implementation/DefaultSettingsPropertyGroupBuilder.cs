@@ -19,9 +19,6 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
         /// <inheritdoc/>
         public string GroupName { get; }
         /// <inheritdoc/>
-        [Obsolete("Will be removed", true)]
-        public bool IsMainToggle { get; private set; }
-        /// <inheritdoc/>
         public int GroupOrder { get; private set; }
         private bool HasGroupToggle { get; set; }
 
@@ -30,8 +27,6 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
             GroupName = name;
         }
 
-        /// <inheritdoc/>
-        public ISettingsPropertyGroupBuilder SetIsMainToggle(bool value) { return this; }
         /// <inheritdoc/>
         public ISettingsPropertyGroupBuilder SetGroupOrder(int value) { GroupOrder = value; return this; }
 

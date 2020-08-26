@@ -1,6 +1,4 @@
-﻿using MCM.Abstractions;
-
-namespace MCM.UI
+﻿namespace MCM.UI
 {
-    public interface IMCMOptionsScreen : IDependency { }
+    public interface IMCMOptionsScreen { }
 }

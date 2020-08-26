@@ -1,9 +1,9 @@
-﻿using MCM.Abstractions.Settings;
+﻿using MCM.Abstractions.Common;
+using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Models;
 using MCM.Extensions;
 using MCM.UI.Actions;
-using MCM.UI.Data;
 using MCM.Utils;
 
 using System.Linq;
@@ -62,7 +62,7 @@ namespace MCM.UI.Utils
                     urs.Do(new SetStringAction(current.PropertyReference, (string) @new.PropertyReference.Value));
                     break;
                 case SettingType.Dropdown:
-                    urs.Do(new SetDropdownIndexAction(current.PropertyReference, new SelectorWrapper(@new.PropertyReference.Value)));
+                    urs.Do(new SetSelectedIndexAction(current.PropertyReference, new SelectedIndexWrapper(@new.PropertyReference.Value)));
                     break;
             }
         }
