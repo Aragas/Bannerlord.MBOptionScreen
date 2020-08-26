@@ -5,7 +5,7 @@ on:
     branches:
       #- master
       # documentation will cover the dev branch for now
-      - v3
+      - dev
     paths:
       - '.github/workflows/docfx.yml'
       - 'src/MCM/**.cs'
