@@ -4,7 +4,7 @@ on:
   push:
     branches:
       #- master
-      # documentation will cover the dev branch for now
+      # documentation will cover the dev branch for now.
       - dev
     paths:
       - '.github/workflows/docfx.yml'
