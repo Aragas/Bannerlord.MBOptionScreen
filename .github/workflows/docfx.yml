@@ -68,8 +68,8 @@ jobs:
       run: Copy-Item "README.md" -Destination "docs/index.md"
       shell: pwsh
 
-    - name: Build Solution
-      run: dotnet build "src/Mod Configuration Menu.sln"
+    - name: Build MCM
+      run: dotnet build src/MCM/MCM.csproj
       env:
         DOCFX: true
         DOTNET_NOLOGO: 1
