@@ -69,7 +69,7 @@ jobs:
       shell: pwsh
 
     - name: Build Solution
-      run: dotnet build src/MCM.sln
+      run: dotnet build src/Mod Configuration Menu.sln
       env:
         DOCFX: true
         DOTNET_NOLOGO: 1
