@@ -3,8 +3,8 @@
    <img src="https://tokei.rs/b1/github/Aragas/Bannerlord.MBOptionScreen?category=code" /></a>
    <a href="https://www.codefactor.io/repository/github/aragas/bannerlord.mboptionscreen"><img src="https://www.codefactor.io/repository/github/aragas/bannerlord.mboptionscreen/badge" alt="CodeFactor" /></a>
    </br>
-   <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen/actions?query=workflow%3ATest"><img src="https://github.com/Aragas/Bannerlord.MBOptionScreen/workflows/Test/badge.svg?branch=v3&event=push" alt="Test" /></a>
-   <a href="https://codecov.io/gh/Aragas/Bannerlord.MBOptionScreen"><img src="https://codecov.io/gh/Aragas/Bannerlord.MBOptionScreen/branch/v3/graph/badge.svg" />
+   <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen/actions?query=workflow%3ATest"><img src="https://github.com/Aragas/Bannerlord.MBOptionScreen/workflows/Test/badge.svg?branch=dev&event=push" alt="Test" /></a>
+   <a href="https://codecov.io/gh/Aragas/Bannerlord.MBOptionScreen"><img src="https://codecov.io/gh/Aragas/Bannerlord.MBOptionScreen/branch/dev/graph/badge.svg" />
    </a>
    </br>
    <a href="https://www.nuget.org/packages/Bannerlord.MCM" alt="NuGet Bannerlord.MCM">
@@ -26,7 +26,7 @@
    </br>
    <img src="https://staticdelivery.nexusmods.com/mods/3174/images/headers/612_1592411190.jpg" width="800">
    </br>
-   <img src="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/v3/resources/main.png?raw=true" width="800">
+   <img src="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/resources/main.png?raw=true" width="800">
 </p>
 
 
