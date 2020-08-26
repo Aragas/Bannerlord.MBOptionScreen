@@ -64,7 +64,7 @@ jobs:
 
     - name: Download Bannerlord binaries
       run: >-
-        dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -username ${{secrets.STEAM_LOGIN}}
+        dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -beta ${{secrets.SYNCED_GAME_STABLE_VERSION}} -username ${{secrets.STEAM_LOGIN}}
         -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord
       env:
         DOTNET_NOLOGO: 1
@@ -86,11 +86,14 @@ jobs:
 
     - name: Test
       run: >-
-          dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Debug -p:GameFolder="$PWD/bannerlord";
-          dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
+          $game_version=$env:STABLE_VERSION;
+          $game_version=$game_version.substring(1);
+          dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Debug -p:GameVersion=$game_version -p:GameFolder="$PWD/bannerlord";
+          dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Release -p:GameVersion=$game_version -p:GameFolder="$PWD/bannerlord";
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
+        STABLE_VERSION: ${{secrets.SYNCED_GAME_STABLE_VERSION}}
       shell: pwsh
 
     - name: Test Coverage
