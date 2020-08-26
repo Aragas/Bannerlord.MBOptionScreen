@@ -98,8 +98,8 @@ jobs:
 
     - name: Test Coverage
       run: >-
-          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test src/MCM.sln --configuration Debug --no-build" -filter:"+[MCMv3.*]*" -output:coverage_mcm_debug.xml -mergebyhash;
-          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test src/MCM.sln --configuration Release --no-build" -filter:"+[MCMv3.*]*" -output:coverage_mcm_release.xml -mergebyhash;
+          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test src/Mod Configuration Menu.sln --configuration Debug --no-build" -filter:"+[MCMv3.*]*" -output:coverage_mcm_debug.xml -mergebyhash;
+          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test src/Mod Configuration Menu.sln --configuration Release --no-build" -filter:"+[MCMv3.*]*" -output:coverage_mcm_release.xml -mergebyhash;
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
