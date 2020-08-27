@@ -5,6 +5,7 @@ using MCM.Utils;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 using TaleWorlds.Localization;
 
@@ -47,9 +48,9 @@ namespace MCM.Abstractions.Settings.Models
         /// <inheritdoc/>
         public int GroupOrder { get; }
 
-        public SettingsPropertyDefinition(IPropertyDefinitionBase propertyDefinition, IPropertyGroupDefinition propertyGroupDefinition, IRef propertyReference)
-            : this(new []{ propertyDefinition }, propertyGroupDefinition, propertyReference) { }
-        public SettingsPropertyDefinition(IEnumerable<IPropertyDefinitionBase> propertyDefinitions, IPropertyGroupDefinition propertyGroupDefinition, IRef propertyReference)
+        public SettingsPropertyDefinition(IPropertyDefinitionBase propertyDefinition, IPropertyGroupDefinition propertyGroupDefinition, IRef propertyReference, char subGroupDelimiter)
+            : this(new [] { propertyDefinition }, propertyGroupDefinition, propertyReference, subGroupDelimiter) { }
+        public SettingsPropertyDefinition(IEnumerable<IPropertyDefinitionBase> propertyDefinitions, IPropertyGroupDefinition propertyGroupDefinition, IRef propertyReference, char subGroupDelimiter)
         {
             var groups = propertyGroupDefinition.GroupName.Split(subGroupDelimiter);
             GroupName = string.Join(subGroupDelimiter.ToString(), groups.Select(x => new TextObject(x).ToString()));

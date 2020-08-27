@@ -1,4 +1,4 @@
-﻿LOGO:  
+LOGO:  
 Drogean
 
 GENERAL:  
@@ -7,7 +7,7 @@ Katarn
 Adonnay  
 PoPoWanObi  
 zijistark  
-М‘рџ…   
+̑🅠  
 shdwp  
 mgemperl    
   
