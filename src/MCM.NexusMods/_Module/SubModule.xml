@@ -20,13 +20,13 @@
     </SubModule>
     <SubModule>
       <Name value="MCMv4 Implementation"/>
-      <DLLName value="MCMv4.Implementation.v4.0.0.dll"/>
+      <DLLName value="MCMv4.Implementation.v$version$.dll"/>
       <SubModuleClassType value="MCM.Implementation.MCMImplementationSubModule"/>
       <Tags/>
     </SubModule>
     <SubModule>
       <Name value="MCMv4 UI"/>
-      <DLLName value="MCMv4.UI.v4.0.0.dll"/>
+      <DLLName value="MCMv4.UI.v$version$.dll"/>
       <SubModuleClassType value="MCM.UI.MCMUISubModule"/>
       <Tags/>
     </SubModule>
