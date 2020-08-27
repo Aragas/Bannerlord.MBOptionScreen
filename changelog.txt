@@ -1,11 +1,19 @@
 ---------------------------------------------------------------------------------------------------
+Version: 4.0.0
+Game Versions: e1.4.3,e1.5.0,e1.5.1
+* Switched to v4 (API not finalized)
+* Added MCMv3 compatibility layer
+* Removed MBO compatibility layer
+* Added Harmony, ButterLib and UIExtender deps
+* Refactoring
+---------------------------------------------------------------------------------------------------
 Version: 3.1.11
 Game Versions: e1.4.0,e1.4.1,e1.4.2
 * Fixed GroupToggle in Fluent API
 * Better Prefab loading
 * Fixed Ctrl+V in Edit Box
 * Fixed 'random' crash in Edit Box
-* Dixed Preset and Dropdown translation
+* Fixed Preset and Dropdown translation
 ---------------------------------------------------------------------------------------------------
 Version: 3.1.10
 Game Versions: e1.4.0,e1.4.1,e1.4.2
