@@ -1,0 +1,51 @@
+---------------------------------------------------------------------------------------------------
+Version: 3.1.11
+Game Versions: e1.4.0,e1.4.1,e1.4.2
+* Fixed GroupToggle in Fluent API
+* Better Prefab loading
+* Fixed Ctrl+V in Edit Box
+* Fixed 'random' crash in Edit Box
+* Dixed Preset and Dropdown translation
+---------------------------------------------------------------------------------------------------
+Version: 3.1.10
+Game Versions: e1.4.0,e1.4.1,e1.4.2
+* Non existing because of a release error
+---------------------------------------------------------------------------------------------------
+Version: 3.1.9
+Game Versions: e1.4.0,e1.4.1,e1.4.2
+* Fixed Group translation bug
+* Fixed Fluent API settings loading
+* Fixed XML settings reading
+---------------------------------------------------------------------------------------------------
+Version: 3.1.8
+Game Versions: e1.4.0,e1.4.1,e1.4.2
+* Fixed editing box in option screen
+* Fixed Preset reset issue
+* Fixed nested setting serialization
+* Made search box bigger
+---------------------------------------------------------------------------------------------------
+Version: 3.1.7
+Game Versions: e1.4.0,e1.4.1,e1.4.2
+* Fixed mission crash
+* Improved GroupName handling, localized strings will work now
+* Improved Search Box
+* Improved Hint visibility
+* Fluent API improvements
+* Better settings serializing
+---------------------------------------------------------------------------------------------------
+Version: 3.1.6
+Game Versions: e1.4.0,e1.4.1,e1.4.2
+* Fixed ModLib conflict
+* Fixed int/float slider value box font
+---------------------------------------------------------------------------------------------------
+Version: 3.1.5
+Game Versions: e1.4.2
+* Better UI spacing
+* Fixed Fluent API
+* Better UI injection
+* Setting names are translatable
+---------------------------------------------------------------------------------------------------
+Version: 3.1.4
+Game Versions: e1.4.0,e1.4.1
+* Fixed ModLib settings display issue
+---------------------------------------------------------------------------------------------------

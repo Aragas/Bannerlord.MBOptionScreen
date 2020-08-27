@@ -1,0 +1,47 @@
+﻿<!--EXTERNAL_PROPERTIES: Version;GameVersion;ButterLibVersion;HarmonyVersion;UIExtenderExVersion-->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Authors>Aragas, mipen</Authors>
+    <AssemblyName>MCMv4.UI.v$(Version)</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="GUI\Brushes\ButtonBrushes.xml" />
+    <EmbeddedResource Include="GUI\Brushes\DividerBrushes.xml" />
+    <EmbeddedResource Include="GUI\Brushes\ExpandIndicator.xml" />
+    <EmbeddedResource Include="GUI\Brushes\SettingsBrush.xml" />
+    <EmbeddedResource Include="GUI\Brushes\ResetButtonBrush.xml" />
+    <EmbeddedResource Include="GUI\Brushes\SettingsValueDisplayBrush.xml" />
+    <EmbeddedResource Include="GUI\Brushes\TextBrushes.xml" />
+
+    <EmbeddedResource Include="GUI\Views\EditValueView.xml" />
+
+    <EmbeddedResource Include="GUI\Views\ModOptionsPageView.xml" />
+    <EmbeddedResource Include="GUI\Views\ModOptionsView.xml" />
+    <EmbeddedResource Include="GUI\Views\SettingsItemView.xml" />
+    <EmbeddedResource Include="GUI\Views\SettingsPropertyGroupView.xml" />
+    <EmbeddedResource Include="GUI\Views\SettingsPropertyView.xml" />
+    <EmbeddedResource Include="GUI\Views\SettingsView.xml" />
+    <EmbeddedResource Include="GUI\Views\DropdownWithHorizontalControl.Checkbox.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="MCMv4.Custom.ScreenTests" />
+    <InternalsVisibleTo Include="MCM.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bannerlord.ButterLib" Version="$(ButterLibVersion)" IncludeAssets="compile" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Native.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.SandBox.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
+    <PackageReference Include="Bannerlord.UIExtenderEx" Version="$(UIExtenderExVersion)" IncludeAssets="compile" />
+    <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" IncludeAssets="compile" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MCM\MCM.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,67 @@
+{
+  "metadata": [
+    {
+      "src": [
+        {
+          "src": "../src",
+          "files": [ "MCM/*.csproj" ]
+        }
+      ],
+      "dest": "api"
+    }
+  ],
+  "build": {
+    "xref": [
+      "xrefs/Newtonsoft.Json-xrefmap.yml",
+      "https://butr.github.io/Bannerlord.ReferenceAssemblies.Documentation/xrefmap.yml"
+    ],
+    "xrefService": [
+      "https://xref.docs.microsoft.com/query?uid={uid}"
+    ],
+    "content": [
+      {
+        "files": [
+          "api/**.yml",
+          "api/index.md"
+        ]
+      },
+      {
+        "files": [
+          "articles/**.md",
+          "articles/**/toc.yml",
+          "toc.yml",
+          "*.md"
+        ]
+      }
+    ],
+    "resource": [
+      {
+        "files": [
+		  "langwordMapping.yml",
+          "images/**",
+          "CNAME"
+        ]
+      },
+      {
+        "src": "../",
+        "files": [ "resources/**" ]
+      }
+    ],
+    "overwrite": [ ],
+    "dest": "_site",
+    "globalMetadata": {
+      "_enableSearch": "true",
+      "_appTitle": "MCM Documentation",
+      "_appFooter": "© 2020 Aragas",
+    },
+    "globalMetadataFiles": [],
+    "fileMetadataFiles": [],
+    "template": [
+      "default",
+      "_template/dark-theme",
+      "_template/last-modified"
+    ],
+    "postProcessors": ["ExtractSearchIndex", "LastModifiedPostProcessor"],
+    "markdownEngineName": "markdig"
+  }
+}

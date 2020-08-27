@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Authors>Aragas, mipen</Authors>
+    <ModuleName>Bannerlord.MBOptionScreen</ModuleName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MCM.Implementation\MCM.Implementation.csproj" />
+    <ProjectReference Include="..\MCM.UI\MCM.UI.csproj" />
+    <ProjectReference Include="..\MCM\MCM.csproj" />
+  </ItemGroup>
+
+  <ItemGroup Condition="$(Configuration) == 'Debug'">
+    <ProjectReference Include="..\MCM.Custom.ScreenTests\MCM.Custom.ScreenTests.csproj" />
+  </ItemGroup>
+
+</Project>

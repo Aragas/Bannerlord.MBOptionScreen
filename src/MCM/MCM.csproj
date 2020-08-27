@@ -1,0 +1,34 @@
+﻿<!--EXTERNAL_PROPERTIES: GameVersion;ButterLibVersion;HarmonyVersion-->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Authors>Aragas, mipen</Authors>
+    <AssemblyName>MCMv4</AssemblyName>
+  </PropertyGroup>
+
+  <!--NuGet Package-->
+  <PropertyGroup>
+    <PackageId>Bannerlord.MCM</PackageId>
+    <PackageDescription>A library for easy Setting integration. Contains the abstraction library, requires the Standalone dependency to work!</PackageDescription>
+    <Title>Mod Configuration Menu</Title>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>MCM-128-w-2.png</PackageIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="../../resources/MCM-128-w-2.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+  <!--NuGet Package-->
+  
+  <ItemGroup>
+    <InternalsVisibleTo Include="MCMv4.Custom.ScreenTests" />
+    <InternalsVisibleTo Include="MCM.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bannerlord.ButterLib" Version="$(ButterLibVersion)" IncludeAssets="compile" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
+    <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" IncludeAssets="compile" />
+  </ItemGroup>
+
+</Project>
