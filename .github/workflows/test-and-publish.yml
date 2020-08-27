@@ -37,7 +37,6 @@ jobs:
         repo: DepotDownloader
         tag: DepotDownloader_2.3.6
         file: depotdownloader-2.3.6.zip
-        token: ${{secrets.GITHUB_TOKEN}}
 
     - name: Extract DepotDownloader_2.3.6
       uses: DuckSoft/extract-7z-action@v1.0
@@ -47,8 +46,11 @@ jobs:
 
     - name: Download Bannerlord binaries
       run: >-
-        dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -username ${{secrets.STEAM_LOGIN}}
+        dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -beta ${{secrets.SYNCED_GAME_STABLE_VERSION}} -username ${{secrets.STEAM_LOGIN}}
         -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Download opencover.4.7.922
       uses: i3h/download-release-asset@v1
@@ -66,17 +68,20 @@ jobs:
 
     - name: Test
       run: >-
-          dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Debug -p:GameFolder="$PWD/bannerlord";
-          dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
+          $game_version=$env:STABLE_VERSION;
+          $game_version=$game_version.substring(1);
+          dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Debug -p:GameVersion=$game_version -p:GameFolder="$PWD/bannerlord";
+          dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Release -p:GameVersion=$game_version -p:GameFolder="$PWD/bannerlord";
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
+        STABLE_VERSION: ${{secrets.SYNCED_GAME_STABLE_VERSION}}
       shell: pwsh
 
     - name: Test Coverage
       run: >-
-          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test src/MCM.sln --configuration Debug --no-build" -filter:"+[MCMv3.*]*" -output:coverage_mcm_debug.xml -mergebyhash;
-          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test src/MCM.sln --configuration Release --no-build" -filter:"+[MCMv3.*]*" -output:coverage_mcm_release.xml -mergebyhash;
+          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test src/Mod Configuration Menu.sln --configuration Debug --no-build" -filter:"+[MCMv3.*]*" -output:coverage_mcm_debug.xml -mergebyhash;
+          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test src/Mod Configuration Menu.sln --configuration Release --no-build" -filter:"+[MCMv3.*]*" -output:coverage_mcm_release.xml -mergebyhash;
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
