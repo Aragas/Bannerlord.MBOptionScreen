@@ -153,8 +153,9 @@ jobs:
         desc="${desc//$'\n'/'%0A'}"
         desc="${desc//$'\r'/'%0D'}"
         echo "::set-output name=mod_description::$desc"
+
     - name: Pack MCM (Release)
-      run: dotnet pack src/MCM.NuGet/MCM.NuGet.csproj --configuration Release -o "./packages";
+      run: dotnet pack src/MCM/MCM.csproj --configuration Release -o "./packages";
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
