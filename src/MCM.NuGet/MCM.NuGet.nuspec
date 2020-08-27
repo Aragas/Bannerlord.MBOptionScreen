@@ -17,13 +17,14 @@
   </metadata>
   <dependencies>
     <group targetFramework=".NETFramework4.7.2">
-      <dependency id="Bannerlord.ButterLib" version="0.0.6" exclude="Runtime,Build,Native,Analyzers,BuildTransitive" />
+      <dependency id="Bannerlord.ButterLib" version="1.0.3" exclude="Runtime,Build,Native,Analyzers,BuildTransitive" />
+	  <dependency id="Bannerlord.UIExtenderEx" version="1.0.2" exclude="Runtime,Build,Native,Analyzers,BuildTransitive" />
       <dependency id="Lib.Harmony" version="2.0.2" exclude="Runtime,Build,Native,Analyzers,BuildTransitive" />
     </group>
   </dependencies>
   <files>
     <file src="bin/$configuration$/$targetframework$/MCM-128-w-2.png" target="icon.png" />
-    <file src="bin/$configuration$/$targetframework$/MCMv3.dll" target="lib/$targetframework$" />
-    <file src="bin/$configuration$/$targetframework$/MCMv3.pdb" target="lib/$targetframework$" />
+    <file src="bin/$configuration$/$targetframework$/MCMv4.dll" target="lib/$targetframework$" />
+    <file src="bin/$configuration$/$targetframework$/MCMv4.pdb" target="lib/$targetframework$" />
   </files>
 </package>
