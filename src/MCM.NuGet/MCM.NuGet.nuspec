@@ -17,8 +17,8 @@
   </metadata>
   <dependencies>
     <group targetFramework=".NETFramework4.7.2">
-      <dependency id="Bannerlord.ButterLib" version="1.0.2" exclude="Runtime,Build,Native,Analyzers,BuildTransitive" />
-	  <dependency id="Bannerlord.UIExtenderEx" version="1.0.2" exclude="Runtime,Build,Native,Analyzers,BuildTransitive" />
+      <dependency id="Bannerlord.ButterLib" version="1.0.3" exclude="Runtime,Build,Native,Analyzers,BuildTransitive" />
+	    <dependency id="Bannerlord.UIExtenderEx" version="1.0.2" exclude="Runtime,Build,Native,Analyzers,BuildTransitive" />
       <dependency id="Lib.Harmony" version="2.0.2" exclude="Runtime,Build,Native,Analyzers,BuildTransitive" />
     </group>
   </dependencies>

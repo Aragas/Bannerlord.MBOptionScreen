@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------------------------------
+Version: 4.0.1
+Game Versions: e1.4.3,e1.5.0,e1.5.1
+* Explicit loading of Implementation and UI sub-modules
+---------------------------------------------------------------------------------------------------
 Version: 4.0.0
 Game Versions: e1.4.3,e1.5.0,e1.5.1
 * Switched to v4 (API not finalized)
