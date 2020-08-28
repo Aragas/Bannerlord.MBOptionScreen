@@ -238,7 +238,7 @@ jobs:
     - name: Run NexusmodsUploader
       run: >-
         bannerlord_nexusmods_uploader upload -g mountandblade2bannerlord -m 612 -n "Mod Configuration Menu"
-        -v "${{steps.changelog.outputs.mod_version}}" -l true -e true -d "${{steps.changelog.outputs.mod_description}}"
+        -v "v${{steps.changelog.outputs.mod_version}}" -l true -e true -d "${{steps.changelog.outputs.mod_description}}"
         -p "$PWD/MCM.Standalone.zip";
       env:
         NEXUSMODS_COOKIES_JSON: '${{secrets.NEXUSMODS_COOKIES_JSON}}'
