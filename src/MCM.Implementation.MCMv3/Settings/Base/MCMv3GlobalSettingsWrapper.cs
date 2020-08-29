@@ -70,8 +70,16 @@ namespace MCM.Implementation.MCMv3.Settings.Base
             _methodOnPropertyChangedDelegate = AccessTools2.GetDelegate<OnPropertyChangedDelegate>(@object, AccessTools.Method(type, nameof(LegacyBaseSettings.OnPropertyChanged)));
         }
 
-        protected override ISettingsPropertyDiscoverer? Discoverer { get; } =
-            ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<IMCMv3SettingsPropertyDiscoverer>();
+        // MCMv3 had the ability to get Instance in OnSubModuleLoad()
+        protected override ISettingsPropertyDiscoverer? Discoverer
+        {
+            get
+            {
+                if (ButterLibSubModule.Instance.GetServiceProvider() is { } serviceProvider)
+                    return serviceProvider.GetRequiredService<IMCMv3SettingsPropertyDiscoverer>();
+                return new MCMv3SettingsPropertyDiscoverer();
+            }
+        }
 
         public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
             _methodOnPropertyChangedDelegate?.Invoke(propertyName);

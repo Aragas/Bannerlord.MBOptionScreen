@@ -12,8 +12,7 @@ namespace MCM.Abstractions.Functionality
 {
     public abstract class BaseResourceHandler
     {
-        private static BaseResourceHandler? _instance;
-        public static BaseResourceHandler Instance => _instance ??=
+        public static BaseResourceHandler Instance =>
             ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<BaseResourceHandler>();
 
         public abstract void InjectBrush(XmlDocument xmlDocument);

@@ -54,16 +54,9 @@ namespace MCM.Implementation.MCMv3
             var harmony = new Harmony("bannerlord.mcm.implementation.mcmv3.loaderpreventer");
             harmony.Patch(AccessTools.Constructor(typeof(v3::MCM.IntegratedLoaderSubModule)),
                 prefix: new HarmonyMethod(SymbolExtensions.GetMethodInfo(() => StopIntegratedLoaderSubModuleCtor(null!))));
-        }
-
-        protected override void OnBeforeInitialModuleScreenSetAsRoot()
-        {
-            base.OnBeforeInitialModuleScreenSetAsRoot();
-
-            var serviceProvider = this.GetServiceProvider();
 
             var field = AccessTools.Field(typeof(MCMv3BaseSettingsProvider), "_instance");
-            field.SetValue(null, new MCMv3SettingsProviderReplacer(serviceProvider.GetRequiredService<BaseSettingsProvider>()));
+            field.SetValue(null, new MCMv3SettingsProviderReplacer());
         }
     }
 }

@@ -30,10 +30,13 @@ namespace MCM.Abstractions.Settings.Containers
 
         protected BaseSettingsContainer()
         {
-            foreach (var format in ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<IEnumerable<ISettingsFormat>>())
-            foreach (var extension in format.Extensions)
+            if (ButterLibSubModule.Instance.GetServiceProvider() is { } serviceProvider)
             {
-                AvailableSettingsFormats[extension] = format;
+                foreach (var format in serviceProvider.GetRequiredService<IEnumerable<ISettingsFormat>>())
+                foreach (var extension in format.Extensions)
+                {
+                    AvailableSettingsFormats[extension] = format;
+                }
             }
         }
 

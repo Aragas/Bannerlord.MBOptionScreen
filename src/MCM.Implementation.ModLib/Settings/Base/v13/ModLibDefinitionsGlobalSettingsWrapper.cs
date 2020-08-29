@@ -52,8 +52,16 @@ namespace MCM.Implementation.ModLib.Settings.Base.v13
             _getSubFolderDelegate = AccessTools2.GetDelegate<GetSubFolderDelegate>(@object, AccessTools.Property(type, nameof(LegacyBaseSettings.SubFolder)).GetMethod);
         }
 
-        protected override ISettingsPropertyDiscoverer? Discoverer { get; } =
-            ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<IModLibDefinitionsSettingsPropertyDiscoverer>();
+        // ModLib v13 has the ability to get Instance in OnSubModuleLoad()
+        protected override ISettingsPropertyDiscoverer? Discoverer
+        {
+            get
+            {
+                if (ButterLibSubModule.Instance.GetServiceProvider() is {} serviceProvider)
+                    return serviceProvider.GetRequiredService<IModLibDefinitionsSettingsPropertyDiscoverer>();
+                return new ModLibDefinitionsSettingsPropertyDiscoverer();
+            }
+        }
 
         internal void UpdateReference(object @object) => Object = @object;
 

@@ -107,13 +107,11 @@ namespace MCM.UI
                 BaseGameMenuScreenHandler.Instance.AddScreen(
                     "MCM_OptionScreen",
                     9990,
-                    //() => DI.GetImplementation<IMCMOptionsScreen>() as ScreenBase,
                     () => ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<IMCMOptionsScreen>() as ScreenBase,
                     new TextObject("{=MainMenu_ModOptions}Mod Options"));
                 BaseIngameMenuScreenHandler.Instance.AddScreen(
                     "MCM_OptionScreen",
                     1,
-                    //() => DI.GetImplementation<IMCMOptionsScreen>() as ScreenBase,
                     () => ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<IMCMOptionsScreen>() as ScreenBase,
                     new TextObject("{=EscapeMenu_ModOptions}Mod Options"));
             }
