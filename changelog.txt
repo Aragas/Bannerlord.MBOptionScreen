@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------------------------------
+Version: 4.0.3
+Game Versions: e1.4.3,e1.5.0,e1.5.1
+* Fixed MCMv3 and ModLib not returning setting instances in OnSubModuleLoad()
+---------------------------------------------------------------------------------------------------
 Version: 4.0.2
 Game Versions: e1.4.3,e1.5.0,e1.5.1
 * Fixed SubModule names

@@ -1,7 +1,13 @@
 ﻿extern alias v3;
 extern alias v4;
 
+using Bannerlord.ButterLib;
+using Bannerlord.ButterLib.Common.Extensions;
+
 using MCM.Implementation.MCMv3.Settings.Base;
+using MCM.Implementation.MCMv3.Settings.Containers;
+
+using Microsoft.Extensions.DependencyInjection;
 
 using System.Collections.Generic;
 
@@ -20,20 +26,26 @@ namespace MCM.Implementation.MCMv3.Settings.Providers
     /// </summary>
     internal class MCMv3SettingsProviderReplacer : MCMv3BaseSettingsProvider
     {
-        private readonly BaseSettingsProvider _settingsProvider;
-
-        public MCMv3SettingsProviderReplacer(BaseSettingsProvider settingsProvider)
-        {
-            _settingsProvider = settingsProvider;
-        }
-
         public override IEnumerable<MCMv3SettingsDefinition> CreateModSettingsDefinitions { get; } = default!;
 
         public override MCMv3BaseSettings? GetSettings(string id)
         {
-            var baseSettings = _settingsProvider.GetSettings(id);
-            if (baseSettings is MCMv3GlobalSettingsWrapper settingsWrapper && settingsWrapper.Object is MCMv3BaseSettings settings)
-                return settings;
+            if (ButterLibSubModule.Instance.GetServiceProvider() is { } serviceProvider)
+            {
+                var settingsProvider = serviceProvider.GetRequiredService<BaseSettingsProvider>();
+
+                var baseSettings = settingsProvider.GetSettings(id);
+                if (baseSettings is MCMv3GlobalSettingsWrapper settingsWrapper && settingsWrapper.Object is MCMv3BaseSettings settings)
+                    return settings;
+            }
+            else
+            {
+                var container = new MCMv3GlobalSettingsContainer();
+                var baseSettings = container.GetSettings(id);
+                if (baseSettings is MCMv3GlobalSettingsWrapper settingsWrapper && settingsWrapper.Object is MCMv3BaseSettings settings)
+                    return settings;
+            }
+
             return null;
         }
 

@@ -10,7 +10,7 @@ namespace MCM.Abstractions.Settings.Base.PerCampaign
     public abstract class AttributePerCampaignSettings<T> : PerCampaignSettings<T> where T : PerCampaignSettings, new()
     {
         /// <inheritdoc/>
-        protected override ISettingsPropertyDiscoverer? Discoverer { get; } =
+        protected override ISettingsPropertyDiscoverer? Discoverer =>
             ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<IAttributeSettingsPropertyDiscoverer>();
     }
 }

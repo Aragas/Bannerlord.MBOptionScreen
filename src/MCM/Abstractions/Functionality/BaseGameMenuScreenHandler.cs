@@ -12,8 +12,7 @@ namespace MCM.Abstractions.Functionality
 {
     public abstract class BaseGameMenuScreenHandler
     {
-        private static BaseGameMenuScreenHandler? _instance;
-        public static BaseGameMenuScreenHandler Instance => _instance ??=
+        public static BaseGameMenuScreenHandler Instance =>
             ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<BaseGameMenuScreenHandler>();
 
         public abstract void AddScreen(string internalName, int index, Func<ScreenBase?> screenFactory, TextObject text);
