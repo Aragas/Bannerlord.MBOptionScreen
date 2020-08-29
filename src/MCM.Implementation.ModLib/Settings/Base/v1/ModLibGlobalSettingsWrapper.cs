@@ -1,7 +1,5 @@
 ﻿extern alias v1;
 
-using Bannerlord.ButterLib;
-using Bannerlord.ButterLib.Common.Extensions;
 using Bannerlord.ButterLib.Common.Helpers;
 
 using HarmonyLib;
@@ -10,8 +8,6 @@ using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Base.Global;
 using MCM.Abstractions.Settings.Properties;
 using MCM.Implementation.ModLib.Settings.Properties.v1;
-
-using Microsoft.Extensions.DependencyInjection;
 
 using System;
 using System.ComponentModel;
@@ -52,16 +48,7 @@ namespace MCM.Implementation.ModLib.Settings.Base.v1
             _getSubFolderDelegate = AccessTools2.GetDelegate<GetSubFolderDelegate>(@object, AccessTools.Property(type, nameof(LegacyBaseSettings.SubFolder)).GetMethod);
         }
 
-        // ModLib v1 has the ability to get Instance in OnSubModuleLoad()
-        protected override ISettingsPropertyDiscoverer? Discoverer
-        {
-            get
-            {
-                if (ButterLibSubModule.Instance.GetServiceProvider() is {} serviceProvider)
-                    return serviceProvider.GetRequiredService<IModLibSettingsPropertyDiscoverer>();
-                return new ModLibSettingsPropertyDiscoverer();
-            }
-        }
+        protected override ISettingsPropertyDiscoverer Discoverer { get; } = new ModLibSettingsPropertyDiscoverer();
 
         internal void UpdateReference(object @object) => Object = @object;
 

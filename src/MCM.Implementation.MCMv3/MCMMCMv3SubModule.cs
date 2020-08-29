@@ -9,13 +9,10 @@ using MCM.Implementation.MCMv3.Settings.Containers;
 using MCM.Implementation.MCMv3.Settings.Properties;
 using MCM.Implementation.MCMv3.Settings.Providers;
 
-using Microsoft.Extensions.DependencyInjection;
-
 using System.Collections.Generic;
 
 using TaleWorlds.MountAndBlade;
 
-using v4::MCM.Abstractions.Settings.Providers;
 using v4::MCM.Extensions;
 
 using MCMv3BaseSettingsProvider = v3::MCM.Abstractions.Settings.Providers.BaseSettingsProvider;
@@ -47,9 +44,9 @@ namespace MCM.Implementation.MCMv3
 
             var services = this.GetServices();
 
-            services.AddSettingsContainer<IMCMv3FluentGlobalSettingsContainer, MCMv3FluentGlobalSettingsContainer>();
-            services.AddSettingsContainer<IMCMv3GlobalSettingsContainer, MCMv3GlobalSettingsContainer>();
-            services.AddSettingsPropertyDiscoverer<IMCMv3SettingsPropertyDiscoverer, MCMv3SettingsPropertyDiscoverer>();
+            services.AddSettingsContainer<MCMv3FluentGlobalSettingsContainer>();
+            services.AddSettingsContainer<MCMv3GlobalSettingsContainer>();
+            services.AddSettingsPropertyDiscoverer<MCMv3SettingsPropertyDiscoverer>();
 
             var harmony = new Harmony("bannerlord.mcm.implementation.mcmv3.loaderpreventer");
             harmony.Patch(AccessTools.Constructor(typeof(v3::MCM.IntegratedLoaderSubModule)),

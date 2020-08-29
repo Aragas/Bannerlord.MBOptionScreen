@@ -15,11 +15,12 @@ using v4::MCM.Abstractions.Ref;
 using v4::MCM.Abstractions.Settings.Definitions;
 using v4::MCM.Abstractions.Settings.Definitions.Wrapper;
 using v4::MCM.Abstractions.Settings.Models;
+using v4::MCM.Abstractions.Settings.Properties;
 using v4::MCM.Utils;
 
 namespace MCM.Implementation.MCMv3.Settings.Properties
 {
-    internal class MCMv3SettingsPropertyDiscoverer : IMCMv3SettingsPropertyDiscoverer
+    internal class MCMv3SettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
     {
         public IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object)
         {

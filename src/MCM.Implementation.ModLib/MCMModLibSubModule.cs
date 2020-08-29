@@ -23,11 +23,11 @@ namespace MCM.Implementation.ModLib
 
             services.AddTransient<BaseModLibScreenOverrider, DefaultModLibScreenOverrider>();
 
-            services.AddSettingsContainer<IModLibSettingsContainer, ModLibSettingsContainer>();
-            services.AddSettingsContainer<IModLibDefinitionsSettingsContainer, ModLibDefinitionsSettingsContainer>();
+            services.AddSettingsContainer<ModLibSettingsContainer>();
+            services.AddSettingsContainer<ModLibDefinitionsSettingsContainer>();
 
-            services.AddSettingsPropertyDiscoverer<IModLibSettingsPropertyDiscoverer, ModLibSettingsPropertyDiscoverer>();
-            services.AddSettingsPropertyDiscoverer<IModLibDefinitionsSettingsPropertyDiscoverer, ModLibDefinitionsSettingsPropertyDiscoverer>();
+            services.AddSettingsPropertyDiscoverer<ModLibSettingsPropertyDiscoverer>();
+            services.AddSettingsPropertyDiscoverer<ModLibDefinitionsSettingsPropertyDiscoverer>();
         }
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot()

@@ -1,15 +1,11 @@
 ﻿extern alias v3;
 extern alias v4;
 
-using Bannerlord.ButterLib;
-using Bannerlord.ButterLib.Common.Extensions;
 using Bannerlord.ButterLib.Common.Helpers;
 
 using HarmonyLib;
 
 using MCM.Implementation.MCMv3.Settings.Properties;
-
-using Microsoft.Extensions.DependencyInjection;
 
 using System;
 using System.ComponentModel;
@@ -70,16 +66,7 @@ namespace MCM.Implementation.MCMv3.Settings.Base
             _methodOnPropertyChangedDelegate = AccessTools2.GetDelegate<OnPropertyChangedDelegate>(@object, AccessTools.Method(type, nameof(LegacyBaseSettings.OnPropertyChanged)));
         }
 
-        // MCMv3 had the ability to get Instance in OnSubModuleLoad()
-        protected override ISettingsPropertyDiscoverer? Discoverer
-        {
-            get
-            {
-                if (ButterLibSubModule.Instance.GetServiceProvider() is { } serviceProvider)
-                    return serviceProvider.GetRequiredService<IMCMv3SettingsPropertyDiscoverer>();
-                return new MCMv3SettingsPropertyDiscoverer();
-            }
-        }
+        protected override ISettingsPropertyDiscoverer Discoverer { get; } = new MCMv3SettingsPropertyDiscoverer();
 
         public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
             _methodOnPropertyChangedDelegate?.Invoke(propertyName);
