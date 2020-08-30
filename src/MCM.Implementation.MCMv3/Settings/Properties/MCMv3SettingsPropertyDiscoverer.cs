@@ -39,6 +39,19 @@ namespace MCM.Implementation.MCMv3.Settings.Properties
 
             foreach (var property in type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
             {
+                if (property.Name == nameof(v3::MCM.Abstractions.Settings.Base.BaseSettings.Id))
+                    continue;
+                if (property.Name == nameof(v3::MCM.Abstractions.Settings.Base.BaseSettings.DisplayName))
+                    continue;
+                if (property.Name == nameof(v3::MCM.Abstractions.Settings.Base.BaseSettings.FolderName))
+                    continue;
+                if (property.Name == nameof(v3::MCM.Abstractions.Settings.Base.BaseSettings.Format))
+                    continue;
+                if (property.Name == nameof(v3::MCM.Abstractions.Settings.Base.BaseSettings.SubFolder))
+                    continue;
+                if (property.Name == nameof(v3::MCM.Abstractions.Settings.Base.BaseSettings.UIVersion))
+                    continue;
+
                 var attributes = property.GetCustomAttributes().ToList();
 
                 object? groupAttrObj = attributes.SingleOrDefault(a => a is v3::MCM.Abstractions.Settings.Definitions.IPropertyGroupDefinition);

@@ -47,12 +47,12 @@ namespace MCM.Implementation
         protected override void OnGameStart(Game game, IGameStarter gameStarter)
         {
             base.OnGameStart(game, gameStarter);
-            BaseSettingsProvider.Instance.OnGameStarted(game);
+            BaseSettingsProvider.Instance!.OnGameStarted(game);
         }
         public override void OnGameEnd(Game game)
         {
             base.OnGameEnd(game);
-            BaseSettingsProvider.Instance.OnGameEnded(game);
+            BaseSettingsProvider.Instance!.OnGameEnded(game);
         }
     }
 }

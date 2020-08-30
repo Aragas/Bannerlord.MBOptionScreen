@@ -35,6 +35,15 @@ namespace MCM.Implementation.ModLib.Settings.Properties.v1
 
             foreach (var property in type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
             {
+                if (property.Name == nameof(v1::ModLib.SettingsBase.ID))
+                    continue;
+                if (property.Name == nameof(v1::ModLib.SettingsBase.ModName))
+                    continue;
+                if (property.Name == nameof(v1::ModLib.SettingsBase.ModuleFolderName))
+                    continue;
+                if (property.Name == nameof(v1::ModLib.SettingsBase.SubFolder))
+                    continue;
+
                 var attributes = property.GetCustomAttributes().ToList();
 
                 object? groupAttrObj = attributes.Find(a => a is v1::ModLib.Attributes.SettingPropertyGroupAttribute);

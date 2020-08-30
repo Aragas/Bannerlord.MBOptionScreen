@@ -15,7 +15,7 @@ namespace MCM.Abstractions.Settings.Models
         {
             SettingsId = id;
 
-            var settings = BaseSettingsProvider.Instance.GetSettings(id);
+            var settings = BaseSettingsProvider.Instance?.GetSettings(id);
             DisplayName = settings?.DisplayName ?? "ERROR";
             SettingPropertyGroups = settings?.GetSettingPropertyGroups() ?? new List<SettingsPropertyGroupDefinition>();
         }

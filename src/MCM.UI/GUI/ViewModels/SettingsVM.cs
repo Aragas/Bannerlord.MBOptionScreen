@@ -27,7 +27,7 @@ namespace MCM.UI.GUI.ViewModels
         public UndoRedoStack URS { get; } = new UndoRedoStack();
 
         public SettingsDefinition SettingsDefinition { get; }
-        public BaseSettings SettingsInstance => BaseSettingsProvider.Instance.GetSettings(SettingsDefinition.SettingsId)!;
+        public BaseSettings SettingsInstance => BaseSettingsProvider.Instance!.GetSettings(SettingsDefinition.SettingsId)!;
 
         public SelectorVM<SelectorItemVM>? PresetsSelector { get; }
 
@@ -151,7 +151,7 @@ namespace MCM.UI.GUI.ViewModels
         }
         public void SaveSettings()
         {
-            BaseSettingsProvider.Instance.SaveSettings(SettingsInstance);
+            BaseSettingsProvider.Instance!.SaveSettings(SettingsInstance);
         }
 
 

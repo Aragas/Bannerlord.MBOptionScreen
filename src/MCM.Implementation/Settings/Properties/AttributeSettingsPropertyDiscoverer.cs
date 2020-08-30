@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using MCM.Abstractions.Settings.Base;
 
 namespace MCM.Implementation.Settings.Properties
 {
@@ -34,6 +35,19 @@ namespace MCM.Implementation.Settings.Properties
 
             foreach (var property in type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
             {
+                if (property.Name == nameof(BaseSettings.Id))
+                    continue;
+                if (property.Name == nameof(BaseSettings.DisplayName))
+                    continue;
+                if (property.Name == nameof(BaseSettings.FolderName))
+                    continue;
+                if (property.Name == nameof(BaseSettings.Format))
+                    continue;
+                if (property.Name == nameof(BaseSettings.SubFolder))
+                    continue;
+                if (property.Name == nameof(BaseSettings.UIVersion))
+                    continue;
+
                 var attributes = property.GetCustomAttributes().ToList();
 
                 object? groupAttrObj = attributes.SingleOrDefault(a => a is IPropertyGroupDefinition);
