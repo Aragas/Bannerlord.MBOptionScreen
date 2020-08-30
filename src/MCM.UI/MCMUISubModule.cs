@@ -79,7 +79,9 @@ namespace MCM.UI
             DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
                 nameof(OnSubModuleUnloaded), SubscriptionType.AfterMethod, (s, e) =>
                 {
-                    MCMUISettings.Instance!.PropertyChanged -= MCMSettings_PropertyChanged;
+                    var instance = MCMUISettings.Instance;
+                    if (instance != null)
+                        instance.PropertyChanged -= MCMSettings_PropertyChanged;
                 });
         }
 

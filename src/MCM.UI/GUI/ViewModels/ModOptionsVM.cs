@@ -172,7 +172,7 @@ namespace MCM.UI.GUI.ViewModels
                 if (!(syncContext is SynchronizationContext uiContext))
                     return;
 
-                var settingsVM = BaseSettingsProvider.Instance.CreateModSettingsDefinitions
+                var settingsVM = BaseSettingsProvider.Instance!.CreateModSettingsDefinitions
                     .Parallel()
                     .Select(s =>
                     {
