@@ -12,13 +12,14 @@ using System.Linq;
 
 using v4::MCM.Abstractions.Settings.Base.Global;
 using v4::MCM.Abstractions.Settings.Containers;
+using v4::MCM.Abstractions.Settings.Containers.Global;
 using v4::MCM.Abstractions.Settings.Models;
 
 using LegacyFluentGlobalSettings = v3::MCM.Abstractions.Settings.Base.Global.FluentGlobalSettings;
 
 namespace MCM.Implementation.MCMv3.Settings.Containers
 {
-    internal class MCMv3FluentGlobalSettingsContainer : BaseSettingsContainer<FluentGlobalSettings>, IMCMv3FluentGlobalSettingsContainer
+    internal class MCMv3FluentGlobalSettingsContainer : BaseSettingsContainer<FluentGlobalSettings>, IFluentGlobalSettingsContainer
     {
         protected override string RootFolder { get; }
 

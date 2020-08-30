@@ -1,8 +1,9 @@
-﻿using HarmonyLib;
+﻿using Bannerlord.ButterLib.Common.Helpers;
 
-using System.Collections;
+using HarmonyLib;
+
 using System.Collections.Concurrent;
-using System.Reflection;
+using System.Collections.Generic;
 using System.Xml;
 
 using TaleWorlds.Engine.GauntletUI;
@@ -12,24 +13,30 @@ namespace MCM.UI.Functionality.Injectors
 {
     internal static class BrushInjector
     {
-        private static MethodInfo LoadBrushFromMethod { get; } = AccessTools.Method(typeof(BrushFactory), "LoadBrushFrom");
-        private static FieldInfo BrushesField { get; } = AccessTools.Field(typeof(BrushFactory), "_brushes");
+        private delegate Brush LoadBrushFromDelegate(BrushFactory instance, XmlNode brushNode);
 
-        internal static readonly ConcurrentDictionary<Brush, object?> _brushes = new ConcurrentDictionary<Brush, object?>();
+        private static readonly LoadBrushFromDelegate? LoadBrushFrom =
+            AccessTools2.GetDelegate<LoadBrushFromDelegate>(typeof(BrushFactory), "LoadBrushFrom");
+
+        private static readonly AccessTools.FieldRef<BrushFactory, Dictionary<string, Brush>>? GetBrushes =
+            AccessTools.FieldRefAccess<BrushFactory, Dictionary<string, Brush>>("_brushes");
+
+        internal static readonly ConcurrentDictionary<Brush, object?> Brushes = new ConcurrentDictionary<Brush, object?>();
 
         public static void InjectDocument(XmlDocument xmlDocument)
         {
-            var brushes = (IDictionary) BrushesField.GetValue(UIResourceManager.BrushFactory);
-            foreach (var brushNode in xmlDocument.SelectSingleNode("Brushes").ChildNodes)
+            if (GetBrushes != null)
             {
-                var brush = (Brush) LoadBrushFromMethod.Invoke(UIResourceManager.BrushFactory, new [] { brushNode });
-
-                if (brushes.Contains(brush.Name))
-                    brushes[brush.Name] = brush;
-                else
-                    brushes.Add(brush.Name, brush);
-
-                _brushes.TryAdd(brush, null);
+                var brushes = GetBrushes(UIResourceManager.BrushFactory);
+                foreach (XmlNode brushNode in xmlDocument.SelectSingleNode("Brushes")!.ChildNodes)
+                {
+                    var brush = LoadBrushFrom?.Invoke(UIResourceManager.BrushFactory, brushNode);
+                    if (brush != null)
+                    {
+                        brushes[brush.Name] = brush;
+                        Brushes.TryAdd(brush, null);
+                    }
+                }
             }
         }
     }

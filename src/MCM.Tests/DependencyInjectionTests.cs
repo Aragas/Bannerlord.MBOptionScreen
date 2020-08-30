@@ -1,5 +1,6 @@
 using Bannerlord.ButterLib;
 using Bannerlord.ButterLib.Common.Extensions;
+using Bannerlord.ButterLib.Common.Helpers;
 using Bannerlord.ButterLib.SubModuleWrappers;
 
 using HarmonyLib;
@@ -19,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using TaleWorlds.Engine;
+using TaleWorlds.Library;
 
 namespace MCM.Tests
 {
@@ -30,12 +32,20 @@ namespace MCM.Tests
             return false;
         }
 
+        private static bool MockedGetLoadedModules(ref List<ModuleInfo> __result)
+        {
+            __result = new List<ModuleInfo>();
+            return false;
+        }
+
         [SetUp]
         public void Setup()
         {
             var harmony = new Harmony($"{nameof(DependencyInjectionTests)}.{nameof(Setup)}");
             harmony.Patch(SymbolExtensions.GetMethodInfo(() => Utilities.GetConfigsPath()),
                 prefix: new HarmonyMethod(DelegateHelper.GetMethodInfo(MockedGetConfigsPath)));
+            harmony.Patch(SymbolExtensions.GetMethodInfo(() => ModuleInfoHelper.GetLoadedModules()),
+                prefix: new HarmonyMethod(DelegateHelper.GetMethodInfo(MockedGetLoadedModules)));
 
             var butterLib = new MBSubModuleBaseWrapper(new ButterLibSubModule());
             butterLib.SubModuleLoad();

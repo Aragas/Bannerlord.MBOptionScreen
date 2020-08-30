@@ -1,4 +1,3 @@
-/*
 using MCM.Implementation;
 using MCM.UI;
 
@@ -64,4 +63,3 @@ namespace MCM.Tests
         }
     }
 }
-*/

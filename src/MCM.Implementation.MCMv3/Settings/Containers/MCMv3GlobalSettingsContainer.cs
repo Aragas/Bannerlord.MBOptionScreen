@@ -20,7 +20,7 @@ using v4::MCM.Utils;
 namespace MCM.Implementation.MCMv3.Settings.Containers
 {
     // MCMv3 had the ability to get Instance in OnSubModuleLoad()
-    internal sealed class MCMv3GlobalSettingsContainer : BaseGlobalSettingsContainer, IMCMv3GlobalSettingsContainer
+    internal sealed class MCMv3GlobalSettingsContainer : BaseGlobalSettingsContainer
     {
         private static List<GlobalSettings>? Settings { get; set; }
 

@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 4.0.4
+Game Versions: e1.4.3,e1.5.0,e1.5.1
+* Returned Implementation Loader
+* Better reflection in UI SubModule
+* Better reflection in Implementation SubModule
+---------------------------------------------------------------------------------------------------
 Version: 4.0.3
 Game Versions: e1.4.3,e1.5.0,e1.5.1
 * Fixed MCMv3 and ModLib not returning setting instances in OnSubModuleLoad()

@@ -1,9 +1,8 @@
 ﻿using HarmonyLib;
 
 using System;
-using System.Collections;
 using System.Collections.Concurrent;
-using System.Reflection;
+using System.Collections.Generic;
 
 using TaleWorlds.Engine.GauntletUI;
 using TaleWorlds.GauntletUI.PrefabSystem;
@@ -12,20 +11,19 @@ namespace MCM.UI.Functionality.Injectors
 {
     internal static class WidgetInjector
     {
-        private static FieldInfo BuiltinTypesField { get; } = AccessTools.Field(typeof(WidgetFactory), "_builtinTypes");
+        private static readonly AccessTools.FieldRef<WidgetFactory, Dictionary<string, Type>>? GetBuiltinTypes =
+            AccessTools.FieldRefAccess<WidgetFactory, Dictionary<string, Type>>("_builtinTypes");
 
-        internal static readonly ConcurrentDictionary<Type, object?> _builtinWidgets = new ConcurrentDictionary<Type, object?>();
+        internal static readonly ConcurrentDictionary<Type, object?> BuiltinWidgets = new ConcurrentDictionary<Type, object?>();
 
         public static void InjectWidget(Type widgetType)
         {
-            var builtinTypes = (IDictionary) BuiltinTypesField.GetValue(UIResourceManager.WidgetFactory);
-
-            if (builtinTypes.Contains(widgetType.Name))
+            if (GetBuiltinTypes != null)
+            {
+                var builtinTypes = GetBuiltinTypes(UIResourceManager.WidgetFactory);
                 builtinTypes[widgetType.Name] = widgetType;
-            else
-                builtinTypes.Add(widgetType.Name, widgetType);
-
-            _builtinWidgets.TryAdd(widgetType, null);
+                BuiltinWidgets.TryAdd(widgetType, null);
+            }
         }
     }
 }

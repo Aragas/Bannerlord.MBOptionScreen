@@ -5,6 +5,7 @@ using Bannerlord.ButterLib.Common.Helpers;
 using HarmonyLib;
 
 using MCM.Abstractions.Settings.Base;
+using MCM.Abstractions.Settings.Containers.Global;
 using MCM.Abstractions.Settings.Models;
 using MCM.Implementation.ModLib.Settings.Base.v13;
 using MCM.Utils;
@@ -14,7 +15,7 @@ using System.Linq;
 
 namespace MCM.Implementation.ModLib.Settings.Containers.v13
 {
-    internal sealed class ModLibDefinitionsSettingsContainer : IModLibDefinitionsSettingsContainer
+    internal sealed class ModLibDefinitionsSettingsContainer : IGlobalSettingsContainer
     {
         private delegate Dictionary<string, v13::ModLib.Definitions.SettingsBase> GetAllSettingsDictDelegate();
         private delegate bool SaveSettingsDelegate(v13::ModLib.Definitions.SettingsBase settings);

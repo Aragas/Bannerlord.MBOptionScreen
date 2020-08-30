@@ -7,7 +7,7 @@ namespace MCM.Implementation.ModLib.Functionality
 {
     public abstract class BaseModLibScreenOverrider
     {
-        public static BaseModLibScreenOverrider Instance => 
+        public static BaseModLibScreenOverrider Instance =>
             ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<BaseModLibScreenOverrider>();
 
         public abstract void OverrideModLibScreen();

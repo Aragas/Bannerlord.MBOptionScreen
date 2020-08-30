@@ -2,7 +2,6 @@
 
 using MCM.Abstractions.Settings.Base.Global;
 using MCM.Abstractions.Settings.Containers;
-using MCM.Abstractions.Settings.Containers.Global;
 using MCM.Abstractions.Settings.Models;
 
 using System;
@@ -12,7 +11,7 @@ using System.Linq;
 
 namespace MCM.Implementation.Settings.Containers.Global
 {
-    public class FluentGlobalSettingsContainer : BaseSettingsContainer<FluentGlobalSettings>, IFluentGlobalSettingsContainer
+    public class FluentGlobalSettingsContainer : BaseSettingsContainer<FluentGlobalSettings>, IMCMFluentGlobalSettingsContainer
     {
         protected override string RootFolder { get; }
 

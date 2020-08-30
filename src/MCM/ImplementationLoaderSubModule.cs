@@ -1,11 +1,8 @@
-﻿/*
-using Bannerlord.ButterLib;
+﻿using Bannerlord.ButterLib;
 using Bannerlord.ButterLib.Assemblies;
 using Bannerlord.ButterLib.Common.Extensions;
 using Bannerlord.ButterLib.Common.Helpers;
 using Bannerlord.ButterLib.SubModuleWrappers;
-
-using MCM.Utils;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -137,7 +134,7 @@ namespace MCM
                     continue;
                 }
 
-                var constructorFunc = ConstructorUtils.Delegate<ConstructorDelegate>(constructor);
+                var constructorFunc = AccessTools2.GetDelegate<ConstructorDelegate>(constructor);
                 if (constructorFunc == null)
                 {
                     logger?.LogError("SubModule {subModuleType}'s default constructor could not be converted to a delegate!", subModuleType);
@@ -239,4 +236,3 @@ namespace MCM
         }
     }
 }
-*/
