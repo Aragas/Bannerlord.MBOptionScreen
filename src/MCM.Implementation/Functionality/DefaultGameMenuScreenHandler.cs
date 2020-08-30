@@ -7,7 +7,6 @@ using MCM.Abstractions.Functionality;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
@@ -21,17 +20,13 @@ namespace MCM.Implementation.Functionality
     {
         private static readonly WeakReference<InitialMenuVM> _instance = new WeakReference<InitialMenuVM>(null!);
         private static Dictionary<string, (int, Func<ScreenBase?>, TextObject)> ScreensCache { get; } = new Dictionary<string, (int, Func<ScreenBase?>, TextObject)>();
-        private static int _initialized;
 
         public DefaultGameMenuScreenHandler()
         {
-            if (Interlocked.Exchange(ref _initialized, 1) == 0)
-            {
-                var harmony = new Harmony("bannerlord.mcm.mainmenuscreeninjection_v3");
-                harmony.Patch(
-                    AccessTools.Constructor(typeof(InitialMenuVM), Type.EmptyTypes),
-                    postfix: new HarmonyMethod(AccessTools.Method(typeof(DefaultGameMenuScreenHandler), nameof(Constructor)), 300));
-            }
+            var harmony = new Harmony("bannerlord.mcm.mainmenuscreeninjection_v4");
+            harmony.Patch(
+                AccessTools.Constructor(typeof(InitialMenuVM), Type.EmptyTypes),
+                postfix: new HarmonyMethod(AccessTools.Method(typeof(DefaultGameMenuScreenHandler), nameof(Constructor)), 300));
         }
 
         private static void Constructor(InitialMenuVM __instance, ref MBBindingList<InitialMenuOptionVM> ____menuOptions)

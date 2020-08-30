@@ -1,4 +1,5 @@
-﻿using Bannerlord.ButterLib;
+﻿using System;
+using Bannerlord.ButterLib;
 using Bannerlord.ButterLib.Common.Extensions;
 using Bannerlord.ButterLib.DelayedSubModule;
 using Bannerlord.UIExtenderEx;
@@ -26,31 +27,30 @@ namespace MCM.UI
 {
     public sealed class MCMUISubModule : MBSubModuleBase
     {
-        public static readonly UIExtender _extender = new UIExtender("MCM.UI");
+        private static readonly UIExtender Extender = new UIExtender("MCM.UI");
 
         protected override void OnSubModuleLoad()
         {
             base.OnSubModuleLoad();
 
             var editabletextpatchHarmony = new Harmony("bannerlord.mcm.ui.editabletextpatch");
-            editabletextpatchHarmony.Patch(
-                EditableTextPatch.GetCursorPositionMethod,
-                finalizer: new HarmonyMethod(typeof(EditableTextPatch), nameof(EditableTextPatch.GetCursorPosition)));
+            EditableTextPatch.Patch(editabletextpatchHarmony);
 
-            var viewmodelwrapperHarmony = new Harmony("bannerlord.mcm.ui.viewmodelwrapper");
-            viewmodelwrapperHarmony.Patch(
-                ViewModelPatch.ExecuteCommandMethod,
-                prefix: new HarmonyMethod(typeof(ViewModelPatch), nameof(ViewModelPatch.ExecuteCommandPatch)));
+            var viewmodelwrapperHarmony = new Harmony("bannerlord.mcm.ui.viewmodelpatch");
+            ViewModelPatch.Patch(viewmodelwrapperHarmony);
+
+            var widgetprefabpatchHarmony = new Harmony("bannerlord.mcm.ui.widgetprefabpatch");
+            WidgetPrefabPatch.Patch(widgetprefabpatchHarmony);
 
             var services = this.GetServices();
             services.AddTransient<IMCMOptionsScreen, ModOptionsGauntletScreen>();
-            services.AddTransient<BaseResourceHandler, DefaultResourceInjector>();
+            services.AddSingleton<BaseResourceHandler, DefaultResourceHandler>();
 
             DelayedSubModuleManager.Register<SandBoxSubModule>();
             DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
                 nameof(OnSubModuleLoad), SubscriptionType.AfterMethod, (s, e) =>
                 {
-                    _extender.Register();
+                    Extender.Register();
                 });
         }
 
@@ -95,14 +95,14 @@ namespace MCM.UI
         {
             if (settings.UseStandardOptionScreen)
             {
-                _extender.Enable();
+                Extender.Enable();
 
                 BaseGameMenuScreenHandler.Instance.RemoveScreen("MCM_OptionScreen");
                 BaseIngameMenuScreenHandler.Instance.RemoveScreen("MCM_OptionScreen");
             }
             else
             {
-                _extender.Disable();
+                Extender.Disable();
 
                 BaseGameMenuScreenHandler.Instance.AddScreen(
                     "MCM_OptionScreen",

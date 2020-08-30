@@ -2,22 +2,24 @@
 
 using MCM.Abstractions;
 
-using System.Reflection;
-
 using TaleWorlds.Library;
 
 namespace MCM.UI.Patches
 {
-    public static class ViewModelPatch
+    internal static class ViewModelPatch
     {
-        public static MethodBase ExecuteCommandMethod { get; } =
-            AccessTools.Method(typeof(ViewModel), nameof(ViewModel.ExecuteCommand));
+        public static void Patch(Harmony harmony)
+        {
+            harmony.Patch(
+                AccessTools.Method(typeof(ViewModel), nameof(ViewModel.ExecuteCommand)),
+                prefix: new HarmonyMethod(typeof(ViewModelPatch), nameof(ExecuteCommandPatch)));
+        }
 
         /// <summary>
         /// Trigger ExecuteCommand in the wrapped VM
         /// We can't extend\copy methods like we do with properties
         /// </summary>
-        public static bool ExecuteCommandPatch(ViewModel __instance, string commandName, object[] parameters)
+        private static bool ExecuteCommandPatch(ViewModel __instance, string commandName, object[] parameters)
         {
             if (__instance is IWrapper wrapper && wrapper.Object is ViewModel viewModel)
             {

@@ -2,7 +2,6 @@
 
 using MCM.Abstractions.Settings.Base.PerCampaign;
 using MCM.Abstractions.Settings.Containers;
-using MCM.Abstractions.Settings.Containers.PerCampaign;
 using MCM.Abstractions.Settings.Models;
 
 using System;
@@ -14,7 +13,7 @@ using TaleWorlds.Core;
 
 namespace MCM.Implementation.Settings.Containers.PerCampaign
 {
-    public class FluentPerCampaignSettingsContainer : BaseSettingsContainer<FluentPerCampaignSettings>, IFluentPerCampaignSettingsContainer
+    public class FluentPerCampaignSettingsContainer : BaseSettingsContainer<FluentPerCampaignSettings>, IMCMFluentPerCampaignSettingsContainer
     {
         protected override string RootFolder { get; }
 

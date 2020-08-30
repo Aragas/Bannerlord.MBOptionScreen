@@ -56,7 +56,7 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public bool GroupToggle
         {
-            get => GroupToggleSettingProperty == null || GroupToggleSettingProperty.BoolValue;
+            get => GroupToggleSettingProperty?.BoolValue != false;
             set
             {
                 if (GroupToggleSettingProperty != null && GroupToggleSettingProperty.BoolValue != value)

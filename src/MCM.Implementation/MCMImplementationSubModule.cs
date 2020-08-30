@@ -27,12 +27,12 @@ namespace MCM.Implementation
 
             var services = this.GetServices();
 
-            services.AddTransient<BaseGameMenuScreenHandler, DefaultGameMenuScreenHandler>();
-            services.AddTransient<BaseIngameMenuScreenHandler, DefaultIngameMenuScreenHandler>();
+            services.AddSingleton<BaseGameMenuScreenHandler, DefaultGameMenuScreenHandler>();
+            services.AddSingleton<BaseIngameMenuScreenHandler, DefaultIngameMenuScreenHandler>();
 
-            services.AddSettingsContainer<FluentGlobalSettingsContainer>();
+            services.AddSettingsContainer<IMCMFluentGlobalSettingsContainer, FluentGlobalSettingsContainer>();
             services.AddSettingsContainer<IMCMGlobalSettingsContainer, MCMGlobalSettingsContainer>();
-            services.AddSettingsContainer<FluentPerCampaignSettingsContainer>();
+            services.AddSettingsContainer<IMCMFluentPerCampaignSettingsContainer, FluentPerCampaignSettingsContainer>();
             services.AddSettingsContainer<IMCMPerCampaignSettingsContainer, MCMPerCampaignSettingsContainer>();
 
             services.AddSettingsFormat<IJsonSettingsFormat, JsonSettingsFormat>();

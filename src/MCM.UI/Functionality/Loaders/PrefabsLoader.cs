@@ -26,7 +26,7 @@ namespace MCM.UI.Functionality.Loaders
         private static XmlDocument Load(string embedPath)
         {
             using var stream = typeof(PrefabsLoader).Assembly.GetManifestResourceStream(embedPath);
-            using var xmlReader = XmlReader.Create(stream, new XmlReaderSettings {IgnoreComments = true});
+            using var xmlReader = XmlReader.Create(stream, new XmlReaderSettings { IgnoreComments = true });
             var doc = new XmlDocument();
             doc.Load(xmlReader);
             return doc;

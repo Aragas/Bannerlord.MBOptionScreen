@@ -6,7 +6,6 @@ using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
 using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.Properties;
-using MCM.Implementation.Attributes;
 using MCM.Utils;
 
 using System;
@@ -39,20 +38,10 @@ namespace MCM.Implementation.Settings.Properties
 
                 object? groupAttrObj = attributes.SingleOrDefault(a => a is IPropertyGroupDefinition);
                 var groupDefinition = groupAttrObj != null
-                    ? new AttributePropertyGroupDefinitionWrapper(groupAttrObj)
+                    ? new PropertyGroupDefinitionWrapper(groupAttrObj)
                     : SettingPropertyGroupAttribute.Default;
 
-                var propertyDefinitions = new List<IPropertyDefinitionBase>();
-
-                var propertyDefinitionWrappers = GetPropertyDefinitionWrappers(attributes).ToList();
-                if (propertyDefinitionWrappers.Count > 0)
-                {
-                    propertyDefinitions.AddRange(propertyDefinitionWrappers);
-
-                    if (groupDefinition is AttributePropertyGroupDefinitionWrapper groupWrapper && groupWrapper.IsMainToggle)
-                        propertyDefinitions.Add(new AttributePropertyDefinitionGroupToggleWrapper(propertyDefinitions.First()));
-                }
-
+                var propertyDefinitions = GetPropertyDefinitionWrappers(attributes).ToList();
                 if (propertyDefinitions.Count > 0)
                     yield return new SettingsPropertyDefinition(
                         propertyDefinitions,
