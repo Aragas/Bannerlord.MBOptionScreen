@@ -7,7 +7,7 @@ using TaleWorlds.Library;
 
 namespace MCM.Abstractions.Dropdown
 {
-    internal class CheckboxDropdownSelectorItemVM<T> : DropdownSelectorItemVM<T> where T : class
+    internal sealed class CheckboxDropdownSelectorItemVM<T> : DropdownSelectorItemVM<T> where T : class
     {
         private delegate bool GetIsSelectedDelegate();
         private delegate void SetIsSelectedDelegate(bool value);

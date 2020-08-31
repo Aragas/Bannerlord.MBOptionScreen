@@ -1,5 +1,4 @@
-﻿using System;
-using Bannerlord.ButterLib;
+﻿using Bannerlord.ButterLib;
 using Bannerlord.ButterLib.Common.Extensions;
 using Bannerlord.ButterLib.DelayedSubModule;
 using Bannerlord.UIExtenderEx;

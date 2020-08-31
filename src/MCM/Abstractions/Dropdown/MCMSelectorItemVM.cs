@@ -4,7 +4,7 @@ using TaleWorlds.Localization;
 
 namespace MCM.Abstractions.Dropdown
 {
-    public class MCMSelectorItemVM : ViewModel
+    public sealed class MCMSelectorItemVM : ViewModel
     {
         private string _stringItem = string.Empty;
         private bool _canBeSelected = true;

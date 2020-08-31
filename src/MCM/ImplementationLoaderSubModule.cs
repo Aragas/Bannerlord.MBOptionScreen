@@ -19,7 +19,7 @@ using TaleWorlds.MountAndBlade;
 
 namespace MCM
 {
-    public class ImplementationLoaderSubModule : MBSubModuleBaseListWrapper
+    public sealed class ImplementationLoaderSubModule : MBSubModuleBaseListWrapper
     {
         private delegate MBSubModuleBase ConstructorDelegate();
 

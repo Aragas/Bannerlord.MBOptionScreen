@@ -20,7 +20,7 @@ using v4::MCM.Utils;
 
 namespace MCM.Implementation.MCMv3.Settings.Properties
 {
-    internal class MCMv3SettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
+    internal sealed class MCMv3SettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
     {
         public IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object)
         {

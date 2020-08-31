@@ -4,7 +4,7 @@ using HarmonyLib;
 
 namespace MCM.Abstractions.Common
 {
-    public class SelectedIndexWrapper : IWrapper
+    public sealed class SelectedIndexWrapper : IWrapper
     {
         private delegate int GetSelectedIndexDelegate();
         private delegate void SetSelectedIndexDelegate(int value);
@@ -17,7 +17,7 @@ namespace MCM.Abstractions.Common
 
         public int SelectedIndex
         {
-            get => _getSelectedIndexDelegate!.Invoke();
+            get => _getSelectedIndexDelegate.Invoke();
             set => _setSelectedIndexDelegate?.Invoke(value);
         }
 

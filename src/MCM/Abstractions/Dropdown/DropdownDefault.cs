@@ -8,7 +8,7 @@ using TaleWorlds.Localization;
 namespace MCM.Abstractions.Dropdown
 {
     // Uses Game's ViewModels
-    public class DropdownDefault<T> : List<T>, IEqualityComparer<DropdownDefault<T>>
+    public sealed class DropdownDefault<T> : List<T>, IEqualityComparer<DropdownDefault<T>>
     {
         public static DropdownDefault<T> Empty => new DropdownDefault<T>(Enumerable.Empty<T>(), 0);
 

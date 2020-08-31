@@ -13,17 +13,20 @@ using MCM.Utils;
 using System.Collections.Generic;
 using System.Linq;
 
+using v13SettingsBase = v13::ModLib.Definitions.SettingsBase;
+using v13SettingsDatabase = v13::ModLib.Definitions.SettingsDatabase;
+
 namespace MCM.Implementation.ModLib.Settings.Containers.v13
 {
     internal sealed class ModLibDefinitionsSettingsContainer : IGlobalSettingsContainer
     {
-        private delegate Dictionary<string, v13::ModLib.Definitions.SettingsBase> GetAllSettingsDictDelegate();
-        private delegate bool SaveSettingsDelegate(v13::ModLib.Definitions.SettingsBase settings);
+        private delegate Dictionary<string, v13SettingsBase> GetAllSettingsDictDelegate();
+        private delegate bool SaveSettingsDelegate(v13SettingsBase settings);
 
-        private static readonly GetAllSettingsDictDelegate GetAllSettingsDict =
-            AccessTools2.GetDelegate<GetAllSettingsDictDelegate>(AccessTools.Property(typeof(v13::ModLib.Definitions.SettingsDatabase), "AllSettingsDict").GetMethod)!;
-        private static readonly SaveSettingsDelegate SaveSettingsFunc =
-            AccessTools2.GetDelegate<SaveSettingsDelegate>(typeof(v13::ModLib.Definitions.SettingsDatabase), "SaveSettings")!;
+        private static readonly GetAllSettingsDictDelegate? GetAllSettingsDict =
+            AccessTools2.GetDelegate<GetAllSettingsDictDelegate>(AccessTools.Property(typeof(v13SettingsDatabase), "AllSettingsDict").GetMethod);
+        private static readonly SaveSettingsDelegate? SaveSettingsFunc =
+            AccessTools2.GetDelegate<SaveSettingsDelegate>(typeof(v13SettingsDatabase), "SaveSettings");
 
         private Dictionary<string, ModLibDefinitionsGlobalSettingsWrapper> LoadedModLibSettings { get; } = new Dictionary<string, ModLibDefinitionsGlobalSettingsWrapper>();
 
@@ -47,9 +50,9 @@ namespace MCM.Implementation.ModLib.Settings.Containers.v13
         }
         public bool SaveSettings(BaseSettings settings)
         {
-            if (settings is ModLibDefinitionsGlobalSettingsWrapper settingsWrapper && settingsWrapper.Object is v13::ModLib.Definitions.SettingsBase modLibSettings)
+            if (settings is ModLibDefinitionsGlobalSettingsWrapper settingsWrapper && settingsWrapper.Object is v13SettingsBase modLibSettings)
             {
-                SaveSettingsFunc(modLibSettings);
+                SaveSettingsFunc?.Invoke(modLibSettings);
                 return true;
             }
 
@@ -80,7 +83,7 @@ namespace MCM.Implementation.ModLib.Settings.Containers.v13
 
         private void ReloadAll()
         {
-            foreach (var settings in GetAllSettingsDict().Values)
+            foreach (var settings in GetAllSettingsDict?.Invoke().Values ?? Enumerable.Empty<v13SettingsBase>())
             {
                 var id = settings.ID;
                 if (!LoadedModLibSettings.ContainsKey(id))
@@ -91,8 +94,8 @@ namespace MCM.Implementation.ModLib.Settings.Containers.v13
         }
         private void Reload(string id)
         {
-            var dict = GetAllSettingsDict();
-            if (dict.ContainsKey(id))
+            var dict = GetAllSettingsDict?.Invoke();
+            if (dict?.ContainsKey(id) == true)
                 LoadedModLibSettings[id].UpdateReference(dict[id]);
         }
     }

@@ -1,7 +1,6 @@
 ﻿using Bannerlord.ButterLib;
 using Bannerlord.ButterLib.Common.Extensions;
 
-using MCM.Abstractions;
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Containers;
 using MCM.Abstractions.Settings.Containers.Global;
@@ -39,19 +38,6 @@ namespace MCM.Implementation.Settings.Providers
             {
                 if (settingsContainer.GetSettings(id) is { } settings)
                     return settings;
-            }
-            return null;
-        }
-        public override object? GetSettingsObject(string id)
-        {
-            foreach (var settingsContainer in SettingsContainers)
-            {
-                if (settingsContainer.GetSettings(id) is { } settings)
-                    return settings switch
-                    {
-                        IWrapper wrapper => wrapper.Object,
-                        _ => settings
-                    };
             }
             return null;
         }

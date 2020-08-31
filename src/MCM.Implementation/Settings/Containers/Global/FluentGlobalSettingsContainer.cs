@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace MCM.Implementation.Settings.Containers.Global
 {
-    public class FluentGlobalSettingsContainer : BaseSettingsContainer<FluentGlobalSettings>, IMCMFluentGlobalSettingsContainer
+    internal sealed class FluentGlobalSettingsContainer : BaseSettingsContainer<FluentGlobalSettings>, IMCMFluentGlobalSettingsContainer
     {
         protected override string RootFolder { get; }
 

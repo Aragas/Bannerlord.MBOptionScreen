@@ -17,7 +17,7 @@ namespace MCM.Abstractions.Settings.Base.PerCampaign
             {
                 if (!Cache.ContainsKey(typeof(T)))
                     Cache.TryAdd(typeof(T), new T().Id);
-                return BaseSettingsProvider.Instance?.GetSettingsObject(Cache[typeof(T)]) as T;
+                return BaseSettingsProvider.Instance?.GetSettings(Cache[typeof(T)]) as T;
             }
         }
     }

@@ -4,7 +4,7 @@ using TaleWorlds.Library;
 namespace MCM.Abstractions.Dropdown
 {
     // For Game's Dropdown implementation
-    internal class DropdownSelectorItemVM : DropdownSelectorItemVM<string>
+    internal sealed class DropdownSelectorItemVM : DropdownSelectorItemVM<string>
     {
         public DropdownSelectorItemVM(string value) : base(value) { }
     }

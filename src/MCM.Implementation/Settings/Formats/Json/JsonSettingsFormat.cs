@@ -1,4 +1,4 @@
 ﻿namespace MCM.Implementation.Settings.Formats.Json
 {
-    internal class JsonSettingsFormat : BaseJsonSettingsFormat, IJsonSettingsFormat { }
+    internal sealed class JsonSettingsFormat : BaseJsonSettingsFormat, IJsonSettingsFormat { }
 }

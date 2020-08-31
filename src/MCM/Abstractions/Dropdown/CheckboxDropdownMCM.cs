@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace MCM.Abstractions.Dropdown
 {
-    public class CheckboxDropdownMCM<T> : List<T>, IEqualityComparer<CheckboxDropdownMCM<T>>
+    public sealed class CheckboxDropdownMCM<T> : List<T>, IEqualityComparer<CheckboxDropdownMCM<T>>
         where T : class
     {
         public static CheckboxDropdownMCM<T> Empty => new CheckboxDropdownMCM<T>(Enumerable.Empty<T>(), 0);

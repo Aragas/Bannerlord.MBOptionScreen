@@ -16,7 +16,7 @@ using TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions;
 namespace MCM.UI.UIExtenderEx
 {
     [ViewModelMixin]
-    internal class OptionsVMMixin : BaseViewModelMixin<OptionsVM>
+    internal sealed class OptionsVMMixin : BaseViewModelMixin<OptionsVM>
     {
         private static readonly Harmony _harmony = new Harmony("bannerlord.mcm.ui.optionsvm");
         private static readonly AccessTools.FieldRef<ViewModel, Dictionary<string, PropertyInfo>> _propertyInfosField =

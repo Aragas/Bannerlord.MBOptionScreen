@@ -12,7 +12,7 @@ namespace MCM.UI.GUI.GauntletUI
     /// <summary>
     /// Mod's Option screen
     /// </summary>
-    internal class ModOptionsGauntletScreen : ScreenBase, IMCMOptionsScreen
+    internal sealed class ModOptionsGauntletScreen : ScreenBase, IMCMOptionsScreen
     {
         private GauntletLayer _gauntletLayer = default!;
         private GauntletMovie _gauntletMovie = default!;

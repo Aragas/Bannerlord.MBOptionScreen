@@ -16,7 +16,7 @@ using System.Reflection;
 
 namespace MCM.Implementation.ModLib.Settings.Properties.v13
 {
-    internal class ModLibDefinitionsSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
+    internal sealed class ModLibDefinitionsSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
     {
         public IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object)
         {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MCM.Abstractions.Settings.Formats.Memory
 {
-    public class MemorySettingsFormat : IMemorySettingsFormat
+    public sealed class MemorySettingsFormat : IMemorySettingsFormat
     {
         /// <inheritdoc/>
         public IEnumerable<string> Extensions { get; } = new [] { "memory" };
