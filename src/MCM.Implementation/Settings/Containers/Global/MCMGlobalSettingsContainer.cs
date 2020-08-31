@@ -2,6 +2,8 @@
 using MCM.Abstractions.Settings.Base.Global;
 using MCM.Abstractions.Settings.Containers.Global;
 
+using Microsoft.Extensions.Logging;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,7 @@ namespace MCM.Implementation.Settings.Containers.Global
 {
     internal sealed class MCMGlobalSettingsContainer : BaseGlobalSettingsContainer, IMCMGlobalSettingsContainer
     {
-        public MCMGlobalSettingsContainer()
+        public MCMGlobalSettingsContainer(ILogger<MCMGlobalSettingsContainer> logger)
         {
             var settings = new List<GlobalSettings>();
             var allTypes = AppDomain.CurrentDomain
@@ -29,7 +31,10 @@ namespace MCM.Implementation.Settings.Containers.Global
             settings.AddRange(mbOptionScreenSettings);
 
             foreach (var setting in settings)
+            {
+                logger.LogTrace("Registering settings {type}.", setting.GetType());
                 RegisterSettings(setting);
+            }
         }
     }
 }

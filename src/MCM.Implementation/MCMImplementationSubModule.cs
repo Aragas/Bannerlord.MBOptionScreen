@@ -34,6 +34,7 @@ namespace MCM.Implementation
             services.AddSettingsContainer<IMCMGlobalSettingsContainer, MCMGlobalSettingsContainer>();
             services.AddSettingsContainer<IMCMFluentPerCampaignSettingsContainer, FluentPerCampaignSettingsContainer>();
             services.AddSettingsContainer<IMCMPerCampaignSettingsContainer, MCMPerCampaignSettingsContainer>();
+            services.AddSettingsContainer<ButterLibSettingsContainer>();
 
             services.AddSettingsFormat<IJsonSettingsFormat, JsonSettingsFormat>();
             services.AddSettingsFormat<IXmlSettingsFormat, XmlSettingsFormat>();

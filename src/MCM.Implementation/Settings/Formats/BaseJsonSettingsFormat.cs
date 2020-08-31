@@ -6,7 +6,7 @@ using MCM.Abstractions.Settings.Formats;
 using MCM.Abstractions.Settings.Models;
 using MCM.Extensions;
 using MCM.Utils;
-
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -16,16 +16,18 @@ using System.IO;
 
 namespace MCM.Implementation.Settings.Formats
 {
-    public class BaseJsonSettingsFormat : ISettingsFormat
+    public abstract class BaseJsonSettingsFormat : ISettingsFormat
     {
         private readonly object _lock = new object();
         private readonly Dictionary<string, object> _existingObjects = new Dictionary<string, object>();
 
+        protected readonly ILogger Logger;
         protected readonly JsonSerializerSettings JsonSerializerSettings;
 
-        protected BaseJsonSettingsFormat()
+        protected BaseJsonSettingsFormat(ILogger logger)
         {
-            JsonSerializerSettings = new JsonSerializerSettings()
+            Logger = logger;
+            JsonSerializerSettings = new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,
                 Converters = { new DropdownJsonConverter(this) }
@@ -34,13 +36,7 @@ namespace MCM.Implementation.Settings.Formats
 
         public virtual IEnumerable<string> Extensions => new [] { "json" };
 
-        protected static string GetPropertyDefinitionId(ISettingsPropertyDefinition definition) =>
-            AccessTools.Property(definition.GetType(), "Id")?.GetValue(definition) as string ??
-            definition.PropertyReference switch
-            {
-                PropertyRef propertyRef => propertyRef.PropertyInfo.Name,
-                _ => $"{definition.GroupName}|{definition.DisplayName}",
-            };
+        protected static string GetPropertyDefinitionId(ISettingsPropertyDefinition definition) => definition.Id;
 
         protected string SaveJson(BaseSettings settings)
         {

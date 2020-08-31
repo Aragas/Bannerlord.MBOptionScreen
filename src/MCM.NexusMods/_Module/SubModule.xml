@@ -34,13 +34,14 @@
       <SubModuleClassType value="MCM.MCMSubModule" />
       <Tags />
     </SubModule>
+    <!--
     <SubModule>
       <Name value="MCMv4 Implementation Loader" />
       <DLLName value="MCMv4.dll" />
       <SubModuleClassType value="MCM.ImplementationLoaderSubModule" />
       <Tags />
     </SubModule>
-    <!--
+    -->
     <SubModule>
       <Name value="MCMv4 Implementation" />
       <DLLName value="MCMv4.Implementation.v$version$.dll" />
@@ -53,7 +54,6 @@
       <SubModuleClassType value="MCM.UI.MCMUISubModule" />
       <Tags />
     </SubModule>
-    -->
     <!--
     <SubModule>
       <Name value="MCMv4 Tests" />

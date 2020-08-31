@@ -1,6 +1,8 @@
 ﻿using MCM.Abstractions;
 using MCM.Abstractions.Settings.Base;
 
+using Microsoft.Extensions.Logging;
+
 using Newtonsoft.Json;
 
 using System.Collections.Generic;
@@ -12,6 +14,8 @@ namespace MCM.Implementation.Settings.Formats.Xml
     internal sealed class XmlSettingsFormat : BaseJsonSettingsFormat, IXmlSettingsFormat
     {
         public override IEnumerable<string> Extensions => new[] { "xml" };
+
+        public XmlSettingsFormat(ILogger<XmlSettingsFormat> logger) : base(logger) { }
 
         public override bool Save(BaseSettings settings, string path)
         {

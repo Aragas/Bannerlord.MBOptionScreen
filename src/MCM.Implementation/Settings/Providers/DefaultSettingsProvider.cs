@@ -9,6 +9,7 @@ using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.Providers;
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 using System.Collections.Generic;
 using System.Linq;
@@ -19,16 +20,33 @@ namespace MCM.Implementation.Settings.Providers
 {
     internal sealed class DefaultSettingsProvider : BaseSettingsProvider
     {
+        private ILogger Logger { get; }
         private List<ISettingsContainer> SettingsContainers { get; }
 
         public override IEnumerable<SettingsDefinition> CreateModSettingsDefinitions => SettingsContainers
             .SelectMany(sp => sp.CreateModSettingsDefinitions);
 
-        public DefaultSettingsProvider()
+        public DefaultSettingsProvider(ILogger<DefaultSettingsProvider> logger)
         {
-            SettingsContainers = new List<ISettingsContainer>()
-                .Concat(ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<IEnumerable<IGlobalSettingsContainer>>())
-                .Concat(ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<IEnumerable<IPerCampaignSettingsContainer>>())
+            Logger = logger;
+
+            var globalSettingsContainers = (ButterLibSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IEnumerable<IGlobalSettingsContainer>>() ??
+                                           Enumerable.Empty<IGlobalSettingsContainer>()).ToList();
+            var perCampaignSettingsContainers = (ButterLibSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IEnumerable<IPerCampaignSettingsContainer>>() ??
+                                                Enumerable.Empty<IPerCampaignSettingsContainer>()).ToList();
+
+            foreach (var globalSettingsContainer in globalSettingsContainers)
+            {
+                logger.LogInformation("Found Global container {type}. Registered {count}", globalSettingsContainer.GetType(), globalSettingsContainer.CreateModSettingsDefinitions.Count);
+            }
+            foreach (var perCampaignSettingsContainer in perCampaignSettingsContainers)
+            {
+                logger.LogInformation("Found PerCampaign container {type}.", perCampaignSettingsContainer.GetType());
+            }
+
+            SettingsContainers = Enumerable.Empty<ISettingsContainer>()
+                .Concat(globalSettingsContainers)
+                .Concat(perCampaignSettingsContainers)
                 .ToList();
         }
 
@@ -37,8 +55,12 @@ namespace MCM.Implementation.Settings.Providers
             foreach (var settingsContainer in SettingsContainers)
             {
                 if (settingsContainer.GetSettings(id) is { } settings)
+                {
+                    Logger.LogTrace("GetSettings {id} returned {type}", id, settings.GetType());
                     return settings;
+                }
             }
+            Logger.LogWarning("GetSettings {id} returned null", id);
             return null;
         }
 
