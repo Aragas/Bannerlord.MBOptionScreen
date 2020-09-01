@@ -153,7 +153,7 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
         [DataSourceProperty]
-        public SelectorVM<SelectorItemVM> PresetsSelector { get; } = new SelectorVM<SelectorItemVM>(Array.Empty<string>(), -1, null);
+        public SelectorVM<SelectorItemVM> PresetsSelector { get; } = new SelectorVM<SelectorItemVM>(Enumerable.Empty<string>(), -1, null);
         [DataSourceProperty]
         public bool IsPresetsSelectorVisible => SelectedMod != null;
 

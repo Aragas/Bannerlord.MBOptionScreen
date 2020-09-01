@@ -1,4 +1,4 @@
-﻿using MCM.Abstractions.Settings.Base.Global;
+﻿using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Containers;
 using MCM.Abstractions.Settings.Containers.Global;
 
@@ -8,9 +8,9 @@ using TaleWorlds.Engine;
 
 using Path = System.IO.Path;
 
-namespace MCM.Implementation.Settings.Containers.Global
+namespace MCM.Implementation.Settings.Containers.Custom
 {
-    internal sealed class ButterLibSettingsContainer : BaseSettingsContainer<GlobalSettings>, IGlobalSettingsContainer
+    internal sealed class ButterLibSettingsContainer : BaseSettingsContainer<BaseSettings>, IGlobalSettingsContainer
     {
         protected override string RootFolder { get; }
 

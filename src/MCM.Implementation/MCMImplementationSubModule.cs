@@ -5,9 +5,11 @@ using MCM.Abstractions.Settings.Properties;
 using MCM.Abstractions.Settings.Providers;
 using MCM.Extensions;
 using MCM.Implementation.Functionality;
+using MCM.Implementation.Settings.Containers.Custom;
 using MCM.Implementation.Settings.Containers.Global;
 using MCM.Implementation.Settings.Containers.PerCampaign;
 using MCM.Implementation.Settings.Formats.Json;
+using MCM.Implementation.Settings.Formats.Json2;
 using MCM.Implementation.Settings.Formats.Xml;
 using MCM.Implementation.Settings.Properties;
 using MCM.Implementation.Settings.Providers;
@@ -37,6 +39,7 @@ namespace MCM.Implementation
             services.AddSettingsContainer<ButterLibSettingsContainer>();
 
             services.AddSettingsFormat<IJsonSettingsFormat, JsonSettingsFormat>();
+            services.AddSettingsFormat<IJson2SettingsFormat, Json2SettingsFormat>();
             services.AddSettingsFormat<IXmlSettingsFormat, XmlSettingsFormat>();
 
             services.AddSettingsPropertyDiscoverer<IAttributeSettingsPropertyDiscoverer, AttributeSettingsPropertyDiscoverer>();

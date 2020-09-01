@@ -47,11 +47,11 @@ namespace MCM.Abstractions.Settings.Containers
 
             LoadedSettings.Add(tSettings.Id, tSettings);
 
-            var path = Path.Combine(RootFolder, tSettings.FolderName, tSettings.SubFolder ?? string.Empty, $"{tSettings.Id}.{tSettings.Format}");
+            var directoryPath = Path.Combine(RootFolder, tSettings.FolderName, tSettings.SubFolder ?? string.Empty);
             if (AvailableSettingsFormats.ContainsKey(tSettings.Format))
-                AvailableSettingsFormats[tSettings.Format].Load(tSettings, path);
+                AvailableSettingsFormats[tSettings.Format].Load(tSettings, directoryPath, tSettings.Id);
             else
-                AvailableSettingsFormats["memory"].Load(tSettings, path);
+                AvailableSettingsFormats["memory"].Load(tSettings, directoryPath, tSettings.Id);
         }
 
         /// <inheritdoc/>
@@ -62,11 +62,11 @@ namespace MCM.Abstractions.Settings.Containers
             if (!(settings is TSettings tSettings) || !LoadedSettings.ContainsKey(tSettings.Id))
                 return false;
 
-            var path = Path.Combine(RootFolder, tSettings.FolderName, tSettings.SubFolder ?? string.Empty, $"{tSettings.Id}.{tSettings.Format}");
+            var directoryPath = Path.Combine(RootFolder, tSettings.FolderName, tSettings.SubFolder ?? string.Empty);
             if (AvailableSettingsFormats.ContainsKey(tSettings.Format))
-                AvailableSettingsFormats[tSettings.Format].Save(tSettings, path);
+                AvailableSettingsFormats[tSettings.Format].Save(tSettings, directoryPath, tSettings.Id);
             else
-                AvailableSettingsFormats["memory"].Save(tSettings, path);
+                AvailableSettingsFormats["memory"].Save(tSettings, directoryPath, tSettings.Id);
 
             return true;
         }

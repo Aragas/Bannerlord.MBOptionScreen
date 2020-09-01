@@ -5,6 +5,7 @@ using MCM.Abstractions.Settings.Formats.Memory;
 using NUnit.Framework;
 
 using System;
+using System.IO;
 
 namespace MCM.Tests.SettingsFormat
 {
@@ -33,12 +34,11 @@ namespace MCM.Tests.SettingsFormat
                     .AddText("prop_4","Test", new ProxyRef<string>(() => _stringValue, o => _stringValue = o), null))
                 .BuildAsGlobal();
 
-            // TODO: Should Load/Save accept the full path or just the base dir path?
-            Path = System.IO.Path.Combine(
+            DirectoryPath = Path.Combine(
                 AppDomain.CurrentDomain.BaseDirectory,
                 Settings.FolderName,
-                Settings.SubFolder ?? string.Empty,
-                $"{Settings.Id}.{Settings.Format}");
+                Settings.SubFolder ?? string.Empty);
+            Filename = Settings.Id;
         }
 
         [Test]
@@ -49,8 +49,8 @@ namespace MCM.Tests.SettingsFormat
             Assert.AreEqual(0F, _floatValue);
             Assert.AreEqual(string.Empty, _stringValue);
 
-            Format.Save(Settings, Path);
-            Format.Load(Settings, Path);
+            Format.Save(Settings, DirectoryPath, Filename);
+            Format.Load(Settings, DirectoryPath, Filename);
 
             Assert.AreEqual(false, _boolValue);
             Assert.AreEqual(0, _intValue);
@@ -63,8 +63,8 @@ namespace MCM.Tests.SettingsFormat
             _floatValue = 5.3453F;
             _stringValue = "Test";
 
-            Format.Save(Settings, Path);
-            Format.Load(Settings, Path);
+            Format.Save(Settings, DirectoryPath, Filename);
+            Format.Load(Settings, DirectoryPath, Filename);
 
             Assert.AreEqual(true, _boolValue);
             Assert.AreEqual(5, _intValue);
@@ -80,8 +80,8 @@ namespace MCM.Tests.SettingsFormat
             _floatValue = 5.3453F;
             _stringValue = "Test";
 
-            Format.Save(Settings, Path);
-            Format.Load(Settings, Path);
+            Format.Save(Settings, DirectoryPath, Filename);
+            Format.Load(Settings, DirectoryPath, Filename);
         }
     }
 }

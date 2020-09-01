@@ -1,4 +1,5 @@
-﻿using Bannerlord.UIExtenderEx.Attributes;
+﻿using Bannerlord.ButterLib.Common.Helpers;
+using Bannerlord.UIExtenderEx.Attributes;
 using Bannerlord.UIExtenderEx.ViewModels;
 
 using HarmonyLib;
@@ -18,43 +19,67 @@ namespace MCM.UI.UIExtenderEx
     [ViewModelMixin]
     internal sealed class OptionsVMMixin : BaseViewModelMixin<OptionsVM>
     {
-        private static readonly Harmony _harmony = new Harmony("bannerlord.mcm.ui.optionsvm");
-        private static readonly AccessTools.FieldRef<ViewModel, Dictionary<string, PropertyInfo>> _propertyInfosField =
+        private delegate void ExecuteDoneDelegate(OptionsVM instance);
+        private delegate void ExecuteCancelDelegate(OptionsVM instance);
+
+        private static readonly ExecuteDoneDelegate? ExecuteDoneMethod = AccessTools2.GetDelegate<ExecuteDoneDelegate>(typeof(OptionsVM), "ExecuteDone");
+        private static readonly ExecuteCancelDelegate? ExecuteCancelMethod = AccessTools2.GetDelegate<ExecuteCancelDelegate>(typeof(OptionsVM), "ExecuteCancel");
+
+        private static readonly AccessTools.FieldRef<ViewModel, Dictionary<string, PropertyInfo>> PropertyInfos =
             AccessTools.FieldRefAccess<ViewModel, Dictionary<string, PropertyInfo>>("_propertyInfos");
+
         static OptionsVMMixin()
         {
-            _harmony.Patch(
+            var harmony = new Harmony("bannerlord.mcm.ui.optionsvm");
+
+            harmony.Patch(
                 AccessTools.Property(typeof(OptionsVM), nameof(OptionsVM.VideoOptions)).GetMethod,
-                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(Postfix)), 300));
-            _harmony.Patch(
+                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
+            harmony.Patch(
                 AccessTools.Property(typeof(OptionsVM), nameof(OptionsVM.AudioOptions)).GetMethod,
-                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(Postfix)), 300));
-            _harmony.Patch(
+                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
+            harmony.Patch(
                 AccessTools.Property(typeof(OptionsVM), nameof(OptionsVM.GameKeyOptionGroups)).GetMethod,
-                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(Postfix)), 300));
-            _harmony.Patch(
+                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
+            harmony.Patch(
                 AccessTools.Property(typeof(OptionsVM), nameof(OptionsVM.GamepadOptions)).GetMethod,
-                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(Postfix)), 300));
-            _harmony.Patch(
+                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
+            harmony.Patch(
                 AccessTools.Property(typeof(OptionsVM), nameof(OptionsVM.GameplayOptions)).GetMethod,
-                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(Postfix)), 300));
-            _harmony.Patch(
+                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
+            harmony.Patch(
                 AccessTools.Property(typeof(OptionsVM), nameof(OptionsVM.GraphicsOptions)).GetMethod,
-                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(Postfix)), 300));
-        }
-        private static void Postfix(OptionsVM __instance)
-        {
-            var property = _propertyInfosField(__instance);
-            if (property.TryGetValue(nameof(ModOptionsSelected), out var propertyInfo))
-                propertyInfo.SetValue(__instance, false);
+                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
+
+            harmony.CreateReversePatcher(
+                AccessTools.Method(typeof(OptionsVM), nameof(OptionsVM.ExecuteCloseOptions)),
+                new HarmonyMethod(SymbolExtensions.GetMethodInfo(() => OriginalExecuteCloseOptions(null!)))).Patch();
+
+            harmony.Patch(
+                AccessTools.Method(typeof(OptionsVM), nameof(OptionsVM.ExecuteCloseOptions)),
+                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(ExecuteCloseOptionsPostfix)), 300));
         }
 
-        private static readonly MethodInfo ExecuteDoneMethod = AccessTools.Method(typeof(OptionsVM), "ExecuteDone");
-        private static readonly MethodInfo ExecuteCancelMethod = AccessTools.Method(typeof(OptionsVM), "ExecuteCancel");
+        private static void OptionsPostfix(OptionsVM __instance)
+        {
+            __instance.SetPropertyValue(nameof(ModOptionsSelected), false);
+        }
+        private static void ExecuteCloseOptionsPostfix(OptionsVM __instance)
+        {
+            if (__instance.GetPropertyValue("MCMMixin") is WeakReference<OptionsVMMixin> weakReference && weakReference.TryGetTarget(out var mixin))
+            {
+                mixin?.ExecuteCloseOptions();
+            }
+        }
+        
+        private static void OriginalExecuteCloseOptions(OptionsVM instance) => throw new NotImplementedException("It's a stub");
 
         private readonly ModOptionsVM _modOptions = new ModOptionsVM();
         private bool _modOptionsSelected;
         private int _descriptionWidth = 650;
+
+        [DataSourceProperty]
+        public WeakReference<OptionsVMMixin> MCMMixin => new WeakReference<OptionsVMMixin>(this);
 
         [DataSourceProperty]
         public ModOptionsVM ModOptions
@@ -116,7 +141,9 @@ namespace MCM.UI.UIExtenderEx
         public void ExecuteCloseOptions()
         {
             ModOptions.ExecuteCancelInternal(false);
-            ViewModel?.ExecuteCloseOptions();
+            if (ViewModel != null)
+                OriginalExecuteCloseOptions(ViewModel);
+            OnFinalize();
         }
 
         [DataSourceMethod]
@@ -125,7 +152,7 @@ namespace MCM.UI.UIExtenderEx
             ModOptions.ExecuteDoneInternal(false, () =>
             {
                 if (ViewModel != null)
-                    ExecuteDoneMethod.Invoke(ViewModel, Array.Empty<object>());
+                    ExecuteDoneMethod?.Invoke(ViewModel);
             });
         }
 
@@ -135,7 +162,7 @@ namespace MCM.UI.UIExtenderEx
             ModOptions.ExecuteCancelInternal(false, () =>
             {
                 if (ViewModel != null)
-                    ExecuteCancelMethod.Invoke(ViewModel, Array.Empty<object>());
+                    ExecuteCancelMethod?.Invoke(ViewModel);
             });
         }
     }

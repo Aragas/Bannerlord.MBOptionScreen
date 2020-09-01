@@ -11,6 +11,7 @@ using MCM.Utils;
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
 
@@ -192,7 +193,10 @@ namespace MCM.UI.GUI.ViewModels
             PropertyReference.PropertyChanged += PropertyReference_OnPropertyChanged;
 
             if (IsDropdownVisible)
+            {
                 DropdownValue.PropertyChanged += DropdownValue_PropertyChanged;
+                DropdownValue.PropertyChangedWithValue += DropdownValue_PropertyChangedWithValue;
+            }
 
             RefreshValues();
         }
@@ -201,7 +205,10 @@ namespace MCM.UI.GUI.ViewModels
             PropertyReference.PropertyChanged -= PropertyReference_OnPropertyChanged;
 
             if (IsDropdownVisible)
+            {
                 DropdownValue.PropertyChanged -= DropdownValue_PropertyChanged;
+                DropdownValue.PropertyChangedWithValue -= DropdownValue_PropertyChangedWithValue;
+            }
 
             base.OnFinalize();
         }
@@ -212,6 +219,14 @@ namespace MCM.UI.GUI.ViewModels
             //SettingsVM.RefreshValues();
         }
         private void DropdownValue_PropertyChanged(object obj, PropertyChangedEventArgs args)
+        {
+            if (args.PropertyName == "SelectedIndex")
+            {
+                URS.Do(new SetSelectedIndexAction(PropertyReference, new SelectedIndexWrapper(obj)));
+                SettingsVM.RecalculateIndex();
+            }
+        }
+        private void DropdownValue_PropertyChangedWithValue(object obj, PropertyChangedWithValueEventArgs args)
         {
             if (args.PropertyName == "SelectedIndex")
             {
@@ -251,14 +266,20 @@ namespace MCM.UI.GUI.ViewModels
             PropertyReference.PropertyChanged -= PropertyReference_OnPropertyChanged;
 
             if (IsDropdownVisible)
+            {
                 DropdownValue.PropertyChanged -= DropdownValue_PropertyChanged;
+                DropdownValue.PropertyChangedWithValue -= DropdownValue_PropertyChangedWithValue;
+            }
         }
         public void OnResetEnd()
         {
-            PropertyReference.PropertyChanged += PropertyReference_OnPropertyChanged;
+            PropertyReference.PropertyChanged -= PropertyReference_OnPropertyChanged;
 
             if (IsDropdownVisible)
-                DropdownValue.PropertyChanged += DropdownValue_PropertyChanged;
+            {
+                DropdownValue.PropertyChanged -= DropdownValue_PropertyChanged;
+                DropdownValue.PropertyChangedWithValue -= DropdownValue_PropertyChangedWithValue;
+            }
 
             RefreshValues();
         }

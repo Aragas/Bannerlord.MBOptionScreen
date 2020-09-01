@@ -17,8 +17,10 @@ namespace MCM.Implementation.Settings.Formats.Xml
 
         public XmlSettingsFormat(ILogger<XmlSettingsFormat> logger) : base(logger) { }
 
-        public override bool Save(BaseSettings settings, string path)
+        public override bool Save(BaseSettings settings, string directoryPath, string filename)
         {
+            var path = Path.Combine(directoryPath, filename + ".xml");
+
             var content = SaveJson(settings);
             var xmlDocument = JsonConvert.DeserializeXmlNode(content, settings is IWrapper wrapper1 ? wrapper1.Object.GetType().Name : settings.GetType().Name);
 
@@ -31,8 +33,9 @@ namespace MCM.Implementation.Settings.Formats.Xml
             return true;
         }
 
-        public override BaseSettings? Load(BaseSettings settings, string path)
+        public override BaseSettings? Load(BaseSettings settings, string directoryPath, string filename)
         {
+            var path = Path.Combine(directoryPath, filename + ".xml");
             var file = new FileInfo(path);
             if (file.Exists)
             {
@@ -44,7 +47,7 @@ namespace MCM.Implementation.Settings.Formats.Xml
                 var root = xmlDocument[settings.GetType().Name];
                 if (root == null)
                 {
-                    Save(settings, path);
+                    Save(settings, directoryPath, filename);
                     return settings;
                 }
 
@@ -53,7 +56,7 @@ namespace MCM.Implementation.Settings.Formats.Xml
                 var set = LoadFromJson(settings, content);
                 if (set == null)
                 {
-                    Save(settings, path);
+                    Save(settings, directoryPath, filename);
                     return settings;
                 }
                 else
@@ -61,7 +64,7 @@ namespace MCM.Implementation.Settings.Formats.Xml
             }
             else
             {
-                Save(settings, path);
+                Save(settings, directoryPath, filename);
                 return settings;
             }
         }

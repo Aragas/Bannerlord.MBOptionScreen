@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 4.0.6
+Game Versions: e1.4.3,e1.5.0,e1.5.1
+* Added ButterLib settings
+* Fixed OptionsVMMixin not triggering on Escape
+* Fixed SetSelectedIndexAction
+* Added json2 format that handles Dropdown as an integer
+---------------------------------------------------------------------------------------------------
 Version: 4.0.5
 Game Versions: e1.4.3,e1.5.0,e1.5.1
 * Fixed ModLib Compatibility Layer issues

@@ -14,7 +14,8 @@ namespace MCM.Tests.SettingsFormat
 
         protected ISettingsFormat Format { get; set; } = default!;
         protected FluentGlobalSettings Settings { get; set; } = default!;
-        protected string Path { get; set; } = default!;
+        protected string DirectoryPath { get; set; } = default!;
+        protected string Filename { get; set; } = default!;
 
         [SetUp]
         public void Setup()

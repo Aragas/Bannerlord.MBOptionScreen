@@ -40,7 +40,7 @@ namespace MCM.Abstractions.Dropdown
                 if (_selectedIndex != value)
                 {
                     _selectedIndex = value;
-                    Selector.SelectedIndex = _selectedIndex;
+                    _selector.SelectedIndex = _selectedIndex;
                 }
             }
         }

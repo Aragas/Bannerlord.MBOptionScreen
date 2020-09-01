@@ -5,7 +5,9 @@
   </tags>
   <strings>
     <string id="MCMSettings_Name" text="Mod Configuration Menu {VERSION}"/>
+
     <string id="BaseSettings_Default" text="Default"/>
+
     <string id="SettingsPropertyGroupDefinition_Misc" text="Misc"/>
   </strings>
 </base>

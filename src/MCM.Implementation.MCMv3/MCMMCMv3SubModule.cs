@@ -19,8 +19,8 @@ namespace MCM.Implementation.MCMv3
 {
     public class MCMMCMv3SubModule : MBSubModuleBase
     {
-        private static readonly AccessTools.FieldRef<MCMv3BaseSettingsProvider, MCMv3BaseSettingsProvider> Instance =
-            AccessTools.FieldRefAccess<MCMv3BaseSettingsProvider, MCMv3BaseSettingsProvider>("_instance");
+        private static readonly AccessTools.FieldRef<MCMv3BaseSettingsProvider>? Instance =
+            AccessTools.StaticFieldRefAccess<MCMv3BaseSettingsProvider>(AccessTools.Field(typeof(MCMv3BaseSettingsProvider), "_instance"));
 
         protected override void OnSubModuleLoad()
         {
@@ -35,7 +35,8 @@ namespace MCM.Implementation.MCMv3
             var harmony = new Harmony("bannerlord.mcm.implementation.mcmv3.loaderpreventer");
             MCMv3IntegratedLoaderSubModulePatch.Patch(harmony);
 
-            Instance() = new MCMv3SettingsProviderReplacer();
+            if (Instance != null)
+                Instance() = new MCMv3SettingsProviderReplacer();
         }
     }
 }

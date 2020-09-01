@@ -37,7 +37,7 @@ namespace MCM.Implementation.Settings.Providers
 
             foreach (var globalSettingsContainer in globalSettingsContainers)
             {
-                logger.LogInformation("Found Global container {type}. Registered {count}", globalSettingsContainer.GetType(), globalSettingsContainer.CreateModSettingsDefinitions.Count);
+                logger.LogInformation("Found Global container {type}.", globalSettingsContainer.GetType());
             }
             foreach (var perCampaignSettingsContainer in perCampaignSettingsContainers)
             {
