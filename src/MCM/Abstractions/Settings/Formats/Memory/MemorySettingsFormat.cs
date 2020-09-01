@@ -4,14 +4,14 @@ using System.Collections.Generic;
 
 namespace MCM.Abstractions.Settings.Formats.Memory
 {
-    public class MemorySettingsFormat : IMemorySettingsFormat
+    public sealed class MemorySettingsFormat : IMemorySettingsFormat
     {
         /// <inheritdoc/>
         public IEnumerable<string> Extensions { get; } = new [] { "memory" };
 
         /// <inheritdoc/>
-        public BaseSettings? Load(BaseSettings settings, string path) => settings;
+        public BaseSettings? Load(BaseSettings settings, string directoryPath, string filename) => settings;
         /// <inheritdoc/>
-        public bool Save(BaseSettings settings, string path) => true;
+        public bool Save(BaseSettings settings, string directoryPath, string filename) => true;
     }
 }

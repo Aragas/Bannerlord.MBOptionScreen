@@ -15,11 +15,11 @@ using v4::MCM.Abstractions.Settings.Base;
 using v4::MCM.Abstractions.Settings.Base.Global;
 using v4::MCM.Abstractions.Settings.Properties;
 
-using LegacyBaseSettings = v3::MCM.Abstractions.Settings.Base.BaseSettings;
+using MCMv3BaseSettings = v3::MCM.Abstractions.Settings.Base.BaseSettings;
 
 namespace MCM.Implementation.MCMv3.Settings.Base
 {
-    public class MCMv3GlobalSettingsWrapper : BaseGlobalSettingsWrapper
+    internal sealed class MCMv3GlobalSettingsWrapper : BaseGlobalSettingsWrapper
     {
         private delegate string GetIdDelegate();
         private delegate string GetFolderNameDelegate();
@@ -56,14 +56,14 @@ namespace MCM.Implementation.MCMv3.Settings.Base
         {
             var type = @object.GetType();
 
-            _getIdDelegate = AccessTools2.GetDelegate<GetIdDelegate>(@object, AccessTools.Property(type, nameof(LegacyBaseSettings.Id)).GetMethod);
-            _getFolderNameDelegate = AccessTools2.GetDelegate<GetFolderNameDelegate>(@object, AccessTools.Property(type, nameof(LegacyBaseSettings.FolderName)).GetMethod);
-            _getDisplayNameDelegate = AccessTools2.GetDelegate<GetDisplayNameDelegate>(@object, AccessTools.Property(type, nameof(LegacyBaseSettings.DisplayName)).GetMethod);
-            _getUIVersionDelegate = AccessTools2.GetDelegate<GetUIVersionDelegate>(@object, AccessTools.Property(type, nameof(LegacyBaseSettings.UIVersion)).GetMethod);
-            _getSubFolderDelegate = AccessTools2.GetDelegate<GetSubFolderDelegate>(@object, AccessTools.Property(type, nameof(LegacyBaseSettings.SubFolder)).GetMethod);
+            _getIdDelegate = AccessTools2.GetDelegate<GetIdDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.Id)).GetMethod);
+            _getFolderNameDelegate = AccessTools2.GetDelegate<GetFolderNameDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.FolderName)).GetMethod);
+            _getDisplayNameDelegate = AccessTools2.GetDelegate<GetDisplayNameDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.DisplayName)).GetMethod);
+            _getUIVersionDelegate = AccessTools2.GetDelegate<GetUIVersionDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.UIVersion)).GetMethod);
+            _getSubFolderDelegate = AccessTools2.GetDelegate<GetSubFolderDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.SubFolder)).GetMethod);
             _getSubGroupDelimiterDelegate = AccessTools2.GetDelegate<GetSubGroupDelimiterDelegate>(@object, AccessTools.Property(type, "SubGroupDelimiter").GetMethod);
-            _getFormatDelegate = AccessTools2.GetDelegate<GetFormatDelegate>(@object, AccessTools.Property(type, nameof(LegacyBaseSettings.Format)).GetMethod);
-            _methodOnPropertyChangedDelegate = AccessTools2.GetDelegate<OnPropertyChangedDelegate>(@object, AccessTools.Method(type, nameof(LegacyBaseSettings.OnPropertyChanged)));
+            _getFormatDelegate = AccessTools2.GetDelegate<GetFormatDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.Format)).GetMethod);
+            _methodOnPropertyChangedDelegate = AccessTools2.GetDelegate<OnPropertyChangedDelegate>(@object, AccessTools.Method(type, nameof(MCMv3BaseSettings.OnPropertyChanged)));
         }
 
         protected override ISettingsPropertyDiscoverer Discoverer { get; } = new MCMv3SettingsPropertyDiscoverer();

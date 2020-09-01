@@ -5,7 +5,7 @@ using TaleWorlds.Library;
 
 namespace MCM.Abstractions.Dropdown
 {
-    internal class DropdownRefSelectorItemVM : DropdownSelectorItemVMBase
+    internal sealed class DropdownRefSelectorItemVM : DropdownSelectorItemVMBase
     {
         private readonly IRef _ref;
 

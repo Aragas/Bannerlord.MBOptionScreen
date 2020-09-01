@@ -2,6 +2,7 @@
 
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Ref;
+using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
 using MCM.Abstractions.Settings.Models;
@@ -16,7 +17,7 @@ using MCM.Abstractions.Settings.Base;
 
 namespace MCM.Implementation.Settings.Properties
 {
-    internal class AttributeSettingsPropertyDiscoverer : IAttributeSettingsPropertyDiscoverer
+    internal sealed class AttributeSettingsPropertyDiscoverer : IAttributeSettingsPropertyDiscoverer
     {
         public IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object)
         {

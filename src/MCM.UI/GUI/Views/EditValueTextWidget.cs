@@ -12,7 +12,7 @@ using TaleWorlds.TwoDimension;
 
 namespace MCM.UI.GUI.Views
 {
-    internal class EditValueTextWidget : EditableTextWidget
+    internal sealed class EditValueTextWidget : EditableTextWidget
     {
         private readonly EditableText _editableWidget;
 

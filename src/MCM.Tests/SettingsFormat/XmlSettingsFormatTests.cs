@@ -2,6 +2,8 @@
 using MCM.Abstractions.Ref;
 using MCM.Implementation.Settings.Formats.Xml;
 
+using Microsoft.Extensions.Logging.Abstractions;
+
 using NUnit.Framework;
 
 using System;
@@ -22,7 +24,7 @@ namespace MCM.Tests.SettingsFormat
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            Format = new XmlSettingsFormat();
+            Format = new XmlSettingsFormat(NullLogger<XmlSettingsFormat>.Instance);
 
             Settings = new DefaultSettingsBuilder("Testing_Global_v1", "Testing Fluent Settings")
                 .SetFormat("xml")
@@ -42,12 +44,11 @@ namespace MCM.Tests.SettingsFormat
                     .AddText("prop_4","Test", new ProxyRef<string>(() => _stringValue, o => _stringValue = o), null))
                 .BuildAsGlobal();
 
-            // TODO: Should Load/Save accept the full path or just the base dir path?
-            Path = System.IO.Path.Combine(
+            DirectoryPath = Path.Combine(
                 AppDomain.CurrentDomain.BaseDirectory,
                 Settings.FolderName,
-                Settings.SubFolder ?? string.Empty,
-                $"{Settings.Id}.{Settings.Format}");
+                Settings.SubFolder ?? string.Empty);
+            Filename = Settings.Id;
         }
 
 
@@ -59,8 +60,8 @@ namespace MCM.Tests.SettingsFormat
             Assert.AreEqual(0F, _floatValue);
             Assert.AreEqual(string.Empty, _stringValue);
 
-            Format.Save(Settings, Path);
-            Format.Load(Settings, Path);
+            Format.Save(Settings, DirectoryPath, Filename);
+            Format.Load(Settings, DirectoryPath, Filename);
 
             Assert.AreEqual(false, _boolValue);
             Assert.AreEqual(0, _intValue);
@@ -73,15 +74,15 @@ namespace MCM.Tests.SettingsFormat
             _floatValue = 5.3453F;
             _stringValue = "Test";
 
-            Format.Save(Settings, Path);
-            Format.Load(Settings, Path);
+            Format.Save(Settings, DirectoryPath, Filename);
+            Format.Load(Settings, DirectoryPath, Filename);
 
             Assert.AreEqual(true, _boolValue);
             Assert.AreEqual(5, _intValue);
             Assert.AreEqual(5.3453F, _floatValue);
             Assert.AreEqual("Test", _stringValue);
 
-            Assert.AreEqual(Expected, File.ReadAllText(Path));
+            Assert.AreEqual(Expected, File.ReadAllText(Path.Combine(DirectoryPath, $"{Filename}.xml")));
         }
 
         [Test]
@@ -92,10 +93,10 @@ namespace MCM.Tests.SettingsFormat
             _floatValue = 5.3453F;
             _stringValue = "Test";
 
-            Format.Save(Settings, Path);
-            Format.Load(Settings, Path);
+            Format.Save(Settings, DirectoryPath, Filename);
+            Format.Load(Settings, DirectoryPath, Filename);
 
-            Assert.AreEqual(Expected, File.ReadAllText(Path));
+            Assert.AreEqual(Expected, File.ReadAllText(Path.Combine(DirectoryPath, $"{Filename}.xml")));
         }
 
         [Test]
@@ -106,22 +107,42 @@ namespace MCM.Tests.SettingsFormat
             _floatValue = 5.3453F;
             _stringValue = "Test";
 
-            Format.Save(Settings, Path);
+            Format.Save(Settings, DirectoryPath, Filename);
 
-            Assert.AreEqual(Expected, File.ReadAllText(Path));
+            Assert.AreEqual(Expected, File.ReadAllText(Path.Combine(DirectoryPath, $"{Filename}.xml")));
         }
 
         [Test]
         public void Load_Test()
         {
-            File.WriteAllText(Path, Expected);
+            var path = Path.Combine(DirectoryPath, $"{Filename}.xml");
 
-            Format.Load(Settings, Path);
+            File.WriteAllText(Path.Combine(DirectoryPath, $"{Filename}.xml"), Expected);
+
+            Format.Load(Settings, DirectoryPath, Filename);
 
             Assert.AreEqual(true, _boolValue);
             Assert.AreEqual(5, _intValue);
             Assert.AreEqual(5.3453F, _floatValue);
             Assert.AreEqual("Test", _stringValue);
+
+            File.Delete(path);
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            var path = Path.Combine(DirectoryPath, $"{Filename}.xml");
+            if (File.Exists(path))
+                File.Delete(path);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            var path = Path.Combine(DirectoryPath, $"{Filename}.xml");
+            if (File.Exists(path))
+                File.Delete(path);
         }
     }
 }

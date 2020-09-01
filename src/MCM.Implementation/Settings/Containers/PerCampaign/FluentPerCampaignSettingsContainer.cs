@@ -13,7 +13,7 @@ using TaleWorlds.Core;
 
 namespace MCM.Implementation.Settings.Containers.PerCampaign
 {
-    public class FluentPerCampaignSettingsContainer : BaseSettingsContainer<FluentPerCampaignSettings>, IMCMFluentPerCampaignSettingsContainer
+    internal sealed class FluentPerCampaignSettingsContainer : BaseSettingsContainer<FluentPerCampaignSettings>, IMCMFluentPerCampaignSettingsContainer
     {
         protected override string RootFolder { get; }
 

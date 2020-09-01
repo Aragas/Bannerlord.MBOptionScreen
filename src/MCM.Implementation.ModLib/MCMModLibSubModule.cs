@@ -4,8 +4,6 @@ using MCM.Extensions;
 using MCM.Implementation.ModLib.Functionality;
 using MCM.Implementation.ModLib.Settings.Containers.v1;
 using MCM.Implementation.ModLib.Settings.Containers.v13;
-using MCM.Implementation.ModLib.Settings.Properties.v1;
-using MCM.Implementation.ModLib.Settings.Properties.v13;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -26,8 +24,8 @@ namespace MCM.Implementation.ModLib
             services.AddSettingsContainer<ModLibSettingsContainer>();
             services.AddSettingsContainer<ModLibDefinitionsSettingsContainer>();
 
-            services.AddSettingsPropertyDiscoverer<ModLibSettingsPropertyDiscoverer>();
-            services.AddSettingsPropertyDiscoverer<ModLibDefinitionsSettingsPropertyDiscoverer>();
+            //services.AddSettingsPropertyDiscoverer<ModLibSettingsPropertyDiscoverer>();
+            //services.AddSettingsPropertyDiscoverer<ModLibDefinitionsSettingsPropertyDiscoverer>();
         }
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot()

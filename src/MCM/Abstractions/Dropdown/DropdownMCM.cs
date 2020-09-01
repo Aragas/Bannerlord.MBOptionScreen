@@ -7,7 +7,7 @@ using TaleWorlds.Localization;
 namespace MCM.Abstractions.Dropdown
 {
     // Uses MCM's classes
-    public class DropdownMCM<T> : List<T>, IEqualityComparer<DropdownMCM<T>>
+    public sealed class DropdownMCM<T> : List<T>, IEqualityComparer<DropdownMCM<T>>
         where T : class
     {
         public static DropdownMCM<T> Empty => new DropdownMCM<T>(Enumerable.Empty<T>(), 0);

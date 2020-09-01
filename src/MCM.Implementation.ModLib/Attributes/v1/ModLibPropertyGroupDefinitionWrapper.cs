@@ -2,11 +2,11 @@
 
 using MCM.Abstractions.Settings.Definitions;
 
-using LegacyAttribute = v1::ModLib.Attributes.SettingPropertyGroupAttribute;
+using v1SettingPropertyAttribute = v1::ModLib.Attributes.SettingPropertyGroupAttribute;
 
 namespace MCM.Implementation.ModLib.Attributes.v1
 {
-    public sealed class ModLibPropertyGroupDefinitionWrapper : IPropertyGroupDefinition
+    internal sealed class ModLibPropertyGroupDefinitionWrapper : IPropertyGroupDefinition
     {
         public string GroupName { get; }
         public bool IsMainToggle { get; }
@@ -16,8 +16,8 @@ namespace MCM.Implementation.ModLib.Attributes.v1
         {
             var type = @object.GetType();
 
-            GroupName = type.GetProperty(nameof(LegacyAttribute.GroupName))?.GetValue(@object) as string ?? "ERROR";
-            IsMainToggle = type.GetProperty(nameof(LegacyAttribute.IsMainToggle))?.GetValue(@object) as bool? ?? false;
+            GroupName = type.GetProperty(nameof(v1SettingPropertyAttribute.GroupName))?.GetValue(@object) as string ?? "ERROR";
+            IsMainToggle = type.GetProperty(nameof(v1SettingPropertyAttribute.IsMainToggle))?.GetValue(@object) as bool? ?? false;
             GroupOrder = -1;
         }
     }

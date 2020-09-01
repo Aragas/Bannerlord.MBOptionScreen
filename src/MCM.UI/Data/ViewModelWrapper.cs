@@ -39,9 +39,17 @@ namespace MCM.UI.Data
 
             // Trigger OnPropertyChanged from Object
             if (Object is INotifyPropertyChanged notifyPropertyChanged)
-                notifyPropertyChanged.PropertyChanged += (sender, args) => OnPropertyChanged(args.PropertyName);
+                notifyPropertyChanged.PropertyChanged += OnPropertyChangedEventHandler;
             if (Object is ViewModel viewModel)
-                viewModel.PropertyChangedWithValue += (sender, args) => OnPropertyChangedWithValue(args.Value, args.PropertyName);
+                viewModel.PropertyChangedWithValue += OnPropertyChangedWithValueEventHandler;
+        }
+        private void OnPropertyChangedEventHandler(object sender, PropertyChangedEventArgs args)
+        {
+            OnPropertyChanged(args.PropertyName);
+        }
+        private void OnPropertyChangedWithValueEventHandler(object sender, PropertyChangedWithValueEventArgs args)
+        {
+            OnPropertyChangedWithValue(args.Value, args.PropertyName);
         }
 
         public override void RefreshValues()
@@ -55,7 +63,12 @@ namespace MCM.UI.Data
         public override void OnFinalize()
         {
             if (Object is ViewModel viewModel)
+            {
+                viewModel.PropertyChanged -= OnPropertyChangedEventHandler;
+                viewModel.PropertyChangedWithValue -= OnPropertyChangedWithValueEventHandler;
+
                 viewModel.OnFinalize();
+            }
 
             base.OnFinalize();
         }

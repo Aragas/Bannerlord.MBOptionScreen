@@ -4,11 +4,11 @@ using MCM.Abstractions.Settings.Definitions;
 
 using TaleWorlds.Localization;
 
-using LegacyAttribute = v13::ModLib.Definitions.Attributes.SettingPropertyAttribute;
+using v13SettingPropertyAttribute = v13::ModLib.Definitions.Attributes.SettingPropertyAttribute;
 
 namespace MCM.Implementation.ModLib.Attributes.v13
 {
-    public sealed class ModLibDefinitionsSettingPropertyAttributeWrapper :
+    internal sealed class ModLibDefinitionsSettingPropertyAttributeWrapper :
         IPropertyDefinitionBool,
         IPropertyDefinitionWithMinMax,
         IPropertyDefinitionWithEditableMinMax
@@ -26,15 +26,15 @@ namespace MCM.Implementation.ModLib.Attributes.v13
         {
             var type = @object.GetType();
 
-            DisplayName = new TextObject(type.GetProperty(nameof(LegacyAttribute.DisplayName))?.GetValue(@object) as string ?? "ERROR").ToString();
-            HintText = new TextObject(type.GetProperty(nameof(LegacyAttribute.HintText))?.GetValue(@object) as string ?? "ERROR").ToString();
+            DisplayName = new TextObject(type.GetProperty(nameof(v13SettingPropertyAttribute.DisplayName))?.GetValue(@object) as string ?? "ERROR").ToString();
+            HintText = new TextObject(type.GetProperty(nameof(v13SettingPropertyAttribute.HintText))?.GetValue(@object) as string ?? "ERROR").ToString();
             Order = -1;
             RequireRestart = true;
 
-            MinValue = (decimal) (type.GetProperty(nameof(LegacyAttribute.MinValue))?.GetValue(@object) as float? ?? 0);
-            MaxValue = (decimal) (type.GetProperty(nameof(LegacyAttribute.MaxValue))?.GetValue(@object) as float? ?? 0);
-            EditableMinValue = (decimal) (type.GetProperty(nameof(LegacyAttribute.EditableMinValue))?.GetValue(@object) as float? ?? 0);
-            EditableMaxValue = (decimal) (type.GetProperty(nameof(LegacyAttribute.EditableMaxValue))?.GetValue(@object) as float? ?? 0);
+            MinValue = (decimal) (type.GetProperty(nameof(v13SettingPropertyAttribute.MinValue))?.GetValue(@object) as float? ?? 0);
+            MaxValue = (decimal) (type.GetProperty(nameof(v13SettingPropertyAttribute.MaxValue))?.GetValue(@object) as float? ?? 0);
+            EditableMinValue = (decimal) (type.GetProperty(nameof(v13SettingPropertyAttribute.EditableMinValue))?.GetValue(@object) as float? ?? 0);
+            EditableMaxValue = (decimal) (type.GetProperty(nameof(v13SettingPropertyAttribute.EditableMaxValue))?.GetValue(@object) as float? ?? 0);
         }
     }
 }

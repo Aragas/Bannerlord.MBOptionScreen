@@ -19,7 +19,7 @@ using LegacyFluentGlobalSettings = v3::MCM.Abstractions.Settings.Base.Global.Flu
 
 namespace MCM.Implementation.MCMv3.Settings.Containers
 {
-    internal class MCMv3FluentGlobalSettingsContainer : BaseSettingsContainer<FluentGlobalSettings>, IFluentGlobalSettingsContainer
+    internal sealed class MCMv3FluentGlobalSettingsContainer : BaseSettingsContainer<FluentGlobalSettings>, IFluentGlobalSettingsContainer
     {
         protected override string RootFolder { get; }
 

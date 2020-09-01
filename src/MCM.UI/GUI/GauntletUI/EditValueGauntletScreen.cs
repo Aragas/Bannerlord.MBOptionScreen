@@ -9,7 +9,7 @@ using TaleWorlds.Library;
 
 namespace MCM.UI.GUI.GauntletUI
 {
-    internal class EditValueGauntletScreen : ScreenBase
+    internal sealed class EditValueGauntletScreen : ScreenBase
     {
         private readonly SettingsPropertyVM _settingProperty;
         private GauntletLayer _gauntletLayer = default!;

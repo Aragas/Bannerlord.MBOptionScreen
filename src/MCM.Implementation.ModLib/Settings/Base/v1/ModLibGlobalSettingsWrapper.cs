@@ -17,7 +17,7 @@ using LegacyBaseSettings = v1::ModLib.SettingsBase;
 
 namespace MCM.Implementation.ModLib.Settings.Base.v1
 {
-    public class ModLibGlobalSettingsWrapper : BaseGlobalSettingsWrapper
+    internal sealed class ModLibGlobalSettingsWrapper : BaseGlobalSettingsWrapper
     {
         private delegate string GetIdDelegate();
         private delegate string GetFolderNameDelegate();

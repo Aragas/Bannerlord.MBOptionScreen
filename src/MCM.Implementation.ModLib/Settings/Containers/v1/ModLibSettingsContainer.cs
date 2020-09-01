@@ -13,14 +13,17 @@ using MCM.Utils;
 using System.Collections.Generic;
 using System.Linq;
 
+using v1SettingsBase = v1::ModLib.SettingsBase;
+using v1SettingsDatabase = v1::ModLib.SettingsDatabase;
+
 namespace MCM.Implementation.ModLib.Settings.Containers.v1
 {
     internal sealed class ModLibSettingsContainer : IGlobalSettingsContainer
     {
-        private delegate Dictionary<string, v1::ModLib.SettingsBase> GetAllSettingsDictDelegate();
+        private delegate Dictionary<string, v1SettingsBase> GetAllSettingsDictDelegate();
 
-        private static readonly GetAllSettingsDictDelegate GetAllSettingsDict =
-            AccessTools2.GetDelegate<GetAllSettingsDictDelegate>(AccessTools.Property(typeof(v1::ModLib.SettingsDatabase), "AllSettingsDict").GetMethod)!;
+        private static readonly GetAllSettingsDictDelegate? GetAllSettingsDict =
+            AccessTools2.GetDelegate<GetAllSettingsDictDelegate>(AccessTools.Property(typeof(v1SettingsDatabase), "AllSettingsDict").GetMethod);
 
         private Dictionary<string, ModLibGlobalSettingsWrapper> LoadedModLibSettings { get; } = new Dictionary<string, ModLibGlobalSettingsWrapper>();
 
@@ -44,9 +47,9 @@ namespace MCM.Implementation.ModLib.Settings.Containers.v1
         }
         public bool SaveSettings(BaseSettings settings)
         {
-            if (settings is ModLibGlobalSettingsWrapper settingsWrapper && settingsWrapper.Object is v1::ModLib.SettingsBase modLibSettings)
+            if (settings is ModLibGlobalSettingsWrapper settingsWrapper && settingsWrapper.Object is v1SettingsBase modLibSettings)
             {
-                v1::ModLib.SettingsDatabase.SaveSettings(modLibSettings);
+                v1SettingsDatabase.SaveSettings(modLibSettings);
                 return true;
             }
 
@@ -76,7 +79,7 @@ namespace MCM.Implementation.ModLib.Settings.Containers.v1
 
         private void ReloadAll()
         {
-            foreach (var settings in GetAllSettingsDict().Values)
+            foreach (var settings in GetAllSettingsDict?.Invoke().Values ?? Enumerable.Empty<v1SettingsBase>())
             {
                 var id = settings.ID;
                 if (!LoadedModLibSettings.ContainsKey(id))
@@ -87,8 +90,8 @@ namespace MCM.Implementation.ModLib.Settings.Containers.v1
         }
         private void Reload(string id)
         {
-            var dict = GetAllSettingsDict();
-            if (dict.ContainsKey(id))
+            var dict = GetAllSettingsDict?.Invoke();
+            if (dict?.ContainsKey(id) == true)
                 LoadedModLibSettings[id].UpdateReference(dict[id]);
         }
     }

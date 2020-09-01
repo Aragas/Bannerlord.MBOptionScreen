@@ -5,23 +5,23 @@ namespace MCM.UI.Actions
 {
     internal sealed class SetSelectedIndexAction : IAction
     {
-        private IRef DropdownContext { get; }
+        private IRef SelectedIndexContext { get; }
         public IRef Context { get; }
         public object Value { get; }
         public object Original { get; }
 
         public SetSelectedIndexAction(IRef context, object value)
         {
-            DropdownContext = context;
+            Context = context;
 
-            Context = new ProxyRef<int>(
-                () => new SelectedIndexWrapper(DropdownContext.Value).SelectedIndex,
-                o => new SelectedIndexWrapper(DropdownContext.Value).SelectedIndex = o);
+            SelectedIndexContext = new ProxyRef<int>(
+                () => new SelectedIndexWrapper(Context.Value).SelectedIndex,
+                o => new SelectedIndexWrapper(Context.Value).SelectedIndex = o);
             Value = new SelectedIndexWrapper(value).SelectedIndex;
-            Original = Context.Value;
+            Original = SelectedIndexContext.Value;
         }
 
-        public void DoAction() => Context.Value = Value;
-        public void UndoAction() => Context.Value = Original;
+        public void DoAction() => SelectedIndexContext.Value = Value;
+        public void UndoAction() => SelectedIndexContext.Value = Original;
     }
 }

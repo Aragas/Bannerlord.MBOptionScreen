@@ -66,6 +66,6 @@ namespace MCM.Abstractions.Settings.Base
             .ToList();
 
         protected virtual IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups() =>
-            SettingsUtils.GetSettingsPropertyGroups(SubGroupDelimiter, Discoverer?.GetProperties(this) ?? Array.Empty<ISettingsPropertyDefinition>());
+            SettingsUtils.GetSettingsPropertyGroups(SubGroupDelimiter, Discoverer?.GetProperties(this) ?? Enumerable.Empty<ISettingsPropertyDefinition>());
     }
 }

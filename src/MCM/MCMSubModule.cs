@@ -7,7 +7,7 @@ using TaleWorlds.MountAndBlade;
 
 namespace MCM
 {
-    public class MCMSubModule : MBSubModuleBase
+    public sealed class MCMSubModule : MBSubModuleBase
     {
         protected override void OnSubModuleLoad()
         {

@@ -7,7 +7,7 @@ using v4::MCM.Abstractions.Settings.Definitions.Wrapper;
 
 namespace MCM.Implementation.MCMv3.Settings.Definitions
 {
-    public sealed class MCMv3PropertyDefinitionWithIdWrapper : BasePropertyDefinitionWrapper,
+    internal sealed class MCMv3PropertyDefinitionWithIdWrapper : BasePropertyDefinitionWrapper,
         IPropertyDefinitionWithId
     {
         /// <inheritdoc/>

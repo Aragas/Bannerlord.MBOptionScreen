@@ -17,6 +17,7 @@ using v4::MCM.Abstractions.Settings.Providers;
 
 using MCMv3BaseSettings = v3::MCM.Abstractions.Settings.Base.BaseSettings;
 using MCMv3BaseSettingsProvider = v3::MCM.Abstractions.Settings.Providers.BaseSettingsProvider;
+using MCMv3IWrappers = v3::MCM.Abstractions.IWrapper;
 using MCMv3SettingsDefinition = v3::MCM.Abstractions.Settings.Models.SettingsDefinition;
 
 namespace MCM.Implementation.MCMv3.Settings.Providers
@@ -24,7 +25,7 @@ namespace MCM.Implementation.MCMv3.Settings.Providers
     /// <summary>
     /// Replaces MCMv3's default <see cref="MCMv3BaseSettingsProvider"/> with MCMv4's one.
     /// </summary>
-    internal class MCMv3SettingsProviderReplacer : MCMv3BaseSettingsProvider
+    internal sealed class MCMv3SettingsProviderReplacer : MCMv3BaseSettingsProvider
     {
         public override IEnumerable<MCMv3SettingsDefinition> CreateModSettingsDefinitions { get; } = default!;
 
@@ -47,6 +48,15 @@ namespace MCM.Implementation.MCMv3.Settings.Providers
             }
 
             return null;
+        }
+        public override object? GetSettingsObject(string id)
+        {
+            var settings = GetSettings(id);
+            return settings switch
+            {
+                MCMv3IWrappers wrapper => wrapper.Object,
+                _ => settings
+            };
         }
 
         public override void SaveSettings(MCMv3BaseSettings settings) { }

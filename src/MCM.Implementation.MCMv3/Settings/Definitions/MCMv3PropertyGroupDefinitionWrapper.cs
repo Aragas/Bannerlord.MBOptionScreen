@@ -4,7 +4,8 @@ using v4::MCM.Abstractions.Settings.Definitions;
 
 namespace MCM.Implementation.MCMv3.Settings.Definitions
 {
-    public sealed class MCMv3PropertyGroupDefinitionWrapper : IPropertyGroupDefinition
+    internal sealed class MCMv3PropertyGroupDefinitionWrapper :
+        IPropertyGroupDefinition
     {
         /// <inheritdoc/>
         public string GroupName { get; }

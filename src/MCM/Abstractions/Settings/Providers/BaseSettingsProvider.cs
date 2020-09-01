@@ -19,7 +19,6 @@ namespace MCM.Abstractions.Settings.Providers
 
         public abstract IEnumerable<SettingsDefinition> CreateModSettingsDefinitions { get; }
         public abstract BaseSettings? GetSettings(string id);
-        public virtual object? GetSettingsObject(string id) => GetSettings(id);
         public abstract void SaveSettings(BaseSettings settings);
         public abstract void ResetSettings(BaseSettings settings);
         public abstract void OverrideSettings(BaseSettings settings);

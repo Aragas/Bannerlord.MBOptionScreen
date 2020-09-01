@@ -1,11 +1,11 @@
-﻿using HarmonyLib;
-
-using MCM.Abstractions.Ref;
+﻿using MCM.Abstractions.Common;
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Formats;
 using MCM.Abstractions.Settings.Models;
 using MCM.Extensions;
 using MCM.Utils;
+
+using Microsoft.Extensions.Logging;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -16,31 +16,27 @@ using System.IO;
 
 namespace MCM.Implementation.Settings.Formats
 {
-    public class BaseJsonSettingsFormat : ISettingsFormat
+    public abstract class BaseJsonSettingsFormat : ISettingsFormat
     {
         private readonly object _lock = new object();
         private readonly Dictionary<string, object> _existingObjects = new Dictionary<string, object>();
 
-        protected readonly JsonSerializerSettings JsonSerializerSettings;
+        protected readonly ILogger Logger;
+        protected virtual JsonSerializerSettings JsonSerializerSettings { get; }
 
-        protected BaseJsonSettingsFormat()
+        protected BaseJsonSettingsFormat(ILogger logger)
         {
-            JsonSerializerSettings = new JsonSerializerSettings()
+            Logger = logger;
+            JsonSerializerSettings = new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,
-                Converters = { new DropdownJsonConverter(this) }
+                Converters = { new DropdownJsonConverter(logger, this) }
             };
         }
 
-        public virtual IEnumerable<string> Extensions => new [] { "json" };
+        public virtual IEnumerable<string> Extensions { get; } = new [] { "json" };
 
-        protected static string GetPropertyDefinitionId(ISettingsPropertyDefinition definition) =>
-            AccessTools.Property(definition.GetType(), "Id")?.GetValue(definition) as string ??
-            definition.PropertyReference switch
-            {
-                PropertyRef propertyRef => propertyRef.PropertyInfo.Name,
-                _ => $"{definition.GroupName}|{definition.DisplayName}",
-            };
+        protected static string GetPropertyDefinitionId(ISettingsPropertyDefinition definition) => definition.Id;
 
         protected string SaveJson(BaseSettings settings)
         {
@@ -87,8 +83,10 @@ namespace MCM.Implementation.Settings.Formats
             return settings;
         }
 
-        public virtual bool Save(BaseSettings settings, string path)
+        public virtual bool Save(BaseSettings settings, string directoryPath, string filename)
         {
+            var path = Path.Combine(directoryPath, filename + ".json");
+
             var content = SaveJson(settings);
 
             var file = new FileInfo(path);
@@ -99,8 +97,9 @@ namespace MCM.Implementation.Settings.Formats
 
             return true;
         }
-        public virtual BaseSettings? Load(BaseSettings settings, string path)
+        public virtual BaseSettings? Load(BaseSettings settings, string directoryPath, string filename)
         {
+            var path = Path.Combine(directoryPath, filename + ".json");
             var file = new FileInfo(path);
             if (file.Exists)
             {
@@ -111,7 +110,7 @@ namespace MCM.Implementation.Settings.Formats
                 var set = LoadFromJson(settings, content);
                 if (set == null)
                 {
-                    Save(settings, path);
+                    Save(settings, directoryPath, filename);
                     return settings;
                 }
                 else
@@ -119,20 +118,28 @@ namespace MCM.Implementation.Settings.Formats
             }
             else
             {
-                Save(settings, path);
+                Save(settings, directoryPath, filename);
                 return settings;
             }
         }
 
-        private object? FindExistingValue(string path) => _existingObjects.TryGetValue(path, out var value) ? value : null;
+        public object? FindExistingValue(string path)
+        {
+            lock (_lock)
+            {
+                return _existingObjects.TryGetValue(path, out var value) ? value : null;
+            }
+        }
 
 
         private class DropdownJsonConverter : JsonConverter
         {
+            private readonly ILogger _logger;
             private readonly BaseJsonSettingsFormat _settingsFormat;
 
-            public DropdownJsonConverter(BaseJsonSettingsFormat settingsFormat)
+            public DropdownJsonConverter(ILogger logger, BaseJsonSettingsFormat settingsFormat)
             {
+                _logger = logger;
                 _settingsFormat = settingsFormat;
             }
 
@@ -140,11 +147,8 @@ namespace MCM.Implementation.Settings.Formats
 
             public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
             {
-                var selectedIndexProperty = AccessTools.Property(value.GetType(), "SelectedIndex");
-                var jo = new JObject
-                {
-                    { "SelectedIndex", selectedIndexProperty?.GetValue(value) as int? ?? 0 },
-                };
+                var wrapper = new SelectedIndexWrapper(value);
+                var jo = new JObject { { "SelectedIndex", wrapper.SelectedIndex } };
                 jo.WriteTo(writer);
             }
 
@@ -152,18 +156,18 @@ namespace MCM.Implementation.Settings.Formats
             {
                 try
                 {
-                    var jo = JObject.Load(reader);
-
                     existingValue ??= _settingsFormat.FindExistingValue(reader.Path);
                     if (existingValue == null)
                         return null;
 
-                    var selectedIndexProperty = AccessTools.Property(existingValue.GetType(), "SelectedIndex");
-
-                    var index = selectedIndexProperty?.GetValue(existingValue) as int? ?? 0;
-                    selectedIndexProperty?.SetValue(existingValue, int.TryParse(jo["SelectedIndex"].ToString(), out var res) ? res : index);
+                    var wrapper = new SelectedIndexWrapper(existingValue);
+                    var token = JToken.Load(reader);
+                    wrapper.SelectedIndex = int.TryParse(token["SelectedIndex"].ToString(), out var res) ? res : wrapper.SelectedIndex;
                 }
-                catch (Exception) { }
+                catch (Exception e)
+                {
+                    _logger.LogError(e, "Error while deserializing Dropdown");
+                }
                 return existingValue;
             }
         }
