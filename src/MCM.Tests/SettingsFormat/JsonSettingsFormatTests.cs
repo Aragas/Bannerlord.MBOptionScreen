@@ -80,7 +80,7 @@ namespace MCM.Tests.SettingsFormat
             Assert.AreEqual(5.3453F, _floatValue);
             Assert.AreEqual("Test", _stringValue);
 
-            Assert.AreEqual(Expected, File.ReadAllText(Path.Combine(DirectoryPath, Filename)));
+            Assert.AreEqual(Expected, File.ReadAllText(Path.Combine(DirectoryPath, $"{Filename}.json")));
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace MCM.Tests.SettingsFormat
             Format.Save(Settings, DirectoryPath, Filename);
             Format.Load(Settings, DirectoryPath, Filename);
 
-            Assert.AreEqual(Expected, File.ReadAllText(Path.Combine(DirectoryPath, Filename)));
+            Assert.AreEqual(Expected, File.ReadAllText(Path.Combine(DirectoryPath, $"{Filename}.json")));
         }
 
         [Test]
@@ -107,13 +107,13 @@ namespace MCM.Tests.SettingsFormat
 
             Format.Save(Settings, DirectoryPath, Filename);
 
-            Assert.AreEqual(Expected, File.ReadAllText(Path.Combine(DirectoryPath, Filename)));
+            Assert.AreEqual(Expected, File.ReadAllText(Path.Combine(DirectoryPath, $"{Filename}.json")));
         }
 
         [Test]
         public void Load_Test()
         {
-            File.WriteAllText(Path.Combine(DirectoryPath, Filename), Expected);
+            File.WriteAllText(Path.Combine(DirectoryPath, $"{Filename}.json"), Expected);
 
             Format.Load(Settings, DirectoryPath, Filename);
 
@@ -121,6 +121,22 @@ namespace MCM.Tests.SettingsFormat
             Assert.AreEqual(5, _intValue);
             Assert.AreEqual(5.3453F, _floatValue);
             Assert.AreEqual("Test", _stringValue);
+        }
+
+        [SetUp]
+        public void SetUp()
+        {
+            var path = Path.Combine(DirectoryPath, $"{Filename}.json");
+            if (File.Exists(path))
+                File.Delete(path);
+        }
+
+        [TearDown]
+        public void TearDown()
+        {
+            var path = Path.Combine(DirectoryPath, $"{Filename}.json");
+            if (File.Exists(path))
+                File.Delete(path);
         }
     }
 }
