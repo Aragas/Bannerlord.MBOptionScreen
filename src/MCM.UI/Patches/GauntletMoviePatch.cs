@@ -4,6 +4,8 @@ using HarmonyLib;
 
 using MCM.Abstractions.Functionality;
 
+using System.Runtime.CompilerServices;
+
 using TaleWorlds.GauntletUI;
 using TaleWorlds.GauntletUI.Data;
 using TaleWorlds.GauntletUI.PrefabSystem;
@@ -24,6 +26,7 @@ namespace MCM.UI.Patches
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(GauntletMoviePatch), nameof(LoadMovieHarmony))));
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private static bool LoadMovieHarmony(GauntletMovie __instance, Widget ____movieRootNode)
         {
             var movie = BaseResourceHandler.Instance.MovieRequested(__instance.MovieName);

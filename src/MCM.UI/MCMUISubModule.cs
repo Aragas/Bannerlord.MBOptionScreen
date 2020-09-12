@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SandBox;
 
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Localization;
@@ -28,6 +29,7 @@ namespace MCM.UI
     {
         private static readonly UIExtender Extender = new UIExtender("MCM.UI");
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         protected override void OnSubModuleLoad()
         {
             base.OnSubModuleLoad();
@@ -49,10 +51,11 @@ namespace MCM.UI
             DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
                 nameof(OnSubModuleLoad), SubscriptionType.AfterMethod, (s, e) =>
                 {
-                    Extender.Register();
+                    Extender.Register(typeof(MCMUISubModule).Assembly);
                 });
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
             base.OnBeforeInitialModuleScreenSetAsRoot();
@@ -70,6 +73,7 @@ namespace MCM.UI
                 });
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         protected override void OnSubModuleUnloaded()
         {
             base.OnSubModuleUnloaded();

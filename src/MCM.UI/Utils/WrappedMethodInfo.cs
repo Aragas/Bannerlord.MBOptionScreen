@@ -20,7 +20,7 @@ namespace MCM.UI.Utils
         public override CallingConventions CallingConvention => _methodInfoImplementation.CallingConvention;
         public override bool ContainsGenericParameters => _methodInfoImplementation.ContainsGenericParameters;
         public override IEnumerable<CustomAttributeData> CustomAttributes => _methodInfoImplementation.CustomAttributes;
-        public override Type DeclaringType => _methodInfoImplementation.DeclaringType;
+        public override Type? DeclaringType => _methodInfoImplementation.DeclaringType;
         public override bool IsGenericMethod => _methodInfoImplementation.IsGenericMethod;
         public override bool IsGenericMethodDefinition => _methodInfoImplementation.IsGenericMethodDefinition;
         public override bool IsSecurityCritical => _methodInfoImplementation.IsSecurityCritical;
@@ -32,8 +32,8 @@ namespace MCM.UI.Utils
         public override MethodImplAttributes MethodImplementationFlags => _methodInfoImplementation.MethodImplementationFlags;
         public override Module Module => _methodInfoImplementation.Module;
         public override string Name => _methodInfoImplementation.Name;
-        public override Type ReflectedType => _methodInfoImplementation.ReflectedType;
-        public override ParameterInfo ReturnParameter => _methodInfoImplementation.ReturnParameter;
+        public override Type? ReflectedType => _methodInfoImplementation.ReflectedType;
+        public override ParameterInfo? ReturnParameter => _methodInfoImplementation.ReturnParameter;
         public override Type ReturnType => _methodInfoImplementation.ReturnType;
         public override ICustomAttributeProvider ReturnTypeCustomAttributes => _methodInfoImplementation.ReturnTypeCustomAttributes;
 
@@ -45,7 +45,7 @@ namespace MCM.UI.Utils
         public override IList<CustomAttributeData> GetCustomAttributesData() => _methodInfoImplementation.GetCustomAttributesData();
         public override Type[] GetGenericArguments() => _methodInfoImplementation.GetGenericArguments();
         public override MethodInfo GetGenericMethodDefinition() => _methodInfoImplementation.GetGenericMethodDefinition();
-        public override MethodBody GetMethodBody() => _methodInfoImplementation.GetMethodBody();
+        public override MethodBody? GetMethodBody() => _methodInfoImplementation.GetMethodBody();
         public override MethodImplAttributes GetMethodImplementationFlags() => _methodInfoImplementation.GetMethodImplementationFlags();
         public override ParameterInfo[] GetParameters() => _methodInfoImplementation.GetParameters();
         public override object Invoke(object obj, BindingFlags invokeAttr, Binder binder, object[] parameters, CultureInfo culture) =>

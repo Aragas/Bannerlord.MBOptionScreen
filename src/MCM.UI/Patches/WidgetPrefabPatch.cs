@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Runtime.CompilerServices;
 using System.Xml;
 
 using TaleWorlds.GauntletUI.PrefabSystem;
@@ -19,12 +20,14 @@ namespace MCM.UI.Patches
                 new HarmonyMethod(SymbolExtensions.GetMethodInfo(() => LoadFromDocument(null!, null!, null!, null!)))).Patch();
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public static WidgetPrefab LoadFromDocument(
             PrefabExtensionContext prefabExtensionContext,
             WidgetAttributeContext widgetAttributeContext,
             string path,
             XmlDocument document)
         {
+            [MethodImpl(MethodImplOptions.NoInlining)]
             static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, MethodBase method)
             {
                 var returnNull = new List<CodeInstruction>

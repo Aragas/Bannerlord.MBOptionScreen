@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions;
@@ -60,10 +61,12 @@ namespace MCM.UI.UIExtenderEx
                 postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(ExecuteCloseOptionsPostfix)), 300));
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private static void OptionsPostfix(OptionsVM __instance)
         {
             __instance.SetPropertyValue(nameof(ModOptionsSelected), false);
         }
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private static void ExecuteCloseOptionsPostfix(OptionsVM __instance)
         {
             if (__instance.GetPropertyValue("MCMMixin") is WeakReference<OptionsVMMixin> weakReference && weakReference.TryGetTarget(out var mixin))
@@ -71,7 +74,8 @@ namespace MCM.UI.UIExtenderEx
                 mixin?.ExecuteCloseOptions();
             }
         }
-        
+
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private static void OriginalExecuteCloseOptions(OptionsVM instance) => throw new NotImplementedException("It's a stub");
 
         private readonly ModOptionsVM _modOptions = new ModOptionsVM();
@@ -84,6 +88,7 @@ namespace MCM.UI.UIExtenderEx
         [DataSourceProperty]
         public ModOptionsVM ModOptions
         {
+            [MethodImpl(MethodImplOptions.NoInlining)]
             get
             {
                 ModOptionsSelected = true;
@@ -94,7 +99,9 @@ namespace MCM.UI.UIExtenderEx
         [DataSourceProperty]
         public int DescriptionWidth
         {
+            [MethodImpl(MethodImplOptions.NoInlining)]
             get => _descriptionWidth;
+            [MethodImpl(MethodImplOptions.NoInlining)]
             private set
             {
                 if (_descriptionWidth == value)
@@ -108,7 +115,9 @@ namespace MCM.UI.UIExtenderEx
         [DataSourceProperty]
         public bool ModOptionsSelected
         {
+            [MethodImpl(MethodImplOptions.NoInlining)]
             get => _modOptionsSelected;
+            [MethodImpl(MethodImplOptions.NoInlining)]
             set
             {
                 if (_modOptionsSelected == value)
@@ -138,6 +147,7 @@ namespace MCM.UI.UIExtenderEx
         }
 
         [DataSourceMethod]
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public void ExecuteCloseOptions()
         {
             ModOptions.ExecuteCancelInternal(false);
@@ -147,6 +157,7 @@ namespace MCM.UI.UIExtenderEx
         }
 
         [DataSourceMethod]
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public void ExecuteDone()
         {
             ModOptions.ExecuteDoneInternal(false, () =>
@@ -157,6 +168,7 @@ namespace MCM.UI.UIExtenderEx
         }
 
         [DataSourceMethod]
+        [MethodImpl(MethodImplOptions.NoInlining)]
         public void ExecuteCancel()
         {
             ModOptions.ExecuteCancelInternal(false, () =>

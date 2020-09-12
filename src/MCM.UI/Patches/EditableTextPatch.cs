@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 
 using System;
+using System.Runtime.CompilerServices;
 
 using TaleWorlds.TwoDimension;
 
@@ -18,6 +19,7 @@ namespace MCM.UI.Patches
                 finalizer: new HarmonyMethod(typeof(EditableTextPatch), nameof(GetCursorPosition)));
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private static Exception? GetCursorPosition(Exception? __exception) => null;
     }
 }
