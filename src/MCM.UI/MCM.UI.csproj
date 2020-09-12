@@ -4,6 +4,7 @@
   <PropertyGroup>
     <Authors>Aragas, mipen</Authors>
     <AssemblyName>MCMv4.UI.v$(Version)</AssemblyName>
+    <LangVersion>preview</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

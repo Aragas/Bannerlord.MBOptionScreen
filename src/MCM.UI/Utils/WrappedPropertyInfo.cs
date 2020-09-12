@@ -24,14 +24,14 @@ namespace MCM.UI.Utils
         public override bool CanRead => _propertyInfoImplementation.CanRead;
         public override bool CanWrite => _propertyInfoImplementation.CanWrite;
         public override IEnumerable<CustomAttributeData> CustomAttributes => _propertyInfoImplementation.CustomAttributes;
-        public override Type DeclaringType => _propertyInfoImplementation.DeclaringType;
+        public override Type? DeclaringType => _propertyInfoImplementation.DeclaringType;
         public override MethodInfo GetMethod => _propertyInfoImplementation.GetMethod;
         public override MemberTypes MemberType => _propertyInfoImplementation.MemberType;
         public override int MetadataToken => _propertyInfoImplementation.MetadataToken;
         public override Module Module => _propertyInfoImplementation.Module;
         public override string Name => _propertyInfoImplementation.Name;
         public override Type PropertyType => _propertyInfoImplementation.PropertyType;
-        public override Type ReflectedType => _propertyInfoImplementation.ReflectedType;
+        public override Type? ReflectedType => _propertyInfoImplementation.ReflectedType;
         public override MethodInfo SetMethod => _propertyInfoImplementation.SetMethod;
 
         public override MethodInfo[] GetAccessors(bool nonPublic) => _propertyInfoImplementation.GetAccessors(nonPublic)

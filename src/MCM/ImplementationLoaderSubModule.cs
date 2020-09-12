@@ -154,7 +154,7 @@ namespace MCM
             if (assemblyLoader == null)
             {
                 if (exception != null)
-                    logger?.LogError(0, exception, "AssemblyLoadProxy could not be initialized.");
+                    logger?.LogError(exception, "AssemblyLoadProxy could not be initialized.");
                 else
                     logger?.LogError("AssemblyLoadProxy could not be initialized.");
 
@@ -169,11 +169,10 @@ namespace MCM
             {
                 logger?.LogInformation("Found implementation {name}.", implementation.Name);
 
-                var asm = AppDomain.CurrentDomain.GetAssemblies();
-                var result = assemblyLoader.LoadFileAndTest(implementation.FullName, out var exception1);
+                var result = assemblyLoader.LoadFileAndTest(implementation.FullName, out var loadException);
                 if (!result)
                 {
-                    logger?.LogError("Implementation {name} is not compatible with the current game!", implementation.Name);
+                    logger?.LogError(loadException, "Implementation {name} is not compatible with the current game!", implementation.Name);
                     continue;
                 }
 

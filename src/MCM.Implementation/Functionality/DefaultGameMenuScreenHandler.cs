@@ -7,6 +7,7 @@ using MCM.Abstractions.Functionality;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
@@ -29,6 +30,7 @@ namespace MCM.Implementation.Functionality
                 postfix: new HarmonyMethod(AccessTools.Method(typeof(DefaultGameMenuScreenHandler), nameof(Constructor)), 300));
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private static void Constructor(InitialMenuVM __instance, ref MBBindingList<InitialMenuOptionVM> ____menuOptions)
         {
             _instance.SetTarget(__instance);

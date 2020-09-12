@@ -3,6 +3,7 @@
 using MCM.UI.Functionality.Injectors;
 
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 using TaleWorlds.GauntletUI;
 
@@ -20,6 +21,7 @@ namespace MCM.UI.Patches
                 postfix: new HarmonyMethod(AccessTools.Method(typeof(BrushFactoryPatch), nameof(LoadBrushesHarmony))));
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private static void LoadBrushesHarmony(BrushFactory __instance)
         {
             if (Brushes != null)

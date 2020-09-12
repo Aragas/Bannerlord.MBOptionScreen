@@ -9,6 +9,7 @@ using SandBox.View.Map;
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Localization;
@@ -58,6 +59,7 @@ namespace MCM.Implementation.Functionality
                 postfix: new HarmonyMethod(AccessTools.Method(typeof(DefaultIngameMenuScreenHandler), nameof(OnMissionScreenFinalize)), 300));
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private static void MapScreen_GetEscapeMenuItems(MapScreen __instance, ref List<EscapeMenuItemVM> __result)
         {
             foreach (var (key, value) in ScreensCache)
@@ -77,6 +79,7 @@ namespace MCM.Implementation.Functionality
                     key, false, false));
             }
         }
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private static void MissionSingleplayerEscapeMenu_GetEscapeMenuItems(GauntletMissionEscapeMenuBase __instance, ref List<EscapeMenuItemVM> __result)
         {
             foreach (var (key, value) in ScreensCache)
@@ -96,6 +99,7 @@ namespace MCM.Implementation.Functionality
                     key, false, false));
             }
         }
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private static void OnMissionScreenInitialize(MissionView __instance)
         {
             if (__instance is GauntletMissionEscapeMenuBase gauntletMissionEscapeMenuBase)
@@ -103,6 +107,7 @@ namespace MCM.Implementation.Functionality
                 _instance.SetTarget(DataSource(gauntletMissionEscapeMenuBase));
             }
         }
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private static void OnMissionScreenFinalize(MissionView __instance)
         {
             if (__instance is GauntletMissionEscapeMenuBase)

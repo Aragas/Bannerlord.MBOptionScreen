@@ -18,6 +18,7 @@ using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 using TaleWorlds.Engine;
 using TaleWorlds.Library;
@@ -26,12 +27,14 @@ namespace MCM.Tests
 {
     public class DependencyInjectionTests
     {
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private static bool MockedGetConfigsPath(ref string __result)
         {
             __result = AppDomain.CurrentDomain.BaseDirectory;
             return false;
         }
 
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private static bool MockedGetLoadedModules(ref List<ModuleInfo> __result)
         {
             __result = new List<ModuleInfo>();

@@ -3,6 +3,7 @@
 using HarmonyLib;
 
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 using TaleWorlds.MountAndBlade;
 
@@ -31,6 +32,7 @@ namespace MCM.Implementation.MCMv3.Patches
         }
 
         // Prevent any Integrated MCMv3 from loading
+        [MethodImpl(MethodImplOptions.NoInlining)]
         private static bool StopIntegratedLoaderSubModuleCtor(MCMv3IntegratedLoaderSubModule __instance)
         {
             _loader(__instance) = new EmptyIntegratedLoader();
