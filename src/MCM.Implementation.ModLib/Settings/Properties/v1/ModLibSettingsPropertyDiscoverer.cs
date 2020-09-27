@@ -73,11 +73,12 @@ namespace MCM.Implementation.ModLib.Settings.Properties.v1
                 }
 
                 if (propertyDefinitions.Count > 0)
-                    yield return new SettingsPropertyDefinition(
-                        propertyDefinitions,
+                {
+                    yield return new SettingsPropertyDefinition(propertyDefinitions,
                         groupDefinition,
                         new PropertyRef(property, @object),
                         subGroupDelimiter);
+                }
             }
         }
 

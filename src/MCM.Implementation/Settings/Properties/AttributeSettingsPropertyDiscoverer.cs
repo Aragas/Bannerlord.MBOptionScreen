@@ -64,11 +64,12 @@ namespace MCM.Implementation.Settings.Properties
 
                 var propertyDefinitions = GetPropertyDefinitionWrappers(attributes).ToList();
                 if (propertyDefinitions.Count > 0)
-                    yield return new SettingsPropertyDefinition(
-                        propertyDefinitions,
+                {
+                    yield return new SettingsPropertyDefinition(propertyDefinitions,
                         groupDefinition,
                         new PropertyRef(property, @object),
                         subGroupDelimiter);
+                }
             }
         }
 

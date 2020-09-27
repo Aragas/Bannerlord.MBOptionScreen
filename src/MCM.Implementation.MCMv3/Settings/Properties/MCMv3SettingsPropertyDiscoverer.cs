@@ -81,11 +81,12 @@ namespace MCM.Implementation.MCMv3.Settings.Properties
                 }
 
                 if (propertyDefinitions.Count > 0)
-                    yield return new SettingsPropertyDefinition(
-                        propertyDefinitions,
+                {
+                    yield return new SettingsPropertyDefinition(propertyDefinitions,
                         groupDefinition,
                         new PropertyRef(property, @object),
                         subGroupDelimiter);
+                }
             }
         }
 
