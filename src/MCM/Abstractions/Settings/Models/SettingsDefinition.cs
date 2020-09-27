@@ -1,4 +1,5 @@
 ﻿using MCM.Abstractions.Settings.Providers;
+using MCM.Extensions;
 using MCM.Utils;
 
 using System.Collections.Generic;

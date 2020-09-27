@@ -5,15 +5,12 @@ using Bannerlord.ButterLib.Common.Helpers;
 
 using HarmonyLib;
 
-using MCM.Implementation.MCMv3.Settings.Properties;
-
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 using v4::MCM.Abstractions.Settings.Base;
 using v4::MCM.Abstractions.Settings.Base.Global;
-using v4::MCM.Abstractions.Settings.Properties;
 
 using MCMv3BaseSettings = v3::MCM.Abstractions.Settings.Base.BaseSettings;
 
@@ -44,8 +41,9 @@ namespace MCM.Implementation.MCMv3.Settings.Base
         public override string DisplayName => _getDisplayNameDelegate?.Invoke() ?? "ERROR";
         public override int UIVersion => _getUIVersionDelegate?.Invoke() ?? 1;
         public override string SubFolder => _getSubFolderDelegate?.Invoke() ?? string.Empty;
-        protected override char SubGroupDelimiter => _getSubGroupDelimiterDelegate?.Invoke() ?? '/';
-        public override string Format => _getFormatDelegate?.Invoke() ?? "json";
+        public override char SubGroupDelimiter => _getSubGroupDelimiterDelegate?.Invoke() ?? '/';
+        public override string FormatType => _getFormatDelegate?.Invoke() ?? "json";
+        public override string DiscoveryType => "mcm_v3_attributes";
         public override event PropertyChangedEventHandler? PropertyChanged
         {
             add { if (Object is INotifyPropertyChanged notifyPropertyChanged) notifyPropertyChanged.PropertyChanged += value; }
@@ -65,8 +63,6 @@ namespace MCM.Implementation.MCMv3.Settings.Base
             _getFormatDelegate = AccessTools2.GetDelegate<GetFormatDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.Format)).GetMethod);
             _methodOnPropertyChangedDelegate = AccessTools2.GetDelegate<OnPropertyChangedDelegate>(@object, AccessTools.Method(type, nameof(MCMv3BaseSettings.OnPropertyChanged)));
         }
-
-        protected override ISettingsPropertyDiscoverer Discoverer { get; } = new MCMv3SettingsPropertyDiscoverer();
 
         public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
             _methodOnPropertyChangedDelegate?.Invoke(propertyName);

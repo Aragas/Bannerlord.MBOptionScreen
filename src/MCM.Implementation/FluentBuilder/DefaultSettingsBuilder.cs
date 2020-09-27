@@ -14,6 +14,7 @@ namespace MCM.Implementation.FluentBuilder
     internal sealed class DefaultSettingsBuilder : BaseSettingsBuilder
     {
         private Dictionary<string, ISettingsPropertyGroupBuilder> PropertyGroups { get; } = new Dictionary<string, ISettingsPropertyGroupBuilder>();
+        private Dictionary<string, ISettingsPresetBuilder> Presets { get; } = new Dictionary<string, ISettingsPresetBuilder>();
 
         private string Id { get; }
         private string DisplayName { get; }
@@ -46,20 +47,29 @@ namespace MCM.Implementation.FluentBuilder
         public override ISettingsBuilder SetOnPropertyChanged(PropertyChangedEventHandler value) { OnPropertyChanged = value; return this; }
 
         /// <inheritdoc/>
-        public override ISettingsBuilder CreateGroup(string name, Action<ISettingsPropertyGroupBuilder> action)
+        public override ISettingsBuilder CreateGroup(string name, Action<ISettingsPropertyGroupBuilder> builder)
         {
             if (!PropertyGroups.ContainsKey(name))
                 PropertyGroups[name] = new DefaultSettingsPropertyGroupBuilder(name);
-            action?.Invoke(PropertyGroups[name]);
+            builder?.Invoke(PropertyGroups[name]);
+            return this;
+        }
+
+        /// <inheritdoc/>
+        public override ISettingsBuilder CreatePreset(string name, Action<ISettingsPresetBuilder> builder)
+        {
+            if (!Presets.ContainsKey(name))
+                Presets[name] = new DefaultSettingsPresetBuilder(name);
+            builder?.Invoke(Presets[name]);
             return this;
         }
 
         /// <inheritdoc/>
         public override FluentGlobalSettings BuildAsGlobal() => new FluentGlobalSettings(
-            Id, DisplayName, FolderName, SubFolder, Format, UIVersion, SubGroupDelimiter, OnPropertyChanged, GetSettingPropertyGroups());
+            Id, DisplayName, FolderName, SubFolder, Format, UIVersion, SubGroupDelimiter, OnPropertyChanged, GetSettingPropertyGroups(), Presets);
         /// <inheritdoc/>
         public override FluentPerCampaignSettings BuildAsPerCampaign() => new FluentPerCampaignSettings(
-            Id, DisplayName, FolderName, SubFolder, Format, UIVersion, SubGroupDelimiter, OnPropertyChanged, GetSettingPropertyGroups());
+            Id, DisplayName, FolderName, SubFolder, Format, UIVersion, SubGroupDelimiter, OnPropertyChanged, GetSettingPropertyGroups(), Presets);
 
         private IEnumerable<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() =>
             SettingsUtils.GetSettingsPropertyGroups(SubGroupDelimiter, GetSettingProperties());

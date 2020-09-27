@@ -1,5 +1,4 @@
-﻿using Bannerlord.ButterLib;
-using Bannerlord.ButterLib.Common.Extensions;
+﻿using Bannerlord.ButterLib.Common.Extensions;
 
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Containers;
@@ -30,10 +29,10 @@ namespace MCM.Implementation.Settings.Providers
         {
             _logger = logger;
 
-             var globalSettingsContainers = (ButterLibSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IEnumerable<IGlobalSettingsContainer>>() ??
-                                           Enumerable.Empty<IGlobalSettingsContainer>()).ToList();
-            var perCampaignSettingsContainers = (ButterLibSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IEnumerable<IPerCampaignSettingsContainer>>() ??
-                                                Enumerable.Empty<IPerCampaignSettingsContainer>()).ToList();
+             var globalSettingsContainers = (MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IEnumerable<IGlobalSettingsContainer>>() ??
+                                             Enumerable.Empty<IGlobalSettingsContainer>()).ToList();
+            var perCampaignSettingsContainers = (MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IEnumerable<IPerCampaignSettingsContainer>>() ??
+                                                 Enumerable.Empty<IPerCampaignSettingsContainer>()).ToList();
 
             foreach (var globalSettingsContainer in globalSettingsContainers)
             {

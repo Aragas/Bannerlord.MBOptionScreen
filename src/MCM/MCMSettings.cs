@@ -18,6 +18,6 @@ namespace MCM
         /// <inheritdoc/>
         public override string FolderName { get; } = "MCM";
         /// <inheritdoc/>
-        public override string Format { get; } = "memory";
+        public override string FormatType { get; } = "memory";
     }
 }

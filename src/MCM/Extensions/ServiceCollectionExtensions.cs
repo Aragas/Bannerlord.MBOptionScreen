@@ -7,6 +7,7 @@ using MCM.Abstractions.Settings.Properties;
 using MCM.Abstractions.Settings.Providers;
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace MCM.Extensions
 {
@@ -23,7 +24,7 @@ namespace MCM.Extensions
         public static IServiceCollection AddSettingsProvider<TImplementation>(this IServiceCollection services)
             where TImplementation : BaseSettingsProvider
         {
-            services.AddSingleton<BaseSettingsProvider, TImplementation>();
+            services.TryAddEnumerable(ServiceDescriptor.Singleton<BaseSettingsProvider, TImplementation>());
             return services;
         }
 
@@ -38,7 +39,8 @@ namespace MCM.Extensions
         public static IServiceCollection AddSettingsFormat<TImplementation>(this IServiceCollection services)
             where TImplementation : class, ISettingsFormat
         {
-            services.AddSingleton<ISettingsFormat, TImplementation>();
+            services.TryAddEnumerable(ServiceDescriptor.Singleton<ISettingsFormat, TImplementation>());
+
             return services;
         }
 
@@ -53,7 +55,7 @@ namespace MCM.Extensions
         public static IServiceCollection AddSettingsPropertyDiscoverer<TImplementation>(this IServiceCollection services)
             where TImplementation : class, ISettingsPropertyDiscoverer
         {
-            services.AddSingleton<ISettingsPropertyDiscoverer, TImplementation>();
+            services.TryAddEnumerable(ServiceDescriptor.Singleton<ISettingsPropertyDiscoverer, TImplementation>());
             return services;
         }
 
@@ -68,7 +70,8 @@ namespace MCM.Extensions
         public static IServiceCollection AddSettingsContainer<TImplementation>(this IServiceCollection services)
             where TImplementation : class, ISettingsContainer
         {
-            services.AddSingleton<ISettingsContainer, TImplementation>();
+            services.TryAddEnumerable(ServiceDescriptor.Singleton<ISettingsContainer, TImplementation>());
+
             if (typeof(IPerCampaignSettingsContainer).IsAssignableFrom(typeof(TImplementation)))
             {
                 services.AddSingleton(typeof(IPerCampaignSettingsContainer), typeof(TImplementation));

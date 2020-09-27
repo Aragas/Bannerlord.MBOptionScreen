@@ -25,7 +25,7 @@ namespace MCM.Abstractions.FluentBuilder
         /// <returns>The settings builder.</returns>
         ISettingsBuilder SetSubFolder(string value);
         /// <summary>
-        /// See <see cref="BaseSettings.Format"/>.
+        /// See <see cref="BaseSettings.FormatType"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The settings builder.</returns>
@@ -55,9 +55,17 @@ namespace MCM.Abstractions.FluentBuilder
         /// Use the action delegate to configure the property group.
         /// </summary>
         /// <param name="name"></param>
-        /// <param name="action"></param>
-        /// <returns></returns>
-        ISettingsBuilder CreateGroup(string name, Action<ISettingsPropertyGroupBuilder> action);
+        /// <param name="builder"></param>
+        /// <returns>The settings builder.</returns>
+        ISettingsBuilder CreateGroup(string name, Action<ISettingsPropertyGroupBuilder> builder);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="builder"></param>
+        /// <returns>The settings builder.</returns>
+        ISettingsBuilder CreatePreset(string name, Action<ISettingsPresetBuilder> builder);
 
         /// <summary>
         /// Returns a Global setting instance.

@@ -34,7 +34,7 @@ namespace MCM.Implementation.Settings.Formats
             };
         }
 
-        public virtual IEnumerable<string> Extensions { get; } = new [] { "json" };
+        public virtual IEnumerable<string> FormatTypes { get; } = new [] { "json" };
 
         protected static string GetPropertyDefinitionId(ISettingsPropertyDefinition definition) => definition.Id;
 

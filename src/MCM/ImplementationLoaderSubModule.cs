@@ -1,11 +1,11 @@
-﻿using Bannerlord.ButterLib;
-using Bannerlord.ButterLib.Assemblies;
+﻿using Bannerlord.ButterLib.Assemblies;
 using Bannerlord.ButterLib.Common.Extensions;
 using Bannerlord.ButterLib.Common.Helpers;
 using Bannerlord.ButterLib.SubModuleWrappers;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 using System;
 using System.Collections.Generic;
@@ -225,7 +225,7 @@ namespace MCM
 
         protected override void OnSubModuleLoad()
         {
-            _logger = ButterLibSubModule.Instance.GetTempServiceProvider().GetRequiredService<ILogger<ImplementationLoaderSubModule>>();
+            _logger = MCMSubModule.Instance?.GetTempServiceProvider()?.GetRequiredService<ILogger<ImplementationLoaderSubModule>>() ?? NullLogger<ImplementationLoaderSubModule>.Instance;
 
             var t1 = LoadAllImplementations("MCMv4.UI.*.dll", _logger).Select(x => new MBSubModuleBaseWrapper(x)).ToList();
             var t2 = LoadAllImplementations("MCMv4.Implementation.*.dll", _logger).Select(x => new MBSubModuleBaseWrapper(x)).ToList();

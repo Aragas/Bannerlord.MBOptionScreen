@@ -1,4 +1,5 @@
-﻿using MCM.Abstractions.Settings.Models;
+﻿using MCM.Abstractions.FluentBuilder;
+using MCM.Abstractions.Settings.Models;
 
 using System;
 using System.Collections;
@@ -8,10 +9,9 @@ using System.Linq;
 
 namespace MCM.Abstractions.Settings.Base.PerCampaign
 {
-    public class FluentPerCampaignSettings : PerCampaignSettings
+    public class FluentPerCampaignSettings : PerCampaignSettings, IFluentSettings
     {
         public static readonly string ContainerId = "MCM_PerCampaign_FluentStorage";
-
 
         /// <inheritdoc/>
         public sealed override string Id { get; }
@@ -22,23 +22,26 @@ namespace MCM.Abstractions.Settings.Base.PerCampaign
         /// <inheritdoc/>
         public sealed override string SubFolder { get; }
         /// <inheritdoc/>
-        public sealed override string Format { get; }
+        public sealed override string FormatType { get; }
+        /// <inheritdoc/>
+        public override string DiscoveryType => "fluent";
         /// <inheritdoc/>
         public sealed override int UIVersion { get; }
         /// <inheritdoc/>
-        protected sealed override char SubGroupDelimiter { get; }
+        public sealed override char SubGroupDelimiter { get; }
         /// <inheritdoc/>
         public sealed override event PropertyChangedEventHandler? PropertyChanged { add => base.PropertyChanged += value; remove => base.PropertyChanged -= value; }
-        private List<SettingsPropertyGroupDefinition> SettingPropertyGroups { get; }
+        public List<SettingsPropertyGroupDefinition> SettingPropertyGroups { get; }
 
         public FluentPerCampaignSettings(string id, string displayName, string folderName, string subFolder, string format,
-            int uiVersion, char subGroupDelimiter, PropertyChangedEventHandler? onPropertyChanged, IEnumerable<SettingsPropertyGroupDefinition> settingPropertyGroups)
+            int uiVersion, char subGroupDelimiter, PropertyChangedEventHandler? onPropertyChanged,
+            IEnumerable<SettingsPropertyGroupDefinition> settingPropertyGroups, Dictionary<string, ISettingsPresetBuilder> presets)
         {
             Id = id;
             DisplayName = displayName;
             FolderName = folderName;
             SubFolder = subFolder;
-            Format = format;
+            FormatType = format;
             UIVersion = uiVersion;
             SubGroupDelimiter = subGroupDelimiter;
             SettingPropertyGroups = settingPropertyGroups.ToList();
@@ -69,8 +72,5 @@ namespace MCM.Abstractions.Settings.Base.PerCampaign
         protected override BaseSettings CopyAsNew() => null!;
         /// <inheritdoc/>
         public override IDictionary<string, Func<BaseSettings>> GetAvailablePresets() => new Dictionary<string, Func<BaseSettings>>();
-
-        /// <inheritdoc/>
-        protected sealed override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups() => SettingPropertyGroups;
     }
 }

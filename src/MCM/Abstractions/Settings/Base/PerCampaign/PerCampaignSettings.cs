@@ -26,6 +26,18 @@ namespace MCM.Abstractions.Settings.Base.PerCampaign
     {
         protected static readonly ConcurrentDictionary<Type, string> Cache = new ConcurrentDictionary<Type, string>();
 
-        public string CampaignId { get; } = Campaign.Current.GetCampaignId() ?? "ERROR";
+        public string CampaignId { get; }
+
+        protected PerCampaignSettings()
+        {
+            try
+            {
+                CampaignId = Campaign.Current?.GetCampaignId() ?? "ERROR";
+            }
+            catch (ArgumentNullException)
+            {
+                CampaignId = "ERROR";
+            }
+        }
     }
 }

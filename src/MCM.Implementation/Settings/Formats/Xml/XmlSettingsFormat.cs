@@ -13,7 +13,7 @@ namespace MCM.Implementation.Settings.Formats.Xml
 {
     internal sealed class XmlSettingsFormat : BaseJsonSettingsFormat, IXmlSettingsFormat
     {
-        public override IEnumerable<string> Extensions => new[] { "xml" };
+        public override IEnumerable<string> FormatTypes => new[] { "xml" };
 
         public XmlSettingsFormat(ILogger<XmlSettingsFormat> logger) : base(logger) { }
 

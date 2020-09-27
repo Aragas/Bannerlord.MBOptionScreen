@@ -1,5 +1,4 @@
-﻿using Bannerlord.ButterLib;
-using Bannerlord.ButterLib.Common.Extensions;
+﻿using Bannerlord.ButterLib.Common.Extensions;
 using Bannerlord.ButterLib.DelayedSubModule;
 using Bannerlord.UIExtenderEx;
 
@@ -65,9 +64,12 @@ namespace MCM.UI
             DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
                 nameof(OnBeforeInitialModuleScreenSetAsRoot), SubscriptionType.AfterMethod, (s, e) =>
                 {
-                    BrushLoader.Inject(BaseResourceHandler.Instance);
-                    PrefabsLoader.Inject(BaseResourceHandler.Instance);
-                    WidgetLoader.Inject(BaseResourceHandler.Instance);
+                    if (BaseResourceHandler.Instance is { } resourceHandler)
+                    {
+                        BrushLoader.Inject(resourceHandler);
+                        PrefabsLoader.Inject(resourceHandler);
+                        WidgetLoader.Inject(resourceHandler);
+                    }
 
                     UpdateOptionScreen(MCMUISettings.Instance!);
                     MCMUISettings.Instance!.PropertyChanged += MCMSettings_PropertyChanged;
@@ -103,22 +105,22 @@ namespace MCM.UI
             {
                 Extender.Enable();
 
-                BaseGameMenuScreenHandler.Instance.RemoveScreen("MCM_OptionScreen");
-                BaseIngameMenuScreenHandler.Instance.RemoveScreen("MCM_OptionScreen");
+                BaseGameMenuScreenHandler.Instance?.RemoveScreen("MCM_OptionScreen");
+                BaseIngameMenuScreenHandler.Instance?.RemoveScreen("MCM_OptionScreen");
             }
             else
             {
                 Extender.Disable();
 
-                BaseGameMenuScreenHandler.Instance.AddScreen(
+                BaseGameMenuScreenHandler.Instance?.AddScreen(
                     "MCM_OptionScreen",
                     9990,
-                    () => ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<IMCMOptionsScreen>() as ScreenBase,
+                    () => MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IMCMOptionsScreen>() as ScreenBase,
                     new TextObject("{=MainMenu_ModOptions}Mod Options"));
-                BaseIngameMenuScreenHandler.Instance.AddScreen(
+                BaseIngameMenuScreenHandler.Instance?.AddScreen(
                     "MCM_OptionScreen",
                     1,
-                    () => ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<IMCMOptionsScreen>() as ScreenBase,
+                    () => MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IMCMOptionsScreen>() as ScreenBase,
                     new TextObject("{=EscapeMenu_ModOptions}Mod Options"));
             }
         }

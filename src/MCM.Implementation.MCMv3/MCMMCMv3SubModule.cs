@@ -7,6 +7,7 @@ using HarmonyLib;
 
 using MCM.Implementation.MCMv3.Patches;
 using MCM.Implementation.MCMv3.Settings.Containers;
+using MCM.Implementation.MCMv3.Settings.Properties;
 using MCM.Implementation.MCMv3.Settings.Providers;
 
 using TaleWorlds.MountAndBlade;
@@ -30,7 +31,7 @@ namespace MCM.Implementation.MCMv3
 
             services.AddSettingsContainer<MCMv3FluentGlobalSettingsContainer>();
             services.AddSettingsContainer<MCMv3GlobalSettingsContainer>();
-            //services.AddSettingsPropertyDiscoverer<MCMv3SettingsPropertyDiscoverer>();
+            services.AddSettingsPropertyDiscoverer<MCMv3SettingsPropertyDiscoverer>();
 
             var harmony = new Harmony("bannerlord.mcm.implementation.mcmv3.loaderpreventer");
             MCMv3IntegratedLoaderSubModulePatch.Patch(harmony);

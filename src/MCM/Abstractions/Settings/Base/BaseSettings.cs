@@ -1,14 +1,10 @@
 ﻿using HarmonyLib;
 
-using MCM.Abstractions.Settings.Models;
-using MCM.Abstractions.Settings.Properties;
-using MCM.Extensions;
 using MCM.Utils;
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
@@ -35,10 +31,10 @@ namespace MCM.Abstractions.Settings.Base
         /// If you want this settings file stored inside a subfolder, set this to the name of the subfolder.
         /// </summary>
         public virtual string SubFolder => string.Empty;
-        public virtual string Format => "json";
+        public virtual string FormatType => "memory";
+        public virtual string DiscoveryType => "none";
         public virtual int UIVersion => 1;
-        protected virtual char SubGroupDelimiter => '/';
-        protected virtual ISettingsPropertyDiscoverer? Discoverer { get; } = null;
+        public virtual char SubGroupDelimiter => '/';
 
         public virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
@@ -60,12 +56,5 @@ namespace MCM.Abstractions.Settings.Base
         {
             { new TextObject("{=BaseSettings_Default}Default").ToString(), CreateNew }
         };
-
-        public virtual List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() => GetUnsortedSettingPropertyGroups()
-            .SortDefault()
-            .ToList();
-
-        protected virtual IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups() =>
-            SettingsUtils.GetSettingsPropertyGroups(SubGroupDelimiter, Discoverer?.GetProperties(this) ?? Enumerable.Empty<ISettingsPropertyDefinition>());
     }
 }

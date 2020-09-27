@@ -60,7 +60,7 @@ namespace MCM.Tests
         [Test]
         public void Resolve_Test()
         {
-            var implementations = ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<IEnumerable<ISettingsFormat>>().ToList();
+            var implementations = MCMSubModule.Instance!.GetServiceProvider()!.GetRequiredService<IEnumerable<ISettingsFormat>>().ToList();
             Assert.True(implementations.Any(i => i is MemorySettingsFormat), "MemorySettingsFormat missing");
             Assert.True(implementations.Any(i => i is JsonSettingsFormat), "JsonSettingsFormat missing");
             Assert.True(implementations.Any(i => i is XmlSettingsFormat), "XmlSettingsFormat missing");

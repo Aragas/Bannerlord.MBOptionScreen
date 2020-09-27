@@ -1,5 +1,4 @@
-﻿using Bannerlord.ButterLib;
-using Bannerlord.ButterLib.Common.Extensions;
+﻿using Bannerlord.ButterLib.Common.Extensions;
 using Bannerlord.ButterLib.Common.Helpers;
 
 using ComparerExtensions;
@@ -9,6 +8,7 @@ using MCM.UI.Extensions;
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 using System;
 using System.Collections.Generic;
@@ -166,7 +166,7 @@ namespace MCM.UI.GUI.ViewModels
 
         public ModOptionsVM()
         {
-            _logger = ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<ILogger<ModOptionsVM>>();
+            _logger = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<ILogger<ModOptionsVM>>() ?? NullLogger<ModOptionsVM>.Instance;
 
             Name = new TextObject("{=ModOptionsVM_Name}Mod Options").ToString();
             DoneButtonText = new TextObject("{=WiNRdfsm}Done").ToString();

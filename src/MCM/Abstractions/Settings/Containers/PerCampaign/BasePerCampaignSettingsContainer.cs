@@ -1,7 +1,14 @@
-﻿using MCM.Abstractions.Settings.Base;
-using MCM.Abstractions.Settings.Base.PerCampaign;
+﻿using Bannerlord.ButterLib.Common.Extensions;
 
+using MCM.Abstractions.Settings.Base;
+using MCM.Abstractions.Settings.Base.PerCampaign;
+using MCM.Abstractions.Settings.Formats;
+
+using Microsoft.Extensions.DependencyInjection;
+
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 using TaleWorlds.Core;
 
@@ -18,21 +25,20 @@ namespace MCM.Abstractions.Settings.Containers.PerCampaign
         }
 
         /// <inheritdoc/>
-        protected override void RegisterSettings(PerCampaignSettings tSettings)
+        protected override void RegisterSettings(PerCampaignSettings settings)
         {
             if (Game.Current?.PlayerTroop?.StringId == null)
                 return;
 
-            if (tSettings == null || LoadedSettings.ContainsKey(tSettings.Id))
+            if (settings == null || LoadedSettings.ContainsKey(settings.Id))
                 return;
 
-            LoadedSettings.Add(tSettings.Id, tSettings);
+            LoadedSettings.Add(settings.Id, settings);
 
-            var directoryPath = Path.Combine(RootFolder, tSettings.FolderName, tSettings.SubFolder ?? string.Empty);
-            if (AvailableSettingsFormats.ContainsKey(tSettings.Format))
-                AvailableSettingsFormats[tSettings.Format].Load(tSettings, directoryPath, tSettings.Id);
-            else
-                AvailableSettingsFormats["memory"].Load(tSettings, directoryPath, tSettings.Id);
+            var directoryPath = Path.Combine(RootFolder, settings.FolderName, settings.SubFolder);
+            var settingsFormats = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
+            var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == settings.FormatType));
+            settingsFormat?.Load(settings, directoryPath, settings.Id);
         }
 
         /// <inheritdoc/>
@@ -41,14 +47,13 @@ namespace MCM.Abstractions.Settings.Containers.PerCampaign
             if (Game.Current?.PlayerTroop?.StringId == null)
                 return false;
 
-            if (!(settings is PerCampaignSettings tSettings) || !LoadedSettings.ContainsKey(tSettings.Id))
+            if (!(settings is PerCampaignSettings) || !LoadedSettings.ContainsKey(settings.Id))
                 return false;
 
-            var directoryPath = Path.Combine(RootFolder, tSettings.FolderName, tSettings.SubFolder ?? string.Empty);
-            if (AvailableSettingsFormats.ContainsKey(tSettings.Format))
-                AvailableSettingsFormats[tSettings.Format].Save(tSettings, directoryPath, tSettings.Id);
-            else
-                AvailableSettingsFormats["memory"].Save(tSettings, directoryPath, tSettings.Id);
+            var directoryPath = Path.Combine(RootFolder, settings.FolderName, settings.SubFolder);
+            var settingsFormats = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
+            var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == settings.FormatType));
+            settingsFormat?.Load(settings, directoryPath, settings.Id);
 
             return true;
         }

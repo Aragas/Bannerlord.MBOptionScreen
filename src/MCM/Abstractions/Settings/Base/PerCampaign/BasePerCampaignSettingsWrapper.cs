@@ -2,13 +2,7 @@
 
 using HarmonyLib;
 
-using MCM.Abstractions.Settings.Models;
-using MCM.Abstractions.Settings.Models.Wrapper;
-using MCM.Utils;
-
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace MCM.Abstractions.Settings.Base.PerCampaign
@@ -22,7 +16,6 @@ namespace MCM.Abstractions.Settings.Base.PerCampaign
         private delegate string GetSubFolderDelegate();
         private delegate char GetSubGroupDelimiterDelegate();
         private delegate string GetFormatDelegate();
-        private delegate List<SettingsPropertyGroupDefinition> GetSettingPropertyGroupsDelegate();
         private delegate void OnPropertyChangedDelegate(string? propertyName);
 
         private readonly GetIdDelegate? _getIdDelegate;
@@ -32,7 +25,6 @@ namespace MCM.Abstractions.Settings.Base.PerCampaign
         private readonly GetSubFolderDelegate? _getSubFolderDelegate;
         private readonly GetSubGroupDelimiterDelegate? _getSubGroupDelimiterDelegate;
         private readonly GetFormatDelegate? _getFormatDelegate;
-        private readonly GetSettingPropertyGroupsDelegate? _methodGetSettingPropertyGroupsDelegate;
         private readonly OnPropertyChangedDelegate? _methodOnPropertyChangedDelegate;
 
         /// <inheritdoc/>
@@ -49,9 +41,9 @@ namespace MCM.Abstractions.Settings.Base.PerCampaign
         /// <inheritdoc/>
         public override string SubFolder => _getSubFolderDelegate?.Invoke() ?? string.Empty;
         /// <inheritdoc/>
-        protected override char SubGroupDelimiter => _getSubGroupDelimiterDelegate?.Invoke() ?? '/';
+        public override char SubGroupDelimiter => _getSubGroupDelimiterDelegate?.Invoke() ?? '/';
         /// <inheritdoc/>
-        public override string Format => _getFormatDelegate?.Invoke() ?? "json";
+        public override string FormatType => _getFormatDelegate?.Invoke() ?? "json";
         /// <inheritdoc/>
         public override event PropertyChangedEventHandler? PropertyChanged
         {
@@ -70,23 +62,12 @@ namespace MCM.Abstractions.Settings.Base.PerCampaign
             _getUIVersionDelegate = AccessTools2.GetDelegate<GetUIVersionDelegate>(@object, AccessTools.Property(type, nameof(UIVersion)).GetGetMethod());
             _getSubFolderDelegate = AccessTools2.GetDelegate<GetSubFolderDelegate>(@object, AccessTools.Property(type, nameof(SubFolder)).GetGetMethod());
             _getSubGroupDelimiterDelegate = AccessTools2.GetDelegate<GetSubGroupDelimiterDelegate>(@object, AccessTools.Property(type, nameof(SubGroupDelimiter)).GetGetMethod());
-            _getFormatDelegate = AccessTools2.GetDelegate<GetFormatDelegate>(@object, AccessTools.Property(type, nameof(Format)).GetGetMethod());
-            _methodGetSettingPropertyGroupsDelegate = AccessTools2.GetDelegate<GetSettingPropertyGroupsDelegate>(@object, AccessTools.Method(type, nameof(GetSettingPropertyGroups)));
+            _getFormatDelegate = AccessTools2.GetDelegate<GetFormatDelegate>(@object, AccessTools.Property(type, nameof(FormatType)).GetGetMethod());
             _methodOnPropertyChangedDelegate = AccessTools2.GetDelegate<OnPropertyChangedDelegate>(@object, AccessTools.Method(type, nameof(OnPropertyChanged)));
         }
 
         /// <inheritdoc/>
         public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
             _methodOnPropertyChangedDelegate?.Invoke(propertyName);
-
-        /// <inheritdoc/>
-        public override List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() =>
-            (_methodGetSettingPropertyGroupsDelegate?.Invoke() ?? Enumerable.Empty<object>())
-            .Select(o => new SettingsPropertyGroupDefinitionWrapper(o))
-            .Cast<SettingsPropertyGroupDefinition>()
-            .ToList();
-        /// <inheritdoc/>
-        protected override IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups() =>
-            SettingsUtils.GetSettingsPropertyGroups(SubGroupDelimiter, Discoverer?.GetProperties(Object) ?? Enumerable.Empty<ISettingsPropertyDefinition>());
     }
 }

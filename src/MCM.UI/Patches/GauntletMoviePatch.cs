@@ -29,7 +29,7 @@ namespace MCM.UI.Patches
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static bool LoadMovieHarmony(GauntletMovie __instance, Widget ____movieRootNode)
         {
-            var movie = BaseResourceHandler.Instance.MovieRequested(__instance.MovieName);
+            var movie = BaseResourceHandler.Instance?.MovieRequested(__instance.MovieName);
             if (movie == null)
                 return true;
 

@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 
+using MCM.Abstractions;
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings.Base;
@@ -18,11 +19,19 @@ namespace MCM.Implementation.Settings.Properties
 {
     internal sealed class AttributeSettingsPropertyDiscoverer : IAttributeSettingsPropertyDiscoverer
     {
-        public IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object)
+        public IEnumerable<string> DiscoveryTypes { get; } = new [] { "attributes" };
+
+        public IEnumerable<ISettingsPropertyDefinition> GetProperties(BaseSettings settings)
         {
-            foreach (var propertyDefinition in GetPropertiesInternal(@object))
+            var obj = settings switch
             {
-                SettingsUtils.CheckIsValid(propertyDefinition, @object);
+                IWrapper wrapper => wrapper.Object,
+                _ => settings
+            };
+
+            foreach (var propertyDefinition in GetPropertiesInternal(obj))
+            {
+                SettingsUtils.CheckIsValid(propertyDefinition, obj);
                 yield return propertyDefinition;
             }
         }
@@ -39,7 +48,7 @@ namespace MCM.Implementation.Settings.Properties
                     continue;
                 if (property.Name == nameof(BaseSettings.FolderName))
                     continue;
-                if (property.Name == nameof(BaseSettings.Format))
+                if (property.Name == nameof(BaseSettings.FormatType))
                     continue;
                 if (property.Name == nameof(BaseSettings.SubFolder))
                     continue;

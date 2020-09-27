@@ -18,7 +18,7 @@ namespace MCM.UI
             { "VERSION", new TextObject(typeof(MCMUISettings).Assembly.GetName().Version.ToString(3)) }
         }).ToString();
         public override string FolderName { get; } = "MCM";
-        public override string Format { get; } = "json";
+        public override string FormatType { get; } = "json";
 
         [SettingPropertyBool("{=MCMUISettings_Name_UseStandard}Use Standard Option Screen", Order = 1, RequireRestart = false, HintText = "{=MCMUISettings_Name_UseStandardDesc}Use standard Options screen instead of using an external.")]
         [SettingPropertyGroup("{=MCMUISettings_Name_General}General")]

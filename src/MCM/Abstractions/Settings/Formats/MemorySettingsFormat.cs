@@ -2,12 +2,12 @@
 
 using System.Collections.Generic;
 
-namespace MCM.Abstractions.Settings.Formats.Memory
+namespace MCM.Abstractions.Settings.Formats
 {
-    public sealed class MemorySettingsFormat : IMemorySettingsFormat
+    public sealed class MemorySettingsFormat : ISettingsFormat
     {
         /// <inheritdoc/>
-        public IEnumerable<string> Extensions { get; } = new [] { "memory" };
+        public IEnumerable<string> FormatTypes { get; } = new [] { "memory" };
 
         /// <inheritdoc/>
         public BaseSettings? Load(BaseSettings settings, string directoryPath, string filename) => settings;

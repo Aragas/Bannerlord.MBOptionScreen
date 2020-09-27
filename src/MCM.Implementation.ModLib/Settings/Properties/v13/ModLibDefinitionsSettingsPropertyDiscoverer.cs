@@ -1,7 +1,9 @@
 ﻿extern alias v13;
 
+using MCM.Abstractions;
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Ref;
+using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
 using MCM.Abstractions.Settings.Models;
@@ -18,11 +20,19 @@ namespace MCM.Implementation.ModLib.Settings.Properties.v13
 {
     internal sealed class ModLibDefinitionsSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
     {
-        public IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object)
+        public IEnumerable<string> DiscoveryTypes { get; } = new [] { "modlib_v13_attributes" };
+
+        public IEnumerable<ISettingsPropertyDefinition> GetProperties(BaseSettings settings)
         {
-            foreach (var propertyDefinition in GetPropertiesInternal(@object))
+            var obj = settings switch
             {
-                SettingsUtils.CheckIsValid(propertyDefinition, @object);
+                IWrapper wrapper => wrapper.Object,
+                _ => settings
+            };
+
+            foreach (var propertyDefinition in GetPropertiesInternal(obj))
+            {
+                SettingsUtils.CheckIsValid(propertyDefinition, obj);
                 yield return propertyDefinition;
             }
         }

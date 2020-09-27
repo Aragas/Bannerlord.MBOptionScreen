@@ -1,7 +1,6 @@
 ﻿extern alias v3;
 extern alias v4;
 
-using Bannerlord.ButterLib;
 using Bannerlord.ButterLib.Common.Extensions;
 
 using MCM.Implementation.MCMv3.Settings.Base;
@@ -31,7 +30,7 @@ namespace MCM.Implementation.MCMv3.Settings.Providers
 
         public override MCMv3BaseSettings? GetSettings(string id)
         {
-            if (ButterLibSubModule.Instance.GetServiceProvider() is { } serviceProvider)
+            if (v4::MCM.MCMSubModule.Instance is { } && v4::MCM.MCMSubModule.Instance.GetServiceProvider() is { } serviceProvider)
             {
                 var settingsProvider = serviceProvider.GetRequiredService<BaseSettingsProvider>();
 

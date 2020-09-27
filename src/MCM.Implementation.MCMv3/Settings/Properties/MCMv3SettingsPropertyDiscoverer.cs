@@ -10,8 +10,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
+using v4::MCM.Abstractions;
 using v4::MCM.Abstractions.Attributes;
 using v4::MCM.Abstractions.Ref;
+using v4::MCM.Abstractions.Settings.Base;
 using v4::MCM.Abstractions.Settings.Definitions;
 using v4::MCM.Abstractions.Settings.Definitions.Wrapper;
 using v4::MCM.Abstractions.Settings.Models;
@@ -22,11 +24,19 @@ namespace MCM.Implementation.MCMv3.Settings.Properties
 {
     internal sealed class MCMv3SettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
     {
-        public IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object)
+        public IEnumerable<string> DiscoveryTypes { get; } = new [] { "mcm_v3_attributes" };
+
+        public IEnumerable<ISettingsPropertyDefinition> GetProperties(BaseSettings settings)
         {
-            foreach (var propertyDefinition in GetPropertiesInternal(@object))
+            var obj = settings switch
             {
-                SettingsUtils.CheckIsValid(propertyDefinition, @object);
+                IWrapper wrapper => wrapper.Object,
+                _ => settings
+            };
+
+            foreach (var propertyDefinition in GetPropertiesInternal(obj))
+            {
+                SettingsUtils.CheckIsValid(propertyDefinition, obj);
                 yield return propertyDefinition;
             }
         }
