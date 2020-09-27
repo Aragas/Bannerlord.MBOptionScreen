@@ -1,4 +1,5 @@
-﻿using MCM.Abstractions.FluentBuilder.Models;
+﻿using MCM.Abstractions.FluentBuilder;
+using MCM.Abstractions.FluentBuilder.Models;
 using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
@@ -6,9 +7,9 @@ using MCM.Abstractions.Settings.Definitions.Wrapper;
 using System;
 using System.Collections.Generic;
 
-namespace MCM.Abstractions.FluentBuilder.Implementation.Models
+namespace MCM.Implementation.FluentBuilder.Models
 {
-    public class DefaultSettingsPropertyIntegerBuilder :
+    internal sealed class DefaultSettingsPropertyIntegerBuilder :
         BaseDefaultSettingsPropertyBuilder<ISettingsPropertyIntegerBuilder>,
         ISettingsPropertyIntegerBuilder,
         IPropertyDefinitionWithMinMax,

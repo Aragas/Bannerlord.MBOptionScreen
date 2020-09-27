@@ -1,6 +1,5 @@
 ﻿using HarmonyLib;
 
-using MCM.Abstractions.Functionality;
 using MCM.UI.Functionality.Injectors;
 using MCM.UI.Functionality.Loaders;
 using MCM.UI.Patches;

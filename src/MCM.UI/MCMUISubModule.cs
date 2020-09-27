@@ -5,7 +5,6 @@ using Bannerlord.UIExtenderEx;
 
 using HarmonyLib;
 
-using MCM.Abstractions.Functionality;
 using MCM.Abstractions.Settings.Base;
 using MCM.UI.Functionality;
 using MCM.UI.Functionality.Loaders;
@@ -44,8 +43,10 @@ namespace MCM.UI
             WidgetPrefabPatch.Patch(widgetprefabpatchHarmony);
 
             var services = this.GetServices();
-            services.AddTransient<IMCMOptionsScreen, ModOptionsGauntletScreen>();
+            services.AddSingleton<BaseGameMenuScreenHandler, DefaultGameMenuScreenHandler>();
+            services.AddSingleton<BaseIngameMenuScreenHandler, DefaultIngameMenuScreenHandler>();
             services.AddSingleton<BaseResourceHandler, DefaultResourceHandler>();
+            services.AddTransient<IMCMOptionsScreen, ModOptionsGauntletScreen>();
 
             DelayedSubModuleManager.Register<SandBoxSubModule>();
             DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(

@@ -55,8 +55,9 @@ namespace MCM.Abstractions.Ref
             if (obj.GetType() != GetType()) return false;
             return Equals((ProxyRef<T>) obj);
         }
-
         /// <inheritdoc/>
         public override int GetHashCode() => HashCode.Combine(_getter, _setter);
+        public static bool operator ==(ProxyRef<T>? left, ProxyRef<T>? right) => Equals(left, right);
+        public static bool operator !=(ProxyRef<T>? left, ProxyRef<T>? right) => !Equals(left, right);
     }
 }

@@ -127,7 +127,7 @@ namespace MCM.UI.GUI.ViewModels
 
         public void AddSelectCommand(Action<SettingsVM> command) => _executeSelect = command;
 
-        private void ExecuteSelect() => _executeSelect?.Invoke(this);
+        public void ExecuteSelect() => _executeSelect.Invoke(this);
 
         public bool RestartRequired() => SettingPropertyGroups
             .SelectMany(x => SettingsUtils.GetAllSettingPropertyDefinitions(x.SettingPropertyGroupDefinition))

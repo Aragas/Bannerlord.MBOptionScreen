@@ -1,11 +1,12 @@
-﻿using MCM.Abstractions.Ref;
+﻿using MCM.Abstractions.FluentBuilder;
+using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings.Definitions;
 
 using System.Collections.Generic;
 
-namespace MCM.Abstractions.FluentBuilder.Implementation
+namespace MCM.Implementation.FluentBuilder
 {
-    public abstract class BaseDefaultSettingsPropertyBuilder<TSettingsPropertyBuilder> :
+    internal abstract class BaseDefaultSettingsPropertyBuilder<TSettingsPropertyBuilder> :
         ISettingsPropertyBuilder<TSettingsPropertyBuilder>,
         IPropertyDefinitionBase,
         IPropertyDefinitionWithId

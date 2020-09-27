@@ -1,15 +1,16 @@
-﻿using MCM.Abstractions.FluentBuilder.Implementation.Models;
+﻿using MCM.Abstractions.FluentBuilder;
 using MCM.Abstractions.FluentBuilder.Models;
 using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
+using MCM.Implementation.FluentBuilder.Models;
 
 using System;
 using System.Collections.Generic;
 
-namespace MCM.Abstractions.FluentBuilder.Implementation
+namespace MCM.Implementation.FluentBuilder
 {
-    public class DefaultSettingsPropertyGroupBuilder :
+    internal sealed class DefaultSettingsPropertyGroupBuilder :
         ISettingsPropertyGroupBuilder,
         IPropertyGroupDefinition
     {

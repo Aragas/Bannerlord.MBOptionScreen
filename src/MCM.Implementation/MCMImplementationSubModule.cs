@@ -1,10 +1,9 @@
 ﻿using Bannerlord.ButterLib.Common.Extensions;
 
-using MCM.Abstractions.Functionality;
 using MCM.Abstractions.Settings.Properties;
 using MCM.Abstractions.Settings.Providers;
 using MCM.Extensions;
-using MCM.Implementation.Functionality;
+using MCM.Implementation.FluentBuilder;
 using MCM.Implementation.Settings.Containers.Custom;
 using MCM.Implementation.Settings.Containers.Global;
 using MCM.Implementation.Settings.Containers.PerCampaign;
@@ -13,8 +12,6 @@ using MCM.Implementation.Settings.Formats.Json2;
 using MCM.Implementation.Settings.Formats.Xml;
 using MCM.Implementation.Settings.Properties;
 using MCM.Implementation.Settings.Providers;
-
-using Microsoft.Extensions.DependencyInjection;
 
 using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
@@ -29,9 +26,6 @@ namespace MCM.Implementation
 
             var services = this.GetServices();
 
-            services.AddSingleton<BaseGameMenuScreenHandler, DefaultGameMenuScreenHandler>();
-            services.AddSingleton<BaseIngameMenuScreenHandler, DefaultIngameMenuScreenHandler>();
-
             services.AddSettingsContainer<IMCMFluentGlobalSettingsContainer, FluentGlobalSettingsContainer>();
             services.AddSettingsContainer<IMCMGlobalSettingsContainer, MCMGlobalSettingsContainer>();
             services.AddSettingsContainer<IMCMFluentPerCampaignSettingsContainer, FluentPerCampaignSettingsContainer>();
@@ -43,6 +37,8 @@ namespace MCM.Implementation
             services.AddSettingsFormat<IXmlSettingsFormat, XmlSettingsFormat>();
 
             services.AddSettingsPropertyDiscoverer<IAttributeSettingsPropertyDiscoverer, AttributeSettingsPropertyDiscoverer>();
+
+            services.AddSettingsBuilderFactory<DefaultSettingsBuilderFactory>();
 
             services.AddSettingsProvider<DefaultSettingsProvider>();
         }

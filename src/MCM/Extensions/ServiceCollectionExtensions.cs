@@ -1,4 +1,5 @@
-﻿using MCM.Abstractions.Settings.Containers;
+﻿using MCM.Abstractions.FluentBuilder;
+using MCM.Abstractions.Settings.Containers;
 using MCM.Abstractions.Settings.Containers.Global;
 using MCM.Abstractions.Settings.Containers.PerCampaign;
 using MCM.Abstractions.Settings.Formats;
@@ -76,6 +77,13 @@ namespace MCM.Extensions
             {
                 services.AddSingleton(typeof(IGlobalSettingsContainer), typeof(TImplementation));
             }
+            return services;
+        }
+
+        public static IServiceCollection AddSettingsBuilderFactory<TImplementation>(this IServiceCollection services)
+            where TImplementation : class, ISettingsBuilderFactory
+        {
+            services.AddSingleton<ISettingsBuilderFactory, TImplementation>();
             return services;
         }
     }

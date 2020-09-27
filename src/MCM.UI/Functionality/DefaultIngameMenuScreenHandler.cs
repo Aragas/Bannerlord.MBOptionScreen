@@ -3,12 +3,11 @@ using Bannerlord.ButterLib.Common.Helpers;
 
 using HarmonyLib;
 
-using MCM.Abstractions.Functionality;
-
 using SandBox.View.Map;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 using TaleWorlds.Engine.Screens;
@@ -18,7 +17,7 @@ using TaleWorlds.MountAndBlade.LegacyGUI.Missions.Singleplayer;
 using TaleWorlds.MountAndBlade.View.Missions;
 using TaleWorlds.MountAndBlade.ViewModelCollection;
 
-namespace MCM.Implementation.Functionality
+namespace MCM.UI.Functionality
 {
     internal sealed class DefaultIngameMenuScreenHandler : BaseIngameMenuScreenHandler
     {
@@ -32,8 +31,10 @@ namespace MCM.Implementation.Functionality
 
         private static readonly AccessTools.FieldRef<GauntletMissionEscapeMenuBase, EscapeMenuVM> DataSource =
             AccessTools.FieldRefAccess<GauntletMissionEscapeMenuBase, EscapeMenuVM>("_dataSource");
+        private static readonly AccessTools.FieldRef<EscapeMenuItemVM, object> Identifier =
+            AccessTools.FieldRefAccess<EscapeMenuItemVM, object>("_identifier");
 
-        private static readonly WeakReference<EscapeMenuVM> _instance = new WeakReference<EscapeMenuVM>(null!);
+        private static readonly WeakReference<GauntletMissionEscapeMenuBase> _instance = new WeakReference<GauntletMissionEscapeMenuBase>(null!);
         private static Dictionary<string, (int, Func<ScreenBase?>, TextObject)> ScreensCache { get; } = new Dictionary<string, (int, Func<ScreenBase?>, TextObject)>();
 
         public DefaultIngameMenuScreenHandler()
@@ -76,7 +77,7 @@ namespace MCM.Implementation.Functionality
                             ScreenManager.PushScreen(screen);
                         }
                     },
-                    key, false, false));
+                    key, false));
             }
         }
         [MethodImpl(MethodImplOptions.NoInlining)]
@@ -96,7 +97,7 @@ namespace MCM.Implementation.Functionality
                             ScreenManager.PushScreen(screen);
                         }
                     },
-                    key, false, false));
+                    key, false));
             }
         }
         [MethodImpl(MethodImplOptions.NoInlining)]
@@ -104,7 +105,7 @@ namespace MCM.Implementation.Functionality
         {
             if (__instance is GauntletMissionEscapeMenuBase gauntletMissionEscapeMenuBase)
             {
-                _instance.SetTarget(DataSource(gauntletMissionEscapeMenuBase));
+                _instance.SetTarget(gauntletMissionEscapeMenuBase);
             }
         }
         [MethodImpl(MethodImplOptions.NoInlining)]
@@ -120,13 +121,11 @@ namespace MCM.Implementation.Functionality
         {
             if (_instance.TryGetTarget(out var instance))
             {
-                // Do not add the Mod Options menu entry because the MissionView will not change
-                /*
-                instance.MenuItems.Insert(index, new EscapeMenuItemVM(
+                var dataSource = DataSource(instance);
+                dataSource.MenuItems.Insert(index, new EscapeMenuItemVM(
                     text,
                     _ => ScreenManager.PushScreen(screenFactory()),
-                    internalName, false, false));
-                */
+                    internalName, false));
             }
 
             ScreensCache[internalName] = (index, screenFactory, text);
@@ -135,12 +134,10 @@ namespace MCM.Implementation.Functionality
         {
             if (_instance.TryGetTarget(out var instance))
             {
-                // Do not remove the screen if it's the mission options because the MissionView will not change
-                /*
-                var found = instance.MenuItems.FirstOrDefault(i => _identifierField.GetValue(i) is string text && text == internalName);
+                var dataSource = DataSource(instance);
+                var found = dataSource.MenuItems.FirstOrDefault(i => Identifier(i) is string text && text == internalName);
                 if (found != null)
-                    instance.MenuItems.Remove(found);
-                */
+                    dataSource.MenuItems.Remove(found);
             }
 
             if (ScreensCache.ContainsKey(internalName))

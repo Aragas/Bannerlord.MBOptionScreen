@@ -1,5 +1,7 @@
 ﻿using MCM.UI.GUI.ViewModels;
 
+using Microsoft.Extensions.Logging;
+
 using TaleWorlds.Engine.GauntletUI;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.GauntletUI.Data;
@@ -14,10 +16,17 @@ namespace MCM.UI.GUI.GauntletUI
     /// </summary>
     internal sealed class ModOptionsGauntletScreen : ScreenBase, IMCMOptionsScreen
     {
+        private readonly ILogger<ModOptionsGauntletScreen> _logger;
+
         private GauntletLayer _gauntletLayer = default!;
         private GauntletMovie _gauntletMovie = default!;
         private ModOptionsVM _dataSource = default!;
         private SpriteCategory _spriteCategoryEncyclopedia = default!;
+
+        public ModOptionsGauntletScreen(ILogger<ModOptionsGauntletScreen> logger)
+        {
+            _logger = logger;
+        }
 
         protected override void OnInitialize()
         {

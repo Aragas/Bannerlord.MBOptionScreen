@@ -1,5 +1,4 @@
-﻿using MCM.Abstractions.Functionality;
-using MCM.UI.Functionality.Injectors;
+﻿using MCM.UI.Functionality.Injectors;
 
 using System.Xml;
 

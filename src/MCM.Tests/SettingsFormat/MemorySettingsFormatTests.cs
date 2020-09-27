@@ -1,4 +1,4 @@
-﻿using MCM.Abstractions.FluentBuilder.Implementation;
+﻿using MCM.Abstractions.FluentBuilder;
 using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings.Formats.Memory;
 
@@ -16,7 +16,7 @@ namespace MCM.Tests.SettingsFormat
         {
             Format = new MemorySettingsFormat();
 
-            Settings = new DefaultSettingsBuilder("Testing_Global_v1", "Testing Fluent Settings")
+            Settings = BaseSettingsBuilder.Create("Testing_Global_v1", "Testing Fluent Settings")!
                 .SetFormat("memory")
                 .SetFolderName(string.Empty)
                 .SetSubFolder(string.Empty)

@@ -1,4 +1,5 @@
-﻿using MCM.Abstractions.Settings.Base.Global;
+﻿using MCM.Abstractions.FluentBuilder;
+using MCM.Abstractions.Settings.Base.Global;
 using MCM.Abstractions.Settings.Base.PerCampaign;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
 using MCM.Abstractions.Settings.Models;
@@ -8,9 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
-namespace MCM.Abstractions.FluentBuilder.Implementation
+namespace MCM.Implementation.FluentBuilder
 {
-    public class DefaultSettingsBuilder : ISettingsBuilder
+    internal sealed class DefaultSettingsBuilder : BaseSettingsBuilder
     {
         private Dictionary<string, ISettingsPropertyGroupBuilder> PropertyGroups { get; } = new Dictionary<string, ISettingsPropertyGroupBuilder>();
 
@@ -28,24 +29,24 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
             Id = id;
             DisplayName = displayName;
 
-            CreateGroup(SettingsPropertyGroupDefinition.DefaultGroupName, builder => { });
+            CreateGroup(SettingsPropertyGroupDefinition.DefaultGroupName, _ => { });
         }
 
         /// <inheritdoc/>
-        public ISettingsBuilder SetFolderName(string value) { FolderName = value; return this; }
+        public override ISettingsBuilder SetFolderName(string value) { FolderName = value; return this; }
         /// <inheritdoc/>
-        public ISettingsBuilder SetSubFolder(string value) { SubFolder = value; return this; }
+        public override ISettingsBuilder SetSubFolder(string value) { SubFolder = value; return this; }
         /// <inheritdoc/>
-        public ISettingsBuilder SetFormat(string value) { Format = value; return this; }
+        public override ISettingsBuilder SetFormat(string value) { Format = value; return this; }
         /// <inheritdoc/>
-        public ISettingsBuilder SetUIVersion(int value) { UIVersion = value; return this; }
+        public override ISettingsBuilder SetUIVersion(int value) { UIVersion = value; return this; }
         /// <inheritdoc/>
-        public ISettingsBuilder SetSubGroupDelimiter(char value) { SubGroupDelimiter = value; return this; }
+        public override ISettingsBuilder SetSubGroupDelimiter(char value) { SubGroupDelimiter = value; return this; }
         /// <inheritdoc/>
-        public ISettingsBuilder SetOnPropertyChanged(PropertyChangedEventHandler value) { OnPropertyChanged = value; return this; }
+        public override ISettingsBuilder SetOnPropertyChanged(PropertyChangedEventHandler value) { OnPropertyChanged = value; return this; }
 
         /// <inheritdoc/>
-        public ISettingsBuilder CreateGroup(string name, Action<ISettingsPropertyGroupBuilder> action)
+        public override ISettingsBuilder CreateGroup(string name, Action<ISettingsPropertyGroupBuilder> action)
         {
             if (!PropertyGroups.ContainsKey(name))
                 PropertyGroups[name] = new DefaultSettingsPropertyGroupBuilder(name);
@@ -54,10 +55,10 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
         }
 
         /// <inheritdoc/>
-        public FluentGlobalSettings BuildAsGlobal() => new FluentGlobalSettings(
+        public override FluentGlobalSettings BuildAsGlobal() => new FluentGlobalSettings(
             Id, DisplayName, FolderName, SubFolder, Format, UIVersion, SubGroupDelimiter, OnPropertyChanged, GetSettingPropertyGroups());
         /// <inheritdoc/>
-        public FluentPerCampaignSettings BuildAsPerCampaign() => new FluentPerCampaignSettings(
+        public override FluentPerCampaignSettings BuildAsPerCampaign() => new FluentPerCampaignSettings(
             Id, DisplayName, FolderName, SubFolder, Format, UIVersion, SubGroupDelimiter, OnPropertyChanged, GetSettingPropertyGroups());
 
         private IEnumerable<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() =>

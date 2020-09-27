@@ -1,5 +1,4 @@
-﻿using MCM.Abstractions.Functionality;
-using MCM.UI.GUI.Views;
+﻿using MCM.UI.GUI.Views;
 
 using TaleWorlds.GauntletUI;
 

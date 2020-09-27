@@ -2,8 +2,6 @@
 
 using HarmonyLib;
 
-using MCM.Abstractions.Functionality;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +13,7 @@ using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.MountAndBlade.ViewModelCollection;
 
-namespace MCM.Implementation.Functionality
+namespace MCM.UI.Functionality
 {
     internal sealed class DefaultGameMenuScreenHandler : BaseGameMenuScreenHandler
     {

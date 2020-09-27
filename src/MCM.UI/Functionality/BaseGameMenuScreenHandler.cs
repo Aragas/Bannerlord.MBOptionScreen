@@ -1,14 +1,14 @@
 ﻿using Bannerlord.ButterLib;
 using Bannerlord.ButterLib.Common.Extensions;
 
-using System;
-
 using Microsoft.Extensions.DependencyInjection;
+
+using System;
 
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Localization;
 
-namespace MCM.Abstractions.Functionality
+namespace MCM.UI.Functionality
 {
     public abstract class BaseGameMenuScreenHandler
     {

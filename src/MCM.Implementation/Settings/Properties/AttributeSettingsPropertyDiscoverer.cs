@@ -30,9 +30,7 @@ namespace MCM.Implementation.Settings.Properties
         private static IEnumerable<ISettingsPropertyDefinition> GetPropertiesInternal(object @object)
         {
             var type = @object.GetType();
-
             var subGroupDelimiter = AccessTools.Property(type, "SubGroupDelimiter")?.GetValue(@object) as char? ?? '/';
-
             foreach (var property in type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
             {
                 if (property.Name == nameof(BaseSettings.Id))
@@ -67,7 +65,7 @@ namespace MCM.Implementation.Settings.Properties
 
         private static IEnumerable<IPropertyDefinitionBase> GetPropertyDefinitionWrappers(IReadOnlyCollection<Attribute> attributes)
         {
-            object? propAttr = null;
+            object? propAttr;
 
             propAttr = attributes.SingleOrDefault(a => a is IPropertyDefinitionBool);
             if (propAttr != null)

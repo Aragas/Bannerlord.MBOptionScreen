@@ -1,6 +1,4 @@
-﻿using MCM.Abstractions.Functionality;
-
-using System.Xml;
+﻿using System.Xml;
 
 namespace MCM.UI.Functionality.Loaders
 {

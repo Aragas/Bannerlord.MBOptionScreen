@@ -2,7 +2,7 @@
 
 using HarmonyLib;
 
-using MCM.Abstractions.Functionality;
+using MCM.UI.Functionality;
 
 using System.Runtime.CompilerServices;
 

@@ -1,11 +1,11 @@
-﻿using MCM.Extensions;
+﻿using MCM.Implementation.MCMv3.Extensions;
 
 using System;
 using System.Linq;
 
-namespace MCM.Utils
+namespace MCM.Implementation.MCMv3.Utils
 {
-    public static class ReflectionUtils
+    internal static class ReflectionUtils
     {
         public static bool ImplementsOrImplementsEquivalent(Type type, Type baseType, bool includeBase = true)
         {

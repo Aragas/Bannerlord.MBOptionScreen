@@ -14,8 +14,10 @@
     <Reference Include="MCMv3" HintPath="_Module/bin/Win64_Shipping_Client/MCMv3.dll" Private="false" Aliases="v3" />
   </ItemGroup>
 
+  <!--
   <ItemGroup Condition="$(Configuration) == 'Debug'">
     <Reference Include="MCMv3.Custom.ScreenTests" HintPath="_Module/bin/Win64_Shipping_Client/MCMv3.Custom.ScreenTests.dll" Private="false" Aliases="v3_Tests" />
   </ItemGroup>
+  -->
   
 </Project>

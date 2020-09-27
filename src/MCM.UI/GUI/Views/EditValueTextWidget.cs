@@ -96,6 +96,9 @@ namespace MCM.UI.GUI.Views
 
         private enum KeyCodes
         {
+            Backspace = 8,
+            Minus = 45,
+            Decimal = 46,
             Zero = 48,
             One = 49,
             Two = 50,
@@ -105,10 +108,7 @@ namespace MCM.UI.GUI.Views
             Six = 54,
             Seven = 55,
             Eight = 56,
-            Nine = 57,
-            Decimal = 46,
-            Minus = 45,
-            Backspace = 8
+            Nine = 57
         }
     }
 }

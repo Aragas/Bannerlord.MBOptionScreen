@@ -46,9 +46,7 @@ namespace MCM.Utils
         {
             GlobalSettings newSettings;
             if (settings is IWrapper wrapper)
-            {
                 newSettings = (GlobalSettings) Activator.CreateInstance(wrapper.GetType(), Activator.CreateInstance(wrapper.Object.GetType()));
-            }
             else
                 newSettings = (GlobalSettings) Activator.CreateInstance(settings.GetType());
             OverrideSettings(settings, newSettings);
@@ -167,9 +165,7 @@ namespace MCM.Utils
 
             foreach (var settingPropertyGroup in settingPropertyGroup1.SubGroups)
             foreach (var settingProperty in GetAllSettingPropertyDefinitions(settingPropertyGroup))
-            {
                 yield return settingProperty;
-            }
         }
         public static IEnumerable<SettingsPropertyGroupDefinition> GetAllSettingPropertyGroupDefinitions(SettingsPropertyGroupDefinition settingPropertyGroup1)
         {

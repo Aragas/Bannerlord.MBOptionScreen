@@ -1,9 +1,14 @@
-﻿using Bannerlord.ButterLib.Common.Helpers;
+﻿using Bannerlord.ButterLib;
+using Bannerlord.ButterLib.Common.Extensions;
+using Bannerlord.ButterLib.Common.Helpers;
 
 using ComparerExtensions;
 
 using MCM.Abstractions.Settings.Providers;
 using MCM.UI.Extensions;
+
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 using System;
 using System.Collections.Generic;
@@ -22,6 +27,8 @@ namespace MCM.UI.GUI.ViewModels
 {
     internal sealed class ModOptionsVM : ViewModel
     {
+        private readonly ILogger<ModOptionsVM> _logger;
+
         private string _titleLabel = string.Empty;
         private string _cancelButtonText = string.Empty;
         private string _doneButtonText = string.Empty;
@@ -159,6 +166,8 @@ namespace MCM.UI.GUI.ViewModels
 
         public ModOptionsVM()
         {
+            _logger = ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<ILogger<ModOptionsVM>>();
+
             Name = new TextObject("{=ModOptionsVM_Name}Mod Options").ToString();
             DoneButtonText = new TextObject("{=WiNRdfsm}Done").ToString();
             CancelButtonText = new TextObject("{=3CpNUnVl}Cancel").ToString();
@@ -169,36 +178,53 @@ namespace MCM.UI.GUI.ViewModels
             // Fancy
             new TaskFactory().StartNew(syncContext => // Build the options in a separate context if possible
             {
-                if (!(syncContext is SynchronizationContext uiContext))
-                    return;
-
-                var settingsVM = BaseSettingsProvider.Instance!.CreateModSettingsDefinitions
-                    .Parallel()
-                    .Select(s =>
-                    {
-                        try { return new SettingsVM(s, this); }
-                        catch (Exception) { return null; } // TODO: Logging
-                    });
-                foreach (var viewModel in settingsVM)
+                try
                 {
-                    uiContext.Send(o =>
+                    if (!(syncContext is SynchronizationContext uiContext))
+                        return;
+
+                    var settingsVM = BaseSettingsProvider.Instance!.CreateModSettingsDefinitions
+                        .Parallel()
+                        .Select(s =>
+                        {
+                            try
+                            {
+                                return new SettingsVM(s, this);
+                            }
+                            catch (Exception e)
+                            {
+                                _logger.LogError(e, "Error while creating a ViewModel for settings {Id}", s.SettingsId);
+                                InformationManager.DisplayMessage(new InformationMessage(new TextObject($"{{=HNduGf7H5a}}There was an error while parsing settings from '{s.SettingsId}'! Please contact the MCM developers and the mod developer!").ToString(), Colors.Red));
+                                return null;
+                            }
+                        })
+                        .ToList();
+                    foreach (var viewModel in settingsVM)
                     {
-                        if (!(o is SettingsVM vm))
-                            return;
+                        uiContext.Send(o =>
+                        {
+                            if (!(o is SettingsVM vm))
+                                return;
 
-                        vm.AddSelectCommand(ExecuteSelect);
-                        ModSettingsList.Add(vm);
-                        vm.RefreshValues();
-                    }, viewModel);
+                            vm.AddSelectCommand(ExecuteSelect);
+                            ModSettingsList.Add(vm);
+                            vm.RefreshValues();
+                        }, viewModel);
+                    }
+
+                    // Yea, I imported a whole library that converts LINQ style order to IComparer
+                    // because I wasn't able to recreate the logic via IComparer. TODO: Fix that
+                    ModSettingsList.Sort(KeyComparer<SettingsVM>
+                        .OrderByDescending(x => x.SettingsDefinition.SettingsId.StartsWith("MCM") ||
+                                                x.SettingsDefinition.SettingsId.StartsWith("Testing") ||
+                                                x.SettingsDefinition.SettingsId.StartsWith("ModLib"))
+                        .ThenByDescending(x => x.DisplayName, new AlphanumComparatorFast()));
                 }
-
-                // Yea, I imported a whole library that converts LINQ style order to IComparer
-                // because I wasn't able to recreate the logic via IComparer. TODO: Fix that
-                ModSettingsList.Sort(KeyComparer<SettingsVM>
-                    .OrderByDescending(x => x.SettingsDefinition.SettingsId.StartsWith("MCM") ||
-                                            x.SettingsDefinition.SettingsId.StartsWith("Testing") ||
-                                            x.SettingsDefinition.SettingsId.StartsWith("ModLib"))
-                    .ThenByDescending(x => x.DisplayName, new AlphanumComparatorFast()));
+                catch (Exception e)
+                {
+                    _logger.LogError(e, "Error while creating ViewModels for the settings");
+                    InformationManager.DisplayMessage(new InformationMessage(new TextObject("{=JLKaTyJcyu}There was a major error while building the settings list! Please contact the MCM developers!").ToString(), Colors.Red));
+                }
             }, SynchronizationContext.Current);
 
             RefreshValues();

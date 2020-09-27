@@ -69,6 +69,12 @@ namespace MCM.UI.Patches
             // make compiler happy
             _ = Transpiler(null!, null!);
 
+            // make analyzer happy
+            prefabExtensionContext.AddExtension(null);
+            widgetAttributeContext.RegisterKeyType(null);
+            path.Do(null);
+            document.Validate(null);
+
             // make compiler happy
             return null!;
         }

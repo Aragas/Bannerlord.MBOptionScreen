@@ -21,8 +21,7 @@ namespace MCM.Implementation.Settings.Containers.PerCampaign
                 .GetAssemblies()
                 .Where(a => !a.IsDynamic)
                 .SelectMany(a => a.GetTypes())
-                .Where(t => t.IsClass && !t.IsAbstract)
-                .Where(t => t.GetConstructor(Type.EmptyTypes) != null)
+                .Where(t => t.IsClass && !t.IsAbstract && t.GetConstructor(Type.EmptyTypes) != null)
                 .ToList();
 
             var mbOptionScreenSettings = allTypes
@@ -30,7 +29,7 @@ namespace MCM.Implementation.Settings.Containers.PerCampaign
                 .Where(t => !typeof(EmptyPerCampaignSettings).IsAssignableFrom(t))
                 .Where(t => !typeof(IWrapper).IsAssignableFrom(t))
                 .Select(t => (PerCampaignSettings) Activator.CreateInstance(t));
-            settings.AddRange(mbOptionScreenSettings!);
+            settings.AddRange(mbOptionScreenSettings);
 
             foreach (var setting in settings)
                 RegisterSettings(setting);

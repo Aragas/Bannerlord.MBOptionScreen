@@ -1,14 +1,14 @@
 ﻿using Bannerlord.ButterLib;
 using Bannerlord.ButterLib.Common.Extensions;
 
+using Microsoft.Extensions.DependencyInjection;
+
 using System;
 using System.Xml;
 
-using Microsoft.Extensions.DependencyInjection;
-
 using TaleWorlds.GauntletUI.PrefabSystem;
 
-namespace MCM.Abstractions.Functionality
+namespace MCM.UI.Functionality
 {
     public abstract class BaseResourceHandler
     {

@@ -5,6 +5,7 @@ using Bannerlord.ButterLib;
 using Bannerlord.ButterLib.Common.Extensions;
 
 using MCM.Implementation.MCMv3.Settings.Base;
+using MCM.Implementation.MCMv3.Utils;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,7 +16,6 @@ using System.Linq;
 using v4::MCM.Abstractions.Settings.Base.Global;
 using v4::MCM.Abstractions.Settings.Containers.Global;
 using v4::MCM.Abstractions.Settings.Formats;
-using v4::MCM.Utils;
 
 namespace MCM.Implementation.MCMv3.Settings.Containers
 {

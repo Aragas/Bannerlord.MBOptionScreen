@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MCM.Extensions
+namespace MCM.Implementation.MCMv3.Extensions
 {
     internal static class TypeExtensions
     {

@@ -7,9 +7,7 @@ using HarmonyLib;
 using MCM.UI.GUI.ViewModels;
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 
 using TaleWorlds.Library;
@@ -25,9 +23,6 @@ namespace MCM.UI.UIExtenderEx
 
         private static readonly ExecuteDoneDelegate? ExecuteDoneMethod = AccessTools2.GetDelegate<ExecuteDoneDelegate>(typeof(OptionsVM), "ExecuteDone");
         private static readonly ExecuteCancelDelegate? ExecuteCancelMethod = AccessTools2.GetDelegate<ExecuteCancelDelegate>(typeof(OptionsVM), "ExecuteCancel");
-
-        private static readonly AccessTools.FieldRef<ViewModel, Dictionary<string, PropertyInfo>> PropertyInfos =
-            AccessTools.FieldRefAccess<ViewModel, Dictionary<string, PropertyInfo>>("_propertyInfos");
 
         static OptionsVMMixin()
         {

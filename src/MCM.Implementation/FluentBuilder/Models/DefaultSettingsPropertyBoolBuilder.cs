@@ -5,17 +5,14 @@ using MCM.Abstractions.Settings.Definitions.Wrapper;
 
 using System.Collections.Generic;
 
-namespace MCM.Abstractions.FluentBuilder.Implementation.Models
+namespace MCM.Implementation.FluentBuilder.Models
 {
-    public class DefaultSettingsPropertyGroupToggleBuilder :
-        BaseDefaultSettingsPropertyBuilder<ISettingsPropertyGroupToggleBuilder>,
-        ISettingsPropertyGroupToggleBuilder,
-        IPropertyDefinitionGroupToggle
+    internal sealed class DefaultSettingsPropertyBoolBuilder :
+        BaseDefaultSettingsPropertyBuilder<ISettingsPropertyBoolBuilder>,
+        ISettingsPropertyBoolBuilder,
+        IPropertyDefinitionBool
     {
-        /// <inheritdoc/>
-        public bool IsToggle { get; } = true;
-
-        internal DefaultSettingsPropertyGroupToggleBuilder(string id, string name, IRef @ref)
+        internal DefaultSettingsPropertyBoolBuilder(string id, string name, IRef @ref)
             : base(id, name, @ref)
         {
             SettingsPropertyBuilder = this;
@@ -24,7 +21,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
         /// <inheritdoc/>
         public override IEnumerable<IPropertyDefinitionBase> GetDefinitions() => new IPropertyDefinitionBase[]
         {
-            new PropertyDefinitionGroupToggleWrapper(this),
+            new PropertyDefinitionBoolWrapper(this),
             new PropertyDefinitionWithIdWrapper(this),
         };
     }

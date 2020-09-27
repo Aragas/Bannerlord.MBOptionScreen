@@ -5,14 +5,14 @@ using MCM.Abstractions.Settings.Definitions.Wrapper;
 
 using System.Collections.Generic;
 
-namespace MCM.Abstractions.FluentBuilder.Implementation.Models
+namespace MCM.Implementation.FluentBuilder.Models
 {
-    public class DefaultSettingsPropertyBoolBuilder :
-        BaseDefaultSettingsPropertyBuilder<ISettingsPropertyBoolBuilder>,
-        ISettingsPropertyBoolBuilder,
-        IPropertyDefinitionBool
+    internal sealed class DefaultSettingsPropertyTextBuilder :
+        BaseDefaultSettingsPropertyBuilder<ISettingsPropertyTextBuilder>,
+        ISettingsPropertyTextBuilder,
+        IPropertyDefinitionText
     {
-        internal DefaultSettingsPropertyBoolBuilder(string id, string name, IRef @ref)
+        internal DefaultSettingsPropertyTextBuilder(string id, string name, IRef @ref)
             : base(id, name, @ref)
         {
             SettingsPropertyBuilder = this;
@@ -21,7 +21,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation.Models
         /// <inheritdoc/>
         public override IEnumerable<IPropertyDefinitionBase> GetDefinitions() => new IPropertyDefinitionBase[]
         {
-            new PropertyDefinitionBoolWrapper(this),
+            new PropertyDefinitionTextWrapper(this),
             new PropertyDefinitionWithIdWrapper(this),
         };
     }

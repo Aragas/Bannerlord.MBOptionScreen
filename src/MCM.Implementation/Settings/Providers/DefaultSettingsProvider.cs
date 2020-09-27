@@ -20,17 +20,17 @@ namespace MCM.Implementation.Settings.Providers
 {
     internal sealed class DefaultSettingsProvider : BaseSettingsProvider
     {
-        private ILogger Logger { get; }
-        private List<ISettingsContainer> SettingsContainers { get; }
+        private readonly ILogger _logger;
+        private readonly List<ISettingsContainer> _settingsContainers;
 
-        public override IEnumerable<SettingsDefinition> CreateModSettingsDefinitions => SettingsContainers
+        public override IEnumerable<SettingsDefinition> CreateModSettingsDefinitions => _settingsContainers
             .SelectMany(sp => sp.CreateModSettingsDefinitions);
 
         public DefaultSettingsProvider(ILogger<DefaultSettingsProvider> logger)
         {
-            Logger = logger;
+            _logger = logger;
 
-            var globalSettingsContainers = (ButterLibSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IEnumerable<IGlobalSettingsContainer>>() ??
+             var globalSettingsContainers = (ButterLibSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IEnumerable<IGlobalSettingsContainer>>() ??
                                            Enumerable.Empty<IGlobalSettingsContainer>()).ToList();
             var perCampaignSettingsContainers = (ButterLibSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IEnumerable<IPerCampaignSettingsContainer>>() ??
                                                 Enumerable.Empty<IPerCampaignSettingsContainer>()).ToList();
@@ -44,7 +44,7 @@ namespace MCM.Implementation.Settings.Providers
                 logger.LogInformation("Found PerCampaign container {type}.", perCampaignSettingsContainer.GetType());
             }
 
-            SettingsContainers = Enumerable.Empty<ISettingsContainer>()
+            _settingsContainers = Enumerable.Empty<ISettingsContainer>()
                 .Concat(globalSettingsContainers)
                 .Concat(perCampaignSettingsContainers)
                 .ToList();
@@ -52,55 +52,45 @@ namespace MCM.Implementation.Settings.Providers
 
         public override BaseSettings? GetSettings(string id)
         {
-            foreach (var settingsContainer in SettingsContainers)
+            foreach (var settingsContainer in _settingsContainers)
             {
                 if (settingsContainer.GetSettings(id) is { } settings)
                 {
-                    Logger.LogTrace("GetSettings {id} returned {type}", id, settings.GetType());
+                    _logger.LogTrace("GetSettings {id} returned {type}", id, settings.GetType());
                     return settings;
                 }
             }
-            Logger.LogWarning("GetSettings {id} returned null", id);
+            _logger.LogWarning("GetSettings {id} returned null", id);
             return null;
         }
 
         public override void SaveSettings(BaseSettings settings)
         {
-            foreach (var settingsContainer in SettingsContainers)
+            foreach (var settingsContainer in _settingsContainers)
                 settingsContainer.SaveSettings(settings);
             settings.OnPropertyChanged(BaseSettings.SaveTriggered);
         }
 
         public override void ResetSettings(BaseSettings settings)
         {
-            foreach (var settingsContainer in SettingsContainers)
+            foreach (var settingsContainer in _settingsContainers)
                 settingsContainer.ResetSettings(settings);
         }
         public override void OverrideSettings(BaseSettings settings)
         {
-            foreach (var settingsContainer in SettingsContainers)
+            foreach (var settingsContainer in _settingsContainers)
                 settingsContainer.OverrideSettings(settings);
         }
 
         public override void OnGameStarted(Game game)
         {
-            foreach (var settingsContainer in SettingsContainers)
-            {
-                if (settingsContainer is IPerCampaignSettingsContainer perCampaignContainer)
-                {
-                    perCampaignContainer.OnGameStarted(game);
-                }
-            }
+            foreach (var perCampaignContainer in _settingsContainers.OfType<IPerCampaignSettingsContainer>())
+                perCampaignContainer.OnGameStarted(game);
         }
         public override void OnGameEnded(Game game)
         {
-            foreach (var settingsContainer in SettingsContainers)
-            {
-                if (settingsContainer is IPerCampaignSettingsContainer perCampaignContainer)
-                {
-                    perCampaignContainer.OnGameEnded(game);
-                }
-            }
+            foreach (var perCampaignContainer in _settingsContainers.OfType<IPerCampaignSettingsContainer>())
+                perCampaignContainer.OnGameEnded(game);
         }
     }
 }

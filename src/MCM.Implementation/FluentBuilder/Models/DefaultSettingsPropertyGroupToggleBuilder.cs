@@ -5,27 +5,26 @@ using MCM.Abstractions.Settings.Definitions.Wrapper;
 
 using System.Collections.Generic;
 
-namespace MCM.Abstractions.FluentBuilder.Implementation.Models
+namespace MCM.Implementation.FluentBuilder.Models
 {
-    public class DefaultSettingsPropertyDropdownBuilder :
-        BaseDefaultSettingsPropertyBuilder<ISettingsPropertyDropdownBuilder>,
-        ISettingsPropertyDropdownBuilder,
-        IPropertyDefinitionDropdown
+    internal sealed class DefaultSettingsPropertyGroupToggleBuilder :
+        BaseDefaultSettingsPropertyBuilder<ISettingsPropertyGroupToggleBuilder>,
+        ISettingsPropertyGroupToggleBuilder,
+        IPropertyDefinitionGroupToggle
     {
         /// <inheritdoc/>
-        public int SelectedIndex { get; }
+        public bool IsToggle { get; } = true;
 
-        internal DefaultSettingsPropertyDropdownBuilder(string id, string name, int selectedIndex, IRef @ref)
+        internal DefaultSettingsPropertyGroupToggleBuilder(string id, string name, IRef @ref)
             : base(id, name, @ref)
         {
             SettingsPropertyBuilder = this;
-            SelectedIndex = selectedIndex;
         }
 
         /// <inheritdoc/>
         public override IEnumerable<IPropertyDefinitionBase> GetDefinitions() => new IPropertyDefinitionBase[]
         {
-            new PropertyDefinitionDropdownWrapper(this),
+            new PropertyDefinitionGroupToggleWrapper(this),
             new PropertyDefinitionWithIdWrapper(this),
         };
     }

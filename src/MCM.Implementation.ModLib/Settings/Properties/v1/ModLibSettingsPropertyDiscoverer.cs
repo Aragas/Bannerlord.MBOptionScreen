@@ -59,20 +59,21 @@ namespace MCM.Implementation.ModLib.Settings.Properties.v1
                     propertyDefinitions.AddRange(propertyDefinitionWrappers);
 
                     if (groupDefinition is ModLibPropertyGroupDefinitionWrapper groupWrapper && groupWrapper.IsMainToggle)
-                        propertyDefinitions.Add(new AttributePropertyDefinitionGroupToggleWrapper(propertyDefinitions.First()));
+                        propertyDefinitions.Add(new AttributePropertyDefinitionGroupToggleWrapper(propertyDefinitions[0]));
                 }
 
-                yield return new SettingsPropertyDefinition(
-                    propertyDefinitions,
-                    groupDefinition,
-                    new PropertyRef(property, @object),
-                    subGroupDelimiter);
+                if (propertyDefinitions.Count > 0)
+                    yield return new SettingsPropertyDefinition(
+                        propertyDefinitions,
+                        groupDefinition,
+                        new PropertyRef(property, @object),
+                        subGroupDelimiter);
             }
         }
 
         private static IEnumerable<IPropertyDefinitionBase> GetPropertyDefinitionWrappers(IReadOnlyCollection<Attribute> attributes)
         {
-                object? propAttr = null;
+                object? propAttr;
 
                 propAttr = attributes.FirstOrDefault(a => a is v1::ModLib.Attributes.SettingPropertyAttribute);
                 if (propAttr != null)

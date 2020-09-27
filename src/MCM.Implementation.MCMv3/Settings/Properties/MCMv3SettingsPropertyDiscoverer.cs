@@ -67,7 +67,7 @@ namespace MCM.Implementation.MCMv3.Settings.Properties
                     propertyDefinitions.AddRange(propertyDefinitionWrappers);
 
                     if (groupDefinition is MCMv3PropertyGroupDefinitionWrapper groupWrapper && groupWrapper.IsMainToggle)
-                        propertyDefinitions.Add(new AttributePropertyDefinitionGroupToggleWrapper(propertyDefinitions.First()));
+                        propertyDefinitions.Add(new AttributePropertyDefinitionGroupToggleWrapper(propertyDefinitions[0]));
                 }
 
                 if (propertyDefinitions.Count > 0)
@@ -81,7 +81,7 @@ namespace MCM.Implementation.MCMv3.Settings.Properties
 
         private static IEnumerable<IPropertyDefinitionBase> GetPropertyDefinitionWrappers(IReadOnlyCollection<Attribute> attributes)
         {
-            object? propAttr = null;
+            object? propAttr;
 
             propAttr = attributes.SingleOrDefault(a => a is v3::MCM.Abstractions.Settings.Definitions.IPropertyDefinitionBool);
             if (propAttr != null)
