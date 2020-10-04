@@ -19,15 +19,16 @@ namespace MCM.Implementation.ModLib
         {
             base.OnSubModuleLoad();
 
-            var services = this.GetServices();
+            if (this.GetServices() is { } services)
+            {
+                services.AddTransient<BaseModLibScreenOverrider, DefaultModLibScreenOverrider>();
 
-            services.AddTransient<BaseModLibScreenOverrider, DefaultModLibScreenOverrider>();
+                services.AddSettingsContainer<ModLibSettingsContainer>();
+                services.AddSettingsContainer<ModLibDefinitionsSettingsContainer>();
 
-            services.AddSettingsContainer<ModLibSettingsContainer>();
-            services.AddSettingsContainer<ModLibDefinitionsSettingsContainer>();
-
-            services.AddSettingsPropertyDiscoverer<ModLibSettingsPropertyDiscoverer>();
-            services.AddSettingsPropertyDiscoverer<ModLibDefinitionsSettingsPropertyDiscoverer>();
+                services.AddSettingsPropertyDiscoverer<ModLibSettingsPropertyDiscoverer>();
+                services.AddSettingsPropertyDiscoverer<ModLibDefinitionsSettingsPropertyDiscoverer>();
+            }
         }
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot()

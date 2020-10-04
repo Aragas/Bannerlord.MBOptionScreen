@@ -18,10 +18,11 @@ namespace MCM
 
             Instance = this;
 
-            var services = this.GetServices();
-
-            services.AddSettingsFormat<MemorySettingsFormat>();
-            services.AddSettingsPropertyDiscoverer<NoneSettingsPropertyDiscoverer>();
+            if (this.GetServices() is { } services)
+            {
+                services.AddSettingsFormat<MemorySettingsFormat>();
+                services.AddSettingsPropertyDiscoverer<NoneSettingsPropertyDiscoverer>();
+            }
         }
 
         protected override void OnSubModuleUnloaded()

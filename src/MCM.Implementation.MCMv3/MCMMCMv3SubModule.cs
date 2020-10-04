@@ -27,11 +27,12 @@ namespace MCM.Implementation.MCMv3
         {
             base.OnSubModuleLoad();
 
-            var services = this.GetServices();
-
-            services.AddSettingsContainer<MCMv3FluentGlobalSettingsContainer>();
-            services.AddSettingsContainer<MCMv3GlobalSettingsContainer>();
-            services.AddSettingsPropertyDiscoverer<MCMv3SettingsPropertyDiscoverer>();
+            if (this.GetServices() is { } services)
+            {
+                services.AddSettingsContainer<MCMv3FluentGlobalSettingsContainer>();
+                services.AddSettingsContainer<MCMv3GlobalSettingsContainer>();
+                services.AddSettingsPropertyDiscoverer<MCMv3SettingsPropertyDiscoverer>();
+            }
 
             var harmony = new Harmony("bannerlord.mcm.implementation.mcmv3.loaderpreventer");
             MCMv3IntegratedLoaderSubModulePatch.Patch(harmony);

@@ -24,23 +24,24 @@ namespace MCM.Implementation
         {
             base.OnSubModuleLoad();
 
-            var services = this.GetServices();
+            if (this.GetServices() is { } services)
+            {
+                services.AddSettingsContainer<IMCMFluentGlobalSettingsContainer, FluentGlobalSettingsContainer>();
+                services.AddSettingsContainer<IMCMGlobalSettingsContainer, MCMGlobalSettingsContainer>();
+                services.AddSettingsContainer<IMCMFluentPerCampaignSettingsContainer, FluentPerCampaignSettingsContainer>();
+                services.AddSettingsContainer<IMCMPerCampaignSettingsContainer, MCMPerCampaignSettingsContainer>();
+                services.AddSettingsContainer<ButterLibSettingsContainer>();
 
-            services.AddSettingsContainer<IMCMFluentGlobalSettingsContainer, FluentGlobalSettingsContainer>();
-            services.AddSettingsContainer<IMCMGlobalSettingsContainer, MCMGlobalSettingsContainer>();
-            services.AddSettingsContainer<IMCMFluentPerCampaignSettingsContainer, FluentPerCampaignSettingsContainer>();
-            services.AddSettingsContainer<IMCMPerCampaignSettingsContainer, MCMPerCampaignSettingsContainer>();
-            services.AddSettingsContainer<ButterLibSettingsContainer>();
+                services.AddSettingsFormat<IJsonSettingsFormat, JsonSettingsFormat>();
+                services.AddSettingsFormat<IJson2SettingsFormat, Json2SettingsFormat>();
+                services.AddSettingsFormat<IXmlSettingsFormat, XmlSettingsFormat>();
 
-            services.AddSettingsFormat<IJsonSettingsFormat, JsonSettingsFormat>();
-            services.AddSettingsFormat<IJson2SettingsFormat, Json2SettingsFormat>();
-            services.AddSettingsFormat<IXmlSettingsFormat, XmlSettingsFormat>();
+                services.AddSettingsPropertyDiscoverer<IAttributeSettingsPropertyDiscoverer, AttributeSettingsPropertyDiscoverer>();
 
-            services.AddSettingsPropertyDiscoverer<IAttributeSettingsPropertyDiscoverer, AttributeSettingsPropertyDiscoverer>();
+                services.AddSettingsBuilderFactory<DefaultSettingsBuilderFactory>();
 
-            services.AddSettingsBuilderFactory<DefaultSettingsBuilderFactory>();
-
-            services.AddSettingsProvider<DefaultSettingsProvider>();
+                services.AddSettingsProvider<DefaultSettingsProvider>();
+            }
         }
 
 
