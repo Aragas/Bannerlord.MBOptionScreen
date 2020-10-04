@@ -44,10 +44,7 @@ namespace MCM.Tests.SettingsFormat
                     .AddText("prop_4","Test", new ProxyRef<string>(() => _stringValue, o => _stringValue = o), null))
                 .BuildAsGlobal();
 
-            DirectoryPath = Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory,
-                Settings.FolderName,
-                Settings.SubFolder ?? string.Empty);
+            DirectoryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Settings.FolderName, Settings.SubFolder);
             Filename = Settings.Id;
         }
 

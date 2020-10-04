@@ -60,7 +60,7 @@ namespace MCM.Abstractions.FluentBuilder
         ISettingsBuilder CreateGroup(string name, Action<ISettingsPropertyGroupBuilder> builder);
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         /// <param name="name"></param>
         /// <param name="builder"></param>

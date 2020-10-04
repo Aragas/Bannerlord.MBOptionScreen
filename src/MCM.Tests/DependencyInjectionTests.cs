@@ -6,7 +6,6 @@ using Bannerlord.ButterLib.SubModuleWrappers;
 using HarmonyLib;
 
 using MCM.Abstractions.Settings.Formats;
-using MCM.Abstractions.Settings.Formats.Memory;
 using MCM.Implementation;
 using MCM.Implementation.Settings.Formats.Json;
 using MCM.Implementation.Settings.Formats.Xml;

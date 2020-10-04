@@ -1,6 +1,6 @@
 ﻿using MCM.Abstractions.FluentBuilder;
 using MCM.Abstractions.Ref;
-using MCM.Abstractions.Settings.Formats.Memory;
+using MCM.Abstractions.Settings.Formats;
 
 using NUnit.Framework;
 
@@ -34,10 +34,7 @@ namespace MCM.Tests.SettingsFormat
                     .AddText("prop_4","Test", new ProxyRef<string>(() => _stringValue, o => _stringValue = o), null))
                 .BuildAsGlobal();
 
-            DirectoryPath = Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory,
-                Settings.FolderName,
-                Settings.SubFolder ?? string.Empty);
+            DirectoryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Settings.FolderName, Settings.SubFolder);
             Filename = Settings.Id;
         }
 
