@@ -6,7 +6,9 @@ using Bannerlord.ButterLib.Common.Helpers;
 using HarmonyLib;
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 using v4::MCM.Abstractions.Settings.Base;
@@ -26,6 +28,7 @@ namespace MCM.Implementation.MCMv3.Settings.Base
         private delegate char GetSubGroupDelimiterDelegate();
         private delegate string GetFormatDelegate();
         private delegate void OnPropertyChangedDelegate(string? propertyName);
+        private delegate IDictionary<string, Func<MCMv3BaseSettings>> GetAvailablePresetsDelegate();
 
         private readonly GetIdDelegate? _getIdDelegate;
         private readonly GetFolderNameDelegate? _getFolderNameDelegate;
@@ -35,6 +38,7 @@ namespace MCM.Implementation.MCMv3.Settings.Base
         private readonly GetSubGroupDelimiterDelegate? _getSubGroupDelimiterDelegate;
         private readonly GetFormatDelegate? _getFormatDelegate;
         private readonly OnPropertyChangedDelegate? _methodOnPropertyChangedDelegate;
+        private readonly GetAvailablePresetsDelegate? _methodGetAvailablePresetsDelegate;
 
         public override string Id => _getIdDelegate?.Invoke() ?? "ERROR";
         public override string FolderName => _getFolderNameDelegate?.Invoke() ?? string.Empty;
@@ -62,10 +66,16 @@ namespace MCM.Implementation.MCMv3.Settings.Base
             _getSubGroupDelimiterDelegate = AccessTools2.GetDelegate<GetSubGroupDelimiterDelegate>(@object, AccessTools.Property(type, "SubGroupDelimiter").GetMethod);
             _getFormatDelegate = AccessTools2.GetDelegate<GetFormatDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.Format)).GetMethod);
             _methodOnPropertyChangedDelegate = AccessTools2.GetDelegate<OnPropertyChangedDelegate>(@object, AccessTools.Method(type, nameof(MCMv3BaseSettings.OnPropertyChanged)));
+            _methodGetAvailablePresetsDelegate = AccessTools2.GetDelegate<GetAvailablePresetsDelegate>(@object, AccessTools.Method(type, nameof(MCMv3BaseSettings.GetAvailablePresets)));
         }
 
         public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
             _methodOnPropertyChangedDelegate?.Invoke(propertyName);
+
+        public override IDictionary<string, Func<BaseSettings>> GetAvailablePresets() =>
+            (_methodGetAvailablePresetsDelegate?.Invoke() ?? new Dictionary<string, Func<MCMv3BaseSettings>>())
+            .Select(kv => new KeyValuePair<string, Func<BaseSettings>>(kv.Key, () => kv.Value() is { } val ? new MCMv3GlobalSettingsWrapper(val) : CreateNew()))
+            .ToDictionary(kv => kv.Key, kv => kv.Value);
 
         protected override BaseSettings CreateNew() => new MCMv3GlobalSettingsWrapper(Activator.CreateInstance(Object.GetType()));
     }
