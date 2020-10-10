@@ -1,7 +1,7 @@
 ﻿using MCM.Abstractions.FluentBuilder;
 using MCM.Abstractions.Settings.Containers;
 using MCM.Abstractions.Settings.Containers.Global;
-using MCM.Abstractions.Settings.Containers.PerCampaign;
+using MCM.Abstractions.Settings.Containers.PerSave;
 using MCM.Abstractions.Settings.Formats;
 using MCM.Abstractions.Settings.Properties;
 using MCM.Abstractions.Settings.Providers;
@@ -72,9 +72,9 @@ namespace MCM.Extensions
         {
             services.TryAddEnumerable(ServiceDescriptor.Singleton<ISettingsContainer, TImplementation>());
 
-            if (typeof(IPerCampaignSettingsContainer).IsAssignableFrom(typeof(TImplementation)))
+            if (typeof(IPerSaveSettingsContainer).IsAssignableFrom(typeof(TImplementation)))
             {
-                services.AddSingleton(typeof(IPerCampaignSettingsContainer), typeof(TImplementation));
+                services.AddSingleton(typeof(IPerSaveSettingsContainer), typeof(TImplementation));
             }
             if (typeof(IGlobalSettingsContainer).IsAssignableFrom(typeof(TImplementation)))
             {

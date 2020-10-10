@@ -3,7 +3,7 @@
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Containers;
 using MCM.Abstractions.Settings.Containers.Global;
-using MCM.Abstractions.Settings.Containers.PerCampaign;
+using MCM.Abstractions.Settings.Containers.PerSave;
 using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.Providers;
 
@@ -31,21 +31,21 @@ namespace MCM.Implementation.Settings.Providers
 
              var globalSettingsContainers = (MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IEnumerable<IGlobalSettingsContainer>>() ??
                                              Enumerable.Empty<IGlobalSettingsContainer>()).ToList();
-            var perCampaignSettingsContainers = (MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IEnumerable<IPerCampaignSettingsContainer>>() ??
-                                                 Enumerable.Empty<IPerCampaignSettingsContainer>()).ToList();
+            var PerSaveSettingsContainers = (MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IEnumerable<IPerSaveSettingsContainer>>() ??
+                                                 Enumerable.Empty<IPerSaveSettingsContainer>()).ToList();
 
             foreach (var globalSettingsContainer in globalSettingsContainers)
             {
                 logger.LogInformation("Found Global container {type}.", globalSettingsContainer.GetType());
             }
-            foreach (var perCampaignSettingsContainer in perCampaignSettingsContainers)
+            foreach (var PerSaveSettingsContainer in PerSaveSettingsContainers)
             {
-                logger.LogInformation("Found PerCampaign container {type}.", perCampaignSettingsContainer.GetType());
+                logger.LogInformation("Found PerSave container {type}.", PerSaveSettingsContainer.GetType());
             }
 
             _settingsContainers = Enumerable.Empty<ISettingsContainer>()
                 .Concat(globalSettingsContainers)
-                .Concat(perCampaignSettingsContainers)
+                .Concat(PerSaveSettingsContainers)
                 .ToList();
         }
 
@@ -83,13 +83,13 @@ namespace MCM.Implementation.Settings.Providers
 
         public override void OnGameStarted(Game game)
         {
-            foreach (var perCampaignContainer in _settingsContainers.OfType<IPerCampaignSettingsContainer>())
-                perCampaignContainer.OnGameStarted(game);
+            foreach (var PerSaveContainer in _settingsContainers.OfType<IPerSaveSettingsContainer>())
+                PerSaveContainer.OnGameStarted(game);
         }
         public override void OnGameEnded(Game game)
         {
-            foreach (var perCampaignContainer in _settingsContainers.OfType<IPerCampaignSettingsContainer>())
-                perCampaignContainer.OnGameEnded(game);
+            foreach (var PerSaveContainer in _settingsContainers.OfType<IPerSaveSettingsContainer>())
+                PerSaveContainer.OnGameEnded(game);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Bannerlord.ButterLib.Common.Extensions;
 
-using MCM.Abstractions.Settings.Base.PerCampaign;
+using MCM.Abstractions.Settings.Base.PerSave;
 using MCM.Abstractions.Settings.Containers;
 using MCM.Abstractions.Settings.Models;
 
@@ -11,12 +11,10 @@ using System.Linq;
 
 using TaleWorlds.Core;
 
-namespace MCM.Implementation.Settings.Containers.PerCampaign
+namespace MCM.Implementation.Settings.Containers.PerSave
 {
-    internal sealed class FluentPerCampaignSettingsContainer : BaseSettingsContainer<FluentPerCampaignSettings>, IMCMFluentPerCampaignSettingsContainer
+    internal sealed class FluentPerSaveSettingsContainer : BaseSettingsContainer<FluentPerSaveSettings>, IMCMFluentPerSaveSettingsContainer
     {
-        protected override string RootFolder { get; }
-
         public override List<SettingsDefinition> CreateModSettingsDefinitions
         {
             get
@@ -30,17 +28,12 @@ namespace MCM.Implementation.Settings.Containers.PerCampaign
             }
         }
 
-        public FluentPerCampaignSettingsContainer()
-        {
-            RootFolder = Path.Combine(base.RootFolder, "PerCampaign");
-        }
-
         private void ReloadAll()
         {
-            if (AppDomain.CurrentDomain.GetData(FluentPerCampaignSettings.ContainerId) == null)
-                AppDomain.CurrentDomain.SetData(FluentPerCampaignSettings.ContainerId, new Dictionary<string, FluentPerCampaignSettings>());
+            if (AppDomain.CurrentDomain.GetData(FluentPerSaveSettings.ContainerId) == null)
+                AppDomain.CurrentDomain.SetData(FluentPerSaveSettings.ContainerId, new Dictionary<string, FluentPerSaveSettings>());
 
-            var storage = (AppDomain.CurrentDomain.GetData(FluentPerCampaignSettings.ContainerId) as Dictionary<string, FluentPerCampaignSettings>)!;
+            var storage = (AppDomain.CurrentDomain.GetData(FluentPerSaveSettings.ContainerId) as Dictionary<string, FluentPerSaveSettings>)!;
             foreach (var (id, settings) in storage)
             {
                 if (!LoadedSettings.ContainsKey(id))

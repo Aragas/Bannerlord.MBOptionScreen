@@ -5,9 +5,9 @@ using HarmonyLib;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace MCM.Abstractions.Settings.Base.PerCampaign
+namespace MCM.Abstractions.Settings.Base.PerSave
 {
-    public abstract class BasePerCampaignSettingsWrapper : PerCampaignSettings, IWrapper
+    public abstract class BasePerSaveSettingsWrapper : PerSaveSettings, IWrapper
     {
         private delegate string GetIdDelegate();
         private delegate string GetFolderNameDelegate();
@@ -24,7 +24,6 @@ namespace MCM.Abstractions.Settings.Base.PerCampaign
         private readonly GetUIVersionDelegate? _getUIVersionDelegate;
         private readonly GetSubFolderDelegate? _getSubFolderDelegate;
         private readonly GetSubGroupDelimiterDelegate? _getSubGroupDelimiterDelegate;
-        private readonly GetFormatDelegate? _getFormatDelegate;
         private readonly OnPropertyChangedDelegate? _methodOnPropertyChangedDelegate;
 
         /// <inheritdoc/>
@@ -43,15 +42,13 @@ namespace MCM.Abstractions.Settings.Base.PerCampaign
         /// <inheritdoc/>
         public override char SubGroupDelimiter => _getSubGroupDelimiterDelegate?.Invoke() ?? '/';
         /// <inheritdoc/>
-        public override string FormatType => _getFormatDelegate?.Invoke() ?? "json";
-        /// <inheritdoc/>
         public override event PropertyChangedEventHandler? PropertyChanged
         {
             add { if (Object is INotifyPropertyChanged notifyPropertyChanged) notifyPropertyChanged.PropertyChanged += value; }
             remove { if (Object is INotifyPropertyChanged notifyPropertyChanged) notifyPropertyChanged.PropertyChanged -= value; }
         }
 
-        protected BasePerCampaignSettingsWrapper(object @object)
+        protected BasePerSaveSettingsWrapper(object @object)
         {
             Object = @object;
             var type = @object.GetType();
@@ -62,7 +59,6 @@ namespace MCM.Abstractions.Settings.Base.PerCampaign
             _getUIVersionDelegate = AccessTools2.GetDelegate<GetUIVersionDelegate>(@object, AccessTools.Property(type, nameof(UIVersion)).GetGetMethod());
             _getSubFolderDelegate = AccessTools2.GetDelegate<GetSubFolderDelegate>(@object, AccessTools.Property(type, nameof(SubFolder)).GetGetMethod());
             _getSubGroupDelimiterDelegate = AccessTools2.GetDelegate<GetSubGroupDelimiterDelegate>(@object, AccessTools.Property(type, nameof(SubGroupDelimiter)).GetGetMethod());
-            _getFormatDelegate = AccessTools2.GetDelegate<GetFormatDelegate>(@object, AccessTools.Property(type, nameof(FormatType)).GetGetMethod());
             _methodOnPropertyChangedDelegate = AccessTools2.GetDelegate<OnPropertyChangedDelegate>(@object, AccessTools.Method(type, nameof(OnPropertyChanged)));
         }
 

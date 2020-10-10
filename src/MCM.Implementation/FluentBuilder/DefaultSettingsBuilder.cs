@@ -1,6 +1,6 @@
 ﻿using MCM.Abstractions.FluentBuilder;
 using MCM.Abstractions.Settings.Base.Global;
-using MCM.Abstractions.Settings.Base.PerCampaign;
+using MCM.Abstractions.Settings.Base.PerSave;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
 using MCM.Abstractions.Settings.Models;
 using MCM.Utils;
@@ -68,8 +68,8 @@ namespace MCM.Implementation.FluentBuilder
         public override FluentGlobalSettings BuildAsGlobal() => new FluentGlobalSettings(
             Id, DisplayName, FolderName, SubFolder, Format, UIVersion, SubGroupDelimiter, OnPropertyChanged, GetSettingPropertyGroups(), Presets);
         /// <inheritdoc/>
-        public override FluentPerCampaignSettings BuildAsPerCampaign() => new FluentPerCampaignSettings(
-            Id, DisplayName, FolderName, SubFolder, Format, UIVersion, SubGroupDelimiter, OnPropertyChanged, GetSettingPropertyGroups(), Presets);
+        public override FluentPerSaveSettings BuildAsPerSave() => new FluentPerSaveSettings(
+            Id, DisplayName, FolderName, SubFolder, UIVersion, SubGroupDelimiter, OnPropertyChanged, GetSettingPropertyGroups(), Presets);
 
         private IEnumerable<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() =>
             SettingsUtils.GetSettingsPropertyGroups(SubGroupDelimiter, GetSettingProperties());

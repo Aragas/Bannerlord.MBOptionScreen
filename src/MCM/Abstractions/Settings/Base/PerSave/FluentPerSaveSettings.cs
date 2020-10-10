@@ -7,11 +7,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 
-namespace MCM.Abstractions.Settings.Base.PerCampaign
+namespace MCM.Abstractions.Settings.Base.PerSave
 {
-    public class FluentPerCampaignSettings : PerCampaignSettings, IFluentSettings
+    public class FluentPerSaveSettings : PerSaveSettings, IFluentSettings
     {
-        public static readonly string ContainerId = "MCM_PerCampaign_FluentStorage";
+        public static readonly string ContainerId = "MCM_PerSave_FluentStorage";
 
         /// <inheritdoc/>
         public sealed override string Id { get; }
@@ -22,8 +22,6 @@ namespace MCM.Abstractions.Settings.Base.PerCampaign
         /// <inheritdoc/>
         public sealed override string SubFolder { get; }
         /// <inheritdoc/>
-        public sealed override string FormatType { get; }
-        /// <inheritdoc/>
         public override string DiscoveryType => "fluent";
         /// <inheritdoc/>
         public sealed override int UIVersion { get; }
@@ -33,7 +31,7 @@ namespace MCM.Abstractions.Settings.Base.PerCampaign
         public sealed override event PropertyChangedEventHandler? PropertyChanged { add => base.PropertyChanged += value; remove => base.PropertyChanged -= value; }
         public List<SettingsPropertyGroupDefinition> SettingPropertyGroups { get; }
 
-        public FluentPerCampaignSettings(string id, string displayName, string folderName, string subFolder, string format,
+        public FluentPerSaveSettings(string id, string displayName, string folderName, string subFolder,
             int uiVersion, char subGroupDelimiter, PropertyChangedEventHandler? onPropertyChanged,
             IEnumerable<SettingsPropertyGroupDefinition> settingPropertyGroups, Dictionary<string, ISettingsPresetBuilder> presets)
         {
@@ -41,7 +39,6 @@ namespace MCM.Abstractions.Settings.Base.PerCampaign
             DisplayName = displayName;
             FolderName = folderName;
             SubFolder = subFolder;
-            FormatType = format;
             UIVersion = uiVersion;
             SubGroupDelimiter = subGroupDelimiter;
             SettingPropertyGroups = settingPropertyGroups.ToList();
@@ -52,7 +49,7 @@ namespace MCM.Abstractions.Settings.Base.PerCampaign
         public void Register()
         {
             if (AppDomain.CurrentDomain.GetData(ContainerId) == null)
-                AppDomain.CurrentDomain.SetData(ContainerId, new Dictionary<string, FluentPerCampaignSettings>());
+                AppDomain.CurrentDomain.SetData(ContainerId, new Dictionary<string, FluentPerSaveSettings>());
 
             if (AppDomain.CurrentDomain.GetData(ContainerId) is IDictionary dict && !dict.Contains(Id))
                 dict.Add(Id, this);
@@ -60,7 +57,7 @@ namespace MCM.Abstractions.Settings.Base.PerCampaign
         public void Unregister()
         {
             if (AppDomain.CurrentDomain.GetData(ContainerId) == null)
-                AppDomain.CurrentDomain.SetData(ContainerId, new Dictionary<string, FluentPerCampaignSettings>());
+                AppDomain.CurrentDomain.SetData(ContainerId, new Dictionary<string, FluentPerSaveSettings>());
 
             if (AppDomain.CurrentDomain.GetData(ContainerId) is IDictionary dict && dict.Contains(Id))
                 dict.Remove(Id);

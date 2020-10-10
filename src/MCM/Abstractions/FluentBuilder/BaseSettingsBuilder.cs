@@ -1,7 +1,7 @@
 ﻿using Bannerlord.ButterLib.Common.Extensions;
 
 using MCM.Abstractions.Settings.Base.Global;
-using MCM.Abstractions.Settings.Base.PerCampaign;
+using MCM.Abstractions.Settings.Base.PerSave;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -26,6 +26,6 @@ namespace MCM.Abstractions.FluentBuilder
         public abstract ISettingsBuilder CreatePreset(string name, Action<ISettingsPresetBuilder> builder);
 
         public abstract FluentGlobalSettings BuildAsGlobal();
-        public abstract FluentPerCampaignSettings BuildAsPerCampaign();
+        public abstract FluentPerSaveSettings BuildAsPerSave();
     }
 }

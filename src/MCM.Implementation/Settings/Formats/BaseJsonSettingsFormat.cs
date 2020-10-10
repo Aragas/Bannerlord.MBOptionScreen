@@ -38,7 +38,7 @@ namespace MCM.Implementation.Settings.Formats
 
         protected static string GetPropertyDefinitionId(ISettingsPropertyDefinition definition) => definition.Id;
 
-        protected string SaveJson(BaseSettings settings)
+        public string SaveJson(BaseSettings settings)
         {
             var jo = new JObject();
             var serializer = JsonSerializer.CreateDefault(JsonSerializerSettings);
@@ -59,7 +59,7 @@ namespace MCM.Implementation.Settings.Formats
         // When I use the standard Populate method for some reason the existing dropdown
         // Gets replaced with a JToken object that ony contains the SelectedIndex.
         // An exception for the dropdown could be made, but a generic approach would be better
-        protected BaseSettings? LoadFromJson(BaseSettings settings, string content)
+        public BaseSettings? LoadFromJson(BaseSettings settings, string content)
         {
             lock (_lock)
             {

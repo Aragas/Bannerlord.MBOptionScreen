@@ -1,8 +1,8 @@
-﻿using MCM.Abstractions.Settings.Base.PerCampaign;
+﻿using MCM.Abstractions.Settings.Base.PerSave;
 
 namespace MCM.Custom.ScreenTests
 {
-    public abstract class BaseTestPerCampaignSettingsBase<T> : AttributePerCampaignSettings<T> where T : PerCampaignSettings, new()
+    public abstract class BaseTestPerSaveSettingsBase<T> : AttributePerSaveSettings<T> where T : PerSaveSettings, new()
     {
         public override string FolderName => "Testing";
     }

@@ -26,6 +26,7 @@ namespace MCM.UI
     public sealed class MCMUISubModule : MBSubModuleBase
     {
         private static readonly UIExtender Extender = new UIExtender("MCM.UI");
+        private bool FirstInit { get; set; } = true;
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         protected override void OnSubModuleLoad()
@@ -60,20 +61,25 @@ namespace MCM.UI
         {
             base.OnBeforeInitialModuleScreenSetAsRoot();
 
-            DelayedSubModuleManager.Register<SandBoxSubModule>();
-            DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
-                nameof(OnBeforeInitialModuleScreenSetAsRoot), SubscriptionType.AfterMethod, (s, e) =>
-                {
-                    if (BaseResourceHandler.Instance is { } resourceHandler)
-                    {
-                        BrushLoader.Inject(resourceHandler);
-                        PrefabsLoader.Inject(resourceHandler);
-                        WidgetLoader.Inject(resourceHandler);
-                    }
+            if (FirstInit)
+            {
+                FirstInit = false;
 
-                    UpdateOptionScreen(MCMUISettings.Instance!);
-                    MCMUISettings.Instance!.PropertyChanged += MCMSettings_PropertyChanged;
-                });
+                DelayedSubModuleManager.Register<SandBoxSubModule>();
+                DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
+                    nameof(OnBeforeInitialModuleScreenSetAsRoot), SubscriptionType.AfterMethod, (s, e) =>
+                    {
+                        if (BaseResourceHandler.Instance is { } resourceHandler)
+                        {
+                            BrushLoader.Inject(resourceHandler);
+                            PrefabsLoader.Inject(resourceHandler);
+                            WidgetLoader.Inject(resourceHandler);
+                        }
+
+                        UpdateOptionScreen(MCMUISettings.Instance!);
+                        MCMUISettings.Instance!.PropertyChanged += MCMSettings_PropertyChanged;
+                    });
+            }
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]

@@ -41,9 +41,9 @@ namespace MCM.Custom.ScreenTests
             globalSettings.Register();
             //globalSettings.Unregister();
 
-            //var perCampaignSettings = builder.BuildAsPerCampaign();
-            //perCampaignSettings.Register();
-            //perCampaignSettings.Unregister();
+            //var PerSaveSettings = builder.BuildAsPerSave();
+            //PerSaveSettings.Register();
+            //PerSaveSettings.Unregister();
 #endif
         }
     }
