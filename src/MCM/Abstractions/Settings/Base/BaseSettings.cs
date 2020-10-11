@@ -31,7 +31,7 @@ namespace MCM.Abstractions.Settings.Base
         /// If you want this settings file stored inside a subfolder, set this to the name of the subfolder.
         /// </summary>
         public virtual string SubFolder => string.Empty;
-        public virtual string FormatType => "memory";
+        public virtual string FormatType => "none";
         public virtual string DiscoveryType => "none";
         public virtual int UIVersion => 1;
         public virtual char SubGroupDelimiter => '/';

@@ -15,7 +15,6 @@ namespace MCM.Abstractions.Settings.Base.PerSave
         private delegate int GetUIVersionDelegate();
         private delegate string GetSubFolderDelegate();
         private delegate char GetSubGroupDelimiterDelegate();
-        private delegate string GetFormatDelegate();
         private delegate void OnPropertyChangedDelegate(string? propertyName);
 
         private readonly GetIdDelegate? _getIdDelegate;

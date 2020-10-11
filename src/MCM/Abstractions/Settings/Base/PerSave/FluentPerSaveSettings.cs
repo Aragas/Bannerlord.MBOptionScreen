@@ -1,8 +1,12 @@
-﻿using MCM.Abstractions.FluentBuilder;
+﻿using Bannerlord.ButterLib.Common.Extensions;
+
+using MCM.Abstractions.FluentBuilder;
+using MCM.Abstractions.Settings.Containers.PerSave;
 using MCM.Abstractions.Settings.Models;
 
+using Microsoft.Extensions.DependencyInjection;
+
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -11,8 +15,6 @@ namespace MCM.Abstractions.Settings.Base.PerSave
 {
     public class FluentPerSaveSettings : PerSaveSettings, IFluentSettings
     {
-        public static readonly string ContainerId = "MCM_PerSave_FluentStorage";
-
         /// <inheritdoc/>
         public sealed override string Id { get; }
         /// <inheritdoc/>
@@ -48,19 +50,13 @@ namespace MCM.Abstractions.Settings.Base.PerSave
 
         public void Register()
         {
-            if (AppDomain.CurrentDomain.GetData(ContainerId) == null)
-                AppDomain.CurrentDomain.SetData(ContainerId, new Dictionary<string, FluentPerSaveSettings>());
-
-            if (AppDomain.CurrentDomain.GetData(ContainerId) is IDictionary dict && !dict.Contains(Id))
-                dict.Add(Id, this);
+            var container = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IFluentPerSaveSettingsContainer>();
+            container?.Register(this);
         }
         public void Unregister()
         {
-            if (AppDomain.CurrentDomain.GetData(ContainerId) == null)
-                AppDomain.CurrentDomain.SetData(ContainerId, new Dictionary<string, FluentPerSaveSettings>());
-
-            if (AppDomain.CurrentDomain.GetData(ContainerId) is IDictionary dict && dict.Contains(Id))
-                dict.Remove(Id);
+            var container = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IFluentPerSaveSettingsContainer>();
+            container?.Unregister(this);
         }
 
         /// <inheritdoc/>

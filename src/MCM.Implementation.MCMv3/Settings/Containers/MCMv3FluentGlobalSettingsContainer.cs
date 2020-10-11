@@ -7,7 +7,6 @@ using MCM.Implementation.MCMv3.Settings.Base;
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 
 using v4::MCM.Abstractions.Settings.Base.Global;
@@ -21,26 +20,6 @@ namespace MCM.Implementation.MCMv3.Settings.Containers
 {
     internal sealed class MCMv3FluentGlobalSettingsContainer : BaseSettingsContainer<FluentGlobalSettings>, IFluentGlobalSettingsContainer
     {
-        protected override string RootFolder { get; }
-
-        public override List<SettingsDefinition> CreateModSettingsDefinitions
-        {
-            get
-            {
-                ReloadAll();
-
-                return LoadedSettings.Keys
-                    .Select(id => new SettingsDefinition(id))
-                    .OrderByDescending(a => a.DisplayName)
-                    .ToList();
-            }
-        }
-
-        public MCMv3FluentGlobalSettingsContainer()
-        {
-            RootFolder = Path.Combine(base.RootFolder, "Global");
-        }
-
         private void ReloadAll()
         {
             var containerId = LegacyFluentGlobalSettings.ContainerId;
@@ -54,5 +33,19 @@ namespace MCM.Implementation.MCMv3.Settings.Containers
                     RegisterSettings(new MCMv3FluentGlobalSettingsWrapper(settings));
             }
         }
+        public override List<SettingsDefinition> CreateModSettingsDefinitions
+        {
+            get
+            {
+                ReloadAll();
+
+                return LoadedSettings.Keys
+                    .Select(id => new SettingsDefinition(id))
+                    .ToList();
+            }
+        }
+
+        public void Register(FluentGlobalSettings settings) { }
+        public void Unregister(FluentGlobalSettings settings) { }
     }
 }

@@ -1,8 +1,12 @@
-﻿using MCM.Abstractions.FluentBuilder;
+﻿using Bannerlord.ButterLib.Common.Extensions;
+
+using MCM.Abstractions.FluentBuilder;
+using MCM.Abstractions.Settings.Containers.Global;
 using MCM.Abstractions.Settings.Models;
 
+using Microsoft.Extensions.DependencyInjection;
+
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -51,21 +55,15 @@ namespace MCM.Abstractions.Settings.Base.Global
             Presets = presets;
         }
 
-        public virtual void Register()
+        public void Register()
         {
-            if (AppDomain.CurrentDomain.GetData(ContainerId) == null)
-                AppDomain.CurrentDomain.SetData(ContainerId, new Dictionary<string, FluentGlobalSettings>());
-
-            if (AppDomain.CurrentDomain.GetData(ContainerId) is IDictionary dict && !dict.Contains(Id))
-                dict.Add(Id, this);
+            var container = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IFluentGlobalSettingsContainer>();
+            container?.Register(this);
         }
-        public virtual void Unregister()
+        public void Unregister()
         {
-            if (AppDomain.CurrentDomain.GetData(ContainerId) == null)
-                AppDomain.CurrentDomain.SetData(ContainerId, new Dictionary<string, FluentGlobalSettings>());
-
-            if (AppDomain.CurrentDomain.GetData(ContainerId) is IDictionary dict && dict.Contains(Id))
-                dict.Remove(Id);
+            var container = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IFluentGlobalSettingsContainer>();
+            container?.Unregister(this);
         }
 
         /// <inheritdoc/>

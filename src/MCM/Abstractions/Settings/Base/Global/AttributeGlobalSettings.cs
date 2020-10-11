@@ -2,6 +2,6 @@
 {
     public abstract class AttributeGlobalSettings<T> : GlobalSettings<T> where T : GlobalSettings, new()
     {
-        public override string DiscoveryType => "attributes";
+        public sealed override string DiscoveryType => "attributes";
     }
 }

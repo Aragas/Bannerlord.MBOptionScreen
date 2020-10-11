@@ -2,6 +2,6 @@
 {
     public abstract class AttributePerSaveSettings<T> : PerSaveSettings<T> where T : PerSaveSettings, new()
     {
-        public override string DiscoveryType => "attributes";
+        public sealed override string DiscoveryType => "attributes";
     }
 }
