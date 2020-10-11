@@ -6,8 +6,6 @@ namespace MCM.Abstractions.Settings.Formats
 {
     public sealed class NoneSettingsFormat : ISettingsFormat
     {
-        private readonly Dictionary<string, BaseSettings> _settings = new Dictionary<string, BaseSettings>();
-
         /// <inheritdoc/>
         public IEnumerable<string> FormatTypes { get; } = new [] { "none" };
 
