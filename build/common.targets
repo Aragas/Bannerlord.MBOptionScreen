@@ -18,7 +18,15 @@
     </ItemGroup>
   </Target>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="$(ModuleName) != ''">
+  <Target Name="TestCheckForGameBinaries" BeforeTargets="Test">
+    <Error Condition="!Exists($(GameFolder))" Text="'GameFolder' property is not set! Can't find the game binaries!" />
+  </Target>
+
+  <Target Name="PostBuildCheckForGameFolder" BeforeTargets="PostBuildCopyToModules" Condition="$(ModuleName) != ''">
+    <Warning Condition="!Exists($(GameFolder))" Text="'GameFolder' property links to a non existing folder! No modules will be copied to the game's Module folder! Check '/build/commpn.props'!"/>
+  </Target>
+
+  <Target Name="PostBuildCopyToModules" AfterTargets="PostBuildEvent" Condition="$(ModuleName) != '' AND Exists($(GameFolder))">
     <CreateDirectory Directory="$(GameFolder)/Modules/$(ModuleName)/bin/Win64_Shipping_Client" />
 
     <CopyFolder FromDirectory="$(TargetDir)" ToDirectory="$(GameFolder)/Modules/$(ModuleName)/bin/Win64_Shipping_Client" Regex="^(?!MCM.NexusMods).*\.dll$" Clean="true" />

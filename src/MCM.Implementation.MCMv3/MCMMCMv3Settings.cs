@@ -16,6 +16,6 @@ namespace MCM.Implementation.MCMv3
             { "VERSION", new TextObject(typeof(MCMMCMv3Settings).Assembly.GetName().Version.ToString(3)) }
         }).ToString();
         public override string FolderName { get; } = "MCM";
-        public override string FormatType { get; } = "memory";
+        public override string FormatType { get; } = "none";
     }
 }
