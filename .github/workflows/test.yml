@@ -88,8 +88,8 @@ jobs:
       run: >-
           $game_version=$env:STABLE_VERSION;
           $game_version=$game_version.substring(1);
-          dotnet test src/Mod Configuration Menu.sln --configuration Debug -p:GameVersion=$game_version -p:GameFolder="$PWD/bannerlord";
-          dotnet test src/Mod Configuration Menu.sln --configuration Release -p:GameVersion=$game_version -p:GameFolder="$PWD/bannerlord";
+          dotnet test "src/Mod Configuration Menu.sln" --configuration Debug -p:GameVersion=$game_version -p:GameFolder="$PWD/bannerlord";
+          dotnet test "src/Mod Configuration Menu.sln" --configuration Release -p:GameVersion=$game_version -p:GameFolder="$PWD/bannerlord";
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
