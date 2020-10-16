@@ -13,7 +13,7 @@ namespace MCM.Abstractions.Dropdown
         public override string StringItem => _ref.Value.ToString();
 
         [DataSourceProperty]
-        public override HintViewModel Hint { get; } = new HintViewModel("");
+        public override HintViewModel Hint { get; } = new HintViewModel(string.Empty);
 
         public DropdownRefSelectorItemVM(IRef @ref)
         {
