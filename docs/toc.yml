@@ -3,7 +3,7 @@
 
 - name: Articles
   href: articles/
-  homepage: articles/mcmv3.md
+  homepage: articles/index.md
 
 - name: API Documentation
   href: api/
