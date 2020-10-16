@@ -13,7 +13,9 @@
   "build": {
     "xref": [
       "xrefs/Newtonsoft.Json-xrefmap.yml",
-      "https://butr.github.io/Bannerlord.ReferenceAssemblies.Documentation/xrefmap.yml"
+      "https://butr.github.io/Bannerlord.ReferenceAssemblies.Documentation/xrefmap.yml",
+      "https://butr.github.io/Bannerlord.ButterLib/xrefmap.yml",
+      "https://butr.github.io/Bannerlord.UIExtenderEx/xrefmap.yml"
     ],
     "xrefService": [
       "https://xref.docs.microsoft.com/query?uid={uid}"
