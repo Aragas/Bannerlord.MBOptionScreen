@@ -1,0 +1,3 @@
+* ``SettingProperty`` moved from ``MBOptionScreen.Attributes`` to ``MBOptionScreen.Attributes.v1``
+* SubModule.xml needs to be updated - change ``DLLName`` attribute from ``MBOptionScreen.dll`` to ``MBOptionScreen.v2.0.2.dll`` or the version you currently use. Basically, after each update of ``MBOptionScreen``, don't forget to change the numbers.
+* It's advised to switch to v2 API of property definition, more info [here](https://github.com/Aragas/Bannerlord.MBOptionScreen/wiki/Attributes)

@@ -1,0 +1,1 @@
+You can check an example of usage of ``Bannerlord.MBOptionScreen`` in my other mod, [Aragas.MercenaryContract](https://github.com/Aragas/Aragas.MercenaryContract).

@@ -1,8 +1,14 @@
-- name: MCMv3
-  href: MCMv3/toc.yml
-  homepage: MCMv3/mcmv3.md
 - name: MCMv4
   href: MCMv4/toc.yml
   homepage: MCMv4/mcmv4.md
+- name: MCMv3
+  href: MCMv3/toc.yml
+  homepage: MCMv3/mcmv3.md
+- name: MCMv2
+  href: MCMv2/toc.yml
+  homepage: MCMv2/attributes.md
+- name: GitHub Actions
+  href: GitHub Actions/toc.yml
+  homepage: GitHub Actions/index.md
 - name: For Contributors
   href: contributors.md
