@@ -67,6 +67,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		..\.github\workflows\test.yml = ..\.github\workflows\test.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{560DE987-D9C8-431C-A197-08C925905C24}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MCMv3", "MCMv3", "{FB5D85DA-B398-4820-AD1F-C79D83543921}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\articles\MCMv3\mcmv3-attributes.md = ..\docs\articles\MCMv3\mcmv3-attributes.md
+		..\docs\articles\MCMv3\mcmv3-fluent-builder.md = ..\docs\articles\MCMv3\mcmv3-fluent-builder.md
+		..\docs\articles\MCMv3\mcmv3.md = ..\docs\articles\MCMv3\mcmv3.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MCMv4", "MCMv4", "{A8BBD326-8B9E-41E4-8219-030B8E42EBBA}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\articles\MCMv4\mcmv4.md = ..\docs\articles\MCMv4\mcmv4.md
+		..\docs\articles\MCMv4\migrating-from-mcmv3.md = ..\docs\articles\MCMv4\migrating-from-mcmv3.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -136,6 +151,9 @@ Global
 		{698918F1-18D4-4E5F-849A-3C81B724EC28} = {013467E6-5CC6-4899-B549-EC5441CB3AB6}
 		{94DECE01-AE9B-476C-82BE-0DE680E38FA2} = {698918F1-18D4-4E5F-849A-3C81B724EC28}
 		{01264F42-8EC3-4920-AF18-FB316F5BFB9A} = {6DA59EA7-D40B-4C02-B0CC-64875B4064CD}
+		{560DE987-D9C8-431C-A197-08C925905C24} = {6DA59EA7-D40B-4C02-B0CC-64875B4064CD}
+		{FB5D85DA-B398-4820-AD1F-C79D83543921} = {560DE987-D9C8-431C-A197-08C925905C24}
+		{A8BBD326-8B9E-41E4-8219-030B8E42EBBA} = {560DE987-D9C8-431C-A197-08C925905C24}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FF6EB7D0-C9CB-4A8B-AE72-0511907E6821}

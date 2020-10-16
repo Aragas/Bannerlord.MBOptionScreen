@@ -14,7 +14,7 @@ Both compatibility layers replace the original libraries to ensure maximum compa
 MCMv3 support 5 API sets:
 * **MCMv3** - main API.
 * **MBOv1** - MBOptionScreen v1.1.15 (Requires **MCM.Implementation.MBO**)
-* **MBO**/**MCMv2** - v2.0.4-v2.0.11 (Requires **MCM.Implementation.MBO**)
+* **MBOv2**/**MCMv2** - v2.0.4-v2.0.11 (Requires **MCM.Implementation.MBO**)
 * **ModLibV1** - v1.0.0-v1.0.2       (Requires **MCM.Implementation.ModLib**)
 * **ModLibV13** - v1.3.0-v1.4.0      (Requires **MCM.Implementation.ModLib**)
 

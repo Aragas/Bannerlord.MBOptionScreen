@@ -1,8 +1,8 @@
 - name: MCMv3
-  href: mcmv3.md
-- name: MCMv3 Attributes
-  href: mcmv3-attributes.md
-- name: MCMv3 Fluent Builder
-  href: mcmv3-fluent-builder.md
+  href: MCMv3/toc.yml
+  homepage: MCMv3/mcmv3.md
+- name: MCMv4
+  href: MCMv4/toc.yml
+  homepage: MCMv4/mcmv4.md
 - name: For Contributors
   href: contributors.md
