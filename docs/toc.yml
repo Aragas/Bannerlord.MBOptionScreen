@@ -7,7 +7,6 @@
 
 - name: API Documentation
   href: api/
-  homepage: api/index.md
 
 - name: Bannerlord Documentations
   dropdown: true
