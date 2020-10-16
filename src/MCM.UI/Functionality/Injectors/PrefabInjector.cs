@@ -43,7 +43,7 @@ namespace MCM.UI.Functionality.Injectors
                 doc);
 
             var customWidgetType = FormatterServices.GetUninitializedObject(CustomWidgetType);
-            if(GetResourcesPath != null) GetResourcesPath(customWidgetType) = string.Empty;
+            if (GetResourcesPath != null) GetResourcesPath(customWidgetType) = string.Empty;
             SetName?.Invoke(customWidgetType, name);
             SetWidgetFactory?.Invoke(customWidgetType, UIResourceManager.WidgetFactory);
             SetWidgetPrefab?.Invoke(customWidgetType, widgetPrefab);
