@@ -68,18 +68,51 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{560DE987-D9C8-431C-A197-08C925905C24}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\articles\contributors.md = ..\docs\articles\contributors.md
+		..\docs\articles\index.md = ..\docs\articles\index.md
+		..\docs\articles\toc.yml = ..\docs\articles\toc.yml
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MCMv3", "MCMv3", "{FB5D85DA-B398-4820-AD1F-C79D83543921}"
 	ProjectSection(SolutionItems) = preProject
 		..\docs\articles\MCMv3\mcmv3-attributes.md = ..\docs\articles\MCMv3\mcmv3-attributes.md
 		..\docs\articles\MCMv3\mcmv3-fluent-builder.md = ..\docs\articles\MCMv3\mcmv3-fluent-builder.md
+		..\docs\articles\MCMv3\mcmv3-soft-dependency.md = ..\docs\articles\MCMv3\mcmv3-soft-dependency.md
 		..\docs\articles\MCMv3\mcmv3.md = ..\docs\articles\MCMv3\mcmv3.md
+		..\docs\articles\MCMv3\toc.yml = ..\docs\articles\MCMv3\toc.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MCMv4", "MCMv4", "{A8BBD326-8B9E-41E4-8219-030B8E42EBBA}"
 	ProjectSection(SolutionItems) = preProject
+		..\docs\articles\MCMv4\mcmv4-migrating-from-mcmv3.md = ..\docs\articles\MCMv4\mcmv4-migrating-from-mcmv3.md
+		..\docs\articles\MCMv4\mcmv4-soft-dependency.md = ..\docs\articles\MCMv4\mcmv4-soft-dependency.md
 		..\docs\articles\MCMv4\mcmv4.md = ..\docs\articles\MCMv4\mcmv4.md
-		..\docs\articles\MCMv4\migrating-from-mcmv3.md = ..\docs\articles\MCMv4\migrating-from-mcmv3.md
+		..\docs\articles\MCMv4\toc.yml = ..\docs\articles\MCMv4\toc.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MCMv2", "MCMv2", "{FFCD62E1-D894-4A2C-AAFD-9CEAF3B47410}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\articles\MCMv2\attributes.md = ..\docs\articles\MCMv2\attributes.md
+		..\docs\articles\MCMv2\comparing-to-modlib.md = ..\docs\articles\MCMv2\comparing-to-modlib.md
+		..\docs\articles\MCMv2\migrating-to-v2.md = ..\docs\articles\MCMv2\migrating-to-v2.md
+		..\docs\articles\MCMv2\project-example.md = ..\docs\articles\MCMv2\project-example.md
+		..\docs\articles\MCMv2\toc.yml = ..\docs\articles\MCMv2\toc.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Installation", "Installation", "{10C9E9D7-3357-4A84-BC9E-E79832895BA1}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\articles\MCMv2\Installation\editing-submodule.xml.md = ..\docs\articles\MCMv2\Installation\editing-submodule.xml.md
+		..\docs\articles\MCMv2\Installation\installation.md = ..\docs\articles\MCMv2\Installation\installation.md
+		..\docs\articles\MCMv2\Installation\settings-definition-example.md = ..\docs\articles\MCMv2\Installation\settings-definition-example.md
+		..\docs\articles\MCMv2\Installation\toc.yml = ..\docs\articles\MCMv2\Installation\toc.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitHub Actions", "GitHub Actions", "{FA2C4FBF-CECC-465F-9132-F98D11C08C75}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\articles\GitHub Actions\environment-variables-used.md = ..\docs\articles\GitHub Actions\environment-variables-used.md
+		..\docs\articles\GitHub Actions\index.md = ..\docs\articles\GitHub Actions\index.md
+		..\docs\articles\GitHub Actions\toc.yml = ..\docs\articles\GitHub Actions\toc.yml
 	EndProjectSection
 EndProject
 Global
@@ -154,6 +187,9 @@ Global
 		{560DE987-D9C8-431C-A197-08C925905C24} = {6DA59EA7-D40B-4C02-B0CC-64875B4064CD}
 		{FB5D85DA-B398-4820-AD1F-C79D83543921} = {560DE987-D9C8-431C-A197-08C925905C24}
 		{A8BBD326-8B9E-41E4-8219-030B8E42EBBA} = {560DE987-D9C8-431C-A197-08C925905C24}
+		{FFCD62E1-D894-4A2C-AAFD-9CEAF3B47410} = {560DE987-D9C8-431C-A197-08C925905C24}
+		{10C9E9D7-3357-4A84-BC9E-E79832895BA1} = {FFCD62E1-D894-4A2C-AAFD-9CEAF3B47410}
+		{FA2C4FBF-CECC-465F-9132-F98D11C08C75} = {560DE987-D9C8-431C-A197-08C925905C24}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FF6EB7D0-C9CB-4A8B-AE72-0511907E6821}

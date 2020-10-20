@@ -23,8 +23,8 @@ You have two options as to how to use MCMv3:
 * Integrate MCMv3 into your mod by using NuGet packet **[Bannerlord.MCM.Integrated](https://www.nuget.org/packages/Bannerlord.MCM.Integrated)**
 * Directly depend on the Nexus standalone mod and use NuGet packet **[Bannerlord.MCM](https://www.nuget.org/packages/Bannerlord.MCM)**
 
-By integrating MCMv3 you won't need to depend on the Nexus standalone package. It will be loaded with your mod and should pick up the settings from your mod and any other mod that uses MCMv3. ModLib and MBO/MCM compatibility will not be provided.  
-**The v3 version still has sometimes issues with the integration system. While those issues are not fixed I would suggest to depend on MCM package/Nexus mod if possible. I at least can guarantee that if the standalone MCM mod is installed, any bugs related to MCM are fixed without your need to update the integrated package. The next big release, v4, will have a stable integration system.**  
+By integrating MCMv3 you won't need to depend on the Nexus standalone package. It will be loaded with your mod and should pick up the settings from your mod and any other mod that uses MCMv3. ModLib and MBO/MCM compatibility will not be provided. 
+**The v3 version still has sometimes issues with the integration system due to game limitations regarding being unable to load multiple versions of the same assembly (DLL). While those issues are not fixed I would suggest to depend on MCM package/Nexus mod if possible. I at least can guarantee that if the standalone MCM mod is installed, any bugs related to MCM are fixed without your need to update the integrated package. The next big release, v4, will not offer an integrated version in favor of the determinism and stability of relying upon a standalone mod.**  
 You also need to include this to your SubModules.xml!
 ```xml
 <SubModule>

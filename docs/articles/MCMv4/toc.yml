@@ -1,4 +1,6 @@
 - name: MCMv4
   href: mcmv4.md
 - name: Migrating from MCMv3
-  href: migrating-from-mcmv3.md
+  href: mcmv4-migrating-from-mcmv3.md
+- name: MCMv4 as a Soft Dependency
+  href: mcmv4-soft-dependency.md

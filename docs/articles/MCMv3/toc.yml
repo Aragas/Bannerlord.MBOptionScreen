@@ -4,3 +4,5 @@
   href: mcmv3-attributes.md
 - name: MCMv3 Fluent Builder
   href: mcmv3-fluent-builder.md
+- name: MCMv3 as a Soft Dependency
+  href: mcmv3-soft-dependency.md
