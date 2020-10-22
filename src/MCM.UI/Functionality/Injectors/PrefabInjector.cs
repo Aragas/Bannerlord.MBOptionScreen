@@ -3,9 +3,11 @@
 using HarmonyLib;
 
 using MCM.UI.Patches;
+using MCM.UI.Utils;
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Xml;
 
@@ -30,9 +32,15 @@ namespace MCM.UI.Functionality.Injectors
         private static readonly SetWidgetPrefabDelegate? SetWidgetPrefab =
             AccessTools2.GetDelegateObjectInstance<SetWidgetPrefabDelegate>(AccessTools.Property(CustomWidgetType, "WidgetPrefab").SetMethod);
         private static readonly AccessTools.FieldRef<object, string>? GetResourcesPath =
-            AccessTools.FieldRefAccess<string>(CustomWidgetType, "_resourcesPath");
+            AccessTools3.FieldRefAccess<string>(CustomWidgetType, "_resourcesPath");
         private static readonly AccessTools.FieldRef<object, IDictionary>? GetCustomTypes =
-            AccessTools.FieldRefAccess<IDictionary>(typeof(WidgetFactory), "_customTypes");
+            AccessTools3.FieldRefAccess<IDictionary>(typeof(WidgetFactory), "_customTypes");
+        private static readonly AccessTools.FieldRef<object, IDictionary>? GetCustomTypePaths =
+            AccessTools3.FieldRefAccess<IDictionary>(typeof(WidgetFactory), "_customTypePaths");
+        private static readonly AccessTools.FieldRef<object, IDictionary>? GetLiveCustomTypes =
+            AccessTools3.FieldRefAccess<IDictionary>(typeof(WidgetFactory), "_liveCustomTypes");
+        private static readonly AccessTools.FieldRef<object, Dictionary<string, int> >? GetLiveInstanceTracker =
+            AccessTools3.FieldRefAccess<Dictionary<string, int>>(typeof(WidgetFactory), "_liveInstanceTracker");
 
         public static WidgetPrefab InjectDocumentAndCreate(string name, XmlDocument doc)
         {
@@ -53,6 +61,24 @@ namespace MCM.UI.Functionality.Injectors
                 var dict = GetCustomTypes(UIResourceManager.WidgetFactory);
                 if (!dict.Contains(name))
                     dict.Add(name, customWidgetType);
+            }
+            if (GetCustomTypePaths != null)
+            {
+                var dict = GetCustomTypePaths(UIResourceManager.WidgetFactory);
+                if (!dict.Contains(name))
+                    dict.Add(name, name);
+            }
+            if (GetLiveCustomTypes != null && GetLiveInstanceTracker != null)
+            {
+                var dict = GetLiveCustomTypes(UIResourceManager.WidgetFactory);
+                if (!dict.Contains(name))
+                    dict.Add(name, customWidgetType);
+
+                var dict2 = GetLiveInstanceTracker(UIResourceManager.WidgetFactory);
+                if (!dict2.ContainsKey(name))
+                    dict2.Add(name, 2); // Hack - keep the instance always alive
+                else
+                    dict2[name]++;
             }
 
             return widgetPrefab;

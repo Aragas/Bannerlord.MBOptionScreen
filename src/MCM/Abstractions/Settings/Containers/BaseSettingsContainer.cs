@@ -23,8 +23,7 @@ namespace MCM.Abstractions.Settings.Containers
 
         /// <inheritdoc/>
         public virtual List<SettingsDefinition> CreateModSettingsDefinitions => LoadedSettings.Keys.ToList()
-            .Select(id => new SettingsDefinition(id))
-            .ToList();
+            .ConvertAll(id => new SettingsDefinition(id));
 
         protected virtual void RegisterSettings(TSettings settings)
         {

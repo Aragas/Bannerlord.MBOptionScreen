@@ -1,0 +1,26 @@
+﻿<Brushes>
+  <Brush Name="MCM_v1.Value.Display">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="BlankWhiteSquare_9" IsHidden="true"/>
+      <BrushLayer Name="Hovered" Sprite="BlankWhiteSquare_9" IsHidden="true"/>
+      <BrushLayer Name="Disabled" IsHidden="true"/>
+    </Layers>
+    <Styles>
+      <Style Name="Default">
+        <BrushLayer Name="Default" Color="#CCCCCC00" AlphaFactor="0.0" IsHidden="false"/>
+      </Style>
+      <Style Name="Hovered">
+        <BrushLayer Name="Hovered" Color="#FFFFFFFF" AlphaFactor="0.5" IsHidden="false"/>
+      </Style>
+      <Style Name="Pressed">
+        <BrushLayer Name="Hovered" Color="#FFFFFFFF" AlphaFactor="0.5" IsHidden="false"/>
+      </Style>
+      <Style Name="Selected">
+        <BrushLayer Name="Hovered" Color="#FFFFFFFF" AlphaFactor="0.5" IsHidden="false"/>
+      </Style>
+      <Style Name="Disabled">
+        <BrushLayer Name="Disabled" Color="#FFFFFFFF" AlphaFactor="1.0" IsHidden="false"/>
+      </Style>
+    </Styles>
+  </Brush>
+</Brushes>

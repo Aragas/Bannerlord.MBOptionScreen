@@ -1,4 +1,5 @@
-﻿using Bannerlord.UIExtenderEx.Attributes;
+﻿using Bannerlord.ButterLib.Common.Helpers;
+using Bannerlord.UIExtenderEx.Attributes;
 using Bannerlord.UIExtenderEx.Prefabs;
 
 using System.Xml;
@@ -29,13 +30,19 @@ namespace MCM.UI.UIExtenderEx
 
         public OptionsPrefabExtension2()
         {
-            XmlDocument.LoadXml("<ModOptionsPageView_MCMv3 Id=\"ModOptionsPage\" DataSource=\"{ModOptions}\" />");
+            if (ApplicationVersionUtils.GameVersion() is { } gameVersion)
+            {
+                if (gameVersion.Major <= 1 && gameVersion.Minor <= 5 && gameVersion.Revision <= 3)
+                    XmlDocument.LoadXml("<ModOptionsPageView_v1 Id=\"ModOptionsPage\" DataSource=\"{ModOptions}\" />");
+                else
+                    XmlDocument.LoadXml("<ModOptionsPageView_v2 Id=\"ModOptionsPage\" DataSource=\"{ModOptions}\" />");
+            }
         }
 
         public override XmlDocument GetPrefabExtension() => XmlDocument;
     }
 
-    [PrefabExtension("Options", "descendant::OptionsScreenWidget[@Id='Options']/Children/ListPanel[@Id='MainSectionListPanel']/Children/Widget[@Id='DescriptionsRightPanel']")]
+    [PrefabExtension("Options", "descendant::Widget[@Id='DescriptionsRightPanel']")]
     public sealed class OptionsPrefabExtension3 : PrefabExtensionReplacePatch
     {
         public override string Id => "Options3";

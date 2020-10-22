@@ -1,4 +1,5 @@
 ﻿using Bannerlord.ButterLib.Common.Extensions;
+using Bannerlord.ButterLib.Common.Helpers;
 using Bannerlord.ButterLib.DelayedSubModule;
 using Bannerlord.UIExtenderEx;
 
@@ -6,7 +7,7 @@ using HarmonyLib;
 
 using MCM.Abstractions.Settings.Base;
 using MCM.UI.Functionality;
-using MCM.UI.Functionality.Loaders;
+using MCM.UI.Functionality.Injectors;
 using MCM.UI.GUI.GauntletUI;
 using MCM.UI.Patches;
 
@@ -45,7 +46,6 @@ namespace MCM.UI
             var services = this.GetServices();
             services.AddSingleton<BaseGameMenuScreenHandler, DefaultGameMenuScreenHandler>();
             services.AddSingleton<BaseIngameMenuScreenHandler, DefaultIngameMenuScreenHandler>();
-            services.AddSingleton<BaseResourceHandler, DefaultResourceHandler>();
             services.AddTransient<IMCMOptionsScreen, ModOptionsGauntletScreen>();
 
             DelayedSubModuleManager.Register<SandBoxSubModule>();
@@ -54,6 +54,14 @@ namespace MCM.UI
                 {
                     Extender.Register(typeof(MCMUISubModule).Assembly);
                 });
+
+            if (ApplicationVersionUtils.GameVersion() is { } gameVersion)
+            {
+                if (gameVersion.Major <= 1 && gameVersion.Minor <= 5 && gameVersion.Revision <= 3)
+                    services.AddSingleton<IResourceInjector, Pre154ResourceInjector>();
+                else
+                    services.AddSingleton<IResourceInjector, Post154ResourceInjector>();
+            }
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
@@ -69,12 +77,7 @@ namespace MCM.UI
                 DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
                     nameof(OnBeforeInitialModuleScreenSetAsRoot), SubscriptionType.AfterMethod, (s, e) =>
                     {
-                        if (BaseResourceHandler.Instance is { } resourceHandler)
-                        {
-                            BrushLoader.Inject(resourceHandler);
-                            PrefabsLoader.Inject(resourceHandler);
-                            WidgetLoader.Inject(resourceHandler);
-                        }
+                        var resourceInjector = this.GetServiceProvider().GetRequiredService<IResourceInjector>();
 
                         UpdateOptionScreen(MCMUISettings.Instance!);
                         MCMUISettings.Instance!.PropertyChanged += MCMSettings_PropertyChanged;

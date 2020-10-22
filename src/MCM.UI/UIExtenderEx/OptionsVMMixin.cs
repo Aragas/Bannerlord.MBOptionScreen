@@ -21,8 +21,10 @@ namespace MCM.UI.UIExtenderEx
         private delegate void ExecuteDoneDelegate(OptionsVM instance);
         private delegate void ExecuteCancelDelegate(OptionsVM instance);
 
-        private static readonly ExecuteDoneDelegate? ExecuteDoneMethod = AccessTools2.GetDelegate<ExecuteDoneDelegate>(typeof(OptionsVM), "ExecuteDone");
-        private static readonly ExecuteCancelDelegate? ExecuteCancelMethod = AccessTools2.GetDelegate<ExecuteCancelDelegate>(typeof(OptionsVM), "ExecuteCancel");
+        private static readonly ExecuteDoneDelegate? ExecuteDoneMethod =
+            AccessTools2.GetDelegate<ExecuteDoneDelegate>(typeof(OptionsVM), "ExecuteDone");
+        private static readonly ExecuteCancelDelegate? ExecuteCancelMethod =
+            AccessTools2.GetDelegate<ExecuteCancelDelegate>(typeof(OptionsVM), "ExecuteCancel");
 
         static OptionsVMMixin()
         {

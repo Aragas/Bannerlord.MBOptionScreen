@@ -9,6 +9,7 @@ using MCM.Implementation.MCMv3.Patches;
 using MCM.Implementation.MCMv3.Settings.Containers;
 using MCM.Implementation.MCMv3.Settings.Properties;
 using MCM.Implementation.MCMv3.Settings.Providers;
+using MCM.Implementation.MCMv3.Utils;
 
 using TaleWorlds.MountAndBlade;
 
@@ -21,7 +22,7 @@ namespace MCM.Implementation.MCMv3
     public class MCMMCMv3SubModule : MBSubModuleBase
     {
         private static readonly AccessTools.FieldRef<MCMv3BaseSettingsProvider>? Instance =
-            AccessTools.StaticFieldRefAccess<MCMv3BaseSettingsProvider>(AccessTools.Field(typeof(MCMv3BaseSettingsProvider), "_instance"));
+            AccessTools3.StaticFieldRefAccess<MCMv3BaseSettingsProvider>(AccessTools.Field(typeof(MCMv3BaseSettingsProvider), "_instance"));
 
         protected override void OnSubModuleLoad()
         {

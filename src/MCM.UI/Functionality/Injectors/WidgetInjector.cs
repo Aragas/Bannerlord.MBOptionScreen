@@ -1,5 +1,7 @@
 ﻿using HarmonyLib;
 
+using MCM.UI.Utils;
+
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -12,7 +14,7 @@ namespace MCM.UI.Functionality.Injectors
     internal static class WidgetInjector
     {
         private static readonly AccessTools.FieldRef<WidgetFactory, Dictionary<string, Type>>? GetBuiltinTypes =
-            AccessTools.FieldRefAccess<WidgetFactory, Dictionary<string, Type>>("_builtinTypes");
+            AccessTools3.FieldRefAccess<WidgetFactory, Dictionary<string, Type>>("_builtinTypes");
 
         internal static readonly ConcurrentDictionary<Type, object?> BuiltinWidgets = new ConcurrentDictionary<Type, object?>();
 

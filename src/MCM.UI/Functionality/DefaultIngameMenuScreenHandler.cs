@@ -3,6 +3,8 @@ using Bannerlord.ButterLib.Common.Helpers;
 
 using HarmonyLib;
 
+using MCM.UI.Utils;
+
 using SandBox.View.Map;
 
 using System;
@@ -29,10 +31,10 @@ namespace MCM.UI.Functionality
         private static readonly OnEscapeMenuToggledGauntletMissionEscapeMenuBaseDelegate? OnEscapeMenuToggledGauntletMissionEscapeMenuBase =
             AccessTools2.GetDelegateObjectInstance<OnEscapeMenuToggledGauntletMissionEscapeMenuBaseDelegate>(typeof(GauntletMissionEscapeMenuBase), "OnEscapeMenuToggled");
 
-        private static readonly AccessTools.FieldRef<GauntletMissionEscapeMenuBase, EscapeMenuVM> DataSource =
-            AccessTools.FieldRefAccess<GauntletMissionEscapeMenuBase, EscapeMenuVM>("_dataSource");
-        private static readonly AccessTools.FieldRef<EscapeMenuItemVM, object> Identifier =
-            AccessTools.FieldRefAccess<EscapeMenuItemVM, object>("_identifier");
+        private static readonly AccessTools.FieldRef<GauntletMissionEscapeMenuBase, EscapeMenuVM>? DataSource =
+            AccessTools3.FieldRefAccess<GauntletMissionEscapeMenuBase, EscapeMenuVM>("_dataSource");
+        private static readonly AccessTools.FieldRef<EscapeMenuItemVM, object>? Identifier =
+            AccessTools3.FieldRefAccess<EscapeMenuItemVM, object>("_identifier");
 
         private static readonly WeakReference<GauntletMissionEscapeMenuBase> _instance = new WeakReference<GauntletMissionEscapeMenuBase>(null!);
         private static Dictionary<string, (int, Func<ScreenBase?>, TextObject)> ScreensCache { get; } = new Dictionary<string, (int, Func<ScreenBase?>, TextObject)>();
@@ -119,7 +121,7 @@ namespace MCM.UI.Functionality
 
         public override void AddScreen(string internalName, int index, Func<ScreenBase?> screenFactory, TextObject text)
         {
-            if (_instance.TryGetTarget(out var instance))
+            if (_instance.TryGetTarget(out var instance) && DataSource != null)
             {
                 var dataSource = DataSource(instance);
                 dataSource.MenuItems.Insert(index, new EscapeMenuItemVM(
@@ -132,7 +134,7 @@ namespace MCM.UI.Functionality
         }
         public override void RemoveScreen(string internalName)
         {
-            if (_instance.TryGetTarget(out var instance))
+            if (_instance.TryGetTarget(out var instance)&& DataSource != null && Identifier != null)
             {
                 var dataSource = DataSource(instance);
                 var found = dataSource.MenuItems.FirstOrDefault(i => Identifier(i) is string text && text == internalName);
