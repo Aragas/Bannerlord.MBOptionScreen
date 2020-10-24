@@ -39,7 +39,7 @@ namespace MCM.UI.Functionality.Injectors
             AccessTools3.FieldRefAccess<IDictionary>(typeof(WidgetFactory), "_customTypePaths");
         private static readonly AccessTools.FieldRef<object, IDictionary>? GetLiveCustomTypes =
             AccessTools3.FieldRefAccess<IDictionary>(typeof(WidgetFactory), "_liveCustomTypes");
-        private static readonly AccessTools.FieldRef<object, Dictionary<string, int> >? GetLiveInstanceTracker =
+        private static readonly AccessTools.FieldRef<object, Dictionary<string, int>>? GetLiveInstanceTracker =
             AccessTools3.FieldRefAccess<Dictionary<string, int>>(typeof(WidgetFactory), "_liveInstanceTracker");
 
         public static WidgetPrefab InjectDocumentAndCreate(string name, XmlDocument doc)
