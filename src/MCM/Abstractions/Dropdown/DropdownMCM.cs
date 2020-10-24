@@ -6,7 +6,9 @@ using TaleWorlds.Localization;
 
 namespace MCM.Abstractions.Dropdown
 {
-    // Uses MCM's classes
+    /// <summary>
+    /// Uses MCM's ViewModels
+    /// </summary>
     public sealed class DropdownMCM<T> : List<T>, IEqualityComparer<DropdownMCM<T>>
         where T : class
     {

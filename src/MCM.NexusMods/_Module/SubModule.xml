@@ -42,7 +42,7 @@
     </SubModule>
     <SubModule>
       <Name value="MCMv4 UI" />
-      <DLLName value="MCMv4.UI.v$version$.dll" />
+      <DLLName value="MCMv4.UI.dll" />
       <SubModuleClassType value="MCM.UI.MCMUISubModule" />
       <Tags />
     </SubModule>
