@@ -73,13 +73,13 @@ namespace MCM.Extensions
             services.TryAddEnumerable(ServiceDescriptor.Singleton<ISettingsContainer, TImplementation>());
 
             if (typeof(IPerSaveSettingsContainer).IsAssignableFrom(typeof(TImplementation)))
-            {
                 services.AddSingleton(typeof(IPerSaveSettingsContainer), typeof(TImplementation));
-            }
             if (typeof(IGlobalSettingsContainer).IsAssignableFrom(typeof(TImplementation)))
-            {
                 services.AddSingleton(typeof(IGlobalSettingsContainer), typeof(TImplementation));
-            }
+            if (typeof(IFluentPerSaveSettingsContainer).IsAssignableFrom(typeof(TImplementation)))
+                services.AddSingleton(typeof(IFluentPerSaveSettingsContainer), typeof(TImplementation));
+            if (typeof(IFluentGlobalSettingsContainer).IsAssignableFrom(typeof(TImplementation)))
+                services.AddSingleton(typeof(IFluentGlobalSettingsContainer), typeof(TImplementation));
             return services;
         }
 

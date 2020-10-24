@@ -38,7 +38,7 @@ namespace MCM.UI.Functionality.Injectors
             GauntletMoviePatch.Patch(harmony, MovieRequested);
 
             BrushInjector.InjectDocument(Load("MCM.UI.GUI.v2.Brushes.ButtonBrushes.xml"));
-            //BrushInjector.InjectDocument(Load("MCM.UI.GUI.v2.Brushes.DividerBrushes.xml"));
+            BrushInjector.InjectDocument(Load("MCM.UI.GUI.v2.Brushes.DividerBrushes.xml"));
             BrushInjector.InjectDocument(Load("MCM.UI.GUI.v2.Brushes.ExpandIndicator.xml"));
             BrushInjector.InjectDocument(Load("MCM.UI.GUI.v2.Brushes.SettingsBrush.xml"));
             BrushInjector.InjectDocument(Load("MCM.UI.GUI.v2.Brushes.ResetButtonBrush.xml"));
@@ -56,30 +56,4 @@ namespace MCM.UI.Functionality.Injectors
             WidgetInfo.ReLoad();
         }
     }
-
-    /*
-    /// <summary>
-    /// Can be easily replaced once a less hacky solution is found
-    /// </summary>
-    internal sealed class DefaultResourceHandler : BaseResourceHandler
-    {
-        public DefaultResourceHandler()
-        {
-            var harmony = new Harmony("bannerlord.mcm.resourcehandler");
-            BrushFactoryPatch.Patch(harmony);
-            GauntletMoviePatch.Patch(harmony);
-        }
-
-        public override void InjectBrush(XmlDocument xmlDocument) => BrushInjector.InjectDocument(xmlDocument);
-        public override void InjectPrefab(string prefabName, XmlDocument xmlDocument, bool create = false) => PrefabInjector.InjectDocumentAndCreate(prefabName, xmlDocument, create);
-        public override void InjectWidget(Type widgetType) => WidgetInjector.InjectWidget(widgetType);
-        public override WidgetPrefab? MovieRequested(string movie) => movie switch
-        {
-            "ModOptionsView_MCMv3" => PrefabsLoader.LoadModOptionsView_MCMv3(),
-            "EditValueView_MCMv3" => PrefabsLoader.LoadEditValueView_MCMv3(),
-            "OptionsWithModOptionsView_MCMv3" => PrefabsLoader.LoadOptionsWithModOptionsView_MCMv3(),
-            _ => null
-        };
-    }
-    */
 }

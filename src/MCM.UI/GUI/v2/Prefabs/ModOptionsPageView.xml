@@ -91,21 +91,18 @@
                                         Text="@SelectedDisplayName" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
                         <!-- Search box -->
-                        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="350" SuggestedHeight="40" VerticalAlignment="Center" HorizontalAlignment="Right" MarginLeft="40" MarginRight="20"
-                                DoNotAcceptEvents="true" Sprite="SaveLoad\load_tuple_selected" Brush="SPOptions.Dropdown.Center">
+                        <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="350" SuggestedHeight="40" VerticalAlignment="Center" HorizontalAlignment="Right" MarginLeft="40" MarginRight="20"
+                                     DoNotAcceptEvents="true" Sprite="SaveLoad\load_tuple_selected" Brush="SPOptions.Dropdown.Center">
                           <Children>
-                            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="25" SuggestedHeight="24" VerticalAlignment="Center" HorizontalAlignment="Right" MarginRight="15"
-                                    Sprite="Encyclopedia\icon_search" IsDisabled="true"/>
-						  
-                            <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center" MarginLeft="10" MarginRight="10"
-                                                Brush="MCMv3.Text" RealText="@SearchText" IsObfuscationEnabled="false"/>
+                            <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center" Brush="MCMv3.Text" RealText="@SearchText" IsObfuscationEnabled="false"/>
+                            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="25" SuggestedHeight="24" HorizontalAlignment="Right" VerticalAlignment="Center" MarginRight="10" Sprite="Encyclopedia\icon_search" IsDisabled="true" />
                           </Children>
-                        </Widget>
+                        </BrushWidget>
 
                       </Children>
                     </ListPanel>
                     <!-- Separator -->
-                    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2" VerticalAlignment="Top" Sprite="GradientDivider_9" Color="#FFEBC1FF" AlphaFactor="0.4" MarginLeft="15" MarginRight="15"/>
+                    <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="MCMv3.Divider.Yellow" MarginLeft="15" MarginRight="15"/>
 
                     <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="30" MarginLeft="30">
                       <Children>
@@ -142,7 +139,7 @@
                                LayoutImp.LayoutMethod="VerticalBottomToTop" MarginTop="1">
                       <Children>
 
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2" VerticalAlignment="Top" Sprite="GradientDivider_9" Color="#FFEBC1FF" AlphaFactor="0.4" MarginLeft="15" MarginRight="15"/>
+                        <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="MCMv3.Divider.Yellow" MarginLeft="15" MarginRight="15" MarginBottom="2"/>
 
                         <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Text="@HintText" IsVisible="@IsHintVisible"
                                     HorizontalAlignment="Left" VerticalAlignment="Center" MarginLeft="20" MarginRight="10" Brush="MCMv3.Hint.Text"/>

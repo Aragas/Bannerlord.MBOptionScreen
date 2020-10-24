@@ -27,7 +27,7 @@
 
                 <!-- Mods Listing Section Inner Panel-->
                 <Widget HeightSizePolicy="Fixed" WidthSizePolicy="Fixed" HorizontalAlignment="Center" VerticalAlignment="Center"
-                        SuggestedWidth="495" SuggestedHeight="637" PositionXOffset="-19" PositionYOffset="31">
+                        SuggestedWidth="495" SuggestedHeight="637" PositionXOffset="23" PositionYOffset="37">
                   <Children>
 
                     <!-- Format for a list is: ScrollPanel -> Widget ClipRect -> ListPanel/Widget InnerPanel -> Items-->
@@ -64,33 +64,32 @@
                   </Children>
                 </Widget>
 
-                <!-- Buttons -->
-                <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Bottom" MarginBottom="39"
-                           MarginRight="39">
-                  <Children>
-
-                    <!-- Cancel button -->
-                    <ButtonWidget Id="CancelButton" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
-                                  SuggestedWidth="!CancelButton.Width" SuggestedHeight="!CancelButton.Height" Brush="MCMv3.Cancel.Button"
-                                  Command.Click="ExecuteCancel">
-                      <Children>
-
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="@CancelButtonText" />
-
-                      </Children>
-                    </ButtonWidget>
-
-                    <!--Done Button-->
-                    <ButtonWidget Id="DoneButton" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
-                                  SuggestedWidth="!CancelButton.Width" SuggestedHeight="!CancelButton.Height" Brush="MCMv3.Done.Button"
-                                  Command.Click="ExecuteDone">
-                      <Children>
-
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="@DoneButtonText" />
-                      </Children>
-                    </ButtonWidget>
-
-                  </Children>
+                <!-- Buttons -->	
+                <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Bottom">	
+                  <Children>	
+		
+                    <!-- Cancel button -->	
+                    <ButtonWidget Id="CancelButton" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"	
+                                  SuggestedWidth="!CancelButton.Width" SuggestedHeight="!CancelButton.Height" Brush="MCMv3.Cancel.Button"	
+                                  Command.Click="ExecuteCancel">	
+                      <Children>	
+		
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="@CancelButtonText" />	
+		
+                      </Children>	
+                    </ButtonWidget>	
+		
+                    <!--Done Button-->	
+                    <ButtonWidget Id="DoneButton" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"	
+                                  SuggestedWidth="!CancelButton.Width" SuggestedHeight="!CancelButton.Height" Brush="MCMv3.Done.Button"	
+                                  Command.Click="ExecuteDone">	
+                      <Children>	
+		
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="@DoneButtonText" />	
+                      </Children>	
+                    </ButtonWidget>	
+		
+                  </Children>	
                 </ListPanel>
 
               </Children>
@@ -121,24 +120,19 @@
                         <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="80" Brush="MCMv3.Title.Text"
                                         Text="@SelectedDisplayName" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
-
                         <!-- Search box -->
-                        <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="350" SuggestedHeight="40" VerticalAlignment="Center" HorizontalAlignment="Right" MarginLeft="40" MarginRight="20"
-                                DoNotAcceptEvents="true" Sprite="SaveLoad\load_tuple_selected" Brush="SPOptions.Dropdown.Center">
+                        <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="350" SuggestedHeight="40" VerticalAlignment="Center" HorizontalAlignment="Right" MarginLeft="40" MarginRight="20"
+                                     DoNotAcceptEvents="true" Sprite="SaveLoad\load_tuple_selected" Brush="SPOptions.Dropdown.Center">
                           <Children>
-                            <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center" MarginLeft="10" MarginRight="10"
-                                                Brush="MCMv3.Text" RealText="@SearchText" IsObfuscationEnabled="false"/>
-                            
-                            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="25" SuggestedHeight="24" VerticalAlignment="Center" HorizontalAlignment="Right" MarginRight="15"
-                                    Sprite="Encyclopedia\icon_search" IsDisabled="true"/>
+                            <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center" Brush="MCMv3.Text" RealText="@SearchText" IsObfuscationEnabled="false"/>
+                            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="25" SuggestedHeight="24" HorizontalAlignment="Right" VerticalAlignment="Center" MarginRight="10" Sprite="Encyclopedia\icon_search" IsDisabled="true" />
                           </Children>
-                        </Widget>
+                        </BrushWidget>
 
                       </Children>
                     </ListPanel>
                     <!-- Separator -->
-                    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="MCMv3.Divider.Yellow"
-                            MarginLeft="15" MarginRight="15"/>
+                    <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="MCMv3.Divider.Yellow" MarginLeft="15" MarginRight="15"/>
 
                     <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="30" MarginLeft="30">
                       <Children>
@@ -175,8 +169,7 @@
                                LayoutImp.LayoutMethod="VerticalBottomToTop" MarginTop="1">
                       <Children>
 
-                        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="MCMv3.Divider.Yellow"
-                                MarginLeft="15" MarginRight="15" MarginBottom="2"/>
+                        <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="MCMv3.Divider.Yellow" MarginLeft="15" MarginRight="15" MarginBottom="2"/>
 
                         <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Text="@HintText" IsVisible="@IsHintVisible"
                                     HorizontalAlignment="Left" VerticalAlignment="Center" MarginLeft="20" MarginRight="10" Brush="MCMv3.Hint.Text"/>
@@ -193,7 +186,7 @@
           </Children>
         </ListPanel>
 
-        <!-- Top Banner -->
+        <!-- Top Banner -->	
         <Standard.TopPanel Parameter.Title="@Name"/>
 
       </Children>

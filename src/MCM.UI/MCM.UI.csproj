@@ -28,6 +28,7 @@
 
   <ItemGroup>
     <EmbeddedResource Include="GUI\v2\Brushes\ButtonBrushes.xml" />
+    <EmbeddedResource Include="GUI\v2\Brushes\DividerBrushes.xml" />
     <EmbeddedResource Include="GUI\v2\Brushes\ExpandIndicator.xml" />
     <EmbeddedResource Include="GUI\v2\Brushes\SettingsBrush.xml" />
     <EmbeddedResource Include="GUI\v2\Brushes\ResetButtonBrush.xml" />
