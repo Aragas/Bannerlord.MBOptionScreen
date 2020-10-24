@@ -5,6 +5,7 @@
     <Authors>Aragas, mipen</Authors>
     <AssemblyName>MCMv4.Implementation.ModLib.v$(Version)</AssemblyName>
     <ModuleName>Bannerlord.MBOptionScreen.ModLib</ModuleName>
+    <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

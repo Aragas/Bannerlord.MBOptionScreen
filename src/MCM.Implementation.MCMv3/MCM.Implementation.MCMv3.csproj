@@ -5,6 +5,7 @@
     <Authors>Aragas</Authors>
     <AssemblyName>MCMv4.Implementation.MCMv3.v$(Version)</AssemblyName>
     <ModuleName>Bannerlord.MBOptionScreen.MCMv3</ModuleName>
+    <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,5 +20,5 @@
     <Reference Include="MCMv3.Custom.ScreenTests" HintPath="_Module/bin/Win64_Shipping_Client/MCMv3.Custom.ScreenTests.dll" Private="false" Aliases="v3_Tests" />
   </ItemGroup>
   -->
-  
+
 </Project>

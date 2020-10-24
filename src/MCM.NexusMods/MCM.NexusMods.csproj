@@ -3,6 +3,7 @@
   <PropertyGroup>
     <Authors>Aragas, mipen</Authors>
     <ModuleName>Bannerlord.MBOptionScreen</ModuleName>
+    <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

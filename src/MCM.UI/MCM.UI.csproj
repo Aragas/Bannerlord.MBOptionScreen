@@ -5,6 +5,7 @@
     <Authors>Aragas, mipen</Authors>
     <AssemblyName>MCMv4.UI</AssemblyName>
     <LangVersion>preview</LangVersion>
+    <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
