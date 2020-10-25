@@ -2,7 +2,7 @@
 <Project>
 
   <PropertyGroup>
-    <Version>4.0.8</Version>
+    <Version>4.1.0</Version>
     <GameVersion>1.4.3</GameVersion>
     <HarmonyVersion>2.0.2</HarmonyVersion>
     <ButterLibVersion>1.0.10</ButterLibVersion>
