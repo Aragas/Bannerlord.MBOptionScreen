@@ -12,7 +12,6 @@
     <PackageDescription>A library for easy Setting integration. Contains the abstraction library, requires the Standalone dependency to work!</PackageDescription>
     <Title>Mod Configuration Menu</Title>
     <Authors>Aragas, mipen</Authors>
-    <DevelopmentDependency>true</DevelopmentDependency>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>MCM-128-w-2.png</PackageIcon>
