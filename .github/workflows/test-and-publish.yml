@@ -128,6 +128,7 @@ jobs:
     # ignore Stable_Release and treat is as Release
     - name: Build MCM (Release)
       run: >-
+        mkdir bannerlord-publish;
         dotnet build src/MCM.NexusMods/MCM.NexusMods.csproj --configuration Stable_Release -p:GameFolder="$PWD/bannerlord-publish";
         dotnet build src/MCM.Implementation.MCMv3/MCM.Implementation.MCMv3.csproj --configuration Stable_Release -p:GameFolder="$PWD/bannerlord-publish";
         dotnet build src/MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Stable_Release -p:GameFolder="$PWD/bannerlord-publish";
