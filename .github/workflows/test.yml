@@ -99,10 +99,10 @@ jobs:
           $stable_version=$stable_version.substring(1);
           $beta_version=$env:BETA_VERSION;
           $beta_version=$beta_version.substring(1);
-          dotnet test "src/Mod Configuration Menu.sln" --configuration Stable_Debug -p:GameVersion=$stable_version -p:GameFolder="$PWD/bannerlord";
-          dotnet test "src/Mod Configuration Menu.sln" --configuration Stable_Release -p:GameVersion=$stable_version -p:GameFolder="$PWD/bannerlord";
-          dotnet test "src/Mod Configuration Menu.sln" --configuration Beta_Debug -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord";
-          dotnet test "src/Mod Configuration Menu.sln" --configuration Beta_Release -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord";
+          dotnet test "src/Mod Configuration Menu.sln" --configuration Stable_Debug -p:GameVersion=$stable_version -p:GameFolder="$PWD/bannerlord-stable";
+          dotnet test "src/Mod Configuration Menu.sln" --configuration Stable_Release -p:GameVersion=$stable_version -p:GameFolder="$PWD/bannerlord-stable";
+          dotnet test "src/Mod Configuration Menu.sln" --configuration Beta_Debug -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord-beta";
+          dotnet test "src/Mod Configuration Menu.sln" --configuration Beta_Release -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord-beta";
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
