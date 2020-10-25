@@ -7,7 +7,7 @@ on:
 
 jobs:
   test:
-    name: Test
+    name: Test and Build
     runs-on: windows-latest
     steps:
     - name: Checkout Repository
@@ -44,13 +44,22 @@ jobs:
         pathSource: depotdownloader-2.3.6.zip
         pathTarget: depotdownloader
 
-    - name: Download Bannerlord binaries
+    - name: Download Bannerlord binaries (Stable)
       run: >-
         dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -beta ${{secrets.SYNCED_GAME_STABLE_VERSION}} -username ${{secrets.STEAM_LOGIN}}
-        -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord
+        -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord-stable
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      shell: pwsh
+    - name: Download Bannerlord binaries (Beta)
+      run: >-
+        dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -beta ${{secrets.SYNCED_GAME_BETA_VERSION}} -username ${{secrets.STEAM_LOGIN}}
+        -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord-beta
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      shell: pwsh
 
     - name: Download opencover.4.7.922
       uses: i3h/download-release-asset@v1
@@ -68,20 +77,27 @@ jobs:
 
     - name: Test
       run: >-
-          $game_version=$env:STABLE_VERSION;
-          $game_version=$game_version.substring(1);
-          dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Debug -p:GameVersion=$game_version -p:GameFolder="$PWD/bannerlord";
-          dotnet test src/MCM.Tests/MCM.Tests.csproj --configuration Release -p:GameVersion=$game_version -p:GameFolder="$PWD/bannerlord";
+          $stable_version=$env:STABLE_VERSION;
+          $stable_version=$stable_version.substring(1);
+          $beta_version=$env:BETA_VERSION;
+          $beta_version=$beta_version.substring(1);
+          dotnet test "src/Mod Configuration Menu.sln" --configuration Stable_Debug -p:GameVersion=$stable_version -p:GameFolder="$PWD/bannerlord-stable";
+          dotnet test "src/Mod Configuration Menu.sln" --configuration Stable_Release -p:GameVersion=$stable_version -p:GameFolder="$PWD/bannerlord-stable";
+          dotnet test "src/Mod Configuration Menu.sln" --configuration Beta_Debug -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord-beta";
+          dotnet test "src/Mod Configuration Menu.sln" --configuration Beta_Release -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord-beta";
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
         STABLE_VERSION: ${{secrets.SYNCED_GAME_STABLE_VERSION}}
+        BETA_VERSION: ${{secrets.SYNCED_GAME_BETA_VERSION}}
       shell: pwsh
 
     - name: Test Coverage
       run: >-
-          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test src/Mod Configuration Menu.sln --configuration Debug --no-build" -filter:"+[MCMv3.*]*" -output:coverage_mcm_debug.xml -mergebyhash;
-          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test src/Mod Configuration Menu.sln --configuration Release --no-build" -filter:"+[MCMv3.*]*" -output:coverage_mcm_release.xml -mergebyhash;
+          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test src/MCM.Tests/MCM.Tests.csproj --configuration Stable_Debug --no-build" -filter:"+[MCMv*.*]* -[MCM*.*Tests]*" -output:coverage_mcm_stable_debug.xml -mergebyhash;
+          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test src/MCM.Tests/MCM.Tests.csproj --configuration Stable_Release --no-build" -filter:"+[MCMv*.*]* -[MCM*.*Tests]*" -output:coverage_mcm_stable_release.xml -mergebyhash;
+          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test src/MCM.Tests/MCM.Tests.csproj --configuration Beta_Debug --no-build" -filter:"+[MCMv*.*]* -[MCM*.*Tests]*" -output:coverage_mcm_beta_debug.xml -mergebyhash;
+          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test src/MCM.Tests/MCM.Tests.csproj --configuration Beta_Release --no-build" -filter:"+[MCMv*.*]* -[MCM*.*Tests]*" -output:coverage_mcm_beta_release.xml -mergebyhash;
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -90,7 +106,7 @@ jobs:
     - name: ReportGenerator
       uses: danielpalme/ReportGenerator-GitHub-Action@4.6.1
       with:
-        reports: 'coverage_mcm_debug.xml;coverage_mcm_release.xml'
+        reports: 'coverage_mcm_stable_debug.xml;coverage_mcm_stable_release.xml;coverage_mcm_beta_debug.xml;coverage_mcm_beta_release.xml'
         targetdir: 'coveragereport'
         reporttypes: 'HtmlInline;Cobertura'
         sourcedirs: './'
@@ -108,6 +124,23 @@ jobs:
         token: ${{secrets.CODECOV_TOKEN}}
         file: coveragereport/Cobertura.xml
         fail_ci_if_error: true
+
+    # ignore Stable_Release and treat is as Release
+    - name: Build MCM (Release)
+      run: >-
+        dotnet build src/MCM.NexusMods/MCM.NexusMods.csproj --configuration Stable_Release -p:GameFolder="$PWD/bannerlord-publish";
+        dotnet build src/MCM.Implementation.MCMv3/MCM.Implementation.MCMv3.csproj --configuration Stable_Release -p:GameFolder="$PWD/bannerlord-publish";
+        dotnet build src/MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Stable_Release -p:GameFolder="$PWD/bannerlord-publish";
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+
+    - name: Upload Bannerlord folder
+      uses: actions/upload-artifact@v2
+      with:
+        name: bannerlord
+        path: ./bannerlord-publish/
+
 
 ###########################
 #        NUGET/GPR        #
@@ -201,14 +234,11 @@ jobs:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
-    - name: Build MCM (Release)
-      run: >-
-        dotnet build src/MCM.NexusMods/MCM.NexusMods.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
-        dotnet build src/MCM.Implementation.MCMv3/MCM.Implementation.MCMv3.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
-        dotnet build src/MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
-      env:
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+    - name: Download bannerlord folder
+      uses: actions/download-artifact@v2
+      with:
+        name: bannerlord
+        path: ./bannerlord
 
     - name: Zip MCM.Standalone
       run: 7z a -tzip MCM.Standalone.zip ./bannerlord/*
@@ -282,14 +312,11 @@ jobs:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
-    - name: Build MCM (Release)
-      run: >-
-        dotnet build src/MCM.NexusMods/MCM.NexusMods.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
-        dotnet build src/MCM.Implementation.MCMv3/MCM.Implementation.MCMv3.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
-        dotnet build src/MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
-      env:
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+    - name: Download bannerlord folder
+      uses: actions/download-artifact@v2
+      with:
+        name: bannerlord
+        path: ./bannerlord
 
     - name: Zip MCM.Standalone
       run: 7z a -tzip MCM.Standalone.zip ./bannerlord/*
