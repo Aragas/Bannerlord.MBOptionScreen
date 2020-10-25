@@ -38,6 +38,7 @@ namespace MCM.Implementation.MCMv3
             var harmony = new Harmony("bannerlord.mcm.implementation.mcmv3.loaderpreventer");
             MCMv3IntegratedLoaderSubModulePatch.Patch(harmony);
 
+            // Prevents the Settings.Instance exception
             if (Instance != null)
                 Instance() = new MCMv3SettingsProviderReplacer();
         }

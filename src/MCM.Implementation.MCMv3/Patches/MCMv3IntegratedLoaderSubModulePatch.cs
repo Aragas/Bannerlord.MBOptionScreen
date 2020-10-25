@@ -25,7 +25,7 @@ namespace MCM.Implementation.MCMv3.Patches
             public void Load() { }
         }
 
-        private static readonly AccessTools.FieldRef<MCMv3IntegratedLoaderSubModule, MCMv3IIntegratedLoader>? _loader =
+        private static readonly AccessTools.FieldRef<MCMv3IntegratedLoaderSubModule, MCMv3IIntegratedLoader>? Loader =
             AccessTools3.FieldRefAccess<MCMv3IntegratedLoaderSubModule, MCMv3IIntegratedLoader>("_loader");
 
         public static void Patch(Harmony harmony)
@@ -38,8 +38,8 @@ namespace MCM.Implementation.MCMv3.Patches
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static bool StopIntegratedLoaderSubModuleCtor(MCMv3IntegratedLoaderSubModule __instance)
         {
-            if (_loader != null)
-                _loader(__instance) = new EmptyIntegratedLoader();
+            if (Loader != null)
+                Loader(__instance) = new EmptyIntegratedLoader();
 
             return false;
         }
