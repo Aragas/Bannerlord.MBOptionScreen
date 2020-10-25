@@ -9,6 +9,7 @@ using MCM.UI.GUI.ViewModels;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Runtime.CompilerServices;
 
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions;

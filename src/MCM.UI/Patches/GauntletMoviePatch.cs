@@ -7,6 +7,8 @@ using MCM.UI.Utils;
 using System;
 using System.Runtime.CompilerServices;
 
+using System.Runtime.CompilerServices;
+
 using TaleWorlds.GauntletUI;
 using TaleWorlds.GauntletUI.Data;
 using TaleWorlds.GauntletUI.PrefabSystem;
