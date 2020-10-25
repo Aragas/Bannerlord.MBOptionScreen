@@ -4,6 +4,8 @@ using MCM.Extensions;
 using MCM.Implementation.ModLib.Functionality;
 using MCM.Implementation.ModLib.Settings.Containers.v1;
 using MCM.Implementation.ModLib.Settings.Containers.v13;
+using MCM.Implementation.ModLib.Settings.Properties.v1;
+using MCM.Implementation.ModLib.Settings.Properties.v13;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,21 +19,22 @@ namespace MCM.Implementation.ModLib
         {
             base.OnSubModuleLoad();
 
-            var services = this.GetServices();
+            if (this.GetServices() is { } services)
+            {
+                services.AddTransient<BaseModLibScreenOverrider, DefaultModLibScreenOverrider>();
 
-            services.AddTransient<BaseModLibScreenOverrider, DefaultModLibScreenOverrider>();
+                services.AddSettingsContainer<ModLibSettingsContainer>();
+                services.AddSettingsContainer<ModLibDefinitionsSettingsContainer>();
 
-            services.AddSettingsContainer<ModLibSettingsContainer>();
-            services.AddSettingsContainer<ModLibDefinitionsSettingsContainer>();
-
-            //services.AddSettingsPropertyDiscoverer<ModLibSettingsPropertyDiscoverer>();
-            //services.AddSettingsPropertyDiscoverer<ModLibDefinitionsSettingsPropertyDiscoverer>();
+                services.AddSettingsPropertyDiscoverer<ModLibSettingsPropertyDiscoverer>();
+                services.AddSettingsPropertyDiscoverer<ModLibDefinitionsSettingsPropertyDiscoverer>();
+            }
         }
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
             if (MCMModLibSettings.Instance!.OverrideModLib)
-                BaseModLibScreenOverrider.Instance.OverrideModLibScreen();
+                BaseModLibScreenOverrider.Instance?.OverrideModLibScreen();
         }
     }
 }

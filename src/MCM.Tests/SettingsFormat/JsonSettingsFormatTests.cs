@@ -1,4 +1,4 @@
-﻿using MCM.Abstractions.FluentBuilder.Implementation;
+﻿using MCM.Abstractions.FluentBuilder;
 using MCM.Abstractions.Ref;
 using MCM.Implementation.Settings.Formats.Json;
 
@@ -25,7 +25,7 @@ namespace MCM.Tests.SettingsFormat
         {
             Format = new JsonSettingsFormat(NullLogger<JsonSettingsFormat>.Instance);
 
-            Settings = new DefaultSettingsBuilder("Testing_Global_v1", "Testing Fluent Settings")
+            Settings = BaseSettingsBuilder.Create("Testing_Global_v1", "Testing Fluent Settings")!
                 .SetFormat("json")
                 .SetFolderName(string.Empty)
                 .SetSubFolder(string.Empty)
@@ -43,10 +43,7 @@ namespace MCM.Tests.SettingsFormat
                     .AddText("prop_4","Test", new ProxyRef<string>(() => _stringValue, o => _stringValue = o), null))
                 .BuildAsGlobal();
 
-            DirectoryPath = Path.Combine(
-                AppDomain.CurrentDomain.BaseDirectory,
-                Settings.FolderName,
-                Settings.SubFolder ?? string.Empty);
+            DirectoryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Settings.FolderName, Settings.SubFolder);
             Filename = Settings.Id;
         }
 

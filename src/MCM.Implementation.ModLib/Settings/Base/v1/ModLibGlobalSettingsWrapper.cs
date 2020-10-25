@@ -6,8 +6,6 @@ using HarmonyLib;
 
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Base.Global;
-using MCM.Abstractions.Settings.Properties;
-using MCM.Implementation.ModLib.Settings.Properties.v1;
 
 using System;
 using System.ComponentModel;
@@ -34,8 +32,9 @@ namespace MCM.Implementation.ModLib.Settings.Base.v1
         public override string DisplayName => _getDisplayNameDelegate?.Invoke() ?? "ERROR";
         public override int UIVersion => 1;
         public override string SubFolder => _getSubFolderDelegate?.Invoke() ?? string.Empty;
-        protected override char SubGroupDelimiter => '/';
-        public override string Format => "memory";
+        public override char SubGroupDelimiter => '/';
+        public override string FormatType => "memory";
+        public override string DiscoveryType => "modlib_v1_attributes";
         public override event PropertyChangedEventHandler? PropertyChanged { add { } remove { } }
 
         public ModLibGlobalSettingsWrapper(object @object) : base(@object)
@@ -47,8 +46,6 @@ namespace MCM.Implementation.ModLib.Settings.Base.v1
             _getDisplayNameDelegate = AccessTools2.GetDelegate<GetDisplayNameDelegate>(@object, AccessTools.Property(type, nameof(LegacyBaseSettings.ModName)).GetMethod);
             _getSubFolderDelegate = AccessTools2.GetDelegate<GetSubFolderDelegate>(@object, AccessTools.Property(type, nameof(LegacyBaseSettings.SubFolder)).GetMethod);
         }
-
-        protected override ISettingsPropertyDiscoverer Discoverer { get; } = new ModLibSettingsPropertyDiscoverer();
 
         internal void UpdateReference(object @object) => Object = @object;
 

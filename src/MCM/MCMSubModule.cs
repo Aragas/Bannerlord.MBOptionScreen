@@ -1,6 +1,7 @@
 ﻿using Bannerlord.ButterLib.Common.Extensions;
 
-using MCM.Abstractions.Settings.Formats.Memory;
+using MCM.Abstractions.Settings.Formats;
+using MCM.Abstractions.Settings.Properties;
 using MCM.Extensions;
 
 using TaleWorlds.MountAndBlade;
@@ -9,13 +10,26 @@ namespace MCM
 {
     public sealed class MCMSubModule : MBSubModuleBase
     {
+        public static MCMSubModule? Instance { get; private set; }
+
         protected override void OnSubModuleLoad()
         {
             base.OnSubModuleLoad();
 
-            var services = this.GetServices();
+            Instance = this;
 
-            services.AddSettingsFormat<IMemorySettingsFormat, MemorySettingsFormat>();
+            if (this.GetServices() is { } services)
+            {
+                services.AddSettingsFormat<MemorySettingsFormat>();
+                services.AddSettingsPropertyDiscoverer<NoneSettingsPropertyDiscoverer>();
+            }
+        }
+
+        protected override void OnSubModuleUnloaded()
+        {
+            base.OnSubModuleUnloaded();
+
+            Instance = null;
         }
     }
 }

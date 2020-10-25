@@ -4,7 +4,7 @@ using MCM.Abstractions.Dropdown;
 
 namespace MCM.Custom.ScreenTests
 {
-    internal sealed class TestPerCampaignSettingsV2 : BaseTestPerCampaignSettingsBase<TestPerCampaignSettingsV2>
+    internal sealed class TestPerSaveSettingsV2 : BaseTestPerSaveSettingsBase<TestPerSaveSettingsV2>
     {
         public override string Id => "Testing1_v2";
         public override string DisplayName => "Testing v2 API";

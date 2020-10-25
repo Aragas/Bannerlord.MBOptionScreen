@@ -1,0 +1,4 @@
+- name: Editing SubModule.xml
+  href: editing-submodule.xml.md
+- name: Settings Definition Example
+  href: settings-definition-example.md

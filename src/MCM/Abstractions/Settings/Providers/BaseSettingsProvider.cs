@@ -1,5 +1,4 @@
-﻿using Bannerlord.ButterLib;
-using Bannerlord.ButterLib.Common.Extensions;
+﻿using Bannerlord.ButterLib.Common.Extensions;
 
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Models;
@@ -15,7 +14,7 @@ namespace MCM.Abstractions.Settings.Providers
     public abstract class BaseSettingsProvider
     {
         public static BaseSettingsProvider? Instance =>
-            ButterLibSubModule.Instance?.GetServiceProvider()?.GetRequiredService<BaseSettingsProvider>();
+            MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<BaseSettingsProvider>();
 
         public abstract IEnumerable<SettingsDefinition> CreateModSettingsDefinitions { get; }
         public abstract BaseSettings? GetSettings(string id);

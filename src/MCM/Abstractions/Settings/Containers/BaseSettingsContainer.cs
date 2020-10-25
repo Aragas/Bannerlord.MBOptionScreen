@@ -1,5 +1,4 @@
-﻿using Bannerlord.ButterLib;
-using Bannerlord.ButterLib.Common.Extensions;
+﻿using Bannerlord.ButterLib.Common.Extensions;
 
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Formats;
@@ -20,38 +19,23 @@ namespace MCM.Abstractions.Settings.Containers
     public abstract class BaseSettingsContainer<TSettings> : ISettingsContainer where TSettings : BaseSettings
     {
         protected virtual string RootFolder { get; } = Path.Combine(Utilities.GetConfigsPath(), "ModSettings");
-        protected Dictionary<string, ISettingsFormat> AvailableSettingsFormats { get; } = new Dictionary<string, ISettingsFormat>();
         protected virtual Dictionary<string, TSettings> LoadedSettings { get; } = new Dictionary<string, TSettings>();
 
         /// <inheritdoc/>
         public virtual List<SettingsDefinition> CreateModSettingsDefinitions => LoadedSettings.Keys.ToList()
-            .Select(id => new SettingsDefinition(id))
-            .ToList();
+            .ConvertAll(id => new SettingsDefinition(id));
 
-        protected BaseSettingsContainer()
+        protected virtual void RegisterSettings(TSettings settings)
         {
-            if (ButterLibSubModule.Instance.GetServiceProvider() is { } serviceProvider)
-            {
-                foreach (var format in serviceProvider.GetRequiredService<IEnumerable<ISettingsFormat>>())
-                foreach (var extension in format.Extensions)
-                {
-                    AvailableSettingsFormats[extension] = format;
-                }
-            }
-        }
-
-        protected virtual void RegisterSettings(TSettings tSettings)
-        {
-            if (tSettings == null || LoadedSettings.ContainsKey(tSettings.Id))
+            if (settings == null || LoadedSettings.ContainsKey(settings.Id))
                 return;
 
-            LoadedSettings.Add(tSettings.Id, tSettings);
+            LoadedSettings.Add(settings.Id, settings);
 
-            var directoryPath = Path.Combine(RootFolder, tSettings.FolderName, tSettings.SubFolder ?? string.Empty);
-            if (AvailableSettingsFormats.ContainsKey(tSettings.Format))
-                AvailableSettingsFormats[tSettings.Format].Load(tSettings, directoryPath, tSettings.Id);
-            else
-                AvailableSettingsFormats["memory"].Load(tSettings, directoryPath, tSettings.Id);
+            var directoryPath = Path.Combine(RootFolder, settings.FolderName, settings.SubFolder);
+            var settingsFormats = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
+            var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == settings.FormatType));
+            settingsFormat?.Load(settings, directoryPath, settings.Id);
         }
 
         /// <inheritdoc/>
@@ -62,11 +46,10 @@ namespace MCM.Abstractions.Settings.Containers
             if (!(settings is TSettings tSettings) || !LoadedSettings.ContainsKey(tSettings.Id))
                 return false;
 
-            var directoryPath = Path.Combine(RootFolder, tSettings.FolderName, tSettings.SubFolder ?? string.Empty);
-            if (AvailableSettingsFormats.ContainsKey(tSettings.Format))
-                AvailableSettingsFormats[tSettings.Format].Save(tSettings, directoryPath, tSettings.Id);
-            else
-                AvailableSettingsFormats["memory"].Save(tSettings, directoryPath, tSettings.Id);
+            var directoryPath = Path.Combine(RootFolder, tSettings.FolderName, tSettings.SubFolder);
+            var settingsFormats = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
+            var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == settings.FormatType));
+            settingsFormat?.Save(settings, directoryPath, settings.Id);
 
             return true;
         }

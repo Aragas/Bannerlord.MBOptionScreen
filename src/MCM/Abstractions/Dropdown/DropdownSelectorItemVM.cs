@@ -17,7 +17,7 @@ namespace MCM.Abstractions.Dropdown
         public override string StringItem => _object.ToString();
 
         [DataSourceProperty]
-        public override HintViewModel Hint { get; } = new HintViewModel("");
+        public override HintViewModel Hint { get; } = new HintViewModel(string.Empty);
 
         public DropdownSelectorItemVM(T @object)
         {

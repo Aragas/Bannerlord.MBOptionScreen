@@ -3,28 +3,47 @@
 
   <PropertyGroup>
     <Authors>Aragas, mipen</Authors>
-    <AssemblyName>MCMv4.UI.v$(Version)</AssemblyName>
+    <AssemblyName>MCMv4.UI</AssemblyName>
     <LangVersion>preview</LangVersion>
+    <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="GUI\Brushes\ButtonBrushes.xml" />
-    <EmbeddedResource Include="GUI\Brushes\DividerBrushes.xml" />
-    <EmbeddedResource Include="GUI\Brushes\ExpandIndicator.xml" />
-    <EmbeddedResource Include="GUI\Brushes\SettingsBrush.xml" />
-    <EmbeddedResource Include="GUI\Brushes\ResetButtonBrush.xml" />
-    <EmbeddedResource Include="GUI\Brushes\SettingsValueDisplayBrush.xml" />
-    <EmbeddedResource Include="GUI\Brushes\TextBrushes.xml" />
+    <EmbeddedResource Include="GUI\v1\Brushes\ButtonBrushes.xml" />
+    <EmbeddedResource Include="GUI\v1\Brushes\DividerBrushes.xml" />
+    <EmbeddedResource Include="GUI\v1\Brushes\ExpandIndicator.xml" />
+    <EmbeddedResource Include="GUI\v1\Brushes\SettingsBrush.xml" />
+    <EmbeddedResource Include="GUI\v1\Brushes\ResetButtonBrush.xml" />
+    <EmbeddedResource Include="GUI\v1\Brushes\SettingsValueDisplayBrush.xml" />
+    <EmbeddedResource Include="GUI\v1\Brushes\TextBrushes.xml" />
 
-    <EmbeddedResource Include="GUI\Views\EditValueView.xml" />
+    <EmbeddedResource Include="GUI\v1\Prefabs\EditValueView.xml" />
+    <EmbeddedResource Include="GUI\v1\Prefabs\ModOptionsPageView.xml" />
+    <EmbeddedResource Include="GUI\v1\Prefabs\ModOptionsView.xml" />
+    <EmbeddedResource Include="GUI\v1\Prefabs\SettingsItemView.xml" />
+    <EmbeddedResource Include="GUI\v1\Prefabs\SettingsPropertyGroupView.xml" />
+    <EmbeddedResource Include="GUI\v1\Prefabs\SettingsPropertyView.xml" />
+    <EmbeddedResource Include="GUI\v1\Prefabs\SettingsView.xml" />
+    <EmbeddedResource Include="GUI\v1\Prefabs\DropdownWithHorizontalControl.Checkbox.xml" />
+  </ItemGroup>
 
-    <EmbeddedResource Include="GUI\Views\ModOptionsPageView.xml" />
-    <EmbeddedResource Include="GUI\Views\ModOptionsView.xml" />
-    <EmbeddedResource Include="GUI\Views\SettingsItemView.xml" />
-    <EmbeddedResource Include="GUI\Views\SettingsPropertyGroupView.xml" />
-    <EmbeddedResource Include="GUI\Views\SettingsPropertyView.xml" />
-    <EmbeddedResource Include="GUI\Views\SettingsView.xml" />
-    <EmbeddedResource Include="GUI\Views\DropdownWithHorizontalControl.Checkbox.xml" />
+  <ItemGroup>
+    <EmbeddedResource Include="GUI\v2\Brushes\ButtonBrushes.xml" />
+    <EmbeddedResource Include="GUI\v2\Brushes\DividerBrushes.xml" />
+    <EmbeddedResource Include="GUI\v2\Brushes\ExpandIndicator.xml" />
+    <EmbeddedResource Include="GUI\v2\Brushes\SettingsBrush.xml" />
+    <EmbeddedResource Include="GUI\v2\Brushes\ResetButtonBrush.xml" />
+    <EmbeddedResource Include="GUI\v2\Brushes\SettingsValueDisplayBrush.xml" />
+    <EmbeddedResource Include="GUI\v2\Brushes\TextBrushes.xml" />
+
+    <EmbeddedResource Include="GUI\v2\Prefabs\EditValueView.xml" />
+    <EmbeddedResource Include="GUI\v2\Prefabs\ModOptionsPageView.xml" />
+    <EmbeddedResource Include="GUI\v2\Prefabs\ModOptionsView.xml" />
+    <EmbeddedResource Include="GUI\v2\Prefabs\SettingsItemView.xml" />
+    <EmbeddedResource Include="GUI\v2\Prefabs\SettingsPropertyGroupView.xml" />
+    <EmbeddedResource Include="GUI\v2\Prefabs\SettingsPropertyView.xml" />
+    <EmbeddedResource Include="GUI\v2\Prefabs\SettingsView.xml" />
+    <EmbeddedResource Include="GUI\v2\Prefabs\DropdownWithHorizontalControl.Checkbox.xml" />
   </ItemGroup>
 
   <ItemGroup>

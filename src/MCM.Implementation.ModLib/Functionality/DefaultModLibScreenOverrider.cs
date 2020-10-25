@@ -1,5 +1,7 @@
 ﻿using HarmonyLib;
 
+using MCM.Implementation.ModLib.Utils;
+
 using System.Collections;
 
 using TaleWorlds.MountAndBlade;
@@ -9,7 +11,7 @@ namespace MCM.Implementation.ModLib.Functionality
     internal sealed class DefaultModLibScreenOverrider : BaseModLibScreenOverrider
     {
         private static readonly AccessTools.FieldRef<Module, IList>? InitialStateOptions =
-            AccessTools.FieldRefAccess<Module, IList>("_initialStateOptions");
+            AccessTools3.FieldRefAccess<Module, IList>("_initialStateOptions");
 
         public override void OverrideModLibScreen()
         {

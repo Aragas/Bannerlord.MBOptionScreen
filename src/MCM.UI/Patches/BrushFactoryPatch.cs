@@ -1,6 +1,7 @@
 ﻿using HarmonyLib;
 
 using MCM.UI.Functionality.Injectors;
+using MCM.UI.Utils;
 
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -12,7 +13,7 @@ namespace MCM.UI.Patches
     internal static class BrushFactoryPatch
     {
         private static readonly AccessTools.FieldRef<BrushFactory, Dictionary<string, Brush>>? Brushes =
-            AccessTools.FieldRefAccess<BrushFactory, Dictionary<string, Brush>>("_brushes");
+            AccessTools3.FieldRefAccess<BrushFactory, Dictionary<string, Brush>>("_brushes");
 
         public static void Patch(Harmony harmony)
         {

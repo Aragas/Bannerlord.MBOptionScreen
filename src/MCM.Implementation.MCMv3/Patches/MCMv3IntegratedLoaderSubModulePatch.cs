@@ -1,6 +1,9 @@
 ﻿extern alias v3;
+extern alias v4;
 
 using HarmonyLib;
+
+using MCM.Implementation.MCMv3.Utils;
 
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -22,8 +25,8 @@ namespace MCM.Implementation.MCMv3.Patches
             public void Load() { }
         }
 
-        private static readonly AccessTools.FieldRef<MCMv3IntegratedLoaderSubModule, MCMv3IIntegratedLoader> _loader =
-            AccessTools.FieldRefAccess<MCMv3IntegratedLoaderSubModule, MCMv3IIntegratedLoader>("_loader");
+        private static readonly AccessTools.FieldRef<MCMv3IntegratedLoaderSubModule, MCMv3IIntegratedLoader>? Loader =
+            AccessTools3.FieldRefAccess<MCMv3IntegratedLoaderSubModule, MCMv3IIntegratedLoader>("_loader");
 
         public static void Patch(Harmony harmony)
         {
@@ -35,7 +38,8 @@ namespace MCM.Implementation.MCMv3.Patches
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static bool StopIntegratedLoaderSubModuleCtor(MCMv3IntegratedLoaderSubModule __instance)
         {
-            _loader(__instance) = new EmptyIntegratedLoader();
+            if (Loader != null)
+                Loader(__instance) = new EmptyIntegratedLoader();
 
             return false;
         }

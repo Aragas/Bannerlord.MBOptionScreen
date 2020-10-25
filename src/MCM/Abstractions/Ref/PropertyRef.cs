@@ -41,8 +41,14 @@ namespace MCM.Abstractions.Ref
         protected virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
+        public bool Equals(PropertyRef? other)
+        {
+            if (ReferenceEquals(null, other)) return false;
+            if (ReferenceEquals(this, other)) return true;
+            return PropertyInfo.Equals(other.PropertyInfo) && Instance.Equals(other.Instance);
+        }
         /// <inheritdoc/>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
@@ -50,14 +56,8 @@ namespace MCM.Abstractions.Ref
             return Equals((PropertyRef) obj);
         }
         /// <inheritdoc/>
-        public bool Equals(PropertyRef? other)
-        {
-            if (ReferenceEquals(null, other)) return false;
-            if (ReferenceEquals(this, other)) return true;
-            return PropertyInfo.Equals(other.PropertyInfo) && Instance.Equals(other.Instance);
-        }
-
-        /// <inheritdoc/>
         public override int GetHashCode() => HashCode.Combine(PropertyInfo, Instance);
+        public static bool operator ==(PropertyRef? left, PropertyRef? right) => Equals(left, right);
+        public static bool operator !=(PropertyRef? left, PropertyRef? right) => !Equals(left, right);
     }
 }

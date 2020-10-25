@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 4.1.0
+Game Versions: e1.4.3,e1.5.0,e1.5.1,e1.5.2,e1.5.3,e1.5.4
+* Added Preset support for FluentBuilder.
+* Using as a Soft Dependency will provide the ability to load/save settings. A hybrid of the old Integrated solution.
+* Added PerSave settings that replace PerCampaign
+* General improvements
+---------------------------------------------------------------------------------------------------
 Version: 4.0.7
 Game Versions: e1.4.3,e1.5.0,e1.5.1,e1.5.2
 * Fixed missing ModOptions menu in Options screen

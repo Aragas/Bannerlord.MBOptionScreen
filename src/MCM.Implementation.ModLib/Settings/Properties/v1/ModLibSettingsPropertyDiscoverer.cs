@@ -1,7 +1,9 @@
 ﻿extern alias v1;
 
+using MCM.Abstractions;
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Ref;
+using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
 using MCM.Abstractions.Settings.Models;
@@ -18,11 +20,19 @@ namespace MCM.Implementation.ModLib.Settings.Properties.v1
 {
     internal sealed class ModLibSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
     {
-        public IEnumerable<ISettingsPropertyDefinition> GetProperties(object @object)
+        public IEnumerable<string> DiscoveryTypes { get; } = new [] { "modlib_v1_attributes" };
+
+        public IEnumerable<ISettingsPropertyDefinition> GetProperties(BaseSettings settings)
         {
-            foreach (var propertyDefinition in GetPropertiesInternal(@object))
+            var obj = settings switch
             {
-                SettingsUtils.CheckIsValid(propertyDefinition, @object);
+                IWrapper wrapper => wrapper.Object,
+                _ => settings
+            };
+
+            foreach (var propertyDefinition in GetPropertiesInternal(obj))
+            {
+                SettingsUtils.CheckIsValid(propertyDefinition, obj);
                 yield return propertyDefinition;
             }
         }
@@ -59,20 +69,22 @@ namespace MCM.Implementation.ModLib.Settings.Properties.v1
                     propertyDefinitions.AddRange(propertyDefinitionWrappers);
 
                     if (groupDefinition is ModLibPropertyGroupDefinitionWrapper groupWrapper && groupWrapper.IsMainToggle)
-                        propertyDefinitions.Add(new AttributePropertyDefinitionGroupToggleWrapper(propertyDefinitions.First()));
+                        propertyDefinitions.Add(new AttributePropertyDefinitionGroupToggleWrapper(propertyDefinitions[0]));
                 }
 
-                yield return new SettingsPropertyDefinition(
-                    propertyDefinitions,
-                    groupDefinition,
-                    new PropertyRef(property, @object),
-                    subGroupDelimiter);
+                if (propertyDefinitions.Count > 0)
+                {
+                    yield return new SettingsPropertyDefinition(propertyDefinitions,
+                        groupDefinition,
+                        new PropertyRef(property, @object),
+                        subGroupDelimiter);
+                }
             }
         }
 
         private static IEnumerable<IPropertyDefinitionBase> GetPropertyDefinitionWrappers(IReadOnlyCollection<Attribute> attributes)
         {
-                object? propAttr = null;
+                object? propAttr;
 
                 propAttr = attributes.FirstOrDefault(a => a is v1::ModLib.Attributes.SettingPropertyAttribute);
                 if (propAttr != null)

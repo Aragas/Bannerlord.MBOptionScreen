@@ -8,7 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-
+using v4::MCM.Abstractions.FluentBuilder;
 using v4::MCM.Abstractions.Settings.Base.Global;
 using v4::MCM.Abstractions.Settings.Models.Wrapper;
 
@@ -44,7 +44,7 @@ namespace MCM.Implementation.MCMv3.Settings.Base
 
         public MCMv3FluentGlobalSettingsWrapper(object @object)
             : base(@object, GetId(@object), GetDisplayName(@object), GetFolderName(@object), GetSubFolder(@object), GetFormat(@object),
-                  GetUIVersion(@object), GetSubGroupDelimiter(@object), null, GetSettingPropertyGroups(@object))
+                  GetUIVersion(@object), GetSubGroupDelimiter(@object), null, GetSettingPropertyGroups(@object), new Dictionary<string, ISettingsPresetBuilder>())
         {
             var type = @object.GetType();
             OnPropertyChangedMethod = AccessTools.Method(type, "OnPropertyChanged");

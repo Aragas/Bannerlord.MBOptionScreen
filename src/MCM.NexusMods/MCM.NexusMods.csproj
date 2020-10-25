@@ -3,10 +3,10 @@
   <PropertyGroup>
     <Authors>Aragas, mipen</Authors>
     <ModuleName>Bannerlord.MBOptionScreen</ModuleName>
+    <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MCM.Implementation\MCM.Implementation.csproj" />
     <ProjectReference Include="..\MCM.UI\MCM.UI.csproj" />
     <ProjectReference Include="..\MCM\MCM.csproj" />
   </ItemGroup>

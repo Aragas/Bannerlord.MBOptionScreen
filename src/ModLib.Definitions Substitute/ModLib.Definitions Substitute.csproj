@@ -6,6 +6,7 @@
     <RootNamespace>ModLib.Definitions</RootNamespace>
     <AssemblyName>ModLib.Definitions</AssemblyName>
     <WarningLevel>0</WarningLevel>
+    <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

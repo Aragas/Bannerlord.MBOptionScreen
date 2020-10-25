@@ -2,7 +2,10 @@
 
 using HarmonyLib;
 
-using MCM.Abstractions.Functionality;
+using MCM.UI.Utils;
+
+using System;
+using System.Runtime.CompilerServices;
 
 using System.Runtime.CompilerServices;
 
@@ -15,12 +18,17 @@ namespace MCM.UI.Patches
     internal static class GauntletMoviePatch
     {
         private delegate void SetRootViewDelegate(GauntletMovie instance, GauntletView value);
-
         private static readonly SetRootViewDelegate? SetRootView =
             AccessTools2.GetDelegate<SetRootViewDelegate>(SymbolExtensions2.GetPropertyInfo((GauntletMovie gm) => gm.RootView).SetMethod);
 
-        public static void Patch(Harmony harmony)
+        private static readonly AccessTools.FieldRef<GauntletMovie, WidgetPrefab>? MoviePrefab =
+            AccessTools3.FieldRefAccess<GauntletMovie, WidgetPrefab>("_moviePrefab");
+
+        private static Func<string, WidgetPrefab?>? _movieRequested;
+
+        public static void Patch(Harmony harmony, Func<string, WidgetPrefab?> movieRequested)
         {
+            _movieRequested = movieRequested;
             harmony.Patch(
                 AccessTools.Method(typeof(GauntletMovie), "LoadMovie"),
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(GauntletMoviePatch), nameof(LoadMovieHarmony))));
@@ -29,9 +37,12 @@ namespace MCM.UI.Patches
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static bool LoadMovieHarmony(GauntletMovie __instance, Widget ____movieRootNode)
         {
-            var movie = BaseResourceHandler.Instance.MovieRequested(__instance.MovieName);
+            var movie = _movieRequested?.Invoke(__instance.MovieName);
             if (movie == null)
                 return true;
+
+            if (MoviePrefab != null)
+                MoviePrefab(__instance) = movie;
 
             var widgetCreationData = new WidgetCreationData(__instance.Context, __instance.WidgetFactory);
             widgetCreationData.AddExtensionData(__instance);

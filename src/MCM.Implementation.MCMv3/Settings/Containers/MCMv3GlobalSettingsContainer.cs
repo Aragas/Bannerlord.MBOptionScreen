@@ -1,21 +1,21 @@
 ﻿extern alias v3;
 extern alias v4;
 
-using Bannerlord.ButterLib;
 using Bannerlord.ButterLib.Common.Extensions;
 
 using MCM.Implementation.MCMv3.Settings.Base;
+using MCM.Implementation.MCMv3.Utils;
 
 using Microsoft.Extensions.DependencyInjection;
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 
 using v4::MCM.Abstractions.Settings.Base.Global;
 using v4::MCM.Abstractions.Settings.Containers.Global;
 using v4::MCM.Abstractions.Settings.Formats;
-using v4::MCM.Utils;
 
 namespace MCM.Implementation.MCMv3.Settings.Containers
 {
@@ -26,15 +26,6 @@ namespace MCM.Implementation.MCMv3.Settings.Containers
 
         public MCMv3GlobalSettingsContainer()
         {
-            if (ButterLibSubModule.Instance.GetServiceProvider() is null!)
-            {
-                foreach (var format in ButterLibSubModule.Instance.GetTempServiceProvider().GetRequiredService<IEnumerable<ISettingsFormat>>())
-                foreach (var extension in format.Extensions)
-                {
-                    AvailableSettingsFormats[extension] = format;
-                }
-            }
-
             if (Settings == null)
             {
                 Settings = new List<GlobalSettings>();
@@ -43,8 +34,7 @@ namespace MCM.Implementation.MCMv3.Settings.Containers
                     .GetAssemblies()
                     .Where(a => !a.IsDynamic)
                     .SelectMany(a => a.GetTypes())
-                    .Where(t => t.IsClass && !t.IsAbstract)
-                    .Where(t => t.GetConstructor(Type.EmptyTypes) != null)
+                    .Where(t => t.IsClass && !t.IsAbstract && t.GetConstructor(Type.EmptyTypes) != null)
                     .ToList();
 
                 var mbOptionScreenSettings = allTypes
@@ -58,6 +48,20 @@ namespace MCM.Implementation.MCMv3.Settings.Containers
 
             foreach (var setting in Settings)
                 RegisterSettings(setting);
+        }
+
+        protected override void RegisterSettings(GlobalSettings settings)
+        {
+            if (settings == null || LoadedSettings.ContainsKey(settings.Id))
+                return;
+
+            LoadedSettings.Add(settings.Id, settings);
+
+            var directoryPath = Path.Combine(RootFolder, settings.FolderName, settings.SubFolder);
+            var serviceProvider = v4::MCM.MCMSubModule.Instance?.GetServiceProvider() ?? v4::MCM.MCMSubModule.Instance?.GetTempServiceProvider();
+            var settingsFormats = serviceProvider.GetRequiredService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
+            var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == settings.FormatType));
+            settingsFormat?.Load(settings, directoryPath, settings.Id);
         }
     }
 }

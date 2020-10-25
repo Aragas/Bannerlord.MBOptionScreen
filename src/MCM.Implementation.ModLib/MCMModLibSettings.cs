@@ -18,7 +18,7 @@ namespace MCM.Implementation.ModLib
             { "VERSION", new TextObject(typeof(MCMModLibSettings).Assembly.GetName().Version.ToString(3)) }
         }).ToString();
         public override string FolderName { get; } = "MCM";
-        public override string Format { get; } = "json";
+        public override string FormatType { get; } = "json";
 
         [SettingPropertyBool("{=MCMModLibSettings_Override}Override ModLib Option Screen", RequireRestart = true, HintText = "{=MCMModLibSettings_OverrideDesc}If set, removes ModLib 'Mod Options' menu entry.")]
         [SettingPropertyGroup("{=MCMModLibSettings_General}General")]

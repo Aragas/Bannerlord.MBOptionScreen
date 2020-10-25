@@ -182,9 +182,9 @@ namespace MCM.UI.GUI.ViewModels
             foreach (var setting in SettingPropertyGroups)
                 setting.OnResetEnd();
         }
-        private void OnHover() => MainView.HintText = HintText;
-        private void OnHoverEnd() => MainView.HintText = string.Empty;
-        private void OnGroupClick() => IsExpanded = !IsExpanded;
+        public void OnHover() => MainView.HintText = HintText;
+        public void OnHoverEnd() => MainView.HintText = string.Empty;
+        public void OnGroupClick() => IsExpanded = !IsExpanded;
 
         public override string ToString() => GroupName;
         public override int GetHashCode() => GroupName.GetHashCode();

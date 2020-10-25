@@ -1,14 +1,13 @@
-﻿using Bannerlord.ButterLib;
-using Bannerlord.ButterLib.Common.Extensions;
+﻿using Bannerlord.ButterLib.Common.Extensions;
+using Bannerlord.ButterLib.Common.Helpers;
 using Bannerlord.ButterLib.DelayedSubModule;
 using Bannerlord.UIExtenderEx;
 
 using HarmonyLib;
 
-using MCM.Abstractions.Functionality;
 using MCM.Abstractions.Settings.Base;
 using MCM.UI.Functionality;
-using MCM.UI.Functionality.Loaders;
+using MCM.UI.Functionality.Injectors;
 using MCM.UI.GUI.GauntletUI;
 using MCM.UI.Patches;
 
@@ -28,6 +27,7 @@ namespace MCM.UI
     public sealed class MCMUISubModule : MBSubModuleBase
     {
         private static readonly UIExtender Extender = new UIExtender("MCM.UI");
+        private bool FirstInit { get; set; } = true;
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         protected override void OnSubModuleLoad()
@@ -44,8 +44,9 @@ namespace MCM.UI
             WidgetPrefabPatch.Patch(widgetprefabpatchHarmony);
 
             var services = this.GetServices();
+            services.AddSingleton<BaseGameMenuScreenHandler, DefaultGameMenuScreenHandler>();
+            services.AddSingleton<BaseIngameMenuScreenHandler, DefaultIngameMenuScreenHandler>();
             services.AddTransient<IMCMOptionsScreen, ModOptionsGauntletScreen>();
-            services.AddSingleton<BaseResourceHandler, DefaultResourceHandler>();
 
             DelayedSubModuleManager.Register<SandBoxSubModule>();
             DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
@@ -53,6 +54,14 @@ namespace MCM.UI
                 {
                     Extender.Register(typeof(MCMUISubModule).Assembly);
                 });
+
+            if (ApplicationVersionUtils.GameVersion() is { } gameVersion)
+            {
+                if (gameVersion.Major <= 1 && gameVersion.Minor <= 5 && gameVersion.Revision <= 3)
+                    services.AddSingleton<IResourceInjector, Pre154ResourceInjector>();
+                else
+                    services.AddSingleton<IResourceInjector, Post154ResourceInjector>();
+            }
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
@@ -60,17 +69,20 @@ namespace MCM.UI
         {
             base.OnBeforeInitialModuleScreenSetAsRoot();
 
-            DelayedSubModuleManager.Register<SandBoxSubModule>();
-            DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
-                nameof(OnBeforeInitialModuleScreenSetAsRoot), SubscriptionType.AfterMethod, (s, e) =>
-                {
-                    BrushLoader.Inject(BaseResourceHandler.Instance);
-                    PrefabsLoader.Inject(BaseResourceHandler.Instance);
-                    WidgetLoader.Inject(BaseResourceHandler.Instance);
+            if (FirstInit)
+            {
+                FirstInit = false;
 
-                    UpdateOptionScreen(MCMUISettings.Instance!);
-                    MCMUISettings.Instance!.PropertyChanged += MCMSettings_PropertyChanged;
-                });
+                DelayedSubModuleManager.Register<SandBoxSubModule>();
+                DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
+                    nameof(OnBeforeInitialModuleScreenSetAsRoot), SubscriptionType.AfterMethod, (s, e) =>
+                    {
+                        var resourceInjector = this.GetServiceProvider().GetRequiredService<IResourceInjector>();
+
+                        UpdateOptionScreen(MCMUISettings.Instance!);
+                        MCMUISettings.Instance!.PropertyChanged += MCMSettings_PropertyChanged;
+                    });
+            }
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
@@ -102,22 +114,22 @@ namespace MCM.UI
             {
                 Extender.Enable();
 
-                BaseGameMenuScreenHandler.Instance.RemoveScreen("MCM_OptionScreen");
-                BaseIngameMenuScreenHandler.Instance.RemoveScreen("MCM_OptionScreen");
+                BaseGameMenuScreenHandler.Instance?.RemoveScreen("MCM_OptionScreen");
+                BaseIngameMenuScreenHandler.Instance?.RemoveScreen("MCM_OptionScreen");
             }
             else
             {
                 Extender.Disable();
 
-                BaseGameMenuScreenHandler.Instance.AddScreen(
+                BaseGameMenuScreenHandler.Instance?.AddScreen(
                     "MCM_OptionScreen",
                     9990,
-                    () => ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<IMCMOptionsScreen>() as ScreenBase,
+                    () => MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IMCMOptionsScreen>() as ScreenBase,
                     new TextObject("{=MainMenu_ModOptions}Mod Options"));
-                BaseIngameMenuScreenHandler.Instance.AddScreen(
+                BaseIngameMenuScreenHandler.Instance?.AddScreen(
                     "MCM_OptionScreen",
                     1,
-                    () => ButterLibSubModule.Instance.GetServiceProvider().GetRequiredService<IMCMOptionsScreen>() as ScreenBase,
+                    () => MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IMCMOptionsScreen>() as ScreenBase,
                     new TextObject("{=EscapeMenu_ModOptions}Mod Options"));
             }
         }

@@ -3,6 +3,7 @@
 
   <PropertyGroup>
     <AssemblyName>MCMv4.Custom.ScreenTests</AssemblyName>
+    <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

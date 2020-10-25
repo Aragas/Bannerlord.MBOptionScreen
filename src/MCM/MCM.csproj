@@ -3,6 +3,7 @@
 
   <PropertyGroup>
     <AssemblyName>MCMv4</AssemblyName>
+    <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
 
   <!--NuGet Package-->
@@ -20,7 +21,7 @@
     <None Include="../../resources/MCM-128-w-2.png" Pack="true" PackagePath="" />
   </ItemGroup>
   <!--NuGet Package-->
-  
+
   <ItemGroup>
     <InternalsVisibleTo Include="MCMv4.Custom.ScreenTests" />
     <InternalsVisibleTo Include="MCM.Tests" />
