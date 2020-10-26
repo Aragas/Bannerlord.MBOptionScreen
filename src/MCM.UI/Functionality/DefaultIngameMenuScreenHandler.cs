@@ -3,8 +3,6 @@ using Bannerlord.ButterLib.Common.Helpers;
 
 using HarmonyLib;
 
-using MCM.UI.Utils;
-
 using SandBox.View.Map;
 
 using System;
@@ -32,9 +30,9 @@ namespace MCM.UI.Functionality
             AccessTools2.GetDelegateObjectInstance<OnEscapeMenuToggledGauntletMissionEscapeMenuBaseDelegate>(typeof(GauntletMissionEscapeMenuBase), "OnEscapeMenuToggled");
 
         private static readonly AccessTools.FieldRef<GauntletMissionEscapeMenuBase, EscapeMenuVM>? DataSource =
-            AccessTools3.FieldRefAccess<GauntletMissionEscapeMenuBase, EscapeMenuVM>("_dataSource");
+            AccessTools2.FieldRefAccess<GauntletMissionEscapeMenuBase, EscapeMenuVM>("_dataSource");
         private static readonly AccessTools.FieldRef<EscapeMenuItemVM, object>? Identifier =
-            AccessTools3.FieldRefAccess<EscapeMenuItemVM, object>("_identifier");
+            AccessTools2.FieldRefAccess<EscapeMenuItemVM, object>("_identifier");
 
         private static readonly WeakReference<GauntletMissionEscapeMenuBase> _instance = new WeakReference<GauntletMissionEscapeMenuBase>(null!);
         private static Dictionary<string, (int, Func<ScreenBase?>, TextObject)> ScreensCache { get; } = new Dictionary<string, (int, Func<ScreenBase?>, TextObject)>();

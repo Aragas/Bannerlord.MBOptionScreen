@@ -3,7 +3,6 @@
 using HarmonyLib;
 
 using MCM.UI.Patches;
-using MCM.UI.Utils;
 
 using System;
 using System.Collections;
@@ -32,15 +31,15 @@ namespace MCM.UI.Functionality.Injectors
         private static readonly SetWidgetPrefabDelegate? SetWidgetPrefab =
             AccessTools2.GetDelegateObjectInstance<SetWidgetPrefabDelegate>(AccessTools.Property(CustomWidgetType, "WidgetPrefab").SetMethod);
         private static readonly AccessTools.FieldRef<object, string>? GetResourcesPath =
-            AccessTools3.FieldRefAccess<string>(CustomWidgetType, "_resourcesPath");
+            AccessTools2.FieldRefAccess<string>(CustomWidgetType, "_resourcesPath");
         private static readonly AccessTools.FieldRef<object, IDictionary>? GetCustomTypes =
-            AccessTools3.FieldRefAccess<IDictionary>(typeof(WidgetFactory), "_customTypes");
+            AccessTools2.FieldRefAccess<IDictionary>(typeof(WidgetFactory), "_customTypes");
         private static readonly AccessTools.FieldRef<object, IDictionary>? GetCustomTypePaths =
-            AccessTools3.FieldRefAccess<IDictionary>(typeof(WidgetFactory), "_customTypePaths");
+            AccessTools2.FieldRefAccess<IDictionary>(typeof(WidgetFactory), "_customTypePaths");
         private static readonly AccessTools.FieldRef<object, IDictionary>? GetLiveCustomTypes =
-            AccessTools3.FieldRefAccess<IDictionary>(typeof(WidgetFactory), "_liveCustomTypes");
+            AccessTools2.FieldRefAccess<IDictionary>(typeof(WidgetFactory), "_liveCustomTypes");
         private static readonly AccessTools.FieldRef<object, Dictionary<string, int>>? GetLiveInstanceTracker =
-            AccessTools3.FieldRefAccess<Dictionary<string, int>>(typeof(WidgetFactory), "_liveInstanceTracker");
+            AccessTools2.FieldRefAccess<Dictionary<string, int>>(typeof(WidgetFactory), "_liveInstanceTracker");
 
         public static WidgetPrefab InjectDocumentAndCreate(string name, XmlDocument doc)
         {

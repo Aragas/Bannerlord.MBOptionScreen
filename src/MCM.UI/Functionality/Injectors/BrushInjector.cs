@@ -2,8 +2,6 @@
 
 using HarmonyLib;
 
-using MCM.UI.Utils;
-
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Xml;
@@ -21,7 +19,7 @@ namespace MCM.UI.Functionality.Injectors
             AccessTools2.GetDelegate<LoadBrushFromDelegate>(typeof(BrushFactory), "LoadBrushFrom");
 
         private static readonly AccessTools.FieldRef<BrushFactory, Dictionary<string, Brush>>? GetBrushes =
-            AccessTools3.FieldRefAccess<BrushFactory, Dictionary<string, Brush>>("_brushes");
+            AccessTools2.FieldRefAccess<BrushFactory, Dictionary<string, Brush>>("_brushes");
 
         internal static readonly ConcurrentDictionary<Brush, object?> Brushes = new ConcurrentDictionary<Brush, object?>();
 

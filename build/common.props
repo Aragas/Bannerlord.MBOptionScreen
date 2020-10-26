@@ -5,8 +5,9 @@
     <Version>4.1.0</Version>
     <GameVersion>1.4.3</GameVersion>
     <HarmonyVersion>2.0.2</HarmonyVersion>
-    <ButterLibVersion>1.0.10</ButterLibVersion>
+    <ButterLibVersion>1.0.14</ButterLibVersion>
     <UIExtenderExVersion>1.0.4</UIExtenderExVersion>
+    <BuildResourcesVersion>1.0.0.17</BuildResourcesVersion>
     <TargetFramework>net472</TargetFramework>
     <LangVersion>8.0</LangVersion>
     <Nullable>enable</Nullable>
@@ -14,29 +15,6 @@
     <GameFolder Condition="$(Configuration) == 'Stable_Debug' OR $(Configuration) == 'Stable_Release'">$(BANNERLORD_STABLE_DIR)</GameFolder>
     <GameFolder Condition="$(Configuration) == 'Beta_Debug' OR $(Configuration) == 'Beta_Release'">$(BANNERLORD_BETA_DIR)</GameFolder>
     <GameFolder Condition="$(BANNERLORD_STABLE_DIR) == '' AND $(BANNERLORD_BETA_DIR) == ''">$(BANNERLORD_GAME_DIR)</GameFolder>
-  </PropertyGroup>
-
-
-  <PropertyGroup Condition="$(Configuration) == 'Stable_Debug' OR $(Configuration) == 'Beta_Debug'" >
-    <DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="$(Configuration) == 'Stable_Release' OR $(Configuration) == 'Beta_Release'" >
-    <DefineConstants>$(DefineConstants);RELEASE;TRACE</DefineConstants>
-    <DebugSymbols>false</DebugSymbols>
-    <DebugType>portable</DebugType>
-    <Optimize>true</Optimize>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="$(Configuration) == 'Stable_Debug' OR $(Configuration) == 'Stable_Release'" >
-    <DefineConstants>$(DefineConstants);STABLE</DefineConstants>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="$(Configuration) == 'Beta_Debug' OR $(Configuration) == 'Beta_Release'" >
-    <DefineConstants>$(DefineConstants);BETA</DefineConstants>
   </PropertyGroup>
 
 </Project>

@@ -49,8 +49,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{8A92126A-70CA-47BF-B208-E49E47A9E707}"
 	ProjectSection(SolutionItems) = preProject
 		..\build\common.props = ..\build\common.props
-		..\build\common.targets = ..\build\common.targets
-		..\build\github-actions.props = ..\build\github-actions.props
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MCMv3", "MCMv3", "{698918F1-18D4-4E5F-849A-3C81B724EC28}"

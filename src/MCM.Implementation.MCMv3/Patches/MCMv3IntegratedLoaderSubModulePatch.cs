@@ -1,9 +1,9 @@
 ﻿extern alias v3;
 extern alias v4;
 
-using HarmonyLib;
+using Bannerlord.ButterLib.Common.Helpers;
 
-using MCM.Implementation.MCMv3.Utils;
+using HarmonyLib;
 
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
@@ -26,7 +26,7 @@ namespace MCM.Implementation.MCMv3.Patches
         }
 
         private static readonly AccessTools.FieldRef<MCMv3IntegratedLoaderSubModule, MCMv3IIntegratedLoader>? Loader =
-            AccessTools3.FieldRefAccess<MCMv3IntegratedLoaderSubModule, MCMv3IIntegratedLoader>("_loader");
+            AccessTools2.FieldRefAccess<MCMv3IntegratedLoaderSubModule, MCMv3IIntegratedLoader>("_loader");
 
         public static void Patch(Harmony harmony)
         {
