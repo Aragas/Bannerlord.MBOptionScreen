@@ -43,5 +43,3 @@ It provides 5 types of options:
 * Dropdown  
   
 The settings can be defined at compile time by using the Attribute API and at runtime by using the Fluent Builder.  
-  
-See the [Wiki](https://github.com/Aragas/Bannerlord.MBOptionScreen/wiki/MCMv3) for more details!  
