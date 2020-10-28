@@ -10,6 +10,6 @@ namespace MCM.UI.Exceptions
         public MCMUIException() : base() { }
         public MCMUIException(string message) : base(message) { }
         public MCMUIException(string message, Exception inner) : base(message, inner) { }
-        public MCMUIException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        protected MCMUIException(SerializationInfo info, StreamingContext context) : base(info, context) { }
     }
 }

@@ -9,6 +9,6 @@ namespace MCM.Exceptions
         public MCMException() : base() { }
         public MCMException(string message) : base(message) { }
         public MCMException(string message, Exception inner) : base(message, inner) { }
-        public MCMException(SerializationInfo info, StreamingContext context) : base(info, context) { }
+        protected MCMException(SerializationInfo info, StreamingContext context) : base(info, context) { }
     }
 }
