@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <Authors>Aragas, mipen</Authors>
-    <AssemblyName>MCMv4.Implementation.ModLib.v$(Version)</AssemblyName>
+    <AssemblyName>MCMv4.Implementation.ModLib</AssemblyName>
     <ModuleName>Bannerlord.MBOptionScreen.ModLib</ModuleName>
     <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
   </PropertyGroup>

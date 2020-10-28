@@ -40,7 +40,7 @@
     </SubModule>
     <SubModule>
       <Name value="MCMv4 ModLib Compatibility"/>
-      <DLLName value="MCMv4.Implementation.ModLib.v$version$.dll"/>
+      <DLLName value="MCMv4.Implementation.ModLib.dll"/>
       <SubModuleClassType value="MCM.Implementation.ModLib.MCMModLibSubModule"/>
       <Tags/>
     </SubModule>
