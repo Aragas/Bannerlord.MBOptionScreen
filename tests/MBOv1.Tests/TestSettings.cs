@@ -1,13 +1,13 @@
-﻿using ModLib.Definitions;
-using ModLib.Definitions.Attributes;
+﻿using MBOptionScreen.Attributes;
+using MBOptionScreen.Settings;
 
-namespace ModLibV13.Tests
+namespace MBOv1.Tests
 {
-    internal sealed class TestSettings : SettingsBase
+    internal sealed class TestSettings : AttributeSettings<TestSettings>
     {
-        public override string ID { get; set; } = "Testing_vM13";
-        public override string ModName => "ModLibV13 Testing API";
-        public override string ModuleFolderName => "ModLibV13.Tests";
+        public override string Id { get; set; } = "Testing_v1";
+        public override string ModName => "MBOv1 Testing API";
+        public override string ModuleFolderName => "MBOv1.Tests";
 
 
         [SettingProperty("Property Bool Default False")]
@@ -19,7 +19,7 @@ namespace ModLibV13.Tests
         [SettingProperty("Property Bool Require Restart")]
         [SettingPropertyGroup("Bool")]
         public bool PropertyBoolRequireRestart { get; set; }
-        [SettingProperty("Property Bool With Hint", "Hint Text")]
+        [SettingProperty("Property Bool With Hint", hintText: "Hint Text")]
         [SettingPropertyGroup("Bool")]
         public bool PropertyBoolWithHint { get; set; }
 
@@ -36,7 +36,7 @@ namespace ModLibV13.Tests
         [SettingProperty("Property Int -10 to 10", -10f, 10f)]
         [SettingPropertyGroup("Int")]
         public int PropertyInt1to10 { get; set; }
-        [SettingProperty("Property Int With Hint", 0f, 100f, "Hint Text")]
+        [SettingProperty("Property Int With Hint", 0f, 100f, hintText: "Hint Text")]
         [SettingPropertyGroup("Int")]
         public int PropertyIntWithHint { get; set; }
 
@@ -53,7 +53,7 @@ namespace ModLibV13.Tests
         [SettingProperty("Property Float -10 to 10", -10f, 10f)]
         [SettingPropertyGroup("Float")]
         public float PropertyFloat1to10 { get; set; }
-        [SettingProperty("Property Float With Hint", 0f, 100f, "Hint Text")]
+        [SettingProperty("Property Float With Hint", 0f, 100f, hintText: "Hint Text")]
         [SettingPropertyGroup("Float")]
         public float PropertyFloatWithHint { get; set; }
 
@@ -67,7 +67,7 @@ namespace ModLibV13.Tests
         [SettingProperty("Property Text Require Restart")]
         [SettingPropertyGroup("Text")]
         public string PropertyTextRequireRestart { get; set; } = string.Empty;
-        [SettingProperty("Property Text With Hint", "Hint Text")]
+        [SettingProperty("Property Text With Hint", hintText: "Hint Text")]
         [SettingPropertyGroup("Text")]
         public string PropertyTextWithHint { get; set; } = string.Empty;
     }

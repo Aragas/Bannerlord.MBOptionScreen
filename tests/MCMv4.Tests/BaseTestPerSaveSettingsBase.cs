@@ -4,6 +4,6 @@ namespace MCMv4.Tests
 {
     public abstract class BaseTestPerSaveSettingsBase<T> : AttributePerSaveSettings<T> where T : PerSaveSettings, new()
     {
-        public override string FolderName => "Testing";
+        public override string FolderName => "MCMv4.Tests";
     }
 }

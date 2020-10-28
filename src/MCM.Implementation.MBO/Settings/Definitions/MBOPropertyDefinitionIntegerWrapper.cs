@@ -1,4 +1,7 @@
 ﻿extern alias v4;
+
+using HarmonyLib;
+
 using v4::MCM.Abstractions.Settings.Definitions;
 using v4::MCM.Abstractions.Settings.Definitions.Wrapper;
 
@@ -14,9 +17,11 @@ namespace MCM.Implementation.MBO.Settings.Definitions
 
         public MBOPropertyDefinitionIntegerWrapper(object @object) : base(@object)
         {
-            MinValue = (decimal) (@object.GetType().GetProperty("MinValue")?.GetValue(@object) as int? ?? 0);
-            MaxValue = (decimal) (@object.GetType().GetProperty("MaxValue")?.GetValue(@object) as int? ?? 0);
-            ValueFormat = @object.GetType().GetProperty("ValueFormat")?.GetValue(@object) as string ?? "0";
+            var type = @object.GetType();
+
+            MinValue = (decimal) (AccessTools.Property(type, "MinValue")?.GetValue(@object) as int? ?? 0);
+            MaxValue = (decimal) (AccessTools.Property(type, "MaxValue")?.GetValue(@object) as int? ?? 0);
+            ValueFormat = AccessTools.Property(type, "ValueFormat")?.GetValue(@object) as string ?? "0";
         }
     }
 }

@@ -2,8 +2,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>ModLibV1.Tests</AssemblyName>
-    <ModuleName>Bannerlord.MBOptionScreen.ModLibV1.Tests</ModuleName>
+    <AssemblyName>ModLibV13.Tests</AssemblyName>
+    <ModuleName>Bannerlord.MBOptionScreen.ModLibV13.Tests</ModuleName>
     <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
   </PropertyGroup>
 

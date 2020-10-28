@@ -1,73 +1,53 @@
-﻿using HarmonyLib;
+﻿extern alias v1;
+extern alias v2;
+extern alias v4;
+
+using Bannerlord.ButterLib.Common.Extensions;
+using Bannerlord.ButterLib.Common.Helpers;
+
+using HarmonyLib;
+
+using MCM.Implementation.MBO.Settings.Containers;
+using MCM.Implementation.MBO.Settings.Properties;
+using MCM.Implementation.MBO.Settings.Providers;
+
+using System.Reflection;
 
 using TaleWorlds.MountAndBlade;
 
+using v1::MBOptionScreen;
+using v1::MBOptionScreen.State;
+using v4::MCM.Extensions;
+
+using MBOv2SettingsBase = v2::MBOptionScreen.Settings.SettingsBase;
+
 namespace MCM.Implementation.MBO
 {
-    // Do not provide assembly substitutes
     public sealed class MCMImplementationMBOSubModule : MBSubModuleBase
     {
-        /// <summary>
-        /// Start initialization
-        /// </summary>
+        private static readonly AccessTools.FieldRef<SharedStateObject>? MBOv1SharedStateObject =
+            AccessTools2.StaticFieldRefAccess<SharedStateObject>(AccessTools.Field(typeof(MBOptionScreenSubModule), "SharedStateObject"));
+
+        private static readonly PropertyInfo? MBOv2SettingsProvider =
+            AccessTools.Property(typeof(MBOv2SettingsBase).Assembly.GetType("MBOptionScreen.Settings.SettingsDatabase"), "MBOptionScreenSettingsProvider");
+
         protected override void OnSubModuleLoad()
         {
-            using var synchronizationProvider = BaseSynchronizationProvider.Create("OnSubModuleLoad_MBOv3");
-            if (synchronizationProvider.IsFirstInitialization)
+            base.OnSubModuleLoad();
+
+            if (this.GetServices() is { } services)
             {
-                var harmonyV1 = new Harmony("bannerlord.mcm.mbo.v1.loaderpreventer");
-                foreach (var method in SettingsDatabaseV1Patch1.TargetMethods())
-                {
-                    harmonyV1.Patch(
-                        method,
-                        prefix: new HarmonyMethod(typeof(SettingsDatabaseV1Patch1), nameof(SettingsDatabaseV1Patch1.Prefix)));
-                }
-                /*
-                foreach (var method in MBOptionScreenV1SubModulePatch1.TargetMethods())
-                {
-                    harmonyV1.Patch(
-                        method,
-                        prefix: new HarmonyMethod(typeof(MBOptionScreenV1SubModulePatch1), nameof(MBOptionScreenV1SubModulePatch1.Prefix)));
-                }
-                foreach (var method in MBOptionScreenV1SubModulePatch2.TargetMethods())
-                {
-                    harmonyV1.Patch(
-                        method,
-                        prefix: new HarmonyMethod(typeof(MBOptionScreenV1SubModulePatch2), nameof(MBOptionScreenV1SubModulePatch2.Prefix)));
-                }
-                */
-
-                var harmonyV2 = new Harmony("bannerlord.mcm.mbo.v2.loaderpreventer");
-                foreach (var method in SettingsDatabaseV2Patch1.TargetMethods())
-                {
-                    harmonyV2.Patch(
-                        method,
-                        prefix: new HarmonyMethod(typeof(SettingsDatabaseV2Patch1), nameof(SettingsDatabaseV2Patch1.Prefix)));
-                }
-                /*
-                foreach (var method in MBOptionScreenV2SubModulePatch1.TargetMethods())
-                {
-                    harmonyV2.Patch(
-                        method,
-                        prefix: new HarmonyMethod(typeof(MBOptionScreenV2SubModulePatch1), nameof(MBOptionScreenV2SubModulePatch1.Prefix)));
-                }
-                foreach (var method in MBOptionScreenV2SubModulePatch2.TargetMethods())
-                {
-                    harmonyV2.Patch(
-                        method,
-                        prefix: new HarmonyMethod(typeof(MBOptionScreenV2SubModulePatch2), nameof(MBOptionScreenV2SubModulePatch2.Prefix)));
-                }
-                */
+                services.AddSettingsContainer<MBOv1GlobalSettingsContainer>();
+                services.AddSettingsContainer<MBOv2GlobalSettingsContainer>();
+                services.AddSettingsPropertyDiscoverer<MBOv1SettingsPropertyDiscoverer>();
+                services.AddSettingsPropertyDiscoverer<MBOv2SettingsPropertyDiscoverer>();
             }
-        }
 
-        /// <summary>
-        /// End initialization
-        /// </summary>
-        protected override void OnBeforeInitialModuleScreenSetAsRoot()
-        {
-            using var synchronizationProvider = BaseSynchronizationProvider.Create("OnBeforeInitialModuleScreenSetAsRoot_MBOv3");
-            if (synchronizationProvider.IsFirstInitialization) { }
+            if (MBOv1SharedStateObject != null)
+                MBOv1SharedStateObject() = new SharedStateObject(new MBOv1SettingsProvider(), null!, null!);
+
+            if (MBOv2SettingsProvider != null)
+                MBOv2SettingsProvider.SetValue(null, new MBOv2SettingsProvider());
         }
     }
 }

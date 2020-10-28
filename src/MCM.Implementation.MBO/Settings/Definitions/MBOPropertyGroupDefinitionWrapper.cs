@@ -2,7 +2,7 @@
 
 using v4::MCM.Abstractions.Settings.Definitions;
 
-namespace MCM.Implementation.MBO.Attributes
+namespace MCM.Implementation.MBO.Settings.Definitions
 {
     public sealed class MBOPropertyGroupDefinitionWrapper : IPropertyGroupDefinition
     {

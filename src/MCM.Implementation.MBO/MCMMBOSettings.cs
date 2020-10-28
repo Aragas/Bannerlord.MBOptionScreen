@@ -8,8 +8,6 @@ using v4::MCM.Abstractions.Settings.Base.Global;
 
 namespace MCM.Implementation.MBO
 {
-    extern alias v4;
-
     internal sealed class MCMMBOSettings : AttributeGlobalSettings<MCMMBOSettings>
     {
         public override string Id { get; } = "MCMMBO_v3";

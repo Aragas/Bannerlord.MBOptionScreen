@@ -1,14 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using MCM.Abstractions.Attributes.v2;
+﻿using MCM.Abstractions.Attributes.v2;
 using MCM.Abstractions.Settings.Base;
+
+using System;
+using System.Collections.Generic;
 
 namespace MCMv3.Tests
 {
     internal sealed class TestSettingsPresets : BaseTestGlobalSettings<TestSettingsPresets>
     {
-        public override string Id => "Testing_Presets_v1";
-        public override string DisplayName => "Testing Presets";
+        public override string Id => "Testing_Presets_v3";
+        public override string DisplayName => "MCMv3 Testing Presets";
 
 
         [SettingPropertyBool("Property 1", RequireRestart = false)]

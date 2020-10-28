@@ -1,5 +1,6 @@
 ﻿using MCM.Abstractions.FluentBuilder;
 using MCM.Abstractions.Ref;
+
 using TaleWorlds.MountAndBlade;
 
 namespace MCMv4.Tests
@@ -19,7 +20,7 @@ namespace MCMv4.Tests
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
 #if DEBUG
-            var builder = BaseSettingsBuilder.Create("Testing_Global_v1", "Testing Fluent Settings")!
+            var builder = BaseSettingsBuilder.Create("Testing_Global_v1", "MCMv4 Testing Fluent Settings")!
                 .SetFormat("xml")
                 .SetFolderName("")
                 .SetSubFolder("")

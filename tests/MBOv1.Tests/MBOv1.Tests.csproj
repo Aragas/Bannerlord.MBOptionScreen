@@ -1,0 +1,18 @@
+﻿<!--EXTERNAL_PROPERTIES: GameVersion-->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>MBOv1.Tests</AssemblyName>
+    <ModuleName>Bannerlord.MBOptionScreen.MBOv1.Tests</ModuleName>
+    <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="MBOv1" HintPath="../../src/MCM.Implementation.MBO/_Module/bin/Win64_Shipping_Client/MBOptionScreen.dll" Private="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

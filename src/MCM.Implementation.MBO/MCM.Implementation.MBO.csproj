@@ -2,8 +2,9 @@
 
   <PropertyGroup>
     <Authors>Aragas, mipen</Authors>
-    <AssemblyName>MCMv3.Implementation.MBO.v$(Version)</AssemblyName>
+    <AssemblyName>MCMv4.Implementation.MBO</AssemblyName>
     <ModuleName>Bannerlord.MBOptionScreen.MBO</ModuleName>
+    <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

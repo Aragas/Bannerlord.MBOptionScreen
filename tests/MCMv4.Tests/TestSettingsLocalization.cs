@@ -5,8 +5,9 @@ namespace MCMv4.Tests
 {
     internal sealed class TestSettingsLocalization : BaseTestGlobalSettings<TestSettingsLocalization>
     {
-        public override string Id => "Testing_Localization_v1";
-        public override string DisplayName => "Testing Localization";
+        public override string Id => "Testing_Localization_v4";
+        public override string DisplayName => "MCMv4 Testing Localization";
+
 
         [SettingPropertyInteger("Option 1", 0, 100, Order = 0, RequireRestart = false, HintText = "Option 1")]
         [SettingPropertyGroup("{=Tgabbs}Level1")]

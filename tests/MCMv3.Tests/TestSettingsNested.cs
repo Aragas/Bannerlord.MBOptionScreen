@@ -5,8 +5,9 @@ namespace MCMv3.Tests
 {
     internal sealed class TestSettingsNested : BaseTestGlobalSettings<TestSettingsNested>
     {
-        public override string Id => "Testing_Nested_v1";
-        public override string DisplayName => "Testing Nested";
+        public override string Id => "Testing_Nested_v3";
+        public override string DisplayName => "MCMv3 Testing Nested";
+
 
         [SettingPropertyInteger("Option 1", 0, 100, Order = 0, RequireRestart = false, HintText = "Option 1")]
         [SettingPropertyGroup("Level1")]

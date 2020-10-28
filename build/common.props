@@ -5,7 +5,7 @@
     <Version>4.1.0</Version>
     <GameVersion>1.4.3</GameVersion>
     <HarmonyVersion>2.0.2</HarmonyVersion>
-    <ButterLibVersion>1.0.10</ButterLibVersion>
+    <ButterLibVersion>1.0.14</ButterLibVersion>
     <UIExtenderExVersion>1.0.4</UIExtenderExVersion>
     <TargetFramework>net472</TargetFramework>
     <LangVersion>8.0</LangVersion>

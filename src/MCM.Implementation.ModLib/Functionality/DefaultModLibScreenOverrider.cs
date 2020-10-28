@@ -1,6 +1,6 @@
-﻿using HarmonyLib;
+﻿using Bannerlord.ButterLib.Common.Helpers;
 
-using MCM.Implementation.ModLib.Utils;
+using HarmonyLib;
 
 using System.Collections;
 
@@ -11,7 +11,7 @@ namespace MCM.Implementation.ModLib.Functionality
     internal sealed class DefaultModLibScreenOverrider : BaseModLibScreenOverrider
     {
         private static readonly AccessTools.FieldRef<Module, IList>? InitialStateOptions =
-            AccessTools3.FieldRefAccess<Module, IList>("_initialStateOptions");
+            AccessTools2.FieldRefAccess<Module, IList>("_initialStateOptions");
 
         public override void OverrideModLibScreen()
         {

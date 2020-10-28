@@ -5,8 +5,8 @@ namespace ModLibV1.Tests
 {
     internal sealed class TestSettings : SettingsBase
     {
-        public override string ID { get; set; } = "Testing";
-        public override string ModName => "Testing API";
+        public override string ID { get; set; } = "Testing_vM1";
+        public override string ModName => "ModLibV1 Testing API";
         public override string ModuleFolderName => "ModLibV1.Tests";
 
 

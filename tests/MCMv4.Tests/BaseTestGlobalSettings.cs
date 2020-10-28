@@ -4,6 +4,6 @@ namespace MCMv4.Tests
 {
     public abstract class BaseTestGlobalSettings<T> : AttributeGlobalSettings<T> where T : GlobalSettings, new()
     {
-        public override string FolderName => "Testing";
+        public override string FolderName => "MCMv4.Tests";
     }
 }

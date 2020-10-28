@@ -4,8 +4,8 @@ namespace MCMv3.Tests
 {
     internal sealed class TestSettingsPropertyChanged : BaseTestGlobalSettings<TestSettingsOrder>
     {
-        public override string Id => "Testing_PropertyChanged_v1";
-        public override string DisplayName => "Testing PropertyChanged";
+        public override string Id => "Testing_PropertyChanged_v3";
+        public override string DisplayName => "MCMv3 Testing PropertyChanged";
 
 
         private bool _property1 = true;

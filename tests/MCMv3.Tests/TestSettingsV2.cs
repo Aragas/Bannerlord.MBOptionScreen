@@ -1,14 +1,15 @@
-﻿using System;
-using MCM.Abstractions.Attributes;
+﻿using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
 using MCM.Abstractions.Data;
+
+using System;
 
 namespace MCMv3.Tests
 {
     internal sealed class TestSettingsV2 : BaseTestGlobalSettings<TestSettingsV2>
     {
-        public override string Id => "Testing_v2";
-        public override string DisplayName => "Testing v2 API";
+        public override string Id => "Testing_v2_v3";
+        public override string DisplayName => "MCMv3 Testing v2 API";
 
 
         [SettingPropertyBool("Property Bool Default False", RequireRestart = false)]

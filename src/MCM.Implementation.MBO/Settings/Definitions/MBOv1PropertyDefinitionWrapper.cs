@@ -4,9 +4,9 @@ using TaleWorlds.Localization;
 
 using v4::MCM.Abstractions.Settings.Definitions;
 
-namespace MCM.Implementation.MBO.Attributes
+namespace MCM.Implementation.MBO.Settings.Definitions
 {
-    public sealed class MBOSettingPropertyAttributeWrapper :
+    public sealed class MBOv1PropertyDefinitionWrapper :
         IPropertyDefinitionBool,
         IPropertyDefinitionWithMinMax,
         IPropertyDefinitionWithEditableMinMax,
@@ -25,7 +25,7 @@ namespace MCM.Implementation.MBO.Attributes
         public decimal EditableMinValue { get; }
         public decimal EditableMaxValue { get; }
 
-        public MBOSettingPropertyAttributeWrapper(object @object)
+        public MBOv1PropertyDefinitionWrapper(object @object)
         {
             var type = @object.GetType();
 

@@ -4,6 +4,6 @@ namespace MCMv3.Tests
 {
     public abstract class BaseTestPerCharacterSettingsBase<T> : AttributePerCharacterSettings<T> where T : PerCharacterSettings, new()
     {
-        public override string FolderName => "Testing";
+        public override string FolderName => "MCMv3.Tests";
     }
 }

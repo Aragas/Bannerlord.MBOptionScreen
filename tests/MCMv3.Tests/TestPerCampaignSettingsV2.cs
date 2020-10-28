@@ -6,8 +6,8 @@ namespace MCMv3.Tests
 {
     internal sealed class TestPerSaveSettingsV2 : BaseTestPerCharacterSettingsBase<TestPerSaveSettingsV2>
     {
-        public override string Id => "Testing1_v2";
-        public override string DisplayName => "Testing v2 API";
+        public override string Id => "Testing_PerCampaign_v2_v3";
+        public override string DisplayName => "MCMv3 Testing PerCampaign v2";
 
 
         [SettingPropertyBool("Property Bool Default False", RequireRestart = false)]

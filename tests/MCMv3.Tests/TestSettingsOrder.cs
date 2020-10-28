@@ -5,8 +5,8 @@ namespace MCMv3.Tests
 {
     internal sealed class TestSettingsOrder : BaseTestGlobalSettings<TestSettingsOrder>
     {
-        public override string Id => "Testing_Order_v1";
-        public override string DisplayName => "Testing Order";
+        public override string Id => "Testing_Order_v3";
+        public override string DisplayName => "MCMv3 Testing Order";
 
 
         [SettingPropertyBool("Correct Order: ACBED")]
