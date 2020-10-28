@@ -1,10 +1,9 @@
-﻿extern alias v3;
+﻿extern alias v1;
 extern alias v4;
 
 using Bannerlord.ButterLib.Common.Extensions;
 
-using MCM.Implementation.MCMv3.Settings.Base;
-using MCM.Implementation.MCMv3.Utils;
+using MCM.Implementation.MBO.Settings.Base;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,18 +12,18 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
+using v1::MBOptionScreen.Settings;
 using v4::MCM.Abstractions.Settings.Base.Global;
 using v4::MCM.Abstractions.Settings.Containers.Global;
 using v4::MCM.Abstractions.Settings.Formats;
 
-namespace MCM.Implementation.MCMv3.Settings.Containers
+namespace MCM.Implementation.MBO.Settings.Containers
 {
-    // MCMv3 had the ability to get Instance in OnSubModuleLoad()
-    internal sealed class MCMv3GlobalSettingsContainer : BaseGlobalSettingsContainer
+    internal sealed class MBOv1GlobalSettingsContainer : BaseGlobalSettingsContainer
     {
         private static List<GlobalSettings>? Settings { get; set; }
 
-        public MCMv3GlobalSettingsContainer()
+        public MBOv1GlobalSettingsContainer()
         {
             if (Settings == null)
             {
@@ -33,16 +32,16 @@ namespace MCM.Implementation.MCMv3.Settings.Containers
                 var allTypes = AppDomain.CurrentDomain
                     .GetAssemblies()
                     .Where(a => !a.IsDynamic)
+                    // ignore v1 and v2 classes
+                    .Where(a => !Path.GetFileNameWithoutExtension(a.Location).StartsWith("MBOptionScreen"))
                     .SelectMany(a => a.GetTypes())
-                    .Where(t => t.IsClass && !t.IsAbstract && t.GetConstructor(Type.EmptyTypes) != null)
+                    .Where(t => t.IsClass && !t.IsAbstract)
+                    .Where(t => t.GetConstructor(Type.EmptyTypes) != null)
                     .ToList();
 
                 var mbOptionScreenSettings = allTypes
-                    .Where(t => typeof(v3::MCM.Abstractions.Settings.Base.Global.GlobalSettings).IsAssignableFrom(t))
-                    .Where(t => !typeof(v3::MCM.Abstractions.Settings.Base.Global.EmptyGlobalSettings).IsAssignableFrom(t))
-                    .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, "MCM.MCMSettings"))
-                    .Where(t => !typeof(v3::MCM.Abstractions.IWrapper).IsAssignableFrom(t))
-                    .Select(obj => new MCMv3GlobalSettingsWrapper(Activator.CreateInstance(obj)));
+                    .Where(t => typeof(SettingsBase).IsAssignableFrom(t))
+                    .Select(obj => new MBOv1GlobalSettingsWrapper(Activator.CreateInstance(obj)));
                 Settings.AddRange(mbOptionScreenSettings);
             }
 
@@ -50,7 +49,7 @@ namespace MCM.Implementation.MCMv3.Settings.Containers
                 RegisterSettings(setting);
         }
 
-        protected override void RegisterSettings(GlobalSettings? settings)
+        protected override void RegisterSettings(GlobalSettings settings)
         {
             if (settings == null || LoadedSettings.ContainsKey(settings.Id))
                 return;

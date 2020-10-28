@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Module>
-  <Name value="MCMv4 MCMv3 Integration"/>
-  <Id value="Bannerlord.MBOptionScreen.MCMv3"/>
+  <Name value="MCMv4 MBO/MCMv2 Integration"/>
+  <Id value="Bannerlord.MBOptionScreen.MBO"/>
   <Version value="v$version$"/>
   <Official value="false"/>
   <SingleplayerModule value="true"/>
@@ -27,11 +27,12 @@
   <!-- Prototype -->
   <SubModules>
     <SubModule>
-      <Name value="MCMv4 MCMv3 Compatibility"/>
-      <DLLName value="MCMv4.Implementation.MCMv3.dll"/>
-      <SubModuleClassType value="MCM.Implementation.MCMv3.MCMMCMv3SubModule"/>
+      <Name value="MCMv4 MBO Compatibility"/>
+      <DLLName value="MCMv4.Implementation.MBO.dll"/>
+      <SubModuleClassType value="MCM.Implementation.MBO.MCMImplementationMBOSubModule"/>
       <Assemblies>
-        <Assembly value="MCMv3.dll"/>
+        <Assembly value="MBOptionScreen.dll"/>
+        <Assembly value="MBOptionScreen.v2.0.10.dll"/>
       </Assemblies>
       <Tags/>
     </SubModule>

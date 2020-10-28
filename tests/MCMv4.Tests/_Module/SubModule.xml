@@ -1,14 +1,15 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Module>
-  <Name value="MCMv4 MCMv3 Integration"/>
-  <Id value="Bannerlord.MBOptionScreen.MCMv3"/>
-  <Version value="v$version$"/>
-  <Official value="false"/>
-  <SingleplayerModule value="true"/>
-  <MultiplayerModule value="false"/>
+  <Name value="MCM MCMv4 Tests" />
+  <Id value="Bannerlord.MBOptionScreen.MCMv4.Tests" />
+  <Version value="v$version$" />
+  <Official value="false" />
+  <SingleplayerModule value="true" />
+  <MultiplayerModule value="false" />
   <DependedModules>
     <DependedModule Id="Bannerlord.Harmony" />
     <DependedModule Id="Bannerlord.ButterLib" />
+    <DependedModule Id="Bannerlord.UIExtenderEx" />
     <DependedModule Id="Bannerlord.MBOptionScreen"/>
   </DependedModules>
   <!-- Prototype -->
@@ -27,13 +28,10 @@
   <!-- Prototype -->
   <SubModules>
     <SubModule>
-      <Name value="MCMv4 MCMv3 Compatibility"/>
-      <DLLName value="MCMv4.Implementation.MCMv3.dll"/>
-      <SubModuleClassType value="MCM.Implementation.MCMv3.MCMMCMv3SubModule"/>
-      <Assemblies>
-        <Assembly value="MCMv3.dll"/>
-      </Assemblies>
-      <Tags/>
+      <Name value="MCMv4 Tests" />
+      <DLLName value="MCMv4.Tests.dll" />
+      <SubModuleClassType value="MCMv4.Tests.SubModule" />
+      <Tags />
     </SubModule>
   </SubModules>
 </Module>

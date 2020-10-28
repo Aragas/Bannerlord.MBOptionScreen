@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Module>
-  <Name value="MCMv4 MCMv3 Integration"/>
-  <Id value="Bannerlord.MBOptionScreen.MCMv3"/>
+  <Name value="MCM MCMv3 Integration Tests"/>
+  <Id value="Bannerlord.MBOptionScreen.MCMv3.Tests"/>
   <Version value="v$version$"/>
   <Official value="false"/>
   <SingleplayerModule value="true"/>
@@ -9,7 +9,9 @@
   <DependedModules>
     <DependedModule Id="Bannerlord.Harmony" />
     <DependedModule Id="Bannerlord.ButterLib" />
+    <DependedModule Id="Bannerlord.UIExtenderEx" />
     <DependedModule Id="Bannerlord.MBOptionScreen"/>
+    <DependedModule Id="Bannerlord.MBOptionScreen.MCMv3"/>
   </DependedModules>
   <!-- Prototype -->
   <DependedModuleMetadatas>
@@ -17,6 +19,7 @@
     <DependedModuleMetadata id="Bannerlord.ButterLib" order="LoadBeforeThis" version="v$butterlibversion$" />
     <DependedModuleMetadata id="Bannerlord.UIExtenderEx" order="LoadBeforeThis" version="v$uiextenderversion$" />
     <DependedModuleMetadata id="Bannerlord.MBOptionScreen" order="LoadBeforeThis" version="v$version$" />
+    <DependedModuleMetadata id="Bannerlord.MBOptionScreen.MCMv3" order="LoadBeforeThis" version="v$version$" />
 
     <DependedModuleMetadata id="Native" order="LoadAfterThis" version="e$gameversion$.*" />
     <DependedModuleMetadata id="SandBoxCore" order="LoadAfterThis" version="e$gameversion$.*" />
@@ -27,12 +30,9 @@
   <!-- Prototype -->
   <SubModules>
     <SubModule>
-      <Name value="MCMv4 MCMv3 Compatibility"/>
-      <DLLName value="MCMv4.Implementation.MCMv3.dll"/>
-      <SubModuleClassType value="MCM.Implementation.MCMv3.MCMMCMv3SubModule"/>
-      <Assemblies>
-        <Assembly value="MCMv3.dll"/>
-      </Assemblies>
+      <Name value="MCMv3 Tests"/>
+      <DLLName value="MCMv3.Tests.dll"/>
+      <SubModuleClassType value="MCMv3.Tests.SubModule"/>
       <Tags/>
     </SubModule>
   </SubModules>

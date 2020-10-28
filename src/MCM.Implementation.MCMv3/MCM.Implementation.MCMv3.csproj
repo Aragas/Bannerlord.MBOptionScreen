@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <Authors>Aragas</Authors>
-    <AssemblyName>MCMv4.Implementation.MCMv3.v$(Version)</AssemblyName>
+    <AssemblyName>MCMv4.Implementation.MCMv3</AssemblyName>
     <ModuleName>Bannerlord.MBOptionScreen.MCMv3</ModuleName>
     <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
   </PropertyGroup>
@@ -18,11 +18,5 @@
     <ProjectReference Include="../MCM/MCM.csproj" Private="false" Aliases="v4" />
     <Reference Include="MCMv3" HintPath="_Module/bin/Win64_Shipping_Client/MCMv3.dll" Private="false" Aliases="v3" />
   </ItemGroup>
-
-  <!--
-  <ItemGroup Condition="$(Configuration) == 'Debug'">
-    <Reference Include="MCMv3.Custom.ScreenTests" HintPath="_Module/bin/Win64_Shipping_Client/MCMv3.Custom.ScreenTests.dll" Private="false" Aliases="v3_Tests" />
-  </ItemGroup>
-  -->
 
 </Project>

@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Authors>Aragas, mipen</Authors>
+    <AssemblyName>MCMv4.Implementation.MBO</AssemblyName>
+    <ModuleName>Bannerlord.MBOptionScreen.MBO</ModuleName>
+    <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bannerlord.ButterLib" Version="$(ButterLibVersion)" IncludeAssets="compile" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
+    <ProjectReference Include="../MCM/MCM.csproj" Private="false" Aliases="v4" />
+    <Reference Include="MCMv1" HintPath="_Module/bin/Win64_Shipping_Client/MBOptionScreen.dll" Private="false" Aliases="v1" />
+    <Reference Include="MCMv2" HintPath="_Module/bin/Win64_Shipping_Client/MBOptionScreen.v2.0.10.dll" Private="false" Aliases="v2" />
+  </ItemGroup>
+
+</Project>
