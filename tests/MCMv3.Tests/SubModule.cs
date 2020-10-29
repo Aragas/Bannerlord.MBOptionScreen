@@ -17,7 +17,7 @@ namespace MCMv3.Tests
         /// </summary>
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
-            var builder = new DefaultSettingsBuilder("Testing_Global_v1", "MCMv3 Testing Fluent Settings")!
+            var builder = new DefaultSettingsBuilder("Testing_Global_v3", "MCMv3 Testing Fluent Settings")!
                 .SetFormat("xml")
                 .SetFolderName("")
                 .SetSubFolder("")

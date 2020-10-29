@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Bannerlord.BuildResources" Version="$(BuildResourcesVersion)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <Reference Include="MBOv2" HintPath="../../src/MCM.Implementation.MBO/_Module/bin/Win64_Shipping_Client/MBOptionScreen.v2.0.10.dll" Private="false" />
   </ItemGroup>
 
