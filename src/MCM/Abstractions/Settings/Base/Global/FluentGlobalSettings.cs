@@ -1,8 +1,8 @@
 ﻿using Bannerlord.ButterLib.Common.Extensions;
 
 using MCM.Abstractions.FluentBuilder;
-using MCM.Abstractions.Settings.Containers.Global;
 using MCM.Abstractions.Settings.Models;
+using MCM.Implementation.Settings.Containers.Global;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,8 +15,6 @@ namespace MCM.Abstractions.Settings.Base.Global
 {
     public class FluentGlobalSettings : GlobalSettings, IFluentSettings
     {
-        public static readonly string ContainerId = "MCMv4_Global_FluentStorage";
-
         /// <inheritdoc/>
         public sealed override string Id { get; }
         /// <inheritdoc/>
@@ -57,12 +55,12 @@ namespace MCM.Abstractions.Settings.Base.Global
 
         public void Register()
         {
-            var container = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IFluentGlobalSettingsContainer>();
+            var container = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IMCMFluentGlobalSettingsContainer>();
             container?.Register(this);
         }
         public void Unregister()
         {
-            var container = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IFluentGlobalSettingsContainer>();
+            var container = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IMCMFluentGlobalSettingsContainer>();
             container?.Unregister(this);
         }
 
@@ -81,7 +79,7 @@ namespace MCM.Abstractions.Settings.Base.Global
                 Func<BaseSettings> func;
                 foreach (var (propertyName, propertyValue) in builder.PropertyValues)
                 {
-                    
+
                 }
                 dict.Add(preset, () =>
                 {

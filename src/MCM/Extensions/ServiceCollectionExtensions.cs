@@ -9,6 +9,8 @@ using MCM.Abstractions.Settings.Providers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
+using System;
+
 namespace MCM.Extensions
 {
     public static class ServiceCollectionExtensions
@@ -17,14 +19,16 @@ namespace MCM.Extensions
             where TService : BaseSettingsProvider
             where TImplementation : class, TService
         {
+            services.AddSingleton<TImplementation>();
+            services.AddSingleton<TService, TImplementation>(sp => sp.GetRequiredService<TImplementation>());
             services.AddSettingsProvider<TImplementation>();
-            services.AddSingleton<TService, TImplementation>();
             return services;
         }
         public static IServiceCollection AddSettingsProvider<TImplementation>(this IServiceCollection services)
             where TImplementation : BaseSettingsProvider
         {
-            services.TryAddEnumerable(ServiceDescriptor.Singleton<BaseSettingsProvider, TImplementation>());
+            services.AddSingleton<TImplementation>();
+            services.TryAddEnumerable(ServiceDescriptor.Singleton<BaseSettingsProvider, TImplementation>(sp => sp.GetRequiredService<TImplementation>()));
             return services;
         }
 
@@ -32,15 +36,16 @@ namespace MCM.Extensions
             where TService : class, ISettingsFormat
             where TImplementation : class, TService
         {
+            services.AddSingleton<TImplementation>();
+            services.AddSingleton<TService, TImplementation>(sp => sp.GetRequiredService<TImplementation>());
             services.AddSettingsFormat<TImplementation>();
-            services.AddSingleton<TService, TImplementation>();
             return services;
         }
         public static IServiceCollection AddSettingsFormat<TImplementation>(this IServiceCollection services)
             where TImplementation : class, ISettingsFormat
         {
-            services.TryAddEnumerable(ServiceDescriptor.Singleton<ISettingsFormat, TImplementation>());
-
+            services.AddSingleton<TImplementation>();
+            services.TryAddEnumerable(ServiceDescriptor.Singleton<ISettingsFormat, TImplementation>(sp => sp.GetRequiredService<TImplementation>()));
             return services;
         }
 
@@ -48,14 +53,16 @@ namespace MCM.Extensions
             where TService : class, ISettingsPropertyDiscoverer
             where TImplementation : class, TService
         {
+            services.AddSingleton<TImplementation>();
+            services.AddSingleton<TService, TImplementation>(sp => sp.GetRequiredService<TImplementation>());
             services.AddSettingsPropertyDiscoverer<TImplementation>();
-            services.AddSingleton<TService, TImplementation>();
             return services;
         }
         public static IServiceCollection AddSettingsPropertyDiscoverer<TImplementation>(this IServiceCollection services)
             where TImplementation : class, ISettingsPropertyDiscoverer
         {
-            services.TryAddEnumerable(ServiceDescriptor.Singleton<ISettingsPropertyDiscoverer, TImplementation>());
+            services.AddSingleton<TImplementation>();
+            services.TryAddEnumerable(ServiceDescriptor.Singleton<ISettingsPropertyDiscoverer, TImplementation>(sp => sp.GetRequiredService<TImplementation>()));
             return services;
         }
 
@@ -63,31 +70,46 @@ namespace MCM.Extensions
             where TService : class, ISettingsContainer
             where TImplementation : class, TService
         {
+            services.AddSingleton<TImplementation>();
+            services.AddSingleton<TService, TImplementation>(sp => sp.GetRequiredService<TImplementation>());
             services.AddSettingsContainer<TImplementation>();
-            services.AddSingleton<TService, TImplementation>();
             return services;
         }
         public static IServiceCollection AddSettingsContainer<TImplementation>(this IServiceCollection services)
             where TImplementation : class, ISettingsContainer
         {
-            services.TryAddEnumerable(ServiceDescriptor.Singleton<ISettingsContainer, TImplementation>());
+            services.AddSingleton<TImplementation>();
+
+            services.TryAddEnumerable(ServiceDescriptor.Singleton<ISettingsContainer, TImplementation>(sp => sp.GetRequiredService<TImplementation>()));
 
             if (typeof(IPerSaveSettingsContainer).IsAssignableFrom(typeof(TImplementation)))
-                services.AddSingleton(typeof(IPerSaveSettingsContainer), typeof(TImplementation));
+                services.TryAddEnumerable(SingletonN<IPerSaveSettingsContainer, TImplementation>(sp => sp.GetRequiredService<TImplementation>()));
             if (typeof(IGlobalSettingsContainer).IsAssignableFrom(typeof(TImplementation)))
-                services.AddSingleton(typeof(IGlobalSettingsContainer), typeof(TImplementation));
+                services.TryAddEnumerable(SingletonN<IGlobalSettingsContainer, TImplementation>(sp => sp.GetRequiredService<TImplementation>()));
             if (typeof(IFluentPerSaveSettingsContainer).IsAssignableFrom(typeof(TImplementation)))
-                services.AddSingleton(typeof(IFluentPerSaveSettingsContainer), typeof(TImplementation));
+                services.TryAddEnumerable(SingletonN<IFluentPerSaveSettingsContainer, TImplementation>(sp => sp.GetRequiredService<TImplementation>()));
             if (typeof(IFluentGlobalSettingsContainer).IsAssignableFrom(typeof(TImplementation)))
-                services.AddSingleton(typeof(IFluentGlobalSettingsContainer), typeof(TImplementation));
+                services.TryAddEnumerable(SingletonN<IFluentGlobalSettingsContainer, TImplementation>(sp => sp.GetRequiredService<TImplementation>()));
+
             return services;
         }
 
         public static IServiceCollection AddSettingsBuilderFactory<TImplementation>(this IServiceCollection services)
             where TImplementation : class, ISettingsBuilderFactory
         {
-            services.AddSingleton<ISettingsBuilderFactory, TImplementation>();
+            services.AddSingleton<TImplementation>();
+            services.AddSingleton<ISettingsBuilderFactory, TImplementation>(sp => sp.GetRequiredService<TImplementation>());
             return services;
+        }
+
+
+        private static ServiceDescriptor SingletonN<TService, TImplementation>(Func<IServiceProvider, TImplementation>? implementationFactory)
+            where TService : class
+            where TImplementation : class
+        {
+            return implementationFactory != null
+                ? ServiceDescriptor.Describe(typeof(TService), implementationFactory, ServiceLifetime.Singleton)
+                : throw new ArgumentNullException(nameof(implementationFactory));
         }
     }
 }
