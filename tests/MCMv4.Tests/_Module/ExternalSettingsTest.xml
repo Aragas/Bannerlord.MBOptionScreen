@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Settings Id="Testing_External_v4" DisplayName="MCMv4 Testing External" UIVersion="1" SubGroupDelimiter="/">
+
+  <SettingPropertyBool Id="prop_1" DisplayName="Check Box" />
+
+  <SettingPropertyGroup DisplayName="Testing 1">
+
+    <SettingPropertyBool Id="prop_2" DisplayName="Check Box" HintText="Test 1" RequireRestart="false" />
+
+  </SettingPropertyGroup>
+
+  <SettingPropertyGroup DisplayName="Testing 2">
+
+    <SettingPropertyInteger Id="prop_3" DisplayName="Integer" MinValue="0" MaxValue="10" HintText="Test 2" RequireRestart="false" />
+
+  </SettingPropertyGroup>
+
+  <SettingPropertyGroup DisplayName="Testing 2/Nested">
+
+    <SettingPropertyInteger Id="prop_4" DisplayName="Floating Integer" MinValue="0" MaxValue="100" HintText="Test 3" RequireRestart="true" />
+
+  </SettingPropertyGroup>
+
+</Settings>

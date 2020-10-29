@@ -7,19 +7,16 @@ namespace MCMv3.Tests
 {
     public sealed class SubModule : MBSubModuleBase
     {
-#if DEBUG
         private bool _boolValue;
         private int _intValue;
         private float _floatValue;
         private string _stringValue = string.Empty;
-#endif
 
         /// <summary>
         /// End initialization
         /// </summary>
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
-#if DEBUG
             var builder = new DefaultSettingsBuilder("Testing_Global_v1", "MCMv3 Testing Fluent Settings")!
                 .SetFormat("xml")
                 .SetFolderName("")
@@ -44,7 +41,6 @@ namespace MCMv3.Tests
             //var PerSaveSettings = builder.BuildAsPerSave();
             //PerSaveSettings.Register();
             //PerSaveSettings.Unregister();
-#endif
         }
     }
 }

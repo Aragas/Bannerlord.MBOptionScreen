@@ -1,4 +1,6 @@
-﻿using ModLib.Debugging;
+﻿extern alias v13;
+
+using ModLib.Debugging;
 using ModLib.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -23,8 +25,8 @@ namespace ModLib
         public static T Get<T>(string id) where T : class
         {
             // Some new ModLib mods love to use FileDabatabse.Get instead of SettingsDatabase.Get
-            if (typeof(ModLib.Definitions.Interfaces.ISerialisableFile).IsAssignableFrom(typeof(T)))
-                return ModLib.Definition.FileDatabaseWorkaround.Get<T>(id);
+            if (typeof(v13::ModLib.Definitions.Interfaces.ISerialisableFile).IsAssignableFrom(typeof(T)))
+                return v13::ModLib.Definition.FileDatabaseWorkaround.Get<T>(id);
 
 
             //First check if the dictionary contains the key
