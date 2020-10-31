@@ -1,4 +1,5 @@
-﻿using MCM.Extensions;
+﻿using MCM.Abstractions.Settings.Definitions;
+using MCM.Extensions;
 
 using System.Collections.Generic;
 
@@ -8,10 +9,21 @@ namespace MCM.Abstractions.Settings.Models
 {
     public class SettingsPropertyGroupDefinition
     {
+        private class DefaultPropertyGroupDefinition : IPropertyGroupDefinition
+        {
+            public string GroupName { get; } = DefaultGroupName;
+            public int GroupOrder { get; } = 0;
+        }
+
         /// <summary>
         /// The default group used for settings that don't have a group explicitly set.
         /// </summary>
         public static readonly string DefaultGroupName = new TextObject("{=SettingsPropertyGroupDefinition_Misc}Misc").ToString();
+
+        /// <summary>
+        /// The default group used for settings that don't have a group explicitly set.
+        /// </summary>
+        public static readonly IPropertyGroupDefinition DefaultGroup = new DefaultPropertyGroupDefinition();
 
         protected readonly TextObject _groupName;
         protected readonly TextObject _groupNameOverride;
