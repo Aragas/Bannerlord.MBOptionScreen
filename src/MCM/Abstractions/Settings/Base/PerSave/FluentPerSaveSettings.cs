@@ -33,8 +33,7 @@ namespace MCM.Abstractions.Settings.Base.PerSave
         public sealed override event PropertyChangedEventHandler? PropertyChanged { add => base.PropertyChanged += value; remove => base.PropertyChanged -= value; }
         public List<SettingsPropertyGroupDefinition> SettingPropertyGroups { get; }
 
-        public FluentPerSaveSettings(string id, string displayName, string folderName, string subFolder,
-            int uiVersion, char subGroupDelimiter, PropertyChangedEventHandler? onPropertyChanged,
+        public FluentPerSaveSettings(string id, string displayName, string folderName, string subFolder, int uiVersion, char subGroupDelimiter, PropertyChangedEventHandler? onPropertyChanged,
             IEnumerable<SettingsPropertyGroupDefinition> settingPropertyGroups, Dictionary<string, ISettingsPresetBuilder> presets)
         {
             Id = id;

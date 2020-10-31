@@ -7,6 +7,8 @@ using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Base.Global;
+using MCM.Abstractions.Settings.Definitions;
+using MCM.Abstractions.Settings.Definitions.Wrapper;
 using MCM.Abstractions.Settings.Models;
 using MCM.Extensions;
 
@@ -255,6 +257,51 @@ namespace MCM.Utils
 
             truncatedGroupName = groupName.Remove(0, index + 1);
             return topGroupName;
+        }
+
+        public static IEnumerable<IPropertyDefinitionBase> GetPropertyDefinitionWrappers(object property)
+        {
+            object? propAttr;
+
+            propAttr = property as IPropertyDefinitionBool;
+            if (propAttr != null)
+                yield return new PropertyDefinitionBoolWrapper(propAttr);
+
+            propAttr = property as IPropertyDefinitionDropdown;
+            if (propAttr != null)
+                yield return new PropertyDefinitionDropdownWrapper(propAttr);
+
+            propAttr = property as IPropertyDefinitionGroupToggle;
+            if (propAttr != null)
+                yield return new PropertyDefinitionGroupToggleWrapper(propAttr);
+
+            propAttr = property as IPropertyDefinitionText;
+            if (propAttr != null)
+                yield return new PropertyDefinitionTextWrapper(propAttr);
+
+            propAttr = property as IPropertyDefinitionWithActionFormat;
+            if (propAttr != null)
+                yield return new PropertyDefinitionWithActionFormatWrapper(propAttr);
+
+            propAttr = property as IPropertyDefinitionWithCustomFormatter;
+            if (propAttr != null)
+                yield return new PropertyDefinitionWithCustomFormatterWrapper(propAttr);
+
+            propAttr = property as IPropertyDefinitionWithEditableMinMax;
+            if (propAttr != null)
+                yield return new PropertyDefinitionWithEditableMinMaxWrapper(propAttr);
+
+            propAttr = property as IPropertyDefinitionWithFormat;
+            if (propAttr != null)
+                yield return new PropertyDefinitionWithFormatWrapper(propAttr);
+
+            propAttr = property as IPropertyDefinitionWithId;
+            if (propAttr != null)
+                yield return new PropertyDefinitionWithIdWrapper(propAttr);
+
+            propAttr = property as IPropertyDefinitionWithMinMax;
+            if (propAttr != null)
+                yield return new PropertyDefinitionWithMinMaxWrapper(propAttr);
         }
     }
 }
