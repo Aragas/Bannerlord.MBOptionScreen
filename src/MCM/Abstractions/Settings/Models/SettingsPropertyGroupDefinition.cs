@@ -58,5 +58,15 @@ namespace MCM.Abstractions.Settings.Models
 
         /// <inheritdoc/>
         public override string ToString() => GroupName;
+
+        public SettingsPropertyGroupDefinition Clone(bool keepRefs = true)
+        {
+            var settings = new SettingsPropertyGroupDefinition(GroupName, order: Order);
+            foreach (var prop in SettingProperties)
+                settings.Add(prop.Clone(keepRefs));
+            foreach (var subGroup in SubGroups)
+                settings.Add(subGroup.Clone(keepRefs));
+            return settings;
+        }
     }
 }

@@ -54,6 +54,7 @@ namespace MCM.Abstractions.Settings.Base
         }
         public virtual IDictionary<string, Func<BaseSettings>> GetAvailablePresets() => new Dictionary<string, Func<BaseSettings>>()
         {
+            // TODO: computable name
             { new TextObject("{=BaseSettings_Default}Default").ToString(), CreateNew }
         };
     }

@@ -2,6 +2,8 @@
 
 using MCM.Abstractions.FluentBuilder;
 using MCM.Abstractions.Settings.Models;
+using MCM.Extensions;
+using MCM.Implementation.FluentBuilder;
 using MCM.Implementation.Settings.Containers.Global;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +36,7 @@ namespace MCM.Abstractions.Settings.Base.Global
         /// <inheritdoc/>
         public sealed override event PropertyChangedEventHandler? PropertyChanged { add => base.PropertyChanged += value; remove => base.PropertyChanged -= value; }
         public List<SettingsPropertyGroupDefinition> SettingPropertyGroups { get; }
+        private WeakReference<PropertyChangedEventHandler?> OnPropertyChangedDelegate { get; }
         private Dictionary<string, ISettingsPresetBuilder> Presets { get; }
 
         public FluentGlobalSettings(string id, string displayName, string folderName, string subFolder, string format,
@@ -48,9 +51,21 @@ namespace MCM.Abstractions.Settings.Base.Global
             UIVersion = uiVersion;
             SubGroupDelimiter = subGroupDelimiter;
             SettingPropertyGroups = settingPropertyGroups.ToList();
+            OnPropertyChangedDelegate = new WeakReference<PropertyChangedEventHandler?>(onPropertyChanged);
             if (onPropertyChanged != null)
                 PropertyChanged += onPropertyChanged;
-            Presets = presets;
+
+            Presets = new Dictionary<string, ISettingsPresetBuilder>();
+            var defaultKey = base.GetAvailablePresets().First().Key;
+            if (!presets.ContainsKey(defaultKey))
+            {
+                var defaultPreset = new DefaultSettingsPresetBuilder(defaultKey);
+                foreach (var propertyDefinition in this.GetAllSettingPropertyDefinitions())
+                    defaultPreset.SetPropertyValue(propertyDefinition.Id, propertyDefinition.PropertyReference.Value);
+                Presets.Add(defaultPreset.PresetName, defaultPreset);
+            }
+            foreach (var (key, value) in presets)
+                Presets.Add(key, value);
         }
 
         public void Register()
@@ -65,33 +80,37 @@ namespace MCM.Abstractions.Settings.Base.Global
         }
 
         /// <inheritdoc/>
-        protected override BaseSettings CreateNew() => null!;
-        /// <inheritdoc/>
-        protected override BaseSettings CopyAsNew() => null!;
-        /// <inheritdoc/>
-        public override IDictionary<string, Func<BaseSettings>> GetAvailablePresets()
-        {
-            // TODO: Presets
-            /*
-            var dict = new Dictionary<string, Func<BaseSettings>>();
-            foreach (var (preset, builder) in Presets)
-            {
-                Func<BaseSettings> func;
-                foreach (var (propertyName, propertyValue) in builder.PropertyValues)
-                {
+        protected sealed override BaseSettings CreateNew() => new FluentGlobalSettings(
+            Id,
+            DisplayName,
+            FolderName,
+            SubFolder,
+            FormatType,
+            UIVersion,
+            SubGroupDelimiter,
+            null,
+            SettingPropertyGroups.Select(g => g.Clone(false)),
+            Presets);
 
-                }
-                dict.Add(preset, () =>
+        /// <inheritdoc/>
+        public sealed override IDictionary<string, Func<BaseSettings>> GetAvailablePresets()
+        {
+            var dict = new Dictionary<string, Func<BaseSettings>>();
+            foreach (var (presetName, presetBuilder) in Presets)
+            {
+                dict.Add(presetName, () =>
                 {
-                    var settings = CopyAsNew();
-                    var props = settings.GetAllSettingPropertyDefinitions();
-                    props.FirstOrDefault(x => x.)
+                    var settings = CreateNew();
+                    var props = settings.GetAllSettingPropertyDefinitions().ToList();
+                    foreach (var (propertyId, propertyValue) in presetBuilder.PropertyValues)
+                    {
+                        if (props.Find(x => x.Id == propertyId) is { } property)
+                            property.PropertyReference.Value = propertyValue;
+                    }
                     return settings;
                 });
             }
-            */
-
-            return new Dictionary<string, Func<BaseSettings>>();
+            return dict;
         }
     }
 }

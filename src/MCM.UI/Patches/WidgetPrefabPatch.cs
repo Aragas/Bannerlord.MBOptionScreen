@@ -27,6 +27,7 @@ namespace MCM.UI.Patches
             string path,
             XmlDocument document)
         {
+            // Replaces reading XML from file with assigning it from the new local variable `XmlDocument document`
             [MethodImpl(MethodImplOptions.NoInlining)]
             static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, MethodBase method)
             {

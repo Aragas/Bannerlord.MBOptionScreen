@@ -40,7 +40,12 @@ namespace MCMv4.Tests
                         .SetRequireRestart(true)
                         .SetHintText("Test")))
                 .CreateGroup("Testing 3", groupBuilder => groupBuilder
-                    .AddText("prop_4", "Test", new ProxyRef<string>(() => _stringValue, o => _stringValue = o), null));
+                    .AddText("prop_4", "Test", new ProxyRef<string>(() => _stringValue, o => _stringValue = o), null))
+                .CreatePreset("Test", presetBuilder => presetBuilder
+                    .SetPropertyValue("prop_1", true)
+                    .SetPropertyValue("prop_2", 2)
+                    .SetPropertyValue("prop_3", 1.5F)
+                    .SetPropertyValue("prop_4", "HueHueHue"));
 
             var globalSettings = builder.BuildAsGlobal();
             globalSettings.Register();

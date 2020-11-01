@@ -8,11 +8,11 @@ namespace MCM.Implementation.FluentBuilder
     {
         public IDictionary<string, object> PropertyValues { get; } = new Dictionary<string, object>();
 
-        public string PropertyName { get; }
+        public string PresetName { get; }
 
-        public DefaultSettingsPresetBuilder(string propertyName)
+        public DefaultSettingsPresetBuilder(string presetName)
         {
-            PropertyName = propertyName;
+            PresetName = presetName;
         }
 
         public ISettingsPresetBuilder SetPropertyValue(string property, object value)

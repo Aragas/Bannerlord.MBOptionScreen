@@ -1,7 +1,7 @@
-﻿using System;
-using System.Collections.Concurrent;
+﻿using MCM.Abstractions.Settings.Providers;
 
-using MCM.Abstractions.Settings.Providers;
+using System;
+using System.Collections.Concurrent;
 
 namespace MCM.Abstractions.Settings.Base.Global
 {

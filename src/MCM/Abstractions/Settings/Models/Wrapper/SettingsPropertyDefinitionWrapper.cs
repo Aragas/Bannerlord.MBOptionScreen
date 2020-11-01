@@ -1,6 +1,8 @@
 ﻿using HarmonyLib;
 
 using MCM.Abstractions.Ref;
+using MCM.Abstractions.Settings.Definitions.Wrapper;
+using MCM.Utils;
 
 using System;
 
@@ -46,6 +48,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
         public string Id { get; }
         /// <inheritdoc/>
         public bool IsToggle { get; }
+        private char SubGroupDelimiter { get; }
 
         public SettingsPropertyDefinitionWrapper(object @object)
         {
@@ -69,6 +72,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
             var customFormatterProperty = AccessTools.Property(type, nameof(CustomFormatter));
             var idProperty = AccessTools.Property(type, nameof(Id));
             var isToggleProperty= AccessTools.Property(type, nameof(IsToggle));
+            var subGroupDelimiterProperty= AccessTools.Property(type, nameof(SubGroupDelimiter));
 
 
             SettingsId = settingsIdProperty?.GetValue(@object) as string ?? "ERROR";
@@ -115,6 +119,18 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
             CustomFormatter = customFormatterProperty?.GetValue(@object) as Type;
             Id = idProperty?.GetValue(@object) as string ?? string.Empty;
             IsToggle = isToggleProperty?.GetValue(@object) as bool? ?? false;
+
+            SubGroupDelimiter = subGroupDelimiterProperty?.GetValue(@object) as char? ?? '/';
+        }
+
+        public SettingsPropertyDefinition Clone(bool keepRefs = true)
+        {
+            var localPropValue = PropertyReference.Value;
+            return new SettingsPropertyDefinition(
+                SettingsUtils.GetPropertyDefinitionWrappers(this),
+                new PropertyGroupDefinitionWrapper(this),
+                keepRefs ? PropertyReference : new StorageRef(localPropValue),
+                SubGroupDelimiter);
         }
     }
 }

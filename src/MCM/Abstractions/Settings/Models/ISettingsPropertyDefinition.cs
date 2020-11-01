@@ -11,14 +11,15 @@ namespace MCM.Abstractions.Settings.Models
         IPropertyDefinitionWithEditableMinMax,
         IPropertyDefinitionWithFormat,
         IPropertyDefinitionWithCustomFormatter,
+        IPropertyDefinitionWithId,
         IPropertyDefinitionText,
         IPropertyDefinitionGroupToggle,
         IPropertyGroupDefinition
     {
-        string Id { get; }
-
         IRef PropertyReference { get; }
 
         SettingType SettingType { get; }
+
+        SettingsPropertyDefinition Clone(bool keepRefs = true);
     }
 }
