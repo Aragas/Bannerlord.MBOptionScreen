@@ -182,12 +182,12 @@ jobs:
     - name: Run ChangelogParser
       id: changelog
       run: |
-        vers="$(bannerlord_changelog_parser latestversion -f "$PWD/changelog.txt")"
+        $vers="$(bannerlord_changelog_parser latestversion -f "$PWD/changelog.txt")"
         echo "::set-output name=mod_version::$vers"
-        desc="$(bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt")"
-        desc="${desc//'%'/'%25'}"
-        desc="${desc//$'\n'/'%0A'}"
-        desc="${desc//$'\r'/'%0D'}"
+        $desc="$(bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt")"
+        $desc="${desc//'%'/'%25'}"
+        $desc="${desc//$'\n'/'%0A'}"
+        $desc="${desc//$'\r'/'%0D'}"
         echo "::set-output name=mod_description::$desc"
       shell: pwsh
 
@@ -263,12 +263,12 @@ jobs:
     - name: Run ChangelogParser
       id: changelog
       run: |
-        vers="$(bannerlord_changelog_parser latestversion -f "$PWD/changelog.txt")"
+        $vers="$(bannerlord_changelog_parser latestversion -f "$PWD/changelog.txt")"
         echo "::set-output name=mod_version::$vers"
-        desc="$(bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt")"
-        desc="${desc//'%'/'%25'}"
-        desc="${desc//$'\n'/'%0A'}"
-        desc="${desc//$'\r'/'%0D'}"
+        $desc="$(bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt")"
+        $desc="${desc//'%'/'%25'}"
+        $desc="${desc//$'\n'/'%0A'}"
+        $desc="${desc//$'\r'/'%0D'}"
         echo "::set-output name=mod_description::$desc"
       shell: pwsh
 
@@ -346,12 +346,12 @@ jobs:
     - name: Run ChangelogParser
       id: changelog
       run: |
-        vers="$(bannerlord_changelog_parser latestversion -f "$PWD/changelog.txt")"
+        $vers="$(bannerlord_changelog_parser latestversion -f "$PWD/changelog.txt")"
         echo "::set-output name=mod_version::$vers"
-        desc="$(bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt")"
-        desc="${desc//'%'/'%25'}"
-        desc="${desc//$'\n'/'%0A'}"
-        desc="${desc//$'\r'/'%0D'}"
+        $desc="$(bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt")"
+        $desc="${desc//'%'/'%25'}"
+        $desc="${desc//$'\n'/'%0A'}"
+        $desc="${desc//$'\r'/'%0D'}"
         echo "::set-output name=mod_description::$desc"
       shell: pwsh
 
