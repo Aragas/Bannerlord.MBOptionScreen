@@ -189,7 +189,7 @@ jobs:
         desc="${desc//$'\n'/'%0A'}"
         desc="${desc//$'\r'/'%0D'}"
         echo "::set-output name=mod_description::$desc"
-      shell: pwsh
+      shell: bash
 
     - name: Pack MCM (Release)
       run: dotnet pack src/MCM/MCM.csproj --configuration Release -o "./packages";
@@ -217,6 +217,7 @@ jobs:
 #          NEXUS          #
 ###########################
   publish-on-nexusmods:
+    if: ${{ false }}
     name: Publish on NexusMods
     runs-on: ubuntu-latest
     needs: test
@@ -270,7 +271,7 @@ jobs:
         desc="${desc//$'\n'/'%0A'}"
         desc="${desc//$'\r'/'%0D'}"
         echo "::set-output name=mod_description::$desc"
-      shell: pwsh
+      shell: bash
 
     - name: Start Selenoid
       uses: Xotabu4/selenoid-github-action@v1
@@ -353,7 +354,7 @@ jobs:
         desc="${desc//$'\n'/'%0A'}"
         desc="${desc//$'\r'/'%0D'}"
         echo "::set-output name=mod_description::$desc"
-      shell: pwsh
+      shell: bash
 
     - name: Create Release
       uses: actions/create-release@v1
