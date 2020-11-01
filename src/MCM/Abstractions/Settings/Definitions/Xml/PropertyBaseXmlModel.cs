@@ -16,7 +16,7 @@ namespace MCM.Abstractions.Settings.Definitions.Xml
         public int Order { get; set; } = default!;
 
         [XmlAttribute("HintText")]
-        public string HintText { get; set; } = "";
+        public string HintText { get; set; } = string.Empty;
 
         [XmlAttribute("RequireRestart")]
         public bool RequireRestart { get; set; } = true;

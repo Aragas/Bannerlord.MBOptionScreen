@@ -19,8 +19,8 @@ namespace MCMv3.Tests
         {
             var builder = new DefaultSettingsBuilder("Testing_Global_v3", "MCMv3 Testing Fluent Settings")!
                 .SetFormat("xml")
-                .SetFolderName("")
-                .SetSubFolder("")
+                .SetFolderName(string.Empty)
+                .SetSubFolder(string.Empty)
                 .CreateGroup("Testing 1", groupBuilder => groupBuilder
                     .AddBool("prop_1", "Check Box", new ProxyRef<bool>(() => _boolValue, o => _boolValue = o), boolBuilder => boolBuilder
                         .SetHintText("Test")

@@ -27,8 +27,8 @@ namespace MCMv4.Tests
         {
             var builder = BaseSettingsBuilder.Create("Testing_Global_v4", "MCMv4 Testing Fluent Settings")!
                 .SetFormat("xml")
-                .SetFolderName("")
-                .SetSubFolder("")
+                .SetFolderName(string.Empty)
+                .SetSubFolder(string.Empty)
                 .CreateGroup("Testing 1", groupBuilder => groupBuilder
                     .AddBool("prop_1", "Check Box", new ProxyRef<bool>(() => _boolValue, o => _boolValue = o), boolBuilder => boolBuilder
                         .SetHintText("Test")
@@ -68,7 +68,7 @@ namespace MCMv4.Tests
             IPropertyDefinitionBool _ => new ProxyRef<bool>(() => false, null),
             IPropertyDefinitionDropdown _ => new ProxyRef<bool>(() => false, null),
             IPropertyDefinitionWithMinMax _ => new ProxyRef<int>(() => 0, null),
-            IPropertyDefinitionText _ => new ProxyRef<string>(() => "", null),
+            IPropertyDefinitionText _ => new ProxyRef<string>(() => string.Empty, null),
             _ => new ProxyRef<object?>(() => null, null)
         };
     }

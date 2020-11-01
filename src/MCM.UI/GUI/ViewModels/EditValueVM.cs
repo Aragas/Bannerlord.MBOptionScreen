@@ -130,7 +130,7 @@ namespace MCM.UI.GUI.ViewModels
                 SettingType.Int => SettingProperty.IntValue.ToString(),
                 SettingType.Float => SettingProperty.FloatValue.ToString(),
                 SettingType.String => SettingProperty.StringValue,
-                _ => "",
+                _ => string.Empty,
             };
         }
 

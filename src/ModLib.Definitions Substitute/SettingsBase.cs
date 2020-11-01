@@ -7,6 +7,6 @@ namespace ModLib.Definitions
         public abstract string ID { get; set; }
         public abstract string ModuleFolderName { get; }
         public abstract string ModName { get; }
-        public virtual string SubFolder => "";
+        public virtual string SubFolder => string.Empty;
     }
 }
