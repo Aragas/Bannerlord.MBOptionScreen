@@ -57,7 +57,7 @@ namespace MCM.Implementation.ModLib.Settings.Properties.v1
                 var attributes = property.GetCustomAttributes().ToList();
 
                 object? groupAttrObj = attributes.Find(a => a is v1::ModLib.Attributes.SettingPropertyGroupAttribute);
-                var groupDefinition = groupAttrObj != null
+                var groupDefinition = groupAttrObj is { }
                     ? new ModLibPropertyGroupDefinitionWrapper(groupAttrObj)
                     : SettingPropertyGroupAttribute.Default;
 
@@ -87,7 +87,7 @@ namespace MCM.Implementation.ModLib.Settings.Properties.v1
                 object? propAttr;
 
                 propAttr = attributes.FirstOrDefault(a => a is v1::ModLib.Attributes.SettingPropertyAttribute);
-                if (propAttr != null)
+                if (propAttr is { })
                     yield return new ModLibSettingPropertyAttributeWrapper(propAttr);
         }
     }

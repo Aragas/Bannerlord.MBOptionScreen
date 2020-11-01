@@ -38,7 +38,7 @@ namespace MCM.Abstractions.Dropdown
         public CheckboxDropdownSelectorItemVM(T @object) : base(@object)
         {
             var isSelectedProperty = AccessTools.Property(typeof(T), "IsSelected");
-            if (isSelectedProperty != null)
+            if (isSelectedProperty is { })
             {
                 _getIsSelectedDelegate = AccessTools2.GetDelegate<GetIsSelectedDelegate>(@object, isSelectedProperty.GetMethod)!;
                 _setIsSelectedDelegate = AccessTools2.GetDelegate<SetIsSelectedDelegate>(@object, isSelectedProperty.SetMethod)!;

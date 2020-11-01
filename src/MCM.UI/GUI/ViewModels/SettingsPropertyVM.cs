@@ -175,7 +175,7 @@ namespace MCM.UI.GUI.ViewModels
         {
             SettingsVM = settingsVM;
             SettingPropertyDefinition = definition;
-            ValueFormatProvider = SettingPropertyDefinition.CustomFormatter!= null
+            ValueFormatProvider = SettingPropertyDefinition.CustomFormatter is { }
                 ? Activator.CreateInstance(SettingPropertyDefinition.CustomFormatter) as IFormatProvider
                 : null;
 

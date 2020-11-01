@@ -45,7 +45,7 @@ namespace MCM.Implementation.Settings.Formats.Xml
                 reader.Dispose();
 
                 var root = xmlDocument[settings.GetType().Name];
-                if (root == null)
+                if (root is null)
                 {
                     Save(settings, directoryPath, filename);
                     return settings;
@@ -54,7 +54,7 @@ namespace MCM.Implementation.Settings.Formats.Xml
                 var content = JsonConvert.SerializeXmlNode(root, Newtonsoft.Json.Formatting.None, true);
 
                 var set = LoadFromJson(settings, content);
-                if (set == null)
+                if (set is null)
                 {
                     Save(settings, directoryPath, filename);
                     return settings;

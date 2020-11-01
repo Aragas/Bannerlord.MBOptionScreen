@@ -16,9 +16,9 @@ namespace MCM.Implementation.ModLib.Functionality
         public override void OverrideModLibScreen()
         {
             var oldOptionScreen = Module.CurrentModule.GetInitialStateOptionWithId("ModOptionsMenu");
-            if (oldOptionScreen != null)
+            if (oldOptionScreen is { })
             {
-                if (InitialStateOptions != null)
+                if (InitialStateOptions is { })
                     InitialStateOptions(Module.CurrentModule).Remove(oldOptionScreen);
             }
         }

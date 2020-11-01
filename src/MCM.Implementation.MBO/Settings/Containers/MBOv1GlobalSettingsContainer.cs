@@ -25,7 +25,7 @@ namespace MCM.Implementation.MBO.Settings.Containers
 
         public MBOv1GlobalSettingsContainer()
         {
-            if (Settings == null)
+            if (Settings is null)
             {
                 Settings = new List<GlobalSettings>();
 
@@ -36,7 +36,7 @@ namespace MCM.Implementation.MBO.Settings.Containers
                     .Where(a => !Path.GetFileNameWithoutExtension(a.Location).StartsWith("MBOptionScreen"))
                     .SelectMany(a => a.GetTypes())
                     .Where(t => t.IsClass && !t.IsAbstract)
-                    .Where(t => t.GetConstructor(Type.EmptyTypes) != null)
+                    .Where(t => t.GetConstructor(Type.EmptyTypes) is { })
                     .ToList();
 
                 var mbOptionScreenSettings = allTypes
@@ -51,7 +51,7 @@ namespace MCM.Implementation.MBO.Settings.Containers
 
         protected override void RegisterSettings(GlobalSettings settings)
         {
-            if (settings == null || LoadedSettings.ContainsKey(settings.Id))
+            if (settings is null || LoadedSettings.ContainsKey(settings.Id))
                 return;
 
             LoadedSettings.Add(settings.Id, settings);

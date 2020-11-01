@@ -1,4 +1,4 @@
-﻿<!--EXTERNAL_PROPERTIES: GameVersion-->
+﻿<!--EXTERNAL_PROPERTIES: GameVersion;BuildResourcesVersion-->
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
@@ -13,9 +13,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\src\ModLib Substitute\ModLib Substitute.csproj" />
   </ItemGroup>
 

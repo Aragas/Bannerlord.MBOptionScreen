@@ -25,7 +25,7 @@ namespace MCM.UI.Patches
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void LoadBrushesHarmony(BrushFactory __instance)
         {
-            if (Brushes != null)
+            if (Brushes is { })
             {
                 var brushes = Brushes(__instance);
                 foreach (var brush in BrushInjector.Brushes.Keys)

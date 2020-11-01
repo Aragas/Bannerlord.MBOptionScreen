@@ -26,7 +26,7 @@ namespace MCM.Implementation.MCMv3.Settings.Containers
 
         public MCMv3GlobalSettingsContainer()
         {
-            if (Settings == null)
+            if (Settings is null)
             {
                 Settings = new List<GlobalSettings>();
 
@@ -34,7 +34,7 @@ namespace MCM.Implementation.MCMv3.Settings.Containers
                     .GetAssemblies()
                     .Where(a => !a.IsDynamic)
                     .SelectMany(a => a.GetTypes())
-                    .Where(t => t.IsClass && !t.IsAbstract && t.GetConstructor(Type.EmptyTypes) != null)
+                    .Where(t => t.IsClass && !t.IsAbstract && t.GetConstructor(Type.EmptyTypes) is { })
                     .ToList();
 
                 var mbOptionScreenSettings = allTypes
@@ -52,7 +52,7 @@ namespace MCM.Implementation.MCMv3.Settings.Containers
 
         protected override void RegisterSettings(GlobalSettings? settings)
         {
-            if (settings == null || LoadedSettings.ContainsKey(settings.Id))
+            if (settings is null || LoadedSettings.ContainsKey(settings.Id))
                 return;
 
             LoadedSettings.Add(settings.Id, settings);

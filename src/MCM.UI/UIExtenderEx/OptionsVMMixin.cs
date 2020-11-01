@@ -137,7 +137,7 @@ namespace MCM.UI.UIExtenderEx
 
         public override void OnFinalize()
         {
-            if (ViewModel != null)
+            if (ViewModel is { })
                 ViewModel.PropertyChanged -= OptionsVM_PropertyChanged;
 
             base.OnFinalize();
@@ -148,7 +148,7 @@ namespace MCM.UI.UIExtenderEx
         public void ExecuteCloseOptions()
         {
             ModOptions.ExecuteCancelInternal(false);
-            if (ViewModel != null)
+            if (ViewModel is { })
                 OriginalExecuteCloseOptions(ViewModel);
             OnFinalize();
         }
@@ -159,7 +159,7 @@ namespace MCM.UI.UIExtenderEx
         {
             ModOptions.ExecuteDoneInternal(false, () =>
             {
-                if (ViewModel != null)
+                if (ViewModel is { })
                     ExecuteDoneMethod?.Invoke(ViewModel);
             });
         }
@@ -170,7 +170,7 @@ namespace MCM.UI.UIExtenderEx
         {
             ModOptions.ExecuteCancelInternal(false, () =>
             {
-                if (ViewModel != null)
+                if (ViewModel is { })
                     ExecuteCancelMethod?.Invoke(ViewModel);
             });
         }

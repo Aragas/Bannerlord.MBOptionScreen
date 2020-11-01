@@ -94,7 +94,7 @@ namespace MCM.UI.GUI.ViewModels
         }
         public void RecalculateIndex()
         {
-            if (_cachedPresets == null || PresetsSelector == null)
+            if (_cachedPresets is null || PresetsSelector is null)
                 return;
 
             var settings = SettingsInstance;
@@ -136,7 +136,7 @@ namespace MCM.UI.GUI.ViewModels
 
         public void ChangePreset(string presetName)
         {
-            if (_cachedPresets == null)
+            if (_cachedPresets is null)
                 return;
 
             var settings = SettingsInstance;

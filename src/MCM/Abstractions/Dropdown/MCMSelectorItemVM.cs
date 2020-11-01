@@ -73,7 +73,7 @@ namespace MCM.Abstractions.Dropdown
 
             _stringItem = Element.ToString();
 
-            if (_hintObj != null)
+            if (_hintObj is { })
                 _hint = new HintViewModel(_hintObj.ToString());
         }
     }

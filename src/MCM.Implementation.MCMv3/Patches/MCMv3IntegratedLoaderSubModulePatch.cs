@@ -38,7 +38,7 @@ namespace MCM.Implementation.MCMv3.Patches
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static bool StopIntegratedLoaderSubModuleCtor(MCMv3IntegratedLoaderSubModule __instance)
         {
-            if (Loader != null)
+            if (Loader is { })
                 Loader(__instance) = new EmptyIntegratedLoader();
 
             return false;

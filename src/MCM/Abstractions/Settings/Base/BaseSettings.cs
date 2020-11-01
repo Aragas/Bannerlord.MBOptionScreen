@@ -42,7 +42,7 @@ namespace MCM.Abstractions.Settings.Base
         {
             var type = GetType();
             var constructor = AccessTools.Constructor(type, Type.EmptyTypes);
-            return constructor != null
+            return constructor is { }
                 ? (BaseSettings) constructor.Invoke(null)
                 : (BaseSettings) FormatterServices.GetUninitializedObject(type);
         }

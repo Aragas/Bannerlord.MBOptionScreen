@@ -27,7 +27,7 @@ namespace MCM.Abstractions.Settings.Containers
 
         protected virtual void RegisterSettings(TSettings? settings)
         {
-            if (settings == null || LoadedSettings.ContainsKey(settings.Id))
+            if (settings is null || LoadedSettings.ContainsKey(settings.Id))
                 return;
 
             LoadedSettings.Add(settings.Id, settings);

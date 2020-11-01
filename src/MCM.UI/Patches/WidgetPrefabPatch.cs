@@ -42,7 +42,7 @@ namespace MCM.UI.Patches
                 var locals = method.GetMethodBody()?.LocalVariables;
                 var typeLocal = locals?.FirstOrDefault(x => x.LocalType == typeof(XmlDocument));
 
-                if (typeLocal == null)
+                if (typeLocal is null)
                     return returnNull;
 
                 var constructorIndex = -1;

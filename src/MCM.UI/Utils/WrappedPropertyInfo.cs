@@ -35,7 +35,7 @@ namespace MCM.UI.Utils
         public override MethodInfo SetMethod => _propertyInfoImplementation.SetMethod;
 
         public override MethodInfo[] GetAccessors(bool nonPublic) => _propertyInfoImplementation.GetAccessors(nonPublic)
-            .Where(m => m != null)
+            .Where(m => m is { })
             .Select(m => new WrappedMethodInfo(m, _instance))
             .Cast<MethodInfo>()
             .ToArray();
@@ -46,7 +46,7 @@ namespace MCM.UI.Utils
         public override MethodInfo GetGetMethod(bool nonPublic)
         {
             var getMethod = _propertyInfoImplementation.GetGetMethod(nonPublic);
-            return getMethod == null ? null! : new WrappedMethodInfo(getMethod, _instance);
+            return getMethod is null ? null! : new WrappedMethodInfo(getMethod, _instance);
         }
         public override ParameterInfo[] GetIndexParameters() => _propertyInfoImplementation.GetIndexParameters();
         public override Type[] GetOptionalCustomModifiers() => _propertyInfoImplementation.GetOptionalCustomModifiers();
@@ -55,7 +55,7 @@ namespace MCM.UI.Utils
         public override MethodInfo GetSetMethod(bool nonPublic)
         {
             var setMethod = _propertyInfoImplementation.GetSetMethod(nonPublic);
-            return setMethod == null ? null! : new WrappedMethodInfo(setMethod, _instance);
+            return setMethod is null ? null! : new WrappedMethodInfo(setMethod, _instance);
         }
         public override object GetValue(object obj, object[] index) => _propertyInfoImplementation.GetValue(_instance, index);
         public override object GetValue(object obj, BindingFlags invokeAttr, Binder binder, object[] index, CultureInfo culture) =>

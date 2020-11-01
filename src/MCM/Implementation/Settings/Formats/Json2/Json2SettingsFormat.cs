@@ -50,7 +50,7 @@ namespace MCM.Implementation.Settings.Formats.Json2
                 try
                 {
                     existingValue ??= _settingsFormat.FindExistingValue(reader.Path);
-                    if (existingValue == null)
+                    if (existingValue is null)
                         return null;
 
                     var wrapper = new SelectedIndexWrapper(existingValue);

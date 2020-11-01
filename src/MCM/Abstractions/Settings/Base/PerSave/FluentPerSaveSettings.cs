@@ -34,7 +34,6 @@ namespace MCM.Abstractions.Settings.Base.PerSave
         /// <inheritdoc/>
         public sealed override event PropertyChangedEventHandler? PropertyChanged { add => base.PropertyChanged += value; remove => base.PropertyChanged -= value; }
         public List<SettingsPropertyGroupDefinition> SettingPropertyGroups { get; }
-        private WeakReference<PropertyChangedEventHandler?> OnPropertyChangedDelegate { get; }
         private Dictionary<string, ISettingsPresetBuilder> Presets { get; }
 
         public FluentPerSaveSettings(string id, string displayName, string folderName, string subFolder, int uiVersion, char subGroupDelimiter, PropertyChangedEventHandler? onPropertyChanged,
@@ -47,8 +46,7 @@ namespace MCM.Abstractions.Settings.Base.PerSave
             UIVersion = uiVersion;
             SubGroupDelimiter = subGroupDelimiter;
             SettingPropertyGroups = settingPropertyGroups.ToList();
-            OnPropertyChangedDelegate = new WeakReference<PropertyChangedEventHandler?>(onPropertyChanged);
-            if (onPropertyChanged != null)
+            if (onPropertyChanged is { })
                 PropertyChanged += onPropertyChanged;
 
             Presets = new Dictionary<string, ISettingsPresetBuilder>();

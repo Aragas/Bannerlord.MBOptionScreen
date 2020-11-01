@@ -23,7 +23,7 @@ namespace MCM.Abstractions.Ref
             get => _getter()!;
             set
             {
-                if (_setter != null)
+                if (_setter is { })
                 {
                     _setter((T) value);
                     OnPropertyChanged(nameof(Value));

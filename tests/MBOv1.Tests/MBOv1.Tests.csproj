@@ -1,4 +1,4 @@
-﻿<!--EXTERNAL_PROPERTIES: GameVersion-->
+﻿<!--EXTERNAL_PROPERTIES: GameVersion;BuildResourcesVersion-->
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
@@ -12,11 +12,8 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <Reference Include="MBOv1" HintPath="../../src/MCM.Implementation.MBO/_Module/bin/Win64_Shipping_Client/MBOptionScreen.dll" Private="false" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
+    <Reference Include="MBOv1" HintPath="../../src/MCM.Implementation.MBO/_Module/bin/Win64_Shipping_Client/MBOptionScreen.dll" Private="false" />
   </ItemGroup>
 
 </Project>

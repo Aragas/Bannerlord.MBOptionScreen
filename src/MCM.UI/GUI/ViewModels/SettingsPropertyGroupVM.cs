@@ -24,7 +24,7 @@ namespace MCM.UI.GUI.ViewModels
         {
             get
             {
-                if (GroupToggleSettingProperty != null && !string.IsNullOrWhiteSpace(GroupToggleSettingProperty.HintText))
+                if (GroupToggleSettingProperty is { } && !string.IsNullOrWhiteSpace(GroupToggleSettingProperty.HintText))
                 {
                     return GroupToggleSettingProperty.HintText;
                 }
@@ -59,7 +59,7 @@ namespace MCM.UI.GUI.ViewModels
             get => GroupToggleSettingProperty?.BoolValue != false;
             set
             {
-                if (GroupToggleSettingProperty != null && GroupToggleSettingProperty.BoolValue != value)
+                if (GroupToggleSettingProperty is { } && GroupToggleSettingProperty.BoolValue != value)
                 {
                     GroupToggleSettingProperty.BoolValue = value;
                     OnPropertyChanged(nameof(GroupToggle));
@@ -87,7 +87,7 @@ namespace MCM.UI.GUI.ViewModels
             {
                 if (!SatisfiesSearch && !AnyChildSettingSatisfiesSearch)
                     return false;
-                else if (ParentGroup != null)
+                else if (ParentGroup is { })
                     return ParentGroup.IsExpanded && ParentGroup.GroupToggle;
                 else
                     return true;
@@ -117,7 +117,7 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
         [DataSourceProperty]
-        public bool HasGroupToggle => GroupToggleSettingProperty != null;
+        public bool HasGroupToggle => GroupToggleSettingProperty is { };
 
         public SettingsPropertyGroupVM(SettingsPropertyGroupDefinition definition, SettingsVM settingsVM, SettingsPropertyGroupVM? parentGroup = null)
         {

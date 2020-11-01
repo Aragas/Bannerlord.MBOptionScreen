@@ -21,10 +21,10 @@ namespace MCM.Implementation.Settings.Containers.PerSave
         protected override void RegisterSettings(PerSaveSettings perSaveSettings)
         {
             var behavior = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<PerSaveCampaignBehavior>();
-            if (behavior == null)
+            if (behavior is null)
                 return;
 
-            if (perSaveSettings == null)
+            if (perSaveSettings is null)
                 return;
 
             LoadedSettings.Add(perSaveSettings.Id, perSaveSettings);
@@ -36,7 +36,7 @@ namespace MCM.Implementation.Settings.Containers.PerSave
         public override bool SaveSettings(BaseSettings settings)
         {
             var behavior = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<PerSaveCampaignBehavior>();
-            if (behavior == null)
+            if (behavior is null)
                 return false;
 
             if (!(settings is PerSaveSettings perSaveSettings) || !LoadedSettings.ContainsKey(settings.Id))
@@ -54,7 +54,7 @@ namespace MCM.Implementation.Settings.Containers.PerSave
                 .GetAssemblies()
                 .Where(a => !a.IsDynamic)
                 .SelectMany(a => a.GetTypes())
-                .Where(t => t.IsClass && !t.IsAbstract && t.GetConstructor(Type.EmptyTypes) != null)
+                .Where(t => t.IsClass && !t.IsAbstract && t.GetConstructor(Type.EmptyTypes) is { })
                 .ToList();
 
             var mbOptionScreenSettings = allTypes

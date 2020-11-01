@@ -50,24 +50,24 @@ namespace MCM.UI.Functionality.Injectors
                 doc);
 
             var customWidgetType = FormatterServices.GetUninitializedObject(CustomWidgetType);
-            if (GetResourcesPath != null) GetResourcesPath(customWidgetType) = string.Empty;
+            if (GetResourcesPath is { }) GetResourcesPath(customWidgetType) = string.Empty;
             SetName?.Invoke(customWidgetType, name);
             SetWidgetFactory?.Invoke(customWidgetType, UIResourceManager.WidgetFactory);
             SetWidgetPrefab?.Invoke(customWidgetType, widgetPrefab);
 
-            if (GetCustomTypes != null)
+            if (GetCustomTypes is { })
             {
                 var dict = GetCustomTypes(UIResourceManager.WidgetFactory);
                 if (!dict.Contains(name))
                     dict.Add(name, customWidgetType);
             }
-            if (GetCustomTypePaths != null)
+            if (GetCustomTypePaths is { })
             {
                 var dict = GetCustomTypePaths(UIResourceManager.WidgetFactory);
                 if (!dict.Contains(name))
                     dict.Add(name, name);
             }
-            if (GetLiveCustomTypes != null && GetLiveInstanceTracker != null)
+            if (GetLiveCustomTypes is { } && GetLiveInstanceTracker is { })
             {
                 var dict = GetLiveCustomTypes(UIResourceManager.WidgetFactory);
                 if (!dict.Contains(name))

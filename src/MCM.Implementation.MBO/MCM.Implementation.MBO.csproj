@@ -1,4 +1,5 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<!--EXTERNAL_PROPERTIES: Version;GameVersion;ButterLibVersion;BuildResourcesVersion-->
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Authors>Aragas, mipen</Authors>
@@ -8,6 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Bannerlord.BuildResources" Version="$(BuildResourcesVersion)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Bannerlord.ButterLib" Version="$(ButterLibVersion)" IncludeAssets="compile" />
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
     <ProjectReference Include="../MCM/MCM.csproj" Private="false" Aliases="v4" />

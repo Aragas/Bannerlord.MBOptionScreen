@@ -108,7 +108,7 @@ namespace MCM.Implementation.Settings.Formats
                 reader.Dispose();
 
                 var set = LoadFromJson(settings, content);
-                if (set == null)
+                if (set is null)
                 {
                     Save(settings, directoryPath, filename);
                     return settings;
@@ -157,7 +157,7 @@ namespace MCM.Implementation.Settings.Formats
                 try
                 {
                     existingValue ??= _settingsFormat.FindExistingValue(reader.Path);
-                    if (existingValue == null)
+                    if (existingValue is null)
                         return null;
 
                     var wrapper = new SelectedIndexWrapper(existingValue);

@@ -20,7 +20,7 @@ namespace MCM.UI.Functionality.Injectors
 
         public static void InjectWidget(Type widgetType)
         {
-            if (GetBuiltinTypes != null)
+            if (GetBuiltinTypes is { })
             {
                 var builtinTypes = GetBuiltinTypes(UIResourceManager.WidgetFactory);
                 builtinTypes[widgetType.Name] = widgetType;
