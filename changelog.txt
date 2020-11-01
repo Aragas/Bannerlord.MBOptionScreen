@@ -1,4 +1,11 @@
 ---------------------------------------------------------------------------------------------------
+Version: 4.1.1
+Game Versions: e1.4.3,e1.5.0,e1.5.1,e1.5.2,e1.5.3,e1.5.4
+* Fixed UI sliders.
+* Fixed Preset support for FluentBuilder.
+* Fixed Fluent support.
+* Added support for External settings
+---------------------------------------------------------------------------------------------------
 Version: 4.1.0
 Game Versions: e1.4.3,e1.5.0,e1.5.1,e1.5.2,e1.5.3,e1.5.4
 * Added Preset support for FluentBuilder.
