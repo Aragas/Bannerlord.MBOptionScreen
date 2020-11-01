@@ -1,14 +1,18 @@
-﻿<!--EXTERNAL_PROPERTIES: Version;GameVersion;HarmonyVersion-->
+﻿<!--EXTERNAL_PROPERTIES: Version;GameVersion;HarmonyVersion;ButterLibVersion;BuildResourcesVersion-->
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Authors>Aragas, mipen</Authors>
-    <AssemblyName>MCMv4.Implementation.ModLib.v$(Version)</AssemblyName>
+    <AssemblyName>MCMv4.Implementation.ModLib</AssemblyName>
     <ModuleName>Bannerlord.MBOptionScreen.ModLib</ModuleName>
     <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Bannerlord.BuildResources" Version="$(BuildResourcesVersion)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Bannerlord.ButterLib" Version="$(ButterLibVersion)" IncludeAssets="compile" />
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
     <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" IncludeAssets="compile" />

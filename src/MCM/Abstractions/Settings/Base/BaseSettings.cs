@@ -42,7 +42,7 @@ namespace MCM.Abstractions.Settings.Base
         {
             var type = GetType();
             var constructor = AccessTools.Constructor(type, Type.EmptyTypes);
-            return constructor != null
+            return constructor is { }
                 ? (BaseSettings) constructor.Invoke(null)
                 : (BaseSettings) FormatterServices.GetUninitializedObject(type);
         }
@@ -54,6 +54,7 @@ namespace MCM.Abstractions.Settings.Base
         }
         public virtual IDictionary<string, Func<BaseSettings>> GetAvailablePresets() => new Dictionary<string, Func<BaseSettings>>()
         {
+            // TODO: computable name
             { new TextObject("{=BaseSettings_Default}Default").ToString(), CreateNew }
         };
     }

@@ -16,7 +16,7 @@ namespace MCM.UI.Functionality.Injectors
         private static XmlDocument Load(string embedPath)
         {
             using var stream = typeof(Post154ResourceInjector).Assembly.GetManifestResourceStream(embedPath);
-            if (stream == null) throw new MCMUIEmbedResourceNotFoundException($"Could not find embed resource '{embedPath}'!");
+            if (stream is null) throw new MCMUIEmbedResourceNotFoundException($"Could not find embed resource '{embedPath}'!");
             using var xmlReader = XmlReader.Create(stream, new XmlReaderSettings { IgnoreComments = true });
             var doc = new XmlDocument();
             doc.Load(xmlReader);

@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ModLib.Definitions Substitute\ModLib.Definitions Substitute.csproj" />
+    <ProjectReference Include="..\ModLib.Definitions Substitute\ModLib.Definitions Substitute.csproj" Aliases="v13" />
   </ItemGroup>
 
 </Project>

@@ -154,11 +154,11 @@ internal sealed class MCMUISettings : AttributeGlobalSettings<MCMUISettings> // 
 bool _boolValue = false;
 int _intValue = 1;
 float _floatValue = 0f;
-string _stringValue = "";
+string _stringValue = string.Empty;
 var builder = new DefaultSettingsBuilder("test_v1", "Test Fluent Settings")
     .SetFormat("xml")
-    .SetFolderName("")
-    .SetSubFolder("")
+    .SetFolderName(string.Empty)
+    .SetSubFolder(string.Empty)
     .CreateGroup("Testing 1", groupBuilder => groupBuilder
         .AddBool("Check Box", new ProxyRef<bool>(() => _boolValue, o => _boolValue = o), boolBuilder => boolBuilder
             .SetHintText("Test")))

@@ -28,20 +28,12 @@
   <SubModules>
     <SubModule>
       <Name value="MCMv4 MCMv3 Compatibility"/>
-      <DLLName value="MCMv4.Implementation.MCMv3.v$version$.dll"/>
+      <DLLName value="MCMv4.Implementation.MCMv3.dll"/>
       <SubModuleClassType value="MCM.Implementation.MCMv3.MCMMCMv3SubModule"/>
       <Assemblies>
         <Assembly value="MCMv3.dll"/>
       </Assemblies>
       <Tags/>
     </SubModule>
-    <!--
-    <SubModule>
-      <Name value="MCMv3 Screen Tests"/>
-      <DLLName value="MCMv3.Custom.ScreenTests.dll"/>
-      <SubModuleClassType value="MCM.Custom.ScreenTests.MCMScreenTestSubModule"/>
-      <Tags/>
-    </SubModule>
-    -->
   </SubModules>
 </Module>

@@ -10,7 +10,7 @@ namespace ModLib
             if (ex != null)
                 return GetString(ex);
             else
-                return "";
+                return string.Empty;
         }
 
         private static string GetString(Exception ex)

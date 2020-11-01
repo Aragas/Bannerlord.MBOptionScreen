@@ -1,8 +1,10 @@
 ﻿using Bannerlord.ButterLib.Common.Extensions;
 
 using MCM.Abstractions.FluentBuilder;
-using MCM.Abstractions.Settings.Containers.Global;
 using MCM.Abstractions.Settings.Models;
+using MCM.Extensions;
+using MCM.Implementation.FluentBuilder;
+using MCM.Implementation.Settings.Containers.Global;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,8 +17,6 @@ namespace MCM.Abstractions.Settings.Base.Global
 {
     public class FluentGlobalSettings : GlobalSettings, IFluentSettings
     {
-        public static readonly string ContainerId = "MCMv4_Global_FluentStorage";
-
         /// <inheritdoc/>
         public sealed override string Id { get; }
         /// <inheritdoc/>
@@ -50,50 +50,65 @@ namespace MCM.Abstractions.Settings.Base.Global
             UIVersion = uiVersion;
             SubGroupDelimiter = subGroupDelimiter;
             SettingPropertyGroups = settingPropertyGroups.ToList();
-            if (onPropertyChanged != null)
+            if (onPropertyChanged is { })
                 PropertyChanged += onPropertyChanged;
-            Presets = presets;
+
+            Presets = new Dictionary<string, ISettingsPresetBuilder>();
+            var defaultKey = base.GetAvailablePresets().First().Key;
+            if (!presets.ContainsKey(defaultKey))
+            {
+                var defaultPreset = new DefaultSettingsPresetBuilder(defaultKey);
+                foreach (var propertyDefinition in this.GetAllSettingPropertyDefinitions())
+                    defaultPreset.SetPropertyValue(propertyDefinition.Id, propertyDefinition.PropertyReference.Value);
+                Presets.Add(defaultPreset.PresetName, defaultPreset);
+            }
+            foreach (var (key, value) in presets)
+                Presets.Add(key, value);
         }
 
         public void Register()
         {
-            var container = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IFluentGlobalSettingsContainer>();
+            var container = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IMCMFluentGlobalSettingsContainer>();
             container?.Register(this);
         }
         public void Unregister()
         {
-            var container = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IFluentGlobalSettingsContainer>();
+            var container = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IMCMFluentGlobalSettingsContainer>();
             container?.Unregister(this);
         }
 
         /// <inheritdoc/>
-        protected override BaseSettings CreateNew() => null!;
+        protected sealed override BaseSettings CreateNew() => new FluentGlobalSettings(
+            Id,
+            DisplayName,
+            FolderName,
+            SubFolder,
+            FormatType,
+            UIVersion,
+            SubGroupDelimiter,
+            null,
+            SettingPropertyGroups.Select(g => g.Clone(false)),
+            Presets);
+
         /// <inheritdoc/>
-        protected override BaseSettings CopyAsNew() => null!;
-        /// <inheritdoc/>
-        public override IDictionary<string, Func<BaseSettings>> GetAvailablePresets()
+        public sealed override IDictionary<string, Func<BaseSettings>> GetAvailablePresets()
         {
-            // TODO: Presets
-            /*
             var dict = new Dictionary<string, Func<BaseSettings>>();
-            foreach (var (preset, builder) in Presets)
+            foreach (var (presetName, presetBuilder) in Presets)
             {
-                Func<BaseSettings> func;
-                foreach (var (propertyName, propertyValue) in builder.PropertyValues)
+                dict.Add(presetName, () =>
                 {
-                    
-                }
-                dict.Add(preset, () =>
-                {
-                    var settings = CopyAsNew();
-                    var props = settings.GetAllSettingPropertyDefinitions();
-                    props.FirstOrDefault(x => x.)
+                    var settings = CreateNew();
+                    var props = settings.GetAllSettingPropertyDefinitions().ToList();
+                    foreach (var (propertyId, propertyValue) in presetBuilder.PropertyValues)
+                    {
+                        if (props.Find(x => x.Id == propertyId) is { } property)
+                            property.PropertyReference.Value = propertyValue;
+                    }
                     return settings;
                 });
             }
-            */
-
-            return new Dictionary<string, Func<BaseSettings>>();
+            return dict;
         }
     }
 }

@@ -95,7 +95,7 @@ namespace MCM.UI
                 nameof(OnSubModuleUnloaded), SubscriptionType.AfterMethod, (s, e) =>
                 {
                     var instance = MCMUISettings.Instance;
-                    if (instance != null)
+                    if (instance is { })
                         instance.PropertyChanged -= MCMSettings_PropertyChanged;
                 });
         }

@@ -65,7 +65,7 @@ namespace MCM.Implementation.MCMv3.Settings.Properties
                 var attributes = property.GetCustomAttributes().ToList();
 
                 object? groupAttrObj = attributes.SingleOrDefault(a => a is v3::MCM.Abstractions.Settings.Definitions.IPropertyGroupDefinition);
-                var groupDefinition = groupAttrObj != null
+                var groupDefinition = groupAttrObj is { }
                     ? new MCMv3PropertyGroupDefinitionWrapper(groupAttrObj)
                     : SettingPropertyGroupAttribute.Default;
 
@@ -95,39 +95,39 @@ namespace MCM.Implementation.MCMv3.Settings.Properties
             object? propAttr;
 
             propAttr = attributes.SingleOrDefault(a => a is v3::MCM.Abstractions.Settings.Definitions.IPropertyDefinitionBool);
-            if (propAttr != null)
+            if (propAttr is { })
                 yield return new MCMv3PropertyDefinitionBoolWrapper(propAttr);
 
             propAttr = attributes.SingleOrDefault(a => a is v3::MCM.Abstractions.Settings.Definitions.IPropertyDefinitionDropdown);
-            if (propAttr != null)
+            if (propAttr is { })
                 yield return new MCMv3PropertyDefinitionDropdownWrapper(propAttr);
 
             propAttr = attributes.SingleOrDefault(a => a is v3::MCM.Abstractions.Settings.Definitions.IPropertyDefinitionText);
-            if (propAttr != null)
+            if (propAttr is { })
                 yield return new MCMv3PropertyDefinitionTextWrapper(propAttr);
 
             propAttr = attributes.SingleOrDefault(a => a is v3::MCM.Abstractions.Settings.Definitions.IPropertyDefinitionWithActionFormat);
-            if (propAttr != null)
+            if (propAttr is { })
                 yield return new MCMv3PropertyDefinitionWithActionFormatWrapper(propAttr);
 
             propAttr = attributes.SingleOrDefault(a => a is v3::MCM.Abstractions.Settings.Definitions.IPropertyDefinitionWithCustomFormatter);
-            if (propAttr != null)
+            if (propAttr is { })
                 yield return new MCMv3PropertyDefinitionWithCustomFormatterWrapper(propAttr);
 
             propAttr = attributes.SingleOrDefault(a => a is v3::MCM.Abstractions.Settings.Definitions.IPropertyDefinitionWithEditableMinMax);
-            if (propAttr != null)
+            if (propAttr is { })
                 yield return new MCMv3PropertyDefinitionWithEditableMinMaxWrapper(propAttr);
 
             propAttr = attributes.SingleOrDefault(a => a is v3::MCM.Abstractions.Settings.Definitions.IPropertyDefinitionWithFormat);
-            if (propAttr != null)
+            if (propAttr is { })
                 yield return new MCMv3PropertyDefinitionWithFormatWrapper(propAttr);
 
             propAttr = attributes.SingleOrDefault(a => a is v3::MCM.Abstractions.Settings.Definitions.IPropertyDefinitionWithId);
-            if (propAttr != null)
+            if (propAttr is { })
                 yield return new MCMv3PropertyDefinitionWithIdWrapper(propAttr);
 
             propAttr = attributes.SingleOrDefault(a => a is v3::MCM.Abstractions.Settings.Definitions.IPropertyDefinitionWithMinMax);
-            if (propAttr != null)
+            if (propAttr is { })
                 yield return new MCMv3PropertyDefinitionWithMinMaxWrapper(propAttr);
         }
     }

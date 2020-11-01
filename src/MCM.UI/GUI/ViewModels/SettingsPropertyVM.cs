@@ -120,7 +120,7 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public string StringValue
         {
-            get => IsStringVisible ? (string) PropertyReference.Value : "";
+            get => IsStringVisible ? (string) PropertyReference.Value : string.Empty;
             set
             {
                 if (IsStringVisible && StringValue != value)
@@ -168,14 +168,14 @@ namespace MCM.UI.GUI.ViewModels
             SettingType.Float => string.IsNullOrWhiteSpace(ValueFormat)
                 ? string.Format(ValueFormatProvider, "{0}", ((float) PropertyReference.Value).ToString("0.00"))
                 : string.Format(ValueFormatProvider, "{0}", ((float) PropertyReference.Value).ToString(ValueFormat)),
-            _ => ""
+            _ => string.Empty
         };
 
         public SettingsPropertyVM(ISettingsPropertyDefinition definition, SettingsVM settingsVM)
         {
             SettingsVM = settingsVM;
             SettingPropertyDefinition = definition;
-            ValueFormatProvider = SettingPropertyDefinition.CustomFormatter!= null
+            ValueFormatProvider = SettingPropertyDefinition.CustomFormatter is { }
                 ? Activator.CreateInstance(SettingPropertyDefinition.CustomFormatter) as IFormatProvider
                 : null;
 

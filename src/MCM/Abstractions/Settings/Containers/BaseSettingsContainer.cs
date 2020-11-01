@@ -25,9 +25,9 @@ namespace MCM.Abstractions.Settings.Containers
         public virtual List<SettingsDefinition> CreateModSettingsDefinitions => LoadedSettings.Keys.ToList()
             .ConvertAll(id => new SettingsDefinition(id));
 
-        protected virtual void RegisterSettings(TSettings settings)
+        protected virtual void RegisterSettings(TSettings? settings)
         {
-            if (settings == null || LoadedSettings.ContainsKey(settings.Id))
+            if (settings is null || LoadedSettings.ContainsKey(settings.Id))
                 return;
 
             LoadedSettings.Add(settings.Id, settings);

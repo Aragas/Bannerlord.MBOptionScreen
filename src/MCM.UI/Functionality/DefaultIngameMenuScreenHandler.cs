@@ -3,8 +3,6 @@ using Bannerlord.ButterLib.Common.Helpers;
 
 using HarmonyLib;
 
-using MCM.UI.Utils;
-
 using SandBox.View.Map;
 
 using System;
@@ -32,9 +30,9 @@ namespace MCM.UI.Functionality
             AccessTools2.GetDelegateObjectInstance<OnEscapeMenuToggledGauntletMissionEscapeMenuBaseDelegate>(typeof(GauntletMissionEscapeMenuBase), "OnEscapeMenuToggled");
 
         private static readonly AccessTools.FieldRef<GauntletMissionEscapeMenuBase, EscapeMenuVM>? DataSource =
-            AccessTools3.FieldRefAccess<GauntletMissionEscapeMenuBase, EscapeMenuVM>("_dataSource");
+            AccessTools2.FieldRefAccess<GauntletMissionEscapeMenuBase, EscapeMenuVM>("_dataSource");
         private static readonly AccessTools.FieldRef<EscapeMenuItemVM, object>? Identifier =
-            AccessTools3.FieldRefAccess<EscapeMenuItemVM, object>("_identifier");
+            AccessTools2.FieldRefAccess<EscapeMenuItemVM, object>("_identifier");
 
         private static readonly WeakReference<GauntletMissionEscapeMenuBase> _instance = new WeakReference<GauntletMissionEscapeMenuBase>(null!);
         private static Dictionary<string, (int, Func<ScreenBase?>, TextObject)> ScreensCache { get; } = new Dictionary<string, (int, Func<ScreenBase?>, TextObject)>();
@@ -73,7 +71,7 @@ namespace MCM.UI.Functionality
                     _ =>
                     {
                         var screen = screenFactory();
-                        if (screen != null)
+                        if (screen is { })
                         {
                             OnEscapeMenuToggledMapScreen?.Invoke(__instance, true);
                             ScreenManager.PushScreen(screen);
@@ -93,7 +91,7 @@ namespace MCM.UI.Functionality
                     _ =>
                     {
                         var screen = screenFactory();
-                        if (screen != null)
+                        if (screen is { })
                         {
                             OnEscapeMenuToggledGauntletMissionEscapeMenuBase?.Invoke(__instance, true);
                             ScreenManager.PushScreen(screen);
@@ -121,7 +119,7 @@ namespace MCM.UI.Functionality
 
         public override void AddScreen(string internalName, int index, Func<ScreenBase?> screenFactory, TextObject text)
         {
-            if (_instance.TryGetTarget(out var instance) && DataSource != null)
+            if (_instance.TryGetTarget(out var instance) && DataSource is { })
             {
                 var dataSource = DataSource(instance);
                 dataSource.MenuItems.Insert(index, new EscapeMenuItemVM(
@@ -134,11 +132,11 @@ namespace MCM.UI.Functionality
         }
         public override void RemoveScreen(string internalName)
         {
-            if (_instance.TryGetTarget(out var instance)&& DataSource != null && Identifier != null)
+            if (_instance.TryGetTarget(out var instance)&& DataSource is { } && Identifier is { })
             {
                 var dataSource = DataSource(instance);
                 var found = dataSource.MenuItems.FirstOrDefault(i => Identifier(i) is string text && text == internalName);
-                if (found != null)
+                if (found is { })
                     dataSource.MenuItems.Remove(found);
             }
 

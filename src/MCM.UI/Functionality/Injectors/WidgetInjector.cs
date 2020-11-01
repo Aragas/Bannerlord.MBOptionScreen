@@ -1,6 +1,6 @@
-﻿using HarmonyLib;
+﻿using Bannerlord.ButterLib.Common.Helpers;
 
-using MCM.UI.Utils;
+using HarmonyLib;
 
 using System;
 using System.Collections.Concurrent;
@@ -14,13 +14,13 @@ namespace MCM.UI.Functionality.Injectors
     internal static class WidgetInjector
     {
         private static readonly AccessTools.FieldRef<WidgetFactory, Dictionary<string, Type>>? GetBuiltinTypes =
-            AccessTools3.FieldRefAccess<WidgetFactory, Dictionary<string, Type>>("_builtinTypes");
+            AccessTools2.FieldRefAccess<WidgetFactory, Dictionary<string, Type>>("_builtinTypes");
 
         internal static readonly ConcurrentDictionary<Type, object?> BuiltinWidgets = new ConcurrentDictionary<Type, object?>();
 
         public static void InjectWidget(Type widgetType)
         {
-            if (GetBuiltinTypes != null)
+            if (GetBuiltinTypes is { })
             {
                 var builtinTypes = GetBuiltinTypes(UIResourceManager.WidgetFactory);
                 builtinTypes[widgetType.Name] = widgetType;

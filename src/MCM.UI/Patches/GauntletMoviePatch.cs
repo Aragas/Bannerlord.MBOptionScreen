@@ -2,11 +2,7 @@
 
 using HarmonyLib;
 
-using MCM.UI.Utils;
-
 using System;
-using System.Runtime.CompilerServices;
-
 using System.Runtime.CompilerServices;
 
 using TaleWorlds.GauntletUI;
@@ -22,7 +18,7 @@ namespace MCM.UI.Patches
             AccessTools2.GetDelegate<SetRootViewDelegate>(SymbolExtensions2.GetPropertyInfo((GauntletMovie gm) => gm.RootView).SetMethod);
 
         private static readonly AccessTools.FieldRef<GauntletMovie, WidgetPrefab>? MoviePrefab =
-            AccessTools3.FieldRefAccess<GauntletMovie, WidgetPrefab>("_moviePrefab");
+            AccessTools2.FieldRefAccess<GauntletMovie, WidgetPrefab>("_moviePrefab");
 
         private static Func<string, WidgetPrefab?>? _movieRequested;
 
@@ -38,10 +34,10 @@ namespace MCM.UI.Patches
         private static bool LoadMovieHarmony(GauntletMovie __instance, Widget ____movieRootNode)
         {
             var movie = _movieRequested?.Invoke(__instance.MovieName);
-            if (movie == null)
+            if (movie is null)
                 return true;
 
-            if (MoviePrefab != null)
+            if (MoviePrefab is { })
                 MoviePrefab(__instance) = movie;
 
             var widgetCreationData = new WidgetCreationData(__instance.Context, __instance.WidgetFactory);

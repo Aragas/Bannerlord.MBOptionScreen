@@ -22,7 +22,7 @@ namespace MCM.Implementation.Settings.Containers.PerSave
         {
             dataStore.SyncData("_settings", ref _settings);
 
-            if (dataStore.IsLoading && _settings == null)
+            if (dataStore.IsLoading && _settings is null)
             {
                 _settings = new Dictionary<string, string>();
             }
@@ -34,7 +34,7 @@ namespace MCM.Implementation.Settings.Containers.PerSave
         {
             var jsonSettingsFormat = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IJson2SettingsFormat>();
 
-            if (_settings == null || jsonSettingsFormat == null)
+            if (_settings is null || jsonSettingsFormat is null)
                 return false;
 
             var key = $"{Path.Combine(perSaveSettings.FolderName, perSaveSettings.SubFolder, perSaveSettings.Id)}";
@@ -46,7 +46,7 @@ namespace MCM.Implementation.Settings.Containers.PerSave
         {
             var jsonSettingsFormat = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IJson2SettingsFormat>();
 
-            if (_settings == null || jsonSettingsFormat == null)
+            if (_settings is null || jsonSettingsFormat is null)
                 return;
 
             var key = $"{Path.Combine(perSaveSettings.FolderName, perSaveSettings.SubFolder, perSaveSettings.Id)}";

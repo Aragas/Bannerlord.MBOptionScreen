@@ -24,7 +24,7 @@ namespace MCM.Abstractions.Dropdown
         static MCMSelectorVM()
         {
             var methodInfo = AccessTools.Property(typeof(TSelectorItemVM), "CanBeSelected")?.GetMethod;
-            _canBeSelectedDelegate = methodInfo != null
+            _canBeSelectedDelegate = methodInfo is { }
                 ? AccessTools2.GetDelegate<CanBeSelectedDelegate>(methodInfo)!
                 : _ => false;
         }

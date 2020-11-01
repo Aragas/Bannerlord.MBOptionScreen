@@ -44,7 +44,7 @@ namespace MCM.UI.Functionality
                     () =>
                     {
                         var screen = screenFactory();
-                        if (screen != null)
+                        if (screen is { })
                             ScreenManager.PushScreen(screen);
                     },
                     false)));
@@ -63,7 +63,7 @@ namespace MCM.UI.Functionality
                     () =>
                     {
                         var screen = screenFactory();
-                        if (screen != null)
+                        if (screen is { })
                             ScreenManager.PushScreen(screen);
                     },
                     false)));
@@ -76,7 +76,7 @@ namespace MCM.UI.Functionality
             if (_instance.TryGetTarget(out var instance))
             {
                 var found = instance.MenuOptions.FirstOrDefault(i => i.InitialStateOption.Id == internalName);
-                if (found != null)
+                if (found is { })
                     instance.MenuOptions.Remove(found);
             }
 

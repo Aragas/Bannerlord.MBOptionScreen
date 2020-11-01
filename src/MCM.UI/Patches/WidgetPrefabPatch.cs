@@ -27,6 +27,7 @@ namespace MCM.UI.Patches
             string path,
             XmlDocument document)
         {
+            // Replaces reading XML from file with assigning it from the new local variable `XmlDocument document`
             [MethodImpl(MethodImplOptions.NoInlining)]
             static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, MethodBase method)
             {
@@ -41,7 +42,7 @@ namespace MCM.UI.Patches
                 var locals = method.GetMethodBody()?.LocalVariables;
                 var typeLocal = locals?.FirstOrDefault(x => x.LocalType == typeof(XmlDocument));
 
-                if (typeLocal == null)
+                if (typeLocal is null)
                     return returnNull;
 
                 var constructorIndex = -1;

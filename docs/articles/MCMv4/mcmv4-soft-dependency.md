@@ -1,5 +1,6 @@
 MCMv4 has no issues with it being used as a soft dependency.  
 Mod Developers are required to include the ``MCMv4.dll`` library inside their /bin folder.  
+MCMv4.dll now includes the implementation details, so it can now Load/Save settings without the Standalone module. The Standalone module is now used to provide the UI implementation of MCMv4. You don't need it if the settings are changed only programmatically.  
 
 #### Example of usage:
 The recommended approach is to define a provider interface and depending on certain conditions, switch bewteen them either at the constructor stage or dynamically.  
@@ -13,11 +14,11 @@ public class CustomSettings
     public Settings()
     {
 
-        if (CustomSettings.Instance != null)
+        if (CustomSettings.Instance is { })
         {
             _provider = CustomSettings.Instance;
         }
-        // CustomSettings.Instance will return null if the MCM standalone modules are not installed
+        // CustomSettings.Instance will return null if something unexpected happened.
         else
         {
             _provider = new HardcodedCustomSettings();

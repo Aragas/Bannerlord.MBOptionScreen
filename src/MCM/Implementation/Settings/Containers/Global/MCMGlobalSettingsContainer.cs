@@ -20,7 +20,7 @@ namespace MCM.Implementation.Settings.Containers.Global
                 .Where(a => !a.IsDynamic)
                 .SelectMany(a => a.GetTypes())
                 .Where(t => t.IsClass && !t.IsAbstract)
-                .Where(t => t.GetConstructor(Type.EmptyTypes) != null)
+                .Where(t => t.GetConstructor(Type.EmptyTypes) is { })
                 .ToList();
 
             var mbOptionScreenSettings = allTypes

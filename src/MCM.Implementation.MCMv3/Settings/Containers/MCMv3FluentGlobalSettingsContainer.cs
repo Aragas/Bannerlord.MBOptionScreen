@@ -23,7 +23,7 @@ namespace MCM.Implementation.MCMv3.Settings.Containers
         private void ReloadAll()
         {
             var containerId = LegacyFluentGlobalSettings.ContainerId;
-            if (AppDomain.CurrentDomain.GetData(containerId) == null)
+            if (AppDomain.CurrentDomain.GetData(containerId) is null)
                 AppDomain.CurrentDomain.SetData(containerId, new Dictionary<string, LegacyFluentGlobalSettings>());
 
             var storage = (AppDomain.CurrentDomain.GetData(containerId) as Dictionary<string, LegacyFluentGlobalSettings>)!;

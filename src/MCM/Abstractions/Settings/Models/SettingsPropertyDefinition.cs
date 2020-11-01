@@ -1,6 +1,7 @@
 ﻿using MCM.Abstractions.Attributes.v1;
 using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings.Definitions;
+using MCM.Abstractions.Settings.Definitions.Wrapper;
 using MCM.Utils;
 
 using System;
@@ -47,13 +48,16 @@ namespace MCM.Abstractions.Settings.Models
         public bool IsToggle { get; }
         /// <inheritdoc/>
         public int GroupOrder { get; }
+        private char SubGroupDelimiter { get; }
 
         public SettingsPropertyDefinition(IPropertyDefinitionBase propertyDefinition, IPropertyGroupDefinition propertyGroupDefinition, IRef propertyReference, char subGroupDelimiter)
             : this(new [] { propertyDefinition }, propertyGroupDefinition, propertyReference, subGroupDelimiter) { }
         public SettingsPropertyDefinition(IEnumerable<IPropertyDefinitionBase> propertyDefinitions, IPropertyGroupDefinition propertyGroupDefinition, IRef propertyReference, char subGroupDelimiter)
         {
-            var groups = propertyGroupDefinition.GroupName.Split(subGroupDelimiter);
-            GroupName = string.Join(subGroupDelimiter.ToString(), groups.Select(x => new TextObject(x).ToString()));
+            SubGroupDelimiter = subGroupDelimiter;
+
+            var groups = propertyGroupDefinition.GroupName.Split(SubGroupDelimiter);
+            GroupName = string.Join(SubGroupDelimiter.ToString(), groups.Select(x => new TextObject(x).ToString()));
             GroupOrder = propertyGroupDefinition.GroupOrder;
 
             PropertyReference = propertyReference;
@@ -137,5 +141,15 @@ namespace MCM.Abstractions.Settings.Models
 
         /// <inheritdoc/>
         public override string ToString() => $"[{GroupName}]: {DisplayName}";
+
+        public SettingsPropertyDefinition Clone(bool keepRefs = true)
+        {
+            var localPropValue = PropertyReference.Value;
+            return new SettingsPropertyDefinition(
+                SettingsUtils.GetPropertyDefinitionWrappers(this),
+                new PropertyGroupDefinitionWrapper(this),
+                keepRefs ? PropertyReference : new StorageRef(localPropValue),
+                SubGroupDelimiter);
+        }
     }
 }

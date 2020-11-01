@@ -56,7 +56,7 @@ namespace MCM.Implementation
 
             if (game.GameType is Campaign)
             {
-                CampaignEvents.OnGameLoadedEvent.AddNonSerializedListener(this, starter =>
+                CampaignEvents.OnGameLoadedEvent.AddNonSerializedListener(this, _ =>
                 {
                     var settingsProvider = this.GetServiceProvider()?.GetRequiredService<BaseSettingsProvider>();
                     settingsProvider?.OnGameStarted(game);

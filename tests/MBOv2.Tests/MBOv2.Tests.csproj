@@ -1,0 +1,19 @@
+﻿<!--EXTERNAL_PROPERTIES: GameVersion;BuildResourcesVersion-->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <AssemblyName>MBOv2.Tests</AssemblyName>
+    <ModuleName>Bannerlord.MBOptionScreen.MBOv2.Tests</ModuleName>
+    <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bannerlord.BuildResources" Version="$(BuildResourcesVersion)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
+    <Reference Include="MBOv2" HintPath="../../src/MCM.Implementation.MBO/_Module/bin/Win64_Shipping_Client/MBOptionScreen.v2.0.10.dll" Private="false" />
+  </ItemGroup>
+
+</Project>

@@ -7,6 +7,8 @@ using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Base.Global;
+using MCM.Abstractions.Settings.Definitions;
+using MCM.Abstractions.Settings.Definitions.Wrapper;
 using MCM.Abstractions.Settings.Models;
 using MCM.Extensions;
 
@@ -137,15 +139,15 @@ namespace MCM.Utils
         public static bool IsForGenericDropdown(Type type)
         {
             var implementsList = type.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IList<>));
-            var hasSelectedIndex = AccessTools.Property(type, "SelectedIndex") != null;
+            var hasSelectedIndex = AccessTools.Property(type, "SelectedIndex") is { };
             return implementsList && hasSelectedIndex;
         }
 
         public static bool IsForTextDropdown(Type type) =>
-            IsForGenericDropdown(type) && type.IsGenericType && AccessTools.Property(type.GenericTypeArguments[0], "IsSelected") == null;
+            IsForGenericDropdown(type) && type.IsGenericType && AccessTools.Property(type.GenericTypeArguments[0], "IsSelected") is null;
 
         public static bool IsForCheckboxDropdown(Type type) =>
-            IsForGenericDropdown(type) && type.IsGenericType && AccessTools.Property(type.GenericTypeArguments[0], "IsSelected") != null;
+            IsForGenericDropdown(type) && type.IsGenericType && AccessTools.Property(type.GenericTypeArguments[0], "IsSelected") is { };
 
         public static bool IsForTextDropdown(object obj) => IsForTextDropdown(obj.GetType());
         public static bool IsForCheckboxDropdown(object obj) => IsForCheckboxDropdown(obj.GetType());
@@ -153,7 +155,7 @@ namespace MCM.Utils
         public static object GetSelector(object dropdown)
         {
             var selectorProperty = AccessTools.Property(dropdown.GetType(), "Selector");
-            return selectorProperty != null
+            return selectorProperty is { }
                 ? selectorProperty.GetValue(dropdown)
                 : MCMSelectorVM<MCMSelectorItemVM>.Empty;
         }
@@ -194,7 +196,7 @@ namespace MCM.Utils
                 // Intended group is a sub group. Must find it. First get the top group.
                 var topGroupName = GetTopGroupName(subGroupDelimiter, sp.GroupName, out var truncatedGroupName);
                 var topGroup = rootCollection.GetGroup(topGroupName);
-                if (topGroup == null)
+                if (topGroup is null)
                 {
                     // Order will not be passed to the subgroup
                     topGroup = new SettingsPropertyGroupDefinition(sp.GroupName, topGroupName);
@@ -207,7 +209,7 @@ namespace MCM.Utils
             {
                 // Group is not a subgroup, can find it in the main list of groups.
                 group = rootCollection.GetGroup(sp.GroupName);
-                if (group == null)
+                if (group is null)
                 {
                     group = new SettingsPropertyGroupDefinition(sp.GroupName, order: sp.GroupOrder);
                     rootCollection.Add(group);
@@ -224,7 +226,7 @@ namespace MCM.Utils
                     // Need to go deeper
                     var topGroupName = GetTopGroupName(subGroupDelimiter, groupName, out var truncatedGroupName);
                     var topGroup = sgp.GetGroupFor(topGroupName);
-                    if (topGroup == null)
+                    if (topGroup is null)
                     {
                         // Order will not be passed to the subgroup
                         topGroup = new SettingsPropertyGroupDefinition(sp.GroupName, topGroupName);
@@ -238,7 +240,7 @@ namespace MCM.Utils
                 {
                     // Reached the bottom level, can return the final group.
                     var group = sgp.GetGroup(groupName);
-                    if (group == null)
+                    if (group is null)
                     {
                         group = new SettingsPropertyGroupDefinition(sp.GroupName, groupName, sp.GroupOrder);
                         sgp.Add(group);
@@ -255,6 +257,51 @@ namespace MCM.Utils
 
             truncatedGroupName = groupName.Remove(0, index + 1);
             return topGroupName;
+        }
+
+        public static IEnumerable<IPropertyDefinitionBase> GetPropertyDefinitionWrappers(object property)
+        {
+            object? propAttr;
+
+            propAttr = property as IPropertyDefinitionBool;
+            if (propAttr is { })
+                yield return new PropertyDefinitionBoolWrapper(propAttr);
+
+            propAttr = property as IPropertyDefinitionDropdown;
+            if (propAttr is { })
+                yield return new PropertyDefinitionDropdownWrapper(propAttr);
+
+            propAttr = property as IPropertyDefinitionGroupToggle;
+            if (propAttr is { })
+                yield return new PropertyDefinitionGroupToggleWrapper(propAttr);
+
+            propAttr = property as IPropertyDefinitionText;
+            if (propAttr is { })
+                yield return new PropertyDefinitionTextWrapper(propAttr);
+
+            propAttr = property as IPropertyDefinitionWithActionFormat;
+            if (propAttr is { })
+                yield return new PropertyDefinitionWithActionFormatWrapper(propAttr);
+
+            propAttr = property as IPropertyDefinitionWithCustomFormatter;
+            if (propAttr is { })
+                yield return new PropertyDefinitionWithCustomFormatterWrapper(propAttr);
+
+            propAttr = property as IPropertyDefinitionWithEditableMinMax;
+            if (propAttr is { })
+                yield return new PropertyDefinitionWithEditableMinMaxWrapper(propAttr);
+
+            propAttr = property as IPropertyDefinitionWithFormat;
+            if (propAttr is { })
+                yield return new PropertyDefinitionWithFormatWrapper(propAttr);
+
+            propAttr = property as IPropertyDefinitionWithId;
+            if (propAttr is { })
+                yield return new PropertyDefinitionWithIdWrapper(propAttr);
+
+            propAttr = property as IPropertyDefinitionWithMinMax;
+            if (propAttr is { })
+                yield return new PropertyDefinitionWithMinMaxWrapper(propAttr);
         }
     }
 }

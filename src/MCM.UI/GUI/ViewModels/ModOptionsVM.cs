@@ -106,7 +106,7 @@ namespace MCM.UI.GUI.ViewModels
                     OnPropertyChanged(nameof(SelectedDisplayName));
                     OnPropertyChanged(nameof(SomethingSelected));
 
-                    if (_selectedMod?.PresetsSelector != null)
+                    if (_selectedMod?.PresetsSelector is { })
                     {
                         PresetsSelector.SetOnChangeAction(null);
                         OnPropertyChanged(nameof(PresetsSelector));
@@ -122,9 +122,9 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
         [DataSourceProperty]
-        public string SelectedDisplayName => SelectedMod == null ? new TextObject("{=ModOptionsVM_NotSpecified}Mod Name not Specified.").ToString() : SelectedMod.DisplayName;
+        public string SelectedDisplayName => SelectedMod is null ? new TextObject("{=ModOptionsVM_NotSpecified}Mod Name not Specified.").ToString() : SelectedMod.DisplayName;
         [DataSourceProperty]
-        public bool SomethingSelected => SelectedMod != null;
+        public bool SomethingSelected => SelectedMod is { };
         [DataSourceProperty]
         public string HintText
         {
@@ -162,7 +162,7 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public SelectorVM<SelectorItemVM> PresetsSelector { get; } = new SelectorVM<SelectorItemVM>(Enumerable.Empty<string>(), -1, null);
         [DataSourceProperty]
-        public bool IsPresetsSelectorVisible => SelectedMod != null;
+        public bool IsPresetsSelectorVisible => SelectedMod is { };
 
         public ModOptionsVM()
         {
@@ -239,7 +239,7 @@ namespace MCM.UI.GUI.ViewModels
 
             OnPropertyChanged(nameof(SelectedMod));
 
-            if (SelectedMod != null)
+            if (SelectedMod is { })
             {
                 PresetsSelector.SetOnChangeAction(null);
                 PresetsSelector.SelectedIndex = SelectedMod?.PresetsSelector?.SelectedIndex ?? -1;
@@ -354,12 +354,12 @@ namespace MCM.UI.GUI.ViewModels
         {
             if (SelectedMod != viewModel)
             {
-                if (SelectedMod != null)
+                if (SelectedMod is { })
                     SelectedMod.IsSelected = false;
 
                 SelectedMod = viewModel;
 
-                if (SelectedMod != null)
+                if (SelectedMod is { })
                     SelectedMod.IsSelected = true;
             }
         }
