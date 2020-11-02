@@ -40,9 +40,6 @@ namespace MCM.UI
             var viewmodelwrapperHarmony = new Harmony("bannerlord.mcm.ui.viewmodelpatch");
             ViewModelPatch.Patch(viewmodelwrapperHarmony);
 
-            var widgetprefabpatchHarmony = new Harmony("bannerlord.mcm.ui.widgetprefabpatch");
-            WidgetPrefabPatch.Patch(widgetprefabpatchHarmony);
-
             var services = this.GetServices();
             services.AddSingleton<BaseGameMenuScreenHandler, DefaultGameMenuScreenHandler>();
             services.AddSingleton<BaseIngameMenuScreenHandler, DefaultIngameMenuScreenHandler>();
@@ -58,9 +55,9 @@ namespace MCM.UI
             if (ApplicationVersionUtils.GameVersion() is { } gameVersion)
             {
                 if (gameVersion.Major <= 1 && gameVersion.Minor <= 5 && gameVersion.Revision <= 3)
-                    services.AddSingleton<IResourceInjector, Pre154ResourceInjector>();
+                    services.AddSingleton<IResourceInjector, ResourceInjectorPre154>();
                 else
-                    services.AddSingleton<IResourceInjector, Post154ResourceInjector>();
+                    services.AddSingleton<IResourceInjector, ResourceInjectorPost154>();
             }
         }
 

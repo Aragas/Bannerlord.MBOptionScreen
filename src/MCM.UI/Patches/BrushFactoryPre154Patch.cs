@@ -1,4 +1,5 @@
 ﻿using Bannerlord.ButterLib.Common.Helpers;
+
 using HarmonyLib;
 
 using MCM.UI.Functionality.Injectors;
@@ -10,7 +11,7 @@ using TaleWorlds.GauntletUI;
 
 namespace MCM.UI.Patches
 {
-    internal static class BrushFactoryPatch
+    internal static class BrushFactoryPre154Patch
     {
         private static readonly AccessTools.FieldRef<BrushFactory, Dictionary<string, Brush>>? Brushes =
             AccessTools2.FieldRefAccess<BrushFactory, Dictionary<string, Brush>>("_brushes");
@@ -19,7 +20,7 @@ namespace MCM.UI.Patches
         {
             harmony.Patch(
                 AccessTools.Method(typeof(BrushFactory), "LoadBrushes"),
-                postfix: new HarmonyMethod(AccessTools.Method(typeof(BrushFactoryPatch), nameof(LoadBrushesHarmony))));
+                postfix: new HarmonyMethod(AccessTools.Method(typeof(BrushFactoryPre154Patch), nameof(LoadBrushesHarmony))));
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]

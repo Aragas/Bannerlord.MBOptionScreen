@@ -1,5 +1,6 @@
 ﻿using HarmonyLib;
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -20,6 +21,7 @@ namespace MCM.UI.Patches
                 new HarmonyMethod(SymbolExtensions.GetMethodInfo(() => LoadFromDocument(null!, null!, null!, null!)))).Patch();
         }
 
+        // We can call a slightly modified native game call this way
         [MethodImpl(MethodImplOptions.NoInlining)]
         public static WidgetPrefab LoadFromDocument(
             PrefabExtensionContext prefabExtensionContext,

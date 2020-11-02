@@ -25,6 +25,7 @@ namespace MCM.UI.Patches
         public static void Patch(Harmony harmony, Func<string, WidgetPrefab?> movieRequested)
         {
             _movieRequested = movieRequested;
+
             harmony.Patch(
                 AccessTools.Method(typeof(GauntletMovie), "LoadMovie"),
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(GauntletMoviePatch), nameof(LoadMovieHarmony))));
