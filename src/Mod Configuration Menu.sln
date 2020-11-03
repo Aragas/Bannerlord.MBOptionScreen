@@ -139,7 +139,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "download-game-binaries", "d
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "setup", "setup", "{CFD69789-216A-423E-86B8-BEABA0C03779}"
 	ProjectSection(SolutionItems) = preProject
-		..\.github\actions\setup\actions.yml = ..\.github\actions\setup\actions.yml
+		..\.github\actions\setup\action.yml = ..\.github\actions\setup\action.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test-and-upload-report", "test-and-upload-report", "{1303AD4E-D8C5-48A2-8834-23BB86884C4F}"
@@ -159,17 +159,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "download-build", "download-
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "github-release", "github-release", "{4AC5609F-F1EE-4C4F-B45F-AF5953A11688}"
 	ProjectSection(SolutionItems) = preProject
-		..\.github\actions\github-release\actions.yml = ..\.github\actions\github-release\actions.yml
+		..\.github\actions\github-release\action.yml = ..\.github\actions\github-release\action.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "package-release", "package-release", "{43AE32C7-1775-4E15-AF85-3DA19DB33753}"
 	ProjectSection(SolutionItems) = preProject
-		..\.github\actions\package-release\actions.yml = ..\.github\actions\package-release\actions.yml
+		..\.github\actions\package-release\action.yml = ..\.github\actions\package-release\action.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nexusmods-release", "nexusmods-release", "{1B904B48-0FD5-465B-8B15-17990F985486}"
 	ProjectSection(SolutionItems) = preProject
-		..\.github\actions\nexusmods-release\actions.yml = ..\.github\actions\nexusmods-release\actions.yml
+		..\.github\actions\nexusmods-release\action.yml = ..\.github\actions\nexusmods-release\action.yml
 	EndProjectSection
 EndProject
 Global
