@@ -1,4 +1,7 @@
 ﻿namespace MCM.UI.Functionality.Injectors
 {
-    internal interface IResourceInjector { }
+    internal interface IResourceInjector
+    {
+        void Inject();
+    }
 }

@@ -7,7 +7,7 @@ namespace MCM.Tests
 {
     public static class DelegateHelper
     {
-        public delegate bool MockedGetBasePathDelegate(ref string __result);
+        public delegate bool MockedGetBasePathDelegate(ref string result);
         public static MethodInfo GetMethodInfo(this MockedGetBasePathDelegate @delegate) => @delegate.Method;
 
         public delegate bool MockedGetLoadedModulesDelegate(ref List<ModuleInfo> list);

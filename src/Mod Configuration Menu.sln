@@ -31,6 +31,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Localization", "_Localizat
 		Localization\std_MCM.xml = Localization\std_MCM.xml
 		Localization\std_MCM_Implementation.xml = Localization\std_MCM_Implementation.xml
 		Localization\std_MCM_MBO.xml = Localization\std_MCM_MBO.xml
+		Localization\std_MCM_MCMv3.xml = Localization\std_MCM_MCMv3.xml
 		Localization\std_MCM_ModLib.xml = Localization\std_MCM_ModLib.xml
 		Localization\std_MCM_UI.xml = Localization\std_MCM_UI.xml
 	EndProjectSection

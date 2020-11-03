@@ -42,7 +42,7 @@ namespace MCM.UI.Functionality.Injectors
             _ => null
         };
 
-        public ResourceInjectorPost154()
+        public void Inject()
         {
             var harmony = new Harmony("bannerlord.mcm.resourcehandler.post154");
             GauntletMoviePatch.Patch(harmony, MovieRequested);

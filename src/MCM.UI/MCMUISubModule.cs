@@ -75,6 +75,7 @@ namespace MCM.UI
                     nameof(OnBeforeInitialModuleScreenSetAsRoot), SubscriptionType.AfterMethod, (s, e) =>
                     {
                         var resourceInjector = this.GetServiceProvider().GetRequiredService<IResourceInjector>();
+                        resourceInjector.Inject();
 
                         UpdateOptionScreen(MCMUISettings.Instance!);
                         MCMUISettings.Instance!.PropertyChanged += MCMSettings_PropertyChanged;

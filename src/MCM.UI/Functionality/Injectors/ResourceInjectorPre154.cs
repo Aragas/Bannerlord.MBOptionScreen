@@ -31,7 +31,7 @@ namespace MCM.UI.Functionality.Injectors
             _ => null
         };
 
-        public ResourceInjectorPre154()
+        public void Inject()
         {
             var harmony = new Harmony("bannerlord.mcm.resourcehandler.pre154");
             BrushFactoryPre154Patch.Patch(harmony);
