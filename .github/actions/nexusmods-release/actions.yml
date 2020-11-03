@@ -1,0 +1,49 @@
+name: 'Initial Setup'
+description: ''
+runs:
+  using: "composite"
+  steps:
+    - name: Install Bannerlord.ChangelogParser and Bannerlord.NexusmodsUploader
+      run: >-
+        dotnet tool install -g Bannerlord.ChangelogParser;
+        dotnet tool install -g Bannerlord.NexusmodsUploader;
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      shell: pwsh
+
+    - name: Run ChangelogParser
+      id: changelog
+      run: |
+        vers="$(bannerlord_changelog_parser latestversion -f "$PWD/changelog.txt")"
+        echo "::set-output name=mod_version::$vers"
+        desc="$(bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt")"
+        desc="${desc//'%'/'%25'}"
+        desc="${desc//$'\n'/'%0A'}"
+        desc="${desc//$'\r'/'%0D'}"
+        echo "::set-output name=mod_description::$desc"
+      shell: bash
+
+    - name: Start Selenoid
+      uses: Xotabu4/selenoid-github-action@v1
+
+    - name: Run NexusmodsUploader
+      run: >-
+        bannerlord_nexusmods_uploader upload -g mountandblade2bannerlord -m 612 -n "Mod Configuration Menu"
+        -v "v${{steps.changelog.outputs.mod_version}}" -l true -e true -d "${{steps.changelog.outputs.mod_description}}"
+        -p "$PWD/MCM.Standalone.zip";
+      env:
+        NEXUSMODS_COOKIES_JSON: '${{secrets.NEXUSMODS_COOKIES_JSON}}'
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      shell: pwsh
+
+    - name: Password protect Screenshots
+      run: 7z a -p${{secrets.SCREENSHOTS_PASSWORD}} Screenshots.7z ./Screenshots/*
+      shell: pwsh
+
+    - name: Upload Screenshots Artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: Screenshots
+        path: Screenshots.7z

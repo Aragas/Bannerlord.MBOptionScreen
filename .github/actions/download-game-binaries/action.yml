@@ -1,0 +1,28 @@
+name: 'Download Game Binaries from Steam'
+description: ''
+runs:
+  using: "composite"
+  steps:
+    - name: Download DepotDownloader_2.3.6
+      uses: i3h/download-release-asset@v1
+      with:
+        owner: SteamRE
+        repo: DepotDownloader
+        tag: DepotDownloader_2.3.6
+        file: depotdownloader-2.3.6.zip
+    - name: Extract DepotDownloader_2.3.6
+      uses: DuckSoft/extract-7z-action@v1.0
+      with:
+        pathSource: depotdownloader-2.3.6.zip
+        pathTarget: depotdownloader
+
+    - name: Download Bannerlord binaries
+      run: >-
+        dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -beta ${{secrets.SYNCED_GAME_STABLE_VERSION}} -username ${{secrets.STEAM_LOGIN}}
+        -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord-stable;
+        dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -beta ${{secrets.SYNCED_GAME_BETA_VERSION}} -username ${{secrets.STEAM_LOGIN}}
+        -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord-beta;
+      env:
+        DOTNET_NOLOGO: 1
+        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+      shell: pwsh
