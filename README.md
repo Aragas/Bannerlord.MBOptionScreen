@@ -3,7 +3,7 @@
    <img src="https://tokei.rs/b1/github/Aragas/Bannerlord.MBOptionScreen?category=code" /></a>
    <a href="https://www.codefactor.io/repository/github/aragas/bannerlord.mboptionscreen"><img src="https://www.codefactor.io/repository/github/aragas/bannerlord.mboptionscreen/badge" alt="CodeFactor" /></a>
    </br>
-   <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen/actions?query=workflow%3ATest"><img src="https://github.com/Aragas/Bannerlord.MBOptionScreen/workflows/Test/badge.svg?branch=dev&event=push" alt="Test" /></a>
+   <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen/actions?query=workflow%3A%22Test%20and%20Publish%22"><img src="https://github.com/Aragas/Bannerlord.MBOptionScreen/workflows/Test%20and%20Publish/badge.svg?branch=dev" alt="Test and Publish" /></a>
    <a href="https://codecov.io/gh/Aragas/Bannerlord.MBOptionScreen"><img src="https://codecov.io/gh/Aragas/Bannerlord.MBOptionScreen/branch/dev/graph/badge.svg" />
    </a>
    </br>
