@@ -8,6 +8,7 @@ jobs:
   verify-nexusmods-cookies:
     name: Verify NexusMods Cookies
     runs-on: ubuntu-latest
+    if: ${{ false }}
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2

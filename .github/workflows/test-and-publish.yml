@@ -1,9 +1,28 @@
 name: Test and Publish
 
 on:
+  repository_dispatch:
+    types:
+      # If a new version of the game is released, test the repo against it.
+      # This way we will always know if the repo is broken on a new update.
+      - game_version_update
   push:
     branches:
       - master
+      - dev
+    paths:
+      - '.github/workflows/test-and-publish.yml'
+      - 'src/**'
+      - 'build/**'
+  pull_request:
+    branches:
+      - dev
+    # will be triggereg when undrafting or requesting review
+    types: [review_requested, ready_for_review]
+    paths:
+      - '.github/workflows/test-and-publish.yml'
+      - 'src/**'
+      - 'build/**'
 
 jobs:
   test:
@@ -20,7 +39,6 @@ jobs:
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
-
     - name: Setup BUTR GPR
       uses: actions/setup-dotnet@master
       with:
@@ -37,25 +55,18 @@ jobs:
         repo: DepotDownloader
         tag: DepotDownloader_2.3.6
         file: depotdownloader-2.3.6.zip
-
     - name: Extract DepotDownloader_2.3.6
       uses: DuckSoft/extract-7z-action@v1.0
       with:
         pathSource: depotdownloader-2.3.6.zip
         pathTarget: depotdownloader
 
-    - name: Download Bannerlord binaries (Stable)
+    - name: Download Bannerlord binaries
       run: >-
         dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -beta ${{secrets.SYNCED_GAME_STABLE_VERSION}} -username ${{secrets.STEAM_LOGIN}}
-        -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord-stable
-      env:
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
-      shell: pwsh
-    - name: Download Bannerlord binaries (Beta)
-      run: >-
+        -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord-stable;
         dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -beta ${{secrets.SYNCED_GAME_BETA_VERSION}} -username ${{secrets.STEAM_LOGIN}}
-        -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord-beta
+        -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord-beta;
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -68,7 +79,6 @@ jobs:
         repo: opencover
         tag: 4.7.922
         file: opencover.4.7.922.zip
-
     - name: Extract opencover.4.7.922
       uses: DuckSoft/extract-7z-action@v1.0
       with:
@@ -81,10 +91,10 @@ jobs:
           $stable_version=$stable_version.substring(1);
           $beta_version=$env:BETA_VERSION;
           $beta_version=$beta_version.substring(1);
-          dotnet test "src/Mod Configuration Menu.sln" --configuration Stable_Debug -p:GameVersion=$stable_version -p:GameFolder="$PWD/bannerlord-stable";
-          dotnet test "src/Mod Configuration Menu.sln" --configuration Stable_Release -p:GameVersion=$stable_version -p:GameFolder="$PWD/bannerlord-stable";
-          dotnet test "src/Mod Configuration Menu.sln" --configuration Beta_Debug -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord-beta";
-          dotnet test "src/Mod Configuration Menu.sln" --configuration Beta_Release -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord-beta";
+          dotnet test "src/MCM.Tests/MCM.Tests.csproj" --configuration Stable_Debug -p:GameVersion=$stable_version -p:GameFolder="$PWD/bannerlord-stable";
+          dotnet test "src/MCM.Tests/MCM.Tests.csproj" --configuration Stable_Release -p:GameVersion=$stable_version -p:GameFolder="$PWD/bannerlord-stable";
+          dotnet test "src/MCM.Tests/MCM.Tests.csproj" --configuration Beta_Debug -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord-beta";
+          dotnet test "src/MCM.Tests/MCM.Tests.csproj" --configuration Beta_Release -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord-beta";
       env:
         DOTNET_NOLOGO: 1
         DOTNET_CLI_TELEMETRY_OPTOUT: 1
@@ -127,6 +137,7 @@ jobs:
 
     # ignore Stable_Release and treat is as Release
     - name: Build MCM (Release)
+      if: ${{ github.ref == 'refs/heads/master' }}
       run: >-
         mkdir bannerlord-publish;
         dotnet build src/MCM.NexusMods/MCM.NexusMods.csproj --configuration Stable_Release -p:GameFolder="$PWD/bannerlord-publish";
@@ -138,6 +149,7 @@ jobs:
       shell: pwsh
 
     - name: Upload Bannerlord folder
+      if: ${{ github.ref == 'refs/heads/master' }}
       uses: actions/upload-artifact@v2
       with:
         name: bannerlord
@@ -150,6 +162,7 @@ jobs:
   publish-on-nuget:
     name: Publish on NuGet
     runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/master' }}
     needs: test
     steps:
     - name: Checkout Repository
@@ -217,9 +230,9 @@ jobs:
 #          NEXUS          #
 ###########################
   publish-on-nexusmods:
-    if: ${{ false }}
     name: Publish on NexusMods
     runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/master' && false }}
     needs: test
     steps:
     - name: Checkout Repository
@@ -303,6 +316,7 @@ jobs:
   publish-on-github:
     name: Publish on GitHub
     runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/master' }}
     needs: test
     steps:
     - name: Checkout Repository
