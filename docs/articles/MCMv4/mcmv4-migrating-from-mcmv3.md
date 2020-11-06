@@ -1,12 +1,11 @@
 ### Notable changes:
 * MCMv4 depends on Bannerlord.Harmony, Bannerlord.ButterLib and Bannerlord.UIExtenderEx.
 * Dropped MCM's dependency injection abstraction in favor of Microsoft.DependencyInjection that ButterLib provides.
-* Dropped support for MBOv1/MBOv2/MCMv2
 * Added support for MCMv3
 
 
 * FluentAPI now supports Presets.
-* PerCharacter settings are replaced by PerSave.
+* PerCharacter settings are replaced by PerSave. They are stored in the save file itself. When MCM is removed, the save file will still be playable. Basically, they do not brick the saves.
 * BaseSettings.Format was renamed to BaseSettings.FormatType.
 * Added new field BaseSettings.DiscoveryType that replaces BaseSettings.Discoverer.
 * Removed BaseSettings.GetSettingPropertyGroups and BaseSettings.GetUnsortedSettingPropertyGroups. Use BaseSettingsExtensions.

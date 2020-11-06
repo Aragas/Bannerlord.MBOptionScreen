@@ -75,6 +75,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MCMv3", "MCMv3", "{FB5D85DA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MCMv4", "MCMv4", "{A8BBD326-8B9E-41E4-8219-030B8E42EBBA}"
 	ProjectSection(SolutionItems) = preProject
+		..\docs\articles\MCMv4\mcmv4-attributes.md = ..\docs\articles\MCMv4\mcmv4-attributes.md
+		..\docs\articles\MCMv4\mcmv4-fluent-builder.md = ..\docs\articles\MCMv4\mcmv4-fluent-builder.md
 		..\docs\articles\MCMv4\mcmv4-migrating-from-mcmv3.md = ..\docs\articles\MCMv4\mcmv4-migrating-from-mcmv3.md
 		..\docs\articles\MCMv4\mcmv4-soft-dependency.md = ..\docs\articles\MCMv4\mcmv4-soft-dependency.md
 		..\docs\articles\MCMv4\mcmv4.md = ..\docs\articles\MCMv4\mcmv4.md
