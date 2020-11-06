@@ -35,10 +35,7 @@ You also need to include this to your SubModules.xml!
   <Name value="MCMv3 Integrated Loader"/>
   <DLLName value="MCMv3.dll"/>
   <SubModuleClassType value="MCM.IntegratedLoaderSubModule"/>
-  <Tags>
-    <Tag key="DedicatedServerType" value="none" />
-    <Tag key="IsNoRenderModeElement" value="false" />
-  </Tags>
+  <Tags/>
 </SubModule>
 ```
   
