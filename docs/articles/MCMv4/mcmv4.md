@@ -43,7 +43,12 @@ You also need to include this to your SubModules.xml!
   </SubModules>
 ```
   
-By depending on the standalone module the experience is basically the same as with ModLib. The Nexus standalone module will ensure that your settings are displayed correctly.
+By depending on the standalone module the experience is basically the same as with ModLib. The Nexus standalone module will ensure that your settings are displayed correctly. You also need to add ``Bannerlord.MBOptionScreen`` as a dependency to your SubModules.xml!
+```xml
+  <DependedModules>
+    <DependedModule Id="Bannerlord.MBOptionScreen"/>
+  </DependedModules>
+```
 
 ## Types of settings <a name="settings_types"></a>
 As of now, Mod Option libraries provided **_Global_** options that are shared across different games/saves.  
