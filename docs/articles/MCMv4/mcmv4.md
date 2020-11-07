@@ -25,8 +25,13 @@ You have two options as to how to use MCMv4:
 * Directly depend on the NexusMods Standalone mod and use NuGet packet **[Bannerlord.MCM](https://www.nuget.org/packages/Bannerlord.MCM)**. Don't include anything in your `/bin` folder from MCM.
 
 By including MCMv4 you will be able to save/load settings programmatically, without having the UI Options screen when the Standalone module is not installed.
-You also need to include this to your SubModules.xml!
+You also need to add ``Bannerlord.ButterLib`` as a dependency and include this to your SubModules.xml!
 ```xml
+  ...
+  <DependedModules>
+    <DependedModule Id="Bannerlord.ButterLib"/>
+  </DependedModules>
+  ...
   <SubModules>
     <SubModule>
       <Name value="MCMv4" />
@@ -41,13 +46,16 @@ You also need to include this to your SubModules.xml!
       <Tags />
     </SubModule>
   </SubModules>
+  ...
 ```
   
 By depending on the standalone module the experience is basically the same as with ModLib. The Nexus standalone module will ensure that your settings are displayed correctly. You also need to add ``Bannerlord.MBOptionScreen`` as a dependency to your SubModules.xml!
 ```xml
+  ...
   <DependedModules>
     <DependedModule Id="Bannerlord.MBOptionScreen"/>
   </DependedModules>
+  ...
 ```
 
 ## Types of settings
