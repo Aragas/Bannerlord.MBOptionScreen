@@ -64,6 +64,9 @@ As of now, Mod Option libraries provided **_Global_** options that are shared ac
 MCMv4 introduces a second type of settings - **_PerSave_**. They are stored in the save file itself. When MCM is removed, the save file will still be playable. Basically, they do not brick the saves.
 
 ## Included Settings Formats and implementing your own
+> [!WARNING]
+> In MCMv4, the default settings provider is `none`, this means that your settings won't be saved to disk unless you override `Settings.FormatType`!
+>
 **MCMv4** provides ``json`` (``json`` and ``json2`` internally) and ``xml`` file formats.  
 You can define your own file formats and take full control of how the settings are saved/loaded by implementing the interface @"MCM.Abstractions.Settings.Formats.ISettingsFormat?text=ISettingsFormat".
 ```csharp
@@ -165,6 +168,9 @@ MCMv4 has several implementations:
 * Check [this page](mcmv4-fluent-builder.md) for using the Fluent Builder
 
 ## Example of Settings definition
+> [!WARNING]
+> In MCMv4, the default settings provider is `none`, this means that your settings won't be saved to disk unless you override `Settings.FormatType`!
+>
 ### Attribute API
 ```csharp
 internal sealed class MCMUISettings : AttributeGlobalSettings<MCMUISettings> // AttributePerCharacterSettings<MCMUISettings>
