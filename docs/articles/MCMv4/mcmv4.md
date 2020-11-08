@@ -248,3 +248,6 @@ The game will load them automatically!
 
 ## Migrating from v3
 * Check [this page](mcmv4-migrating-from-mcmv3.md)!
+
+## Notes
+* Settings.Instance is available _after_ `OnSubModuleLoad`, so the earliest you can use it is inside `OnBeforeInitialModuleScreenSetAsRoot`
