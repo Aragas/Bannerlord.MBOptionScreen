@@ -180,7 +180,7 @@ internal sealed class MCMUISettings : AttributeGlobalSettings<MCMUISettings> // 
     public override string Id => "MCMUI_v3";
     public override string DisplayName => $"MCM UI Impl. {typeof(MCMUISettings).Assembly.GetName().Version.ToString(3)}";
     public override string FolderName => "MCM";
-    public override string Format => "json";
+    public override string FormatType => "json";
 
     [SettingPropertyBool("Use Standard Option Screen", Order = 1, RequireRestart = false, HintText = "Use standard Options screen instead of using an external.")]
     [SettingPropertyGroup("General")]
