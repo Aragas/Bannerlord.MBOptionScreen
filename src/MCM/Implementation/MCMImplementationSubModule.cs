@@ -56,11 +56,21 @@ namespace MCM.Implementation
 
             if (game.GameType is Campaign)
             {
+                /*
                 CampaignEvents.OnGameLoadedEvent.AddNonSerializedListener(this, _ =>
                 {
                     var settingsProvider = this.GetServiceProvider()?.GetRequiredService<BaseSettingsProvider>();
                     settingsProvider?.OnGameStarted(game);
                 });
+                CampaignEvents.OnNewGameCreatedEvent.AddNonSerializedListener(this, _ =>
+                {
+                    var settingsProvider = this.GetServiceProvider()?.GetRequiredService<BaseSettingsProvider>();
+                    settingsProvider?.OnGameStarted(game);
+                });
+                */
+
+                var settingsProvider = this.GetServiceProvider()?.GetRequiredService<BaseSettingsProvider>();
+                settingsProvider?.OnGameStarted(game);
 
                 CampaignGameStarter gameStarter = (CampaignGameStarter) gameStarterObject;
                 gameStarter.AddBehavior(this.GetServiceProvider().GetRequiredService<PerSaveCampaignBehavior>());

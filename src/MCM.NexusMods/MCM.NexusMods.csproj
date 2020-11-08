@@ -4,6 +4,7 @@
   <PropertyGroup>
     <Authors>Aragas, mipen</Authors>
     <ModuleName>Bannerlord.MBOptionScreen</ModuleName>
+    <PostBuildCopyToModulesRegex>^(?!MCM.NexusMods).*\.dll|.*\.config</PostBuildCopyToModulesRegex>
     <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
   </PropertyGroup>
 
