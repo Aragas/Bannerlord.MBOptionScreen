@@ -1,0 +1,32 @@
+﻿<!--EXTERNAL_PROPERTIES: BuildResourcesVersion-->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Authors>Aragas</Authors>
+    <ModuleName>Bannerlord.MBOptionScreen</ModuleName>
+    <PostBuildCopyToModulesRegex>^(?!MCM.Publish).*\.dll|.*\.config</PostBuildCopyToModulesRegex>
+    <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bannerlord.BuildResources" Version="$(BuildResourcesVersion)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MCM.Adapter.MBO\MCM.Adapter.MBO.csproj" />
+    <ProjectReference Include="..\MCM.Adapter.MCMv3\MCM.Adapter.MCMv3.csproj" />
+    <ProjectReference Include="..\MCM.Adapter.ModLib\MCM.Adapter.ModLib.csproj" />
+    <ProjectReference Include="..\MCM.UI\MCM.UI.csproj" />
+    <ProjectReference Include="..\MCM\MCM.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\MCM.Adapter.MBO\_Module\bin\Win64_Shipping_Client\MBOptionScreen.dll" Link="_Module\bin\Win64_Shipping_Client\MBOptionScreen.dll" />
+    <None Include="..\MCM.Adapter.MBO\_Module\bin\Win64_Shipping_Client\MBOptionScreen.v2.0.10.dll" Link="_Module\bin\Win64_Shipping_Client\MBOptionScreen.v2.0.10.dll" />
+    <None Include="..\MCM.Adapter.MCMv3\_Module\bin\Win64_Shipping_Client\MCMv3.dll" Link="_Module\bin\Win64_Shipping_Client\MCMv3.dll" />
+  </ItemGroup>
+
+</Project>

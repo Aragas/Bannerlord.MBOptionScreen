@@ -55,7 +55,7 @@ namespace MCMv4.Tests
             //perSaveSettings.Register();
             //perSaveSettings.Unregister();
 
-            var path = Path.Combine(Utilities.GetBasePath(), "Modules", "Bannerlord.MBOptionScreen.MCMv4.Tests", "ExternalSettingsTest.xml");
+            var path = Path.Combine(Utilities.GetBasePath(), "Modules", "Bannerlord.MBOptionScreen.Tests", "ExternalSettingsTest.xml");
             if (!File.Exists(path))
                 throw new Exception("Settings does not exist in '/Modules' folder");
             using var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);

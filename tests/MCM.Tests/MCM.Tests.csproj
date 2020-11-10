@@ -2,8 +2,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net472</TargetFrameworks>
-
     <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
 
     <IsPackable>false</IsPackable>
@@ -13,8 +11,8 @@
 
   <ItemGroup>
     <PackageReference Include="nunit" Version="3.12.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
-    <PackageReference Include="NUnit3TestAdapter" Version="3.16.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.8.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
 
     <PackageReference Include="Bannerlord.ButterLib" Version="$(ButterLibVersion)" />
     <PackageReference Include="Bannerlord.UIExtenderEx" Version="$(UIExtenderExVersion)" />

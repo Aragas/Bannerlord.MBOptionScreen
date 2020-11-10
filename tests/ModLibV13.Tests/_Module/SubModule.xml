@@ -11,7 +11,6 @@
     <DependedModule Id="Bannerlord.ButterLib" />
     <DependedModule Id="Bannerlord.UIExtenderEx" />
     <DependedModule Id="Bannerlord.MBOptionScreen"/>
-    <DependedModule Id="Bannerlord.MBOptionScreen.ModLib"/>
   </DependedModules>
   <!-- Prototype -->
   <DependedModuleMetadatas>
@@ -19,7 +18,6 @@
     <DependedModuleMetadata id="Bannerlord.ButterLib" order="LoadBeforeThis" version="v$butterlibversion$" />
     <DependedModuleMetadata id="Bannerlord.UIExtenderEx" order="LoadBeforeThis" version="v$uiextenderversion$" />
     <DependedModuleMetadata id="Bannerlord.MBOptionScreen" order="LoadBeforeThis" version="v$version$" />
-    <DependedModuleMetadata id="Bannerlord.MBOptionScreen.ModLib" order="LoadBeforeThis" version="v$version$" />
 
     <DependedModuleMetadata id="Native" order="LoadAfterThis" version="e$gameversion$.*" />
     <DependedModuleMetadata id="SandBoxCore" order="LoadAfterThis" version="e$gameversion$.*" />

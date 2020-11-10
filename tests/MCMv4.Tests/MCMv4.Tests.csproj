@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <AssemblyName>MCMv4.Tests</AssemblyName>
-    <ModuleName>Bannerlord.MBOptionScreen.MCMv4.Tests</ModuleName>
+
     <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
   </PropertyGroup>
 
