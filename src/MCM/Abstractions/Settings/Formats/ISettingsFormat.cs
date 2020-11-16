@@ -9,6 +9,6 @@ namespace MCM.Abstractions.Settings.Formats
         IEnumerable<string> FormatTypes { get; }
 
         bool Save(BaseSettings settings, string directoryPath, string filename);
-        BaseSettings? Load(BaseSettings settings, string directoryPath, string filename);
+        BaseSettings Load(BaseSettings settings, string directoryPath, string filename);
     }
 }

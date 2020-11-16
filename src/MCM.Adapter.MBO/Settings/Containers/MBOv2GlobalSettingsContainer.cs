@@ -35,12 +35,14 @@ namespace MCM.Adapter.MBO.Settings.Containers
                     .Where(a => !Path.GetFileNameWithoutExtension(a.Location).StartsWith("MBOptionScreen"))
                     .SelectMany(a => a.GetTypes())
                     .Where(t => t.IsClass && !t.IsAbstract)
-                    .Where(t => t.GetConstructor(Type.EmptyTypes) is { })
+                    .Where(t => t.GetConstructor(Type.EmptyTypes) is not null)
                     .ToList();
 
                 var mbOptionScreenSettings = allTypes
                     .Where(t => typeof(v2::MBOptionScreen.Settings.SettingsBase).IsAssignableFrom(t))
-                    .Select(obj => new MBOv2GlobalSettingsWrapper(Activator.CreateInstance(obj)));
+                    .Select(obj => Activator.CreateInstance(obj) is { } val ? new MBOv2GlobalSettingsWrapper(val) : null)
+                    .Where(t => t is not null)
+                    .Cast<GlobalSettings>();
                 Settings.AddRange(mbOptionScreenSettings);
             }
 
@@ -48,7 +50,7 @@ namespace MCM.Adapter.MBO.Settings.Containers
                 RegisterSettings(setting);
         }
 
-        protected override void RegisterSettings(GlobalSettings settings)
+        protected override void RegisterSettings(GlobalSettings? settings)
         {
             if (settings is null || LoadedSettings.ContainsKey(settings.Id))
                 return;

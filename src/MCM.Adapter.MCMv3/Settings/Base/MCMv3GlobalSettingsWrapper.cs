@@ -77,6 +77,6 @@ namespace MCM.Adapter.MCMv3.Settings.Base
             .Select(kv => new KeyValuePair<string, Func<BaseSettings>>(kv.Key, () => kv.Value() is { } val ? new MCMv3GlobalSettingsWrapper(val) : CreateNew()))
             .ToDictionary(kv => kv.Key, kv => kv.Value);
 
-        protected override BaseSettings CreateNew() => new MCMv3GlobalSettingsWrapper(Activator.CreateInstance(Object.GetType()));
+        protected override BaseSettings CreateNew() => new MCMv3GlobalSettingsWrapper(Activator.CreateInstance(Object.GetType())!);
     }
 }

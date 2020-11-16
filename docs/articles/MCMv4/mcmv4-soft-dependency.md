@@ -14,7 +14,7 @@ public class CustomSettings
     public Settings()
     {
 
-        if (CustomSettings.Instance is { })
+        if (CustomSettings.Instance is not null)
         {
             _provider = CustomSettings.Instance;
         }

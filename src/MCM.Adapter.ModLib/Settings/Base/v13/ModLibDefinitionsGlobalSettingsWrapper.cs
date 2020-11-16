@@ -51,6 +51,6 @@ namespace MCM.Adapter.ModLib.Settings.Base.v13
 
         public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) { }
 
-        protected override BaseSettings CreateNew() => new ModLibDefinitionsGlobalSettingsWrapper(Activator.CreateInstance(Object.GetType()));
+        protected override BaseSettings CreateNew() => new ModLibDefinitionsGlobalSettingsWrapper(Activator.CreateInstance(Object.GetType())!);
     }
 }

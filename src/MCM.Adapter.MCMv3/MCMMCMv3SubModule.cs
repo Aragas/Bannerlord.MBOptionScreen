@@ -39,7 +39,7 @@ namespace MCM.Adapter.MCMv3
             MCMv3IntegratedLoaderSubModulePatch.Patch(harmony);
 
             // Prevents the Settings.Instance exception
-            if (Instance is { })
+            if (Instance is not null)
                 Instance() = new MCMv3SettingsProviderReplacer();
         }
     }

@@ -3,6 +3,7 @@
 using HarmonyLib;
 
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 using TaleWorlds.GauntletUI;
@@ -31,6 +32,8 @@ namespace MCM.UI.Patches
                 prefix: new HarmonyMethod(AccessTools.Method(typeof(GauntletMoviePatch), nameof(LoadMovieHarmony))));
         }
 
+        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static bool LoadMovieHarmony(GauntletMovie __instance, Widget ____movieRootNode)
         {

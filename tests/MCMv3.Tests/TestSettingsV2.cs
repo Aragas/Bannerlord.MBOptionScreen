@@ -181,9 +181,9 @@ namespace MCMv3.Tests
 
         public class TestIntFormatter : IFormatProvider, ICustomFormatter
         {
-            public object? GetFormat(Type formatType) => formatType == typeof(ICustomFormatter) ? this : null;
+            public object? GetFormat(Type? formatType) => formatType == typeof(ICustomFormatter) ? this : null;
 
-            public string Format(string format, object arg, IFormatProvider formatProvider)
+            public string Format(string? format, object? arg, IFormatProvider? formatProvider)
             {
                 return (-1).ToString();
             }

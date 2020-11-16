@@ -30,7 +30,7 @@ namespace MCM.Adapter.MCMv3.Settings.Providers
 
         public override MCMv3BaseSettings? GetSettings(string id)
         {
-            if (v4::MCM.MCMSubModule.Instance is { } && v4::MCM.MCMSubModule.Instance.GetServiceProvider() is { } serviceProvider)
+            if (v4::MCM.MCMSubModule.Instance is not null && v4::MCM.MCMSubModule.Instance.GetServiceProvider() is { } serviceProvider)
             {
                 var settingsProvider = serviceProvider.GetRequiredService<BaseSettingsProvider>();
 

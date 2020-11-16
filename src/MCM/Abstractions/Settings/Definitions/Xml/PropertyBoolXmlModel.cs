@@ -8,6 +8,6 @@ namespace MCM.Abstractions.Settings.Definitions.Xml
     public class PropertyBoolXmlModel : PropertyBaseXmlModel, IPropertyDefinitionBool, IPropertyDefinitionGroupToggle
     {
         [XmlAttribute("IsToggle")]
-        public bool IsToggle { get; set; } = false;
+        public bool IsToggle { get; set; }
     }
 }

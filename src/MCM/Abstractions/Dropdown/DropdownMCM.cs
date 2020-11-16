@@ -71,19 +71,19 @@ namespace MCM.Abstractions.Dropdown
         private void OnSelectionChanged(MCMSelectorVM<DropdownSelectorItemVM> obj) => _selectedIndex = obj.SelectedIndex;
 
         /// <inheritdoc/>
-        public bool Equals(DropdownMCM<T> x, DropdownMCM<T> y) => x.SelectedIndex == y.SelectedIndex;
+        public bool Equals(DropdownMCM<T>? x, DropdownMCM<T>? y) => x?.SelectedIndex == y?.SelectedIndex;
         /// <inheritdoc/>
         public int GetHashCode(DropdownMCM<T> obj) => obj.SelectedIndex;
 
         /// <inheritdoc/>
         public override int GetHashCode() => GetHashCode(this);
         /// <inheritdoc/>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is DropdownMCM<T> dropdown)
                 return Equals(this, dropdown);
 
-            return base.Equals(obj);
+            return ReferenceEquals(this, obj);
         }
     }
 }

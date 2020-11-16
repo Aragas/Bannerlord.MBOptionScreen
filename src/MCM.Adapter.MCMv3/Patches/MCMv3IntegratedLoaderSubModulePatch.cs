@@ -6,6 +6,7 @@ using Bannerlord.ButterLib.Common.Helpers;
 using HarmonyLib;
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 using TaleWorlds.MountAndBlade;
@@ -35,10 +36,13 @@ namespace MCM.Adapter.MCMv3.Patches
         }
 
         // Prevent any Integrated MCMv3 from loading
+        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
+        [SuppressMessage("ReSharper", "UnusedMethodReturnValue.Local")]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static bool StopIntegratedLoaderSubModuleCtor(MCMv3IntegratedLoaderSubModule __instance)
         {
-            if (Loader is { })
+            if (Loader is not null)
                 Loader(__instance) = new EmptyIntegratedLoader();
 
             return false;

@@ -36,19 +36,10 @@ namespace MCM.Implementation.FluentBuilder.Models
         /// <inheritdoc/>
         public ISettingsPropertyBuilder AddValueFormat(string value)
         {
-            if (ValueFormatFunc is { })
+            if (ValueFormatFunc is not null)
                 throw new InvalidOperationException("AddActionValueFormat was already called!");
 
             ValueFormat = value;
-            return SettingsPropertyBuilder;
-        }
-        /// <inheritdoc/>
-        public ISettingsPropertyBuilder AddActionValueFormat(Func<float, string> value)
-        {
-            if (!string.IsNullOrEmpty(ValueFormat))
-                throw new InvalidOperationException("AddValueFormat was already called!");
-
-            ValueFormatFunc = obj => value((int) obj);
             return SettingsPropertyBuilder;
         }
 

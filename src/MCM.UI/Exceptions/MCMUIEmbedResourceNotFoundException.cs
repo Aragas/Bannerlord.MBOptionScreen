@@ -8,7 +8,7 @@ namespace MCM.UI.Exceptions
     [Serializable]
     public class MCMUIEmbedResourceNotFoundException : MCMException
     {
-        public MCMUIEmbedResourceNotFoundException() : base() { }
+        public MCMUIEmbedResourceNotFoundException() { }
         public MCMUIEmbedResourceNotFoundException(string message) : base(message) { }
         public MCMUIEmbedResourceNotFoundException(string message, Exception inner) : base(message, inner) { }
         protected MCMUIEmbedResourceNotFoundException(SerializationInfo info, StreamingContext context) : base(info, context) { }

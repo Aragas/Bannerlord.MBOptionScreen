@@ -25,13 +25,13 @@ namespace MCM.UI.Functionality.Injectors
 
         public static void InjectDocument(XmlDocument xmlDocument)
         {
-            if (GetBrushes is { })
+            if (GetBrushes is not null)
             {
                 var brushes = GetBrushes(UIResourceManager.BrushFactory);
                 foreach (XmlNode brushNode in xmlDocument.SelectSingleNode("Brushes")!.ChildNodes)
                 {
                     var brush = LoadBrushFrom?.Invoke(UIResourceManager.BrushFactory, brushNode);
-                    if (brush is { })
+                    if (brush is not null)
                     {
                         brushes[brush.Name] = brush;
                         Brushes.TryAdd(brush, null);

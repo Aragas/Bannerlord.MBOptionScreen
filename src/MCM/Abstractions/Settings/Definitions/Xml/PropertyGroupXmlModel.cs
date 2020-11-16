@@ -12,7 +12,7 @@ namespace MCM.Abstractions.Settings.Definitions.Xml
         public string GroupName { get; set; } = default!;
 
         [XmlAttribute("Order")]
-        public int GroupOrder { get; set; } = default!;
+        public int GroupOrder { get; set; }
 
         [XmlArray("Properties")]
         [XmlArrayItem("PropertyBool", typeof(PropertyBoolXmlModel))]

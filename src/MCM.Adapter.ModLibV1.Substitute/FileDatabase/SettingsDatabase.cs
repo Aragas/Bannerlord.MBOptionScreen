@@ -37,15 +37,7 @@ namespace ModLib
         /// </summary>
         /// <param name="uniqueID">The ID for the settings instance.</param>
         /// <returns>Returns the settings instance with the given ID. Returns null if nothing can be found.</returns>
-        public static ISerialisableFile GetSettings(string uniqueID)
-        {
-            if (AllSettingsDict.ContainsKey(uniqueID))
-            {
-                return AllSettingsDict[uniqueID];
-            }
-            else
-                return null;
-        }
+        public static ISerialisableFile? GetSettings(string uniqueID) => AllSettingsDict.ContainsKey(uniqueID) ? AllSettingsDict[uniqueID] : null;
 
         /// <summary>
         /// Saves the settings instance to file.
@@ -66,8 +58,8 @@ namespace ModLib
         public static SettingsBase ResetSettingsInstance(SettingsBase settingsInstance)
         {
             if (settingsInstance == null) throw new ArgumentNullException(nameof(settingsInstance));
-            string id = settingsInstance.ID;
-            SettingsBase newObj = (SettingsBase)Activator.CreateInstance(settingsInstance.GetType());
+            var id = settingsInstance.ID;
+            var newObj = (SettingsBase) Activator.CreateInstance(settingsInstance.GetType())!;
             newObj.ID = id;
             AllSettingsDict[id] = newObj;
             return newObj;

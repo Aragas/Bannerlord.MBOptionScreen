@@ -33,7 +33,15 @@ namespace MCM.Abstractions.Ref
         /// <inheritdoc/>
         public Type Type => _getTypeDelegate!.Invoke();
         /// <inheritdoc/>
-        public object Value { get => _getValueDelegate!.Invoke(); set => _setValueDelegate?.Invoke(value); }
+        public object? Value
+        {
+            get => _getValueDelegate!.Invoke();
+            set
+            {
+                if (_setValueDelegate is not null && value is not null)
+                    _setValueDelegate(value);
+            }
+        }
 
         public RefWrapper(object @object)
         {

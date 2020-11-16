@@ -7,11 +7,8 @@ namespace ModLib.Definitions
 {
     public static class SettingsDatabase
     {
-        public static SettingsBase GetSettings<T>() where T : SettingsBase
-        {
-            var defaultSB = (SettingsBase) Activator.CreateInstance(typeof(T));
-            return GetSettings(defaultSB.ID);
-        }
+        public static SettingsBase? GetSettings<T>() where T : SettingsBase =>
+            Activator.CreateInstance(typeof(T)) is SettingsBase defaultSB ? GetSettings(defaultSB.ID) : null;
 
         private static Dictionary<string, SettingsBase> AllSettingsDict { get; } = new Dictionary<string, SettingsBase>();
 
@@ -44,15 +41,7 @@ namespace ModLib.Definitions
         /// </summary>
         /// <param name="uniqueID">The ID for the settings instance.</param>
         /// <returns>Returns the settings instance with the given ID. Returns null if nothing can be found.</returns>
-        internal static SettingsBase GetSettings(string uniqueID)
-        {
-            if (AllSettingsDict.ContainsKey(uniqueID))
-            {
-                return AllSettingsDict[uniqueID];
-            }
-            else
-                return null;
-        }
+        internal static SettingsBase? GetSettings(string uniqueID) => AllSettingsDict.ContainsKey(uniqueID) ? AllSettingsDict[uniqueID] : null;
 
         /// <summary>
         /// Saves the settings instance to file.
@@ -73,8 +62,8 @@ namespace ModLib.Definitions
         internal static SettingsBase ResetSettingsInstance(SettingsBase settingsInstance)
         {
             if (settingsInstance == null) throw new ArgumentNullException(nameof(settingsInstance));
-            string id = settingsInstance.ID;
-            SettingsBase newObj = (SettingsBase)Activator.CreateInstance(settingsInstance.GetType());
+            var id = settingsInstance.ID;
+            var newObj = (SettingsBase) Activator.CreateInstance(settingsInstance.GetType())!;
             newObj.ID = id;
             AllSettingsDict[id] = newObj;
             return newObj;
@@ -92,19 +81,19 @@ namespace ModLib.Definitions
 
         internal static void LoadAllSettings()
         {
-            List<Type> types = new List<Type>();
+            var types = new List<Type>();
 
-            foreach (var assem in AppDomain.CurrentDomain.GetAssemblies())
+            foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
             {
-                var list = (from t in assem.GetTypes()
-                            where t != typeof(SettingsBase) && t.IsSubclassOf(typeof(SettingsBase)) && !t.IsAbstract && !t.IsInterface
-                            select t).ToList();
+                var list = asm.GetTypes()
+                    .Where(t => t != typeof(SettingsBase) && t.IsSubclassOf(typeof(SettingsBase)) && !t.IsAbstract && !t.IsInterface)
+                    .ToList();
 
-                if (list.Any())
+                if (list.Count > 0)
                     types.AddRange(list);
             }
 
-            if (types.Any())
+            if (types.Count > 0)
             {
                 foreach (var t in types)
                 {
@@ -115,20 +104,21 @@ namespace ModLib.Definitions
 
         internal static void LoadSettingsFromType(Type t)
         {
-            SettingsBase defaultSB = (SettingsBase) Activator.CreateInstance(t);
-            SettingsBase sb = FileDatabase.Get<SettingsBase>(defaultSB.ID);
-            if (sb == null)
+            if (Activator.CreateInstance(t) is SettingsBase defaultSB)
             {
-                string path = Path.Combine(FileDatabase.GetPathForModule(defaultSB.ModuleFolderName, FileDatabase.Location.Configs), FileDatabase.GetFileNameFor(defaultSB));
-                if (File.Exists(path))
-                {
-                    FileDatabase.LoadFromFile(path);
-                    sb = FileDatabase.Get<SettingsBase>(defaultSB.ID);
-                }
+                var sb = FileDatabase.Get<SettingsBase>(defaultSB.ID);
                 if (sb == null)
-                    sb = defaultSB;
+                {
+                    var path = Path.Combine(FileDatabase.GetPathForModule(defaultSB.ModuleFolderName, FileDatabase.Location.Configs), FileDatabase.GetFileNameFor(defaultSB));
+                    if (File.Exists(path))
+                    {
+                        FileDatabase.LoadFromFile(path);
+                        sb = FileDatabase.Get<SettingsBase>(defaultSB.ID);
+                    }
+                    sb ??= defaultSB;
+                }
+                RegisterSettings(sb);
             }
-            RegisterSettings(sb);
         }
     }
 }

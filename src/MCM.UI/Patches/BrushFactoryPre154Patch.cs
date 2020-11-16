@@ -5,6 +5,7 @@ using HarmonyLib;
 using MCM.UI.Functionality.Injectors;
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 using TaleWorlds.GauntletUI;
@@ -23,10 +24,12 @@ namespace MCM.UI.Patches
                 postfix: new HarmonyMethod(AccessTools.Method(typeof(BrushFactoryPre154Patch), nameof(LoadBrushesHarmony))));
         }
 
+        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void LoadBrushesHarmony(BrushFactory __instance)
         {
-            if (Brushes is { })
+            if (Brushes is not null)
             {
                 var brushes = Brushes(__instance);
                 foreach (var brush in BrushInjector.Brushes.Keys)

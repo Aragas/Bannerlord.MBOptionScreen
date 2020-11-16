@@ -43,11 +43,11 @@ namespace MCM.UI.Data
             if (Object is ViewModel viewModel)
                 viewModel.PropertyChangedWithValue += OnPropertyChangedWithValueEventHandler;
         }
-        private void OnPropertyChangedEventHandler(object sender, PropertyChangedEventArgs args)
+        private void OnPropertyChangedEventHandler(object? sender, PropertyChangedEventArgs args)
         {
             OnPropertyChanged(args.PropertyName);
         }
-        private void OnPropertyChangedWithValueEventHandler(object sender, PropertyChangedWithValueEventArgs args)
+        private void OnPropertyChangedWithValueEventHandler(object? sender, PropertyChangedWithValueEventArgs args)
         {
             OnPropertyChangedWithValue(args.Value, args.PropertyName);
         }

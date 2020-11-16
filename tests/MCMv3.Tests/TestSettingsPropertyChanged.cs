@@ -43,7 +43,7 @@ namespace MCMv3.Tests
             PropertyChanged += TestSettingsPropertyChanged_PropertyChanged;
         }
 
-        private void TestSettingsPropertyChanged_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void TestSettingsPropertyChanged_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(Property2))
             {

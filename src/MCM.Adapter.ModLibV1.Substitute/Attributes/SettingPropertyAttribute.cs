@@ -5,12 +5,12 @@ namespace ModLib.Attributes
     [AttributeUsage(AttributeTargets.Property)]
     public sealed class SettingPropertyAttribute : Attribute
     {
-        public string DisplayName { get; } = string.Empty;
-        public float MinValue { get; } = 0f;
-        public float MaxValue { get; } = 0f;
-        public float EditableMinValue { get; } = 0f;
-        public float EditableMaxValue { get; } = 0f;
-        public string HintText { get; } = string.Empty;
+        public string DisplayName { get; }
+        public float MinValue { get; }
+        public float MaxValue { get; }
+        public float EditableMinValue { get; }
+        public float EditableMaxValue { get; }
+        public string HintText { get; }
 
         public SettingPropertyAttribute(string displayName, float minValue, float maxValue, float editableMinValue, float editableMaxValue, string hintText = "")
         {

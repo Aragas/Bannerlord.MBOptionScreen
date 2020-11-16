@@ -5,7 +5,7 @@ namespace ModLib
 {
     public static class IEnumerableExtensions
     {
-        public static IEnumerable<T> Do<T>(this IEnumerable<T> enumerable, Action<T> action)
+        public static IEnumerable<T> Do<T>(this IEnumerable<T>? enumerable, Action<T> action)
         {
             if (enumerable != null)
             {
@@ -14,7 +14,9 @@ namespace ModLib
                 return enumerable;
             }
             else
-                return null;
+            {
+                return null!;
+            }
         }
     }
 }

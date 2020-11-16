@@ -43,10 +43,10 @@ namespace MCM.Adapter.MBO
                 services.AddSettingsPropertyDiscoverer<MBOv2SettingsPropertyDiscoverer>();
             }
 
-            if (MBOv1SharedStateObject is { })
+            if (MBOv1SharedStateObject is not null)
                 MBOv1SharedStateObject() = new SharedStateObject(new MBOv1SettingsProvider(), null!, null!);
 
-            if (MBOv2SettingsProvider is { })
+            if (MBOv2SettingsProvider is not null)
                 MBOv2SettingsProvider.SetValue(null, new MBOv2SettingsProvider());
         }
     }

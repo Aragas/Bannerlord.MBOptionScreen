@@ -33,7 +33,7 @@ namespace MCM.Implementation.Settings.Formats.Xml
             return true;
         }
 
-        public override BaseSettings? Load(BaseSettings settings, string directoryPath, string filename)
+        public override BaseSettings Load(BaseSettings settings, string directoryPath, string filename)
         {
             var path = Path.Combine(directoryPath, filename + ".xml");
             var file = new FileInfo(path);
@@ -53,14 +53,7 @@ namespace MCM.Implementation.Settings.Formats.Xml
 
                 var content = JsonConvert.SerializeXmlNode(root, Newtonsoft.Json.Formatting.None, true);
 
-                var set = LoadFromJson(settings, content);
-                if (set is null)
-                {
-                    Save(settings, directoryPath, filename);
-                    return settings;
-                }
-                else
-                    return set;
+                return LoadFromJson(settings, content);
             }
             else
             {

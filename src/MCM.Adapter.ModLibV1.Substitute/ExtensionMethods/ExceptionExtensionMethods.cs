@@ -15,7 +15,7 @@ namespace ModLib
 
         private static string GetString(Exception ex)
         {
-            StringBuilder sb = new StringBuilder();
+            var sb = new StringBuilder();
             GetStringRecursive(ex, sb);
             sb.AppendLine();
             sb.AppendLine("Stack trace:");
@@ -25,7 +25,7 @@ namespace ModLib
 
         private static void GetStringRecursive(Exception ex, StringBuilder sb)
         {
-            sb.AppendLine($"{ex.GetType().Name}:");
+            sb.Append(ex.GetType().Name).AppendLine(":");
             sb.AppendLine(ex.Message);
             if (ex.InnerException != null)
             {

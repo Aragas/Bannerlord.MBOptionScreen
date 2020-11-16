@@ -34,7 +34,7 @@ namespace MCM.Adapter.MCMv3.Settings.Containers
                     .GetAssemblies()
                     .Where(a => !a.IsDynamic)
                     .SelectMany(a => a.GetTypes())
-                    .Where(t => t.IsClass && !t.IsAbstract && t.GetConstructor(Type.EmptyTypes) is { })
+                    .Where(t => t.IsClass && !t.IsAbstract && t.GetConstructor(Type.EmptyTypes) is not null)
                     .ToList();
 
                 var mbOptionScreenSettings = allTypes
@@ -42,7 +42,9 @@ namespace MCM.Adapter.MCMv3.Settings.Containers
                     .Where(t => !typeof(v3::MCM.Abstractions.Settings.Base.Global.EmptyGlobalSettings).IsAssignableFrom(t))
                     .Where(t => !ReflectionUtils.ImplementsOrImplementsEquivalent(t, "MCM.MCMSettings"))
                     .Where(t => !typeof(v3::MCM.Abstractions.IWrapper).IsAssignableFrom(t))
-                    .Select(obj => new MCMv3GlobalSettingsWrapper(Activator.CreateInstance(obj)));
+                    .Select(obj => Activator.CreateInstance(obj) is { } val ? new MCMv3GlobalSettingsWrapper(val) : null)
+                    .Where(t => t is not null)
+                    .Cast<GlobalSettings>();
                 Settings.AddRange(mbOptionScreenSettings);
             }
 

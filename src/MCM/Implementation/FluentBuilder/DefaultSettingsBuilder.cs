@@ -51,7 +51,7 @@ namespace MCM.Implementation.FluentBuilder
         {
             if (!PropertyGroups.ContainsKey(name))
                 PropertyGroups[name] = new DefaultSettingsPropertyGroupBuilder(name);
-            builder?.Invoke(PropertyGroups[name]);
+            builder.Invoke(PropertyGroups[name]);
             return this;
         }
 
@@ -60,7 +60,7 @@ namespace MCM.Implementation.FluentBuilder
         {
             if (!Presets.ContainsKey(name))
                 Presets[name] = new DefaultSettingsPresetBuilder(name);
-            builder?.Invoke(Presets[name]);
+            builder.Invoke(Presets[name]);
             return this;
         }
 
@@ -77,13 +77,14 @@ namespace MCM.Implementation.FluentBuilder
         private IEnumerable<SettingsPropertyDefinition> GetSettingProperties()
         {
             foreach (var settingsPropertyGroup in PropertyGroups.Values)
-            foreach (var settingsProperty in settingsPropertyGroup.Properties.Values)
             {
-                yield return new SettingsPropertyDefinition(
-                    settingsProperty.GetDefinitions(),
-                    new PropertyGroupDefinitionWrapper(settingsPropertyGroup.GetPropertyGroupDefinition()),
-                    settingsProperty.PropertyReference,
-                    SubGroupDelimiter);
+                foreach (var settingsProperty in settingsPropertyGroup.Properties.Values)
+                {
+                    yield return new SettingsPropertyDefinition(settingsProperty.GetDefinitions(),
+                        new PropertyGroupDefinitionWrapper(settingsPropertyGroup.GetPropertyGroupDefinition()),
+                        settingsProperty.PropertyReference,
+                        SubGroupDelimiter);
+                }
             }
         }
     }

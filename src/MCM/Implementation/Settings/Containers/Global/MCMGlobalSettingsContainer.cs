@@ -20,14 +20,16 @@ namespace MCM.Implementation.Settings.Containers.Global
                 .Where(a => !a.IsDynamic)
                 .SelectMany(a => a.GetTypes())
                 .Where(t => t.IsClass && !t.IsAbstract)
-                .Where(t => t.GetConstructor(Type.EmptyTypes) is { })
+                .Where(t => t.GetConstructor(Type.EmptyTypes) is not null)
                 .ToList();
 
             var mbOptionScreenSettings = allTypes
                 .Where(t => typeof(GlobalSettings).IsAssignableFrom(t))
                 .Where(t => !typeof(EmptyGlobalSettings).IsAssignableFrom(t))
                 .Where(t => !typeof(IWrapper).IsAssignableFrom(t))
-                .Select(t => (GlobalSettings) Activator.CreateInstance(t));
+                .Select(t => Activator.CreateInstance(t) as GlobalSettings)
+                .Where(t => t is not null)
+                .Cast<GlobalSettings>();
             settings.AddRange(mbOptionScreenSettings);
 
             foreach (var setting in settings)

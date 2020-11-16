@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
+// ReSharper disable once CheckNamespace
 namespace ComparerExtensions
 {
     internal sealed class ComparisonWrapper<T> : Comparer<T>
     {
-        private readonly Func<T, T, int> comparison;
+        private readonly Func<T, T, int> _comparison;
 
         public static IComparer<T> GetComparer(Func<T, T, int> comparison)
         {
@@ -15,9 +17,9 @@ namespace ComparerExtensions
 
         private ComparisonWrapper(Func<T, T, int> comparison)
         {
-            this.comparison = comparison;
+            _comparison = comparison;
         }
 
-        public override int Compare(T x, T y) => comparison(x, y);
+        public override int Compare(T x, T y) => _comparison(x, y);
     }
 }

@@ -52,19 +52,19 @@ namespace MCM.Abstractions.Dropdown
         private void OnSelectionChanged(MCMSelectorVM<CheckboxDropdownSelectorItemVM<T>> obj) => _selectedIndex = obj.SelectedIndex;
 
         /// <inheritdoc/>
-        public bool Equals(CheckboxDropdownMCM<T> x, CheckboxDropdownMCM<T> y) => x.SelectedIndex == y.SelectedIndex;
+        public bool Equals(CheckboxDropdownMCM<T>? x, CheckboxDropdownMCM<T>? y) => x?.SelectedIndex == y?.SelectedIndex;
         /// <inheritdoc/>
         public int GetHashCode(CheckboxDropdownMCM<T> obj) => obj.SelectedIndex;
 
         /// <inheritdoc/>
         public override int GetHashCode() => GetHashCode(this);
         /// <inheritdoc/>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is CheckboxDropdownMCM<T> dropdown)
                 return Equals(this, dropdown);
 
-            return base.Equals(obj);
+            return ReferenceEquals(this, obj);
         }
     }
 }

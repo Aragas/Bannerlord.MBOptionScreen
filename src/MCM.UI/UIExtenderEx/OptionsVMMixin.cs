@@ -8,6 +8,7 @@ using MCM.UI.GUI.ViewModels;
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 using TaleWorlds.Library;
@@ -58,11 +59,15 @@ namespace MCM.UI.UIExtenderEx
                 postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(ExecuteCloseOptionsPostfix)), 300));
         }
 
+        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void OptionsPostfix(OptionsVM __instance)
         {
             __instance.SetPropertyValue(nameof(ModOptionsSelected), false);
         }
+        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void ExecuteCloseOptionsPostfix(OptionsVM __instance)
         {
@@ -72,6 +77,8 @@ namespace MCM.UI.UIExtenderEx
             }
         }
 
+        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
+        [SuppressMessage("ReSharper", "UnusedParameter.Local")]
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void OriginalExecuteCloseOptions(OptionsVM instance) => throw new NotImplementedException("It's a stub");
 
@@ -130,14 +137,14 @@ namespace MCM.UI.UIExtenderEx
             vm.PropertyChanged += OptionsVM_PropertyChanged;
         }
 
-        private void OptionsVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OptionsVM_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             _modOptions.OnPropertyChanged(e.PropertyName);
         }
 
         public override void OnFinalize()
         {
-            if (ViewModel is { })
+            if (ViewModel is not null)
                 ViewModel.PropertyChanged -= OptionsVM_PropertyChanged;
 
             base.OnFinalize();
@@ -148,7 +155,7 @@ namespace MCM.UI.UIExtenderEx
         public void ExecuteCloseOptions()
         {
             ModOptions.ExecuteCancelInternal(false);
-            if (ViewModel is { })
+            if (ViewModel is not null)
                 OriginalExecuteCloseOptions(ViewModel);
             OnFinalize();
         }
@@ -159,7 +166,7 @@ namespace MCM.UI.UIExtenderEx
         {
             ModOptions.ExecuteDoneInternal(false, () =>
             {
-                if (ViewModel is { })
+                if (ViewModel is not null)
                     ExecuteDoneMethod?.Invoke(ViewModel);
             });
         }
@@ -170,7 +177,7 @@ namespace MCM.UI.UIExtenderEx
         {
             ModOptions.ExecuteCancelInternal(false, () =>
             {
-                if (ViewModel is { })
+                if (ViewModel is not null)
                     ExecuteCancelMethod?.Invoke(ViewModel);
             });
         }

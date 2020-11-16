@@ -6,7 +6,7 @@ namespace MCM.Implementation.FluentBuilder
 {
     internal sealed class DefaultSettingsPresetBuilder : ISettingsPresetBuilder
     {
-        public IDictionary<string, object> PropertyValues { get; } = new Dictionary<string, object>();
+        public IDictionary<string, object?> PropertyValues { get; } = new Dictionary<string, object?>();
 
         public string PresetName { get; }
 
@@ -15,7 +15,7 @@ namespace MCM.Implementation.FluentBuilder
             PresetName = presetName;
         }
 
-        public ISettingsPresetBuilder SetPropertyValue(string property, object value)
+        public ISettingsPresetBuilder SetPropertyValue(string property, object? value)
         {
             if (!PropertyValues.ContainsKey(property))
                 PropertyValues[property] = value;

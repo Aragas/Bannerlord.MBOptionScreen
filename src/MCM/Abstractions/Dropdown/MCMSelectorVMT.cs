@@ -23,7 +23,10 @@ namespace MCM.Abstractions.Dropdown
             _selectedIndex = -1;
 
             foreach (var @ref in list)
-                ItemList.Add((TSelectorItemVM) Activator.CreateInstance(typeof(TSelectorItemVM), @ref));
+            {
+                if (Activator.CreateInstance(typeof(TSelectorItemVM), @ref) is TSelectorItemVM val)
+                    ItemList.Add(val);
+            }
 
             HasSingleItem = ItemList.Count <= 1;
 

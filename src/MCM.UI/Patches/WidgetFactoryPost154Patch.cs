@@ -3,6 +3,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 using TaleWorlds.GauntletUI.PrefabSystem;
@@ -29,6 +30,8 @@ namespace MCM.UI.Patches
                 prefix: new HarmonyMethod(AccessTools.DeclaredMethod(typeof(WidgetFactoryPost154Patch), nameof(OnUnloadPrefix))));
         }
 
+        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static bool GetCustomTypePrefix(string typeName, IDictionary ____liveCustomTypes, ref WidgetPrefab __result)
         {

@@ -18,7 +18,7 @@ namespace MCM.Implementation.Settings.Containers.PerSave
     internal sealed class MCMPerSaveSettingsContainer : BaseSettingsContainer<PerSaveSettings>, IMCMPerSaveSettingsContainer
     {
         /// <inheritdoc/>
-        protected override void RegisterSettings(PerSaveSettings perSaveSettings)
+        protected override void RegisterSettings(PerSaveSettings? perSaveSettings)
         {
             var behavior = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<PerSaveCampaignBehavior>();
             if (behavior is null)
@@ -39,10 +39,10 @@ namespace MCM.Implementation.Settings.Containers.PerSave
             if (behavior is null)
                 return false;
 
-            if (!(settings is PerSaveSettings perSaveSettings) || !LoadedSettings.ContainsKey(settings.Id))
+            if (settings is not PerSaveSettings || !LoadedSettings.ContainsKey(settings.Id))
                 return false;
 
-            return behavior.SaveSettings(perSaveSettings);
+            return behavior.SaveSettings((PerSaveSettings) settings);
         }
 
         public void OnGameStarted(Game game)
@@ -54,14 +54,16 @@ namespace MCM.Implementation.Settings.Containers.PerSave
                 .GetAssemblies()
                 .Where(a => !a.IsDynamic)
                 .SelectMany(a => a.GetTypes())
-                .Where(t => t.IsClass && !t.IsAbstract && t.GetConstructor(Type.EmptyTypes) is { })
+                .Where(t => t.IsClass && !t.IsAbstract && t.GetConstructor(Type.EmptyTypes) is not null)
                 .ToList();
 
             var mbOptionScreenSettings = allTypes
                 .Where(t => typeof(PerSaveSettings).IsAssignableFrom(t))
                 .Where(t => !typeof(EmptyPerSaveSettings).IsAssignableFrom(t))
                 .Where(t => !typeof(IWrapper).IsAssignableFrom(t))
-                .Select(t => (PerSaveSettings) Activator.CreateInstance(t));
+                .Select(t => Activator.CreateInstance(t) as PerSaveSettings)
+                .Where(t => t is not null)
+                .Cast<PerSaveSettings>();
             settings.AddRange(mbOptionScreenSettings);
 
             foreach (var setting in settings)

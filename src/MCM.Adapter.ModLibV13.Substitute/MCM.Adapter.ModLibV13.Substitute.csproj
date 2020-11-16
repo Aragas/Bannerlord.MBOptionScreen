@@ -5,7 +5,6 @@
     <Authors>mipen, Aragas</Authors>
     <AssemblyName>ModLib.Definitions</AssemblyName>
     <RootNamespace>ModLib.Definitions</RootNamespace>
-    <WarningLevel>0</WarningLevel>
     <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
 

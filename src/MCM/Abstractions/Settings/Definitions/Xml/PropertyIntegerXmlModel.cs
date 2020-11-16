@@ -8,9 +8,9 @@ namespace MCM.Abstractions.Settings.Definitions.Xml
     public class PropertyIntegerXmlModel : PropertyBaseXmlModel, IPropertyDefinitionWithMinMax
     {
         [XmlAttribute("MinValue")]
-        public decimal MinValue { get; set; } = default!;
+        public decimal MinValue { get; set; }
 
         [XmlAttribute("MaxValue")]
-        public decimal MaxValue { get; set; } = default!;
+        public decimal MaxValue { get; set; }
     }
 }

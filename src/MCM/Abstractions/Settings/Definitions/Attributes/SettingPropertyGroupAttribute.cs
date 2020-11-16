@@ -3,6 +3,7 @@ using MCM.Abstractions.Settings.Models;
 
 using System;
 
+// ReSharper disable once CheckNamespace
 namespace MCM.Abstractions.Attributes
 {
     /// <summary>

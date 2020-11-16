@@ -63,7 +63,7 @@ namespace MCM.Adapter.MBO.Settings.Properties
                 var attributes = property.GetCustomAttributes().ToList();
 
                 object? groupAttrObj = attributes.SingleOrDefault(a => a is v1::MBOptionScreen.Attributes.SettingPropertyGroupAttribute);
-                var groupDefinition = groupAttrObj is { }
+                var groupDefinition = groupAttrObj is not null
                     ? new MBOPropertyGroupDefinitionWrapper(groupAttrObj)
                     : SettingPropertyGroupAttribute.Default;
 
@@ -93,7 +93,7 @@ namespace MCM.Adapter.MBO.Settings.Properties
             object? propAttr;
 
             propAttr = attributes.SingleOrDefault(a => a is v1::MBOptionScreen.Attributes.SettingPropertyAttribute);
-            if (propAttr is { })
+            if (propAttr is not null)
                 yield return new MBOv1PropertyDefinitionWrapper(propAttr);
         }
     }

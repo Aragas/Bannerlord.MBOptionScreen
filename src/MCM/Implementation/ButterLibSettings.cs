@@ -18,7 +18,7 @@ namespace MCM.Implementation
         public override string Id { get; } = "Options";
         public override string DisplayName => new TextObject("{=ButterLibSettings_Name}ButterLib {VERSION}", new Dictionary<string, TextObject>
         {
-            { "VERSION", new TextObject(typeof(ButterLibSubModule).Assembly.GetName().Version.ToString(3)) }
+            { "VERSION", new TextObject(typeof(ButterLibSubModule).Assembly.GetName().Version?.ToString(3) ?? "ERROR") }
         }).ToString();
         public override string FolderName { get; } = "ButterLib";
         public override string FormatType { get; } = "json2";

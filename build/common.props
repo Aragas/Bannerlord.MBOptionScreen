@@ -5,11 +5,11 @@
     <Version>4.1.2</Version>
     <GameVersion>1.4.3</GameVersion>
     <HarmonyVersion>2.0.2</HarmonyVersion>
-    <ButterLibVersion>1.0.14</ButterLibVersion>
+    <ButterLibVersion>0.0.14</ButterLibVersion>
     <UIExtenderExVersion>1.0.4</UIExtenderExVersion>
     <BuildResourcesVersion>1.0.0.20</BuildResourcesVersion>
     <TargetFramework>net472</TargetFramework>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <!--Bannerlord's Root Folder. Leave empty if you want it to be tried to be autoresolved.-->
     <GameFolder Condition="$(Configuration) == 'Stable_Debug' OR $(Configuration) == 'Stable_Release'">$(BANNERLORD_STABLE_DIR)</GameFolder>

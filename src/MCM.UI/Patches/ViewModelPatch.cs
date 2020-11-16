@@ -2,6 +2,7 @@
 
 using MCM.Abstractions;
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 using TaleWorlds.Library;
@@ -21,6 +22,8 @@ namespace MCM.UI.Patches
         /// Trigger ExecuteCommand in the wrapped VM
         /// We can't extend\copy methods like we do with properties
         /// </summary>
+        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static bool ExecuteCommandPatch(ViewModel __instance, string commandName, object[] parameters)
         {

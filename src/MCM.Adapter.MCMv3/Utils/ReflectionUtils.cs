@@ -18,7 +18,7 @@ namespace MCM.Adapter.MCMv3.Utils
         {
             var typeToCheck = includeBase ? type : type.BaseType;
 
-            while (typeToCheck is { })
+            while (typeToCheck is not null)
             {
                 if (string.Equals(typeToCheck.FullName(), fullBaseTypeName, StringComparison.Ordinal))
                     return true;

@@ -24,7 +24,7 @@ namespace MCM.Abstractions.Dropdown
         static MCMSelectorVM()
         {
             var methodInfo = AccessTools.Property(typeof(TSelectorItemVM), "CanBeSelected")?.GetMethod;
-            _canBeSelectedDelegate = methodInfo is { }
+            _canBeSelectedDelegate = methodInfo is not null
                 ? AccessTools2.GetDelegate<CanBeSelectedDelegate>(methodInfo)!
                 : _ => false;
         }
@@ -123,7 +123,10 @@ namespace MCM.Abstractions.Dropdown
             // Check that TSelectorItemVM has a constructor that accepts the object
 
             foreach (var obj in list)
-                ItemList.Add((TSelectorItemVM) Activator.CreateInstance(typeof(TSelectorItemVM), obj));
+            {
+                if (Activator.CreateInstance(typeof(TSelectorItemVM), obj) is TSelectorItemVM val)
+                    ItemList.Add(val);
+            }
 
             HasSingleItem = ItemList.Count <= 1;
 
@@ -151,7 +154,7 @@ namespace MCM.Abstractions.Dropdown
 
         public void ExecuteRandomize()
         {
-            if (ItemList.Count(i => _canBeSelectedDelegate(i)) > 0)
+            if (ItemList.Any(i => _canBeSelectedDelegate(i)))
             {
                 var randomElement = ItemList.Where(i => _canBeSelectedDelegate(i)).GetRandomElement();
                 SelectedIndex = ItemList.IndexOf(randomElement);

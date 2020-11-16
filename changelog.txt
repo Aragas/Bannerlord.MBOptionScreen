@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------------------------------
+Version: 4.2.0
+Game Versions: e1.4.3,e1.5.0,e1.5.1,e1.5.2,e1.5.3,e1.5.4
+* Fixed a crash caused by opening ModOptions menu 3 times.
+---------------------------------------------------------------------------------------------------
 Version: 4.1.2
 Game Versions: e1.4.3,e1.5.0,e1.5.1,e1.5.2,e1.5.3,e1.5.4
 * Fixed a crash caused by opening ModOptions menu 3 times.

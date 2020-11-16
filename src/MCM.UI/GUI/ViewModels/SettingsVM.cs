@@ -85,7 +85,7 @@ namespace MCM.UI.GUI.ViewModels
 
             RefreshValues();
         }
-        private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void Settings_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == BaseSettings.SaveTriggered)
                 return;

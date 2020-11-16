@@ -10,7 +10,7 @@ namespace MCM.Abstractions.Dropdown
         private readonly IRef _ref;
 
         [DataSourceProperty]
-        public override string StringItem => _ref.Value.ToString();
+        public override string StringItem => _ref.Value?.ToString() ?? "ERROR";
 
         [DataSourceProperty]
         public override HintViewModel Hint { get; } = new HintViewModel(string.Empty);
@@ -20,6 +20,6 @@ namespace MCM.Abstractions.Dropdown
             _ref = @ref;
         }
 
-        public override string ToString() => _ref.Value.ToString();
+        public override string ToString() => _ref.Value?.ToString() ?? "ERROR";
     }
 }

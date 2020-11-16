@@ -33,12 +33,12 @@ namespace MCM.UI.Utils
         public override Module Module => _methodInfoImplementation.Module;
         public override string Name => _methodInfoImplementation.Name;
         public override Type? ReflectedType => _methodInfoImplementation.ReflectedType;
-        public override ParameterInfo? ReturnParameter => _methodInfoImplementation.ReturnParameter;
+        public override ParameterInfo ReturnParameter => _methodInfoImplementation.ReturnParameter;
         public override Type ReturnType => _methodInfoImplementation.ReturnType;
         public override ICustomAttributeProvider ReturnTypeCustomAttributes => _methodInfoImplementation.ReturnTypeCustomAttributes;
 
         public override Delegate CreateDelegate(Type delegateType) => _methodInfoImplementation.CreateDelegate(delegateType);
-        public override Delegate CreateDelegate(Type delegateType, object target) => _methodInfoImplementation.CreateDelegate(delegateType, target);
+        public override Delegate CreateDelegate(Type delegateType, object? target) => _methodInfoImplementation.CreateDelegate(delegateType, target);
         public override MethodInfo GetBaseDefinition() => _methodInfoImplementation.GetBaseDefinition();
         public override object[] GetCustomAttributes(bool inherit) => _methodInfoImplementation.GetCustomAttributes(inherit);
         public override object[] GetCustomAttributes(Type attributeType, bool inherit) => _methodInfoImplementation.GetCustomAttributes(attributeType, inherit);
@@ -48,25 +48,18 @@ namespace MCM.UI.Utils
         public override MethodBody? GetMethodBody() => _methodInfoImplementation.GetMethodBody();
         public override MethodImplAttributes GetMethodImplementationFlags() => _methodInfoImplementation.GetMethodImplementationFlags();
         public override ParameterInfo[] GetParameters() => _methodInfoImplementation.GetParameters();
-        public override object Invoke(object obj, BindingFlags invokeAttr, Binder binder, object[] parameters, CultureInfo culture) =>
+        public override object? Invoke(object? obj, BindingFlags invokeAttr, Binder? binder, object?[]? parameters, CultureInfo? culture) =>
             _methodInfoImplementation.Invoke(_instance, invokeAttr, binder, parameters, culture);
         public override bool IsDefined(Type attributeType, bool inherit) => _methodInfoImplementation.IsDefined(attributeType, inherit);
         public override MethodInfo MakeGenericMethod(params Type[] typeArguments) => _methodInfoImplementation.MakeGenericMethod(typeArguments);
 
-        public override string ToString() => _methodInfoImplementation.ToString();
-        public override bool Equals(object obj)
+        public override string? ToString() => _methodInfoImplementation.ToString();
+        public override bool Equals(object? obj) => obj switch
         {
-            if (obj is WrappedMethodInfo proxy)
-            {
-                return _methodInfoImplementation.Equals(proxy._methodInfoImplementation);
-            }
-            if (obj is MethodInfo propertyInfo)
-            {
-                return _methodInfoImplementation.Equals(propertyInfo);
-            }
-
-            return _methodInfoImplementation.Equals(obj);
-        }
+            WrappedMethodInfo proxy => _methodInfoImplementation.Equals(proxy._methodInfoImplementation),
+            MethodInfo propertyInfo => _methodInfoImplementation.Equals(propertyInfo),
+            _ => _methodInfoImplementation.Equals(obj)
+        };
         public override int GetHashCode() => _methodInfoImplementation.GetHashCode();
     }
 }

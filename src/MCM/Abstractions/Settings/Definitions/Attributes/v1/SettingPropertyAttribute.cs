@@ -2,6 +2,7 @@
 
 using System;
 
+// ReSharper disable once CheckNamespace
 namespace MCM.Abstractions.Attributes.v1
 {
     /// <summary>

@@ -16,6 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SandBox;
 
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 using TaleWorlds.Engine.Screens;
@@ -24,6 +25,8 @@ using TaleWorlds.MountAndBlade;
 
 namespace MCM.UI
 {
+    [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
     public sealed class MCMUISubModule : MBSubModuleBase
     {
         private static readonly UIExtender Extender = new UIExtender("MCM.UI");
@@ -93,12 +96,12 @@ namespace MCM.UI
                 nameof(OnSubModuleUnloaded), SubscriptionType.AfterMethod, (s, e) =>
                 {
                     var instance = MCMUISettings.Instance;
-                    if (instance is { })
+                    if (instance is not null)
                         instance.PropertyChanged -= MCMSettings_PropertyChanged;
                 });
         }
 
-        private static void MCMSettings_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private static void MCMSettings_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (sender is MCMUISettings settings && e.PropertyName == BaseSettings.SaveTriggered)
             {

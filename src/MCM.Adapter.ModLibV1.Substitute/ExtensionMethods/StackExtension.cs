@@ -12,8 +12,8 @@ namespace ModLib
             if (toAppend.Count == 0)
                 return;
 
-            T[] array = toAppend.ToArray();
-            for (int i = array.Length - 1; i >= 0; i--)
+            var array = toAppend.ToArray();
+            for (var i = array.Length - 1; i >= 0; i--)
             {
                 baseStack.Push(array[i]);
             }

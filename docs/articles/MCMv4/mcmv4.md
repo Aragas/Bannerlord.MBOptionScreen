@@ -83,7 +83,7 @@ protected override void OnSubModuleLoad()
 {
     base.OnSubModuleLoad();
 
-    if (this.GetServices() is { } services)
+    if (this.GetServices() is not null services)
     {
         services.AddSettingsFormat<YamlSettingsFormat>();
     }

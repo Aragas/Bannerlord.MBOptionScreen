@@ -4,6 +4,7 @@ using HarmonyLib;
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
@@ -28,6 +29,8 @@ namespace MCM.UI.Functionality
                 postfix: new HarmonyMethod(AccessTools.Method(typeof(DefaultGameMenuScreenHandler), nameof(Constructor)), 300));
         }
 
+        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void Constructor(InitialMenuVM __instance, ref MBBindingList<InitialMenuOptionVM> ____menuOptions)
         {
@@ -44,7 +47,7 @@ namespace MCM.UI.Functionality
                     () =>
                     {
                         var screen = screenFactory();
-                        if (screen is { })
+                        if (screen is not null)
                             ScreenManager.PushScreen(screen);
                     },
                     false)));
@@ -63,7 +66,7 @@ namespace MCM.UI.Functionality
                     () =>
                     {
                         var screen = screenFactory();
-                        if (screen is { })
+                        if (screen is not null)
                             ScreenManager.PushScreen(screen);
                     },
                     false)));
@@ -76,7 +79,7 @@ namespace MCM.UI.Functionality
             if (_instance.TryGetTarget(out var instance))
             {
                 var found = instance.MenuOptions.FirstOrDefault(i => i.InitialStateOption.Id == internalName);
-                if (found is { })
+                if (found is not null)
                     instance.MenuOptions.Remove(found);
             }
 

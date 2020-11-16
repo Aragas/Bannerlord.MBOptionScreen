@@ -14,10 +14,10 @@ namespace MCM.Abstractions.Settings.Formats
         public IEnumerable<string> FormatTypes { get; } = new [] { "memory" };
 
         /// <inheritdoc/>
-        public BaseSettings? Load(BaseSettings settings, string directoryPath, string filename)
+        public BaseSettings Load(BaseSettings settings, string directoryPath, string filename)
         {
             if (_settings.TryGetValue(Path.Combine(directoryPath, filename), out var sett) || !ReferenceEquals(settings, sett))
-                SettingsUtils.OverrideSettings(settings, sett);
+                SettingsUtils.OverrideSettings(settings, sett!);
             return settings;
         }
 

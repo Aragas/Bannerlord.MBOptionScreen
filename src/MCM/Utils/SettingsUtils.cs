@@ -6,7 +6,6 @@ using MCM.Abstractions.Dropdown;
 using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Base;
-using MCM.Abstractions.Settings.Base.Global;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
 using MCM.Abstractions.Settings.Models;
@@ -46,12 +45,10 @@ namespace MCM.Utils
 
         public static void ResetSettings(BaseSettings settings)
         {
-            GlobalSettings newSettings;
-            if (settings is IWrapper wrapper)
-                newSettings = (GlobalSettings) Activator.CreateInstance(wrapper.GetType(), Activator.CreateInstance(wrapper.Object.GetType()));
-            else
-                newSettings = (GlobalSettings) Activator.CreateInstance(settings.GetType());
-            OverrideSettings(settings, newSettings);
+            if (settings is IWrapper wrapper && Activator.CreateInstance(wrapper.Object.GetType()) is { } copy && Activator.CreateInstance(wrapper.GetType(), copy) is BaseSettings copyWrapped)
+                OverrideSettings(settings, copyWrapped);
+            else if (Activator.CreateInstance(settings.GetType()) is BaseSettings copySettings)
+                OverrideSettings(settings, copySettings);
         }
         public static void OverrideSettings(BaseSettings settings, BaseSettings overrideSettings)
         {
@@ -76,8 +73,11 @@ namespace MCM.Utils
 
             return true;
         }
-        public static bool Equals(ISettingsPropertyDefinition currentDefinition, ISettingsPropertyDefinition newDefinition)
+        public static bool Equals(ISettingsPropertyDefinition? currentDefinition, ISettingsPropertyDefinition? newDefinition)
         {
+            if (currentDefinition is null || newDefinition is null)
+                return false;
+
             // TODO:
             switch (currentDefinition.SettingType)
             {
@@ -86,12 +86,18 @@ namespace MCM.Utils
                 case SettingType.Float:
                 case SettingType.String:
                 {
+                    if (currentDefinition.PropertyReference.Value is null || newDefinition.PropertyReference.Value is null)
+                        return false;
+
                     var original = currentDefinition.PropertyReference.Value;
                     var @new = newDefinition.PropertyReference.Value;
                     return original.Equals(@new);
                 }
                 case SettingType.Dropdown:
                 {
+                    if (currentDefinition.PropertyReference.Value is null || newDefinition.PropertyReference.Value is null)
+                        return false;
+
                     var original = new SelectedIndexWrapper(currentDefinition.PropertyReference.Value);
                     var @new = new SelectedIndexWrapper(newDefinition.PropertyReference.Value);
                     return original.SelectedIndex.Equals(@new.SelectedIndex);
@@ -109,7 +115,9 @@ namespace MCM.Utils
             {
                 var settingPropertyGroup = current.GetSettingPropertyGroups()
                     .Find(x => x.GroupName == newSettingPropertyGroup.GroupName);
-                OverrideValues(settingPropertyGroup, newSettingPropertyGroup);
+                if (settingPropertyGroup is not null)
+                    OverrideValues(settingPropertyGroup, newSettingPropertyGroup);
+                // else log
             }
         }
         public static void OverrideValues(SettingsPropertyGroupDefinition current, SettingsPropertyGroupDefinition @new)
@@ -118,13 +126,17 @@ namespace MCM.Utils
             {
                 var settingPropertyGroup = current.SubGroups
                     .FirstOrDefault(x => x.GroupName == newSettingPropertyGroup.GroupName);
-                OverrideValues(settingPropertyGroup, newSettingPropertyGroup);
+                if (settingPropertyGroup is not null)
+                    OverrideValues(settingPropertyGroup, newSettingPropertyGroup);
+                // else log
             }
             foreach (var newSettingProperty in @new.SettingProperties)
             {
                 var settingProperty = current.SettingProperties
                     .FirstOrDefault(x => x.DisplayName == newSettingProperty.DisplayName);
-                OverrideValues(settingProperty, newSettingProperty);
+                if (settingProperty is not null)
+                    OverrideValues(settingProperty, newSettingProperty);
+                // else log
             }
         }
         public static void OverrideValues(ISettingsPropertyDefinition current, ISettingsPropertyDefinition @new)
@@ -139,7 +151,7 @@ namespace MCM.Utils
         public static bool IsForGenericDropdown(Type type)
         {
             var implementsList = type.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IList<>));
-            var hasSelectedIndex = AccessTools.Property(type, "SelectedIndex") is { };
+            var hasSelectedIndex = AccessTools.Property(type, "SelectedIndex") is not null;
             return implementsList && hasSelectedIndex;
         }
 
@@ -147,27 +159,33 @@ namespace MCM.Utils
             IsForGenericDropdown(type) && type.IsGenericType && AccessTools.Property(type.GenericTypeArguments[0], "IsSelected") is null;
 
         public static bool IsForCheckboxDropdown(Type type) =>
-            IsForGenericDropdown(type) && type.IsGenericType && AccessTools.Property(type.GenericTypeArguments[0], "IsSelected") is { };
+            IsForGenericDropdown(type) && type.IsGenericType && AccessTools.Property(type.GenericTypeArguments[0], "IsSelected") is not null;
 
-        public static bool IsForTextDropdown(object obj) => IsForTextDropdown(obj.GetType());
-        public static bool IsForCheckboxDropdown(object obj) => IsForCheckboxDropdown(obj.GetType());
+        public static bool IsForTextDropdown(object? obj) => obj is not null && IsForTextDropdown(obj.GetType());
+        public static bool IsForCheckboxDropdown(object? obj) => obj is not null && IsForCheckboxDropdown(obj.GetType());
 
         public static object GetSelector(object dropdown)
         {
             var selectorProperty = AccessTools.Property(dropdown.GetType(), "Selector");
-            return selectorProperty is { }
-                ? selectorProperty.GetValue(dropdown)
+            return selectorProperty is not null && selectorProperty.GetValue(dropdown) is { } value
+                ? value
                 : MCMSelectorVM<MCMSelectorItemVM>.Empty;
         }
 
         public static IEnumerable<ISettingsPropertyDefinition> GetAllSettingPropertyDefinitions(SettingsPropertyGroupDefinition settingPropertyGroup1)
         {
             foreach (var settingProperty in settingPropertyGroup1.SettingProperties)
+            {
                 yield return settingProperty;
+            }
 
             foreach (var settingPropertyGroup in settingPropertyGroup1.SubGroups)
-            foreach (var settingProperty in GetAllSettingPropertyDefinitions(settingPropertyGroup))
-                yield return settingProperty;
+            {
+                foreach (var settingProperty in GetAllSettingPropertyDefinitions(settingPropertyGroup))
+                {
+                    yield return settingProperty;
+                }
+            }
         }
         public static IEnumerable<SettingsPropertyGroupDefinition> GetAllSettingPropertyGroupDefinitions(SettingsPropertyGroupDefinition settingPropertyGroup1)
         {
@@ -264,43 +282,43 @@ namespace MCM.Utils
             object? propAttr;
 
             propAttr = property as IPropertyDefinitionBool;
-            if (propAttr is { })
+            if (propAttr is not null)
                 yield return new PropertyDefinitionBoolWrapper(propAttr);
 
             propAttr = property as IPropertyDefinitionDropdown;
-            if (propAttr is { })
+            if (propAttr is not null)
                 yield return new PropertyDefinitionDropdownWrapper(propAttr);
 
             propAttr = property as IPropertyDefinitionGroupToggle;
-            if (propAttr is { })
+            if (propAttr is not null)
                 yield return new PropertyDefinitionGroupToggleWrapper(propAttr);
 
             propAttr = property as IPropertyDefinitionText;
-            if (propAttr is { })
+            if (propAttr is not null)
                 yield return new PropertyDefinitionTextWrapper(propAttr);
 
             propAttr = property as IPropertyDefinitionWithActionFormat;
-            if (propAttr is { })
+            if (propAttr is not null)
                 yield return new PropertyDefinitionWithActionFormatWrapper(propAttr);
 
             propAttr = property as IPropertyDefinitionWithCustomFormatter;
-            if (propAttr is { })
+            if (propAttr is not null)
                 yield return new PropertyDefinitionWithCustomFormatterWrapper(propAttr);
 
             propAttr = property as IPropertyDefinitionWithEditableMinMax;
-            if (propAttr is { })
+            if (propAttr is not null)
                 yield return new PropertyDefinitionWithEditableMinMaxWrapper(propAttr);
 
             propAttr = property as IPropertyDefinitionWithFormat;
-            if (propAttr is { })
+            if (propAttr is not null)
                 yield return new PropertyDefinitionWithFormatWrapper(propAttr);
 
             propAttr = property as IPropertyDefinitionWithId;
-            if (propAttr is { })
+            if (propAttr is not null)
                 yield return new PropertyDefinitionWithIdWrapper(propAttr);
 
             propAttr = property as IPropertyDefinitionWithMinMax;
-            if (propAttr is { })
+            if (propAttr is not null)
                 yield return new PropertyDefinitionWithMinMaxWrapper(propAttr);
         }
     }

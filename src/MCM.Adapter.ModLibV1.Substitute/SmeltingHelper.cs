@@ -16,10 +16,7 @@ namespace ModLib
             if (item == null) throw new ArgumentNullException(nameof(item));
             return item.WeaponDesign.UsedPieces
                 .Select(x => x.CraftingPiece)
-                .Where(x =>
-                    x != null &&
-                    x.IsValid &&
-                    !Campaign.Current.GetCampaignBehavior<CraftingCampaignBehavior>().IsOpened(x));
+                .Where(x => x?.IsValid == true && !Campaign.Current.GetCampaignBehavior<CraftingCampaignBehavior>().IsOpened(x));
         }
     }
 }

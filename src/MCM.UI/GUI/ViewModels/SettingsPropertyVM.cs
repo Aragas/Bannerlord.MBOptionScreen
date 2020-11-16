@@ -37,7 +37,7 @@ namespace MCM.UI.GUI.ViewModels
         public IFormatProvider? ValueFormatProvider { get; }
 
         public bool SatisfiesSearch => string.IsNullOrEmpty(MainView.SearchText) ||
-                                       Name.IndexOf(MainView.SearchText, StringComparison.OrdinalIgnoreCase) >= 0;
+                                       Name.IndexOf(MainView.SearchText, StringComparison.InvariantCultureIgnoreCase) >= 0;
 
         [DataSourceProperty]
         public string Name => SettingPropertyDefinition.DisplayName;
@@ -49,7 +49,7 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public bool IsBoolVisible { get; }
         [DataSourceProperty]
-        public bool IsStringVisible{ get; }
+        public bool IsStringVisible { get; }
         [DataSourceProperty]
         public bool IsDropdownVisible { get; }
         [DataSourceProperty]
@@ -79,7 +79,7 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public float FloatValue
         {
-            get => IsFloatVisible ? (float) PropertyReference.Value : 0f;
+            get => IsFloatVisible ? PropertyReference.Value is float val ? val : float.MinValue : 0f;
             set
             {
                 if (IsFloatVisible && FloatValue != value)
@@ -93,7 +93,7 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public int IntValue
         {
-            get => IsIntVisible ? (int) PropertyReference.Value : 0;
+            get => IsIntVisible ? PropertyReference.Value is int val ? val : int.MinValue : 0;
             set
             {
                 if (IsIntVisible && IntValue != value)
@@ -107,7 +107,7 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public bool BoolValue
         {
-            get => IsBoolVisible && (bool) PropertyReference.Value;
+            get => IsBoolVisible && PropertyReference.Value is bool val ? val : false;
             set
             {
                 if (IsBoolVisible && BoolValue != value)
@@ -120,7 +120,7 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public string StringValue
         {
-            get => IsStringVisible ? (string) PropertyReference.Value : string.Empty;
+            get => IsStringVisible ? PropertyReference.Value is string val ? val : "ERROR" : string.Empty;
             set
             {
                 if (IsStringVisible && StringValue != value)
@@ -133,8 +133,8 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public SelectorVMWrapper DropdownValue
         {
-            get => _selectorVMWrapper ??= new SelectorVMWrapper(IsDropdownVisible
-                    ? SettingsUtils.GetSelector(PropertyReference.Value)
+            get => _selectorVMWrapper ??= new SelectorVMWrapper(IsDropdownVisible && PropertyReference.Value is { } val
+                    ? SettingsUtils.GetSelector(val)
                     : MCMSelectorVM<MCMSelectorItemVM>.Empty);
             set
             {
@@ -144,11 +144,13 @@ namespace MCM.UI.GUI.ViewModels
                     URS.Do(new ComplexReferenceTypeAction<SelectedIndexWrapper>(PropertyReference, selector =>
                     {
                         //selector.ItemList = DropdownValue.ItemList;
-                        selector.SelectedIndex = DropdownValue.SelectedIndex;
+                        if (selector is not null)
+                            selector.SelectedIndex = DropdownValue.SelectedIndex;
                     }, selector =>
                     {
                         //selector.ItemList = DropdownValue.ItemList;
-                        selector.SelectedIndex = DropdownValue.SelectedIndex;
+                        if (selector is not null)
+                            selector.SelectedIndex = DropdownValue.SelectedIndex;
                     }));
                     OnPropertyChanged(nameof(DropdownValue));
                 }
@@ -162,12 +164,12 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public string TextBoxValue => SettingType switch
         {
-            SettingType.Int => string.IsNullOrWhiteSpace(ValueFormat)
-                ? string.Format(ValueFormatProvider, "{0}", ((int) PropertyReference.Value).ToString("0"))
-                : string.Format(ValueFormatProvider, "{0}", ((int) PropertyReference.Value).ToString(ValueFormat)),
-            SettingType.Float => string.IsNullOrWhiteSpace(ValueFormat)
-                ? string.Format(ValueFormatProvider, "{0}", ((float) PropertyReference.Value).ToString("0.00"))
-                : string.Format(ValueFormatProvider, "{0}", ((float) PropertyReference.Value).ToString(ValueFormat)),
+            SettingType.Int when PropertyReference.Value is int val => string.IsNullOrWhiteSpace(ValueFormat)
+                ? string.Format(ValueFormatProvider, "{0}", (val).ToString("0"))
+                : string.Format(ValueFormatProvider, "{0}", (val).ToString(ValueFormat)),
+            SettingType.Float when PropertyReference.Value is float val => string.IsNullOrWhiteSpace(ValueFormat)
+                ? string.Format(ValueFormatProvider, "{0}", (val).ToString("0.00"))
+                : string.Format(ValueFormatProvider, "{0}", (val).ToString(ValueFormat)),
             _ => string.Empty
         };
 
@@ -175,7 +177,7 @@ namespace MCM.UI.GUI.ViewModels
         {
             SettingsVM = settingsVM;
             SettingPropertyDefinition = definition;
-            ValueFormatProvider = SettingPropertyDefinition.CustomFormatter is { }
+            ValueFormatProvider = SettingPropertyDefinition.CustomFormatter is not null
                 ? Activator.CreateInstance(SettingPropertyDefinition.CustomFormatter) as IFormatProvider
                 : null;
 
@@ -212,15 +214,15 @@ namespace MCM.UI.GUI.ViewModels
 
             base.OnFinalize();
         }
-        private void PropertyReference_OnPropertyChanged(object obj, PropertyChangedEventArgs args)
+        private void PropertyReference_OnPropertyChanged(object? obj, PropertyChangedEventArgs args)
         {
             RefreshValues();
             SettingsVM.RecalculateIndex();
             //SettingsVM.RefreshValues();
         }
-        private void DropdownValue_PropertyChanged(object obj, PropertyChangedEventArgs args)
+        private void DropdownValue_PropertyChanged(object? obj, PropertyChangedEventArgs args)
         {
-            if (args.PropertyName == "SelectedIndex")
+            if (obj is not null && args.PropertyName == "SelectedIndex")
             {
                 URS.Do(new SetSelectedIndexAction(PropertyReference, new SelectedIndexWrapper(obj)));
                 SettingsVM.RecalculateIndex();
@@ -283,10 +285,13 @@ namespace MCM.UI.GUI.ViewModels
 
             RefreshValues();
         }
+        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
         [SuppressMessage("Redundancy", "RCS1213:Remove unused member declaration.", Justification = "Reflection is used.")]
         public void OnHover() => MainView.HintText = HintText;
+        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
         [SuppressMessage("Redundancy", "RCS1213:Remove unused member declaration.", Justification = "Reflection is used.")]
         public void OnHoverEnd() => MainView.HintText = string.Empty;
+        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
         [SuppressMessage("Redundancy", "RCS1213:Remove unused member declaration.", Justification = "Reflection is used.")]
         public void OnValueClick() => ScreenManager.PushScreen(new EditValueGauntletScreen(this));
 

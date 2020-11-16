@@ -6,7 +6,6 @@ using MCM.UI.Patches;
 
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Xml;
 
@@ -17,7 +16,7 @@ namespace MCM.UI.Functionality.Injectors
 {
     internal static class PrefabInjector
     {
-        private static Type CustomWidgetType { get; } =
+        private static Type? CustomWidgetType { get; } =
             typeof(WidgetTemplate).Assembly.GetType("TaleWorlds.GauntletUI.PrefabSystem.CustomWidgetType");
 
         private delegate void SetNameDelegate(object instance, string name);
@@ -30,20 +29,16 @@ namespace MCM.UI.Functionality.Injectors
             AccessTools2.GetDelegateObjectInstance<SetWidgetFactoryDelegate>(AccessTools.Property(CustomWidgetType, "WidgetFactory").SetMethod);
         private static readonly SetWidgetPrefabDelegate? SetWidgetPrefab =
             AccessTools2.GetDelegateObjectInstance<SetWidgetPrefabDelegate>(AccessTools.Property(CustomWidgetType, "WidgetPrefab").SetMethod);
-        private static readonly AccessTools.FieldRef<object, string>? GetResourcesPath =
-            AccessTools2.FieldRefAccess<string>(CustomWidgetType, "_resourcesPath");
+        private static readonly AccessTools.FieldRef<object, string>? GetResourcesPath = CustomWidgetType is not null ?
+            AccessTools2.FieldRefAccess<string>(CustomWidgetType, "_resourcesPath") : null;
         private static readonly AccessTools.FieldRef<object, IDictionary>? GetCustomTypes =
             AccessTools2.FieldRefAccess<IDictionary>(typeof(WidgetFactory), "_customTypes");
         private static readonly AccessTools.FieldRef<object, IDictionary>? GetCustomTypePaths =
             AccessTools2.FieldRefAccess<IDictionary>(typeof(WidgetFactory), "_customTypePaths");
-        private static readonly AccessTools.FieldRef<object, IDictionary>? GetLiveCustomTypes =
-            AccessTools2.FieldRefAccess<IDictionary>(typeof(WidgetFactory), "_liveCustomTypes");
-        private static readonly AccessTools.FieldRef<object, Dictionary<string, int>>? GetLiveInstanceTracker =
-            AccessTools2.FieldRefAccess<Dictionary<string, int>>(typeof(WidgetFactory), "_liveInstanceTracker");
 
         public static void Register(string name)
         {
-            if (GetCustomTypePaths is { })
+            if (GetCustomTypePaths is not null)
             {
                 var dict = GetCustomTypePaths(UIResourceManager.WidgetFactory);
                 if (!dict.Contains(name))
@@ -59,11 +54,14 @@ namespace MCM.UI.Functionality.Injectors
                 string.Empty,
                 doc);
 
-            var customWidgetType = FormatterServices.GetUninitializedObject(CustomWidgetType);
-            if (GetResourcesPath is { }) GetResourcesPath(customWidgetType) = string.Empty;
-            SetName?.Invoke(customWidgetType, name);
-            SetWidgetFactory?.Invoke(customWidgetType, UIResourceManager.WidgetFactory);
-            SetWidgetPrefab?.Invoke(customWidgetType, widgetPrefab);
+            if (CustomWidgetType is not null)
+            {
+                var customWidgetType = FormatterServices.GetUninitializedObject(CustomWidgetType);
+                if (GetResourcesPath is not null) GetResourcesPath(customWidgetType) = string.Empty;
+                SetName?.Invoke(customWidgetType, name);
+                SetWidgetFactory?.Invoke(customWidgetType, UIResourceManager.WidgetFactory);
+                SetWidgetPrefab?.Invoke(customWidgetType, widgetPrefab);
+            }
 
             return widgetPrefab;
         }
@@ -77,17 +75,20 @@ namespace MCM.UI.Functionality.Injectors
                 string.Empty,
                 doc);
 
-            var customWidgetType = FormatterServices.GetUninitializedObject(CustomWidgetType);
-            if (GetResourcesPath is { }) GetResourcesPath(customWidgetType) = string.Empty;
-            SetName?.Invoke(customWidgetType, name);
-            SetWidgetFactory?.Invoke(customWidgetType, UIResourceManager.WidgetFactory);
-            SetWidgetPrefab?.Invoke(customWidgetType, widgetPrefab);
-
-            if (GetCustomTypes is { })
+            if (CustomWidgetType is not null)
             {
-                var dict = GetCustomTypes(UIResourceManager.WidgetFactory);
-                if (!dict.Contains(name))
-                    dict.Add(name, customWidgetType);
+                var customWidgetType = FormatterServices.GetUninitializedObject(CustomWidgetType);
+                if (GetResourcesPath is not null) GetResourcesPath(customWidgetType) = string.Empty;
+                SetName?.Invoke(customWidgetType, name);
+                SetWidgetFactory?.Invoke(customWidgetType, UIResourceManager.WidgetFactory);
+                SetWidgetPrefab?.Invoke(customWidgetType, widgetPrefab);
+
+                if (GetCustomTypes is not null)
+                {
+                    var dict = GetCustomTypes(UIResourceManager.WidgetFactory);
+                    if (!dict.Contains(name))
+                        dict.Add(name, customWidgetType);
+                }
             }
 
             return widgetPrefab;

@@ -30,7 +30,14 @@ namespace MCM.UI.Actions
             var lastChange = stack.Last();
             var originalValue = firstChange.Original;
             var currentValue = lastChange.Value;
-            return !originalValue.Equals(currentValue);
+
+            if (originalValue is null && currentValue is null)
+                return false;
+            if (originalValue is null && currentValue is not null)
+                return true;
+            if (originalValue is not null && currentValue is null)
+                return true;
+            return !originalValue!.Equals(currentValue!);
         }
 
         /// <summary>

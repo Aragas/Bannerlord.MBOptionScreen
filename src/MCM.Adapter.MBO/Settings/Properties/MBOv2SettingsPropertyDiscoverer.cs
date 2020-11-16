@@ -65,7 +65,7 @@ namespace MCM.Adapter.MBO.Settings.Properties
                 var attributes = property.GetCustomAttributes().ToList();
 
                 object? groupAttrObj = attributes.SingleOrDefault(a => a is v2::MBOptionScreen.Settings.IPropertyGroupDefinition);
-                var groupDefinition = groupAttrObj is { }
+                var groupDefinition = groupAttrObj is not null
                     ? new MBOPropertyGroupDefinitionWrapper(groupAttrObj)
                     : SettingPropertyGroupAttribute.Default;
 
@@ -95,27 +95,27 @@ namespace MCM.Adapter.MBO.Settings.Properties
             object? propAttr;
 
             propAttr = attributes.SingleOrDefault(a => a is v2::MBOptionScreen.Attributes.v1.SettingPropertyAttribute);
-            if (propAttr is { })
+            if (propAttr is not null)
                 yield return new MBOv1PropertyDefinitionWrapper(propAttr);
 
             propAttr = attributes.SingleOrDefault(a => a is v2::MBOptionScreen.Settings.IPropertyDefinitionBool);
-            if (propAttr is { })
+            if (propAttr is not null)
                 yield return new PropertyDefinitionBoolWrapper(propAttr);
 
             propAttr = attributes.SingleOrDefault(a => a is v2::MBOptionScreen.Settings.IPropertyDefinitionFloatingInteger);
-            if (propAttr is { })
+            if (propAttr is not null)
                 yield return new MBOPropertyDefinitionFloatingIntegerWrapper(propAttr);
 
             propAttr = attributes.SingleOrDefault(a => a is v2::MBOptionScreen.Settings.IPropertyDefinitionInteger);
-            if (propAttr is { })
+            if (propAttr is not null)
                 yield return new MBOPropertyDefinitionIntegerWrapper(propAttr);
 
             propAttr = attributes.SingleOrDefault(a => a is v2::MBOptionScreen.Settings.IPropertyDefinitionText);
-            if (propAttr is { })
+            if (propAttr is not null)
                 yield return new PropertyDefinitionTextWrapper(propAttr);
 
             propAttr = attributes.SingleOrDefault(a => a is v2::MBOptionScreen.Settings.IPropertyDefinitionDropdown);
-            if (propAttr is { })
+            if (propAttr is not null)
                 yield return new PropertyDefinitionDropdownWrapper(propAttr);
         }
     }

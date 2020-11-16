@@ -5,6 +5,7 @@ using HarmonyLib;
 
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
@@ -37,6 +38,7 @@ namespace MCM.Adapter.MCMv3.Settings.Base
 
         private MethodInfo? OnPropertyChangedMethod { get; }
 
+        [SuppressMessage("Usage", "RCS1159:Use EventHandler<T>.", Justification = "<Pending>")]
         public new event PropertyChangedEventHandler? PropertyChanged
         {
             add { if (Object is INotifyPropertyChanged notifyPropertyChanged) notifyPropertyChanged.PropertyChanged += value; }

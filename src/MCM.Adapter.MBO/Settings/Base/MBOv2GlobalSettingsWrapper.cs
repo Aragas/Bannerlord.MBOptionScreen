@@ -60,7 +60,7 @@ namespace MCM.Adapter.MBO.Settings.Base
             _getFormatDelegate = AccessTools2.GetDelegate<GetFormatDelegate>(@object, AccessTools.Property(type, nameof(MCMv2BaseSettings.Format)).GetMethod);
         }
 
-        protected override BaseSettings CreateNew() => new MBOv2GlobalSettingsWrapper(Activator.CreateInstance(Object.GetType()));
+        protected override BaseSettings CreateNew() => new MBOv2GlobalSettingsWrapper(Activator.CreateInstance(Object.GetType())!);
 
         internal void UpdateReference(object @object) => Object = @object;
     }

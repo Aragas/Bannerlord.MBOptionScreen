@@ -12,7 +12,7 @@ namespace ModLib.Definition
 {
     public static class FileDatabaseWorkaround
     {
-        public static T Get<T>(string id) where T : class => FileDatabase.Get<T>(id);
+        public static T? Get<T>(string id) where T : class => FileDatabase.Get<T>(id);
     }
 }
 
@@ -29,7 +29,7 @@ namespace ModLib
         /// <typeparam name="T">Type of object to retrieve.</typeparam>
         /// <param name="id">ID of object to retrieve.</param>
         /// <returns>Returns the instance of the object with the given type and ID. If it cannot be found, returns null.</returns>
-        public static T Get<T>(string id) where T : class
+        public static T? Get<T>(string id) where T : class
         {
             //First check if the dictionary contains the key
             if (!Data.ContainsKey(typeof(T)))
@@ -37,7 +37,7 @@ namespace ModLib
             if (!Data[typeof(T)].ContainsKey(id))
                 return default;
 
-            return (T)Data[typeof(T)][id];
+            return Data[typeof(T)][id] as T;
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace ModLib
         /// <returns>Returns true if initialisation was successful.</returns>
         public static bool Initialise(string moduleFolderName)
         {
-            bool successful = false;
+            var successful = false;
             try
             {
                 LoadAllFiles(moduleFolderName);
@@ -66,7 +66,7 @@ namespace ModLib
         /// <param name="moduleFolderName">The folder name of the module to save to.</param>
         /// <param name="sf">Instance of the object to save to file.</param>
         /// <param name="location">Indicates whether to save the file to the ModuleData/Loadables folder or to the mod's Config folder in Bannerlord's 'My Documents' directory.</param>
-        public static bool SaveToFile(string moduleFolderName, ISerialisableFile sf, Location location = Location.Modules)
+        public static bool SaveToFile(string moduleFolderName, ISerialisableFile? sf, Location location = Location.Modules)
         {
             try
             {
@@ -77,7 +77,7 @@ namespace ModLib
                     throw new Exception($"FileDatabase tried to save an object of type {sf.GetType().FullName} with ID {sf.ID} but the module folder name given was null or empty.");
 
                 //Gets the intended path for the file.
-                string path = GetPathForModule(moduleFolderName, location);
+                var path = GetPathForModule(moduleFolderName, location);
 
                 if (location == Location.Modules && !Directory.Exists(path))
                     throw new Exception($"FileDatabase cannot find the module named {moduleFolderName}");
@@ -87,9 +87,8 @@ namespace ModLib
                 if (location == Location.Modules)
                     path = Path.Combine(path, "ModuleData", LoadablesFolderName);
 
-                if (sf is ISubFolder)
+                if (sf is ISubFolder subFolder)
                 {
-                    ISubFolder subFolder = sf as ISubFolder;
                     if (!string.IsNullOrWhiteSpace(subFolder.SubFolder))
                         path = Path.Combine(path, subFolder.SubFolder);
                 }
@@ -102,11 +101,10 @@ namespace ModLib
                 if (File.Exists(path))
                     File.Delete(path);
 
-                using (XmlWriter writer = XmlWriter.Create(path, new XmlWriterSettings() { Indent = true, OmitXmlDeclaration = true }))
+                using (var writer = XmlWriter.Create(path, new XmlWriterSettings() { Indent = true, OmitXmlDeclaration = true }))
                 {
-                    XmlRootAttribute rootNode = new XmlRootAttribute();
-                    rootNode.ElementName = $"{sf.GetType().Assembly.GetName().Name}-{sf.GetType().FullName}";
-                    XmlSerializerNamespaces xmlns = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
+                    var rootNode = new XmlRootAttribute { ElementName = $"{sf.GetType().Assembly.GetName().Name}-{sf.GetType().FullName}" };
+                    var xmlns = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
                     var serializer = new XmlSerializer(sf.GetType(), rootNode);
                     serializer.Serialize(writer, sf, xmlns);
                 }
@@ -128,8 +126,8 @@ namespace ModLib
         /// <returns>Returns true if the file was deleted successfully.</returns>
         public static bool DeleteFile(string moduleFolderName, string fileName, Location location = Location.Modules)
         {
-            bool successful = true;
-            string path = GetPathForModule(moduleFolderName, location);
+            var successful = true;
+            var path = GetPathForModule(moduleFolderName, location);
             if (!Directory.Exists(path))
             {
                 ModDebug.ShowError($"Tried to delete a file with file name {fileName} from directory \"{path}\" but the directory doesn't exist.", "Could not find directory");
@@ -139,7 +137,7 @@ namespace ModLib
             if (location == Location.Modules)
                 path = Path.Combine(path, "ModuleData", LoadablesFolderName);
 
-            string filePath = Path.Combine(path, fileName);
+            var filePath = Path.Combine(path, fileName);
             if (File.Exists(filePath))
                 File.Delete(filePath);
 
@@ -165,7 +163,7 @@ namespace ModLib
             if (string.IsNullOrWhiteSpace(loadable.ID))
                 throw new ArgumentNullException($"Loadable of type {loadable.GetType()} has missing ID field");
 
-            Type type = loadable.GetType();
+            var type = loadable.GetType();
             //Special case for settings. We want them to all be saved under the SettingsBase key.
             if (type.IsSubclassOf(typeof(SettingsBase)))
                 type = typeof(SettingsBase);
@@ -179,14 +177,16 @@ namespace ModLib
                 Data[type][loadable.ID] = loadable;
             }
             else
+            {
                 Data[type].Add(loadable.ID, loadable);
+            }
         }
 
         internal static void LoadFromFile(string filePath)
         {
-            using (XmlReader reader = XmlReader.Create(filePath))
+            using (var reader = XmlReader.Create(filePath))
             {
-                string nodeData = string.Empty;
+                var nodeData = string.Empty;
                 try
                 {
                     //Find the type name
@@ -196,25 +196,22 @@ namespace ModLib
                     if (string.IsNullOrWhiteSpace(nodeData))
                         throw new Exception($"Could not find the root node in xml document located at {filePath}");
 
-                    TypeData data = new TypeData(nodeData);
+                    var data = new TypeData(nodeData);
                     //Find the type from the root node name. The root node should be the full name of the type, including the namespace and the assembly.
 
                     if (data.Type == null)
                         throw new Exception($"Unable to find type {data.FullName}");
 
-                    XmlRootAttribute root = new XmlRootAttribute();
-                    root.ElementName = nodeData;
-                    root.IsNullable = true;
-                    XmlSerializer serialiser = new XmlSerializer(data.Type, root);
-                    ISerialisableFile loaded = (ISerialisableFile)serialiser.Deserialize(reader);
-                    if (loaded != null)
+                    var root = new XmlRootAttribute { ElementName = nodeData, IsNullable = true };
+                    var serialiser = new XmlSerializer(data.Type, root);
+                    if (serialiser.Deserialize(reader) is ISerialisableFile loaded)
                         Add(loaded);
                     else
                         throw new Exception($"Unable to load {data.FullName} from file {filePath}.");
                 }
                 catch (Exception ex)
                 {
-                    if (ex is ArgumentNullException && ((ArgumentNullException)ex).ParamName == "type")
+                    if (ex is ArgumentNullException argumentNullException && argumentNullException.ParamName == "type")
                         throw new Exception($"Cannot get a type from type name {nodeData} in file {filePath}", ex);
                     throw new Exception($"An error occurred whilst loading file {filePath}", ex);
                 }
@@ -229,11 +226,11 @@ namespace ModLib
         {
             #region Loadables Folder
             //Check if the given module name is correct
-            string modulePath = GetPathForModule(moduleName, Location.Modules);
+            var modulePath = GetPathForModule(moduleName, Location.Modules);
             if (!Directory.Exists(modulePath))
                 throw new Exception($"Cannot find module named {moduleName}");
             //Check the module's ModuleData folder for the Loadables folder.
-            string moduleLoadablesPath = Path.Combine(modulePath, "ModuleData", LoadablesFolderName);
+            var moduleLoadablesPath = Path.Combine(modulePath, "ModuleData", LoadablesFolderName);
             if (Directory.Exists(moduleLoadablesPath))
             {
                 try
@@ -246,8 +243,8 @@ namespace ModLib
                     }
 
                     //Loop through any subfolders and load the files in them
-                    string[] subDirs = Directory.GetDirectories(moduleLoadablesPath);
-                    if (subDirs.Any())
+                    var subDirs = Directory.GetDirectories(moduleLoadablesPath);
+                    if (subDirs.Length > 0)
                     {
                         foreach (var subDir in subDirs)
                         {
@@ -271,13 +268,16 @@ namespace ModLib
                 }
             }
             else
+            {
                 Directory.CreateDirectory(moduleLoadablesPath);
+            }
+
             #endregion
             #region Documents Folder
-            string modConfigsPath = GetPathForModule(moduleName, Location.Configs);
+            var modConfigsPath = GetPathForModule(moduleName, Location.Configs);
             if (Directory.Exists(modConfigsPath))
             {
-                foreach (string filePath in Directory.GetFiles(modConfigsPath))
+                foreach (var filePath in Directory.GetFiles(modConfigsPath))
                 {
                     try
                     {
@@ -288,8 +288,8 @@ namespace ModLib
                         ModDebug.LogError($"Failed to load file: {filePath}\n\n Skipping...", ex);
                     }
                 }
-                string[] subfolders = Directory.GetDirectories(modConfigsPath);
-                if (subfolders.Any())
+                var subfolders = Directory.GetDirectories(modConfigsPath);
+                if (subfolders.Length > 0)
                 {
                     foreach (var subFolder in subfolders)
                     {
@@ -308,7 +308,10 @@ namespace ModLib
                 }
             }
             else
+            {
                 Directory.CreateDirectory(modConfigsPath);
+            }
+
             #endregion
         }
 
@@ -339,19 +342,11 @@ namespace ModLib
 
         private class TypeData
         {
-            public string AssemblyName { get; private set; } = string.Empty;
-            public string TypeName { get; private set; } = string.Empty;
+            public string AssemblyName { get; private set; }
+            public string TypeName { get; private set; }
             public string FullName => $"{TypeName}, {AssemblyName}";
-            private Type _type = null;
-            public Type Type
-            {
-                get
-                {
-                    if (_type == null)
-                        _type = AppDomain.CurrentDomain.GetAssemblies().Where(z => z.FullName.StartsWith(AssemblyName)).FirstOrDefault().GetType(TypeName);
-                    return _type;
-                }
-            }
+            private Type? _type = null;
+            public Type? Type => _type ??= Array.Find(AppDomain.CurrentDomain.GetAssemblies(), z => z.FullName?.StartsWith(AssemblyName) == true)?.GetType(TypeName);
 
             public TypeData(string nodeData)
             {
@@ -362,7 +357,7 @@ namespace ModLib
                     if (!nodeData.Contains("."))
                         throw new ArgumentException($"Node data does not contain a namespace string\nNode Data: {nodeData}");
 
-                    string[] split = nodeData.Split('-');
+                    var split = nodeData.Split('-');
 
                     if (!string.IsNullOrWhiteSpace(split[0]))
                         AssemblyName = split[0];
@@ -375,7 +370,9 @@ namespace ModLib
                         throw new ArgumentException($"Type name in node data was null or empty\nNode Data: {nodeData}");
                 }
                 else
+                {
                     throw new ArgumentException($"The given node data was invalid.\nNode Data: {nodeData}");
+                }
             }
         }
 

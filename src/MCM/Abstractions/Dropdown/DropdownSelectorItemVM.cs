@@ -11,17 +11,17 @@ namespace MCM.Abstractions.Dropdown
 
     internal class DropdownSelectorItemVM<T> : DropdownSelectorItemVMBase where T : class
     {
-        protected readonly T _object;
+        protected readonly T Object;
 
         [DataSourceProperty]
-        public override string StringItem => _object.ToString();
+        public override string StringItem => Object.ToString() ?? "ERROR";
 
         [DataSourceProperty]
         public override HintViewModel Hint { get; } = new HintViewModel(string.Empty);
 
         public DropdownSelectorItemVM(T @object)
         {
-            _object = @object;
+            Object = @object;
         }
 
         public override string ToString() => StringItem;

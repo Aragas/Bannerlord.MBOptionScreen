@@ -57,7 +57,7 @@ namespace MCM.Adapter.MBO.Settings.Base
             _getSubGroupDelimiterDelegate = AccessTools2.GetDelegate<GetSubGroupDelimiterDelegate>(@object, AccessTools.Property(type, "SubGroupDelimiter").GetMethod);
         }
 
-        protected override BaseSettings CreateNew() => new MBOv1GlobalSettingsWrapper(Activator.CreateInstance(Object.GetType()));
+        protected override BaseSettings CreateNew() => new MBOv1GlobalSettingsWrapper(Activator.CreateInstance(Object.GetType())!);
 
         internal void UpdateReference(object @object) => Object = @object;
     }

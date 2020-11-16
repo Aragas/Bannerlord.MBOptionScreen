@@ -10,7 +10,6 @@ namespace MCM.Adapter.MCMv3.Settings.Definitions
         /// <inheritdoc/>
         public string GroupName { get; }
 
-        /// <inheritdoc/>
         public bool IsMainToggle { get; }
 
         /// <inheritdoc/>

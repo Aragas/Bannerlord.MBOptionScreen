@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 
 using TaleWorlds.Localization;
 
+// ReSharper disable once CheckNamespace
 namespace MCM.Abstractions.Attributes
 {
     [SuppressMessage("Design", "RCS1203:Use AttributeUsageAttribute.", Justification = "Implemented in the derived attributes.")]

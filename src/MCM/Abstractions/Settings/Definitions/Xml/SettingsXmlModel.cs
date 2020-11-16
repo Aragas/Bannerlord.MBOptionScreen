@@ -21,7 +21,7 @@ namespace MCM.Abstractions.Settings.Definitions.Xml
         public string SubFolder => string.Empty;
 
         [XmlAttribute("UIVersion")]
-        public int UIVersion { get; set; } = default!;
+        public int UIVersion { get; set; }
 
         [XmlAttribute("SubGroupDelimiter")]
         public string SubGroupDelimiter { get; set; } = default!;

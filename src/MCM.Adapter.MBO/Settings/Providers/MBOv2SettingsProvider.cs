@@ -25,7 +25,7 @@ namespace MCM.Adapter.MBO.Settings.Providers
 
         public SettingsBase? GetSettings(string id)
         {
-            if (v4::MCM.MCMSubModule.Instance is { } && v4::MCM.MCMSubModule.Instance.GetServiceProvider() is { } serviceProvider)
+            if (v4::MCM.MCMSubModule.Instance is not null && v4::MCM.MCMSubModule.Instance.GetServiceProvider() is { } serviceProvider)
             {
                 var settingsProvider = serviceProvider.GetRequiredService<BaseSettingsProvider>();
 

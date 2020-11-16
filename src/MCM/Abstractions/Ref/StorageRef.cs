@@ -10,8 +10,8 @@ namespace MCM.Abstractions.Ref
 
         public Type Type { get; }
 
-        private object _value;
-        public object Value
+        private object? _value;
+        public object? Value
         {
             get => _value;
             set
@@ -24,10 +24,10 @@ namespace MCM.Abstractions.Ref
             }
         }
 
-        public StorageRef(object value)
+        public StorageRef(object? value)
         {
             _value = value;
-            Type = value.GetType();
+            Type = value?.GetType() ?? typeof(object); // TODO
         }
 
         private void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>
