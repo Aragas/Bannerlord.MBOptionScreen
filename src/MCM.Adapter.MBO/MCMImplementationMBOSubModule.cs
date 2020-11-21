@@ -31,9 +31,11 @@ namespace MCM.Adapter.MBO
         private static readonly PropertyInfo? MBOv2SettingsProvider =
             AccessTools.Property(typeof(MBOv2SettingsBase).Assembly.GetType("MBOptionScreen.Settings.SettingsDatabase"), "MBOptionScreenSettingsProvider");
 
-        protected override void OnSubModuleLoad()
+        private bool ServiceRegistrationWasCalled { get; set; }
+
+        public void OnServiceRegistration()
         {
-            base.OnSubModuleLoad();
+            ServiceRegistrationWasCalled = true;
 
             if (this.GetServices() is { } services)
             {
@@ -42,6 +44,14 @@ namespace MCM.Adapter.MBO
                 services.AddSettingsPropertyDiscoverer<MBOv1SettingsPropertyDiscoverer>();
                 services.AddSettingsPropertyDiscoverer<MBOv2SettingsPropertyDiscoverer>();
             }
+        }
+
+        protected override void OnSubModuleLoad()
+        {
+            base.OnSubModuleLoad();
+
+            if (!ServiceRegistrationWasCalled)
+                OnServiceRegistration();
 
             if (MBOv1SharedStateObject is not null)
                 MBOv1SharedStateObject() = new SharedStateObject(new MBOv1SettingsProvider(), null!, null!);

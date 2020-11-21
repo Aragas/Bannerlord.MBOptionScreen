@@ -15,9 +15,11 @@ namespace MCM.Adapter.ModLib
 {
     public sealed class MCMModLibSubModule : MBSubModuleBase
     {
-        protected override void OnSubModuleLoad()
+        private bool ServiceRegistrationWasCalled { get; set; }
+
+        public void OnServiceRegistration()
         {
-            base.OnSubModuleLoad();
+            ServiceRegistrationWasCalled = true;
 
             if (this.GetServices() is { } services)
             {
@@ -29,6 +31,14 @@ namespace MCM.Adapter.ModLib
                 services.AddSettingsPropertyDiscoverer<ModLibSettingsPropertyDiscoverer>();
                 services.AddSettingsPropertyDiscoverer<ModLibDefinitionsSettingsPropertyDiscoverer>();
             }
+        }
+
+        protected override void OnSubModuleLoad()
+        {
+            base.OnSubModuleLoad();
+
+            if (!ServiceRegistrationWasCalled)
+                OnServiceRegistration();
         }
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot()

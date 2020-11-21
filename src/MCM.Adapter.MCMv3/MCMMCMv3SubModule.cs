@@ -24,9 +24,11 @@ namespace MCM.Adapter.MCMv3
         private static readonly AccessTools.FieldRef<MCMv3BaseSettingsProvider>? Instance =
             AccessTools2.StaticFieldRefAccess<MCMv3BaseSettingsProvider>(AccessTools.Field(typeof(MCMv3BaseSettingsProvider), "_instance"));
 
-        protected override void OnSubModuleLoad()
+        private bool ServiceRegistrationWasCalled { get; set; }
+
+        public void OnServiceRegistration()
         {
-            base.OnSubModuleLoad();
+            ServiceRegistrationWasCalled = true;
 
             if (this.GetServices() is { } services)
             {
@@ -34,6 +36,14 @@ namespace MCM.Adapter.MCMv3
                 services.AddSettingsContainer<MCMv3GlobalSettingsContainer>();
                 services.AddSettingsPropertyDiscoverer<MCMv3SettingsPropertyDiscoverer>();
             }
+        }
+
+        protected override void OnSubModuleLoad()
+        {
+            base.OnSubModuleLoad();
+
+            if (!ServiceRegistrationWasCalled)
+                OnServiceRegistration();
 
             var harmony = new Harmony("bannerlord.mcm.implementation.mcmv3.loaderpreventer");
             MCMv3IntegratedLoaderSubModulePatch.Patch(harmony);

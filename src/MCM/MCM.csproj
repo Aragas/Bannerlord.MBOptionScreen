@@ -21,10 +21,11 @@
   </ItemGroup>
   <!--NuGet Package-->
 
+  <!--Windows Forms-->
   <ItemGroup>
-    <InternalsVisibleTo Include="MCMv4.Custom.ScreenTests" />
-    <InternalsVisibleTo Include="MCM.Tests" />
+    <_SDKImplicitReference Include="System.Windows.Forms" />
   </ItemGroup>
+  <!--Windows Forms-->
 
   <ItemGroup>
     <PackageReference Include="Bannerlord.BuildResources" Version="$(BuildResourcesVersion)">
@@ -42,6 +43,11 @@
     <PackageReference Include="Microsoft.Extensions.Options" Version="2.0.0" IncludeAssets="compile" />
     <PackageReference Include="Microsoft.Extensions.Primitives" Version="2.0.0" IncludeAssets="compile" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" IncludeAssets="compile" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="MCMv4.Custom.ScreenTests" />
+    <InternalsVisibleTo Include="MCM.Tests" />
   </ItemGroup>
 
 </Project>

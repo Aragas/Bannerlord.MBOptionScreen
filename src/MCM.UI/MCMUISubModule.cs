@@ -17,7 +17,6 @@ using SandBox;
 
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
-using System.Runtime.CompilerServices;
 
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Localization;
@@ -30,12 +29,36 @@ namespace MCM.UI
     public sealed class MCMUISubModule : MBSubModuleBase
     {
         private static readonly UIExtender Extender = new UIExtender("MCM.UI");
-        private bool FirstInit { get; set; } = true;
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
+        private bool ServiceRegistrationWasCalled { get; set; }
+        private bool OnBeforeInitialModuleScreenSetAsRootWasCalled { get; set; }
+
+        public void OnServiceRegistration()
+        {
+            ServiceRegistrationWasCalled = true;
+
+            if (this.GetServices() is { } services)
+            {
+                services.AddSingleton<BaseGameMenuScreenHandler, DefaultGameMenuScreenHandler>();
+                services.AddSingleton<BaseIngameMenuScreenHandler, DefaultIngameMenuScreenHandler>();
+                services.AddTransient<IMCMOptionsScreen, ModOptionsGauntletScreen>();
+
+                if (ApplicationVersionUtils.GameVersion() is { } gameVersion)
+                {
+                    if (gameVersion.Major <= 1 && gameVersion.Minor <= 5 && gameVersion.Revision <= 3)
+                        services.AddSingleton<IResourceInjector, ResourceInjectorPre154>();
+                    else
+                        services.AddSingleton<IResourceInjector, ResourceInjectorPost154>();
+                }
+            }
+        }
+
         protected override void OnSubModuleLoad()
         {
             base.OnSubModuleLoad();
+
+            if (!ServiceRegistrationWasCalled)
+                OnServiceRegistration();
 
             var editabletextpatchHarmony = new Harmony("bannerlord.mcm.ui.editabletextpatch");
             EditableTextPatch.Patch(editabletextpatchHarmony);
@@ -43,35 +66,21 @@ namespace MCM.UI
             var viewmodelwrapperHarmony = new Harmony("bannerlord.mcm.ui.viewmodelpatch");
             ViewModelPatch.Patch(viewmodelwrapperHarmony);
 
-            var services = this.GetServices();
-            services.AddSingleton<BaseGameMenuScreenHandler, DefaultGameMenuScreenHandler>();
-            services.AddSingleton<BaseIngameMenuScreenHandler, DefaultIngameMenuScreenHandler>();
-            services.AddTransient<IMCMOptionsScreen, ModOptionsGauntletScreen>();
-
             DelayedSubModuleManager.Register<SandBoxSubModule>();
             DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
                 nameof(OnSubModuleLoad), SubscriptionType.AfterMethod, (s, e) =>
                 {
                     Extender.Register(typeof(MCMUISubModule).Assembly);
                 });
-
-            if (ApplicationVersionUtils.GameVersion() is { } gameVersion)
-            {
-                if (gameVersion.Major <= 1 && gameVersion.Minor <= 5 && gameVersion.Revision <= 3)
-                    services.AddSingleton<IResourceInjector, ResourceInjectorPre154>();
-                else
-                    services.AddSingleton<IResourceInjector, ResourceInjectorPost154>();
-            }
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
             base.OnBeforeInitialModuleScreenSetAsRoot();
 
-            if (FirstInit)
+            if (!OnBeforeInitialModuleScreenSetAsRootWasCalled)
             {
-                FirstInit = false;
+                OnBeforeInitialModuleScreenSetAsRootWasCalled = true;
 
                 DelayedSubModuleManager.Register<SandBoxSubModule>();
                 DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
@@ -86,7 +95,6 @@ namespace MCM.UI
             }
         }
 
-        [MethodImpl(MethodImplOptions.NoInlining)]
         protected override void OnSubModuleUnloaded()
         {
             base.OnSubModuleUnloaded();

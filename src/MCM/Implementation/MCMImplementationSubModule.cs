@@ -23,9 +23,11 @@ namespace MCM.Implementation
 {
     public sealed class MCMImplementationSubModule : MBSubModuleBase
     {
-        protected override void OnSubModuleLoad()
+        private bool ServiceRegistrationWasCalled { get; set; }
+
+        public void OnServiceRegistration()
         {
-            base.OnSubModuleLoad();
+            ServiceRegistrationWasCalled = true;
 
             if (this.GetServices() is { } services)
             {
@@ -47,6 +49,14 @@ namespace MCM.Implementation
 
                 services.AddScoped<PerSaveCampaignBehavior>();
             }
+        }
+
+        protected override void OnSubModuleLoad()
+        {
+            base.OnSubModuleLoad();
+
+            if (!ServiceRegistrationWasCalled)
+                OnServiceRegistration();
         }
 
 
