@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Module>
   <Name value="Mod Configuration Menu v4" />
-  <Id value="Bannerlord.MBOptionScreen" />
+  <Id value="$modulename$" />
   <Version value="v$version$" />
   <Official value="false" />
   <DefaultModule value="false" />
@@ -10,6 +10,7 @@
   <Url value="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" />
   <DependedModules>
     <DependedModule Id="Bannerlord.Harmony" />
+    <DependedModule Id="Bannerlord.ModuleLoader" />
     <DependedModule Id="Bannerlord.ButterLib" />
     <DependedModule Id="Bannerlord.UIExtenderEx" />
   </DependedModules>
