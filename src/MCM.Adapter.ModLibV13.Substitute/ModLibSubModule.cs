@@ -6,9 +6,16 @@ namespace ModLib.Definitions
     {
         public static string ModuleFolderName { get; } = "ModLib";
 
+        private bool _isInitialized { get; set; }
+
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
-            SettingsDatabase.LoadAllSettings();
+            if (!_isInitialized)
+            {
+                SettingsDatabase.LoadAllSettings();
+
+                _isInitialized = true;
+            }
         }
     }
 }
