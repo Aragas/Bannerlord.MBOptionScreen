@@ -7,7 +7,7 @@
     <HarmonyVersion>2.0.2</HarmonyVersion>
     <ButterLibVersion>0.0.14</ButterLibVersion>
     <UIExtenderExVersion>1.0.4</UIExtenderExVersion>
-    <BuildResourcesVersion>1.0.0.20</BuildResourcesVersion>
+    <BuildResourcesVersion>1.0.0.25</BuildResourcesVersion>
     <TargetFramework>net472</TargetFramework>
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
@@ -18,25 +18,37 @@
   </PropertyGroup>
 
 
-  <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true' AND '$(DISABLE_GITHUB_ACTIONS)' == ''">
+  <!--Automatic Path Resolution-->
+  <PropertyGroup>
+    <!--Windows-->
+    <!--Get from Registry (not working with dotnet right now)-->
+    <GameFolder Condition="!Exists($(GameFolder)) AND $(OS) == 'Windows_NT'">$(registry:HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\Steam App 261550@InstallLocation)</GameFolder>
+    <!--Set a default value if registry value is missing-->
+    <GameFolder Condition="!Exists($(GameFolder)) AND $(OS) == 'Windows_NT'">C:\Program Files (x86)\Steam\steamapps\common\Mount &amp; Blade II Bannerlord</GameFolder>
+    <!--Unix-->
+    <!--Set a default value if registry value is missing-->
+    <GameFolder Condition="!Exists($(GameFolder)) AND $(OS) == 'Unix'">~/.steam/root/steamapps/common/Mount &amp; Blade II Bannerlord</GameFolder>
+  </PropertyGroup>
+
+
+  <!--NuGet SorceLink-->
+  <PropertyGroup>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
-    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
   </PropertyGroup>
-
-  <ItemGroup Condition="'$(GITHUB_ACTIONS)' == 'true' AND '$(DISABLE_GITHUB_ACTIONS)' == ''">
+  <!--SorceLink-->
+  <PropertyGroup>
+    <Deterministic>true</Deterministic>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+  </PropertyGroup>
+  <!--SorceLink-->
+  <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
   </ItemGroup>
-
-  <!-- Workaround for https://github.com/NuGet/Home/issues/9431 -->
-  <ItemGroup Condition="'$(GITHUB_ACTIONS)' == 'true' AND '$(DISABLE_GITHUB_ACTIONS)' == ''">
-    <SourceRoot Include="$(NuGetPackageRoot)" Condition="'$(NuGetPackageRoot)' != ''" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(GITHUB_ACTIONS)' == 'true' AND '$(DISABLE_GITHUB_ACTIONS)' == '' AND $(TargetFramework) == 'net472' AND '$(OS)' != 'Windows_NT'">
+  <!--CI Builds-->
+  <ItemGroup Condition="$(TargetFramework) == 'net472' AND $(OS) != 'Windows_NT'">
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
