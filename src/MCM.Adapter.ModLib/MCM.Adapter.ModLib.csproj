@@ -5,6 +5,7 @@
     <Authors>Aragas, mipen</Authors>
     <AssemblyName>MCMv4.Adapter.ModLib</AssemblyName>
     <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
+    <ModuleName>Bannerlord.MBOptionScreen.ModLib</ModuleName>
   </PropertyGroup>
 
   <ItemGroup>

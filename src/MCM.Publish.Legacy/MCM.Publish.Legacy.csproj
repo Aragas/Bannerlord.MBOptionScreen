@@ -1,9 +1,10 @@
-﻿<!--EXTERNAL_PROPERTIES: GameVersion;BuildResourcesVersion-->
+﻿<!--EXTERNAL_PROPERTIES: BuildResourcesVersion-->
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>MCMv4.Tests</AssemblyName>
-
+    <Authors>Aragas</Authors>
+    <ModuleName>Bannerlord.MBOptionScreen</ModuleName>
+    <PostBuildCopyToModulesRegex>^(?!MCM.Publish.Legacy).*\.dll|^(?!MCM.Publish.Legacy).*\.pdb</PostBuildCopyToModulesRegex>
     <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
   </PropertyGroup>
 
@@ -12,9 +13,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
-    <ProjectReference Include="..\..\src\MCM\MCM.csproj" />
-    <ProjectReference Include="..\ModLibV1.Tests\ModLibV1.Tests.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MCM.UI\MCM.UI.csproj" />
+    <ProjectReference Include="..\MCM\MCM.csproj" />
   </ItemGroup>
 
 </Project>

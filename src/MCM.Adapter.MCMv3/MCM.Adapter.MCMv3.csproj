@@ -5,6 +5,7 @@
     <Authors>Aragas</Authors>
     <AssemblyName>MCMv4.Adapter.MCMv3</AssemblyName>
     <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
+    <ModuleName>Bannerlord.MBOptionScreen.MCMv3</ModuleName>
   </PropertyGroup>
 
   <ItemGroup>
