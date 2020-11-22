@@ -30,6 +30,8 @@ namespace MCM
 Make sure MCM is loaded before them!";
         private const string SErrorOfficialModules =
 @"{=JP23gY34Gm}The following modules were loaded before MCM:";
+        private const string SMessageContinue =
+@"{=eXs6FLm5DP}It's strongly recommended to terminate the game now. Do you wish to terminate it?";
 
         public static MCMSubModule? Instance { get; private set; }
 
@@ -113,8 +115,15 @@ Make sure MCM is loaded before them!";
 
             if (sb.Length > 0)
             {
-                MessageBox.Show(sb.ToString(), new TextObject(SWarningTitle).ToString(), MessageBoxButtons.OK);
-                Environment.Exit(1);
+                sb.AppendLine();
+                sb.AppendLine(new TextObject(SMessageContinue).ToString());
+
+                switch (MessageBox.Show(sb.ToString(), new TextObject(SWarningTitle).ToString(), MessageBoxButtons.YesNo))
+                {
+                    case DialogResult.Yes:
+                        Environment.Exit(1);
+                        break;
+                }
             }
         }
     }
