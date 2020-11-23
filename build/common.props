@@ -17,7 +17,6 @@
     <GameFolder Condition="$(BANNERLORD_STABLE_DIR) == '' AND $(BANNERLORD_BETA_DIR) == ''">$(BANNERLORD_GAME_DIR)</GameFolder>
   </PropertyGroup>
 
-
   <!--Automatic Path Resolution-->
   <PropertyGroup>
     <!--Windows-->
@@ -30,7 +29,11 @@
     <GameFolder Condition="!Exists($(GameFolder)) AND $(OS) == 'Unix'">~/.steam/root/steamapps/common/Mount &amp; Blade II Bannerlord</GameFolder>
   </PropertyGroup>
 
-
+  
+  <!--GitHub Actions-->
+  <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
   <!--NuGet SorceLink-->
   <PropertyGroup>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
