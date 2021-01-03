@@ -156,7 +156,15 @@ namespace MCM.UI.UIExtenderEx
         {
             ModOptions.ExecuteCancelInternal(false);
             if (ViewModel is not null)
-                OriginalExecuteCloseOptions(ViewModel);
+            {
+                try
+                {
+                    OriginalExecuteCloseOptions(ViewModel);
+                }
+                // For some reason it throws a null exception, but ignoring it seems to be fine for now.
+                catch { }
+            }
+
             OnFinalize();
         }
 
