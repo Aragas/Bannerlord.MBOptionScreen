@@ -18,8 +18,8 @@ namespace MCM.UI.Functionality
 {
     internal sealed class DefaultGameMenuScreenHandler : BaseGameMenuScreenHandler
     {
-        private static readonly WeakReference<InitialMenuVM> _instance = new WeakReference<InitialMenuVM>(null!);
-        private static Dictionary<string, (int, Func<ScreenBase?>, TextObject)> ScreensCache { get; } = new Dictionary<string, (int, Func<ScreenBase?>, TextObject)>();
+        private static readonly WeakReference<InitialMenuVM> _instance = new(null!);
+        private static Dictionary<string, (int, Func<ScreenBase?>, TextObject)> ScreensCache { get; } = new();
 
         public DefaultGameMenuScreenHandler()
         {

@@ -27,7 +27,7 @@ namespace MCM.UI.Patches
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static bool ExecuteCommandPatch(ViewModel __instance, string commandName, object[] parameters)
         {
-            if (__instance is IWrapper wrapper && wrapper.Object is ViewModel viewModel)
+            if (__instance is IWrapper { Object: ViewModel viewModel })
             {
                 viewModel.ExecuteCommand(commandName, parameters);
                 return false;

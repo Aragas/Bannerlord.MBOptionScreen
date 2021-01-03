@@ -1,6 +1,7 @@
-﻿using System;
+﻿using MCM.Exceptions;
+
+using System;
 using System.Runtime.Serialization;
-using MCM.Exceptions;
 
 namespace MCM.UI.Exceptions
 {

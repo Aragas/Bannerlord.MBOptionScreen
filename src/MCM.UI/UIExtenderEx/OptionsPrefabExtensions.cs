@@ -11,7 +11,7 @@ namespace MCM.UI.UIExtenderEx
     {
         public override string Id => "Options1";
         public override int Position => 3;
-        private XmlDocument XmlDocument { get; } = new XmlDocument();
+        private XmlDocument XmlDocument { get; } = new();
 
         public OptionsPrefabExtension1()
         {
@@ -26,7 +26,7 @@ namespace MCM.UI.UIExtenderEx
     {
         public override string Id => "Options2";
         public override int Position => 3;
-        private XmlDocument XmlDocument { get; } = new XmlDocument();
+        private XmlDocument XmlDocument { get; } = new();
 
         public OptionsPrefabExtension2()
         {
@@ -46,7 +46,7 @@ namespace MCM.UI.UIExtenderEx
     public sealed class OptionsPrefabExtension3 : PrefabExtensionReplacePatch
     {
         public override string Id => "Options3";
-        private XmlDocument XmlDocument { get; } = new XmlDocument();
+        private XmlDocument XmlDocument { get; } = new();
 
         public OptionsPrefabExtension3()
         {

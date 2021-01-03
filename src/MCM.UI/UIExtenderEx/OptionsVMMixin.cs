@@ -82,12 +82,12 @@ namespace MCM.UI.UIExtenderEx
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void OriginalExecuteCloseOptions(OptionsVM instance) => throw new NotImplementedException("It's a stub");
 
-        private readonly ModOptionsVM _modOptions = new ModOptionsVM();
+        private readonly ModOptionsVM _modOptions = new();
         private bool _modOptionsSelected;
         private int _descriptionWidth = 650;
 
         [DataSourceProperty]
-        public WeakReference<OptionsVMMixin> MCMMixin => new WeakReference<OptionsVMMixin>(this);
+        public WeakReference<OptionsVMMixin> MCMMixin => new(this);
 
         [DataSourceProperty]
         public ModOptionsVM ModOptions

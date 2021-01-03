@@ -34,7 +34,7 @@ namespace MCM.UI.GUI.ViewModels
         private string _doneButtonText = string.Empty;
         private string _modsText = string.Empty;
         private SettingsVM? _selectedMod;
-        private MBBindingList<SettingsVM> _modSettingsList = new MBBindingList<SettingsVM>();
+        private MBBindingList<SettingsVM> _modSettingsList = new();
         private string _hintText = string.Empty;
         private string _searchText = string.Empty;
 
@@ -160,7 +160,7 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
         [DataSourceProperty]
-        public SelectorVM<SelectorItemVM> PresetsSelector { get; } = new SelectorVM<SelectorItemVM>(Enumerable.Empty<string>(), -1, null);
+        public SelectorVM<SelectorItemVM> PresetsSelector { get; } = new(Enumerable.Empty<string>(), -1, null);
         [DataSourceProperty]
         public bool IsPresetsSelectorVisible => SelectedMod is not null;
 

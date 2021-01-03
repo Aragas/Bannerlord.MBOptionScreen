@@ -77,7 +77,8 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public string CancelButtonText
         {
-            get => _cancelButtonText; set
+            get => _cancelButtonText;
+            set
             {
                 _cancelButtonText = value;
                 OnPropertyChanged(nameof(CancelButtonText));

@@ -23,7 +23,7 @@
             <!-- Controls Section-->
             <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="Fixed" VerticalAlignment="Center" HorizontalAlignment="Center" MarginLeft="50" SuggestedWidth="350">
               <Children>
-                
+
                 <!-- Boolean switch widget -->
                 <Widget WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="362" VerticalAlignment="Center" HorizontalAlignment="Center"
                         IsVisible="@IsBoolVisible" UpdateChildrenStates="true" IsEnabled="@IsEnabled">

@@ -28,7 +28,7 @@ namespace MCM.UI
     [SuppressMessage("ReSharper", "UnusedType.Global")]
     public sealed class MCMUISubModule : MBSubModuleBase
     {
-        private static readonly UIExtender Extender = new UIExtender("MCM.UI");
+        private static readonly UIExtender Extender = new("MCM.UI");
 
         private bool ServiceRegistrationWasCalled { get; set; }
         private bool OnBeforeInitialModuleScreenSetAsRootWasCalled { get; set; }
@@ -46,9 +46,9 @@ namespace MCM.UI
                 if (ApplicationVersionUtils.GameVersion() is { } gameVersion)
                 {
                     if (gameVersion.Major <= 1 && gameVersion.Minor <= 5 && gameVersion.Revision <= 3)
-                        services.AddSingleton<IResourceInjector, ResourceInjectorPre154>();
+                        services.AddSingleton<ResourceInjector, ResourceInjectorPre154>();
                     else
-                        services.AddSingleton<IResourceInjector, ResourceInjectorPost154>();
+                        services.AddSingleton<ResourceInjector, ResourceInjectorPost154>();
                 }
             }
         }
@@ -65,6 +65,7 @@ namespace MCM.UI
 
             var viewmodelwrapperHarmony = new Harmony("bannerlord.mcm.ui.viewmodelpatch");
             ViewModelPatch.Patch(viewmodelwrapperHarmony);
+
 
             DelayedSubModuleManager.Register<SandBoxSubModule>();
             DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
@@ -86,7 +87,7 @@ namespace MCM.UI
                 DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
                     nameof(OnBeforeInitialModuleScreenSetAsRoot), SubscriptionType.AfterMethod, (s, e) =>
                     {
-                        var resourceInjector = this.GetServiceProvider().GetRequiredService<IResourceInjector>();
+                        var resourceInjector = this.GetServiceProvider().GetRequiredService<ResourceInjector>();
                         resourceInjector.Inject();
 
                         UpdateOptionScreen(MCMUISettings.Instance!);

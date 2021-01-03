@@ -17,7 +17,7 @@ namespace ComparerExtensions
         /// <summary>
         /// Gets the default instance of a NullComparer.
         /// </summary>
-        public static NullComparer<T> Default { get; } = new NullComparer<T>();
+        public static NullComparer<T> Default { get; } = new();
 
         /// <summary>
         /// Always returns zero, indicating that the two values are equal.

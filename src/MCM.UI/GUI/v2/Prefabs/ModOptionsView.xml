@@ -64,32 +64,32 @@
                   </Children>
                 </Widget>
 
-                <!-- Buttons -->	
-                <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Bottom">	
-                  <Children>	
-		
-                    <!-- Cancel button -->	
-                    <ButtonWidget Id="CancelButton" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"	
-                                  SuggestedWidth="!CancelButton.Width" SuggestedHeight="!CancelButton.Height" Brush="MCMv3.Cancel.Button"	
-                                  Command.Click="ExecuteCancel">	
-                      <Children>	
-		
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="@CancelButtonText" />	
-		
-                      </Children>	
-                    </ButtonWidget>	
-		
-                    <!--Done Button-->	
-                    <ButtonWidget Id="DoneButton" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"	
-                                  SuggestedWidth="!CancelButton.Width" SuggestedHeight="!CancelButton.Height" Brush="MCMv3.Done.Button"	
-                                  Command.Click="ExecuteDone">	
-                      <Children>	
-		
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="@DoneButtonText" />	
-                      </Children>	
-                    </ButtonWidget>	
-		
-                  </Children>	
+                <!-- Buttons -->
+                <ListPanel WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+                  <Children>
+
+                    <!-- Cancel button -->
+                    <ButtonWidget Id="CancelButton" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
+                                  SuggestedWidth="!CancelButton.Width" SuggestedHeight="!CancelButton.Height" Brush="MCMv3.Cancel.Button"
+                                  Command.Click="ExecuteCancel">
+                      <Children>
+
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="@CancelButtonText" />
+
+                      </Children>
+                    </ButtonWidget>
+
+                    <!--Done Button-->
+                    <ButtonWidget Id="DoneButton" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
+                                  SuggestedWidth="!CancelButton.Width" SuggestedHeight="!CancelButton.Height" Brush="MCMv3.Done.Button"
+                                  Command.Click="ExecuteDone">
+                      <Children>
+
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="@DoneButtonText" />
+                      </Children>
+                    </ButtonWidget>
+
+                  </Children>
                 </ListPanel>
 
               </Children>
@@ -186,7 +186,7 @@
           </Children>
         </ListPanel>
 
-        <!-- Top Banner -->	
+        <!-- Top Banner -->
         <Standard.TopPanel Parameter.Title="@Name"/>
 
       </Children>

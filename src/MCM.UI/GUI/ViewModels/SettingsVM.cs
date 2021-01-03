@@ -25,7 +25,7 @@ namespace MCM.UI.GUI.ViewModels
         private readonly IDictionary<string, BaseSettings>? _cachedPresets;
 
         public ModOptionsVM MainView { get; }
-        public UndoRedoStack URS { get; } = new UndoRedoStack();
+        public UndoRedoStack URS { get; } = new();
 
         public SettingsDefinition SettingsDefinition { get; }
         public BaseSettings SettingsInstance => BaseSettingsProvider.Instance!.GetSettings(SettingsDefinition.SettingsId)!;

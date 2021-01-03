@@ -50,9 +50,9 @@ namespace MCM.UI.GUI.ViewModels
                 { "GROUPNAME", new TextObject(GroupName) }
             }).ToString();
         [DataSourceProperty]
-        public MBBindingList<SettingsPropertyVM> SettingProperties { get; } = new MBBindingList<SettingsPropertyVM>();
+        public MBBindingList<SettingsPropertyVM> SettingProperties { get; } = new();
         [DataSourceProperty]
-        public MBBindingList<SettingsPropertyGroupVM> SettingPropertyGroups { get; } = new MBBindingList<SettingsPropertyGroupVM>();
+        public MBBindingList<SettingsPropertyGroupVM> SettingPropertyGroups { get; } = new();
         [DataSourceProperty]
         public bool GroupToggle
         {

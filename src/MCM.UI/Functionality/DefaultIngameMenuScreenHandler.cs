@@ -34,8 +34,8 @@ namespace MCM.UI.Functionality
         private static readonly AccessTools.FieldRef<EscapeMenuItemVM, object>? Identifier =
             AccessTools2.FieldRefAccess<EscapeMenuItemVM, object>("_identifier");
 
-        private static readonly WeakReference<GauntletMissionEscapeMenuBase> _instance = new WeakReference<GauntletMissionEscapeMenuBase>(null!);
-        private static Dictionary<string, (int, Func<ScreenBase?>, TextObject)> ScreensCache { get; } = new Dictionary<string, (int, Func<ScreenBase?>, TextObject)>();
+        private static readonly WeakReference<GauntletMissionEscapeMenuBase> _instance = new(null!);
+        private static Dictionary<string, (int, Func<ScreenBase?>, TextObject)> ScreensCache { get; } = new();
 
         public DefaultIngameMenuScreenHandler()
         {

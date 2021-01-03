@@ -5,9 +5,9 @@
     <Version>4.1.3</Version>
     <GameVersion>1.4.3</GameVersion>
     <HarmonyVersion>2.0.2</HarmonyVersion>
-    <ButterLibVersion>0.0.14</ButterLibVersion>
-    <UIExtenderExVersion>1.0.4</UIExtenderExVersion>
-    <BuildResourcesVersion>1.0.0.25</BuildResourcesVersion>
+    <ButterLibVersion>1.0.19</ButterLibVersion>
+    <UIExtenderExVersion>1.1.0</UIExtenderExVersion>
+    <BuildResourcesVersion>1.0.0.32</BuildResourcesVersion>
     <TargetFramework>net472</TargetFramework>
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
@@ -29,7 +29,17 @@
     <GameFolder Condition="!Exists($(GameFolder)) AND $(OS) == 'Unix'">~/.steam/root/steamapps/common/Mount &amp; Blade II Bannerlord</GameFolder>
   </PropertyGroup>
 
-  
+  <ItemGroup>
+    <PackageReference Include="IsExternalInit" Version="1.0.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Nullable" Version="1.3.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
   <!--GitHub Actions-->
   <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
     <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
