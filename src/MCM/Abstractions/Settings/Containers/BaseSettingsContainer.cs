@@ -19,7 +19,7 @@ namespace MCM.Abstractions.Settings.Containers
     public abstract class BaseSettingsContainer<TSettings> : ISettingsContainer where TSettings : BaseSettings
     {
         protected virtual string RootFolder { get; } = Path.Combine(Utilities.GetConfigsPath(), "ModSettings");
-        protected virtual Dictionary<string, TSettings> LoadedSettings { get; } = new Dictionary<string, TSettings>();
+        protected virtual Dictionary<string, TSettings> LoadedSettings { get; } = new();
 
         /// <inheritdoc/>
         public virtual List<SettingsDefinition> CreateModSettingsDefinitions => LoadedSettings.Keys.ToList()

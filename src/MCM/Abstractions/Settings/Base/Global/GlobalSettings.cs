@@ -20,6 +20,6 @@ namespace MCM.Abstractions.Settings.Base.Global
 
     public abstract class GlobalSettings : BaseSettings
     {
-        protected static readonly ConcurrentDictionary<Type, string> Cache = new ConcurrentDictionary<Type, string>();
+        protected static readonly ConcurrentDictionary<Type, string> Cache = new();
     }
 }

@@ -21,7 +21,7 @@ namespace MCM.Adapter.MCMv3.Patches
         // Prevent any Integrated MCMv3 from loading
         private class EmptyIntegratedLoader : MCMv3IIntegratedLoader
         {
-            public List<(MBSubModuleBase, System.Type)> MCMImplementationSubModules { get; } = new List<(MBSubModuleBase, System.Type)>();
+            public List<(MBSubModuleBase, System.Type)> MCMImplementationSubModules { get; } = new();
 
             public void Load() { }
         }

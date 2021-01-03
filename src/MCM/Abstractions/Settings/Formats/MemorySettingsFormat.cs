@@ -8,7 +8,7 @@ namespace MCM.Abstractions.Settings.Formats
 {
     public sealed class MemorySettingsFormat : ISettingsFormat
     {
-        private readonly Dictionary<string, BaseSettings> _settings = new Dictionary<string, BaseSettings>();
+        private readonly Dictionary<string, BaseSettings> _settings = new();
 
         /// <inheritdoc/>
         public IEnumerable<string> FormatTypes { get; } = new [] { "memory" };

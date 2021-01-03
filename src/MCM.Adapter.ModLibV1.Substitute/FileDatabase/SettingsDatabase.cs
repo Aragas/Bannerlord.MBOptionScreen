@@ -7,7 +7,7 @@ namespace ModLib
 {
     public static class SettingsDatabase
     {
-        private static Dictionary<string, SettingsBase> AllSettingsDict { get; } = new Dictionary<string, SettingsBase>();
+        private static Dictionary<string, SettingsBase> AllSettingsDict { get; } = new();
 
         public static List<SettingsBase> AllSettings => AllSettingsDict.Values.ToList();
         public static int SettingsCount => AllSettingsDict.Values.Count;

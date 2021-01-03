@@ -7,8 +7,6 @@ using MCM.Abstractions.Settings.Base;
 
 using Microsoft.Extensions.Logging;
 
-using System.Collections.Generic;
-
 using TaleWorlds.Localization;
 
 namespace MCM.Implementation
@@ -16,7 +14,7 @@ namespace MCM.Implementation
     internal sealed class ButterLibSettings : BaseSettings
     {
         public override string Id { get; } = "Options";
-        public override string DisplayName => new TextObject("{=ButterLibSettings_Name}ButterLib {VERSION}", new Dictionary<string, TextObject>
+        public override string DisplayName => new TextObject("{=ButterLibSettings_Name}ButterLib {VERSION}", new()
         {
             { "VERSION", new TextObject(typeof(ButterLibSubModule).Assembly.GetName().Version?.ToString(3) ?? "ERROR") }
         }).ToString();
@@ -26,7 +24,7 @@ namespace MCM.Implementation
 
         [SettingPropertyDropdown("{=ButterLibSettings_Name_LogLevel}Log Level", Order = 1, RequireRestart = true, HintText = "{=ButterLibSettings_Name_LogLevelDesc}Level of logs to write.")]
         [SettingPropertyGroup("{=ButterLibSettings_Name_Logging}Logging")]
-        public DropdownDefault<string> MinLogLevel { get; set; } = new DropdownDefault<string>(new[]
+        public DropdownDefault<string> MinLogLevel { get; set; } = new(new[]
         {
             $"{{=2Tp85Cpa}}{LogLevel.Trace}",
             $"{{=Es0LPYu1}}{LogLevel.Debug}",

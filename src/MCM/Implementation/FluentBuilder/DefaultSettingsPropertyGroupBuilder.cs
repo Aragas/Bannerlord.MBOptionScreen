@@ -15,7 +15,7 @@ namespace MCM.Implementation.FluentBuilder
         IPropertyGroupDefinition
     {
         /// <inheritdoc/>
-        public Dictionary<string, ISettingsPropertyBuilder> Properties { get; } = new Dictionary<string, ISettingsPropertyBuilder>();
+        public Dictionary<string, ISettingsPropertyBuilder> Properties { get; } = new();
 
         /// <inheritdoc/>
         public string GroupName { get; }

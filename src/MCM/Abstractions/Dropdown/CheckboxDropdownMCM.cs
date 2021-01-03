@@ -10,7 +10,7 @@ namespace MCM.Abstractions.Dropdown
     internal sealed class CheckboxDropdownMCM<T> : List<T>, IEqualityComparer<CheckboxDropdownMCM<T>>
         where T : class
     {
-        public static CheckboxDropdownMCM<T> Empty => new CheckboxDropdownMCM<T>(Enumerable.Empty<T>(), 0);
+        public static CheckboxDropdownMCM<T> Empty => new(Enumerable.Empty<T>(), 0);
 
         private MCMSelectorVM<CheckboxDropdownSelectorItemVM<T>, T> _selector;
         private int _selectedIndex;

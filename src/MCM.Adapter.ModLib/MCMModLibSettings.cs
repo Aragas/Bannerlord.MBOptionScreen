@@ -2,8 +2,6 @@
 using MCM.Abstractions.Attributes.v2;
 using MCM.Abstractions.Settings.Base.Global;
 
-using System.Collections.Generic;
-
 using TaleWorlds.Localization;
 
 namespace MCM.Adapter.ModLib
@@ -13,7 +11,7 @@ namespace MCM.Adapter.ModLib
         private bool _overrideModLib = true;
 
         public override string Id { get; } = "MCMModLib_v4";
-        public override string DisplayName => new TextObject("{=MCMModLibSettings_Name}MCM ModLib Adapter {VERSION}", new Dictionary<string, TextObject>
+        public override string DisplayName => new TextObject("{=MCMModLibSettings_Name}MCM ModLib Adapter {VERSION}", new()
         {
             { "VERSION", new TextObject(typeof(MCMModLibSettings).Assembly.GetName().Version?.ToString(3) ?? "ERROR") }
         }).ToString();

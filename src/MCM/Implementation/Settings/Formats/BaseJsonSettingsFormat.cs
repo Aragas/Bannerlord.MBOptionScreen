@@ -18,8 +18,8 @@ namespace MCM.Implementation.Settings.Formats
 {
     internal abstract class BaseJsonSettingsFormat : ISettingsFormat
     {
-        private readonly object _lock = new object();
-        private readonly Dictionary<string, object?> _existingObjects = new Dictionary<string, object?>();
+        private readonly object _lock = new();
+        private readonly Dictionary<string, object?> _existingObjects = new();
 
         protected readonly ILogger Logger;
         protected virtual JsonSerializerSettings JsonSerializerSettings { get; }

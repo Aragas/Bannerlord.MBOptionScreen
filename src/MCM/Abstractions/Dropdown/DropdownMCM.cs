@@ -12,7 +12,7 @@ namespace MCM.Abstractions.Dropdown
     public sealed class DropdownMCM<T> : List<T>, IEqualityComparer<DropdownMCM<T>>
         where T : class
     {
-        public static DropdownMCM<T> Empty => new DropdownMCM<T>(Enumerable.Empty<T>(), 0);
+        public static DropdownMCM<T> Empty => new(Enumerable.Empty<T>(), 0);
 
         private MCMSelectorVM<DropdownSelectorItemVM, string> _selector;
         private int _selectedIndex;

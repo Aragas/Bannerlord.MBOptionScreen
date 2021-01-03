@@ -14,6 +14,6 @@ namespace ModLib.Attributes
             IsMainToggle = isMainToggle;
         }
 
-        public static SettingPropertyGroupAttribute Default => new SettingPropertyGroupAttribute("Misc");
+        public static SettingPropertyGroupAttribute Default => new("Misc");
     }
 }

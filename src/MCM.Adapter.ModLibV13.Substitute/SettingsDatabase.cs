@@ -10,7 +10,7 @@ namespace ModLib.Definitions
         public static SettingsBase? GetSettings<T>() where T : SettingsBase =>
             Activator.CreateInstance(typeof(T)) is SettingsBase defaultSB ? GetSettings(defaultSB.ID) : null;
 
-        private static Dictionary<string, SettingsBase> AllSettingsDict { get; } = new Dictionary<string, SettingsBase>();
+        private static Dictionary<string, SettingsBase> AllSettingsDict { get; } = new();
 
         public static List<SettingsBase> AllSettings => AllSettingsDict.Values.ToList();
         public static int SettingsCount => AllSettingsDict.Values.Count;

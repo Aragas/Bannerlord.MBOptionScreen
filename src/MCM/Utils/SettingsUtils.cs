@@ -167,7 +167,7 @@ namespace MCM.Utils
         public static object GetSelector(object dropdown)
         {
             var selectorProperty = AccessTools.Property(dropdown.GetType(), "Selector");
-            return selectorProperty is not null && selectorProperty.GetValue(dropdown) is { } value
+            return selectorProperty?.GetValue(dropdown) is { } value
                 ? value
                 : MCMSelectorVM<MCMSelectorItemVM>.Empty;
         }

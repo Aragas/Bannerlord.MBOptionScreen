@@ -28,7 +28,7 @@ namespace MCM.Adapter.ModLib.Settings.Containers.v13
         private static readonly SaveSettingsDelegate? SaveSettingsFunc =
             AccessTools2.GetDelegate<SaveSettingsDelegate>(typeof(v13SettingsDatabase), "SaveSettings");
 
-        private Dictionary<string, ModLibDefinitionsGlobalSettingsWrapper> LoadedModLibSettings { get; } = new Dictionary<string, ModLibDefinitionsGlobalSettingsWrapper>();
+        private Dictionary<string, ModLibDefinitionsGlobalSettingsWrapper> LoadedModLibSettings { get; } = new();
 
         public List<SettingsDefinition> CreateModSettingsDefinitions
         {

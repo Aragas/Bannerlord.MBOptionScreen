@@ -14,7 +14,7 @@ namespace ModLib
     public static class FileDatabase
     {
         private const string LoadablesFolderName = "Loadables";
-        public static Dictionary<Type, Dictionary<string, ISerialisableFile>> Data { get; } = new Dictionary<Type, Dictionary<string, ISerialisableFile>>();
+        public static Dictionary<Type, Dictionary<string, ISerialisableFile>> Data { get; } = new();
 
         /// <summary>
         /// Returns the ISerialisableFile of type T with the given ID from the database. If it cannot be found, returns null.

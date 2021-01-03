@@ -13,8 +13,8 @@ namespace MCM.Implementation.FluentBuilder
 {
     internal sealed class DefaultSettingsBuilder : BaseSettingsBuilder
     {
-        private Dictionary<string, ISettingsPropertyGroupBuilder> PropertyGroups { get; } = new Dictionary<string, ISettingsPropertyGroupBuilder>();
-        private Dictionary<string, ISettingsPresetBuilder> Presets { get; } = new Dictionary<string, ISettingsPresetBuilder>();
+        private Dictionary<string, ISettingsPropertyGroupBuilder> PropertyGroups { get; } = new();
+        private Dictionary<string, ISettingsPresetBuilder> Presets { get; } = new();
 
         private string Id { get; }
         private string DisplayName { get; }
@@ -65,10 +65,10 @@ namespace MCM.Implementation.FluentBuilder
         }
 
         /// <inheritdoc/>
-        public override FluentGlobalSettings BuildAsGlobal() => new FluentGlobalSettings(
+        public override FluentGlobalSettings BuildAsGlobal() => new(
             Id, DisplayName, FolderName, SubFolder, Format, UIVersion, SubGroupDelimiter, OnPropertyChanged, GetSettingPropertyGroups(), Presets);
         /// <inheritdoc/>
-        public override FluentPerSaveSettings BuildAsPerSave() => new FluentPerSaveSettings(
+        public override FluentPerSaveSettings BuildAsPerSave() => new(
             Id, DisplayName, FolderName, SubFolder, UIVersion, SubGroupDelimiter, OnPropertyChanged, GetSettingPropertyGroups(), Presets);
 
         private IEnumerable<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() =>

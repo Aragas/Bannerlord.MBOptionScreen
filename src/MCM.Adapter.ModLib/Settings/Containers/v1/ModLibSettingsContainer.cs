@@ -25,7 +25,7 @@ namespace MCM.Adapter.ModLib.Settings.Containers.v1
         private static readonly GetAllSettingsDictDelegate? GetAllSettingsDict =
             AccessTools2.GetDelegate<GetAllSettingsDictDelegate>(AccessTools.Property(typeof(v1SettingsDatabase), "AllSettingsDict").GetMethod);
 
-        private Dictionary<string, ModLibGlobalSettingsWrapper> LoadedModLibSettings { get; } = new Dictionary<string, ModLibGlobalSettingsWrapper>();
+        private Dictionary<string, ModLibGlobalSettingsWrapper> LoadedModLibSettings { get; } = new();
 
         public List<SettingsDefinition> CreateModSettingsDefinitions
         {

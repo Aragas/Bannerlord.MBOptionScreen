@@ -29,10 +29,10 @@ namespace MCM.Abstractions.Dropdown
                 : _ => false;
         }
 
-        public static MCMSelectorVM<TSelectorItemVM> Empty => new MCMSelectorVM<TSelectorItemVM>(null);
+        public static MCMSelectorVM<TSelectorItemVM> Empty => new(null);
 
         protected Action<MCMSelectorVM<TSelectorItemVM>>? _onChange;
-        private MBBindingList<TSelectorItemVM> _itemList = new MBBindingList<TSelectorItemVM>();
+        private MBBindingList<TSelectorItemVM> _itemList = new();
         protected int _selectedIndex = -1;
         private TSelectorItemVM? _selectedItem;
         private bool _hasSingleItem;

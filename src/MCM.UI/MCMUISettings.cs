@@ -2,8 +2,6 @@
 using MCM.Abstractions.Attributes.v2;
 using MCM.Abstractions.Settings.Base.Global;
 
-using System.Collections.Generic;
-
 using TaleWorlds.Localization;
 
 namespace MCM.UI
@@ -13,7 +11,7 @@ namespace MCM.UI
         private bool _useStandardOptionScreen;
 
         public override string Id { get; } = "MCMUI_v4";
-        public override string DisplayName => new TextObject("{=MCMUISettings_Name}MCM UI {VERSION}", new Dictionary<string, TextObject>
+        public override string DisplayName => new TextObject("{=MCMUISettings_Name}MCM UI {VERSION}", new()
         {
             { "VERSION", new TextObject(typeof(MCMUISettings).Assembly.GetName().Version?.ToString(3) ?? "ERROR") }
         }).ToString();

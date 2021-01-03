@@ -20,7 +20,7 @@ namespace MCM.Abstractions.Settings.Base.PerSave
 
     public abstract class PerSaveSettings : BaseSettings
     {
-        protected static readonly ConcurrentDictionary<Type, string> Cache = new ConcurrentDictionary<Type, string>();
+        protected static readonly ConcurrentDictionary<Type, string> Cache = new();
 
         public sealed override string FormatType { get; } = "json2";
     }

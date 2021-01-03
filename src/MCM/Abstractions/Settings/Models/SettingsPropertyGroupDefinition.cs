@@ -27,8 +27,8 @@ namespace MCM.Abstractions.Settings.Models
 
         protected readonly TextObject _groupName;
         protected readonly TextObject _groupNameOverride;
-        protected readonly List<SettingsPropertyGroupDefinition> subGroups = new List<SettingsPropertyGroupDefinition>();
-        protected readonly List<ISettingsPropertyDefinition> settingProperties = new List<ISettingsPropertyDefinition>();
+        protected readonly List<SettingsPropertyGroupDefinition> subGroups = new();
+        protected readonly List<ISettingsPropertyDefinition> settingProperties = new();
 
         public string GroupName { get; }
         public TextObject DisplayGroupName => _groupNameOverride.Length > 0 ? _groupNameOverride : _groupName;

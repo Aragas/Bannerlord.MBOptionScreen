@@ -14,7 +14,7 @@ namespace MCM.Implementation.Settings.Containers.PerSave
 {
     internal class PerSaveCampaignBehavior : CampaignBehaviorBase
     {
-        private Dictionary<string, string>? _settings = new Dictionary<string, string>();
+        private Dictionary<string, string>? _settings = new();
 
         public Dictionary<string, string>? Settings => _settings;
 
