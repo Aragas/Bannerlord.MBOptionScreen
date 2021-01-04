@@ -19,7 +19,7 @@ using SettingsBase = v2::MBOptionScreen.Settings.SettingsBase;
 
 namespace MCM.Adapter.MBO.Settings.Providers
 {
-    internal class MBOv2SettingsProvider : IMBOptionScreenSettingsProvider
+    internal sealed class MBOv2SettingsProvider : IMBOptionScreenSettingsProvider
     {
         List<ModSettingsDefinition> ISettingsProvider.CreateModSettingsDefinitions { get; } = default!;
 
@@ -30,14 +30,14 @@ namespace MCM.Adapter.MBO.Settings.Providers
                 var settingsProvider = serviceProvider.GetRequiredService<BaseSettingsProvider>();
 
                 var baseSettings = settingsProvider.GetSettings(id);
-                if (baseSettings is MBOv2GlobalSettingsWrapper settingsWrapper && settingsWrapper.Object is SettingsBase settings)
+                if (baseSettings is MBOv2GlobalSettingsWrapper { Object: SettingsBase settings })
                     return settings;
             }
             else
             {
                 var container = new MBOv2GlobalSettingsContainer();
                 var baseSettings = container.GetSettings(id);
-                if (baseSettings is MBOv2GlobalSettingsWrapper settingsWrapper && settingsWrapper.Object is SettingsBase settings)
+                if (baseSettings is MBOv2GlobalSettingsWrapper { Object: SettingsBase settings })
                     return settings;
             }
 

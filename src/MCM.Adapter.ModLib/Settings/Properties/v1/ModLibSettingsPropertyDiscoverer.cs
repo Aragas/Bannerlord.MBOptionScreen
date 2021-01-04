@@ -68,7 +68,7 @@ namespace MCM.Adapter.ModLib.Settings.Properties.v1
                 {
                     propertyDefinitions.AddRange(propertyDefinitionWrappers);
 
-                    if (groupDefinition is ModLibPropertyGroupDefinitionWrapper groupWrapper && groupWrapper.IsMainToggle)
+                    if (groupDefinition is ModLibPropertyGroupDefinitionWrapper { IsMainToggle: true })
                         propertyDefinitions.Add(new AttributePropertyDefinitionGroupToggleWrapper(propertyDefinitions[0]));
                 }
 

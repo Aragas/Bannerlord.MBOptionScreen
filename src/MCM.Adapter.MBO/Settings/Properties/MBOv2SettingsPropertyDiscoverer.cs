@@ -22,7 +22,7 @@ using v4::MCM.Utils;
 
 namespace MCM.Adapter.MBO.Settings.Properties
 {
-    internal class MBOv2SettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
+    internal sealed class MBOv2SettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
     {
         public IEnumerable<string> DiscoveryTypes { get; } = new [] { "mbo_v2_attributes" };
 
@@ -76,7 +76,7 @@ namespace MCM.Adapter.MBO.Settings.Properties
                 {
                     propertyDefinitions.AddRange(propertyDefinitionWrappers);
 
-                    if (groupDefinition is MBOPropertyGroupDefinitionWrapper groupWrapper && groupWrapper.IsMainToggle)
+                    if (groupDefinition is MBOPropertyGroupDefinitionWrapper { IsMainToggle: true })
                         propertyDefinitions.Add(new AttributePropertyDefinitionGroupToggleWrapper(propertyDefinitions[0]));
                 }
 

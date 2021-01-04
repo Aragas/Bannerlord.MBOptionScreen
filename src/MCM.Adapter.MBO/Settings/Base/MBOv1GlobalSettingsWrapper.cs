@@ -15,7 +15,7 @@ using MCMv1BaseSettings = v1::MBOptionScreen.Settings.SettingsBase;
 
 namespace MCM.Adapter.MBO.Settings.Base
 {
-    public class MBOv1GlobalSettingsWrapper : BaseGlobalSettingsWrapper
+    internal sealed class MBOv1GlobalSettingsWrapper : BaseGlobalSettingsWrapper
     {
         private delegate string GetIdDelegate();
         private delegate string GetFolderNameDelegate();

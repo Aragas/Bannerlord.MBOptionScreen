@@ -1,10 +1,10 @@
 ﻿using ModLib.Debugging;
 using ModLib.Definitions;
 using ModLib.Definitions.Interfaces;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -151,10 +151,8 @@ namespace ModLib
         /// <param name="sf">The instance of the object whose file should be deleted.</param>
         /// <param name="location">The location of the file to be deleted.</param>
         /// <returns>Returns true if the file was deleted successfully.</returns>
-        public static bool DeleteFile(string moduleFolderName, ISerialisableFile sf, Location location = Location.Modules)
-        {
-            return DeleteFile(moduleFolderName, GetFileNameFor(sf), location);
-        }
+        public static bool DeleteFile(string moduleFolderName, ISerialisableFile sf, Location location = Location.Modules) =>
+            DeleteFile(moduleFolderName, GetFileNameFor(sf), location);
 
         private static void Add(ISerialisableFile loadable)
         {
@@ -211,7 +209,7 @@ namespace ModLib
                 }
                 catch (Exception ex)
                 {
-                    if (ex is ArgumentNullException argumentNullException && argumentNullException.ParamName == "type")
+                    if (ex is ArgumentNullException { ParamName: "type" } argumentNullException)
                         throw new Exception($"Cannot get a type from type name {nodeData} in file {filePath}", ex);
                     throw new Exception($"An error occurred whilst loading file {filePath}", ex);
                 }
@@ -332,18 +330,14 @@ namespace ModLib
         /// <param name="moduleFolderName">Name of the Module's Folder.</param>
         /// <param name="location">Which location to get the path to - configs or the mod's module folder.</param>
         /// <returns></returns>
-        public static string GetPathForModule(string moduleFolderName, Location location)
-        {
-            if (location == Location.Modules)
-                return Path.Combine(TaleWorlds.Library.BasePath.Name, "Modules", moduleFolderName);
-            else
-                return Path.Combine(TaleWorlds.Engine.Utilities.GetConfigsPath(), moduleFolderName);
-        }
+        public static string GetPathForModule(string moduleFolderName, Location location) => location == Location.Modules
+            ? Path.Combine(TaleWorlds.Library.BasePath.Name, "Modules", moduleFolderName)
+            : Path.Combine(TaleWorlds.Engine.Utilities.GetConfigsPath(), moduleFolderName);
 
         private class TypeData
         {
-            public string AssemblyName { get; private set; }
-            public string TypeName { get; private set; }
+            public string AssemblyName { get; }
+            public string TypeName { get; }
             public string FullName => $"{TypeName}, {AssemblyName}";
             private Type? _type = null;
             public Type? Type => _type ??= Array.Find(AppDomain.CurrentDomain.GetAssemblies(), z => z.FullName?.StartsWith(AssemblyName) == true)?.GetType(TypeName);

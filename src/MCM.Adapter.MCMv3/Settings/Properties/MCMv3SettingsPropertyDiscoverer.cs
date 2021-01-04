@@ -76,7 +76,7 @@ namespace MCM.Adapter.MCMv3.Settings.Properties
                 {
                     propertyDefinitions.AddRange(propertyDefinitionWrappers);
 
-                    if (groupDefinition is MCMv3PropertyGroupDefinitionWrapper groupWrapper && groupWrapper.IsMainToggle)
+                    if (groupDefinition is MCMv3PropertyGroupDefinitionWrapper { IsMainToggle: true })
                         propertyDefinitions.Add(new AttributePropertyDefinitionGroupToggleWrapper(propertyDefinitions[0]));
                 }
 

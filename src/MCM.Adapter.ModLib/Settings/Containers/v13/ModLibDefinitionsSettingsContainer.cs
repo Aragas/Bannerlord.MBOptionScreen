@@ -50,7 +50,7 @@ namespace MCM.Adapter.ModLib.Settings.Containers.v13
         }
         public bool SaveSettings(BaseSettings settings)
         {
-            if (settings is ModLibDefinitionsGlobalSettingsWrapper settingsWrapper && settingsWrapper.Object is v13SettingsBase modLibSettings)
+            if (settings is ModLibDefinitionsGlobalSettingsWrapper { Object: v13SettingsBase modLibSettings })
             {
                 SaveSettingsFunc?.Invoke(modLibSettings);
                 return true;

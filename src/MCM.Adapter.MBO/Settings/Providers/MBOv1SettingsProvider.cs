@@ -18,7 +18,7 @@ using SettingsBase = v1::MBOptionScreen.Settings.SettingsBase;
 
 namespace MCM.Adapter.MBO.Settings.Providers
 {
-    internal class MBOv1SettingsProvider : ISettingsProvider
+    internal sealed class MBOv1SettingsProvider : ISettingsProvider
     {
         List<ModSettingsDefinition> ISettingsProvider.CreateModSettingsDefinitions { get; } = default!;
 
@@ -29,14 +29,14 @@ namespace MCM.Adapter.MBO.Settings.Providers
                 var settingsProvider = serviceProvider.GetRequiredService<BaseSettingsProvider>();
 
                 var baseSettings = settingsProvider.GetSettings(id);
-                if (baseSettings is MBOv1GlobalSettingsWrapper settingsWrapper && settingsWrapper.Object is SettingsBase settings)
+                if (baseSettings is MBOv1GlobalSettingsWrapper { Object: SettingsBase settings })
                     return settings;
             }
             else
             {
                 var container = new MBOv1GlobalSettingsContainer();
                 var baseSettings = container.GetSettings(id);
-                if (baseSettings is MBOv1GlobalSettingsWrapper settingsWrapper && settingsWrapper.Object is SettingsBase settings)
+                if (baseSettings is MBOv1GlobalSettingsWrapper { Object: SettingsBase settings })
                     return settings;
             }
 

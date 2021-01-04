@@ -35,14 +35,14 @@ namespace MCM.Adapter.MCMv3.Settings.Providers
                 var settingsProvider = serviceProvider.GetRequiredService<BaseSettingsProvider>();
 
                 var baseSettings = settingsProvider.GetSettings(id);
-                if (baseSettings is MCMv3GlobalSettingsWrapper settingsWrapper && settingsWrapper.Object is MCMv3BaseSettings settings)
+                if (baseSettings is MCMv3GlobalSettingsWrapper { Object: MCMv3BaseSettings settings })
                     return settings;
             }
             else
             {
                 var container = new MCMv3GlobalSettingsContainer();
                 var baseSettings = container.GetSettings(id);
-                if (baseSettings is MCMv3GlobalSettingsWrapper settingsWrapper && settingsWrapper.Object is MCMv3BaseSettings settings)
+                if (baseSettings is MCMv3GlobalSettingsWrapper { Object: MCMv3BaseSettings settings })
                     return settings;
             }
 

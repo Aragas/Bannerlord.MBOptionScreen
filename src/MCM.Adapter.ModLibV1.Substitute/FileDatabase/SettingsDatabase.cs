@@ -1,4 +1,5 @@
 ﻿using ModLib.Interfaces;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,9 +36,9 @@ namespace ModLib
         /// <summary>
         /// Retrieves the Settings instance from the SettingsDatabase with the given ID.
         /// </summary>
-        /// <param name="uniqueID">The ID for the settings instance.</param>
+        /// <param name="uniqueId">The ID for the settings instance.</param>
         /// <returns>Returns the settings instance with the given ID. Returns null if nothing can be found.</returns>
-        public static ISerialisableFile? GetSettings(string uniqueID) => AllSettingsDict.ContainsKey(uniqueID) ? AllSettingsDict[uniqueID] : null;
+        public static ISerialisableFile? GetSettings(string uniqueId) => AllSettingsDict.ContainsKey(uniqueId) ? AllSettingsDict[uniqueId] : null;
 
         /// <summary>
         /// Saves the settings instance to file.
