@@ -12,5 +12,8 @@ namespace MCM.Tests
 
         public delegate bool MockedGetLoadedModulesDelegate(ref List<ModuleInfo> list);
         public static MethodInfo GetMethodInfo(MockedGetLoadedModulesDelegate @delegate) => @delegate.Method;
+
+        public delegate bool MockedGetModulesNamesDelegate(ref string[] __result);
+        public static MethodInfo GetMethodInfo(MockedGetModulesNamesDelegate @delegate) => @delegate.Method;
     }
 }

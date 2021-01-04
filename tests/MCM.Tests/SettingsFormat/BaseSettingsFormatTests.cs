@@ -5,7 +5,7 @@ using NUnit.Framework;
 
 namespace MCM.Tests.SettingsFormat
 {
-    public class BaseSettingsFormatTests
+    public class BaseSettingsFormatTests : BaseTests
     {
         protected bool _boolValue;
         protected int _intValue;
