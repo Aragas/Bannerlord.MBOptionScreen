@@ -22,9 +22,9 @@ namespace MCM.Utils
             : type.GetInterfaces().Except(type.BaseType.GetInterfaces());
 
         private static ApplicationVersion Version { get; } = ApplicationVersionUtils.GameVersion();
-        private static Dictionary<string, Type> LatestImplementations { get; } = new Dictionary<string, Type>();
-        private static Dictionary<string, HashSet<string>> DependencyBases { get; } = new Dictionary<string, HashSet<string>>();
-        private static Dictionary<string, Type> DependencyBaseLatestImplementations { get; } = new Dictionary<string, Type>();
+        private static Dictionary<string, Type> LatestImplementations { get; } = new();
+        private static Dictionary<string, HashSet<string>> DependencyBases { get; } = new();
+        private static Dictionary<string, Type> DependencyBaseLatestImplementations { get; } = new();
 
         public static void Update()
         {

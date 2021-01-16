@@ -8,7 +8,7 @@ namespace MCM.Abstractions.Synchronization
     public abstract class BaseSynchronizationProvider : IDependency, IDisposable
     {
         private static readonly ConcurrentDictionary<string, BaseSynchronizationProvider> _instances =
-            new ConcurrentDictionary<string, BaseSynchronizationProvider>();
+            new();
         public static BaseSynchronizationProvider Create(string name) =>
             _instances.GetOrAdd(name, n => DI.GetImplementation<BaseSynchronizationProvider, SynchronizationProviderWrapper>(n)!);
 

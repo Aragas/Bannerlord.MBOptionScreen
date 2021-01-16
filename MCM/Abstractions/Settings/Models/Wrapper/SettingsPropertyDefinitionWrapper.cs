@@ -1,4 +1,6 @@
-﻿using HarmonyLib;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using HarmonyLib;
 
 using MCM.Abstractions.Ref;
 
@@ -75,30 +77,30 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
 
             SettingsId = SettingsIdProperty?.GetValue(@object) as string ?? "ERROR";
             SettingType = SettingTypeProperty?.GetValue(@object) is { } settingTypeObject
-                ? Enum.TryParse<SettingType>(settingTypeObject.ToString(), out var resultEnum) 
+                ? Enum.TryParse<SettingType>(settingTypeObject.ToString(), out var resultEnum)
                     ? resultEnum
                     : SettingType.NONE
                 : SettingType.NONE;
-            PropertyReference = PropertyProperty?.GetValue(@object) is { } value 
+            PropertyReference = PropertyProperty?.GetValue(@object) is { } value
                 ? value is IRef @ref ? @ref : new RefWrapper(value)
                 : new ProxyRef<object?>(() => null, o => { });
 
             DisplayName = DisplayNameProperty?.GetValue(@object) switch
             {
-                string str => new TextObject(str).ToString(),
+                string str => TextObjectHelper.Create(str).ToString(),
                 TextObject to => to.ToString(),
                 _ => DisplayName
             };
             HintText = HintTextProperty?.GetValue(@object) switch
             {
-                string str => new TextObject(str).ToString(),
+                string str => TextObjectHelper.Create(str).ToString(),
                 TextObject to => to.ToString(),
                 _ => HintText
             };
             Order = OrderProperty?.GetValue(@object) as int? ?? -1;
             RequireRestart = RequireRestartProperty?.GetValue(@object) as bool? ?? true;
 
-            GroupName = new TextObject(GroupNameProperty?.GetValue(@object) as string ?? "").ToString();
+            GroupName = TextObjectHelper.Create(GroupNameProperty?.GetValue(@object) as string ?? "").ToString();
             GroupOrder = GroupOrderProperty?.GetValue(@object) as int? ?? -1;
             IsMainToggle = IsMainToggleProperty?.GetValue(@object) as bool? ?? false;
 

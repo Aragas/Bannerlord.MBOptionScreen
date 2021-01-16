@@ -1,8 +1,8 @@
-﻿using MCM.Abstractions.Settings.Definitions;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using MCM.Abstractions.Settings.Definitions;
 
 using System;
-
-using TaleWorlds.Localization;
 
 namespace MCM.Abstractions.Attributes
 {
@@ -25,11 +25,11 @@ namespace MCM.Abstractions.Attributes
         /// <summary>
         /// The hint text that is displayed at the bottom of the screen when the user hovers over the setting in the settings menu.
         /// </summary>
-        public string HintText { get => _hintText; set => _hintText = new TextObject(value).ToString(); }
+        public string HintText { get => _hintText; set => _hintText = TextObjectHelper.Create(value).ToString(); }
 
         protected BaseSettingPropertyAttribute(string displayName, int order = -1, bool requireRestart = true, string hintText = "")
         {
-            DisplayName = new TextObject(displayName).ToString();
+            DisplayName = TextObjectHelper.Create(displayName).ToString();
             Order = order;
             RequireRestart = requireRestart;
             HintText = hintText;

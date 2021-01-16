@@ -1,6 +1,6 @@
-﻿using MCM.Abstractions.Settings.Definitions;
+﻿using Bannerlord.BUTR.Shared.Helpers;
 
-using TaleWorlds.Localization;
+using MCM.Abstractions.Settings.Definitions;
 
 namespace MCM.Abstractions.Attributes.v1
 {
@@ -30,8 +30,8 @@ namespace MCM.Abstractions.Attributes.v1
             Object = @object;
             var type = @object.GetType();
 
-            DisplayName = new TextObject(type.GetProperty("Name")?.GetValue(@object) as string ?? "ERROR").ToString();
-            HintText = new TextObject(type.GetProperty(nameof(HintText))?.GetValue(@object) as string ?? "ERROR").ToString();
+            DisplayName = TextObjectHelper.Create(type.GetProperty("Name")?.GetValue(@object) as string ?? "ERROR").ToString();
+            HintText = TextObjectHelper.Create(type.GetProperty(nameof(HintText))?.GetValue(@object) as string ?? "ERROR").ToString();
             Order = type.GetProperty(nameof(Order))?.GetValue(@object) as int? ?? 0;
             RequireRestart = type.GetProperty(nameof(RequireRestart))?.GetValue(@object) as bool? ?? true;
 

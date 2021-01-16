@@ -12,7 +12,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
 {
     public class DefaultSettingsBuilder : ISettingsBuilder
     {
-        private Dictionary<string, ISettingsPropertyGroupBuilder> PropertyGroups { get; } = new Dictionary<string, ISettingsPropertyGroupBuilder>();
+        private Dictionary<string, ISettingsPropertyGroupBuilder> PropertyGroups { get; } = new();
         
         private string Id { get; }
         private string DisplayName { get; }
@@ -46,9 +46,9 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
             return this;
         }
 
-        public FluentGlobalSettings BuildAsGlobal() => new FluentGlobalSettings(
+        public FluentGlobalSettings BuildAsGlobal() => new(
             Id, DisplayName, FolderName, SubFolder, Format, UIVersion, SubGroupDelimiter, OnPropertyChanged, GetSettingPropertyGroups());
-        public FluentPerCharacterSettings BuildAsPerCharacter() => new FluentPerCharacterSettings(
+        public FluentPerCharacterSettings BuildAsPerCharacter() => new(
             Id, DisplayName, FolderName, SubFolder, Format, UIVersion, SubGroupDelimiter, OnPropertyChanged, GetSettingPropertyGroups());
 
         private IEnumerable<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() =>

@@ -1,4 +1,6 @@
-﻿using HarmonyLib;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using HarmonyLib;
 
 using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.Properties;
@@ -11,8 +13,6 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-
-using TaleWorlds.Localization;
 
 namespace MCM.Abstractions.Settings.Base
 {
@@ -48,7 +48,7 @@ namespace MCM.Abstractions.Settings.Base
         }
         public virtual IDictionary<string, Func<BaseSettings>> GetAvailablePresets() => new Dictionary<string, Func<BaseSettings>>()
         {
-            {new TextObject("{=BaseSettings_Default}Default").ToString(), CreateNew}
+            {TextObjectHelper.Create("{=BaseSettings_Default}Default").ToString(), CreateNew}
         };
 
         public virtual List<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() => GetUnsortedSettingPropertyGroups()

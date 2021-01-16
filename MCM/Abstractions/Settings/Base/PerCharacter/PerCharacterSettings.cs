@@ -22,7 +22,7 @@ namespace MCM.Abstractions.Settings.Base.PerCharacter
 
     public abstract class PerCharacterSettings : BaseSettings
     {
-        protected static readonly ConcurrentDictionary<Type, string> Cache = new ConcurrentDictionary<Type, string>();
+        protected static readonly ConcurrentDictionary<Type, string> Cache = new();
 
         public string CharacterId { get; } = $"{Game.Current?.PlayerTroop?.Id.ToString() ?? "ERROR"}_{Game.Current?.PlayerTroop?.Name.ToString() ?? "ERROR"}";
     }

@@ -13,7 +13,7 @@ namespace MCM.Abstractions.FluentBuilder.Implementation
         ISettingsPropertyGroupBuilder,
         IPropertyGroupDefinition
     {
-        public Dictionary<string, ISettingsPropertyBuilder> Properties { get; } = new Dictionary<string, ISettingsPropertyBuilder>();
+        public Dictionary<string, ISettingsPropertyBuilder> Properties { get; } = new();
 
         public string GroupName { get; }
         public bool IsMainToggle { get; private set; }

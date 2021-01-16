@@ -1,15 +1,16 @@
-﻿using System;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 using TaleWorlds.Core.ViewModelCollection;
-using TaleWorlds.Localization;
 
 namespace MCM.Abstractions.Data
 {
     public class DefaultDropdown<T> : List<T>, IDropdownProvider, IEqualityComparer<DefaultDropdown<T>>
     {
-        public static DefaultDropdown<T> Empty => new DefaultDropdown<T>(Array.Empty<T>(), 0);
+        public static DefaultDropdown<T> Empty => new(Array.Empty<T>(), 0);
 
         private SelectorVM<SelectorItemVM> _selector;
         private int _selectedIndex;
@@ -57,7 +58,7 @@ namespace MCM.Abstractions.Data
 
         public DefaultDropdown(IEnumerable<T> values, int selectedIndex) : base(values)
         {
-            _selector = new SelectorVM<SelectorItemVM>(this.Select(x =>new TextObject(x?.ToString() ?? "ERROR").ToString()),
+            _selector = new SelectorVM<SelectorItemVM>(this.Select(x =>TextObjectHelper.Create(x?.ToString() ?? "ERROR").ToString()),
                 selectedIndex,
                 OnSelectionChanged);
 
