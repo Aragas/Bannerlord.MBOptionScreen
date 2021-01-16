@@ -1,4 +1,6 @@
-﻿using MCM.Abstractions.Settings;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using MCM.Abstractions.Settings;
 using MCM.UI.Actions;
 
 using System.Collections.Generic;
@@ -88,9 +90,9 @@ namespace MCM.UI.GUI.ViewModels
         {
             SettingProperty = settingProperty;
 
-            TitleText = new TextObject("{=EditValueVM_TitleText}Edit \"{PROPERTYNAME}\"", new Dictionary<string, TextObject>
+            TitleText = TextObjectHelper.Create("{=EditValueVM_TitleText}Edit \"{PROPERTYNAME}\"", new Dictionary<string, TextObject>
             {
-                { "PROPERTYNAME", new TextObject(SettingProperty.Name) }
+                { "PROPERTYNAME", TextObjectHelper.Create(SettingProperty.Name) }
             }).ToString();
             switch (SettingType)
             {
@@ -98,25 +100,25 @@ namespace MCM.UI.GUI.ViewModels
                 case SettingType.Float:
                 {
                     var format = SettingProperty.IsIntVisible ? "0" : "0.00";
-                    DescriptionText = new TextObject("{=EditValueVM_DescriptionText_Numeric}Edit the value for \"{PROPERTYNAME}\".\nThe minimum value is {MINVALUE} and the maximum value is {MAXVALUE}.", new Dictionary<string, TextObject>
+                    DescriptionText = TextObjectHelper.Create("{=EditValueVM_DescriptionText_Numeric}Edit the value for \"{PROPERTYNAME}\".\nThe minimum value is {MINVALUE} and the maximum value is {MAXVALUE}.", new Dictionary<string, TextObject>
                     {
-                        { "PROPERTYNAME", new TextObject(SettingProperty.Name) },
-                        { "MINVALUE", new TextObject(SettingProperty.SettingPropertyDefinition.EditableMinValue.ToString(format)) },
-                        { "MAXVALUE", new TextObject(SettingProperty.SettingPropertyDefinition.EditableMaxValue.ToString(format)) },
+                        { "PROPERTYNAME", TextObjectHelper.Create(SettingProperty.Name) },
+                        { "MINVALUE", TextObjectHelper.Create(SettingProperty.SettingPropertyDefinition.EditableMinValue.ToString(format)) },
+                        { "MAXVALUE", TextObjectHelper.Create(SettingProperty.SettingPropertyDefinition.EditableMaxValue.ToString(format)) },
                     }).ToString();
                     break;
                 }
                 case SettingType.String:
                 {
-                    DescriptionText = new TextObject("{=EditValueVM_DescriptionText_Text}Edit the value for \"{PROPERTYNAME}\".", new Dictionary<string, TextObject>
+                    DescriptionText = TextObjectHelper.Create("{=EditValueVM_DescriptionText_Text}Edit the value for \"{PROPERTYNAME}\".", new Dictionary<string, TextObject>
                     {
-                        { "PROPERTYNAME", new TextObject(SettingProperty.Name) },
+                        { "PROPERTYNAME", TextObjectHelper.Create(SettingProperty.Name) },
                     }).ToString();
                     break;
                 }
             }
-            DoneButtonText = new TextObject("{=WiNRdfsm}Done").ToString();
-            CancelButtonText = new TextObject("{=3CpNUnVl}Cancel").ToString();
+            DoneButtonText = TextObjectHelper.Create("{=WiNRdfsm}Done").ToString();
+            CancelButtonText = TextObjectHelper.Create("{=3CpNUnVl}Cancel").ToString();
 
             RefreshValues();
         }

@@ -2,6 +2,7 @@
 using Bannerlord.ButterLib.Common.Helpers;
 using Bannerlord.ButterLib.DelayedSubModule;
 using Bannerlord.UIExtenderEx;
+using Bannerlord.BUTR.Shared.Helpers;
 
 using HarmonyLib;
 
@@ -19,7 +20,6 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 using TaleWorlds.Engine.Screens;
-using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
 
 namespace MCM.UI
@@ -122,12 +122,12 @@ namespace MCM.UI
                     "MCM_OptionScreen",
                     9990,
                     () => MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IMCMOptionsScreen>() as ScreenBase,
-                    new TextObject("{=MainMenu_ModOptions}Mod Options"));
+                    TextObjectHelper.Create("{=MainMenu_ModOptions}Mod Options"));
                 BaseIngameMenuScreenHandler.Instance?.AddScreen(
                     "MCM_OptionScreen",
                     1,
                     () => MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IMCMOptionsScreen>() as ScreenBase,
-                    new TextObject("{=EscapeMenu_ModOptions}Mod Options"));
+                    TextObjectHelper.Create("{=EscapeMenu_ModOptions}Mod Options"));
             }
         }
     }

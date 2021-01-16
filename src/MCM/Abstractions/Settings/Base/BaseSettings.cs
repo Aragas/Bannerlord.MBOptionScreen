@@ -1,4 +1,6 @@
-﻿using HarmonyLib;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using HarmonyLib;
 
 using MCM.Utils;
 
@@ -7,8 +9,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-
-using TaleWorlds.Localization;
 
 namespace MCM.Abstractions.Settings.Base
 {
@@ -55,7 +55,7 @@ namespace MCM.Abstractions.Settings.Base
         public virtual IDictionary<string, Func<BaseSettings>> GetAvailablePresets() => new Dictionary<string, Func<BaseSettings>>()
         {
             // TODO: computable name
-            { new TextObject("{=BaseSettings_Default}Default").ToString(), CreateNew }
+            { TextObjectHelper.Create("{=BaseSettings_Default}Default").ToString(), CreateNew }
         };
     }
 }

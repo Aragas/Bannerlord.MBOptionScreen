@@ -1,8 +1,8 @@
 ﻿extern alias v1;
 
-using MCM.Abstractions.Settings.Definitions;
+using Bannerlord.BUTR.Shared.Helpers;
 
-using TaleWorlds.Localization;
+using MCM.Abstractions.Settings.Definitions;
 
 using v1SettingPropertyAttribute = v1::ModLib.Attributes.SettingPropertyAttribute;
 
@@ -26,8 +26,8 @@ namespace MCM.Implementation.ModLib.Attributes.v1
         {
             var type = @object.GetType();
 
-            DisplayName = new TextObject(type.GetProperty(nameof(v1SettingPropertyAttribute.DisplayName))?.GetValue(@object) as string ?? "ERROR").ToString();
-            HintText = new TextObject(type.GetProperty(nameof(v1SettingPropertyAttribute.HintText))?.GetValue(@object) as string ?? "ERROR").ToString();
+            DisplayName = TextObjectHelper.Create(type.GetProperty(nameof(v1SettingPropertyAttribute.DisplayName))?.GetValue(@object) as string ?? "ERROR").ToString();
+            HintText = TextObjectHelper.Create(type.GetProperty(nameof(v1SettingPropertyAttribute.HintText))?.GetValue(@object) as string ?? "ERROR").ToString();
             Order = -1;
             RequireRestart = true;
 

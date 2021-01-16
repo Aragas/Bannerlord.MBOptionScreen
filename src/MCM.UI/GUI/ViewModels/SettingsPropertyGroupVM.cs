@@ -1,4 +1,6 @@
-﻿using MCM.Abstractions.Settings.Models;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using MCM.Abstractions.Settings.Models;
 
 using System;
 using System.Collections.Generic;
@@ -45,9 +47,9 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public string GroupNameDisplay => GroupToggle
             ? GroupName
-            : new TextObject("{=SettingsPropertyGroupVM_Disabled}{GROUPNAME} (Disabled)", new Dictionary<string, TextObject>
+            : TextObjectHelper.Create("{=SettingsPropertyGroupVM_Disabled}{GROUPNAME} (Disabled)", new Dictionary<string, TextObject>
             {
-                { "GROUPNAME", new TextObject(GroupName) }
+                { "GROUPNAME", TextObjectHelper.Create(GroupName) }
             }).ToString();
         [DataSourceProperty]
         public MBBindingList<SettingsPropertyVM> SettingProperties { get; } = new MBBindingList<SettingsPropertyVM>();

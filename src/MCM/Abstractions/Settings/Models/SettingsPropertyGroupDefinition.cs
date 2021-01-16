@@ -1,4 +1,6 @@
-﻿using MCM.Abstractions.Settings.Definitions;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using MCM.Abstractions.Settings.Definitions;
 using MCM.Extensions;
 
 using System.Collections.Generic;
@@ -18,7 +20,7 @@ namespace MCM.Abstractions.Settings.Models
         /// <summary>
         /// The default group used for settings that don't have a group explicitly set.
         /// </summary>
-        public static readonly string DefaultGroupName = new TextObject("{=SettingsPropertyGroupDefinition_Misc}Misc").ToString();
+        public static readonly string DefaultGroupName = TextObjectHelper.Create("{=SettingsPropertyGroupDefinition_Misc}Misc").ToString();
 
         /// <summary>
         /// The default group used for settings that don't have a group explicitly set.
@@ -38,8 +40,8 @@ namespace MCM.Abstractions.Settings.Models
 
         public SettingsPropertyGroupDefinition(string groupName, string groupNameOverride = "", int order = -1)
         {
-            _groupName = new TextObject(groupName);
-            _groupNameOverride = new TextObject(groupNameOverride ?? string.Empty);
+            _groupName = TextObjectHelper.Create(groupName);
+            _groupNameOverride = TextObjectHelper.Create(groupNameOverride ?? string.Empty);
             GroupName = DisplayGroupName.ToString();
             Order = order;
         }

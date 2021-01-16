@@ -1,4 +1,6 @@
-﻿using MCM.Abstractions.Attributes;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
 using MCM.Abstractions.Settings.Base.Global;
 
@@ -13,9 +15,9 @@ namespace MCM.UI
         private bool _useStandardOptionScreen = false;
 
         public override string Id { get; } = "MCMUI_v4";
-        public override string DisplayName => new TextObject("{=MCMUISettings_Name}MCM UI Impl. {VERSION}", new Dictionary<string, TextObject>
+        public override string DisplayName => TextObjectHelper.Create("{=MCMUISettings_Name}MCM UI Impl. {VERSION}", new Dictionary<string, TextObject>
         {
-            { "VERSION", new TextObject(typeof(MCMUISettings).Assembly.GetName().Version.ToString(3)) }
+            { "VERSION", TextObjectHelper.Create(typeof(MCMUISettings).Assembly.GetName().Version.ToString(3)) }
         }).ToString();
         public override string FolderName { get; } = "MCM";
         public override string FormatType { get; } = "json";

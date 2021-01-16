@@ -1,4 +1,5 @@
-﻿using Bannerlord.ButterLib;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+using Bannerlord.ButterLib;
 
 using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
@@ -16,9 +17,9 @@ namespace MCM.Implementation
     internal sealed class ButterLibSettings : BaseSettings
     {
         public override string Id { get; } = "Options";
-        public override string DisplayName => new TextObject("{=ButterLibSettings_Name}ButterLib {VERSION}", new Dictionary<string, TextObject>
+        public override string DisplayName => TextObjectHelper.Create("{=ButterLibSettings_Name}ButterLib {VERSION}", new Dictionary<string, TextObject>
         {
-            { "VERSION", new TextObject(typeof(ButterLibSubModule).Assembly.GetName().Version.ToString(3)) }
+            { "VERSION", TextObjectHelper.Create(typeof(ButterLibSubModule).Assembly.GetName().Version.ToString(3)) }
         }).ToString();
         public override string FolderName { get; } = "ButterLib";
         public override string FormatType { get; } = "json2";
