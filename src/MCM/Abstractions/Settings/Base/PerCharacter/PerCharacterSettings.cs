@@ -1,11 +1,21 @@
-﻿using System;
+﻿using MCM.Abstractions.Settings.Providers;
+
+using System;
 using System.Collections.Concurrent;
 
 namespace MCM.Abstractions.Settings.Base.PerCharacter
 {
     public abstract class PerCharacterSettings<T> : PerCharacterSettings where T : PerCharacterSettings, new()
     {
-        public static T? Instance => throw new NotImplementedException();
+        public static T? Instance
+        {
+            get
+            {
+                if (!Cache.ContainsKey(typeof(T)))
+                    Cache.TryAdd(typeof(T), new T().Id);
+                return BaseSettingsProvider.Instance.GetSettingsObject(Cache[typeof(T)]) as T;
+            }
+        }
     }
 
     public abstract class PerCharacterSettings : BaseSettings

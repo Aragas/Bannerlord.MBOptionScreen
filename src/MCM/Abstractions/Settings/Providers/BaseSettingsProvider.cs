@@ -9,7 +9,8 @@ namespace MCM.Abstractions.Settings.Providers
 {
     public abstract class BaseSettingsProvider : IDependency
     {
-        public static BaseSettingsProvider Instance => null!;
+        private static BaseSettingsProvider? _instance;
+        public static BaseSettingsProvider Instance => _instance;
 
         public abstract IEnumerable<SettingsDefinition> CreateModSettingsDefinitions { get; }
         public abstract BaseSettings? GetSettings(string id);
