@@ -7,24 +7,23 @@
   <DefaultModule value="false" />
   <SingleplayerModule value="true" />
   <MultiplayerModule value="false" />
+  <Url value="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" />
   <DependedModules>
-    <DependedModule Id="Bannerlord.Harmony" />
-    <DependedModule Id="Bannerlord.ButterLib" />
-    <DependedModule Id="Bannerlord.UIExtenderEx" />
+    <DependedModule Id="Bannerlord.Harmony" DependentVersion="v$harmonyversion$" />
+    <DependedModule Id="Bannerlord.ButterLib" DependentVersion="v$butterlibversion$" />
+    <DependedModule Id="Bannerlord.UIExtenderEx" DependentVersion="v$uiextenderexversion$" />
   </DependedModules>
   <!-- Prototype -->
   <DependedModuleMetadatas>
     <DependedModuleMetadata id="Bannerlord.Harmony" order="LoadBeforeThis" version="v$harmonyversion$" />
     <DependedModuleMetadata id="Bannerlord.ButterLib" order="LoadBeforeThis" version="v$butterlibversion$" />
-    <DependedModuleMetadata id="Bannerlord.UIExtenderEx" order="LoadBeforeThis" version="v$uiextenderversion$" />
+    <DependedModuleMetadata id="Bannerlord.UIExtenderEx" order="LoadBeforeThis" version="v$uiextenderexversion$" />
 
     <DependedModuleMetadata id="Native" order="LoadAfterThis" version="e$gameversion$.*" />
     <DependedModuleMetadata id="SandBoxCore" order="LoadAfterThis" version="e$gameversion$.*" />
     <DependedModuleMetadata id="Sandbox" order="LoadAfterThis" version="e$gameversion$.*" />
     <DependedModuleMetadata id="StoryMode" order="LoadAfterThis" version="e$gameversion$.*" optional="true" />
     <DependedModuleMetadata id="CustomBattle" order="LoadAfterThis" version="e$gameversion$.*" optional="true" />
-
-    <DependedModuleMetadata id="Bannerlord.MBOptionScreen.MBO" incompatible="true" />
   </DependedModuleMetadatas>
   <!-- Prototype -->
   <SubModules>
