@@ -1,4 +1,4 @@
-﻿using TaleWorlds.Localization;
+﻿using Bannerlord.BUTR.Shared.Helpers;
 
 namespace MCM.Abstractions.Settings.Definitions.Wrapper
 {
@@ -17,10 +17,10 @@ namespace MCM.Abstractions.Settings.Definitions.Wrapper
         {
             var type = @object.GetType();
 
-            DisplayName = new TextObject(type.GetProperty(nameof(DisplayName))?.GetValue(@object) as string ?? "ERROR").ToString();
+            DisplayName = TextObjectHelper.Create(type.GetProperty(nameof(DisplayName))?.GetValue(@object) as string ?? "ERROR").ToString();
             Order = type.GetProperty(nameof(Order))?.GetValue(@object) as int? ?? -1;
             RequireRestart = type.GetProperty(nameof(RequireRestart))?.GetValue(@object) as bool? ?? true;
-            HintText = new TextObject(type.GetProperty(nameof(HintText))?.GetValue(@object) as string ?? "ERROR").ToString();
+            HintText = TextObjectHelper.Create(type.GetProperty(nameof(HintText))?.GetValue(@object) as string ?? "ERROR").ToString();
         }
     }
 }

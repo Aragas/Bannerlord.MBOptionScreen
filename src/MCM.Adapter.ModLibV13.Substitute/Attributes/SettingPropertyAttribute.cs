@@ -3,14 +3,14 @@
 namespace ModLib.Definitions.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
-    public class SettingPropertyAttribute : Attribute
+    public sealed class SettingPropertyAttribute : Attribute
     {
-        public string DisplayName { get; private set; } = string.Empty;
-        public float MinValue { get; private set; } = 0f;
-        public float MaxValue { get; private set; } = 0f;
-        public float EditableMinValue { get; private set; } = 0f;
-        public float EditableMaxValue { get; private set; } = 0f;
-        public string HintText { get; private set; } = string.Empty;
+        public string DisplayName { get; } = string.Empty;
+        public float MinValue { get; } = 0f;
+        public float MaxValue { get; } = 0f;
+        public float EditableMinValue { get; } = 0f;
+        public float EditableMaxValue { get; } = 0f;
+        public string HintText { get; } = string.Empty;
 
         public SettingPropertyAttribute(string displayName, float minValue, float maxValue, float editableMinValue, float editableMaxValue, string hintText = "")
         {

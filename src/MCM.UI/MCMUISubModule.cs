@@ -1,4 +1,5 @@
-﻿using Bannerlord.ButterLib.Common.Extensions;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+using Bannerlord.ButterLib.Common.Extensions;
 using Bannerlord.ButterLib.Common.Helpers;
 using Bannerlord.ButterLib.DelayedSubModule;
 using Bannerlord.UIExtenderEx;
@@ -12,14 +13,16 @@ using MCM.UI.GUI.GauntletUI;
 using MCM.UI.Patches;
 
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 
 using SandBox;
 
+using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 using TaleWorlds.Engine.Screens;
-using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
 
 namespace MCM.UI
@@ -28,8 +31,10 @@ namespace MCM.UI
     [SuppressMessage("ReSharper", "UnusedType.Global")]
     public sealed class MCMUISubModule : MBSubModuleBase
     {
+        internal static ILogger<MCMUISubModule> Logger = NullLogger<MCMUISubModule>.Instance;
         private static readonly UIExtender Extender = new("MCM.UI");
 
+        private bool DelayedServiceCreation { get; set; }
         private bool ServiceRegistrationWasCalled { get; set; }
         private bool OnBeforeInitialModuleScreenSetAsRootWasCalled { get; set; }
 
@@ -57,8 +62,21 @@ namespace MCM.UI
         {
             base.OnSubModuleLoad();
 
+            IServiceProvider serviceProvider;
+
             if (!ServiceRegistrationWasCalled)
+            {
                 OnServiceRegistration();
+                DelayedServiceCreation = true;
+                serviceProvider = this.GetTempServiceProvider()!;
+            }
+            else
+            {
+                serviceProvider = this.GetServiceProvider()!;
+            }
+
+            Logger = serviceProvider.GetRequiredService<ILogger<MCMUISubModule>>();
+            Logger.LogTrace("OnSubModuleLoad: Logging started...");
 
             var editabletextpatchHarmony = new Harmony("bannerlord.mcm.ui.editabletextpatch");
             EditableTextPatch.Patch(editabletextpatchHarmony);
@@ -69,7 +87,7 @@ namespace MCM.UI
 
             DelayedSubModuleManager.Register<SandBoxSubModule>();
             DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
-                nameof(OnSubModuleLoad), SubscriptionType.AfterMethod, (s, e) =>
+                nameof(OnSubModuleLoad), SubscriptionType.AfterMethod, (_, _) =>
                 {
                     Extender.Register(typeof(MCMUISubModule).Assembly);
                 });
@@ -83,9 +101,14 @@ namespace MCM.UI
             {
                 OnBeforeInitialModuleScreenSetAsRootWasCalled = true;
 
+                if (DelayedServiceCreation)
+                {
+                    Logger = this.GetServiceProvider().GetRequiredService<ILogger<MCMUISubModule>>();
+                }
+
                 DelayedSubModuleManager.Register<SandBoxSubModule>();
                 DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
-                    nameof(OnBeforeInitialModuleScreenSetAsRoot), SubscriptionType.AfterMethod, (s, e) =>
+                    nameof(OnBeforeInitialModuleScreenSetAsRoot), SubscriptionType.AfterMethod, (_, _) =>
                     {
                         var resourceInjector = this.GetServiceProvider().GetRequiredService<ResourceInjector>();
                         resourceInjector.Inject();
@@ -102,7 +125,7 @@ namespace MCM.UI
 
             DelayedSubModuleManager.Register<SandBoxSubModule>();
             DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
-                nameof(OnSubModuleUnloaded), SubscriptionType.AfterMethod, (s, e) =>
+                nameof(OnSubModuleUnloaded), SubscriptionType.AfterMethod, (_, _) =>
                 {
                     var instance = MCMUISettings.Instance;
                     if (instance is not null)
@@ -135,12 +158,12 @@ namespace MCM.UI
                     "MCM_OptionScreen",
                     9990,
                     () => MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IMCMOptionsScreen>() as ScreenBase,
-                    new TextObject("{=MainMenu_ModOptions}Mod Options"));
+                    TextObjectHelper.Create("{=MainMenu_ModOptions}Mod Options"));
                 BaseIngameMenuScreenHandler.Instance?.AddScreen(
                     "MCM_OptionScreen",
                     1,
                     () => MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IMCMOptionsScreen>() as ScreenBase,
-                    new TextObject("{=EscapeMenu_ModOptions}Mod Options"));
+                    TextObjectHelper.Create("{=EscapeMenu_ModOptions}Mod Options"));
             }
         }
     }

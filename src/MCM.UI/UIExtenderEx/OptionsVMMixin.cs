@@ -31,24 +31,20 @@ namespace MCM.UI.UIExtenderEx
         {
             var harmony = new Harmony("bannerlord.mcm.ui.optionsvm");
 
-            harmony.Patch(
-                AccessTools.Property(typeof(OptionsVM), nameof(OptionsVM.VideoOptions)).GetMethod,
-                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
-            harmony.Patch(
-                AccessTools.Property(typeof(OptionsVM), nameof(OptionsVM.AudioOptions)).GetMethod,
-                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
-            harmony.Patch(
-                AccessTools.Property(typeof(OptionsVM), nameof(OptionsVM.GameKeyOptionGroups)).GetMethod,
-                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
-            harmony.Patch(
-                AccessTools.Property(typeof(OptionsVM), nameof(OptionsVM.GamepadOptions)).GetMethod,
-                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
-            harmony.Patch(
-                AccessTools.Property(typeof(OptionsVM), nameof(OptionsVM.GameplayOptions)).GetMethod,
-                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
-            harmony.Patch(
-                AccessTools.Property(typeof(OptionsVM), nameof(OptionsVM.GraphicsOptions)).GetMethod,
-                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
+            if (AccessTools.Property(typeof(OptionsVM), "VideoOptions")?.GetMethod is { } m1)
+                harmony.Patch(m1, postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
+            if (AccessTools.Property(typeof(OptionsVM), "AudioOptions")?.GetMethod is { } m2)
+                harmony.Patch(m2, postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
+            if (AccessTools.Property(typeof(OptionsVM), "GameKeyOptionGroups")?.GetMethod is { } m3)
+                harmony.Patch(m3, postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
+            if (AccessTools.Property(typeof(OptionsVM), "GamepadOptions")?.GetMethod is { } m4)
+                harmony.Patch(m4, postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
+            if (AccessTools.Property(typeof(OptionsVM), "GameplayOptions")?.GetMethod is { } m5)
+                harmony.Patch(m5, postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
+            if (AccessTools.Property(typeof(OptionsVM), "PerformanceOptions")?.GetMethod is { } m6)
+                harmony.Patch(m6, postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
+            if (AccessTools.Property(typeof(OptionsVM), "GraphicsOptions")?.GetMethod is { } m7)
+                harmony.Patch(m7, postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
 
             harmony.CreateReversePatcher(
                 AccessTools.Method(typeof(OptionsVM), nameof(OptionsVM.ExecuteCloseOptions)),

@@ -21,7 +21,7 @@ namespace MCM.Tests.SettingsFormat
 }";
 
         [OneTimeSetUp]
-        public void OneTimeSetUp()
+        public void OneTimeSetUp1()
         {
             Format = new JsonSettingsFormat(NullLogger<JsonSettingsFormat>.Instance);
 
@@ -129,7 +129,7 @@ namespace MCM.Tests.SettingsFormat
         }
 
         [TearDown]
-        public void TearDown()
+        public void TearDown1()
         {
             var path = Path.Combine(DirectoryPath, $"{Filename}.json");
             if (File.Exists(path))

@@ -6,6 +6,8 @@ using MCM.Extensions;
 using MCM.UI.Actions;
 using MCM.Utils;
 
+using Microsoft.Extensions.Logging;
+
 using System.Linq;
 
 namespace MCM.UI.Utils
@@ -26,7 +28,8 @@ namespace MCM.UI.Utils
                     .FirstOrDefault(x => x.GroupName == newSettingPropertyGroup.GroupName);
                 if (settingPropertyGroup is not null)
                     OverrideValues(urs, settingPropertyGroup, newSettingPropertyGroup);
-                // else log
+                else
+                    MCMUISubModule.Logger.LogWarning("{NewId}::{GroupName} was not found on, {CurrentId}", @new.Id, newSettingPropertyGroup.GroupName, current.Id);
             }
         }
         public static void OverrideValues(UndoRedoStack urs, SettingsPropertyGroupDefinition current, SettingsPropertyGroupDefinition @new)
@@ -37,7 +40,8 @@ namespace MCM.UI.Utils
                     .FirstOrDefault(x => x.GroupName == newSettingPropertyGroup.GroupName);
                 if (settingPropertyGroup is not null)
                     OverrideValues(urs, settingPropertyGroup, newSettingPropertyGroup);
-                // else log
+                else
+                    MCMUISubModule.Logger.LogWarning("{NewId}::{GroupName} was not found on, {CurrentId}", @new.DisplayGroupName, newSettingPropertyGroup.GroupName, current.DisplayGroupName);
             }
             foreach (var newSettingProperty in @new.SettingProperties)
             {
@@ -45,7 +49,8 @@ namespace MCM.UI.Utils
                     .FirstOrDefault(x => x.DisplayName == newSettingProperty.DisplayName);
                 if (settingProperty is not null)
                     OverrideValues(urs, settingProperty, newSettingProperty);
-                // else log
+                else
+                    MCMUISubModule.Logger.LogWarning("{NewId}::{GroupName} was not found on, {CurrentId}", @new.DisplayGroupName, newSettingProperty.DisplayName, current.DisplayGroupName);
             }
         }
         public static void OverrideValues(UndoRedoStack urs, ISettingsPropertyDefinition current, ISettingsPropertyDefinition @new)

@@ -1,4 +1,6 @@
-﻿using MCM.Abstractions.Attributes.v1;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using MCM.Abstractions.Attributes.v1;
 using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
@@ -7,8 +9,6 @@ using MCM.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
-using TaleWorlds.Localization;
 
 namespace MCM.Abstractions.Settings.Models
 {
@@ -57,7 +57,7 @@ namespace MCM.Abstractions.Settings.Models
             SubGroupDelimiter = subGroupDelimiter;
 
             var groups = propertyGroupDefinition.GroupName.Split(SubGroupDelimiter);
-            GroupName = string.Join(SubGroupDelimiter.ToString(), groups.Select(x => new TextObject(x).ToString()));
+            GroupName = string.Join(SubGroupDelimiter.ToString(), groups.Select(x => TextObjectHelper.Create(x).ToString()));
             GroupOrder = propertyGroupDefinition.GroupOrder;
 
             PropertyReference = propertyReference;
@@ -80,10 +80,10 @@ namespace MCM.Abstractions.Settings.Models
             {
                 if (propertyDefinition is IPropertyDefinitionBase propertyBase)
                 {
-                    DisplayName = new TextObject(propertyBase.DisplayName).ToString();
+                    DisplayName = TextObjectHelper.Create(propertyBase.DisplayName).ToString();
                     Order = propertyBase.Order;
                     RequireRestart = propertyBase.RequireRestart;
-                    HintText = new TextObject(propertyBase.HintText).ToString();
+                    HintText = TextObjectHelper.Create(propertyBase.HintText).ToString();
                 }
                 if (propertyDefinition is SettingPropertyAttribute settingPropertyAttribute) // v1
                 {

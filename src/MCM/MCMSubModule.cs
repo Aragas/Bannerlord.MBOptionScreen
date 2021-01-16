@@ -1,5 +1,5 @@
-﻿using Bannerlord.ButterLib.Common.Extensions;
-using Bannerlord.ButterLib.Common.Helpers;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+using Bannerlord.ButterLib.Common.Extensions;
 
 using MCM.Abstractions.Settings.Formats;
 using MCM.Abstractions.Settings.Properties;
@@ -10,7 +10,6 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
 
 namespace MCM
@@ -72,7 +71,7 @@ Make sure MCM is loaded before them!";
 
         private static void CheckLoadOrder()
         {
-            var loadedModules = ModuleInfoHelper.GetLoadedModules();
+            var loadedModules = Bannerlord.ButterLib.Common.Helpers.ModuleInfoHelper.GetExtendedLoadedModules();
             if (loadedModules.Count == 0) return;
 
             var sb = new StringBuilder();
@@ -82,7 +81,7 @@ Make sure MCM is loaded before them!";
             if (harmonyModuleIndex == -1)
             {
                 if (sb.Length != 0) sb.AppendLine();
-                sb.AppendLine(new TextObject(SErrorHarmonyNotFound).ToString());
+                sb.AppendLine(TextObjectHelper.Create(SErrorHarmonyNotFound).ToString());
             }
 
             var butterLibModule = loadedModules.SingleOrDefault(x => x.Id == "Bannerlord.ButterLib");
@@ -90,7 +89,7 @@ Make sure MCM is loaded before them!";
             if (butterLibModuleIndex == -1)
             {
                 if (sb.Length != 0) sb.AppendLine();
-                sb.AppendLine(new TextObject(SErrorButterLibNotFound).ToString());
+                sb.AppendLine(TextObjectHelper.Create(SErrorButterLibNotFound).ToString());
             }
 
             var uiExtenderExModule = loadedModules.SingleOrDefault(x => x.Id == "Bannerlord.UIExtenderEx");
@@ -98,7 +97,7 @@ Make sure MCM is loaded before them!";
             if (uiExtenderExIndex == -1)
             {
                 if (sb.Length != 0) sb.AppendLine();
-                sb.AppendLine(new TextObject(SErrorUIExtenderExNotFound).ToString());
+                sb.AppendLine(TextObjectHelper.Create(SErrorUIExtenderExNotFound).ToString());
             }
 
             var mcmModule = loadedModules.SingleOrDefault(x => x.Id == "Bannerlord.MBOptionScreen");
@@ -108,8 +107,8 @@ Make sure MCM is loaded before them!";
             if (modulesLoadedBefore.Count > 0)
             {
                 if (sb.Length != 0) sb.AppendLine();
-                sb.AppendLine(new TextObject(SErrorOfficialModulesLoadedBeforeMCM).ToString());
-                sb.AppendLine(new TextObject(SErrorOfficialModules).ToString());
+                sb.AppendLine(TextObjectHelper.Create(SErrorOfficialModulesLoadedBeforeMCM).ToString());
+                sb.AppendLine(TextObjectHelper.Create(SErrorOfficialModules).ToString());
                 foreach (var (module, _) in modulesLoadedBefore)
                     sb.AppendLine(module.Id);
             }
@@ -117,9 +116,9 @@ Make sure MCM is loaded before them!";
             if (sb.Length > 0)
             {
                 sb.AppendLine();
-                sb.AppendLine(new TextObject(SMessageContinue).ToString());
+                sb.AppendLine(TextObjectHelper.Create(SMessageContinue).ToString());
 
-                switch (MessageBox.Show(sb.ToString(), new TextObject(SWarningTitle).ToString(), MessageBoxButtons.YesNo))
+                switch (MessageBox.Show(sb.ToString(), TextObjectHelper.Create(SWarningTitle).ToString(), MessageBoxButtons.YesNo))
                 {
                     case DialogResult.Yes:
                         Environment.Exit(1);

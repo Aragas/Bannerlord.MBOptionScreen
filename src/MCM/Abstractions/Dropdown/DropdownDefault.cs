@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 using TaleWorlds.Core.ViewModelCollection;
-using TaleWorlds.Localization;
 
 namespace MCM.Abstractions.Dropdown
 {
@@ -21,7 +22,7 @@ namespace MCM.Abstractions.Dropdown
         {
             get
             {
-                _selector.Refresh(this.Select(x => new TextObject(x?.ToString() ?? "ERROR").ToString()), SelectedIndex, OnSelectionChanged);
+                _selector.Refresh(this.Select(x => TextObjectHelper.Create(x?.ToString() ?? "ERROR").ToString()), SelectedIndex, OnSelectionChanged);
                 return _selector;
             }
             set
@@ -61,7 +62,7 @@ namespace MCM.Abstractions.Dropdown
 
         public DropdownDefault(IEnumerable<T> values, int selectedIndex) : base(values)
         {
-            var select = this.Select(x => new TextObject(x?.ToString() ?? "ERROR").ToString());
+            var select = this.Select(x => TextObjectHelper.Create(x?.ToString() ?? "ERROR").ToString());
             _selector = new SelectorVM<SelectorItemVM>(select, selectedIndex, OnSelectionChanged);
 
             if (SelectedIndex != 0 && SelectedIndex >= Count)

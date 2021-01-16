@@ -1,6 +1,6 @@
 ﻿extern alias v4;
 
-using TaleWorlds.Localization;
+using Bannerlord.BUTR.Shared.Helpers;
 
 using v4::MCM.Abstractions.Settings.Definitions;
 
@@ -29,8 +29,8 @@ namespace MCM.Adapter.MBO.Settings.Definitions
         {
             var type = @object.GetType();
 
-            DisplayName = new TextObject((type.GetProperty("DisplayName") ?? type.GetProperty("Name"))?.GetValue(@object) as string ?? "ERROR").ToString();
-            HintText = new TextObject(type.GetProperty("HintText")?.GetValue(@object) as string ?? "ERROR").ToString();
+            DisplayName = TextObjectHelper.Create((type.GetProperty("DisplayName") ?? type.GetProperty("Name"))?.GetValue(@object) as string ?? "ERROR").ToString();
+            HintText = TextObjectHelper.Create(type.GetProperty("HintText")?.GetValue(@object) as string ?? "ERROR").ToString();
             Order = type.GetProperty("Order")?.GetValue(@object) as int? ?? 0;
             RequireRestart = type.GetProperty("RequireRestart")?.GetValue(@object) as bool? ?? true;
 

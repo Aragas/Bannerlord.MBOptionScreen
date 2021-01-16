@@ -1,6 +1,10 @@
-﻿using MCM.Abstractions.Attributes;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
 using MCM.Abstractions.Settings.Base.Global;
+
+using System.Collections.Generic;
 
 using TaleWorlds.Localization;
 
@@ -11,9 +15,9 @@ namespace MCM.Adapter.ModLib
         private bool _overrideModLib = true;
 
         public override string Id { get; } = "MCMModLib_v4";
-        public override string DisplayName => new TextObject("{=MCMModLibSettings_Name}MCM ModLib Adapter {VERSION}", new()
+        public override string DisplayName => TextObjectHelper.Create("{=MCMModLibSettings_Name}MCM ModLib Adapter {VERSION}", new Dictionary<string, TextObject>()
         {
-            { "VERSION", new TextObject(typeof(MCMModLibSettings).Assembly.GetName().Version?.ToString(3) ?? "ERROR") }
+            { "VERSION", TextObjectHelper.Create(typeof(MCMModLibSettings).Assembly.GetName().Version?.ToString(3) ?? "ERROR") }
         }).ToString();
         public override string FolderName { get; } = "MCM";
         public override string FormatType { get; } = "json";

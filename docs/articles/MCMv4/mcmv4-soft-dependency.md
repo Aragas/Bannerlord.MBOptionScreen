@@ -44,9 +44,9 @@ public class CustomSettings : AttributeGlobalSettings<CustomSettings>, ICustomSe
     private bool _overrideSomething = true;
 
     public override string Id { get; } = "CustomSettings_v1";
-    public override string DisplayName => new TextObject("{=CustomSettings_Name}Custom {VERSION}", new Dictionary<string, TextObject>
+    public override string DisplayName => TextObjectHelper.Create("{=CustomSettings_Name}Custom {VERSION}", new Dictionary<string, TextObject>
     {
-        { "VERSION", new TextObject(typeof(CustomSettings).Assembly.GetName().Version.ToString(3)) }
+        { "VERSION", TextObjectHelper.Create(typeof(CustomSettings).Assembly.GetName().Version.ToString(3)) }
     }).ToString();
     public override string FolderName { get; } = "Custom";
     public override string FormatType { get; } = "json2";

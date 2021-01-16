@@ -25,7 +25,7 @@ namespace MCM.UI.Patches
         [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
         [SuppressMessage("ReSharper", "InconsistentNaming")]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private static bool ExecuteCommandPatch(ViewModel __instance, string commandName, object[] parameters)
+        private static bool ExecuteCommandPatch(object __instance, string commandName, object[] parameters)
         {
             if (__instance is IWrapper { Object: ViewModel viewModel })
             {

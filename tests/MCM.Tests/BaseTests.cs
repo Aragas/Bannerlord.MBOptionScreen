@@ -13,7 +13,6 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 using TaleWorlds.Engine;
-using TaleWorlds.Library;
 
 namespace MCM.Tests
 {
@@ -27,16 +26,16 @@ namespace MCM.Tests
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private static bool MockedGetLoadedModules(ref List<ModuleInfo> __result)
+        private static bool MockedGetLoadedModules(ref List<ExtendedModuleInfo> __result)
         {
-            __result = new List<ModuleInfo>();
+            __result = new List<ExtendedModuleInfo>();
             return false;
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static bool MockedGetModulesNames(ref string[] __result)
         {
-            __result = new string[0];
+            __result = Array.Empty<string>();
             return false;
         }
 
@@ -47,7 +46,7 @@ namespace MCM.Tests
         {
             _harmony.Patch(SymbolExtensions.GetMethodInfo(() => Utilities.GetConfigsPath()),
                 prefix: new HarmonyMethod(DelegateHelper.GetMethodInfo(MockedGetConfigsPath)));
-            _harmony.Patch(SymbolExtensions.GetMethodInfo(() => ModuleInfoHelper.GetLoadedModules()),
+            _harmony.Patch(SymbolExtensions.GetMethodInfo(() => ModuleInfoHelper.GetExtendedLoadedModules()),
                 prefix: new HarmonyMethod(DelegateHelper.GetMethodInfo(MockedGetLoadedModules)));
             _harmony.Patch(SymbolExtensions.GetMethodInfo(() => Utilities.GetModulesNames()),
                 prefix: new HarmonyMethod(DelegateHelper.GetMethodInfo(MockedGetModulesNames)));
@@ -64,7 +63,7 @@ namespace MCM.Tests
         {
             _harmony.Unpatch(SymbolExtensions.GetMethodInfo(() => Utilities.GetConfigsPath()),
                 DelegateHelper.GetMethodInfo(MockedGetConfigsPath));
-            _harmony.Unpatch(SymbolExtensions.GetMethodInfo(() => ModuleInfoHelper.GetLoadedModules()),
+            _harmony.Unpatch(SymbolExtensions.GetMethodInfo(() => ModuleInfoHelper.GetExtendedLoadedModules()),
                 DelegateHelper.GetMethodInfo(MockedGetLoadedModules));
             _harmony.Unpatch(SymbolExtensions.GetMethodInfo(() => Utilities.GetModulesNames()),
                 DelegateHelper.GetMethodInfo(MockedGetModulesNames));

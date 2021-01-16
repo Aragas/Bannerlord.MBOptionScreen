@@ -43,28 +43,11 @@ namespace MCM.UI.UIExtenderEx
     }
 
     [PrefabExtension("Options", "descendant::Widget[@Id='DescriptionsRightPanel']")]
-    public sealed class OptionsPrefabExtension3 : PrefabExtensionReplacePatch
+    [PrefabExtension("Options", "descendant::Widget[@Id='DescriptionsRightPanel']")]
+    public sealed class OptionsPrefabExtension3 : PrefabExtensionSetAttributePatch
     {
         public override string Id => "Options3";
-        private XmlDocument XmlDocument { get; } = new();
-
-        public OptionsPrefabExtension3()
-        {
-            XmlDocument.LoadXml(@"
-<Widget Id=""DescriptionsRightPanel"" WidthSizePolicy=""Fixed"" HeightSizePolicy=""StretchToParent"" SuggestedWidth=""@DescriptionWidth"">
-  <Children>
-    <ListPanel Id=""DescriptionsListPanel"" WidthSizePolicy=""StretchToParent"" HeightSizePolicy=""CoverChildren"" MarginLeft=""40"" MarginTop=""65"" LayoutImp.LayoutMethod=""VerticalBottomToTop"">
-      <Children>
-        <RichTextWidget Id=""CurrentOptionNameWidget"" WidthSizePolicy=""StretchToParent"" HeightSizePolicy=""CoverChildren"" Brush=""SPOptions.Description.Title.Text"" Text="" "" />
-        <RichTextWidget Id=""CurrentOptionDescriptionWidget"" WidthSizePolicy=""StretchToParent"" HeightSizePolicy=""CoverChildren"" MarginTop=""25"" Brush=""SPOptions.Description.Text"" Text="" "" />
-        <Widget Id=""CurrentOptionImageWidget"" WidthSizePolicy=""Fixed"" HeightSizePolicy=""Fixed"" SuggestedWidth=""576"" SuggestedHeight=""324"" MarginTop=""35"" />
-      </Children>
-    </ListPanel>
-  </Children>
-</Widget>
-");
-        }
-
-        public override XmlDocument GetPrefabExtension() => XmlDocument;
+        public override string Attribute => "SuggestedWidth";
+        public override string Value => "@DescriptionWidth";
     }
 }

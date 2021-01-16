@@ -1,4 +1,5 @@
 using Bannerlord.ButterLib.Common.Extensions;
+
 using MCM.Abstractions.Settings.Formats;
 using MCM.Implementation.Settings.Formats.Json;
 using MCM.Implementation.Settings.Formats.Xml;
@@ -6,6 +7,7 @@ using MCM.Implementation.Settings.Formats.Xml;
 using Microsoft.Extensions.DependencyInjection;
 
 using NUnit.Framework;
+
 using System.Collections.Generic;
 using System.Linq;
 
