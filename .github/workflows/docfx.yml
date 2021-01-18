@@ -63,7 +63,7 @@ jobs:
     - name: Run DocFX
       run: >-
         Copy-Item "README.md" -Destination "docs/index.md";
-        nuget install docfx.console -ExcludeVersion
+        nuget install docfx.console -ExcludeVersion;
         if ($${{runner.os == 'Windows'}}) {
           docfx.console/tools/docfx.exe metadata docs/docfx.json;
           docfx.console/tools/docfx.exe build docs/docfx.json;
