@@ -22,7 +22,7 @@ env:
 jobs:
   docfx:
     name: DocFX documentation
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
@@ -33,7 +33,7 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@master
       with:
-        dotnet-version: 3.1.x
+        dotnet-version: 5.0.x
     - name: Setup BUTR GPR
       uses: actions/setup-dotnet@master
       with:
@@ -41,18 +41,10 @@ jobs:
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
-    - name: Download docfx
-      uses: i3h/download-release-asset@v1
+    - name: Setup NuGet
+      uses: nuget/setup-nuget@v1
       with:
-        owner: dotnet
-        repo: docfx
-        tag: latest
-        file: docfx.zip
-    - name: Extract docfx
-      uses: DuckSoft/extract-7z-action@v1.0
-      with:
-        pathSource: docfx.zip
-        pathTarget: docfx
+        nuget-version: 'latest'
 
     - name: Generating Newtonsoft.Json xref maps
       run: >-
@@ -66,17 +58,20 @@ jobs:
       run: >-
         dotnet build src/MCM/MCM.csproj;
         dotnet build build/DocFx.Plugin.LastModified/DocFx.Plugin.LastModified --configuration Release --output docs/_template/last-modified/plugins;
-      env:
-        DOCFX: true
       shell: pwsh
 
-    - name: DocFX metadata and build
+    - name: Run DocFX
       run: >-
         Copy-Item "README.md" -Destination "docs/index.md";
-        docfx/docfx.exe metadata docs/docfx.json;
-        docfx/docfx.exe build docs/docfx.json;
-      env:
-        DOCFX: true
+        nuget install docfx.console -ExcludeVersion
+        if ($${{runner.os == 'Windows'}}) {
+          docfx.console/tools/docfx.exe metadata docs/docfx.json;
+          docfx.console/tools/docfx.exe build docs/docfx.json;
+        }
+        else {
+          mono docfx.console/tools/docfx.exe metadata docs/docfx.json;
+          mono docfx.console/tools/docfx.exe build docs/docfx.json;
+        }
       shell: pwsh
 
     - name: Deploy DocFX
