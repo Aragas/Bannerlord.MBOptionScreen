@@ -41,7 +41,6 @@ namespace MCM.UI
             ViewModelPatch.Patch(viewmodelwrapperHarmony);
 
             var services = this.GetServices();
-            services.AddSingleton<BaseGameMenuScreenHandler, DefaultGameMenuScreenHandler>();
             services.AddSingleton<BaseIngameMenuScreenHandler, DefaultIngameMenuScreenHandler>();
             services.AddTransient<IMCMOptionsScreen, ModOptionsGauntletScreen>();
 
@@ -54,6 +53,11 @@ namespace MCM.UI
 
             if (ApplicationVersionUtils.GameVersion() is { } gameVersion)
             {
+                if (gameVersion.Major <= 1 && gameVersion.Minor <= 5 && gameVersion.Revision <= 7)
+                    services.AddSingleton<BaseGameMenuScreenHandler, Pre158GameMenuScreenHandler>();
+                else
+                    services.AddSingleton<BaseGameMenuScreenHandler, Post158GameMenuScreenHandler>();
+
                 if (gameVersion.Major <= 1 && gameVersion.Minor <= 5 && gameVersion.Revision <= 3)
                     services.AddSingleton<IResourceInjector, ResourceInjectorPre154>();
                 else

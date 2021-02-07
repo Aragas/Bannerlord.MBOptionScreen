@@ -5,10 +5,15 @@ using MCM.Abstractions.Settings.Models;
 using System.Collections.Generic;
 using System.Linq;
 
+using TaleWorlds.Core;
+
 namespace MCM.Extensions
 {
     internal static class CollectionExtensions
     {
+        public static T? GetRandomElementInefficiently<T>(this IEnumerable<T> e) =>
+            e.IsEmpty() ? default : e.ElementAt(MBRandom.RandomInt(e.Count()));
+
         public static IEnumerable<SettingsPropertyGroupDefinition> SortDefault(this IEnumerable<SettingsPropertyGroupDefinition> enumerable) => enumerable
             .OrderByDescending(x => x.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)
             .ThenByDescending(x => x.Order)
