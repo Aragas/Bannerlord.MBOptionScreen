@@ -2,11 +2,12 @@
 
 using HarmonyLib;
 
+using MCM.Extensions;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using TaleWorlds.Core;
 using TaleWorlds.Library;
 
 namespace MCM.Abstractions.Dropdown
@@ -156,7 +157,7 @@ namespace MCM.Abstractions.Dropdown
         {
             if (ItemList.Any(i => _canBeSelectedDelegate(i)))
             {
-                var randomElement = ItemList.Where(i => _canBeSelectedDelegate(i)).GetRandomElement();
+                var randomElement = ItemList.Where(i => _canBeSelectedDelegate(i)).GetRandomElementInefficiently();
                 SelectedIndex = ItemList.IndexOf(randomElement);
             }
         }

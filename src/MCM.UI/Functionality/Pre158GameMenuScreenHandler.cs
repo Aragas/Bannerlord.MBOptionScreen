@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
-
+using MCM.UI.Utils;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
@@ -16,17 +16,17 @@ using TaleWorlds.MountAndBlade.ViewModelCollection;
 
 namespace MCM.UI.Functionality
 {
-    internal sealed class DefaultGameMenuScreenHandler : BaseGameMenuScreenHandler
+    internal sealed class Pre158GameMenuScreenHandler : BaseGameMenuScreenHandler
     {
         private static readonly WeakReference<InitialMenuVM> _instance = new(null!);
         private static Dictionary<string, (int, Func<ScreenBase?>, TextObject)> ScreensCache { get; } = new();
 
-        public DefaultGameMenuScreenHandler()
+        public Pre158GameMenuScreenHandler()
         {
             var harmony = new Harmony("bannerlord.mcm.mainmenuscreeninjection_v4");
             harmony.Patch(
                 AccessTools.Constructor(typeof(InitialMenuVM), Type.EmptyTypes),
-                postfix: new HarmonyMethod(AccessTools.Method(typeof(DefaultGameMenuScreenHandler), nameof(Constructor)), 300));
+                postfix: new HarmonyMethod(AccessTools.Method(typeof(Pre158GameMenuScreenHandler), nameof(Constructor)), 300));
         }
 
         [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
@@ -40,7 +40,7 @@ namespace MCM.UI.Functionality
                 var (index, screenFactory, text) = value;
 
                 var insertIndex = ____menuOptions.FindIndex(i => i.InitialStateOption.OrderIndex > index);
-                ____menuOptions.Insert(insertIndex, new InitialMenuOptionVM(new InitialStateOption(
+                ____menuOptions.Insert(insertIndex, new InitialMenuOptionVM(InitialStateOptionUtils.Create(
                     key,
                     text,
                     9000,
@@ -50,7 +50,7 @@ namespace MCM.UI.Functionality
                         if (screen is not null)
                             ScreenManager.PushScreen(screen);
                     },
-                    false)));
+                    () => false)));
             }
         }
 
@@ -59,7 +59,7 @@ namespace MCM.UI.Functionality
             if (_instance.TryGetTarget(out var instance))
             {
                 var insertIndex = instance.MenuOptions.FindIndex(i => i.InitialStateOption.OrderIndex > index);
-                instance.MenuOptions.Insert(insertIndex, new InitialMenuOptionVM(new InitialStateOption(
+                instance.MenuOptions.Insert(insertIndex, new InitialMenuOptionVM(InitialStateOptionUtils.Create(
                     internalName,
                     text,
                     index,
@@ -69,7 +69,7 @@ namespace MCM.UI.Functionality
                         if (screen is not null)
                             ScreenManager.PushScreen(screen);
                     },
-                    false)));
+                    () => false)));
             }
 
             ScreensCache[internalName] = (index, screenFactory, text);

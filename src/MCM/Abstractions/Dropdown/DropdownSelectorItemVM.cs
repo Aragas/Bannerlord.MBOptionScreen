@@ -1,4 +1,6 @@
-﻿using TaleWorlds.Core.ViewModelCollection;
+﻿using MCM.Utils;
+
+using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Library;
 
 namespace MCM.Abstractions.Dropdown
@@ -17,7 +19,7 @@ namespace MCM.Abstractions.Dropdown
         public override string StringItem => Object.ToString() ?? "ERROR";
 
         [DataSourceProperty]
-        public override HintViewModel Hint { get; } = new(string.Empty);
+        public override HintViewModel Hint { get; } = HintViewModelUtils.Create();
 
         public DropdownSelectorItemVM(T @object)
         {

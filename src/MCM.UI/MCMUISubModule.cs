@@ -44,12 +44,16 @@ namespace MCM.UI
 
             if (this.GetServices() is { } services)
             {
-                services.AddSingleton<BaseGameMenuScreenHandler, DefaultGameMenuScreenHandler>();
                 services.AddSingleton<BaseIngameMenuScreenHandler, DefaultIngameMenuScreenHandler>();
                 services.AddTransient<IMCMOptionsScreen, ModOptionsGauntletScreen>();
 
                 if (ApplicationVersionUtils.GameVersion() is { } gameVersion)
                 {
+                    if (gameVersion.Major <= 1 && gameVersion.Minor <= 5 && gameVersion.Revision <= 7)
+                        services.AddSingleton<BaseGameMenuScreenHandler, Pre158GameMenuScreenHandler>();
+                    else
+                        services.AddSingleton<BaseGameMenuScreenHandler, Post158GameMenuScreenHandler>();
+
                     if (gameVersion.Major <= 1 && gameVersion.Minor <= 5 && gameVersion.Revision <= 3)
                         services.AddSingleton<ResourceInjector, ResourceInjectorPre154>();
                     else

@@ -6,8 +6,8 @@
     <GameVersion>1.4.3</GameVersion>
     <HarmonyVersion>2.0.2</HarmonyVersion>
     <ButterLibVersion>1.0.20</ButterLibVersion>
-    <UIExtenderExVersion>1.1.2</UIExtenderExVersion>
-    <BuildResourcesVersion>1.0.0.32</BuildResourcesVersion>
+    <UIExtenderExVersion>2.1.0</UIExtenderExVersion>
+    <BuildResourcesVersion>1.0.0.33</BuildResourcesVersion>
     <BUTRSharedVersion>1.6.1.22</BUTRSharedVersion>
     <TargetFramework>net472</TargetFramework>
     <LangVersion>9.0</LangVersion>
