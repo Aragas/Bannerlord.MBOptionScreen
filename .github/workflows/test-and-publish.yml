@@ -139,9 +139,7 @@ jobs:
       if: ${{ github.ref == 'refs/heads/master' }}
       run: >-
         mkdir bannerlord-publish;
-        dotnet build src/MCM.NexusMods/MCM.NexusMods.csproj --configuration Stable_Release -p:GameFolder="$PWD/bannerlord-publish";
-        dotnet build src/MCM.Implementation.MCMv3/MCM.Implementation.MCMv3.csproj --configuration Stable_Release -p:GameFolder="$PWD/bannerlord-publish";
-        dotnet build src/MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Stable_Release -p:GameFolder="$PWD/bannerlord-publish";
+        dotnet build src/MCM.Publish/MCM.Publish.csproj --configuration Stable_Release -p:GameFolder="$PWD/bannerlord-publish";
       shell: pwsh
 
     - name: Upload Bannerlord folder
