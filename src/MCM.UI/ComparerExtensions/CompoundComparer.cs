@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 
+// ReSharper disable once CheckNamespace
 namespace ComparerExtensions
 {
     internal sealed class CompoundComparer<T> : Comparer<T>
     {
-        private readonly List<IComparer<T>> comparers;
+        private readonly List<IComparer<T>> _comparers;
 
         public static IComparer<T> GetComparer(IComparer<T> baseComparer, IComparer<T> nextComparer)
         {
@@ -16,7 +17,7 @@ namespace ComparerExtensions
 
         public CompoundComparer()
         {
-            comparers = new List<IComparer<T>>();
+            _comparers = new List<IComparer<T>>();
         }
 
         public void AppendComparison(IComparer<T> comparer)
@@ -27,15 +28,15 @@ namespace ComparerExtensions
             }
             if (comparer is CompoundComparer<T> other)
             {
-                comparers.AddRange(other.comparers);
+                _comparers.AddRange(other._comparers);
                 return;
             }
-            comparers.Add(comparer);
+            _comparers.Add(comparer);
         }
 
         public override int Compare(T x, T y)
         {
-            foreach (var comparer in comparers)
+            foreach (var comparer in _comparers)
             {
                 var result = comparer.Compare(x, y);
                 if (result != 0)
@@ -48,13 +49,13 @@ namespace ComparerExtensions
 
         public IComparer<T> Normalize()
         {
-            if (comparers.Count == 0)
+            if (_comparers.Count == 0)
             {
                 return NullComparer<T>.Default;
             }
-            if (comparers.Count == 1)
+            if (_comparers.Count == 1)
             {
-                return comparers[0];
+                return _comparers[0];
             }
             return this;
         }

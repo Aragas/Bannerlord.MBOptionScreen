@@ -39,15 +39,23 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
             var subGroupsProperty = AccessTools.Property(@object.GetType(), nameof(SubGroups)) ??
                                     AccessTools.Property(@object.GetType(), "SettingPropertyGroups");
             if (subGroupsProperty?.GetValue(@object) is IEnumerable list)
+            {
                 foreach (var obj in list)
+                {
                     yield return new SettingsPropertyGroupDefinitionWrapper(obj);
+                }
+            }
         }
         private static IEnumerable<ISettingsPropertyDefinition> GetSettingProperties(object @object)
         {
             var settingPropertiesProperty = AccessTools.Property(@object.GetType(), nameof(SettingProperties));
             if (settingPropertiesProperty?.GetValue(@object) is IEnumerable list)
+            {
                 foreach (var obj in list)
+                {
                     yield return new SettingsPropertyDefinitionWrapper(obj);
+                }
+            }
         }
     }
 }

@@ -1,5 +1,9 @@
 - name: MCMv4
   href: mcmv4.md
+- name: MCMv4 Attributes
+  href: mcmv4-attributes.md
+- name: MCMv4 Fluent Builder
+  href: mcmv4-fluent-builder.md
 - name: Migrating from MCMv3
   href: mcmv4-migrating-from-mcmv3.md
 - name: MCMv4 as a Soft Dependency

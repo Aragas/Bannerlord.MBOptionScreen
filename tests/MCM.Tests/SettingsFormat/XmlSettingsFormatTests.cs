@@ -22,7 +22,7 @@ namespace MCM.Tests.SettingsFormat
 </FluentGlobalSettings>";
 
         [OneTimeSetUp]
-        public void OneTimeSetUp()
+        public void OneTimeSetUp1()
         {
             Format = new XmlSettingsFormat(NullLogger<XmlSettingsFormat>.Instance);
 
@@ -135,7 +135,7 @@ namespace MCM.Tests.SettingsFormat
         }
 
         [TearDown]
-        public void TearDown()
+        public void TearDown1()
         {
             var path = Path.Combine(DirectoryPath, $"{Filename}.xml");
             if (File.Exists(path))

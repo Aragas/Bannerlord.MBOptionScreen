@@ -7,16 +7,20 @@ namespace MCM.UI.Actions
     {
         private IRef SelectedIndexContext { get; }
         public IRef Context { get; }
-        public object Value { get; }
-        public object Original { get; }
+        public object? Value { get; }
+        public object? Original { get; }
 
         public SetSelectedIndexAction(IRef context, object value)
         {
             Context = context;
 
             SelectedIndexContext = new ProxyRef<int>(
-                () => new SelectedIndexWrapper(Context.Value).SelectedIndex,
-                o => new SelectedIndexWrapper(Context.Value).SelectedIndex = o);
+                () => Context.Value is not null ? new SelectedIndexWrapper(Context.Value).SelectedIndex : 0,
+                o =>
+                {
+                    if (Context.Value is not null)
+                        new SelectedIndexWrapper(Context.Value).SelectedIndex = o;
+                });
             Value = new SelectedIndexWrapper(value).SelectedIndex;
             Original = SelectedIndexContext.Value;
         }

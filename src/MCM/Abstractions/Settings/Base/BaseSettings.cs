@@ -1,21 +1,24 @@
-﻿using HarmonyLib;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using HarmonyLib;
 
 using MCM.Utils;
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-
-using TaleWorlds.Localization;
 
 namespace MCM.Abstractions.Settings.Base
 {
     public abstract class BaseSettings : INotifyPropertyChanged
     {
         public const string SaveTriggered = "SAVE_TRIGGERED";
+
         /// <inheritdoc/>
+        [SuppressMessage("Design", "CA1070:Do not declare event fields as virtual", Justification = "<Pending>")]
         public virtual event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
@@ -42,7 +45,7 @@ namespace MCM.Abstractions.Settings.Base
         {
             var type = GetType();
             var constructor = AccessTools.Constructor(type, Type.EmptyTypes);
-            return constructor is { }
+            return constructor is not null
                 ? (BaseSettings) constructor.Invoke(null)
                 : (BaseSettings) FormatterServices.GetUninitializedObject(type);
         }
@@ -55,7 +58,7 @@ namespace MCM.Abstractions.Settings.Base
         public virtual IDictionary<string, Func<BaseSettings>> GetAvailablePresets() => new Dictionary<string, Func<BaseSettings>>()
         {
             // TODO: computable name
-            { new TextObject("{=BaseSettings_Default}Default").ToString(), CreateNew }
+            { TextObjectHelper.Create("{=BaseSettings_Default}Default").ToString(), CreateNew }
         };
     }
 }

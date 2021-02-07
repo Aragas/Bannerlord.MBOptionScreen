@@ -1,4 +1,5 @@
-﻿using Bannerlord.ButterLib.Common.Helpers;
+﻿/*
+using Bannerlord.ButterLib.Common.Helpers;
 
 using HarmonyLib;
 
@@ -38,7 +39,7 @@ namespace MCM.Abstractions.Dropdown
         public CheckboxDropdownSelectorItemVM(T @object) : base(@object)
         {
             var isSelectedProperty = AccessTools.Property(typeof(T), "IsSelected");
-            if (isSelectedProperty is { })
+            if (isSelectedProperty is not null)
             {
                 _getIsSelectedDelegate = AccessTools2.GetDelegate<GetIsSelectedDelegate>(@object, isSelectedProperty.GetMethod)!;
                 _setIsSelectedDelegate = AccessTools2.GetDelegate<SetIsSelectedDelegate>(@object, isSelectedProperty.SetMethod)!;
@@ -49,9 +50,10 @@ namespace MCM.Abstractions.Dropdown
                 _setIsSelectedDelegate = _ => { };
             }
 
-            StringItem = AccessTools.Property(typeof(T), "Name")?.GetValue(@object) is string name ? name : @object.ToString();
+            StringItem = AccessTools.Property(typeof(T), "Name")?.GetValue(@object) is string name ? name : @object.ToString() ?? "ERROR";
 
             Hint = AccessTools.Property(typeof(T), "HintText")?.GetValue(@object) is string hintText ? new HintViewModel(hintText) : new HintViewModel(string.Empty);
         }
     }
 }
+*/

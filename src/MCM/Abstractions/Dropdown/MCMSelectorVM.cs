@@ -2,11 +2,12 @@
 
 using HarmonyLib;
 
+using MCM.Extensions;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using TaleWorlds.Core;
 using TaleWorlds.Library;
 
 namespace MCM.Abstractions.Dropdown
@@ -24,15 +25,15 @@ namespace MCM.Abstractions.Dropdown
         static MCMSelectorVM()
         {
             var methodInfo = AccessTools.Property(typeof(TSelectorItemVM), "CanBeSelected")?.GetMethod;
-            _canBeSelectedDelegate = methodInfo is { }
+            _canBeSelectedDelegate = methodInfo is not null
                 ? AccessTools2.GetDelegate<CanBeSelectedDelegate>(methodInfo)!
                 : _ => false;
         }
 
-        public static MCMSelectorVM<TSelectorItemVM> Empty => new MCMSelectorVM<TSelectorItemVM>(null);
+        public static MCMSelectorVM<TSelectorItemVM> Empty => new(null);
 
         protected Action<MCMSelectorVM<TSelectorItemVM>>? _onChange;
-        private MBBindingList<TSelectorItemVM> _itemList = new MBBindingList<TSelectorItemVM>();
+        private MBBindingList<TSelectorItemVM> _itemList = new();
         protected int _selectedIndex = -1;
         private TSelectorItemVM? _selectedItem;
         private bool _hasSingleItem;
@@ -123,7 +124,10 @@ namespace MCM.Abstractions.Dropdown
             // Check that TSelectorItemVM has a constructor that accepts the object
 
             foreach (var obj in list)
-                ItemList.Add((TSelectorItemVM) Activator.CreateInstance(typeof(TSelectorItemVM), obj));
+            {
+                if (Activator.CreateInstance(typeof(TSelectorItemVM), obj) is TSelectorItemVM val)
+                    ItemList.Add(val);
+            }
 
             HasSingleItem = ItemList.Count <= 1;
 
@@ -151,9 +155,9 @@ namespace MCM.Abstractions.Dropdown
 
         public void ExecuteRandomize()
         {
-            if (ItemList.Count(i => _canBeSelectedDelegate(i)) > 0)
+            if (ItemList.Any(i => _canBeSelectedDelegate(i)))
             {
-                var randomElement = ItemList.Where(i => _canBeSelectedDelegate(i)).GetRandomElement();
+                var randomElement = ItemList.Where(i => _canBeSelectedDelegate(i)).GetRandomElementInefficiently();
                 SelectedIndex = ItemList.IndexOf(randomElement);
             }
         }

@@ -1,0 +1,19 @@
+﻿<!--EXTERNAL_PROPERTIES: GameVersion-->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Authors>mipen, Aragas</Authors>
+    <AssemblyName>ModLib</AssemblyName>
+    <RootNamespace>ModLib</RootNamespace>
+    <Configurations>Debug;Release</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MCM.Adapter.ModLibV13.Substitute\MCM.Adapter.ModLibV13.Substitute.csproj" Aliases="v13" />
+  </ItemGroup>
+
+</Project>

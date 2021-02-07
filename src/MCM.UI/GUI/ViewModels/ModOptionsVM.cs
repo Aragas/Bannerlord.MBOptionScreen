@@ -1,4 +1,5 @@
-﻿using Bannerlord.ButterLib.Common.Extensions;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+using Bannerlord.ButterLib.Common.Extensions;
 using Bannerlord.ButterLib.Common.Helpers;
 
 using ComparerExtensions;
@@ -34,7 +35,7 @@ namespace MCM.UI.GUI.ViewModels
         private string _doneButtonText = string.Empty;
         private string _modsText = string.Empty;
         private SettingsVM? _selectedMod;
-        private MBBindingList<SettingsVM> _modSettingsList = new MBBindingList<SettingsVM>();
+        private MBBindingList<SettingsVM> _modSettingsList = new();
         private string _hintText = string.Empty;
         private string _searchText = string.Empty;
 
@@ -63,7 +64,8 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public string CancelButtonText
         {
-            get => _cancelButtonText; set
+            get => _cancelButtonText;
+            set
             {
                 _cancelButtonText = value;
                 OnPropertyChanged(nameof(CancelButtonText));
@@ -72,7 +74,8 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public string ModsText
         {
-            get => _modsText; set
+            get => _modsText;
+            set
             {
                 _modsText = value;
                 OnPropertyChanged(nameof(ModsText));
@@ -106,7 +109,7 @@ namespace MCM.UI.GUI.ViewModels
                     OnPropertyChanged(nameof(SelectedDisplayName));
                     OnPropertyChanged(nameof(SomethingSelected));
 
-                    if (_selectedMod?.PresetsSelector is { })
+                    if (_selectedMod?.PresetsSelector is not null)
                     {
                         PresetsSelector.SetOnChangeAction(null);
                         OnPropertyChanged(nameof(PresetsSelector));
@@ -122,9 +125,9 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
         [DataSourceProperty]
-        public string SelectedDisplayName => SelectedMod is null ? new TextObject("{=ModOptionsVM_NotSpecified}Mod Name not Specified.").ToString() : SelectedMod.DisplayName;
+        public string SelectedDisplayName => SelectedMod is null ? TextObjectHelper.Create("{=ModOptionsVM_NotSpecified}Mod Name not Specified.").ToString() : SelectedMod.DisplayName;
         [DataSourceProperty]
-        public bool SomethingSelected => SelectedMod is { };
+        public bool SomethingSelected => SelectedMod is not null;
         [DataSourceProperty]
         public string HintText
         {
@@ -160,18 +163,18 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
         [DataSourceProperty]
-        public SelectorVM<SelectorItemVM> PresetsSelector { get; } = new SelectorVM<SelectorItemVM>(Enumerable.Empty<string>(), -1, null);
+        public SelectorVM<SelectorItemVM> PresetsSelector { get; } = new(Enumerable.Empty<string>(), -1, null);
         [DataSourceProperty]
-        public bool IsPresetsSelectorVisible => SelectedMod is { };
+        public bool IsPresetsSelectorVisible => SelectedMod is not null;
 
         public ModOptionsVM()
         {
             _logger = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<ILogger<ModOptionsVM>>() ?? NullLogger<ModOptionsVM>.Instance;
 
-            Name = new TextObject("{=ModOptionsVM_Name}Mod Options").ToString();
-            DoneButtonText = new TextObject("{=WiNRdfsm}Done").ToString();
-            CancelButtonText = new TextObject("{=3CpNUnVl}Cancel").ToString();
-            ModsText = new TextObject("{=ModOptionsPageView_Mods}Mods").ToString();
+            Name = TextObjectHelper.Create("{=ModOptionsVM_Name}Mod Options").ToString();
+            DoneButtonText = TextObjectHelper.Create("{=WiNRdfsm}Done").ToString();
+            CancelButtonText = TextObjectHelper.Create("{=3CpNUnVl}Cancel").ToString();
+            ModsText = TextObjectHelper.Create("{=ModOptionsPageView_Mods}Mods").ToString();
             SearchText = string.Empty;
 
             ModSettingsList = new MBBindingList<SettingsVM>();
@@ -180,50 +183,54 @@ namespace MCM.UI.GUI.ViewModels
             {
                 try
                 {
-                    if (!(syncContext is SynchronizationContext uiContext))
-                        return;
-
-                    var settingsVM = BaseSettingsProvider.Instance!.CreateModSettingsDefinitions
-                        .Parallel()
-                        .Select(s =>
-                        {
-                            try
-                            {
-                                return new SettingsVM(s, this);
-                            }
-                            catch (Exception e)
-                            {
-                                _logger.LogError(e, "Error while creating a ViewModel for settings {Id}", s.SettingsId);
-                                InformationManager.DisplayMessage(new InformationMessage(new TextObject($"{{=HNduGf7H5a}}There was an error while parsing settings from '{s.SettingsId}'! Please contact the MCM developers and the mod developer!").ToString(), Colors.Red));
-                                return null;
-                            }
-                        })
-                        .ToList();
-                    foreach (var viewModel in settingsVM)
+                    if (syncContext is SynchronizationContext uiContext)
                     {
-                        uiContext.Send(o =>
+                        var settingsVM = BaseSettingsProvider.Instance!.CreateModSettingsDefinitions
+                            .Parallel()
+                            .Select(s =>
+                            {
+                                try
+                                {
+                                    return new SettingsVM(s, this);
+                                }
+                                catch (Exception e)
+                                {
+                                    _logger.LogError(e, "Error while creating a ViewModel for settings {Id}", s.SettingsId);
+                                    InformationManager.DisplayMessage(new InformationMessage(
+                                        TextObjectHelper.Create($"{{=HNduGf7H5a}}There was an error while parsing settings from '{s.SettingsId}'! Please contact the MCM developers and the mod developer!").ToString(),
+                                        Colors.Red));
+                                    return null;
+                                }
+                            })
+                            .ToList();
+                        foreach (var viewModel in settingsVM)
                         {
-                            if (!(o is SettingsVM vm))
-                                return;
+                            uiContext.Send(o =>
+                            {
+                                if (o is SettingsVM vm)
+                                {
+                                    vm.AddSelectCommand(ExecuteSelect);
+                                    ModSettingsList.Add(vm);
+                                    vm.RefreshValues();
+                                }
+                            }, viewModel);
+                        }
 
-                            vm.AddSelectCommand(ExecuteSelect);
-                            ModSettingsList.Add(vm);
-                            vm.RefreshValues();
-                        }, viewModel);
+                        // Yea, I imported a whole library that converts LINQ style order to IComparer
+                        // because I wasn't able to recreate the logic via IComparer. TODO: Fix that
+                        ModSettingsList.Sort(KeyComparer<SettingsVM>
+                            .OrderByDescending(x => x.SettingsDefinition.SettingsId.StartsWith("MCM") ||
+                                                    x.SettingsDefinition.SettingsId.StartsWith("Testing") ||
+                                                    x.SettingsDefinition.SettingsId.StartsWith("ModLib"))
+                            .ThenByDescending(x => x.DisplayName, new AlphanumComparatorFast()));
                     }
-
-                    // Yea, I imported a whole library that converts LINQ style order to IComparer
-                    // because I wasn't able to recreate the logic via IComparer. TODO: Fix that
-                    ModSettingsList.Sort(KeyComparer<SettingsVM>
-                        .OrderByDescending(x => x.SettingsDefinition.SettingsId.StartsWith("MCM") ||
-                                                x.SettingsDefinition.SettingsId.StartsWith("Testing") ||
-                                                x.SettingsDefinition.SettingsId.StartsWith("ModLib"))
-                        .ThenByDescending(x => x.DisplayName, new AlphanumComparatorFast()));
                 }
                 catch (Exception e)
                 {
                     _logger.LogError(e, "Error while creating ViewModels for the settings");
-                    InformationManager.DisplayMessage(new InformationMessage(new TextObject("{=JLKaTyJcyu}There was a major error while building the settings list! Please contact the MCM developers!").ToString(), Colors.Red));
+                    InformationManager.DisplayMessage(new InformationMessage(
+                        TextObjectHelper.Create("{=JLKaTyJcyu}There was a major error while building the settings list! Please contact the MCM developers!").ToString(),
+                        Colors.Red));
                 }
             }, SynchronizationContext.Current);
 
@@ -239,7 +246,7 @@ namespace MCM.UI.GUI.ViewModels
 
             OnPropertyChanged(nameof(SelectedMod));
 
-            if (SelectedMod is { })
+            if (SelectedMod is not null)
             {
                 PresetsSelector.SetOnChangeAction(null);
                 PresetsSelector.SelectedIndex = SelectedMod?.PresetsSelector?.SelectedIndex ?? -1;
@@ -249,16 +256,16 @@ namespace MCM.UI.GUI.ViewModels
 
         private void OnPresetsSelectorChange(SelectorVM<SelectorItemVM> selector)
         {
-            InformationManager.ShowInquiry(new InquiryData(new TextObject("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new Dictionary<string, TextObject>
+            InformationManager.ShowInquiry(new InquiryData(TextObjectHelper.Create("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new Dictionary<string, TextObject>()
                 {
-                    { "PRESET", new TextObject(selector.SelectedItem.StringItem) }
+                    { "PRESET", TextObjectHelper.Create(selector.SelectedItem.StringItem) }
                 }).ToString(),
-                new TextObject("{=ModOptionsVM_Discard}Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?", new Dictionary<string, TextObject>
+                TextObjectHelper.Create("{=ModOptionsVM_Discard}Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?", new Dictionary<string, TextObject>()
                 {
-                    { "NAME", new TextObject(SelectedMod!.DisplayName) },
-                    { "ITEM", new TextObject(selector.SelectedItem.StringItem) }
+                    { "NAME", TextObjectHelper.Create(SelectedMod!.DisplayName) },
+                    { "ITEM", TextObjectHelper.Create(selector.SelectedItem.StringItem) }
                 }).ToString(),
-                true, true, new TextObject("{=aeouhelq}Yes").ToString(), new TextObject("{=8OkPHu4f}No").ToString(),
+                true, true, TextObjectHelper.Create("{=aeouhelq}Yes").ToString(), TextObjectHelper.Create("{=8OkPHu4f}No").ToString(),
                 () =>
                 {
                     SelectedMod!.ChangePreset(PresetsSelector.SelectedItem.StringItem);
@@ -320,9 +327,9 @@ namespace MCM.UI.GUI.ViewModels
             var requireRestart = changedModSettings.Any(x => x.RestartRequired());
             if (requireRestart)
             {
-                InformationManager.ShowInquiry(new InquiryData(new TextObject("{=ModOptionsVM_RestartTitle}Game Needs to Restart").ToString(),
-                    new TextObject("{=ModOptionsVM_RestartDesc}The game needs to be restarted to apply mod settings changes. Do you want to close the game now?").ToString(),
-                    true, true, new TextObject("{=aeouhelq}Yes").ToString(), new TextObject("{=3CpNUnVl}Cancel").ToString(),
+                InformationManager.ShowInquiry(new InquiryData(TextObjectHelper.Create("{=ModOptionsVM_RestartTitle}Game Needs to Restart").ToString(),
+                    TextObjectHelper.Create("{=ModOptionsVM_RestartDesc}The game needs to be restarted to apply mod settings changes. Do you want to close the game now?").ToString(),
+                    true, true, TextObjectHelper.Create("{=aeouhelq}Yes").ToString(), TextObjectHelper.Create("{=3CpNUnVl}Cancel").ToString(),
                     () =>
                     {
                         foreach (var changedModSetting in changedModSettings)
@@ -354,12 +361,12 @@ namespace MCM.UI.GUI.ViewModels
         {
             if (SelectedMod != viewModel)
             {
-                if (SelectedMod is { })
+                if (SelectedMod is not null)
                     SelectedMod.IsSelected = false;
 
                 SelectedMod = viewModel;
 
-                if (SelectedMod is { })
+                if (SelectedMod is not null)
                     SelectedMod.IsSelected = true;
             }
         }

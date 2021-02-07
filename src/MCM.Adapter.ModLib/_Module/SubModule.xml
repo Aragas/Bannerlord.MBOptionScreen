@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Module>
+  <Name value="MCMv4 ModLib v1/v13 Adapter"/>
+  <Id value="Bannerlord.MBOptionScreen.ModLib"/>
+  <Version value="v$version$"/>
+  <Official value="false"/>
+  <SingleplayerModule value="true"/>
+  <MultiplayerModule value="false"/>
+  <DependedModules>
+    <DependedModule Id="Bannerlord.Harmony" DependentVersion="v$harmonyversion$" />
+    <!--<DependedModule Id="Bannerlord.ModuleLoader" />-->
+    <DependedModule Id="Bannerlord.ButterLib" DependentVersion="v$butterlibversion$" />
+    <DependedModule Id="Bannerlord.MBOptionScreen" DependentVersion="v$version$" />
+  </DependedModules>
+  <!-- Prototype -->
+  <DependedModuleMetadatas>
+    <DependedModuleMetadata id="Bannerlord.Harmony" order="LoadBeforeThis" version="v$harmonyversion$" />
+    <DependedModuleMetadata id="Bannerlord.ModuleLoader" order="LoadBeforeThis" version="v$moduleloaderversion$" optional="true" />
+    <DependedModuleMetadata id="Bannerlord.ButterLib" order="LoadBeforeThis" version="v$butterlibversion$" />
+    <DependedModuleMetadata id="Bannerlord.UIExtenderEx" order="LoadBeforeThis" version="v$uiextenderversion$" />
+    <DependedModuleMetadata id="Bannerlord.MBOptionScreen" order="LoadBeforeThis" version="v$version$" />
+
+    <DependedModuleMetadata id="Native" order="LoadAfterThis" version="e$gameversion$.*" />
+    <DependedModuleMetadata id="SandBoxCore" order="LoadAfterThis" version="e$gameversion$.*" />
+    <DependedModuleMetadata id="Sandbox" order="LoadAfterThis" version="e$gameversion$.*" />
+    <DependedModuleMetadata id="StoryMode" order="LoadAfterThis" version="e$gameversion$.*" optional="true" />
+    <DependedModuleMetadata id="CustomBattle" order="LoadAfterThis" version="e$gameversion$.*" optional="true" />
+
+    <DependedModuleMetadata id="ModLib" order="LoadAfterThis" optional="true" />
+  </DependedModuleMetadatas>
+  <!-- Prototype -->
+  <SubModules>
+    <SubModule>
+      <Name value="ModLib Substitute"/>
+      <DLLName value="ModLib.dll"/>
+      <SubModuleClassType value="ModLib.ModLibSubModule"/>
+      <Tags/>
+    </SubModule>
+    <SubModule>
+      <Name value="ModLib.Definitions Substitute"/>
+      <DLLName value="ModLib.Definitions.dll"/>
+      <SubModuleClassType value="ModLib.Definitions.ModLibSubModule"/>
+      <Tags/>
+    </SubModule>
+    <SubModule>
+      <Name value="MCMv4 ModLib Adapter"/>
+      <DLLName value="MCMv4.Adapter.ModLib.dll"/>
+      <SubModuleClassType value="MCM.Adapter.ModLib.MCMModLibSubModule"/>
+      <Tags/>
+    </SubModule>
+  </SubModules>
+</Module>

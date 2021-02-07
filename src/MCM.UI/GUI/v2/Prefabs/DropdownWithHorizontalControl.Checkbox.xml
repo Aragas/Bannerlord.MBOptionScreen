@@ -4,8 +4,8 @@
   </Parameters>
   <Constants>
     <Constant Name="Extension.Width" BrushLayer="Default" BrushName="SPOptions.Dropdown.Extension" BrushValueType="Width" />
-	  <Constant Name="DropdownCenter.Width" BrushLayer="Default" BrushName="SPOptions.Dropdown.Center" BrushValueType="Width" />
-	  <Constant Name="DropdownCenter.Height" BrushLayer="Default" BrushName="SPOptions.Dropdown.Center" BrushValueType="Height" />
+    <Constant Name="DropdownCenter.Width" BrushLayer="Default" BrushName="SPOptions.Dropdown.Center" BrushValueType="Width" />
+    <Constant Name="DropdownCenter.Height" BrushLayer="Default" BrushName="SPOptions.Dropdown.Center" BrushValueType="Height" />
   </Constants>
   <Window>
     <ListPanel Id="HorizontalControlParent" DataSource="*SelectorDataSource" WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren">

@@ -8,6 +8,7 @@ using MCM.UI.GUI.ViewModels;
 
 using System;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 using TaleWorlds.Library;
@@ -30,24 +31,20 @@ namespace MCM.UI.UIExtenderEx
         {
             var harmony = new Harmony("bannerlord.mcm.ui.optionsvm");
 
-            harmony.Patch(
-                AccessTools.Property(typeof(OptionsVM), nameof(OptionsVM.VideoOptions)).GetMethod,
-                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
-            harmony.Patch(
-                AccessTools.Property(typeof(OptionsVM), nameof(OptionsVM.AudioOptions)).GetMethod,
-                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
-            harmony.Patch(
-                AccessTools.Property(typeof(OptionsVM), nameof(OptionsVM.GameKeyOptionGroups)).GetMethod,
-                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
-            harmony.Patch(
-                AccessTools.Property(typeof(OptionsVM), nameof(OptionsVM.GamepadOptions)).GetMethod,
-                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
-            harmony.Patch(
-                AccessTools.Property(typeof(OptionsVM), nameof(OptionsVM.GameplayOptions)).GetMethod,
-                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
-            harmony.Patch(
-                AccessTools.Property(typeof(OptionsVM), nameof(OptionsVM.GraphicsOptions)).GetMethod,
-                postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
+            if (AccessTools.Property(typeof(OptionsVM), "VideoOptions")?.GetMethod is { } m1)
+                harmony.Patch(m1, postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
+            if (AccessTools.Property(typeof(OptionsVM), "AudioOptions")?.GetMethod is { } m2)
+                harmony.Patch(m2, postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
+            if (AccessTools.Property(typeof(OptionsVM), "GameKeyOptionGroups")?.GetMethod is { } m3)
+                harmony.Patch(m3, postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
+            if (AccessTools.Property(typeof(OptionsVM), "GamepadOptions")?.GetMethod is { } m4)
+                harmony.Patch(m4, postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
+            if (AccessTools.Property(typeof(OptionsVM), "GameplayOptions")?.GetMethod is { } m5)
+                harmony.Patch(m5, postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
+            if (AccessTools.Property(typeof(OptionsVM), "PerformanceOptions")?.GetMethod is { } m6)
+                harmony.Patch(m6, postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
+            if (AccessTools.Property(typeof(OptionsVM), "GraphicsOptions")?.GetMethod is { } m7)
+                harmony.Patch(m7, postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
 
             harmony.CreateReversePatcher(
                 AccessTools.Method(typeof(OptionsVM), nameof(OptionsVM.ExecuteCloseOptions)),
@@ -58,11 +55,15 @@ namespace MCM.UI.UIExtenderEx
                 postfix: new HarmonyMethod(AccessTools.Method(typeof(OptionsVMMixin), nameof(ExecuteCloseOptionsPostfix)), 300));
         }
 
+        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void OptionsPostfix(OptionsVM __instance)
         {
             __instance.SetPropertyValue(nameof(ModOptionsSelected), false);
         }
+        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void ExecuteCloseOptionsPostfix(OptionsVM __instance)
         {
@@ -72,15 +73,17 @@ namespace MCM.UI.UIExtenderEx
             }
         }
 
+        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
+        [SuppressMessage("ReSharper", "UnusedParameter.Local")]
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void OriginalExecuteCloseOptions(OptionsVM instance) => throw new NotImplementedException("It's a stub");
 
-        private readonly ModOptionsVM _modOptions = new ModOptionsVM();
+        private readonly ModOptionsVM _modOptions = new();
         private bool _modOptionsSelected;
         private int _descriptionWidth = 650;
 
         [DataSourceProperty]
-        public WeakReference<OptionsVMMixin> MCMMixin => new WeakReference<OptionsVMMixin>(this);
+        public WeakReference<OptionsVMMixin> MCMMixin => new(this);
 
         [DataSourceProperty]
         public ModOptionsVM ModOptions
@@ -130,14 +133,14 @@ namespace MCM.UI.UIExtenderEx
             vm.PropertyChanged += OptionsVM_PropertyChanged;
         }
 
-        private void OptionsVM_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void OptionsVM_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             _modOptions.OnPropertyChanged(e.PropertyName);
         }
 
         public override void OnFinalize()
         {
-            if (ViewModel is { })
+            if (ViewModel is not null)
                 ViewModel.PropertyChanged -= OptionsVM_PropertyChanged;
 
             base.OnFinalize();
@@ -148,8 +151,16 @@ namespace MCM.UI.UIExtenderEx
         public void ExecuteCloseOptions()
         {
             ModOptions.ExecuteCancelInternal(false);
-            if (ViewModel is { })
-                OriginalExecuteCloseOptions(ViewModel);
+            if (ViewModel is not null)
+            {
+                try
+                {
+                    OriginalExecuteCloseOptions(ViewModel);
+                }
+                // For some reason it throws a null exception, but ignoring it seems to be fine for now.
+                catch { }
+            }
+
             OnFinalize();
         }
 
@@ -159,7 +170,7 @@ namespace MCM.UI.UIExtenderEx
         {
             ModOptions.ExecuteDoneInternal(false, () =>
             {
-                if (ViewModel is { })
+                if (ViewModel is not null)
                     ExecuteDoneMethod?.Invoke(ViewModel);
             });
         }
@@ -170,7 +181,7 @@ namespace MCM.UI.UIExtenderEx
         {
             ModOptions.ExecuteCancelInternal(false, () =>
             {
-                if (ViewModel is { })
+                if (ViewModel is not null)
                     ExecuteCancelMethod?.Invoke(ViewModel);
             });
         }

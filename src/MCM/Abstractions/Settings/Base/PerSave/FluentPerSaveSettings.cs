@@ -46,7 +46,7 @@ namespace MCM.Abstractions.Settings.Base.PerSave
             UIVersion = uiVersion;
             SubGroupDelimiter = subGroupDelimiter;
             SettingPropertyGroups = settingPropertyGroups.ToList();
-            if (onPropertyChanged is { })
+            if (onPropertyChanged is not null)
                 PropertyChanged += onPropertyChanged;
 
             Presets = new Dictionary<string, ISettingsPresetBuilder>();

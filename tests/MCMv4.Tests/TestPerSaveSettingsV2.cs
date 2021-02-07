@@ -74,7 +74,7 @@ namespace MCMv4.Tests
 
         [SettingPropertyDropdown("Property Dropdown SelectedIndex 0", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown")]
-        public DropdownDefault<string> PropertyDropdownSelectedIndex0 { get; } = new DropdownDefault<string>(new string[]
+        public DropdownDefault<string> PropertyDropdownSelectedIndex0 { get; } = new(new string[]
         {
             "Test1",
             "Test2",
@@ -82,7 +82,7 @@ namespace MCMv4.Tests
         }, 0);
         [SettingPropertyDropdown("Property Dropdown SelectedIndex 1", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown")]
-        public DropdownDefault<string> PropertyDropdownSelectedIndex1 { get; } = new DropdownDefault<string>(new string[]
+        public DropdownDefault<string> PropertyDropdownSelectedIndex1 { get; } = new(new string[]
         {
             "Test1",
             "Test2",
@@ -90,7 +90,7 @@ namespace MCMv4.Tests
         }, 1);
         [SettingPropertyDropdown("Property Dropdown SelectedIndex 2", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown")]
-        public DropdownDefault<string> PropertyDropdownSelectedIndex2 { get; } = new DropdownDefault<string>(new string[]
+        public DropdownDefault<string> PropertyDropdownSelectedIndex2 { get; } = new(new string[]
         {
             "Test1",
             "Test2",
@@ -98,7 +98,7 @@ namespace MCMv4.Tests
         }, 2);
         [SettingPropertyDropdown("Property Dropdown Require Restart")]
         [SettingPropertyGroup("Dropdown")]
-        public DropdownDefault<string> PropertyDropdownRequireRestart { get; } = new DropdownDefault<string>(new string[]
+        public DropdownDefault<string> PropertyDropdownRequireRestart { get; } = new(new string[]
         {
             "Test1",
             "Test2",
@@ -106,7 +106,7 @@ namespace MCMv4.Tests
         }, 0);
         [SettingPropertyDropdown("Property Dropdown With Hint", RequireRestart = false, HintText = "Hint Text")]
         [SettingPropertyGroup("Dropdown")]
-        public DropdownDefault<string> PropertyDropdownWithHint { get; } = new DropdownDefault<string>(new string[]
+        public DropdownDefault<string> PropertyDropdownWithHint { get; } = new(new string[]
         {
             "Test1",
             "Test2",
@@ -116,43 +116,43 @@ namespace MCMv4.Tests
 
         [SettingPropertyDropdown("Property Dropdown Custom SelectedIndex 0", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown Custom")]
-        public DropdownDefault<CustomObject> PropertyDropdownCustomSelectedIndex0 { get; } = new DropdownDefault<CustomObject>(new CustomObject[]
+        public DropdownDefault<CustomObject> PropertyDropdownCustomSelectedIndex0 { get; } = new(new CustomObject[]
         {
-            new CustomObject("Test1"),
-            new CustomObject("Test2"),
-            new CustomObject("Test3"),
+            new("Test1"),
+            new("Test2"),
+            new("Test3"),
         }, 0);
         [SettingPropertyDropdown("Property Dropdown Custom SelectedIndex 1", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown Custom")]
-        public DropdownDefault<CustomObject> PropertyDropdownCustomSelectedIndex1 { get; } = new DropdownDefault<CustomObject>(new CustomObject[]
+        public DropdownDefault<CustomObject> PropertyDropdownCustomSelectedIndex1 { get; } = new(new CustomObject[]
         {
-            new CustomObject("Test1"),
-            new CustomObject("Test2"),
-            new CustomObject("Test3"),
+            new("Test1"),
+            new("Test2"),
+            new("Test3"),
         }, 1);
         [SettingPropertyDropdown("Property Dropdown Custom SelectedIndex 2", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown Custom")]
-        public DropdownDefault<CustomObject> PropertyDropdownCustomSelectedIndex2 { get; } = new DropdownDefault<CustomObject>(new CustomObject[]
+        public DropdownDefault<CustomObject> PropertyDropdownCustomSelectedIndex2 { get; } = new(new CustomObject[]
         {
-            new CustomObject("Test1"),
-            new CustomObject("Test2"),
-            new CustomObject("Test3"),
+            new("Test1"),
+            new("Test2"),
+            new("Test3"),
         }, 2);
         [SettingPropertyDropdown("Property Dropdown Custom Require Restart")]
         [SettingPropertyGroup("Dropdown Custom")]
-        public DropdownDefault<CustomObject> PropertyDropdownCustomRequireRestart { get; } = new DropdownDefault<CustomObject>(new CustomObject[]
+        public DropdownDefault<CustomObject> PropertyDropdownCustomRequireRestart { get; } = new(new CustomObject[]
         {
-            new CustomObject("Test1"),
-            new CustomObject("Test2"),
-            new CustomObject("Test3"),
+            new("Test1"),
+            new("Test2"),
+            new("Test3"),
         }, 0);
         [SettingPropertyDropdown("Property Dropdown Custom With Hint", RequireRestart = false, HintText = "Hint Text")]
         [SettingPropertyGroup("Dropdown Custom")]
-        public DropdownDefault<CustomObject> PropertyDropdownCustomWithHint { get; } = new DropdownDefault<CustomObject>(new CustomObject[]
+        public DropdownDefault<CustomObject> PropertyDropdownCustomWithHint { get; } = new(new CustomObject[]
         {
-            new CustomObject("Test1"),
-            new CustomObject("Test2"),
-            new CustomObject("Test3"),
+            new("Test1"),
+            new("Test2"),
+            new("Test3"),
         }, 0);
         public class CustomObject
         {

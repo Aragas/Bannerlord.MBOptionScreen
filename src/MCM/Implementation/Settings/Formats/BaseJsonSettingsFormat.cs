@@ -18,8 +18,8 @@ namespace MCM.Implementation.Settings.Formats
 {
     internal abstract class BaseJsonSettingsFormat : ISettingsFormat
     {
-        private readonly object _lock = new object();
-        private readonly Dictionary<string, object> _existingObjects = new Dictionary<string, object>();
+        private readonly object _lock = new();
+        private readonly Dictionary<string, object?> _existingObjects = new();
 
         protected readonly ILogger Logger;
         protected virtual JsonSerializerSettings JsonSerializerSettings { get; }
@@ -59,7 +59,7 @@ namespace MCM.Implementation.Settings.Formats
         // When I use the standard Populate method for some reason the existing dropdown
         // Gets replaced with a JToken object that ony contains the SelectedIndex.
         // An exception for the dropdown could be made, but a generic approach would be better
-        public BaseSettings? LoadFromJson(BaseSettings settings, string content)
+        public BaseSettings LoadFromJson(BaseSettings settings, string content)
         {
             lock (_lock)
             {
@@ -97,7 +97,7 @@ namespace MCM.Implementation.Settings.Formats
 
             return true;
         }
-        public virtual BaseSettings? Load(BaseSettings settings, string directoryPath, string filename)
+        public virtual BaseSettings Load(BaseSettings settings, string directoryPath, string filename)
         {
             var path = Path.Combine(directoryPath, filename + ".json");
             var file = new FileInfo(path);
@@ -107,14 +107,7 @@ namespace MCM.Implementation.Settings.Formats
                 var content = reader.ReadToEnd();
                 reader.Dispose();
 
-                var set = LoadFromJson(settings, content);
-                if (set is null)
-                {
-                    Save(settings, directoryPath, filename);
-                    return settings;
-                }
-                else
-                    return set;
+                return LoadFromJson(settings, content);
             }
             else
             {

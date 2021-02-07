@@ -1,4 +1,6 @@
-﻿using MCM.Abstractions.Settings.Base;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.Providers;
 using MCM.Extensions;
@@ -13,7 +15,6 @@ using System.Linq;
 
 using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Library;
-using TaleWorlds.Localization;
 
 namespace MCM.UI.GUI.ViewModels
 {
@@ -25,7 +26,7 @@ namespace MCM.UI.GUI.ViewModels
         private readonly IDictionary<string, BaseSettings>? _cachedPresets;
 
         public ModOptionsVM MainView { get; }
-        public UndoRedoStack URS { get; } = new UndoRedoStack();
+        public UndoRedoStack URS { get; } = new();
 
         public SettingsDefinition SettingsDefinition { get; }
         public BaseSettings SettingsInstance => BaseSettingsProvider.Instance!.GetSettings(SettingsDefinition.SettingsId)!;
@@ -69,7 +70,7 @@ namespace MCM.UI.GUI.ViewModels
             // {
                 _cachedPresets = SettingsInstance.GetAvailablePresets().ToDictionary(pair => pair.Key, pair => pair.Value());
 
-                PresetsSelector = new SelectorVM<SelectorItemVM>(new List<string> { new TextObject("{=SettingsVM_Custom}Custom").ToString() }.Concat(_cachedPresets.Keys.Select(x => new TextObject(x).ToString())), -1, null);
+                PresetsSelector = new SelectorVM<SelectorItemVM>(new List<string> { TextObjectHelper.Create("{=SettingsVM_Custom}Custom").ToString() }.Concat(_cachedPresets.Keys.Select(x => TextObjectHelper.Create(x).ToString())), -1, null);
                 PresetsSelector.ItemList[0].CanBeSelected = false;
 
                 RecalculateIndex();
@@ -85,7 +86,7 @@ namespace MCM.UI.GUI.ViewModels
 
             RefreshValues();
         }
-        private void Settings_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        private void Settings_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == BaseSettings.SaveTriggered)
                 return;
@@ -148,7 +149,7 @@ namespace MCM.UI.GUI.ViewModels
         }
         public void ResetSettings()
         {
-            ChangePreset(new TextObject("{=BaseSettings_Default}Default").ToString());
+            ChangePreset(TextObjectHelper.Create("{=BaseSettings_Default}Default").ToString());
         }
         public void SaveSettings()
         {

@@ -18,14 +18,14 @@ namespace MCM.Abstractions.Ref
         /// <inheritdoc/>
         public Type Type => typeof(T);
         /// <inheritdoc/>
-        public object Value
+        public object? Value
         {
-            get => _getter()!;
+            get => _getter();
             set
             {
-                if (_setter is { })
+                if (_setter is not null && value is T val)
                 {
-                    _setter((T) value);
+                    _setter(val);
                     OnPropertyChanged(nameof(Value));
                 }
             }
@@ -43,14 +43,14 @@ namespace MCM.Abstractions.Ref
         /// <inheritdoc/>
         public bool Equals(ProxyRef<T>? other)
         {
-            if (ReferenceEquals(null, other)) return false;
+            if (other is null) return false;
             if (ReferenceEquals(this, other)) return true;
             return _getter.Equals(other._getter) && Equals(_setter, other._setter);
         }
         /// <inheritdoc/>
         public override bool Equals(object? obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
             return Equals((ProxyRef<T>) obj);

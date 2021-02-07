@@ -21,7 +21,7 @@ namespace MCM.Abstractions.Settings.Base.PerSave
         {
             using var reader = XmlReader.Create(xmlStream, new XmlReaderSettings { IgnoreComments = true, IgnoreWhitespace = true });
             var serializer = new XmlSerializer(typeof(SettingsXmlModel));
-            if (!serializer.CanDeserialize(reader) || !(serializer.Deserialize(reader) is SettingsXmlModel settingsXmlModel))
+            if (!serializer.CanDeserialize(reader) || serializer.Deserialize(reader) is not SettingsXmlModel settingsXmlModel)
                 return null;
 
             var subGroupDelimiter = settingsXmlModel.SubGroupDelimiter[0];

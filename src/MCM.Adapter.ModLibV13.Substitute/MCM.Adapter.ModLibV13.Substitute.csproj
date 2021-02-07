@@ -1,0 +1,15 @@
+﻿<!--EXTERNAL_PROPERTIES: GameVersion-->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Authors>mipen, Aragas</Authors>
+    <AssemblyName>ModLib.Definitions</AssemblyName>
+    <RootNamespace>ModLib.Definitions</RootNamespace>
+    <Configurations>Debug;Release</Configurations>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

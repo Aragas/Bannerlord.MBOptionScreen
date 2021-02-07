@@ -1,4 +1,6 @@
-﻿using HarmonyLib;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using HarmonyLib;
 
 using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
@@ -12,8 +14,6 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
 {
     public sealed class SettingsPropertyDefinitionWrapper : ISettingsPropertyDefinition
     {
-        /// <inheritdoc/>
-        public string SettingsId { get; }
         /// <inheritdoc/>
         public IRef PropertyReference { get; }
         /// <inheritdoc/>
@@ -54,7 +54,6 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
         {
             var type = @object.GetType();
 
-            var settingsIdProperty = AccessTools.Property(type, nameof(SettingsId));
             var settingTypeProperty = AccessTools.Property(type, nameof(SettingType));
             var propertyProperty = AccessTools.Property(type, nameof(PropertyReference));
             var displayNameProperty = AccessTools.Property(type, nameof(DisplayName));
@@ -75,7 +74,6 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
             var subGroupDelimiterProperty= AccessTools.Property(type, nameof(SubGroupDelimiter));
 
 
-            SettingsId = settingsIdProperty?.GetValue(@object) as string ?? "ERROR";
             SettingType = settingTypeProperty?.GetValue(@object) is { } settingTypeObject
                 ? Enum.TryParse<SettingType>(settingTypeObject.ToString(), out var resultEnum)
                     ? resultEnum
@@ -87,20 +85,20 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
 
             DisplayName = displayNameProperty?.GetValue(@object) switch
             {
-                string str => new TextObject(str).ToString(),
+                string str => TextObjectHelper.Create(str).ToString(),
                 TextObject to => to.ToString(),
-                _ => DisplayName
+                _ => "ERROR"
             };
             HintText = hintTextProperty?.GetValue(@object) switch
             {
-                string str => new TextObject(str).ToString(),
+                string str => TextObjectHelper.Create(str).ToString(),
                 TextObject to => to.ToString(),
-                _ => HintText
+                _ => "ERROR"
             };
             Order = orderProperty?.GetValue(@object) as int? ?? -1;
             RequireRestart = requireRestartProperty?.GetValue(@object) as bool? ?? true;
 
-            GroupName = new TextObject(groupNameProperty?.GetValue(@object) as string ?? string.Empty).ToString();
+            GroupName = TextObjectHelper.Create(groupNameProperty?.GetValue(@object) as string ?? string.Empty).ToString();
             GroupOrder = groupOrderProperty?.GetValue(@object) as int? ?? -1;
 
             MinValue = minValueProperty?.GetValue(@object) is { } minVal ? minVal as decimal? ?? 0 : 0;

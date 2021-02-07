@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 using TaleWorlds.Core;
@@ -63,6 +64,8 @@ namespace MCM.Implementation.Settings.Providers
             return null;
         }
 
+        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
+        [SuppressMessage("ReSharper", "ExplicitCallerInfoArgument")]
         public override void SaveSettings(BaseSettings settings)
         {
             foreach (var settingsContainer in _settingsContainers)

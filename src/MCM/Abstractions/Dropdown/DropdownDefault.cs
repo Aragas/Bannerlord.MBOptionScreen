@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 using TaleWorlds.Core.ViewModelCollection;
-using TaleWorlds.Localization;
 
 namespace MCM.Abstractions.Dropdown
 {
@@ -12,7 +13,7 @@ namespace MCM.Abstractions.Dropdown
     /// </summary>
     public sealed class DropdownDefault<T> : List<T>, IEqualityComparer<DropdownDefault<T>>
     {
-        public static DropdownDefault<T> Empty => new DropdownDefault<T>(Enumerable.Empty<T>(), 0);
+        public static DropdownDefault<T> Empty => new(Enumerable.Empty<T>(), 0);
 
         private SelectorVM<SelectorItemVM> _selector;
         private int _selectedIndex;
@@ -21,7 +22,7 @@ namespace MCM.Abstractions.Dropdown
         {
             get
             {
-                _selector.Refresh(this.Select(x => new TextObject(x?.ToString() ?? "ERROR").ToString()), SelectedIndex, OnSelectionChanged);
+                _selector.Refresh(this.Select(x => TextObjectHelper.Create(x?.ToString() ?? "ERROR").ToString()), SelectedIndex, OnSelectionChanged);
                 return _selector;
             }
             set
@@ -61,7 +62,7 @@ namespace MCM.Abstractions.Dropdown
 
         public DropdownDefault(IEnumerable<T> values, int selectedIndex) : base(values)
         {
-            var select = this.Select(x => new TextObject(x?.ToString() ?? "ERROR").ToString());
+            var select = this.Select(x => TextObjectHelper.Create(x?.ToString() ?? "ERROR").ToString());
             _selector = new SelectorVM<SelectorItemVM>(select, selectedIndex, OnSelectionChanged);
 
             if (SelectedIndex != 0 && SelectedIndex >= Count)
@@ -71,19 +72,19 @@ namespace MCM.Abstractions.Dropdown
         private void OnSelectionChanged(SelectorVM<SelectorItemVM> obj) => _selectedIndex = obj.SelectedIndex;
 
         /// <inheritdoc/>
-        public bool Equals(DropdownDefault<T> x, DropdownDefault<T> y) => x.SelectedIndex == y.SelectedIndex;
+        public bool Equals(DropdownDefault<T>? x, DropdownDefault<T>? y) => x?.SelectedIndex == y?.SelectedIndex;
         /// <inheritdoc/>
         public int GetHashCode(DropdownDefault<T> obj) => obj.SelectedIndex;
 
         /// <inheritdoc/>
         public override int GetHashCode() => GetHashCode(this);
         /// <inheritdoc/>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is DropdownDefault<T> dropdown)
                 return Equals(this, dropdown);
 
-            return base.Equals(obj);
+            return ReferenceEquals(this, obj);
         }
     }
 }

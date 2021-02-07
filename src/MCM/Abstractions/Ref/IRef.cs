@@ -12,6 +12,6 @@ namespace MCM.Abstractions.Ref
         /// Underlying type of the value
         /// </summary>
         Type Type { get; }
-        object Value { get; set; }
+        object? Value { get; set; }
     }
 }

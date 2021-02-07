@@ -11,6 +11,14 @@ on:
       - 'src/MCM/**.cs'
       - 'docs/**'
 
+env:
+  # Disable the .NET logo in the console output.
+  DOTNET_NOLOGO: true
+  # Disable the .NET first time experience to skip caching NuGet packages and speed up the build.
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  # Disable sending .NET CLI telemetry to Microsoft.
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
 jobs:
   docfx:
     name: DocFX documentation
@@ -25,33 +33,18 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@master
       with:
-        dotnet-version: 3.1.x
-      env:
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
-
+        dotnet-version: 5.0.x
     - name: Setup BUTR GPR
       uses: actions/setup-dotnet@master
       with:
         source-url: https://nuget.pkg.github.com/BUTR/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
-    - name: Download docfx
-      uses: i3h/download-release-asset@v1
+    - name: Setup NuGet
+      uses: nuget/setup-nuget@v1
       with:
-        owner: dotnet
-        repo: docfx
-        tag: latest
-        file: docfx.zip
-
-    - name: Extract docfx
-      uses: DuckSoft/extract-7z-action@v1.0
-      with:
-        pathSource: docfx.zip
-        pathTarget: docfx
+        nuget-version: 'latest'
 
     - name: Generating Newtonsoft.Json xref maps
       run: >-
@@ -59,40 +52,26 @@ jobs:
             Newtonsoft.Json 11.0.2 netstandard2.0 `
             https://www.newtonsoft.com/json/help/html/ `
             $PWD/docs/xrefs/Newtonsoft.Json-xrefmap.yml
-      env:
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
       shell: pwsh
 
-    - name: Copy root README
-      run: Copy-Item "README.md" -Destination "docs/index.md"
+    - name: Build MCM and DocFx.Plugin.LastModified
+      run: >-
+        dotnet build src/MCM/MCM.csproj;
+        dotnet build build/DocFx.Plugin.LastModified/DocFx.Plugin.LastModified --configuration Release --output docs/_template/last-modified/plugins;
       shell: pwsh
 
-    - name: Build MCM
-      run: dotnet build src/MCM/MCM.csproj
-      env:
-        DOCFX: true
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
-      shell: pwsh
-
-    - name: Build DocFx.Plugin.LastModified
-      run: dotnet build build/DocFx.Plugin.LastModified/DocFx.Plugin.LastModified --configuration Release --output docs/_template/last-modified/plugins
-      shell: pwsh
-
-    - name: DocFX metadata
-      run: docfx/docfx.exe metadata docs/docfx.json
-      env:
-        DOCFX: true
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
-      shell: pwsh
-
-    - name: DocFX build
-      run: docfx/docfx.exe build docs/docfx.json;
-      env:
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+    - name: Run DocFX
+      run: >-
+        Copy-Item "README.md" -Destination "docs/index.md";
+        nuget install docfx.console -ExcludeVersion;
+        if ($${{runner.os == 'Windows'}}) {
+          docfx.console/tools/docfx.exe metadata docs/docfx.json;
+          docfx.console/tools/docfx.exe build docs/docfx.json;
+        }
+        else {
+          mono docfx.console/tools/docfx.exe metadata docs/docfx.json;
+          mono docfx.console/tools/docfx.exe build docs/docfx.json;
+        }
       shell: pwsh
 
     - name: Deploy DocFX

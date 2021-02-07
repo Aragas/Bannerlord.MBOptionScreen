@@ -1,4 +1,6 @@
-﻿using TaleWorlds.Core.ViewModelCollection;
+﻿using MCM.Utils;
+
+using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
 
@@ -71,10 +73,10 @@ namespace MCM.Abstractions.Dropdown
         {
             base.RefreshValues();
 
-            _stringItem = Element.ToString();
+            _stringItem = Element.ToString() ?? "ERROR";
 
-            if (_hintObj is { })
-                _hint = new HintViewModel(_hintObj.ToString());
+            if (_hintObj is not null)
+                _hint = HintViewModelUtils.Create(_hintObj);
         }
     }
 }

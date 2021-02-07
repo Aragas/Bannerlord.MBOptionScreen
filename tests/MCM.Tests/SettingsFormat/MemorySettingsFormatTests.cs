@@ -12,7 +12,7 @@ namespace MCM.Tests.SettingsFormat
     public class MemorySettingsFormatTests : BaseSettingsFormatTests
     {
         [OneTimeSetUp]
-        public void OneTimeSetUp()
+        public void OneTimeSetUp1()
         {
             Format = new MemorySettingsFormat();
 

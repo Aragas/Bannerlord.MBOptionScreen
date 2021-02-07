@@ -7,29 +7,29 @@ namespace MCM.UI.Actions
     internal sealed class ComplexReferenceTypeAction<T> : IAction where T : class
     {
         public IRef Context { get; }
-        public object Value
+        public object? Value
         {
             get
             {
-                DoFunction((T) Context.Value);
+                DoFunction(Context.Value as T);
                 return Context.Value;
             }
         }
-        public object Original
+        public object? Original
         {
             get
             {
-                UndoFunction((T) Context.Value);
+                UndoFunction(Context.Value as T);
                 return Context.Value;
             }
         }
-        private Action<T> DoFunction { get; }
-        private Action<T> UndoFunction { get; }
+        private Action<T?> DoFunction { get; }
+        private Action<T?> UndoFunction { get; }
 
         /// <summary>
         /// new ProxyRef(() => Value, null)
         /// </summary>
-        public ComplexReferenceTypeAction(IRef context, Action<T> doFunction, Action<T> undoFunction)
+        public ComplexReferenceTypeAction(IRef context, Action<T?> doFunction, Action<T?> undoFunction)
         {
             Context = context;
             DoFunction = doFunction;

@@ -1,9 +1,36 @@
 name: Test and Publish
 
 on:
+  repository_dispatch:
+    types:
+      # If a new version of the game is released, test the repo against it.
+      # This way we will always know if the repo is broken on a new update.
+      - game_version_update
   push:
     branches:
       - master
+      - dev
+    paths:
+      - '.github/workflows/test-and-publish.yml'
+      - 'src/**'
+      - 'build/**'
+  pull_request:
+    branches:
+      - dev
+    # will be triggereg when undrafting or requesting review
+    types: [review_requested, ready_for_review]
+    paths:
+      - '.github/workflows/test-and-publish.yml'
+      - 'src/**'
+      - 'build/**'
+
+env:
+  # Disable the .NET logo in the console output.
+  DOTNET_NOLOGO: true
+  # Disable the .NET first time experience to skip caching NuGet packages and speed up the build.
+  DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
+  # Disable sending .NET CLI telemetry to Microsoft.
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
 
 jobs:
   test:
@@ -16,19 +43,17 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@master
       with:
+        dotnet-version: 5.0.x
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@master
+      with:
         dotnet-version: 3.1.x
-      env:
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
-
     - name: Setup BUTR GPR
       uses: actions/setup-dotnet@master
       with:
         source-url: https://nuget.pkg.github.com/BUTR/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Download DepotDownloader_2.3.6
       uses: i3h/download-release-asset@v1
@@ -37,28 +62,18 @@ jobs:
         repo: DepotDownloader
         tag: DepotDownloader_2.3.6
         file: depotdownloader-2.3.6.zip
-
     - name: Extract DepotDownloader_2.3.6
       uses: DuckSoft/extract-7z-action@v1.0
       with:
         pathSource: depotdownloader-2.3.6.zip
         pathTarget: depotdownloader
 
-    - name: Download Bannerlord binaries (Stable)
+    - name: Download Bannerlord binaries
       run: >-
         dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -beta ${{secrets.SYNCED_GAME_STABLE_VERSION}} -username ${{secrets.STEAM_LOGIN}}
-        -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord-stable
-      env:
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
-      shell: pwsh
-    - name: Download Bannerlord binaries (Beta)
-      run: >-
+        -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord-stable;
         dotnet depotdownloader/DepotDownloader.dll -app 261550 -depot 261551 -beta ${{secrets.SYNCED_GAME_BETA_VERSION}} -username ${{secrets.STEAM_LOGIN}}
-        -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord-beta
-      env:
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+        -password ${{secrets.STEAM_PASSWORD}} -filelist ./.github/resources/FileFilters.regexp -dir bannerlord-beta;
       shell: pwsh
 
     - name: Download opencover.4.7.922
@@ -68,7 +83,6 @@ jobs:
         repo: opencover
         tag: 4.7.922
         file: opencover.4.7.922.zip
-
     - name: Extract opencover.4.7.922
       uses: DuckSoft/extract-7z-action@v1.0
       with:
@@ -81,26 +95,21 @@ jobs:
           $stable_version=$stable_version.substring(1);
           $beta_version=$env:BETA_VERSION;
           $beta_version=$beta_version.substring(1);
-          dotnet test "src/Mod Configuration Menu.sln" --configuration Stable_Debug -p:GameVersion=$stable_version -p:GameFolder="$PWD/bannerlord-stable";
-          dotnet test "src/Mod Configuration Menu.sln" --configuration Stable_Release -p:GameVersion=$stable_version -p:GameFolder="$PWD/bannerlord-stable";
-          dotnet test "src/Mod Configuration Menu.sln" --configuration Beta_Debug -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord-beta";
-          dotnet test "src/Mod Configuration Menu.sln" --configuration Beta_Release -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord-beta";
+          dotnet test "tests/MCM.Tests/MCM.Tests.csproj" --configuration Stable_Debug -p:GameVersion=$stable_version -p:GameFolder="$PWD/bannerlord-stable";
+          dotnet test "tests/MCM.Tests/MCM.Tests.csproj" --configuration Stable_Release -p:GameVersion=$stable_version -p:GameFolder="$PWD/bannerlord-stable";
+          dotnet test "tests/MCM.Tests/MCM.Tests.csproj" --configuration Beta_Debug -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord-beta";
+          dotnet test "tests/MCM.Tests/MCM.Tests.csproj" --configuration Beta_Release -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord-beta";
       env:
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
         STABLE_VERSION: ${{secrets.SYNCED_GAME_STABLE_VERSION}}
         BETA_VERSION: ${{secrets.SYNCED_GAME_BETA_VERSION}}
       shell: pwsh
 
     - name: Test Coverage
       run: >-
-          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test src/MCM.Tests/MCM.Tests.csproj --configuration Stable_Debug --no-build" -filter:"+[MCMv*.*]* -[MCM*.*Tests]*" -output:coverage_mcm_stable_debug.xml -mergebyhash;
-          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test src/MCM.Tests/MCM.Tests.csproj --configuration Stable_Release --no-build" -filter:"+[MCMv*.*]* -[MCM*.*Tests]*" -output:coverage_mcm_stable_release.xml -mergebyhash;
-          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test src/MCM.Tests/MCM.Tests.csproj --configuration Beta_Debug --no-build" -filter:"+[MCMv*.*]* -[MCM*.*Tests]*" -output:coverage_mcm_beta_debug.xml -mergebyhash;
-          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test src/MCM.Tests/MCM.Tests.csproj --configuration Beta_Release --no-build" -filter:"+[MCMv*.*]* -[MCM*.*Tests]*" -output:coverage_mcm_beta_release.xml -mergebyhash;
-      env:
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
+          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test tests/MCM.Tests/MCM.Tests.csproj --configuration Stable_Debug --no-build" -filter:"+[MCMv*]* -[MCM*.*Tests]*" -output:coverage_mcm_stable_debug.xml -mergebyhash;
+          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test tests/MCM.Tests/MCM.Tests.csproj --configuration Stable_Release --no-build" -filter:"+[MCMv*]* -[MCM*.*Tests]*" -output:coverage_mcm_stable_release.xml -mergebyhash;
+          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test tests/MCM.Tests/MCM.Tests.csproj --configuration Beta_Debug --no-build" -filter:"+[MCMv*]* -[MCM*.*Tests]*" -output:coverage_mcm_beta_debug.xml -mergebyhash;
+          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test tests/MCM.Tests/MCM.Tests.csproj --configuration Beta_Release --no-build" -filter:"+[MCMv*]* -[MCM*.*Tests]*" -output:coverage_mcm_beta_release.xml -mergebyhash;
       shell: pwsh
 
     - name: ReportGenerator
@@ -127,17 +136,16 @@ jobs:
 
     # ignore Stable_Release and treat is as Release
     - name: Build MCM (Release)
+      if: ${{ github.ref == 'refs/heads/master' }}
       run: >-
         mkdir bannerlord-publish;
         dotnet build src/MCM.NexusMods/MCM.NexusMods.csproj --configuration Stable_Release -p:GameFolder="$PWD/bannerlord-publish";
         dotnet build src/MCM.Implementation.MCMv3/MCM.Implementation.MCMv3.csproj --configuration Stable_Release -p:GameFolder="$PWD/bannerlord-publish";
         dotnet build src/MCM.Implementation.ModLib/MCM.Implementation.ModLib.csproj --configuration Stable_Release -p:GameFolder="$PWD/bannerlord-publish";
-      env:
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
       shell: pwsh
 
     - name: Upload Bannerlord folder
+      if: ${{ github.ref == 'refs/heads/master' }}
       uses: actions/upload-artifact@v2
       with:
         name: bannerlord
@@ -150,6 +158,7 @@ jobs:
   publish-on-nuget:
     name: Publish on NuGet
     runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/master' }}
     needs: test
     steps:
     - name: Checkout Repository
@@ -158,25 +167,20 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@master
       with:
+        dotnet-version: 5.0.x
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@master
+      with:
         dotnet-version: 3.1.x
-      env:
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
-
     - name: Setup BUTR GPR
       uses: actions/setup-dotnet@master
       with:
         source-url: https://nuget.pkg.github.com/BUTR/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Install Bannerlord.ChangelogParser
       run: dotnet tool install -g Bannerlord.ChangelogParser
-      env:
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
       shell: pwsh
 
     - name: Run ChangelogParser
@@ -193,16 +197,10 @@ jobs:
 
     - name: Pack MCM (Release)
       run: dotnet pack src/MCM/MCM.csproj --configuration Release -o "./packages";
-      env:
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
       shell: pwsh
 
     - name: Push to NuGet
       run: dotnet nuget push "./packages/*.nupkg" -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json
-      env:
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
       shell: pwsh
 
     - name: Push to GPR
@@ -217,9 +215,9 @@ jobs:
 #          NEXUS          #
 ###########################
   publish-on-nexusmods:
-    if: ${{ false }}
     name: Publish on NexusMods
     runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/master' && false }}
     needs: test
     steps:
     - name: Checkout Repository
@@ -228,19 +226,17 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@master
       with:
+        dotnet-version: 5.0.x
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@master
+      with:
         dotnet-version: 3.1.x
-      env:
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
-
     - name: Setup BUTR GPR
       uses: actions/setup-dotnet@master
       with:
         source-url: https://nuget.pkg.github.com/BUTR/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Download bannerlord folder
       uses: actions/download-artifact@v2
@@ -250,15 +246,13 @@ jobs:
 
     - name: Zip MCM.Standalone
       run: 7z a -tzip MCM.Standalone.zip ./bannerlord/*
-      shell: pwsh
+      #shell: pwsh
+      # pwsh casues it to include the root folder
 
     - name: Install Bannerlord.ChangelogParser and Bannerlord.NexusmodsUploader
       run: >-
         dotnet tool install -g Bannerlord.ChangelogParser;
         dotnet tool install -g Bannerlord.NexusmodsUploader;
-      env:
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
       shell: pwsh
 
     - name: Run ChangelogParser
@@ -283,13 +277,12 @@ jobs:
         -p "$PWD/MCM.Standalone.zip";
       env:
         NEXUSMODS_COOKIES_JSON: '${{secrets.NEXUSMODS_COOKIES_JSON}}'
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
       shell: pwsh
 
     - name: Password protect Screenshots
       run: 7z a -p${{secrets.SCREENSHOTS_PASSWORD}} Screenshots.7z ./Screenshots/*
-      shell: pwsh
+      #shell: pwsh
+      # pwsh casues it to include the root folder
 
     - name: Upload Screenshots Artifact
       uses: actions/upload-artifact@v2
@@ -303,6 +296,7 @@ jobs:
   publish-on-github:
     name: Publish on GitHub
     runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/master' }}
     needs: test
     steps:
     - name: Checkout Repository
@@ -311,19 +305,17 @@ jobs:
     - name: Setup .NET Core
       uses: actions/setup-dotnet@master
       with:
+        dotnet-version: 5.0.x
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@master
+      with:
         dotnet-version: 3.1.x
-      env:
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
-
     - name: Setup BUTR GPR
       uses: actions/setup-dotnet@master
       with:
         source-url: https://nuget.pkg.github.com/BUTR/index.json
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
 
     - name: Download bannerlord folder
       uses: actions/download-artifact@v2
@@ -333,15 +325,13 @@ jobs:
 
     - name: Zip MCM.Standalone
       run: 7z a -tzip MCM.Standalone.zip ./bannerlord/*
-      shell: pwsh
+      #shell: pwsh
+      # pwsh casues it to include the root folder
 
     - name: Install Bannerlord.ChangelogParser and Bannerlord.NexusmodsUploader
       run: >-
         dotnet tool install -g Bannerlord.ChangelogParser;
         dotnet tool install -g Bannerlord.NexusmodsUploader;
-      env:
-        DOTNET_NOLOGO: 1
-        DOTNET_CLI_TELEMETRY_OPTOUT: 1
       shell: pwsh
 
     - name: Run ChangelogParser
@@ -367,7 +357,6 @@ jobs:
         prerelease: false
       env:
         GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
     - name: Upload Release Asset
       id: upload-release-asset
       uses: actions/upload-release-asset@v1

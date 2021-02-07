@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <AssemblyName>MCMv4.Tests</AssemblyName>
-    <ModuleName>Bannerlord.MBOptionScreen.MCMv4.Tests</ModuleName>
+
     <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
   </PropertyGroup>
 
@@ -14,6 +14,7 @@
     </PackageReference>
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
     <ProjectReference Include="..\..\src\MCM\MCM.csproj" />
+    <ProjectReference Include="..\ModLibV1.Tests\ModLibV1.Tests.csproj" />
   </ItemGroup>
 
 </Project>

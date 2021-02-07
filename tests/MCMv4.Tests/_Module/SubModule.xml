@@ -8,6 +8,7 @@
   <MultiplayerModule value="false" />
   <DependedModules>
     <DependedModule Id="Bannerlord.Harmony" />
+    <!--<DependedModule Id="Bannerlord.ModuleLoader" />-->
     <DependedModule Id="Bannerlord.ButterLib" />
     <DependedModule Id="Bannerlord.UIExtenderEx" />
     <DependedModule Id="Bannerlord.MBOptionScreen"/>
@@ -15,6 +16,7 @@
   <!-- Prototype -->
   <DependedModuleMetadatas>
     <DependedModuleMetadata id="Bannerlord.Harmony" order="LoadBeforeThis" version="v$harmonyversion$" />
+    <!--<DependedModuleMetadata id="Bannerlord.ModuleLoader" order="LoadBeforeThis" version="v$moduleloaderversion$" />-->
     <DependedModuleMetadata id="Bannerlord.ButterLib" order="LoadBeforeThis" version="v$butterlibversion$" />
     <DependedModuleMetadata id="Bannerlord.UIExtenderEx" order="LoadBeforeThis" version="v$uiextenderversion$" />
     <DependedModuleMetadata id="Bannerlord.MBOptionScreen" order="LoadBeforeThis" version="v$version$" />

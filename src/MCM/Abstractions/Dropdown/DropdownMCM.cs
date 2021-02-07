@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
-
-using TaleWorlds.Localization;
 
 namespace MCM.Abstractions.Dropdown
 {
@@ -12,7 +12,7 @@ namespace MCM.Abstractions.Dropdown
     public sealed class DropdownMCM<T> : List<T>, IEqualityComparer<DropdownMCM<T>>
         where T : class
     {
-        public static DropdownMCM<T> Empty => new DropdownMCM<T>(Enumerable.Empty<T>(), 0);
+        public static DropdownMCM<T> Empty => new(Enumerable.Empty<T>(), 0);
 
         private MCMSelectorVM<DropdownSelectorItemVM, string> _selector;
         private int _selectedIndex;
@@ -21,7 +21,7 @@ namespace MCM.Abstractions.Dropdown
         {
             get
             {
-                _selector.Refresh(this.Select(x => new TextObject(x?.ToString() ?? "ERROR").ToString()), SelectedIndex, OnSelectionChanged);
+                _selector.Refresh(this.Select(x => TextObjectHelper.Create(x?.ToString() ?? "ERROR").ToString()), SelectedIndex, OnSelectionChanged);
                 return _selector;
             }
             set
@@ -61,7 +61,7 @@ namespace MCM.Abstractions.Dropdown
 
         public DropdownMCM(IEnumerable<T> values, int selectedIndex) : base(values)
         {
-            var select = this.Select(x => new TextObject(x?.ToString() ?? "ERROR").ToString());
+            var select = this.Select(x => TextObjectHelper.Create(x?.ToString() ?? "ERROR").ToString());
             _selector = new MCMSelectorVM<DropdownSelectorItemVM, string>(select, selectedIndex, OnSelectionChanged);
 
             if (SelectedIndex != 0 && SelectedIndex >= Count)
@@ -71,19 +71,19 @@ namespace MCM.Abstractions.Dropdown
         private void OnSelectionChanged(MCMSelectorVM<DropdownSelectorItemVM> obj) => _selectedIndex = obj.SelectedIndex;
 
         /// <inheritdoc/>
-        public bool Equals(DropdownMCM<T> x, DropdownMCM<T> y) => x.SelectedIndex == y.SelectedIndex;
+        public bool Equals(DropdownMCM<T>? x, DropdownMCM<T>? y) => x?.SelectedIndex == y?.SelectedIndex;
         /// <inheritdoc/>
         public int GetHashCode(DropdownMCM<T> obj) => obj.SelectedIndex;
 
         /// <inheritdoc/>
         public override int GetHashCode() => GetHashCode(this);
         /// <inheritdoc/>
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is DropdownMCM<T> dropdown)
                 return Equals(this, dropdown);
 
-            return base.Equals(obj);
+            return ReferenceEquals(this, obj);
         }
     }
 }

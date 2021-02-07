@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <AssemblyName>MBOv1.Tests</AssemblyName>
-    <ModuleName>Bannerlord.MBOptionScreen.MBOv1.Tests</ModuleName>
+
     <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
   </PropertyGroup>
 
@@ -13,7 +13,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
-    <Reference Include="MBOv1" HintPath="../../src/MCM.Implementation.MBO/_Module/bin/Win64_Shipping_Client/MBOptionScreen.dll" Private="false" />
+    <Reference Include="MBOv1" HintPath="../../src/MCM.Adapter.MBO/_Module/bin/Win64_Shipping_Client/MBOptionScreen.dll" Private="false" />
   </ItemGroup>
 
 </Project>

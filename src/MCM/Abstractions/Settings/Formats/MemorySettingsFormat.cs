@@ -8,16 +8,16 @@ namespace MCM.Abstractions.Settings.Formats
 {
     public sealed class MemorySettingsFormat : ISettingsFormat
     {
-        private readonly Dictionary<string, BaseSettings> _settings = new Dictionary<string, BaseSettings>();
+        private readonly Dictionary<string, BaseSettings> _settings = new();
 
         /// <inheritdoc/>
         public IEnumerable<string> FormatTypes { get; } = new [] { "memory" };
 
         /// <inheritdoc/>
-        public BaseSettings? Load(BaseSettings settings, string directoryPath, string filename)
+        public BaseSettings Load(BaseSettings settings, string directoryPath, string filename)
         {
             if (_settings.TryGetValue(Path.Combine(directoryPath, filename), out var sett) || !ReferenceEquals(settings, sett))
-                SettingsUtils.OverrideSettings(settings, sett);
+                SettingsUtils.OverrideSettings(settings, sett!);
             return settings;
         }
 

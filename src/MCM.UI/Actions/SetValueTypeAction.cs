@@ -5,8 +5,8 @@ namespace MCM.UI.Actions
     internal sealed class SetValueTypeAction<T> : IAction where T : struct
     {
         public IRef Context { get; }
-        public object Value { get; }
-        public object Original { get; }
+        public object? Value { get; }
+        public object? Original { get; }
 
         public SetValueTypeAction(IRef context, T value)
         {

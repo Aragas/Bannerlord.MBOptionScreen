@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+// ReSharper disable once CheckNamespace
 namespace ComparerExtensions
 {
     /// <summary>
@@ -10,13 +11,6 @@ namespace ComparerExtensions
     /// <typeparam name="T">The type being compared.</typeparam>
     internal abstract class KeyComparer<T> : IComparer<T>, IComparer
     {
-        /// <summary>
-        /// Initializes a new instance of a KeyComparer.
-        /// </summary>
-        protected KeyComparer()
-        {
-        }
-
         /// <summary>
         /// Compares the given values by key.
         /// </summary>
@@ -30,7 +24,7 @@ namespace ComparerExtensions
         /// </returns>
         public abstract int Compare(T x, T y);
 
-        int IComparer.Compare(object x, object y) => Compare((T) x, (T) y);
+        int IComparer.Compare(object? x, object? y) => x is T x1 && y is T y1 ? Compare(x1, y1) : 0;
 
         /// <summary>
         /// Creates a new KeyComparer that sorts using the results of the key selector.

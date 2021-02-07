@@ -23,9 +23,11 @@ namespace MCM.Implementation
 {
     public sealed class MCMImplementationSubModule : MBSubModuleBase
     {
-        protected override void OnSubModuleLoad()
+        private bool ServiceRegistrationWasCalled { get; set; }
+
+        public void OnServiceRegistration()
         {
-            base.OnSubModuleLoad();
+            ServiceRegistrationWasCalled = true;
 
             if (this.GetServices() is { } services)
             {
@@ -49,6 +51,14 @@ namespace MCM.Implementation
             }
         }
 
+        protected override void OnSubModuleLoad()
+        {
+            base.OnSubModuleLoad();
+
+            if (!ServiceRegistrationWasCalled)
+                OnServiceRegistration();
+        }
+
 
         protected override void OnGameStart(Game game, IGameStarter gameStarterObject)
         {
@@ -56,11 +66,21 @@ namespace MCM.Implementation
 
             if (game.GameType is Campaign)
             {
+                /*
                 CampaignEvents.OnGameLoadedEvent.AddNonSerializedListener(this, _ =>
                 {
                     var settingsProvider = this.GetServiceProvider()?.GetRequiredService<BaseSettingsProvider>();
                     settingsProvider?.OnGameStarted(game);
                 });
+                CampaignEvents.OnNewGameCreatedEvent.AddNonSerializedListener(this, _ =>
+                {
+                    var settingsProvider = this.GetServiceProvider()?.GetRequiredService<BaseSettingsProvider>();
+                    settingsProvider?.OnGameStarted(game);
+                });
+                */
+
+                var settingsProvider = this.GetServiceProvider()?.GetRequiredService<BaseSettingsProvider>();
+                settingsProvider?.OnGameStarted(game);
 
                 CampaignGameStarter gameStarter = (CampaignGameStarter) gameStarterObject;
                 gameStarter.AddBehavior(this.GetServiceProvider().GetRequiredService<PerSaveCampaignBehavior>());

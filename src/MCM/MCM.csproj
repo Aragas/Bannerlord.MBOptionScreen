@@ -2,6 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <Authors>Aragas, mipen</Authors>
     <AssemblyName>MCMv4</AssemblyName>
     <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
@@ -11,7 +12,6 @@
     <PackageId>Bannerlord.MCM</PackageId>
     <PackageDescription>A library for easy Setting integration. Contains the abstraction library, requires the Standalone dependency to work!</PackageDescription>
     <Title>Mod Configuration Menu</Title>
-    <Authors>Aragas, mipen</Authors>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>MCM-128-w-2.png</PackageIcon>
@@ -21,19 +21,37 @@
   </ItemGroup>
   <!--NuGet Package-->
 
+  <!--Windows Forms-->
   <ItemGroup>
-    <InternalsVisibleTo Include="MCMv4.Custom.ScreenTests" />
-    <InternalsVisibleTo Include="MCM.Tests" />
+    <_SDKImplicitReference Include="System.Windows.Forms" />
   </ItemGroup>
+  <!--Windows Forms-->
 
   <ItemGroup>
     <PackageReference Include="Bannerlord.BuildResources" Version="$(BuildResourcesVersion)">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Bannerlord.ButterLib" Version="$(ButterLibVersion)" IncludeAssets="compile" />
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
     <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" IncludeAssets="compile" />
+    <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.0" IncludeAssets="compile" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.0.0" IncludeAssets="compile" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" IncludeAssets="compile" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.0.0" IncludeAssets="compile" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" IncludeAssets="compile" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="2.0.0" IncludeAssets="compile" />
+    <PackageReference Include="Microsoft.Extensions.Primitives" Version="2.0.0" IncludeAssets="compile" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" IncludeAssets="compile" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="MCMv4.Custom.ScreenTests" />
+    <InternalsVisibleTo Include="MCM.Tests" />
   </ItemGroup>
 
 </Project>

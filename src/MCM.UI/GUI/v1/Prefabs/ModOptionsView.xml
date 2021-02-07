@@ -128,7 +128,7 @@
                           <Children>
                             <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center" MarginLeft="10" MarginRight="10"
                                                 Brush="MCM_v1.Text" RealText="@SearchText" IsObfuscationEnabled="false"/>
-                            
+
                             <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="25" SuggestedHeight="24" VerticalAlignment="Center" HorizontalAlignment="Right" MarginRight="15"
                                     Sprite="Encyclopedia\icon_search" IsDisabled="true"/>
                           </Children>

@@ -41,11 +41,11 @@ namespace MCM.UI.GUI.GauntletUI
             // || gauntletLayer.Input.IsGameKeyReleased(34)
             if (_gauntletLayer.Input.IsHotKeyReleased("Exit"))
             {
-                _dataSource?.ExecuteCancel();
+                _dataSource.ExecuteCancel();
             }
             else if (_gauntletLayer.Input.IsHotKeyReleased("FinalizeChat"))
             {
-                _dataSource?.ExecuteDone();
+                _dataSource.ExecuteDone();
             }
         }
 

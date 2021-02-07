@@ -19,7 +19,7 @@ namespace MCM.Abstractions.Settings.Containers
     public abstract class BaseSettingsContainer<TSettings> : ISettingsContainer where TSettings : BaseSettings
     {
         protected virtual string RootFolder { get; } = Path.Combine(Utilities.GetConfigsPath(), "ModSettings");
-        protected virtual Dictionary<string, TSettings> LoadedSettings { get; } = new Dictionary<string, TSettings>();
+        protected virtual Dictionary<string, TSettings> LoadedSettings { get; } = new();
 
         /// <inheritdoc/>
         public virtual List<SettingsDefinition> CreateModSettingsDefinitions => LoadedSettings.Keys.ToList()
@@ -43,10 +43,10 @@ namespace MCM.Abstractions.Settings.Containers
         /// <inheritdoc/>
         public virtual bool SaveSettings(BaseSettings settings)
         {
-            if (!(settings is TSettings tSettings) || !LoadedSettings.ContainsKey(tSettings.Id))
+            if (settings is not TSettings || !LoadedSettings.ContainsKey(settings.Id))
                 return false;
 
-            var directoryPath = Path.Combine(RootFolder, tSettings.FolderName, tSettings.SubFolder);
+            var directoryPath = Path.Combine(RootFolder, settings.FolderName, settings.SubFolder);
             var settingsFormats = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == settings.FormatType));
             settingsFormat?.Save(settings, directoryPath, settings.Id);
@@ -57,19 +57,19 @@ namespace MCM.Abstractions.Settings.Containers
         /// <inheritdoc/>
         public virtual bool OverrideSettings(BaseSettings settings)
         {
-            if (!(settings is TSettings tSettings) || !LoadedSettings.ContainsKey(tSettings.Id))
+            if (settings is not TSettings || !LoadedSettings.ContainsKey(settings.Id))
                 return false;
 
-            SettingsUtils.OverrideSettings(LoadedSettings[tSettings.Id], tSettings);
+            SettingsUtils.OverrideSettings(LoadedSettings[settings.Id], settings);
             return true;
         }
         /// <inheritdoc/>
         public virtual bool ResetSettings(BaseSettings settings)
         {
-            if (!(settings is TSettings tSettings) || !LoadedSettings.ContainsKey(tSettings.Id))
+            if (settings is not TSettings || !LoadedSettings.ContainsKey(settings.Id))
                 return false;
 
-            SettingsUtils.ResetSettings(LoadedSettings[tSettings.Id]);
+            SettingsUtils.ResetSettings(LoadedSettings[settings.Id]);
             return true;
         }
     }

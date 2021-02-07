@@ -13,7 +13,7 @@ namespace MCM.Abstractions.Settings.Definitions.Xml
         public string DisplayName { get; set; } = default!;
 
         [XmlAttribute("Order")]
-        public int Order { get; set; } = default!;
+        public int Order { get; set; }
 
         [XmlAttribute("HintText")]
         public string HintText { get; set; } = string.Empty;

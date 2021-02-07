@@ -5,7 +5,7 @@
              TextBlur="0.1" FontSize="40" TextShadowAngle="60"/>
     </Styles>
   </Brush>
-  
+
   <Brush Name="MCM_v1.Text" Font="FiraSansExtraCondensed-Regular" TextHorizontalAlignment="Center" TextVerticalAlignment="Center" FontSize="24" >
     <Styles>
       <Style Name="Default" FontColor="#FFCF9AFF" TextBlur="0"  TextShadowAngle="0" TextAlphaFactor="0.8" TextGlowColor="#FFFFFF00" TextOutlineColor="#FFFFFF00"
@@ -25,7 +25,7 @@
       <Style Name="Disabled" TextAlphaFactor="0.5" />
     </Styles>
   </Brush>
-  
+
   <Brush Name="MCM_v1.Group.Text" Font="FiraSansExtraCondensed-Regular" TextHorizontalAlignment="Right" TextVerticalAlignment="Center" FontSize="30">
     <Styles>
       <Style Name="Default" FontColor="#FFCF9AFF" TextGlowRadius="0" TextShadowAngle="0" TextAlphaFactor="0.8" TextGlowColor="#FFFFFF00"
@@ -46,5 +46,5 @@
              TextOutlineAmount="0" TextGlowRadius="0" />
     </Styles>
   </Brush>
-  
+
 </Brushes>

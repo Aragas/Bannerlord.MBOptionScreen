@@ -1,4 +1,6 @@
-﻿using MCM.Abstractions.Settings.Models;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using MCM.Abstractions.Settings.Models;
 
 using System;
 using System.Collections.Generic;
@@ -24,7 +26,7 @@ namespace MCM.UI.GUI.ViewModels
         {
             get
             {
-                if (GroupToggleSettingProperty is { } && !string.IsNullOrWhiteSpace(GroupToggleSettingProperty.HintText))
+                if (GroupToggleSettingProperty is not null && !string.IsNullOrWhiteSpace(GroupToggleSettingProperty.HintText))
                 {
                     return GroupToggleSettingProperty.HintText;
                 }
@@ -37,7 +39,7 @@ namespace MCM.UI.GUI.ViewModels
             {
                 if (string.IsNullOrEmpty(MainView.SearchText))
                     return true;
-                return GroupName.IndexOf(MainView.SearchText, StringComparison.OrdinalIgnoreCase) >= 0 || AnyChildSettingSatisfiesSearch;
+                return GroupName.IndexOf(MainView.SearchText, StringComparison.InvariantCultureIgnoreCase) >= 0 || AnyChildSettingSatisfiesSearch;
             }
         }
         public bool AnyChildSettingSatisfiesSearch => SettingProperties.Any(x => x.SatisfiesSearch) || SettingPropertyGroups.Any(x => x.SatisfiesSearch);
@@ -45,21 +47,21 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public string GroupNameDisplay => GroupToggle
             ? GroupName
-            : new TextObject("{=SettingsPropertyGroupVM_Disabled}{GROUPNAME} (Disabled)", new Dictionary<string, TextObject>
+            : TextObjectHelper.Create("{=SettingsPropertyGroupVM_Disabled}{GROUPNAME} (Disabled)", new Dictionary<string, TextObject>
             {
-                { "GROUPNAME", new TextObject(GroupName) }
+                { "GROUPNAME", TextObjectHelper.Create(GroupName) }
             }).ToString();
         [DataSourceProperty]
-        public MBBindingList<SettingsPropertyVM> SettingProperties { get; } = new MBBindingList<SettingsPropertyVM>();
+        public MBBindingList<SettingsPropertyVM> SettingProperties { get; } = new();
         [DataSourceProperty]
-        public MBBindingList<SettingsPropertyGroupVM> SettingPropertyGroups { get; } = new MBBindingList<SettingsPropertyGroupVM>();
+        public MBBindingList<SettingsPropertyGroupVM> SettingPropertyGroups { get; } = new();
         [DataSourceProperty]
         public bool GroupToggle
         {
             get => GroupToggleSettingProperty?.BoolValue != false;
             set
             {
-                if (GroupToggleSettingProperty is { } && GroupToggleSettingProperty.BoolValue != value)
+                if (GroupToggleSettingProperty is not null && GroupToggleSettingProperty.BoolValue != value)
                 {
                     GroupToggleSettingProperty.BoolValue = value;
                     OnPropertyChanged(nameof(GroupToggle));
@@ -87,7 +89,7 @@ namespace MCM.UI.GUI.ViewModels
             {
                 if (!SatisfiesSearch && !AnyChildSettingSatisfiesSearch)
                     return false;
-                else if (ParentGroup is { })
+                else if (ParentGroup is not null)
                     return ParentGroup.IsExpanded && ParentGroup.GroupToggle;
                 else
                     return true;
@@ -117,7 +119,7 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
         [DataSourceProperty]
-        public bool HasGroupToggle => GroupToggleSettingProperty is { };
+        public bool HasGroupToggle => GroupToggleSettingProperty is not null;
 
         public SettingsPropertyGroupVM(SettingsPropertyGroupDefinition definition, SettingsVM settingsVM, SettingsPropertyGroupVM? parentGroup = null)
         {

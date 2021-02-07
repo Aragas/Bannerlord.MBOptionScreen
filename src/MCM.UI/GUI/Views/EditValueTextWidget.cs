@@ -1,9 +1,13 @@
-﻿using MCM.Abstractions.Settings;
+﻿using Bannerlord.ButterLib.Common.Helpers;
+
+using HarmonyLib;
+
+using MCM.Abstractions.Settings;
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Reflection;
 
 using TaleWorlds.GauntletUI;
 using TaleWorlds.InputSystem;
@@ -14,7 +18,10 @@ namespace MCM.UI.GUI.Views
 {
     internal sealed class EditValueTextWidget : EditableTextWidget
     {
-        private readonly EditableText _editableWidget;
+        private static readonly AccessTools.FieldRef<EditableTextWidget, EditableText>? _editableText =
+            AccessTools2.FieldRefAccess<EditableTextWidget, EditableText>("_editableText");
+
+        private readonly EditableText? _editableWidget;
 
         [DataSourceProperty]
         public SettingType SettingType { get; set; } = SettingType.Float;
@@ -25,8 +32,8 @@ namespace MCM.UI.GUI.Views
 
         public EditValueTextWidget(UIContext context) : base(context)
         {
-            _editableWidget = (EditableText) typeof(EditableTextWidget).GetField("_editableText", BindingFlags.Instance | BindingFlags.NonPublic)
-                .GetValue(this);
+            if (_editableText != null)
+                _editableWidget = _editableText(this);
         }
 
         public override void HandleInput(IReadOnlyList<int> lastKeysPressed)
@@ -49,22 +56,22 @@ namespace MCM.UI.GUI.Views
                     {
                         if (key == (int) KeyCodes.Minus)
                         {
-                            if (_editableWidget.SelectedTextBegin != 0)
+                            if (_editableWidget?.SelectedTextBegin != 0)
                                 continue;
                         }
                         else if (SettingType == SettingType.Float)
                         {
                             // Handle input for float types
-                            if (key == (int)KeyCodes.Decimal)
+                            if (key == (int) KeyCodes.Decimal)
                             {
-                                if (RealText.Count(ch => ch == '.') >= 1)
+                                if (RealText.Any(ch => ch == '.'))
                                     continue;
                             }
                         }
                         else if (SettingType == SettingType.Int)
                         {
                             // Handle input for int types.
-                            if (key == (int)KeyCodes.Decimal)
+                            if (key == (int) KeyCodes.Decimal)
                                 continue;
                         }
                         base.HandleInput(lastKeysPressed);
@@ -82,7 +89,7 @@ namespace MCM.UI.GUI.Views
                                 {
                                     var format = SettingType == SettingType.Int ? "0" : "0.00";
                                     RealText = newVal.ToString(format);
-                                    _editableWidget.SetCursorPosition(0, true);
+                                    _editableWidget?.SetCursorPosition(0, true);
                                 }
                             }
                         }
@@ -90,10 +97,13 @@ namespace MCM.UI.GUI.Views
                 }
             }
             else
+            {
                 base.HandleInput(lastKeysPressed);
+            }
         }
 
-
+        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
+        [SuppressMessage("ReSharper", "UnusedMember.Local")]
         private enum KeyCodes
         {
             Backspace = 8,

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
+// ReSharper disable once CheckNamespace
 namespace ComparerExtensions
 {
     /// <summary>
@@ -16,7 +17,7 @@ namespace ComparerExtensions
         /// <summary>
         /// Gets the default instance of a NullComparer.
         /// </summary>
-        public static NullComparer<T> Default { get; } = new NullComparer<T>();
+        public static NullComparer<T> Default { get; } = new();
 
         /// <summary>
         /// Always returns zero, indicating that the two values are equal.
@@ -26,6 +27,6 @@ namespace ComparerExtensions
         /// <returns>Zero, indicating that the two values are equal.</returns>
         public int Compare(T x, T y) => 0;
 
-        int IComparer.Compare(object x, object y) => Compare((T)x, (T)y);
+        int IComparer.Compare(object? x, object? y) => x is T x1 && y is T y1 ? Compare(x1, y1) : 0;
     }
 }

@@ -107,7 +107,7 @@ namespace MCM.Extensions
             where TService : class
             where TImplementation : class
         {
-            return implementationFactory is { }
+            return implementationFactory is not null
                 ? ServiceDescriptor.Describe(typeof(TService), implementationFactory, ServiceLifetime.Singleton)
                 : throw new ArgumentNullException(nameof(implementationFactory));
         }
