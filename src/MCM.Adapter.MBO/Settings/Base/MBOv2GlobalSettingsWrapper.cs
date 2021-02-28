@@ -1,8 +1,6 @@
 ﻿extern alias v2;
 extern alias v4;
 
-using Bannerlord.ButterLib.Common.Helpers;
-
 using HarmonyLib;
 
 using System;
@@ -10,6 +8,7 @@ using System.ComponentModel;
 
 using v4::MCM.Abstractions.Settings.Base;
 using v4::MCM.Abstractions.Settings.Base.Global;
+using v4::MCM.Utils;
 
 using MCMv2BaseSettings = v2::MBOptionScreen.Settings.SettingsBase;
 
@@ -51,13 +50,13 @@ namespace MCM.Adapter.MBO.Settings.Base
         {
             var type = @object.GetType();
 
-            _getIdDelegate = AccessTools2.GetDelegate<GetIdDelegate>(@object, AccessTools.Property(type, nameof(MCMv2BaseSettings.Id)).GetMethod);
-            _getFolderNameDelegate = AccessTools2.GetDelegate<GetFolderNameDelegate>(@object, AccessTools.Property(type, nameof(MCMv2BaseSettings.ModuleFolderName)).GetMethod);
-            _getDisplayNameDelegate = AccessTools2.GetDelegate<GetDisplayNameDelegate>(@object, AccessTools.Property(type, nameof(MCMv2BaseSettings.ModName)).GetMethod);
-            _getUIVersionDelegate = AccessTools2.GetDelegate<GetUIVersionDelegate>(@object, AccessTools.Property(type, nameof(MCMv2BaseSettings.UIVersion)).GetMethod);
-            _getSubFolderDelegate = AccessTools2.GetDelegate<GetSubFolderDelegate>(@object, AccessTools.Property(type, nameof(MCMv2BaseSettings.SubFolder)).GetMethod);
-            _getSubGroupDelimiterDelegate = AccessTools2.GetDelegate<GetSubGroupDelimiterDelegate>(@object, AccessTools.Property(type, "SubGroupDelimiter").GetMethod);
-            _getFormatDelegate = AccessTools2.GetDelegate<GetFormatDelegate>(@object, AccessTools.Property(type, nameof(MCMv2BaseSettings.Format)).GetMethod);
+            _getIdDelegate = AccessTools3.GetDelegate<GetIdDelegate>(@object, AccessTools.Property(type, nameof(MCMv2BaseSettings.Id)).GetMethod);
+            _getFolderNameDelegate = AccessTools3.GetDelegate<GetFolderNameDelegate>(@object, AccessTools.Property(type, nameof(MCMv2BaseSettings.ModuleFolderName)).GetMethod);
+            _getDisplayNameDelegate = AccessTools3.GetDelegate<GetDisplayNameDelegate>(@object, AccessTools.Property(type, nameof(MCMv2BaseSettings.ModName)).GetMethod);
+            _getUIVersionDelegate = AccessTools3.GetDelegate<GetUIVersionDelegate>(@object, AccessTools.Property(type, nameof(MCMv2BaseSettings.UIVersion)).GetMethod);
+            _getSubFolderDelegate = AccessTools3.GetDelegate<GetSubFolderDelegate>(@object, AccessTools.Property(type, nameof(MCMv2BaseSettings.SubFolder)).GetMethod);
+            _getSubGroupDelimiterDelegate = AccessTools3.GetDelegate<GetSubGroupDelimiterDelegate>(@object, AccessTools.Property(type, "SubGroupDelimiter").GetMethod);
+            _getFormatDelegate = AccessTools3.GetDelegate<GetFormatDelegate>(@object, AccessTools.Property(type, nameof(MCMv2BaseSettings.Format)).GetMethod);
         }
 
         protected override BaseSettings CreateNew() => new MBOv2GlobalSettingsWrapper(Activator.CreateInstance(Object.GetType())!);

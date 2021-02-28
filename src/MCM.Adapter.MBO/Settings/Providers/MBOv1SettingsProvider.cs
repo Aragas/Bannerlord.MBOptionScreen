@@ -1,16 +1,14 @@
 ﻿extern alias v1;
 extern alias v4;
 
-using Bannerlord.ButterLib.Common.Extensions;
-
 using MCM.Adapter.MBO.Settings.Base;
 using MCM.Adapter.MBO.Settings.Containers;
 
-using Microsoft.Extensions.DependencyInjection;
-
 using System.Collections.Generic;
 
+using v4::MCM;
 using v4::MCM.Abstractions.Settings.Providers;
+using v4::MCM.DependencyInjection;
 
 using ISettingsProvider = v1::MBOptionScreen.Interfaces.ISettingsProvider;
 using ModSettingsDefinition = v1::MBOptionScreen.Settings.ModSettingsDefinition;
@@ -24,10 +22,8 @@ namespace MCM.Adapter.MBO.Settings.Providers
 
         public SettingsBase? GetSettings(string id)
         {
-            if (v4::MCM.MCMSubModule.Instance is not null && v4::MCM.MCMSubModule.Instance.GetServiceProvider() is { } serviceProvider)
+            if (MCMSubModule.Instance is not null && GenericServiceProvider.GetService<BaseSettingsProvider>() is { } settingsProvider)
             {
-                var settingsProvider = serviceProvider.GetRequiredService<BaseSettingsProvider>();
-
                 var baseSettings = settingsProvider.GetSettings(id);
                 if (baseSettings is MBOv1GlobalSettingsWrapper { Object: SettingsBase settings })
                     return settings;

@@ -1,8 +1,7 @@
 ﻿using MCM.Abstractions.FluentBuilder;
 using MCM.Abstractions.Ref;
 using MCM.Implementation.Settings.Formats.Json;
-
-using Microsoft.Extensions.Logging.Abstractions;
+using MCM.Logger;
 
 using NUnit.Framework;
 
@@ -23,7 +22,7 @@ namespace MCM.Tests.SettingsFormat
         [OneTimeSetUp]
         public void OneTimeSetUp1()
         {
-            Format = new JsonSettingsFormat(NullLogger<JsonSettingsFormat>.Instance);
+            Format = new JsonSettingsFormat(new NullMCMLogger<JsonSettingsFormat>());
 
             Settings = BaseSettingsBuilder.Create("Testing_Global_v1", "Testing Fluent Settings")!
                 .SetFormat("json")

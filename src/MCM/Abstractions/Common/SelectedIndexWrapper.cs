@@ -1,6 +1,6 @@
-﻿using Bannerlord.ButterLib.Common.Helpers;
+﻿using HarmonyLib;
 
-using HarmonyLib;
+using MCM.Utils;
 
 namespace MCM.Abstractions.Common
 {
@@ -27,8 +27,8 @@ namespace MCM.Abstractions.Common
             var type = @object.GetType();
 
             var selectedIndexProperty = AccessTools.Property(type, nameof(SelectedIndex));
-            _getSelectedIndexDelegate = AccessTools2.GetDelegate<GetSelectedIndexDelegate>(@object, selectedIndexProperty.GetGetMethod())!;
-            _setSelectedIndexDelegate = AccessTools2.GetDelegate<SetSelectedIndexDelegate>(@object, selectedIndexProperty.GetSetMethod());
+            _getSelectedIndexDelegate = AccessTools3.GetDelegate<GetSelectedIndexDelegate>(@object, selectedIndexProperty.GetGetMethod())!;
+            _setSelectedIndexDelegate = AccessTools3.GetDelegate<SetSelectedIndexDelegate>(@object, selectedIndexProperty.GetSetMethod());
         }
     }
 }

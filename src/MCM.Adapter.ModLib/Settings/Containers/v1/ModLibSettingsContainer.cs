@@ -1,7 +1,5 @@
 ﻿extern alias v1;
 
-using Bannerlord.ButterLib.Common.Helpers;
-
 using HarmonyLib;
 
 using MCM.Abstractions.Settings.Base;
@@ -23,7 +21,7 @@ namespace MCM.Adapter.ModLib.Settings.Containers.v1
         private delegate Dictionary<string, v1SettingsBase> GetAllSettingsDictDelegate();
 
         private static readonly GetAllSettingsDictDelegate? GetAllSettingsDict =
-            AccessTools2.GetDelegate<GetAllSettingsDictDelegate>(AccessTools.Property(typeof(v1SettingsDatabase), "AllSettingsDict").GetMethod);
+            AccessTools3.GetDelegate<GetAllSettingsDictDelegate>(AccessTools.Property(typeof(v1SettingsDatabase), "AllSettingsDict").GetMethod);
 
         private Dictionary<string, ModLibGlobalSettingsWrapper> LoadedModLibSettings { get; } = new();
 

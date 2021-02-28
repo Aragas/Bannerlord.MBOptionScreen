@@ -16,7 +16,6 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Bannerlord.ButterLib" Version="$(ButterLibVersion)" IncludeAssets="compile" />
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
     <ProjectReference Include="../MCM/MCM.csproj" Private="false" Aliases="v4" />
     <Reference Include="MCMv1" HintPath="_Module/bin/Win64_Shipping_Client/MBOptionScreen.dll" Private="false" Aliases="v1" />

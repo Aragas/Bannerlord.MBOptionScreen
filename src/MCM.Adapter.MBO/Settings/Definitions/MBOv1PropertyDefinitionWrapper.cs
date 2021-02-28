@@ -29,8 +29,8 @@ namespace MCM.Adapter.MBO.Settings.Definitions
         {
             var type = @object.GetType();
 
-            DisplayName = TextObjectHelper.Create((type.GetProperty("DisplayName") ?? type.GetProperty("Name"))?.GetValue(@object) as string ?? "ERROR").ToString();
-            HintText = TextObjectHelper.Create(type.GetProperty("HintText")?.GetValue(@object) as string ?? "ERROR").ToString();
+            DisplayName = TextObjectHelper.Create((type.GetProperty("DisplayName") ?? type.GetProperty("Name"))?.GetValue(@object) as string ?? "ERROR")?.ToString() ?? "ERROR";
+            HintText = TextObjectHelper.Create(type.GetProperty("HintText")?.GetValue(@object) as string ?? "ERROR")?.ToString() ?? "ERROR";
             Order = type.GetProperty("Order")?.GetValue(@object) as int? ?? 0;
             RequireRestart = type.GetProperty("RequireRestart")?.GetValue(@object) as bool? ?? true;
 

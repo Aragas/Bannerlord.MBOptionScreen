@@ -1,5 +1,4 @@
 ﻿using Bannerlord.BUTR.Shared.Helpers;
-using Bannerlord.ButterLib.Common.Helpers;
 
 using HarmonyLib;
 
@@ -24,11 +23,11 @@ namespace MCM.Utils
             {
                 var @params = constructorInfo.GetParameters();
                 if (@params.Length == 0)
-                    Empty = AccessTools2.GetDelegate<EmptyDelegate>(constructorInfo);
+                    Empty = AccessTools3.GetDelegate<EmptyDelegate>(constructorInfo);
                 if (@params.Length >= 1 && @params[1].ParameterType == typeof(string))
-                    V1 = AccessTools2.GetDelegate<V1Delegate>(constructorInfo);
+                    V1 = AccessTools3.GetDelegate<V1Delegate>(constructorInfo);
                 if (@params.Length >= 1 && @params[1].ParameterType == typeof(TextObject))
-                    V2 = AccessTools2.GetDelegate<V2Delegate>(constructorInfo);
+                    V2 = AccessTools3.GetDelegate<V2Delegate>(constructorInfo);
             }
         }
 

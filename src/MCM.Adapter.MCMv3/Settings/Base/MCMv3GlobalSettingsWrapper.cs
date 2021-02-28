@@ -1,8 +1,6 @@
 ﻿extern alias v3;
 extern alias v4;
 
-using Bannerlord.ButterLib.Common.Helpers;
-
 using HarmonyLib;
 
 using System;
@@ -13,6 +11,7 @@ using System.Runtime.CompilerServices;
 
 using v4::MCM.Abstractions.Settings.Base;
 using v4::MCM.Abstractions.Settings.Base.Global;
+using v4::MCM.Utils;
 
 using MCMv3BaseSettings = v3::MCM.Abstractions.Settings.Base.BaseSettings;
 
@@ -58,15 +57,15 @@ namespace MCM.Adapter.MCMv3.Settings.Base
         {
             var type = @object.GetType();
 
-            _getIdDelegate = AccessTools2.GetDelegate<GetIdDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.Id)).GetMethod);
-            _getFolderNameDelegate = AccessTools2.GetDelegate<GetFolderNameDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.FolderName)).GetMethod);
-            _getDisplayNameDelegate = AccessTools2.GetDelegate<GetDisplayNameDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.DisplayName)).GetMethod);
-            _getUIVersionDelegate = AccessTools2.GetDelegate<GetUIVersionDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.UIVersion)).GetMethod);
-            _getSubFolderDelegate = AccessTools2.GetDelegate<GetSubFolderDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.SubFolder)).GetMethod);
-            _getSubGroupDelimiterDelegate = AccessTools2.GetDelegate<GetSubGroupDelimiterDelegate>(@object, AccessTools.Property(type, "SubGroupDelimiter").GetMethod);
-            _getFormatDelegate = AccessTools2.GetDelegate<GetFormatDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.Format)).GetMethod);
-            _methodOnPropertyChangedDelegate = AccessTools2.GetDelegate<OnPropertyChangedDelegate>(@object, AccessTools.Method(type, nameof(MCMv3BaseSettings.OnPropertyChanged)));
-            _methodGetAvailablePresetsDelegate = AccessTools2.GetDelegate<GetAvailablePresetsDelegate>(@object, AccessTools.Method(type, nameof(MCMv3BaseSettings.GetAvailablePresets)));
+            _getIdDelegate = AccessTools3.GetDelegate<GetIdDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.Id)).GetMethod);
+            _getFolderNameDelegate = AccessTools3.GetDelegate<GetFolderNameDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.FolderName)).GetMethod);
+            _getDisplayNameDelegate = AccessTools3.GetDelegate<GetDisplayNameDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.DisplayName)).GetMethod);
+            _getUIVersionDelegate = AccessTools3.GetDelegate<GetUIVersionDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.UIVersion)).GetMethod);
+            _getSubFolderDelegate = AccessTools3.GetDelegate<GetSubFolderDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.SubFolder)).GetMethod);
+            _getSubGroupDelimiterDelegate = AccessTools3.GetDelegate<GetSubGroupDelimiterDelegate>(@object, AccessTools.Property(type, "SubGroupDelimiter").GetMethod);
+            _getFormatDelegate = AccessTools3.GetDelegate<GetFormatDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.Format)).GetMethod);
+            _methodOnPropertyChangedDelegate = AccessTools3.GetDelegate<OnPropertyChangedDelegate>(@object, AccessTools.Method(type, nameof(MCMv3BaseSettings.OnPropertyChanged)));
+            _methodGetAvailablePresetsDelegate = AccessTools3.GetDelegate<GetAvailablePresetsDelegate>(@object, AccessTools.Method(type, nameof(MCMv3BaseSettings.GetAvailablePresets)));
         }
 
         public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>

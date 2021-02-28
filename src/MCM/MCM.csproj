@@ -21,12 +21,6 @@
   </ItemGroup>
   <!--NuGet Package-->
 
-  <!--Windows Forms-->
-  <ItemGroup>
-    <_SDKImplicitReference Include="System.Windows.Forms" />
-  </ItemGroup>
-  <!--Windows Forms-->
-
   <ItemGroup>
     <PackageReference Include="Bannerlord.BuildResources" Version="$(BuildResourcesVersion)">
       <PrivateAssets>all</PrivateAssets>
@@ -36,16 +30,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Bannerlord.ButterLib" Version="$(ButterLibVersion)" IncludeAssets="compile" />
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
     <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" IncludeAssets="compile" />
-    <PackageReference Include="Microsoft.Bcl.HashCode" Version="1.1.0" IncludeAssets="compile" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.0.0" IncludeAssets="compile" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="2.0.0" IncludeAssets="compile" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.0.0" IncludeAssets="compile" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" IncludeAssets="compile" />
-    <PackageReference Include="Microsoft.Extensions.Options" Version="2.0.0" IncludeAssets="compile" />
-    <PackageReference Include="Microsoft.Extensions.Primitives" Version="2.0.0" IncludeAssets="compile" />
+    <PackageReference Include="LightInject.Source" Version="6.4.0" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" IncludeAssets="compile" />
   </ItemGroup>
 

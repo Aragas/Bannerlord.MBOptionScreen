@@ -1,18 +1,15 @@
 ﻿extern alias v3;
 extern alias v4;
 
-using Bannerlord.ButterLib.Common.Extensions;
-
 using MCM.Adapter.MCMv3.Settings.Base;
 using MCM.Adapter.MCMv3.Settings.Containers;
-
-using Microsoft.Extensions.DependencyInjection;
 
 using System.Collections.Generic;
 
 using TaleWorlds.Core;
 
 using v4::MCM.Abstractions.Settings.Providers;
+using v4::MCM.DependencyInjection;
 
 using MCMv3BaseSettings = v3::MCM.Abstractions.Settings.Base.BaseSettings;
 using MCMv3BaseSettingsProvider = v3::MCM.Abstractions.Settings.Providers.BaseSettingsProvider;
@@ -30,11 +27,9 @@ namespace MCM.Adapter.MCMv3.Settings.Providers
 
         public override MCMv3BaseSettings? GetSettings(string id)
         {
-            if (v4::MCM.MCMSubModule.Instance is not null && v4::MCM.MCMSubModule.Instance.GetServiceProvider() is { } serviceProvider)
+            if (v4::MCM.MCMSubModule.Instance is not null && GenericServiceProvider.GetService<BaseSettingsProvider>() is { } settingsProvider)
             {
-                var settingsProvider = serviceProvider.GetRequiredService<BaseSettingsProvider>();
-
-                var baseSettings = settingsProvider.GetSettings(id);
+                var baseSettings = settingsProvider?.GetSettings(id);
                 if (baseSettings is MCMv3GlobalSettingsWrapper { Object: MCMv3BaseSettings settings })
                     return settings;
             }

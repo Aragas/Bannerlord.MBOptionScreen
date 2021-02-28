@@ -1,6 +1,5 @@
-﻿using Bannerlord.ButterLib.Common.Helpers;
-
-using MCM.Abstractions.Settings.Models;
+﻿using MCM.Abstractions.Settings.Models;
+using MCM.Utils;
 
 using System.Collections.Generic;
 using System.Linq;

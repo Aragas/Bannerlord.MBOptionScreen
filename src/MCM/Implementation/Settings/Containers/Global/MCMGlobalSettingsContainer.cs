@@ -1,8 +1,7 @@
 ﻿using MCM.Abstractions;
 using MCM.Abstractions.Settings.Base.Global;
 using MCM.Abstractions.Settings.Containers.Global;
-
-using Microsoft.Extensions.Logging;
+using MCM.Logger;
 
 using System;
 using System.Collections.Generic;
@@ -12,7 +11,7 @@ namespace MCM.Implementation.Settings.Containers.Global
 {
     internal sealed class MCMGlobalSettingsContainer : BaseGlobalSettingsContainer, IMCMGlobalSettingsContainer
     {
-        public MCMGlobalSettingsContainer(ILogger<MCMGlobalSettingsContainer> logger)
+        public MCMGlobalSettingsContainer(IMCMLogger<MCMGlobalSettingsContainer> logger)
         {
             var settings = new List<GlobalSettings>();
             var allTypes = AppDomain.CurrentDomain

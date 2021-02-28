@@ -1,8 +1,7 @@
-﻿using Bannerlord.ButterLib.Common.Helpers;
-
-using HarmonyLib;
+﻿using HarmonyLib;
 
 using MCM.Extensions;
+using MCM.Utils;
 
 using System;
 using System.Collections.Generic;
@@ -26,7 +25,7 @@ namespace MCM.Abstractions.Dropdown
         {
             var methodInfo = AccessTools.Property(typeof(TSelectorItemVM), "CanBeSelected")?.GetMethod;
             _canBeSelectedDelegate = methodInfo is not null
-                ? AccessTools2.GetDelegate<CanBeSelectedDelegate>(methodInfo)!
+                ? AccessTools3.GetDelegate<CanBeSelectedDelegate>(methodInfo)!
                 : _ => false;
         }
 

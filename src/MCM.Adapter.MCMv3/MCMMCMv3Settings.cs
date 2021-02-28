@@ -14,7 +14,7 @@ namespace MCM.Adapter.MCMv3
         public override string DisplayName => TextObjectHelper.Create("{=MCMMCMv3Settings_Name}MCM MCMv3 Adapter {VERSION}", new Dictionary<string, TextObject>()
         {
             { "VERSION", TextObjectHelper.Create(typeof(MCMMCMv3Settings).Assembly.GetName().Version?.ToString(3) ?? "ERROR") }
-        }).ToString();
+        })?.ToString() ?? "ERROR";
         public override string FolderName { get; } = "MCM";
         public override string FormatType { get; } = "none";
     }

@@ -51,6 +51,12 @@
     <InternalsVisibleTo Include="MCM.Tests" />
   </ItemGroup>
 
+  <!--Windows Forms-->
+  <ItemGroup>
+    <_SDKImplicitReference Include="System.Windows.Forms" />
+  </ItemGroup>
+  <!--Windows Forms-->
+
   <ItemGroup>
     <PackageReference Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)">
       <PrivateAssets>all</PrivateAssets>

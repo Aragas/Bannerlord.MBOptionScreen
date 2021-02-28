@@ -1,6 +1,6 @@
-﻿using Bannerlord.ButterLib.Common.Helpers;
+﻿using HarmonyLib;
 
-using HarmonyLib;
+using MCM.Utils;
 
 using System;
 using System.ComponentModel;
@@ -51,9 +51,9 @@ namespace MCM.Abstractions.Ref
             var typeProperty = AccessTools.Property(type, nameof(Type));
             var valueProperty = AccessTools.Property(type, nameof(Value));
 
-            _getTypeDelegate = AccessTools2.GetDelegate<GetTypeDelegate>(@object, typeProperty.GetGetMethod());
-            _getValueDelegate = AccessTools2.GetDelegate<GetValueDelegate>(@object, valueProperty.GetGetMethod());
-            _setValueDelegate = AccessTools2.GetDelegate<SetValueDelegate>(@object, valueProperty.GetSetMethod());
+            _getTypeDelegate = AccessTools3.GetDelegate<GetTypeDelegate>(@object, typeProperty.GetGetMethod());
+            _getValueDelegate = AccessTools3.GetDelegate<GetValueDelegate>(@object, valueProperty.GetGetMethod());
+            _setValueDelegate = AccessTools3.GetDelegate<SetValueDelegate>(@object, valueProperty.GetSetMethod());
         }
     }
 }

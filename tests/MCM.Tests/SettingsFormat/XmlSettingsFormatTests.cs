@@ -1,8 +1,7 @@
 ﻿using MCM.Abstractions.FluentBuilder;
 using MCM.Abstractions.Ref;
 using MCM.Implementation.Settings.Formats.Xml;
-
-using Microsoft.Extensions.Logging.Abstractions;
+using MCM.Logger;
 
 using NUnit.Framework;
 
@@ -24,7 +23,7 @@ namespace MCM.Tests.SettingsFormat
         [OneTimeSetUp]
         public void OneTimeSetUp1()
         {
-            Format = new XmlSettingsFormat(NullLogger<XmlSettingsFormat>.Instance);
+            Format = new XmlSettingsFormat(new NullMCMLogger<XmlSettingsFormat>());
 
             Settings = BaseSettingsBuilder.Create("Testing_Global_v1", "Testing Fluent Settings")!
                 .SetFormat("xml")

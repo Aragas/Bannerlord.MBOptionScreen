@@ -50,7 +50,7 @@ namespace MCM.UI.GUI.ViewModels
             : TextObjectHelper.Create("{=SettingsPropertyGroupVM_Disabled}{GROUPNAME} (Disabled)", new Dictionary<string, TextObject>
             {
                 { "GROUPNAME", TextObjectHelper.Create(GroupName) }
-            }).ToString();
+            })?.ToString() ?? string.Empty;
         [DataSourceProperty]
         public MBBindingList<SettingsPropertyVM> SettingProperties { get; } = new();
         [DataSourceProperty]

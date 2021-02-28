@@ -1,13 +1,12 @@
 ﻿using Bannerlord.BUTR.Shared.Helpers;
-using Bannerlord.ButterLib.Common.Extensions;
-using Bannerlord.ButterLib.Common.Helpers;
 
 using ComparerExtensions;
 
 using MCM.Abstractions.Settings.Providers;
+using MCM.DependencyInjection;
 using MCM.UI.Extensions;
+using MCM.Utils;
 
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
@@ -125,7 +124,7 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
         [DataSourceProperty]
-        public string SelectedDisplayName => SelectedMod is null ? TextObjectHelper.Create("{=ModOptionsVM_NotSpecified}Mod Name not Specified.").ToString() : SelectedMod.DisplayName;
+        public string SelectedDisplayName => SelectedMod is null ? TextObjectHelper.Create("{=ModOptionsVM_NotSpecified}Mod Name not Specified.")?.ToString() ?? string.Empty : SelectedMod.DisplayName;
         [DataSourceProperty]
         public bool SomethingSelected => SelectedMod is not null;
         [DataSourceProperty]
@@ -169,12 +168,12 @@ namespace MCM.UI.GUI.ViewModels
 
         public ModOptionsVM()
         {
-            _logger = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<ILogger<ModOptionsVM>>() ?? NullLogger<ModOptionsVM>.Instance;
+            _logger = GenericServiceProvider.GetService<ILogger<ModOptionsVM>>() ?? NullLogger<ModOptionsVM>.Instance;
 
-            Name = TextObjectHelper.Create("{=ModOptionsVM_Name}Mod Options").ToString();
-            DoneButtonText = TextObjectHelper.Create("{=WiNRdfsm}Done").ToString();
-            CancelButtonText = TextObjectHelper.Create("{=3CpNUnVl}Cancel").ToString();
-            ModsText = TextObjectHelper.Create("{=ModOptionsPageView_Mods}Mods").ToString();
+            Name = TextObjectHelper.Create("{=ModOptionsVM_Name}Mod Options")?.ToString() ?? string.Empty;
+            DoneButtonText = TextObjectHelper.Create("{=WiNRdfsm}Done")?.ToString() ?? string.Empty;
+            CancelButtonText = TextObjectHelper.Create("{=3CpNUnVl}Cancel")?.ToString() ?? string.Empty;
+            ModsText = TextObjectHelper.Create("{=ModOptionsPageView_Mods}Mods")?.ToString() ?? string.Empty;
             SearchText = string.Empty;
 
             ModSettingsList = new MBBindingList<SettingsVM>();
@@ -197,7 +196,7 @@ namespace MCM.UI.GUI.ViewModels
                                 {
                                     _logger.LogError(e, "Error while creating a ViewModel for settings {Id}", s.SettingsId);
                                     InformationManager.DisplayMessage(new InformationMessage(
-                                        TextObjectHelper.Create($"{{=HNduGf7H5a}}There was an error while parsing settings from '{s.SettingsId}'! Please contact the MCM developers and the mod developer!").ToString(),
+                                        TextObjectHelper.Create($"{{=HNduGf7H5a}}There was an error while parsing settings from '{s.SettingsId}'! Please contact the MCM developers and the mod developer!")?.ToString(),
                                         Colors.Red));
                                     return null;
                                 }
@@ -229,7 +228,7 @@ namespace MCM.UI.GUI.ViewModels
                 {
                     _logger.LogError(e, "Error while creating ViewModels for the settings");
                     InformationManager.DisplayMessage(new InformationMessage(
-                        TextObjectHelper.Create("{=JLKaTyJcyu}There was a major error while building the settings list! Please contact the MCM developers!").ToString(),
+                        TextObjectHelper.Create("{=JLKaTyJcyu}There was a major error while building the settings list! Please contact the MCM developers!")?.ToString(),
                         Colors.Red));
                 }
             }, SynchronizationContext.Current);
@@ -256,16 +255,16 @@ namespace MCM.UI.GUI.ViewModels
 
         private void OnPresetsSelectorChange(SelectorVM<SelectorItemVM> selector)
         {
-            InformationManager.ShowInquiry(new InquiryData(TextObjectHelper.Create("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new Dictionary<string, TextObject>()
+            InformationManager.ShowInquiry(new InquiryData(TextObjectHelper.Create("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new Dictionary<string, TextObject>
                 {
                     { "PRESET", TextObjectHelper.Create(selector.SelectedItem.StringItem) }
-                }).ToString(),
-                TextObjectHelper.Create("{=ModOptionsVM_Discard}Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?", new Dictionary<string, TextObject>()
+                })?.ToString(),
+                TextObjectHelper.Create("{=ModOptionsVM_Discard}Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?", new Dictionary<string, TextObject>
                 {
                     { "NAME", TextObjectHelper.Create(SelectedMod!.DisplayName) },
                     { "ITEM", TextObjectHelper.Create(selector.SelectedItem.StringItem) }
-                }).ToString(),
-                true, true, TextObjectHelper.Create("{=aeouhelq}Yes").ToString(), TextObjectHelper.Create("{=8OkPHu4f}No").ToString(),
+                })?.ToString(),
+                true, true, TextObjectHelper.Create("{=aeouhelq}Yes")?.ToString(), TextObjectHelper.Create("{=8OkPHu4f}No")?.ToString(),
                 () =>
                 {
                     SelectedMod!.ChangePreset(PresetsSelector.SelectedItem.StringItem);
@@ -327,9 +326,9 @@ namespace MCM.UI.GUI.ViewModels
             var requireRestart = changedModSettings.Any(x => x.RestartRequired());
             if (requireRestart)
             {
-                InformationManager.ShowInquiry(new InquiryData(TextObjectHelper.Create("{=ModOptionsVM_RestartTitle}Game Needs to Restart").ToString(),
-                    TextObjectHelper.Create("{=ModOptionsVM_RestartDesc}The game needs to be restarted to apply mod settings changes. Do you want to close the game now?").ToString(),
-                    true, true, TextObjectHelper.Create("{=aeouhelq}Yes").ToString(), TextObjectHelper.Create("{=3CpNUnVl}Cancel").ToString(),
+                InformationManager.ShowInquiry(new InquiryData(TextObjectHelper.Create("{=ModOptionsVM_RestartTitle}Game Needs to Restart")?.ToString(),
+                    TextObjectHelper.Create("{=ModOptionsVM_RestartDesc}The game needs to be restarted to apply mod settings changes. Do you want to close the game now?")?.ToString(),
+                    true, true, TextObjectHelper.Create("{=aeouhelq}Yes")?.ToString(), TextObjectHelper.Create("{=3CpNUnVl}Cancel")?.ToString(),
                     () =>
                     {
                         foreach (var changedModSetting in changedModSettings)

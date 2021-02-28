@@ -7,9 +7,15 @@ using Bannerlord.UIExtenderEx;
 using HarmonyLib;
 
 using MCM.Abstractions.Settings.Base;
+using MCM.DependencyInjection;
+using MCM.Extensions;
+using MCM.Logger;
+using MCM.UI.ButterLib;
+using MCM.UI.DependencyInjection;
 using MCM.UI.Functionality;
 using MCM.UI.Functionality.Injectors;
 using MCM.UI.GUI.GauntletUI;
+using MCM.UI.Logger;
 using MCM.UI.Patches;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -21,6 +27,9 @@ using SandBox;
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Text;
+using System.Windows.Forms;
 
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.MountAndBlade;
@@ -31,6 +40,23 @@ namespace MCM.UI
     [SuppressMessage("ReSharper", "UnusedType.Global")]
     public sealed class MCMUISubModule : MBSubModuleBase
     {
+        private const string SWarningTitle =
+@"{=dzeWx4xSfR}Warning from MCM!";
+        private const string SErrorHarmonyNotFound =
+@"{=EEVJa5azpB}Bannerlord.Harmony module was not found!";
+        private const string SErrorUIExtenderExNotFound =
+@"{=YjsGP3mUaj}Bannerlord.UIExtenderEx module was not found!";
+        private const string SErrorButterLibNotFound =
+@"{=5EDzm7u4mS}Bannerlord.ButterLib module was not found!";
+        private const string SErrorOfficialModulesLoadedBeforeMCM =
+@"{=BccWuuSR6a}MCM is loaded after the official modules!
+Make sure MCM is loaded before them!";
+        private const string SErrorOfficialModules =
+@"{=JP23gY34Gm}The following modules were loaded before MCM:";
+        private const string SMessageContinue =
+@"{=eXs6FLm5DP}It's strongly recommended to terminate the game now. Do you wish to terminate it?";
+
+
         internal static ILogger<MCMUISubModule> Logger = NullLogger<MCMUISubModule>.Instance;
         private static readonly UIExtender Extender = new("MCM.UI");
 
@@ -38,12 +64,28 @@ namespace MCM.UI
         private bool ServiceRegistrationWasCalled { get; set; }
         private bool OnBeforeInitialModuleScreenSetAsRootWasCalled { get; set; }
 
+        public MCMUISubModule()
+        {
+            MCMSubModule.Instance?.OverrideServiceContainer(new ButterLibServiceContainer());
+
+            CheckLoadOrder();
+        }
+
         public void OnServiceRegistration()
         {
             ServiceRegistrationWasCalled = true;
 
-            if (this.GetServices() is { } services)
+            if (this.GetServiceContainer() is { } services)
             {
+                services.AddSettingsContainer<ButterLibSettingsContainer>();
+
+                services.AddTransient(typeof(IServiceProvider), () => this.GetTempServiceProvider() ?? this.GetServiceProvider()!);
+                //services.AddTransient<ILogger, LoggerWrapper>();
+                //services.AddTransient(typeof(ILogger<>), typeof(LoggerWrapper<>));
+                services.AddTransient<IMCMLogger, MCMLogger>();
+                services.AddTransient(typeof(IMCMLogger<>), typeof(MCMLogger<>));
+
+
                 services.AddSingleton<BaseIngameMenuScreenHandler, DefaultIngameMenuScreenHandler>();
                 services.AddTransient<IMCMOptionsScreen, ModOptionsGauntletScreen>();
 
@@ -114,8 +156,8 @@ namespace MCM.UI
                 DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
                     nameof(OnBeforeInitialModuleScreenSetAsRoot), SubscriptionType.AfterMethod, (_, _) =>
                     {
-                        var resourceInjector = this.GetServiceProvider().GetRequiredService<ResourceInjector>();
-                        resourceInjector.Inject();
+                        var resourceInjector = GenericServiceProvider.GetService<ResourceInjector>();
+                        resourceInjector?.Inject();
 
                         UpdateOptionScreen(MCMUISettings.Instance!);
                         MCMUISettings.Instance!.PropertyChanged += MCMSettings_PropertyChanged;
@@ -161,13 +203,71 @@ namespace MCM.UI
                 BaseGameMenuScreenHandler.Instance?.AddScreen(
                     "MCM_OptionScreen",
                     9990,
-                    () => MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IMCMOptionsScreen>() as ScreenBase,
+                    () => GenericServiceProvider.GetService<IMCMOptionsScreen>() as ScreenBase,
                     TextObjectHelper.Create("{=MainMenu_ModOptions}Mod Options"));
                 BaseIngameMenuScreenHandler.Instance?.AddScreen(
                     "MCM_OptionScreen",
                     1,
-                    () => MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IMCMOptionsScreen>() as ScreenBase,
+                    () => GenericServiceProvider.GetService<IMCMOptionsScreen>() as ScreenBase,
                     TextObjectHelper.Create("{=EscapeMenu_ModOptions}Mod Options"));
+            }
+        }
+
+        private static void CheckLoadOrder()
+        {
+            var loadedModules = Bannerlord.ButterLib.Common.Helpers.ModuleInfoHelper.GetExtendedLoadedModules();
+            if (loadedModules.Count == 0) return;
+
+            var sb = new StringBuilder();
+
+            var harmonyModule = loadedModules.SingleOrDefault(x => x.Id == "Bannerlord.Harmony");
+            var harmonyModuleIndex = harmonyModule is not null ? loadedModules.IndexOf(harmonyModule) : -1;
+            if (harmonyModuleIndex == -1)
+            {
+                if (sb.Length != 0) sb.AppendLine();
+                sb.AppendLine(TextObjectHelper.Create(SErrorHarmonyNotFound)?.ToString());
+            }
+
+            var butterLibModule = loadedModules.SingleOrDefault(x => x.Id == "Bannerlord.ButterLib");
+            var butterLibModuleIndex = butterLibModule is not null ? loadedModules.IndexOf(butterLibModule) : -1;
+            if (butterLibModuleIndex == -1)
+            {
+                if (sb.Length != 0) sb.AppendLine();
+                sb.AppendLine(TextObjectHelper.Create(SErrorButterLibNotFound)?.ToString());
+            }
+
+            var uiExtenderExModule = loadedModules.SingleOrDefault(x => x.Id == "Bannerlord.UIExtenderEx");
+            var uiExtenderExIndex = uiExtenderExModule is not null ? loadedModules.IndexOf(uiExtenderExModule) : -1;
+            if (uiExtenderExIndex == -1)
+            {
+                if (sb.Length != 0) sb.AppendLine();
+                sb.AppendLine(TextObjectHelper.Create(SErrorUIExtenderExNotFound)?.ToString());
+            }
+
+            var mcmModule = loadedModules.SingleOrDefault(x => x.Id == "Bannerlord.MBOptionScreen");
+            var mcmIndex = mcmModule is not null ? loadedModules.IndexOf(mcmModule) : -1;
+            var officialModules = loadedModules.Where(x => x.IsOfficial).Select(x => (Module: x, Index: loadedModules.IndexOf(x)));
+            var modulesLoadedBefore = officialModules.Where(tuple => tuple.Index < mcmIndex).ToList();
+            if (modulesLoadedBefore.Count > 0)
+            {
+                if (sb.Length != 0) sb.AppendLine();
+                sb.AppendLine(TextObjectHelper.Create(SErrorOfficialModulesLoadedBeforeMCM)?.ToString());
+                sb.AppendLine(TextObjectHelper.Create(SErrorOfficialModules)?.ToString());
+                foreach (var (module, _) in modulesLoadedBefore)
+                    sb.AppendLine(module.Id);
+            }
+
+            if (sb.Length > 0)
+            {
+                sb.AppendLine();
+                sb.AppendLine(TextObjectHelper.Create(SMessageContinue)?.ToString());
+
+                switch (MessageBox.Show(sb.ToString(), TextObjectHelper.Create(SWarningTitle)?.ToString(), MessageBoxButtons.YesNo))
+                {
+                    case DialogResult.Yes:
+                        Environment.Exit(1);
+                        break;
+                }
             }
         }
     }

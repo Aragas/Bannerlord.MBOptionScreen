@@ -1,11 +1,8 @@
-﻿using Bannerlord.ButterLib.Common.Extensions;
-
-using MCM.Abstractions.Settings.Base;
+﻿using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Formats;
 using MCM.Abstractions.Settings.Models;
+using MCM.DependencyInjection;
 using MCM.Utils;
-
-using Microsoft.Extensions.DependencyInjection;
 
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +30,7 @@ namespace MCM.Abstractions.Settings.Containers
             LoadedSettings.Add(settings.Id, settings);
 
             var directoryPath = Path.Combine(RootFolder, settings.FolderName, settings.SubFolder);
-            var settingsFormats = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
+            var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == settings.FormatType));
             settingsFormat?.Load(settings, directoryPath, settings.Id);
         }
@@ -47,7 +44,7 @@ namespace MCM.Abstractions.Settings.Containers
                 return false;
 
             var directoryPath = Path.Combine(RootFolder, settings.FolderName, settings.SubFolder);
-            var settingsFormats = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
+            var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == settings.FormatType));
             settingsFormat?.Save(settings, directoryPath, settings.Id);
 
