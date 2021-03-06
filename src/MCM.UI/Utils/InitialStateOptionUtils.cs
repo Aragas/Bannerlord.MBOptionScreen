@@ -12,7 +12,7 @@ namespace MCM.UI.Utils
     internal static class InitialStateOptionUtils
     {
         private delegate InitialStateOption V1Delegate(string id, TextObject name, int orderIndex, Action action, bool isDisabled);
-        private delegate InitialStateOption V2Delegate(string id, TextObject name, int orderIndex, Action action, Func<bool> isDisabled, TextObject disabledReason = null);
+        private delegate InitialStateOption V2Delegate(string id, TextObject name, int orderIndex, Action action, Func<bool> isDisabled, TextObject? disabledReason = null);
 
         private static readonly V1Delegate? V1;
         private static readonly V2Delegate? V2;

@@ -255,11 +255,11 @@ namespace MCM.UI.GUI.ViewModels
 
         private void OnPresetsSelectorChange(SelectorVM<SelectorItemVM> selector)
         {
-            InformationManager.ShowInquiry(new InquiryData(TextObjectHelper.Create("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new Dictionary<string, TextObject>
+            InformationManager.ShowInquiry(new InquiryData(TextObjectHelper.Create("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new Dictionary<string, TextObject?>
                 {
                     { "PRESET", TextObjectHelper.Create(selector.SelectedItem.StringItem) }
                 })?.ToString(),
-                TextObjectHelper.Create("{=ModOptionsVM_Discard}Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?", new Dictionary<string, TextObject>
+                TextObjectHelper.Create("{=ModOptionsVM_Discard}Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?", new Dictionary<string, TextObject?>
                 {
                     { "NAME", TextObjectHelper.Create(SelectedMod!.DisplayName) },
                     { "ITEM", TextObjectHelper.Create(selector.SelectedItem.StringItem) }

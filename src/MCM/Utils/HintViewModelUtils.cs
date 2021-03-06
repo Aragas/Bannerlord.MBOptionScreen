@@ -1,6 +1,7 @@
 ﻿using Bannerlord.BUTR.Shared.Helpers;
 
 using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Localization;
@@ -10,8 +11,8 @@ namespace MCM.Utils
     internal static class HintViewModelUtils
     {
         private delegate HintViewModel EmptyDelegate();
-        private delegate HintViewModel V1Delegate(string hintText, string uniqueName = null);
-        private delegate HintViewModel V2Delegate(TextObject hintText, string uniqueName = null);
+        private delegate HintViewModel V1Delegate(string hintText, string? uniqueName = null);
+        private delegate HintViewModel V2Delegate(TextObject? hintText, string? uniqueName = null);
 
         private static readonly EmptyDelegate? Empty;
         private static readonly V1Delegate? V1;
@@ -23,11 +24,11 @@ namespace MCM.Utils
             {
                 var @params = constructorInfo.GetParameters();
                 if (@params.Length == 0)
-                    Empty = AccessTools3.GetDelegate<EmptyDelegate>(constructorInfo);
+                    Empty = AccessTools2.GetDelegate<EmptyDelegate>(constructorInfo);
                 if (@params.Length >= 1 && @params[1].ParameterType == typeof(string))
-                    V1 = AccessTools3.GetDelegate<V1Delegate>(constructorInfo);
+                    V1 = AccessTools2.GetDelegate<V1Delegate>(constructorInfo);
                 if (@params.Length >= 1 && @params[1].ParameterType == typeof(TextObject))
-                    V2 = AccessTools3.GetDelegate<V2Delegate>(constructorInfo);
+                    V2 = AccessTools2.GetDelegate<V2Delegate>(constructorInfo);
             }
         }
 

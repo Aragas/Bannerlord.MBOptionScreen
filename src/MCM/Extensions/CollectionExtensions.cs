@@ -1,6 +1,7 @@
 ﻿using MCM.Abstractions.Settings.Models;
 using MCM.Utils;
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -10,8 +11,30 @@ namespace MCM.Extensions
 {
     internal static class CollectionExtensions
     {
-        public static T? GetRandomElementInefficiently<T>(this IEnumerable<T> e) =>
-            e.IsEmpty() ? default : e.ElementAt(MBRandom.RandomInt(e.Count()));
+        public static T? GetRandomElementWithPredicate<T>(this IReadOnlyCollection<T> collection, Func<T, bool> predicate)
+        {
+            if (collection.Count == 0)
+                return default;
+
+            var predicateMatchCount = collection.Count(predicate);
+            if (predicateMatchCount == 0)
+                return default;
+
+            var randomInt = MBRandom.RandomInt(predicateMatchCount);
+            foreach (var element in collection)
+            {
+                if (predicate(element))
+                {
+                    randomInt--;
+                    if (randomInt <= 0)
+                    {
+                        return element;
+                    }
+                }
+            }
+
+            return default;
+        }
 
         public static IEnumerable<SettingsPropertyGroupDefinition> SortDefault(this IEnumerable<SettingsPropertyGroupDefinition> enumerable) => enumerable
             .OrderByDescending(x => x.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)

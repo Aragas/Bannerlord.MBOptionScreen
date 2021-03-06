@@ -20,29 +20,29 @@ namespace MCM.Abstractions.Settings.Models
         /// <summary>
         /// The default group used for settings that don't have a group explicitly set.
         /// </summary>
-        public static readonly string DefaultGroupName = TextObjectHelper.Create("{=SettingsPropertyGroupDefinition_Misc}Misc").ToString();
+        public static readonly string DefaultGroupName = TextObjectHelper.Create("{=SettingsPropertyGroupDefinition_Misc}Misc")?.ToString() ?? "ERROR";
 
         /// <summary>
         /// The default group used for settings that don't have a group explicitly set.
         /// </summary>
         public static readonly IPropertyGroupDefinition DefaultGroup = new DefaultPropertyGroupDefinition();
 
-        protected readonly TextObject _groupName;
-        protected readonly TextObject _groupNameOverride;
+        protected readonly TextObject? _groupName;
+        protected readonly TextObject? _groupNameOverride;
         protected readonly List<SettingsPropertyGroupDefinition> subGroups = new();
         protected readonly List<ISettingsPropertyDefinition> settingProperties = new();
 
         public string GroupName { get; }
-        public TextObject DisplayGroupName => _groupNameOverride.Length > 0 ? _groupNameOverride : _groupName;
+        public TextObject? DisplayGroupName => _groupNameOverride?.Length > 0 ? _groupNameOverride : _groupName;
         public int Order { get; }
         public IEnumerable<SettingsPropertyGroupDefinition> SubGroups => subGroups.SortDefault();
         public IEnumerable<ISettingsPropertyDefinition> SettingProperties => settingProperties.SortDefault();
 
-        public SettingsPropertyGroupDefinition(string groupName, string groupNameOverride = "", int order = -1)
+        public SettingsPropertyGroupDefinition(string groupName, string? groupNameOverride = "", int order = -1)
         {
             _groupName = TextObjectHelper.Create(groupName);
             _groupNameOverride = TextObjectHelper.Create(groupNameOverride ?? string.Empty);
-            GroupName = DisplayGroupName.ToString();
+            GroupName = DisplayGroupName?.ToString() ?? "ERROR";
             Order = order;
         }
 

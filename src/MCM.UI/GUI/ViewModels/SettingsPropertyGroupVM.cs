@@ -47,7 +47,7 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public string GroupNameDisplay => GroupToggle
             ? GroupName
-            : TextObjectHelper.Create("{=SettingsPropertyGroupVM_Disabled}{GROUPNAME} (Disabled)", new Dictionary<string, TextObject>
+            : TextObjectHelper.Create("{=SettingsPropertyGroupVM_Disabled}{GROUPNAME} (Disabled)", new Dictionary<string, TextObject?>
             {
                 { "GROUPNAME", TextObjectHelper.Create(GroupName) }
             })?.ToString() ?? string.Empty;

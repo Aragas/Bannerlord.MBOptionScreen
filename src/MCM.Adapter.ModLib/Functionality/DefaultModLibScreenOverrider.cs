@@ -1,6 +1,5 @@
 ﻿using HarmonyLib;
-
-using MCM.Utils;
+using HarmonyLib.BUTR.Extensions;
 
 using System.Collections;
 
@@ -11,7 +10,7 @@ namespace MCM.Adapter.ModLib.Functionality
     internal sealed class DefaultModLibScreenOverrider : BaseModLibScreenOverrider
     {
         private static readonly AccessTools.FieldRef<Module, IList>? InitialStateOptions =
-            AccessTools3.FieldRefAccess<Module, IList>("_initialStateOptions");
+            AccessTools2.FieldRefAccess<Module, IList>("_initialStateOptions");
 
         public override void OverrideModLibScreen()
         {

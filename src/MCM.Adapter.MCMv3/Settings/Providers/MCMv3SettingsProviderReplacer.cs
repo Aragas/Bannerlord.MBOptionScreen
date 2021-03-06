@@ -27,7 +27,7 @@ namespace MCM.Adapter.MCMv3.Settings.Providers
 
         public override MCMv3BaseSettings? GetSettings(string id)
         {
-            if (v4::MCM.MCMSubModule.Instance is not null && GenericServiceProvider.GetService<BaseSettingsProvider>() is { } settingsProvider)
+            if (GenericServiceProvider.GetService<BaseSettingsProvider>() is { } settingsProvider)
             {
                 var baseSettings = settingsProvider?.GetSettings(id);
                 if (baseSettings is MCMv3GlobalSettingsWrapper { Object: MCMv3BaseSettings settings })

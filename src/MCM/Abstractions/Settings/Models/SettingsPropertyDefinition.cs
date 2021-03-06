@@ -57,7 +57,7 @@ namespace MCM.Abstractions.Settings.Models
             SubGroupDelimiter = subGroupDelimiter;
 
             var groups = propertyGroupDefinition.GroupName.Split(SubGroupDelimiter);
-            GroupName = string.Join(SubGroupDelimiter.ToString(), groups.Select(x => TextObjectHelper.Create(x).ToString()));
+            GroupName = string.Join(SubGroupDelimiter.ToString(), groups.Select(x => TextObjectHelper.Create(x)?.ToString()));
             GroupOrder = propertyGroupDefinition.GroupOrder;
 
             PropertyReference = propertyReference;
@@ -80,10 +80,10 @@ namespace MCM.Abstractions.Settings.Models
             {
                 if (propertyDefinition is IPropertyDefinitionBase propertyBase)
                 {
-                    DisplayName = TextObjectHelper.Create(propertyBase.DisplayName).ToString();
+                    DisplayName = TextObjectHelper.Create(propertyBase.DisplayName)?.ToString() ?? "ERROR";
                     Order = propertyBase.Order;
                     RequireRestart = propertyBase.RequireRestart;
-                    HintText = TextObjectHelper.Create(propertyBase.HintText).ToString();
+                    HintText = TextObjectHelper.Create(propertyBase.HintText)?.ToString() ?? "ERROR";
                 }
                 if (propertyDefinition is SettingPropertyAttribute settingPropertyAttribute) // v1
                 {

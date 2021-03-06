@@ -1,11 +1,10 @@
 ﻿using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using MCM.Extensions;
-using MCM.Utils;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 using TaleWorlds.Library;
 
@@ -25,7 +24,7 @@ namespace MCM.Abstractions.Dropdown
         {
             var methodInfo = AccessTools.Property(typeof(TSelectorItemVM), "CanBeSelected")?.GetMethod;
             _canBeSelectedDelegate = methodInfo is not null
-                ? AccessTools3.GetDelegate<CanBeSelectedDelegate>(methodInfo)!
+                ? AccessTools2.GetDelegate<CanBeSelectedDelegate>(methodInfo)!
                 : _ => false;
         }
 
@@ -154,10 +153,9 @@ namespace MCM.Abstractions.Dropdown
 
         public void ExecuteRandomize()
         {
-            if (ItemList.Any(i => _canBeSelectedDelegate(i)))
+            if (ItemList.GetRandomElementWithPredicate(i => _canBeSelectedDelegate(i)) is { } element)
             {
-                var randomElement = ItemList.Where(i => _canBeSelectedDelegate(i)).GetRandomElementInefficiently();
-                SelectedIndex = ItemList.IndexOf(randomElement);
+                SelectedIndex = ItemList.IndexOf(element);
             }
         }
 

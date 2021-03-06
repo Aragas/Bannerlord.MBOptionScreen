@@ -13,7 +13,7 @@ namespace MCM
         /// <inheritdoc/>
         public override string Id { get; } = "MCM_v3";
         /// <inheritdoc/>
-        public override string DisplayName => TextObjectHelper.Create("{=MCMSettings_Name}Mod Configuration Menu {VERSION}", new Dictionary<string, TextObject>
+        public override string DisplayName => TextObjectHelper.Create("{=MCMSettings_Name}Mod Configuration Menu {VERSION}", new Dictionary<string, TextObject?>
         {
             { "VERSION", TextObjectHelper.Create(typeof(MCMSettings).Assembly.GetName().Version?.ToString(3) ?? "ERROR") }
         })?.ToString() ?? "ERROR";

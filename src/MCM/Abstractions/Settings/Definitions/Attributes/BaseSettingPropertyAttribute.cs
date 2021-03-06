@@ -20,11 +20,11 @@ namespace MCM.Abstractions.Attributes
         /// <inheritdoc/>
         public bool RequireRestart { get; set; }
         /// <inheritdoc/>
-        public string HintText { get => _hintText; set => _hintText = TextObjectHelper.Create(value).ToString(); }
+        public string HintText { get => _hintText; set => _hintText = TextObjectHelper.Create(value)?.ToString() ?? "ERROR"; }
 
         protected BaseSettingPropertyAttribute(string displayName, int order = -1, bool requireRestart = true, string hintText = "")
         {
-            DisplayName = TextObjectHelper.Create(displayName).ToString();
+            DisplayName = TextObjectHelper.Create(displayName)?.ToString() ?? "ERROR";
             Order = order;
             RequireRestart = requireRestart;
             HintText = hintText;

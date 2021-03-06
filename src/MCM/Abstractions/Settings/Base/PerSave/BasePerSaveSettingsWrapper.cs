@@ -1,6 +1,5 @@
 ﻿using HarmonyLib;
-
-using MCM.Utils;
+using HarmonyLib.BUTR.Extensions;
 
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -52,13 +51,13 @@ namespace MCM.Abstractions.Settings.Base.PerSave
             Object = @object;
             var type = @object.GetType();
 
-            _getIdDelegate = AccessTools3.GetDelegate<GetIdDelegate>(@object, AccessTools.Property(type, nameof(Id)).GetGetMethod());
-            _getFolderNameDelegate = AccessTools3.GetDelegate<GetFolderNameDelegate>(@object, AccessTools.Property(type, nameof(FolderName)).GetGetMethod());
-            _getDisplayNameDelegate = AccessTools3.GetDelegate<GetDisplayNameDelegate>(@object, AccessTools.Property(type, nameof(DisplayName)).GetGetMethod());
-            _getUIVersionDelegate = AccessTools3.GetDelegate<GetUIVersionDelegate>(@object, AccessTools.Property(type, nameof(UIVersion)).GetGetMethod());
-            _getSubFolderDelegate = AccessTools3.GetDelegate<GetSubFolderDelegate>(@object, AccessTools.Property(type, nameof(SubFolder)).GetGetMethod());
-            _getSubGroupDelimiterDelegate = AccessTools3.GetDelegate<GetSubGroupDelimiterDelegate>(@object, AccessTools.Property(type, nameof(SubGroupDelimiter)).GetGetMethod());
-            _methodOnPropertyChangedDelegate = AccessTools3.GetDelegate<OnPropertyChangedDelegate>(@object, AccessTools.Method(type, nameof(OnPropertyChanged)));
+            _getIdDelegate = AccessTools2.GetDelegate<GetIdDelegate>(@object, AccessTools.Property(type, nameof(Id)).GetGetMethod());
+            _getFolderNameDelegate = AccessTools2.GetDelegate<GetFolderNameDelegate>(@object, AccessTools.Property(type, nameof(FolderName)).GetGetMethod());
+            _getDisplayNameDelegate = AccessTools2.GetDelegate<GetDisplayNameDelegate>(@object, AccessTools.Property(type, nameof(DisplayName)).GetGetMethod());
+            _getUIVersionDelegate = AccessTools2.GetDelegate<GetUIVersionDelegate>(@object, AccessTools.Property(type, nameof(UIVersion)).GetGetMethod());
+            _getSubFolderDelegate = AccessTools2.GetDelegate<GetSubFolderDelegate>(@object, AccessTools.Property(type, nameof(SubFolder)).GetGetMethod());
+            _getSubGroupDelimiterDelegate = AccessTools2.GetDelegate<GetSubGroupDelimiterDelegate>(@object, AccessTools.Property(type, nameof(SubGroupDelimiter)).GetGetMethod());
+            _methodOnPropertyChangedDelegate = AccessTools2.GetDelegate<OnPropertyChangedDelegate>(@object, AccessTools.Method(type, nameof(OnPropertyChanged)));
         }
 
         /// <inheritdoc/>

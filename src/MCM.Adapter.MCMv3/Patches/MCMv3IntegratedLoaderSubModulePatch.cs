@@ -2,14 +2,13 @@
 extern alias v4;
 
 using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 using TaleWorlds.MountAndBlade;
-
-using v4::MCM.Utils;
 
 using MCMv3IIntegratedLoader = v3::MCM.Abstractions.Loader.IIntegratedLoader;
 using MCMv3IntegratedLoaderSubModule = v3::MCM.IntegratedLoaderSubModule;
@@ -27,7 +26,7 @@ namespace MCM.Adapter.MCMv3.Patches
         }
 
         private static readonly AccessTools.FieldRef<MCMv3IntegratedLoaderSubModule, MCMv3IIntegratedLoader>? Loader =
-            AccessTools3.FieldRefAccess<MCMv3IntegratedLoaderSubModule, MCMv3IIntegratedLoader>("_loader");
+            AccessTools2.FieldRefAccess<MCMv3IntegratedLoaderSubModule, MCMv3IIntegratedLoader>("_loader");
 
         public static void Patch(Harmony harmony)
         {

@@ -3,9 +3,6 @@ using MCM.Abstractions.Settings.Properties;
 using MCM.DependencyInjection;
 using MCM.Extensions;
 using MCM.LightInject;
-using MCM.Logger;
-
-using System.Linq;
 
 using TaleWorlds.MountAndBlade;
 

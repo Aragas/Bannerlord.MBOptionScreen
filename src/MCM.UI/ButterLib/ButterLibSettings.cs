@@ -17,7 +17,7 @@ namespace MCM.UI.ButterLib
     internal sealed class ButterLibSettings : BaseSettings
     {
         public override string Id { get; } = "Options";
-        public override string DisplayName => TextObjectHelper.Create("{=ButterLibSettings_Name}ButterLib {VERSION}", new Dictionary<string, TextObject>
+        public override string DisplayName => TextObjectHelper.Create("{=ButterLibSettings_Name}ButterLib {VERSION}", new Dictionary<string, TextObject?>
         {
             { "VERSION", TextObjectHelper.Create(typeof(ButterLibSubModule).Assembly.GetName().Version?.ToString(3) ?? "ERROR") }
         })?.ToString() ?? "ERROR";

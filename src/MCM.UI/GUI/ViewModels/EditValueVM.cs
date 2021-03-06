@@ -90,7 +90,7 @@ namespace MCM.UI.GUI.ViewModels
         {
             SettingProperty = settingProperty;
 
-            TitleText = TextObjectHelper.Create("{=EditValueVM_TitleText}Edit \"{PROPERTYNAME}\"", new Dictionary<string, TextObject>
+            TitleText = TextObjectHelper.Create("{=EditValueVM_TitleText}Edit \"{PROPERTYNAME}\"", new Dictionary<string, TextObject?>
             {
                 { "PROPERTYNAME", TextObjectHelper.Create(SettingProperty.Name) }
             })?.ToString() ?? "ERROR";
@@ -100,7 +100,7 @@ namespace MCM.UI.GUI.ViewModels
                 case SettingType.Float:
                 {
                     var format = SettingProperty.IsIntVisible ? "0" : "0.00";
-                    DescriptionText = TextObjectHelper.Create("{=EditValueVM_DescriptionText_Numeric}Edit the value for \"{PROPERTYNAME}\".\nThe minimum value is {MINVALUE} and the maximum value is {MAXVALUE}.", new Dictionary<string, TextObject>
+                    DescriptionText = TextObjectHelper.Create("{=EditValueVM_DescriptionText_Numeric}Edit the value for \"{PROPERTYNAME}\".\nThe minimum value is {MINVALUE} and the maximum value is {MAXVALUE}.", new Dictionary<string, TextObject?>
                     {
                         { "PROPERTYNAME", TextObjectHelper.Create(SettingProperty.Name) },
                         { "MINVALUE", TextObjectHelper.Create(SettingProperty.SettingPropertyDefinition.EditableMinValue.ToString(format)) },
@@ -110,7 +110,7 @@ namespace MCM.UI.GUI.ViewModels
                 }
                 case SettingType.String:
                 {
-                    DescriptionText = TextObjectHelper.Create("{=EditValueVM_DescriptionText_Text}Edit the value for \"{PROPERTYNAME}\".", new Dictionary<string, TextObject>
+                    DescriptionText = TextObjectHelper.Create("{=EditValueVM_DescriptionText_Text}Edit the value for \"{PROPERTYNAME}\".", new Dictionary<string, TextObject?>
                     {
                         { "PROPERTYNAME", TextObjectHelper.Create(SettingProperty.Name) },
                     })?.ToString() ?? "ERROR";

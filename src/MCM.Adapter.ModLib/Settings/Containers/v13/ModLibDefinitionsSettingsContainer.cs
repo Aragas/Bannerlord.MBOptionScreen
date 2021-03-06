@@ -1,6 +1,7 @@
 ﻿extern alias v13;
 
 using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Containers.Global;
@@ -22,9 +23,9 @@ namespace MCM.Adapter.ModLib.Settings.Containers.v13
         private delegate bool SaveSettingsDelegate(v13SettingsBase settings);
 
         private static readonly GetAllSettingsDictDelegate? GetAllSettingsDict =
-            AccessTools3.GetDelegate<GetAllSettingsDictDelegate>(AccessTools.Property(typeof(v13SettingsDatabase), "AllSettingsDict").GetMethod);
+            AccessTools2.GetDelegate<GetAllSettingsDictDelegate>(AccessTools.Property(typeof(v13SettingsDatabase), "AllSettingsDict").GetMethod);
         private static readonly SaveSettingsDelegate? SaveSettingsFunc =
-            AccessTools3.GetDelegate<SaveSettingsDelegate>(typeof(v13SettingsDatabase), "SaveSettings");
+            AccessTools2.GetDelegate<SaveSettingsDelegate>(typeof(v13SettingsDatabase), "SaveSettings");
 
         private Dictionary<string, ModLibDefinitionsGlobalSettingsWrapper> LoadedModLibSettings { get; } = new();
 

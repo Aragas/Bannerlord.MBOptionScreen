@@ -26,8 +26,8 @@ namespace MCM.Adapter.ModLib.Attributes.v1
         {
             var type = @object.GetType();
 
-            DisplayName = TextObjectHelper.Create(type.GetProperty(nameof(v1SettingPropertyAttribute.DisplayName))?.GetValue(@object) as string ?? "ERROR").ToString();
-            HintText = TextObjectHelper.Create(type.GetProperty(nameof(v1SettingPropertyAttribute.HintText))?.GetValue(@object) as string ?? "ERROR").ToString();
+            DisplayName = TextObjectHelper.Create(type.GetProperty(nameof(v1SettingPropertyAttribute.DisplayName))?.GetValue(@object) as string ?? "ERROR")?.ToString() ?? "ERROR";
+            HintText = TextObjectHelper.Create(type.GetProperty(nameof(v1SettingPropertyAttribute.HintText))?.GetValue(@object) as string ?? "ERROR")?.ToString() ?? "ERROR";
             Order = -1;
             RequireRestart = true;
 

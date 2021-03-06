@@ -85,20 +85,20 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
 
             DisplayName = displayNameProperty?.GetValue(@object) switch
             {
-                string str => TextObjectHelper.Create(str).ToString(),
+                string str => TextObjectHelper.Create(str)?.ToString() ?? "ERROR",
                 TextObject to => to.ToString(),
                 _ => "ERROR"
             };
             HintText = hintTextProperty?.GetValue(@object) switch
             {
-                string str => TextObjectHelper.Create(str).ToString(),
+                string str => TextObjectHelper.Create(str)?.ToString() ?? "ERROR",
                 TextObject to => to.ToString(),
                 _ => "ERROR"
             };
             Order = orderProperty?.GetValue(@object) as int? ?? -1;
             RequireRestart = requireRestartProperty?.GetValue(@object) as bool? ?? true;
 
-            GroupName = TextObjectHelper.Create(groupNameProperty?.GetValue(@object) as string ?? string.Empty).ToString();
+            GroupName = TextObjectHelper.Create(groupNameProperty?.GetValue(@object) as string ?? string.Empty)?.ToString() ?? "ERROR";
             GroupOrder = groupOrderProperty?.GetValue(@object) as int? ?? -1;
 
             MinValue = minValueProperty?.GetValue(@object) is { } minVal ? minVal as decimal? ?? 0 : 0;

@@ -17,6 +17,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
+    <PackageReference Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <ProjectReference Include="../MCM/MCM.csproj" Private="false" Aliases="v4" />
     <Reference Include="MCMv1" HintPath="_Module/bin/Win64_Shipping_Client/MBOptionScreen.dll" Private="false" Aliases="v1" />
     <Reference Include="MCMv2" HintPath="_Module/bin/Win64_Shipping_Client/MBOptionScreen.v2.0.10.dll" Private="false" Aliases="v2" />

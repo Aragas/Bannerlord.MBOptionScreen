@@ -6,7 +6,6 @@ using MCM.Adapter.MBO.Settings.Containers;
 
 using System.Collections.Generic;
 
-using v4::MCM;
 using v4::MCM.Abstractions.Settings.Providers;
 using v4::MCM.DependencyInjection;
 
@@ -22,7 +21,7 @@ namespace MCM.Adapter.MBO.Settings.Providers
 
         public SettingsBase? GetSettings(string id)
         {
-            if (MCMSubModule.Instance is not null && GenericServiceProvider.GetService<BaseSettingsProvider>() is { } settingsProvider)
+            if (GenericServiceProvider.GetService<BaseSettingsProvider>() is { } settingsProvider)
             {
                 var baseSettings = settingsProvider.GetSettings(id);
                 if (baseSettings is MBOv1GlobalSettingsWrapper { Object: SettingsBase settings })
