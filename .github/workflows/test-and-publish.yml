@@ -14,6 +14,7 @@ on:
       - '.github/workflows/test-and-publish.yml'
       - 'src/**'
       - 'build/**'
+      - 'tests/**'
   pull_request:
     branches:
       - dev
@@ -23,6 +24,7 @@ on:
       - '.github/workflows/test-and-publish.yml'
       - 'src/**'
       - 'build/**'
+      - 'tests/**'
 
 env:
   # Disable the .NET logo in the console output.
