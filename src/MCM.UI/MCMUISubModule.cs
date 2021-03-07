@@ -40,21 +40,21 @@ namespace MCM.UI
     [SuppressMessage("ReSharper", "UnusedType.Global")]
     public sealed class MCMUISubModule : MBSubModuleBase
     {
-        private const string SWarningTitle =
-@"{=dzeWx4xSfR}Warning from MCM!";
         private const string SErrorHarmonyNotFound =
 @"{=EEVJa5azpB}Bannerlord.Harmony module was not found!";
         private const string SErrorUIExtenderExNotFound =
 @"{=YjsGP3mUaj}Bannerlord.UIExtenderEx module was not found!";
         private const string SErrorButterLibNotFound =
 @"{=5EDzm7u4mS}Bannerlord.ButterLib module was not found!";
+        private const string SMessageContinue =
+@"{=eXs6FLm5DP}It's strongly recommended to terminate the game now. Do you wish to terminate it?";
+        private const string SWarningTitle =
+@"{=dzeWx4xSfR}Warning from MCM!";
         private const string SErrorOfficialModulesLoadedBeforeMCM =
 @"{=BccWuuSR6a}MCM is loaded after the official modules!
 Make sure MCM is loaded before them!";
         private const string SErrorOfficialModules =
 @"{=JP23gY34Gm}The following modules were loaded before MCM:";
-        private const string SMessageContinue =
-@"{=eXs6FLm5DP}It's strongly recommended to terminate the game now. Do you wish to terminate it?";
 
 
         internal static ILogger<MCMUISubModule> Logger = NullLogger<MCMUISubModule>.Instance;

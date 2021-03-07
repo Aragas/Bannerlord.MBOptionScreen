@@ -5,16 +5,9 @@
     <Authors>Aragas, mipen</Authors>
     <AssemblyName>MCMv4.Adapter.ModLib</AssemblyName>
     <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
-    <!--
-    <ModuleName>Bannerlord.MBOptionScreen.ModLib</ModuleName>
-    -->
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bannerlord.BuildResources" Version="$(BuildResourcesVersion)">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
     <PackageReference Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
