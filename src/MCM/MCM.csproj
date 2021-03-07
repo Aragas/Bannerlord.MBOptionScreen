@@ -36,8 +36,11 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" IncludeAssets="compile" />
-    <PackageReference Include="LightInject.Source" Version="6.4.0" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" IncludeAssets="compile" />
+    <PackageReference Include="LightInject.Source" Version="6.4.0" PrivateAssets="all" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>compile</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
