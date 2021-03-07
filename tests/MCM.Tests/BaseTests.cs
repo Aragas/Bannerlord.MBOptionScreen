@@ -53,9 +53,11 @@ namespace MCM.Tests
 
             var butterLib = new MBSubModuleBaseWrapper(new ButterLibSubModule());
             butterLib.SubModuleLoad();
-            new MBSubModuleBaseWrapper(new MCMSubModule()).SubModuleLoad();
+            var mcm = new MBSubModuleBaseWrapper(new MCMSubModule());
+            mcm.SubModuleLoad();
             new MBSubModuleBaseWrapper(new MCMImplementationSubModule()).SubModuleLoad();
             butterLib.BeforeInitialModuleScreenSetAsRoot();
+            mcm.BeforeInitialModuleScreenSetAsRoot();
         }
 
         [OneTimeTearDown]
