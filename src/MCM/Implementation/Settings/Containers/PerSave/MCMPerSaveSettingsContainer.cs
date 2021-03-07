@@ -1,11 +1,8 @@
-﻿using Bannerlord.ButterLib.Common.Extensions;
-
-using MCM.Abstractions;
+﻿using MCM.Abstractions;
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Base.PerSave;
 using MCM.Abstractions.Settings.Containers;
-
-using Microsoft.Extensions.DependencyInjection;
+using MCM.DependencyInjection;
 
 using System;
 using System.Collections.Generic;
@@ -20,7 +17,7 @@ namespace MCM.Implementation.Settings.Containers.PerSave
         /// <inheritdoc/>
         protected override void RegisterSettings(PerSaveSettings? perSaveSettings)
         {
-            var behavior = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<PerSaveCampaignBehavior>();
+            var behavior = GenericServiceProvider.GetService<PerSaveCampaignBehavior>();
             if (behavior is null)
                 return;
 
@@ -35,7 +32,7 @@ namespace MCM.Implementation.Settings.Containers.PerSave
         /// <inheritdoc/>
         public override bool SaveSettings(BaseSettings settings)
         {
-            var behavior = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<PerSaveCampaignBehavior>();
+            var behavior = GenericServiceProvider.GetService<PerSaveCampaignBehavior>();
             if (behavior is null)
                 return false;
 

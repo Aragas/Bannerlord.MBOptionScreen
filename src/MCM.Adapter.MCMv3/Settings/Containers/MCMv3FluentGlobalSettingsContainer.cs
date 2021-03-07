@@ -1,7 +1,7 @@
 ﻿extern alias v3;
 extern alias v4;
 
-using Bannerlord.ButterLib.Common.Extensions;
+using Bannerlord.BUTR.Shared.Extensions;
 
 using MCM.Adapter.MCMv3.Settings.Base;
 

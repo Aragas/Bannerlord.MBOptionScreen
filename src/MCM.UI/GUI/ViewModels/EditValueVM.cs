@@ -90,35 +90,35 @@ namespace MCM.UI.GUI.ViewModels
         {
             SettingProperty = settingProperty;
 
-            TitleText = TextObjectHelper.Create("{=EditValueVM_TitleText}Edit \"{PROPERTYNAME}\"", new Dictionary<string, TextObject>()
+            TitleText = TextObjectHelper.Create("{=EditValueVM_TitleText}Edit \"{PROPERTYNAME}\"", new Dictionary<string, TextObject?>
             {
                 { "PROPERTYNAME", TextObjectHelper.Create(SettingProperty.Name) }
-            }).ToString();
+            })?.ToString() ?? "ERROR";
             switch (SettingType)
             {
                 case SettingType.Int:
                 case SettingType.Float:
                 {
                     var format = SettingProperty.IsIntVisible ? "0" : "0.00";
-                    DescriptionText = TextObjectHelper.Create("{=EditValueVM_DescriptionText_Numeric}Edit the value for \"{PROPERTYNAME}\".\nThe minimum value is {MINVALUE} and the maximum value is {MAXVALUE}.", new Dictionary<string, TextObject>()
+                    DescriptionText = TextObjectHelper.Create("{=EditValueVM_DescriptionText_Numeric}Edit the value for \"{PROPERTYNAME}\".\nThe minimum value is {MINVALUE} and the maximum value is {MAXVALUE}.", new Dictionary<string, TextObject?>
                     {
                         { "PROPERTYNAME", TextObjectHelper.Create(SettingProperty.Name) },
                         { "MINVALUE", TextObjectHelper.Create(SettingProperty.SettingPropertyDefinition.EditableMinValue.ToString(format)) },
                         { "MAXVALUE", TextObjectHelper.Create(SettingProperty.SettingPropertyDefinition.EditableMaxValue.ToString(format)) },
-                    }).ToString();
+                    })?.ToString() ?? "ERROR";
                     break;
                 }
                 case SettingType.String:
                 {
-                    DescriptionText = TextObjectHelper.Create("{=EditValueVM_DescriptionText_Text}Edit the value for \"{PROPERTYNAME}\".", new Dictionary<string, TextObject>()
+                    DescriptionText = TextObjectHelper.Create("{=EditValueVM_DescriptionText_Text}Edit the value for \"{PROPERTYNAME}\".", new Dictionary<string, TextObject?>
                     {
                         { "PROPERTYNAME", TextObjectHelper.Create(SettingProperty.Name) },
-                    }).ToString();
+                    })?.ToString() ?? "ERROR";
                     break;
                 }
             }
-            DoneButtonText = TextObjectHelper.Create("{=WiNRdfsm}Done").ToString();
-            CancelButtonText = TextObjectHelper.Create("{=3CpNUnVl}Cancel").ToString();
+            DoneButtonText = TextObjectHelper.Create("{=WiNRdfsm}Done")?.ToString() ?? "ERROR";
+            CancelButtonText = TextObjectHelper.Create("{=3CpNUnVl}Cancel")?.ToString() ?? "ERROR";
 
             RefreshValues();
         }

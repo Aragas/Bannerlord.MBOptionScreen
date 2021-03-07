@@ -12,15 +12,15 @@ using System.Collections.Generic;
 
 using TaleWorlds.Localization;
 
-namespace MCM.Implementation
+namespace MCM.UI.ButterLib
 {
     internal sealed class ButterLibSettings : BaseSettings
     {
         public override string Id { get; } = "Options";
-        public override string DisplayName => TextObjectHelper.Create("{=ButterLibSettings_Name}ButterLib {VERSION}", new Dictionary<string, TextObject>()
+        public override string DisplayName => TextObjectHelper.Create("{=ButterLibSettings_Name}ButterLib {VERSION}", new Dictionary<string, TextObject?>
         {
             { "VERSION", TextObjectHelper.Create(typeof(ButterLibSubModule).Assembly.GetName().Version?.ToString(3) ?? "ERROR") }
-        }).ToString();
+        })?.ToString() ?? "ERROR";
         public override string FolderName { get; } = "ButterLib";
         public override string FormatType { get; } = "json2";
         public override string DiscoveryType { get; } = "attributes";

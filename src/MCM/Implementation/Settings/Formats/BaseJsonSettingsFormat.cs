@@ -3,13 +3,12 @@ using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Formats;
 using MCM.Abstractions.Settings.Models;
 using MCM.Extensions;
+using MCM.Logger;
 using MCM.Utils;
 
-using Microsoft.Extensions.Logging;
-
 using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,10 +20,10 @@ namespace MCM.Implementation.Settings.Formats
         private readonly object _lock = new();
         private readonly Dictionary<string, object?> _existingObjects = new();
 
-        protected readonly ILogger Logger;
+        protected readonly IMCMLogger Logger;
         protected virtual JsonSerializerSettings JsonSerializerSettings { get; }
 
-        protected BaseJsonSettingsFormat(ILogger logger)
+        protected BaseJsonSettingsFormat(IMCMLogger logger)
         {
             Logger = logger;
             JsonSerializerSettings = new JsonSerializerSettings
@@ -127,10 +126,10 @@ namespace MCM.Implementation.Settings.Formats
 
         private class DropdownJsonConverter : JsonConverter
         {
-            private readonly ILogger _logger;
+            private readonly IMCMLogger _logger;
             private readonly BaseJsonSettingsFormat _settingsFormat;
 
-            public DropdownJsonConverter(ILogger logger, BaseJsonSettingsFormat settingsFormat)
+            public DropdownJsonConverter(IMCMLogger logger, BaseJsonSettingsFormat settingsFormat)
             {
                 _logger = logger;
                 _settingsFormat = settingsFormat;

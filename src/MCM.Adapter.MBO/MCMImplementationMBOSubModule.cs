@@ -2,10 +2,8 @@
 extern alias v2;
 extern alias v4;
 
-using Bannerlord.ButterLib.Common.Extensions;
-using Bannerlord.ButterLib.Common.Helpers;
-
 using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using MCM.Adapter.MBO.Settings.Containers;
 using MCM.Adapter.MBO.Settings.Properties;
@@ -37,7 +35,7 @@ namespace MCM.Adapter.MBO
         {
             ServiceRegistrationWasCalled = true;
 
-            if (this.GetServices() is { } services)
+            if (this.GetServiceContainer() is { } services)
             {
                 services.AddSettingsContainer<MBOv1GlobalSettingsContainer>();
                 services.AddSettingsContainer<MBOv2GlobalSettingsContainer>();

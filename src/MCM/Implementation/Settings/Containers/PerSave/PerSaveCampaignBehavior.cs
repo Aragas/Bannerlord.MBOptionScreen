@@ -1,9 +1,6 @@
-﻿using Bannerlord.ButterLib.Common.Extensions;
-
-using MCM.Abstractions.Settings.Base.PerSave;
+﻿using MCM.Abstractions.Settings.Base.PerSave;
+using MCM.DependencyInjection;
 using MCM.Implementation.Settings.Formats.Json2;
-
-using Microsoft.Extensions.DependencyInjection;
 
 using System.Collections.Generic;
 using System.IO;
@@ -32,7 +29,7 @@ namespace MCM.Implementation.Settings.Containers.PerSave
 
         public bool SaveSettings(PerSaveSettings perSaveSettings)
         {
-            var jsonSettingsFormat = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IJson2SettingsFormat>();
+            var jsonSettingsFormat = GenericServiceProvider.GetService<IJson2SettingsFormat>();
 
             if (_settings is null || jsonSettingsFormat is null)
                 return false;
@@ -44,7 +41,7 @@ namespace MCM.Implementation.Settings.Containers.PerSave
 
         public void LoadSettings(PerSaveSettings perSaveSettings)
         {
-            var jsonSettingsFormat = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IJson2SettingsFormat>();
+            var jsonSettingsFormat = GenericServiceProvider.GetService<IJson2SettingsFormat>();
 
             if (_settings is null || jsonSettingsFormat is null)
                 return;

@@ -56,7 +56,14 @@ namespace MCM.Abstractions.Ref
             return Equals((PropertyRef) obj);
         }
         /// <inheritdoc/>
-        public override int GetHashCode() => HashCode.Combine(PropertyInfo, Instance);
+        public override int GetHashCode()
+        {
+            var hash = 269;
+            hash = (hash * 47) + PropertyInfo.GetHashCode();
+            hash = (hash * 47) + Instance.GetHashCode();
+            return hash;
+        }
+
         public static bool operator ==(PropertyRef? left, PropertyRef? right) => Equals(left, right);
         public static bool operator !=(PropertyRef? left, PropertyRef? right) => !Equals(left, right);
     }

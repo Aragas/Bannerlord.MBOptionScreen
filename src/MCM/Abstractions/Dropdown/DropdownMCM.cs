@@ -21,7 +21,7 @@ namespace MCM.Abstractions.Dropdown
         {
             get
             {
-                _selector.Refresh(this.Select(x => TextObjectHelper.Create(x?.ToString() ?? "ERROR").ToString()), SelectedIndex, OnSelectionChanged);
+                _selector.Refresh(this.Select(x => TextObjectHelper.Create(x?.ToString() ?? "ERROR")?.ToString() ?? "ERROR"), SelectedIndex, OnSelectionChanged);
                 return _selector;
             }
             set
@@ -61,7 +61,7 @@ namespace MCM.Abstractions.Dropdown
 
         public DropdownMCM(IEnumerable<T> values, int selectedIndex) : base(values)
         {
-            var select = this.Select(x => TextObjectHelper.Create(x?.ToString() ?? "ERROR").ToString());
+            var select = this.Select(x => TextObjectHelper.Create(x?.ToString() ?? "ERROR")?.ToString() ?? "ERROR");
             _selector = new MCMSelectorVM<DropdownSelectorItemVM, string>(select, selectedIndex, OnSelectionChanged);
 
             if (SelectedIndex != 0 && SelectedIndex >= Count)

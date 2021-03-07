@@ -70,7 +70,7 @@ namespace MCM.UI.GUI.ViewModels
             // {
                 _cachedPresets = SettingsInstance.GetAvailablePresets().ToDictionary(pair => pair.Key, pair => pair.Value());
 
-                PresetsSelector = new SelectorVM<SelectorItemVM>(new List<string> { TextObjectHelper.Create("{=SettingsVM_Custom}Custom").ToString() }.Concat(_cachedPresets.Keys.Select(x => TextObjectHelper.Create(x).ToString())), -1, null);
+                PresetsSelector = new SelectorVM<SelectorItemVM>(new List<string> { TextObjectHelper.Create("{=SettingsVM_Custom}Custom")?.ToString() ?? "ERROR" }.Concat(_cachedPresets.Keys.Select(x => TextObjectHelper.Create(x)?.ToString())), -1, null);
                 PresetsSelector.ItemList[0].CanBeSelected = false;
 
                 RecalculateIndex();
@@ -149,7 +149,7 @@ namespace MCM.UI.GUI.ViewModels
         }
         public void ResetSettings()
         {
-            ChangePreset(TextObjectHelper.Create("{=BaseSettings_Default}Default").ToString());
+            ChangePreset(TextObjectHelper.Create("{=BaseSettings_Default}Default")?.ToString() ?? string.Empty);
         }
         public void SaveSettings()
         {

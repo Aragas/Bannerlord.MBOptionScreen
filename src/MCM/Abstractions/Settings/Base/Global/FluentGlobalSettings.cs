@@ -1,12 +1,11 @@
-﻿using Bannerlord.ButterLib.Common.Extensions;
+﻿using Bannerlord.BUTR.Shared.Extensions;
 
 using MCM.Abstractions.FluentBuilder;
 using MCM.Abstractions.Settings.Models;
+using MCM.DependencyInjection;
 using MCM.Extensions;
 using MCM.Implementation.FluentBuilder;
 using MCM.Implementation.Settings.Containers.Global;
-
-using Microsoft.Extensions.DependencyInjection;
 
 using System;
 using System.Collections.Generic;
@@ -68,12 +67,12 @@ namespace MCM.Abstractions.Settings.Base.Global
 
         public void Register()
         {
-            var container = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IMCMFluentGlobalSettingsContainer>();
+            var container = GenericServiceProvider.GetService<IMCMFluentGlobalSettingsContainer>();
             container?.Register(this);
         }
         public void Unregister()
         {
-            var container = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IMCMFluentGlobalSettingsContainer>();
+            var container = GenericServiceProvider.GetService<IMCMFluentGlobalSettingsContainer>();
             container?.Unregister(this);
         }
 

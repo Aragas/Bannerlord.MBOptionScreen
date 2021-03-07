@@ -1,9 +1,9 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using MCM.Logger;
 
 namespace MCM.Implementation.Settings.Formats.Json
 {
     internal sealed class JsonSettingsFormat : BaseJsonSettingsFormat, IJsonSettingsFormat
     {
-        public JsonSettingsFormat(ILogger<JsonSettingsFormat> logger) : base(logger) { }
+        public JsonSettingsFormat(IMCMLogger<JsonSettingsFormat> logger) : base(logger) { }
     }
 }

@@ -1,10 +1,8 @@
 ﻿extern alias v3;
 extern alias v4;
 
-using Bannerlord.ButterLib.Common.Extensions;
-using Bannerlord.ButterLib.Common.Helpers;
-
 using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using MCM.Adapter.MCMv3.Patches;
 using MCM.Adapter.MCMv3.Settings.Containers;
@@ -30,7 +28,7 @@ namespace MCM.Adapter.MCMv3
         {
             ServiceRegistrationWasCalled = true;
 
-            if (this.GetServices() is { } services)
+            if (this.GetServiceContainer() is { } services)
             {
                 services.AddSettingsContainer<MCMv3FluentGlobalSettingsContainer>();
                 services.AddSettingsContainer<MCMv3GlobalSettingsContainer>();

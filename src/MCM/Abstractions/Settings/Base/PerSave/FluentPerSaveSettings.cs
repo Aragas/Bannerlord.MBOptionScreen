@@ -1,12 +1,11 @@
-﻿using Bannerlord.ButterLib.Common.Extensions;
+﻿using Bannerlord.BUTR.Shared.Extensions;
 
 using MCM.Abstractions.FluentBuilder;
 using MCM.Abstractions.Settings.Models;
+using MCM.DependencyInjection;
 using MCM.Extensions;
 using MCM.Implementation.FluentBuilder;
 using MCM.Implementation.Settings.Containers.PerSave;
-
-using Microsoft.Extensions.DependencyInjection;
 
 using System;
 using System.Collections.Generic;
@@ -64,12 +63,12 @@ namespace MCM.Abstractions.Settings.Base.PerSave
 
         public void Register()
         {
-            var container = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IMCMFluentPerSaveSettingsContainer>();
+            var container = GenericServiceProvider.GetService<IMCMFluentPerSaveSettingsContainer>();
             container?.Register(this);
         }
         public void Unregister()
         {
-            var container = MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<IMCMFluentPerSaveSettingsContainer>();
+            var container = GenericServiceProvider.GetService<IMCMFluentPerSaveSettingsContainer>();
             container?.Unregister(this);
         }
 

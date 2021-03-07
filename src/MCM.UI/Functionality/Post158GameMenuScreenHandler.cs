@@ -55,8 +55,10 @@ namespace MCM.UI.Functionality
             }
         }
 
-        public override void AddScreen(string internalName, int index, Func<ScreenBase?> screenFactory, TextObject text)
+        public override void AddScreen(string internalName, int index, Func<ScreenBase?> screenFactory, TextObject? text)
         {
+            if (text is null) return;
+
             if (_instance.TryGetTarget(out var instance))
             {
                 var insertIndex = instance.MenuOptions.FindIndex(i => i.InitialStateOption.OrderIndex > index);

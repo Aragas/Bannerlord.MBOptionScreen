@@ -1,5 +1,5 @@
 ﻿extern alias v13;
-
+using System;
 using Bannerlord.BUTR.Shared.Helpers;
 
 using MCM.Abstractions.Settings.Definitions;
@@ -26,8 +26,8 @@ namespace MCM.Adapter.ModLib.Attributes.v13
         {
             var type = @object.GetType();
 
-            DisplayName = TextObjectHelper.Create(type.GetProperty(nameof(v13SettingPropertyAttribute.DisplayName))?.GetValue(@object) as string ?? "ERROR").ToString();
-            HintText = TextObjectHelper.Create(type.GetProperty(nameof(v13SettingPropertyAttribute.HintText))?.GetValue(@object) as string ?? "ERROR").ToString();
+            DisplayName = TextObjectHelper.Create(type.GetProperty(nameof(v13SettingPropertyAttribute.DisplayName))?.GetValue(@object) as string ?? "ERROR")?.ToString() ?? "ERROR";
+            HintText = TextObjectHelper.Create(type.GetProperty(nameof(v13SettingPropertyAttribute.HintText))?.GetValue(@object) as string ?? "ERROR")?.ToString() ?? "ERROR";
             Order = -1;
             RequireRestart = true;
 

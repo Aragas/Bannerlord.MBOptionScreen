@@ -1,12 +1,10 @@
-﻿using Bannerlord.ButterLib.Common.Helpers;
-
-using HarmonyLib;
+﻿using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using MCM.Extensions;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 using TaleWorlds.Library;
 
@@ -155,10 +153,9 @@ namespace MCM.Abstractions.Dropdown
 
         public void ExecuteRandomize()
         {
-            if (ItemList.Any(i => _canBeSelectedDelegate(i)))
+            if (ItemList.GetRandomElementWithPredicate(i => _canBeSelectedDelegate(i)) is { } element)
             {
-                var randomElement = ItemList.Where(i => _canBeSelectedDelegate(i)).GetRandomElementInefficiently();
-                SelectedIndex = ItemList.IndexOf(randomElement);
+                SelectedIndex = ItemList.IndexOf(element);
             }
         }
 

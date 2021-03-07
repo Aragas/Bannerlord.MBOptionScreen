@@ -1,13 +1,9 @@
-﻿using Bannerlord.ButterLib.Common.Extensions;
-
-using MCM.Adapter.ModLib.Functionality;
+﻿using MCM.Adapter.ModLib.Functionality;
 using MCM.Adapter.ModLib.Settings.Containers.v1;
 using MCM.Adapter.ModLib.Settings.Containers.v13;
 using MCM.Adapter.ModLib.Settings.Properties.v1;
 using MCM.Adapter.ModLib.Settings.Properties.v13;
 using MCM.Extensions;
-
-using Microsoft.Extensions.DependencyInjection;
 
 using TaleWorlds.MountAndBlade;
 
@@ -21,7 +17,7 @@ namespace MCM.Adapter.ModLib
         {
             ServiceRegistrationWasCalled = true;
 
-            if (this.GetServices() is { } services)
+            if (this.GetServiceContainer() is { } services)
             {
                 services.AddTransient<BaseModLibScreenOverrider, DefaultModLibScreenOverrider>();
 

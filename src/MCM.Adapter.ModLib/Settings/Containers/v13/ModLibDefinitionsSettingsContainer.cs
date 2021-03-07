@@ -1,8 +1,7 @@
 ﻿extern alias v13;
 
-using Bannerlord.ButterLib.Common.Helpers;
-
 using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Containers.Global;

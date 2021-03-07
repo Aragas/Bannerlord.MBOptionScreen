@@ -1,9 +1,6 @@
-﻿using Bannerlord.ButterLib.Common.Extensions;
-
-using MCM.Abstractions.Settings.Base;
+﻿using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Models;
-
-using Microsoft.Extensions.DependencyInjection;
+using MCM.DependencyInjection;
 
 using System.Collections.Generic;
 
@@ -14,7 +11,7 @@ namespace MCM.Abstractions.Settings.Providers
     public abstract class BaseSettingsProvider
     {
         public static BaseSettingsProvider? Instance =>
-            MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<BaseSettingsProvider>();
+            GenericServiceProvider.GetService<BaseSettingsProvider>();
 
         public abstract IEnumerable<SettingsDefinition> CreateModSettingsDefinitions { get; }
         public abstract BaseSettings? GetSettings(string id);

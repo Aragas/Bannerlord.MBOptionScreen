@@ -1,7 +1,7 @@
 ﻿using Bannerlord.BUTR.Shared.Helpers;
-using Bannerlord.ButterLib.Common.Helpers;
 
 using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Localization;
@@ -11,8 +11,8 @@ namespace MCM.Utils
     internal static class HintViewModelUtils
     {
         private delegate HintViewModel EmptyDelegate();
-        private delegate HintViewModel V1Delegate(string hintText, string uniqueName = null);
-        private delegate HintViewModel V2Delegate(TextObject hintText, string uniqueName = null);
+        private delegate HintViewModel V1Delegate(string hintText, string? uniqueName = null);
+        private delegate HintViewModel V2Delegate(TextObject? hintText, string? uniqueName = null);
 
         private static readonly EmptyDelegate? Empty;
         private static readonly V1Delegate? V1;

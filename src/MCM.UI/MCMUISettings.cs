@@ -15,10 +15,10 @@ namespace MCM.UI
         private bool _useStandardOptionScreen;
 
         public override string Id { get; } = "MCMUI_v4";
-        public override string DisplayName => TextObjectHelper.Create("{=MCMUISettings_Name}MCM UI {VERSION}", new Dictionary<string, TextObject>()
+        public override string DisplayName => TextObjectHelper.Create("{=MCMUISettings_Name}MCM UI {VERSION}", new Dictionary<string, TextObject?>
         {
             { "VERSION", TextObjectHelper.Create(typeof(MCMUISettings).Assembly.GetName().Version?.ToString(3) ?? "ERROR") }
-        }).ToString();
+        })?.ToString() ?? "ERROR";
         public override string FolderName { get; } = "MCM";
         public override string FormatType { get; } = "json";
 

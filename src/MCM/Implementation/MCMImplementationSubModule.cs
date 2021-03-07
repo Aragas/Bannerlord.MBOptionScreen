@@ -1,10 +1,8 @@
-﻿using Bannerlord.ButterLib.Common.Extensions;
-
-using MCM.Abstractions.Settings.Properties;
+﻿using MCM.Abstractions.Settings.Properties;
 using MCM.Abstractions.Settings.Providers;
+using MCM.DependencyInjection;
 using MCM.Extensions;
 using MCM.Implementation.FluentBuilder;
-using MCM.Implementation.Settings.Containers.Custom;
 using MCM.Implementation.Settings.Containers.Global;
 using MCM.Implementation.Settings.Containers.PerSave;
 using MCM.Implementation.Settings.Formats.Json;
@@ -12,8 +10,6 @@ using MCM.Implementation.Settings.Formats.Json2;
 using MCM.Implementation.Settings.Formats.Xml;
 using MCM.Implementation.Settings.Properties;
 using MCM.Implementation.Settings.Providers;
-
-using Microsoft.Extensions.DependencyInjection;
 
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
@@ -29,13 +25,12 @@ namespace MCM.Implementation
         {
             ServiceRegistrationWasCalled = true;
 
-            if (this.GetServices() is { } services)
+            if (this.GetServiceContainer() is { } services)
             {
                 services.AddSettingsContainer<IMCMFluentGlobalSettingsContainer, FluentGlobalSettingsContainer>();
                 services.AddSettingsContainer<IMCMGlobalSettingsContainer, MCMGlobalSettingsContainer>();
                 services.AddSettingsContainer<IMCMFluentPerSaveSettingsContainer, FluentPerSaveSettingsContainer>();
                 services.AddSettingsContainer<IMCMPerSaveSettingsContainer, MCMPerSaveSettingsContainer>();
-                services.AddSettingsContainer<ButterLibSettingsContainer>();
 
                 services.AddSettingsFormat<IJsonSettingsFormat, JsonSettingsFormat>();
                 services.AddSettingsFormat<IJson2SettingsFormat, Json2SettingsFormat>();
@@ -79,11 +74,11 @@ namespace MCM.Implementation
                 });
                 */
 
-                var settingsProvider = this.GetServiceProvider()?.GetRequiredService<BaseSettingsProvider>();
+                var settingsProvider = GenericServiceProvider.GetService<BaseSettingsProvider>();
                 settingsProvider?.OnGameStarted(game);
 
                 CampaignGameStarter gameStarter = (CampaignGameStarter) gameStarterObject;
-                gameStarter.AddBehavior(this.GetServiceProvider().GetRequiredService<PerSaveCampaignBehavior>());
+                gameStarter.AddBehavior(GenericServiceProvider.GetService<PerSaveCampaignBehavior>());
             }
         }
         public override void OnGameEnd(Game game)
@@ -92,8 +87,8 @@ namespace MCM.Implementation
 
             if (game.GameType is Campaign)
             {
-                    var settingsProvider = this.GetServiceProvider()?.GetRequiredService<BaseSettingsProvider>();
-                    settingsProvider?.OnGameEnded(game);
+                var settingsProvider = GenericServiceProvider.GetService<BaseSettingsProvider>();
+                settingsProvider?.OnGameEnded(game);
             }
         }
     }

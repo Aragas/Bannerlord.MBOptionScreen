@@ -8,7 +8,7 @@ using TaleWorlds.Engine;
 
 using Path = System.IO.Path;
 
-namespace MCM.Implementation.Settings.Containers.Custom
+namespace MCM.UI.ButterLib
 {
     internal sealed class ButterLibSettingsContainer : BaseSettingsContainer<BaseSettings>, IGlobalSettingsContainer
     {

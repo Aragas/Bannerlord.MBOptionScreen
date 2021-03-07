@@ -1,9 +1,8 @@
 ﻿extern alias v2;
 extern alias v4;
 
-using Bannerlord.ButterLib.Common.Helpers;
-
 using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using System;
 using System.ComponentModel;

@@ -1,13 +1,10 @@
-﻿using Bannerlord.ButterLib.Common.Extensions;
-
-using Microsoft.Extensions.DependencyInjection;
+﻿using MCM.DependencyInjection;
 
 namespace MCM.Adapter.ModLib.Functionality
 {
     public abstract class BaseModLibScreenOverrider
     {
-        public static BaseModLibScreenOverrider? Instance =>
-            MCMSubModule.Instance?.GetServiceProvider()?.GetRequiredService<BaseModLibScreenOverrider>();
+        public static BaseModLibScreenOverrider? Instance => GenericServiceProvider.GetService<BaseModLibScreenOverrider>();
 
         public abstract void OverrideModLibScreen();
     }
