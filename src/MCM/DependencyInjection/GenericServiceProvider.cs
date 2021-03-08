@@ -4,6 +4,6 @@
     {
         internal static IGenericServiceProvider ServiceProvider { get; set; }
 
-        public static TService? GetService<TService>() where TService : class => ServiceProvider.GetService<TService>();
+        public static TService? GetService<TService>() where TService : class => ServiceProvider?.GetService<TService>();
     }
 }
