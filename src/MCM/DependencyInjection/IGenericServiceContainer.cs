@@ -4,7 +4,7 @@ namespace MCM.DependencyInjection
 {
     public interface IGenericServiceProvider
     {
-        TService GetService<TService>() where TService : class;
+        TService? GetService<TService>() where TService : class;
     }
 
     public interface IGenericServiceContainer

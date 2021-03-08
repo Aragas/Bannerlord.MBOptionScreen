@@ -8,6 +8,6 @@ namespace MCM.DependencyInjection
 
         public LightInjectGenericServiceProvider(IServiceContainer serviceContainer) => _serviceContainer = serviceContainer;
 
-        public TService GetService<TService>() where TService : class => _serviceContainer.GetInstance<TService>();
+        public TService? GetService<TService>() where TService : class => _serviceContainer.GetInstance<TService>();
     }
 }

@@ -10,7 +10,7 @@ namespace MCM.UI.DependencyInjection
 {
     internal class ButterLibServiceContainer : IGenericServiceContainer
     {
-        private static IServiceCollection? ServiceContainer => MCMSubModule.Instance?.GetServices();
+        private static IServiceCollection? ServiceContainer => DependencyInjectionExtensions.GetServices(MCMSubModule.Instance!);
 
         public IGenericServiceContainer RegisterSingleton<TService>() where TService : class
         {

@@ -1,53 +1,56 @@
 ﻿using Bannerlord.ButterLib.Common.Helpers;
 using Bannerlord.UIExtenderEx.Attributes;
-using Bannerlord.UIExtenderEx.Prefabs;
+using Bannerlord.UIExtenderEx.Prefabs2;
 
+using System.Collections.Generic;
 using System.Xml;
 
 namespace MCM.UI.UIExtenderEx
 {
-    [PrefabExtension("Options", "descendant::OptionsScreenWidget[@Id='Options']/Children/Standard.TopPanel/Children/ListPanel/Children")]
+    [PrefabExtension("Options", "descendant::ListPanel[@Id='TabToggleList']/Children/OptionsTabToggle[5]")]
     public sealed class OptionsPrefabExtension1 : PrefabExtensionInsertPatch
     {
-        public override string Id => "Options1";
-        public override int Position => 3;
-        private XmlDocument XmlDocument { get; } = new();
+        public override InsertType Type => InsertType.Prepend;
+
+        private readonly XmlDocument _xmlDocument = new();
 
         public OptionsPrefabExtension1()
         {
-            XmlDocument.LoadXml("<OptionsTabToggle DataSource=\"{ModOptions}\" PositionYOffset=\"2\" Parameter.ButtonBrush=\"Header.Tab.Center\" Parameter.TabName=\"ModOptionsPage\" />");
+            _xmlDocument.LoadXml("<OptionsTabToggle DataSource=\"{ModOptions}\" PositionYOffset=\"2\" Parameter.ButtonBrush=\"Header.Tab.Center\" Parameter.TabName=\"ModOptionsPage\" />");
         }
 
-        public override XmlDocument GetPrefabExtension() => XmlDocument;
+        [PrefabExtensionXmlNode()]
+        public XmlNode GetPrefabExtension() => _xmlDocument;
     }
 
-    [PrefabExtension("Options", "descendant::TabControl[@Id='TabControl']/Children")]
+    [PrefabExtension("Options", "descendant::TabControl[@Id='TabControl']/Children/*[5]")]
     internal sealed class OptionsPrefabExtension2 : PrefabExtensionInsertPatch
     {
-        public override string Id => "Options2";
-        public override int Position => 3;
-        private XmlDocument XmlDocument { get; } = new();
+        public override InsertType Type => InsertType.Prepend;
+
+        private readonly XmlDocument _xmlDocument = new();
 
         public OptionsPrefabExtension2()
         {
             if (ApplicationVersionUtils.GameVersion() is { } gameVersion)
             {
                 if (gameVersion.Major <= 1 && gameVersion.Minor <= 5 && gameVersion.Revision <= 3)
-                    XmlDocument.LoadXml("<ModOptionsPageView_v1 Id=\"ModOptionsPage\" DataSource=\"{ModOptions}\" />");
+                    _xmlDocument.LoadXml("<ModOptionsPageView_v1 Id=\"ModOptionsPage\" DataSource=\"{ModOptions}\" />");
                 else
-                    XmlDocument.LoadXml("<ModOptionsPageView_v2 Id=\"ModOptionsPage\" DataSource=\"{ModOptions}\" />");
+                    _xmlDocument.LoadXml("<ModOptionsPageView_v2 Id=\"ModOptionsPage\" DataSource=\"{ModOptions}\" />");
             }
         }
 
-        public override XmlDocument GetPrefabExtension() => XmlDocument;
+        [PrefabExtensionXmlDocument]
+        public XmlDocument GetPrefabExtension() => _xmlDocument;
     }
 
     [PrefabExtension("Options", "descendant::Widget[@Id='DescriptionsRightPanel']")]
-    [PrefabExtension("Options", "descendant::Widget[@Id='DescriptionsRightPanel']")]
     public sealed class OptionsPrefabExtension3 : PrefabExtensionSetAttributePatch
     {
-        public override string Id => "Options3";
-        public override string Attribute => "SuggestedWidth";
-        public override string Value => "@DescriptionWidth";
+        public override List<Attribute> Attributes => new()
+        {
+            new Attribute( "SuggestedWidth", "@DescriptionWidth" )
+        };
     }
 }
