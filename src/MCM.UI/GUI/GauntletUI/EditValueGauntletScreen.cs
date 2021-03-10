@@ -17,7 +17,7 @@ namespace MCM.UI.GUI.GauntletUI
 
         private readonly SettingsPropertyVM _settingProperty;
         private GauntletLayer _gauntletLayer = default!;
-        private GauntletMovie _gauntletMovie = default!;
+        private object _gauntletMovie = default!;
         private EditValueVM _dataSource = default!;
         private ReleaseMovieDelegate? _releaseMovie;
 
