@@ -1,4 +1,6 @@
-﻿using MCM.UI.GUI.ViewModels;
+﻿using Bannerlord.ButterLib.Common.Helpers;
+
+using MCM.UI.GUI.ViewModels;
 
 using TaleWorlds.Engine;
 using TaleWorlds.Engine.GauntletUI;
@@ -11,10 +13,13 @@ namespace MCM.UI.GUI.GauntletUI
 {
     internal sealed class EditValueGauntletScreen : ScreenBase
     {
+        private delegate void ReleaseMovieDelegate(object movie);
+
         private readonly SettingsPropertyVM _settingProperty;
         private GauntletLayer _gauntletLayer = default!;
         private GauntletMovie _gauntletMovie = default!;
         private EditValueVM _dataSource = default!;
+        private ReleaseMovieDelegate? _releaseMovie;
 
         public EditValueGauntletScreen(SettingsPropertyVM settingProperty)
         {
@@ -26,6 +31,7 @@ namespace MCM.UI.GUI.GauntletUI
             base.OnInitialize();
             _dataSource = new EditValueVM(_settingProperty);
             _gauntletLayer = new GauntletLayer(4000, "GauntletLayer");
+            _releaseMovie = AccessTools2.GetDelegate<ReleaseMovieDelegate>(typeof(GauntletLayer), "ReleaseMovie");
             _gauntletMovie = _gauntletLayer.LoadMovie("EditValueView_MCM", _dataSource);
             _gauntletLayer.Input.RegisterHotKeyCategory(HotKeyManager.GetCategory("ChatLogHotKeyCategory"));
             _gauntletLayer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);
@@ -53,7 +59,7 @@ namespace MCM.UI.GUI.GauntletUI
         {
             base.OnFinalize();
             RemoveLayer(_gauntletLayer);
-            _gauntletLayer.ReleaseMovie(_gauntletMovie);
+            _releaseMovie?.Invoke(_gauntletMovie);
             _gauntletLayer = null!;
             _gauntletMovie = null!;
             _dataSource.SettingProperty = null!;
