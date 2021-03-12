@@ -1,10 +1,11 @@
-﻿using MCM.UI.GUI.ViewModels;
+﻿using Bannerlord.ButterLib.Common.Helpers;
+
+using MCM.UI.GUI.ViewModels;
 
 using Microsoft.Extensions.Logging;
 
 using TaleWorlds.Engine.GauntletUI;
 using TaleWorlds.Engine.Screens;
-using TaleWorlds.GauntletUI.Data;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
 using TaleWorlds.TwoDimension;
@@ -16,12 +17,15 @@ namespace MCM.UI.GUI.GauntletUI
     /// </summary>
     internal sealed class ModOptionsGauntletScreen : ScreenBase, IMCMOptionsScreen
     {
+        private delegate void ReleaseMovieDelegate(object movie);
+
         private readonly ILogger<ModOptionsGauntletScreen> _logger;
 
         private GauntletLayer _gauntletLayer = default!;
-        private GauntletMovie _gauntletMovie = default!;
+        private object _gauntletMovie = default!;
         private ModOptionsVM _dataSource = default!;
         private SpriteCategory _spriteCategoryEncyclopedia = default!;
+        private ReleaseMovieDelegate? _releaseMovie;
 
         public ModOptionsGauntletScreen(ILogger<ModOptionsGauntletScreen> logger)
         {
@@ -38,6 +42,7 @@ namespace MCM.UI.GUI.GauntletUI
             _spriteCategoryEncyclopedia.Load(resourceContext, uiresourceDepot);
             _dataSource = new ModOptionsVM();
             _gauntletLayer = new GauntletLayer(4000, "GauntletLayer");
+            _releaseMovie = AccessTools2.GetDelegate<ReleaseMovieDelegate>(typeof(GauntletLayer), "ReleaseMovie");
             _gauntletMovie = _gauntletLayer.LoadMovie("ModOptionsView_MCM", _dataSource);
             _gauntletLayer.Input.RegisterHotKeyCategory(HotKeyManager.GetCategory("GenericPanelGameKeyCategory"));
             _gauntletLayer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);
@@ -63,7 +68,7 @@ namespace MCM.UI.GUI.GauntletUI
             // TODO: There was a report that the encyclopedia UI is bugged
             //_spriteCategoryEncyclopedia.Unload();
             RemoveLayer(_gauntletLayer);
-            _gauntletLayer.ReleaseMovie(_gauntletMovie);
+            _releaseMovie?.Invoke(_gauntletMovie);
             _gauntletLayer = null!;
             _gauntletMovie = null!;
             _dataSource.ExecuteSelect(null);
