@@ -1,17 +1,18 @@
-﻿using Bannerlord.ButterLib.Common.Extensions;
+﻿using Bannerlord.BUTR.Shared.Extensions;
 
 using HarmonyLib;
+
+using MCM.UI.Utils;
 
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using MCM.UI.Utils;
+
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
-using TaleWorlds.MountAndBlade;
 using TaleWorlds.MountAndBlade.ViewModelCollection;
 
 namespace MCM.UI.Functionality

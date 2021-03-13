@@ -1,9 +1,7 @@
-﻿using Bannerlord.ButterLib.Common.Helpers;
-
-using HarmonyLib;
+﻿using HarmonyLib;
 
 using System;
-
+using HarmonyLib.BUTR.Extensions;
 using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
 
