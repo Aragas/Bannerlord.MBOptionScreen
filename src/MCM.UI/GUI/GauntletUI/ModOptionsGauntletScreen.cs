@@ -32,6 +32,7 @@ namespace MCM.UI.GUI.GauntletUI
         private object? _gauntletMovie;
         private ModOptionsVM _dataSource = default!;
         private SpriteCategory _spriteCategoryEncyclopedia = default!;
+        private ReleaseMovieDelegate? _releaseMovie;
 
         public ModOptionsGauntletScreen(ILogger<ModOptionsGauntletScreen> logger)
         {
