@@ -1,5 +1,4 @@
-﻿using Bannerlord.ButterLib.Common.Helpers;
-using Bannerlord.UIExtenderEx.Attributes;
+﻿using Bannerlord.UIExtenderEx.Attributes;
 using Bannerlord.UIExtenderEx.Prefabs2;
 
 using System.Collections.Generic;
@@ -32,7 +31,7 @@ namespace MCM.UI.UIExtenderEx
 
         public OptionsPrefabExtension2()
         {
-            if (ApplicationVersionUtils.GameVersion() is { } gameVersion)
+            if (Bannerlord.ButterLib.Common.Helpers.ApplicationVersionUtils.GameVersion() is { } gameVersion)
             {
                 if (gameVersion.Major <= 1 && gameVersion.Minor <= 5 && gameVersion.Revision <= 3)
                     _xmlDocument.LoadXml("<ModOptionsPageView_v1 Id=\"ModOptionsPage\" DataSource=\"{ModOptions}\" />");

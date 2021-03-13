@@ -1,6 +1,5 @@
 ﻿using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.ButterLib.Common.Extensions;
-using Bannerlord.ButterLib.Common.Helpers;
 using Bannerlord.ButterLib.DelayedSubModule;
 using Bannerlord.UIExtenderEx;
 
@@ -89,7 +88,7 @@ Make sure MCM is loaded before them!";
                 services.AddSingleton<BaseIngameMenuScreenHandler, DefaultIngameMenuScreenHandler>();
                 services.AddTransient<IMCMOptionsScreen, ModOptionsGauntletScreen>();
 
-                if (ApplicationVersionUtils.GameVersion() is { } gameVersion)
+                if (Bannerlord.ButterLib.Common.Helpers.ApplicationVersionUtils.GameVersion() is { } gameVersion)
                 {
                     if (gameVersion.Major <= 1 && gameVersion.Minor <= 5 && gameVersion.Revision <= 7)
                         services.AddSingleton<BaseGameMenuScreenHandler, Pre158GameMenuScreenHandler>();

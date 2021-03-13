@@ -1,8 +1,8 @@
-﻿using Bannerlord.ButterLib.Common.Helpers;
-using Bannerlord.UIExtenderEx.Attributes;
+﻿using Bannerlord.UIExtenderEx.Attributes;
 using Bannerlord.UIExtenderEx.ViewModels;
 
 using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using MCM.UI.GUI.ViewModels;
 

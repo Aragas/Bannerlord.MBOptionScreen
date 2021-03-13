@@ -1,6 +1,5 @@
-﻿using Bannerlord.ButterLib.Common.Helpers;
-
-using HarmonyLib;
+﻿using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using MCM.Abstractions.Settings;
 

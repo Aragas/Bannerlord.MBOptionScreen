@@ -1,4 +1,5 @@
-﻿using Bannerlord.ButterLib.Common.Helpers;
+﻿using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using MCM.UI.GUI.ViewModels;
 
@@ -17,15 +18,20 @@ namespace MCM.UI.GUI.GauntletUI
     /// </summary>
     internal sealed class ModOptionsGauntletScreen : ScreenBase, IMCMOptionsScreen
     {
-        private delegate void ReleaseMovieDelegate(object movie);
+        private delegate object LoadMovieDelegate(object instance, string movieName, ViewModel dataSource);
+        private delegate void ReleaseMovieDelegate(object instance, object movie);
+
+        private static readonly LoadMovieDelegate? LoadMovie =
+            AccessTools2.GetDelegateObjectInstance<LoadMovieDelegate>(AccessTools.Method(typeof(GauntletLayer), "LoadMovie"));
+        private static readonly ReleaseMovieDelegate? ReleaseMovie =
+            AccessTools2.GetDelegateObjectInstance<ReleaseMovieDelegate>(AccessTools.Method(typeof(GauntletLayer), "ReleaseMovie"));
 
         private readonly ILogger<ModOptionsGauntletScreen> _logger;
 
         private GauntletLayer _gauntletLayer = default!;
-        private object _gauntletMovie = default!;
+        private object? _gauntletMovie;
         private ModOptionsVM _dataSource = default!;
         private SpriteCategory _spriteCategoryEncyclopedia = default!;
-        private ReleaseMovieDelegate? _releaseMovie;
 
         public ModOptionsGauntletScreen(ILogger<ModOptionsGauntletScreen> logger)
         {
@@ -42,8 +48,7 @@ namespace MCM.UI.GUI.GauntletUI
             _spriteCategoryEncyclopedia.Load(resourceContext, uiresourceDepot);
             _dataSource = new ModOptionsVM();
             _gauntletLayer = new GauntletLayer(4000, "GauntletLayer");
-            _releaseMovie = AccessTools2.GetDelegate<ReleaseMovieDelegate>(typeof(GauntletLayer), "ReleaseMovie");
-            _gauntletMovie = _gauntletLayer.LoadMovie("ModOptionsView_MCM", _dataSource);
+            _gauntletMovie = LoadMovie is not null ? LoadMovie(_gauntletLayer, "ModOptionsView_MCM", _dataSource) : null;
             _gauntletLayer.Input.RegisterHotKeyCategory(HotKeyManager.GetCategory("GenericPanelGameKeyCategory"));
             _gauntletLayer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);
             _gauntletLayer.IsFocusLayer = true;
@@ -68,7 +73,7 @@ namespace MCM.UI.GUI.GauntletUI
             // TODO: There was a report that the encyclopedia UI is bugged
             //_spriteCategoryEncyclopedia.Unload();
             RemoveLayer(_gauntletLayer);
-            _releaseMovie?.Invoke(_gauntletMovie);
+            if (_gauntletMovie is not null && ReleaseMovie is not null) ReleaseMovie(_gauntletLayer, _gauntletMovie);
             _gauntletLayer = null!;
             _gauntletMovie = null!;
             _dataSource.ExecuteSelect(null);

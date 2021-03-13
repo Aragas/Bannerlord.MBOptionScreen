@@ -1,4 +1,4 @@
-﻿using Bannerlord.ButterLib.Common.Extensions;
+﻿using Bannerlord.BUTR.Shared.Extensions;
 
 using HarmonyLib;
 

@@ -1,7 +1,7 @@
-﻿using Bannerlord.ButterLib.Common.Extensions;
-using Bannerlord.ButterLib.Common.Helpers;
+﻿using Bannerlord.BUTR.Shared.Extensions;
 
 using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using SandBox.View.Map;
 
