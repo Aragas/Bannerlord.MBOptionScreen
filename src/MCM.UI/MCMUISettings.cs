@@ -22,7 +22,8 @@ namespace MCM.UI
         public override string FolderName { get; } = "MCM";
         public override string FormatType { get; } = "json";
 
-        [SettingPropertyBool("{=MCMUISettings_Name_UseStandard}Use Standard Option Screen", Order = 1, RequireRestart = false, HintText = "{=MCMUISettings_Name_UseStandardDesc}Use standard Options screen instead of using an external.")]
+        [SettingPropertyBool("{=MCMUISettings_Name_HideMainMenuEntry}Hide Main Menu Entry", Order = 1, RequireRestart = false,
+            HintText = "{=MCMUISettings_Name_HideMainMenuEntryDesc}Hides MCM's Main Menu 'Mod Options' Menu Entry.")]
         [SettingPropertyGroup("{=MCMUISettings_Name_General}General")]
         public bool UseStandardOptionScreen
         {

@@ -85,7 +85,6 @@ Make sure MCM is loaded before them!";
                 services.AddTransient(typeof(IMCMLogger<>), typeof(MCMLogger<>));
 
 
-                services.AddSingleton<BaseIngameMenuScreenHandler, DefaultIngameMenuScreenHandler>();
                 services.AddTransient<IMCMOptionsScreen, ModOptionsGauntletScreen>();
 
                 if (Bannerlord.ButterLib.Common.Helpers.ApplicationVersionUtils.GameVersion() is { } gameVersion)
@@ -135,6 +134,7 @@ Make sure MCM is loaded before them!";
                 nameof(OnSubModuleLoad), SubscriptionType.AfterMethod, (_, _) =>
                 {
                     Extender.Register(typeof(MCMUISubModule).Assembly);
+                    Extender.Enable();
                 });
         }
 
@@ -190,25 +190,15 @@ Make sure MCM is loaded before them!";
         {
             if (settings.UseStandardOptionScreen)
             {
-                Extender.Enable();
-
                 BaseGameMenuScreenHandler.Instance?.RemoveScreen("MCM_OptionScreen");
-                BaseIngameMenuScreenHandler.Instance?.RemoveScreen("MCM_OptionScreen");
             }
             else
             {
-                Extender.Disable();
-
                 BaseGameMenuScreenHandler.Instance?.AddScreen(
                     "MCM_OptionScreen",
                     9990,
                     () => GenericServiceProvider.GetService<IMCMOptionsScreen>() as ScreenBase,
                     TextObjectHelper.Create("{=MainMenu_ModOptions}Mod Options"));
-                BaseIngameMenuScreenHandler.Instance?.AddScreen(
-                    "MCM_OptionScreen",
-                    1,
-                    () => GenericServiceProvider.GetService<IMCMOptionsScreen>() as ScreenBase,
-                    TextObjectHelper.Create("{=EscapeMenu_ModOptions}Mod Options"));
             }
         }
 
