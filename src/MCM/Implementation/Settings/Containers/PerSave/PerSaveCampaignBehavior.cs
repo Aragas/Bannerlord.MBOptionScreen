@@ -19,9 +19,15 @@ namespace MCM.Implementation.Settings.Containers.PerSave
         {
             dataStore.SyncData("_settings", ref _settings);
 
-            if (dataStore.IsLoading && _settings is null)
+            if (dataStore.IsLoading)
             {
-                _settings = new Dictionary<string, string>();
+                if (_settings is null)
+                {
+                    _settings = new Dictionary<string, string>();
+                }
+
+                var perSaveSettingsContainer = GenericServiceProvider.GetService<MCMPerSaveSettingsContainer>();
+                perSaveSettingsContainer?.LoadSettings();
             }
         }
 

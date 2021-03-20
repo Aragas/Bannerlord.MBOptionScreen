@@ -18,6 +18,7 @@ namespace MCM.Implementation.Settings.Containers.PerSave
         }
 
         public void OnGameStarted(Game game) => LoadedSettings.Clear();
+        public void LoadSettings() { }
         public void OnGameEnded(Game game) => LoadedSettings.Clear();
     }
 }

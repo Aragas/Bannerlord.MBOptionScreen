@@ -45,7 +45,10 @@ namespace MCM.Implementation.Settings.Containers.PerSave
         public void OnGameStarted(Game game)
         {
             LoadedSettings.Clear();
+        }
 
+        public void LoadSettings()
+        {
             var settings = new List<PerSaveSettings>();
             var allTypes = AppDomain.CurrentDomain
                 .GetAssemblies()
