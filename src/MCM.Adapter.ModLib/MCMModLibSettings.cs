@@ -22,7 +22,8 @@ namespace MCM.Adapter.ModLib
         public override string FolderName { get; } = "MCM";
         public override string FormatType { get; } = "json";
 
-        [SettingPropertyBool("{=MCMModLibSettings_Override}Override ModLib Option Screen", RequireRestart = true, HintText = "{=MCMModLibSettings_OverrideDesc}If set, removes ModLib 'Mod Options' menu entry.")]
+        [SettingPropertyBool("{=MCMModLibSettings_HideMainMenuEntry}Hide Main Menu Entry", RequireRestart = true,
+            HintText = "{=MCMModLibSettings_HideMainMenuEntryDesc}Hides ModLibs 'Mod Options' Menu Entry.")]
         [SettingPropertyGroup("{=MCMModLibSettings_General}General")]
         public bool OverrideModLib
         {

@@ -29,8 +29,8 @@
     <string id="EscapeMenu_ModOptions" text="Mod Options"/>
     <string id="MCMUISettings_Name" text="MCM UI Impl. {VERSION}"/>
     <string id="MCMUISettings_Name_General" text="General"/>
-    <string id="MCMUISettings_Name_UseStandard" text="Use Standard Option Screen"/>
-    <string id="MCMUISettings_Name_UseStandardDesc" text="Use standard Options screen instead of using an external."/>
+    <string id="MCMUISettings_Name_HideMainMenuEntry" text="Hide Main Menu Entry"/>
+    <string id="MCMUISettings_Name_HideMainMenuEntryDesc" text="Hides MCM's Main Menu 'Mod Options' Menu Entry."/>
     <string id="ButterLibSettings_Name" text="ButterLib {VERSION}"/>
     <string id="ButterLibSettings_Name_Logging" text="Logging"/>
     <string id="ButterLibSettings_Name_LogLevel" text="Log Level"/>
@@ -41,8 +41,8 @@
     <string id="MCMMCMv3Settings_Name" text="MCM MCMv3 Impl. {VERSION}"/>
     <!-- ModLib -->
     <string id="MCMModLibSettings_Name" text="MCM ModLib Impl. {VERSION}"/>
-    <string id="MCMModLibSettings_Override" text="Override ModLib Option Screen"/>
-    <string id="MCMModLibSettings_OverrideDesc" text="If set, removes ModLib 'Mod Options' menu entry."/>
+    <string id="MCMModLibSettings_HideMainMenuEntry" text="Hide Main Menu Entry"/>
+    <string id="MCMModLibSettings_HideMainMenuEntryDesc" text="Hides ModLibs 'Mod Options' Menu Entry."/>
     <string id="MCMModLibSettings_General" text="General"/>
   </strings>
 </base>
