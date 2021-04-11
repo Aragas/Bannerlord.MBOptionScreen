@@ -22,7 +22,7 @@ namespace MCM.Tests.SettingsFormat
         [OneTimeSetUp]
         public void OneTimeSetUp1()
         {
-            Format = new JsonSettingsFormat(new NullMCMLogger<JsonSettingsFormat>());
+            Format = new JsonSettingsFormat(new DefaultMCMLogger<JsonSettingsFormat>());
 
             Settings = BaseSettingsBuilder.Create("Testing_Global_v1", "Testing Fluent Settings")!
                 .SetFormat("json")

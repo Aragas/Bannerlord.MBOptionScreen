@@ -88,11 +88,11 @@ namespace MCM.DependencyInjection
         {
             if (_serviceContainer.AvailableServices.All(s => s.ServiceType != typeof(IMCMLogger)))
             {
-                _serviceContainer.RegisterTransient<IMCMLogger, NullMCMLogger>();
+                _serviceContainer.RegisterTransient<IMCMLogger, DefaultMCMLogger>();
             }
             if (_serviceContainer.AvailableServices.All(s => s.ServiceType != typeof(IMCMLogger<>)))
             {
-                _serviceContainer.RegisterTransient(typeof(IMCMLogger<>), typeof(NullMCMLogger<>));
+                _serviceContainer.RegisterTransient(typeof(IMCMLogger<>), typeof(DefaultMCMLogger<>));
             }
 
             _serviceContainer.Compile();
