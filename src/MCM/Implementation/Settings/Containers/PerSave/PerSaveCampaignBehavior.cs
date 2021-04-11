@@ -31,7 +31,17 @@ namespace MCM.Implementation.Settings.Containers.PerSave
             }
         }
 
-        public override void RegisterEvents() { }
+        public override void RegisterEvents()
+        {
+            CampaignEvents.OnNewGameCreatedEvent.AddNonSerializedListener(this, OnNewGameCreatedEvent);
+        }
+
+        private void OnNewGameCreatedEvent(CampaignGameStarter campaignGameStarter)
+        {
+            _settings = new Dictionary<string, string>();
+            var perSaveSettingsContainer = GenericServiceProvider.GetService<MCMPerSaveSettingsContainer>();
+            perSaveSettingsContainer?.LoadSettings();
+        }
 
         public bool SaveSettings(PerSaveSettings perSaveSettings)
         {
