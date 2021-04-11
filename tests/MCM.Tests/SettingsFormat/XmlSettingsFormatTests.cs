@@ -23,7 +23,7 @@ namespace MCM.Tests.SettingsFormat
         [OneTimeSetUp]
         public void OneTimeSetUp1()
         {
-            Format = new XmlSettingsFormat(new NullMCMLogger<XmlSettingsFormat>());
+            Format = new XmlSettingsFormat(new DefaultMCMLogger<XmlSettingsFormat>());
 
             Settings = BaseSettingsBuilder.Create("Testing_Global_v1", "Testing Fluent Settings")!
                 .SetFormat("xml")

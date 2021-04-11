@@ -46,6 +46,12 @@ jobs:
       with:
         nuget-version: 'latest'
 
+    - name: Ensure NuGet Source
+      uses: fabriciomurta/ensure-nuget-source@v1
+      with:
+        name: 'nuget.org'
+        url: 'https://api.nuget.org/v3/index.json'
+
     - name: Generating Newtonsoft.Json xref maps
       run: >-
         dotnet run -p build/SandcastleXrefGenerator -- `

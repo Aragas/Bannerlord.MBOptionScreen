@@ -57,6 +57,12 @@ jobs:
       env:
         NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
 
+    - name: Ensure NuGet Source
+      uses: fabriciomurta/ensure-nuget-source@v1
+      with:
+        name: 'nuget.org'
+        url: 'https://api.nuget.org/v3/index.json'
+
     - name: Download DepotDownloader_2.3.6
       uses: i3h/download-release-asset@v1
       with:
