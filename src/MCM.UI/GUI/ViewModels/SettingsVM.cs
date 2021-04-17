@@ -86,6 +86,7 @@ namespace MCM.UI.GUI.ViewModels
 
             RefreshValues();
         }
+
         private void Settings_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == BaseSettings.SaveTriggered)
@@ -147,6 +148,24 @@ namespace MCM.UI.GUI.ViewModels
 
             RecalculateIndex();
         }
+        public void ChangePresetValue(string presetName, string valueId)
+        {
+            if (_cachedPresets is null)
+                return;
+
+            var settings = SettingsInstance;
+
+            if (_cachedPresets.TryGetValue(presetName, out var preset))
+            {
+                var current = SettingsInstance.GetAllSettingPropertyDefinitions().FirstOrDefault(spd => spd.Id == valueId);
+                var @new = preset.GetAllSettingPropertyDefinitions().FirstOrDefault(spd => spd.Id == valueId);
+
+                if (current is not null && @new is not null)
+                    UISettingsUtils.OverrideValues(URS, current, @new);
+            }
+
+            RecalculateIndex();
+        }
         public void ResetSettings()
         {
             ChangePreset(TextObjectHelper.Create("{=BaseSettings_Default}Default")?.ToString() ?? string.Empty);
@@ -154,6 +173,10 @@ namespace MCM.UI.GUI.ViewModels
         public void SaveSettings()
         {
             BaseSettingsProvider.Instance!.SaveSettings(SettingsInstance);
+        }
+        public void ResetSettingsValue(string valueId)
+        {
+            ChangePresetValue(TextObjectHelper.Create("{=BaseSettings_Default}Default")?.ToString() ?? string.Empty, valueId);
         }
 
 

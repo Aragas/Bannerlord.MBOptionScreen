@@ -1,6 +1,7 @@
 ﻿using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.ButterLib.Common.Extensions;
 using Bannerlord.ButterLib.DelayedSubModule;
+using Bannerlord.ButterLib.HotKeys;
 using Bannerlord.UIExtenderEx;
 
 using HarmonyLib;
@@ -14,6 +15,7 @@ using MCM.UI.DependencyInjection;
 using MCM.UI.Functionality;
 using MCM.UI.Functionality.Injectors;
 using MCM.UI.GUI.GauntletUI;
+using MCM.UI.HotKeys;
 using MCM.UI.Logger;
 using MCM.UI.Patches;
 
@@ -57,7 +59,8 @@ Make sure MCM is loaded before them!";
 
 
         internal static ILogger<MCMUISubModule> Logger = NullLogger<MCMUISubModule>.Instance;
-        private static readonly UIExtender Extender = new("MCM.UI");
+        private static UIExtender Extender = new("MCM.UI");
+        internal static ResetValueToDefault? ResetValueToDefault;
 
         private bool DelayedServiceCreation { get; set; }
         private bool ServiceRegistrationWasCalled { get; set; }
@@ -161,6 +164,12 @@ Make sure MCM is loaded before them!";
                         UpdateOptionScreen(MCMUISettings.Instance!);
                         MCMUISettings.Instance!.PropertyChanged += MCMSettings_PropertyChanged;
                     });
+            }
+
+            if (HotKeyManager.Create("MCM.UI") is { } hkm)
+            {
+                ResetValueToDefault = hkm.Add<ResetValueToDefault>();
+                hkm.Build();
             }
         }
 
