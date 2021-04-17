@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using MCM.Abstractions;
 
@@ -14,7 +15,7 @@ namespace MCM.UI.Patches
         public static void Patch(Harmony harmony)
         {
             harmony.Patch(
-                AccessTools.Method(typeof(ViewModel), nameof(ViewModel.ExecuteCommand)),
+                AccessTools2.Method(typeof(ViewModel), nameof(ViewModel.ExecuteCommand)),
                 prefix: new HarmonyMethod(typeof(ViewModelPatch), nameof(ExecuteCommandPatch)));
         }
 

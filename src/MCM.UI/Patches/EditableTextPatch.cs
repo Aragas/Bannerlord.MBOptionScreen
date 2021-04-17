@@ -1,4 +1,5 @@
 ﻿using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -16,7 +17,7 @@ namespace MCM.UI.Patches
         public static void Patch(Harmony harmony)
         {
             harmony.Patch(
-                AccessTools.Method(typeof(EditableText), "GetCursorPosition"),
+                AccessTools2.Method(typeof(EditableText), "GetCursorPosition"),
                 finalizer: new HarmonyMethod(typeof(EditableTextPatch), nameof(GetCursorPosition)));
         }
 

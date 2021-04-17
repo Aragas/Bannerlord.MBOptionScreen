@@ -1,7 +1,9 @@
-﻿using MCM.Abstractions.FluentBuilder;
-using MCM.Abstractions.Ref;
-using MCM.Implementation.Settings.Formats.Json;
-using MCM.Logger;
+﻿extern alias v4;
+
+using v4::MCM.Abstractions.FluentBuilder;
+using v4::MCM.Abstractions.Ref;
+using v4::MCM.Implementation.Settings.Formats.Json;
+using v4::MCM.Logger;
 
 using NUnit.Framework;
 

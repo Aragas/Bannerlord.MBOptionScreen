@@ -2,7 +2,7 @@
 
 using System;
 
-using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using v4::MCM.Abstractions.Settings.Definitions;
 using v4::MCM.Abstractions.Settings.Definitions.Wrapper;
@@ -19,7 +19,7 @@ namespace MCM.Adapter.MCMv3.Settings.Definitions
         {
             var type = @object.GetType();
 
-            CustomFormatter = AccessTools.Property(type, nameof(CustomFormatter))?.GetValue(@object) as Type;
+            CustomFormatter = AccessTools2.Property(type, nameof(CustomFormatter))?.GetValue(@object) as Type;
         }
     }
 }

@@ -1,5 +1,7 @@
-﻿using MCM.Abstractions.Settings.Base.Global;
-using MCM.Abstractions.Settings.Formats;
+﻿extern alias v4;
+
+using v4::MCM.Abstractions.Settings.Base.Global;
+using v4::MCM.Abstractions.Settings.Formats;
 
 using NUnit.Framework;
 

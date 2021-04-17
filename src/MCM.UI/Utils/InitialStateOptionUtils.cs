@@ -1,7 +1,7 @@
-﻿using HarmonyLib;
+﻿using HarmonyLib.BUTR.Extensions;
 
 using System;
-using HarmonyLib.BUTR.Extensions;
+
 using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
 
@@ -17,7 +17,7 @@ namespace MCM.UI.Utils
 
         static InitialStateOptionUtils()
         {
-            foreach (var constructorInfo in AccessTools.GetDeclaredConstructors(typeof(InitialStateOption), false))
+            foreach (var constructorInfo in HarmonyLib.AccessTools.GetDeclaredConstructors(typeof(InitialStateOption), false))
             {
                 var @params = constructorInfo.GetParameters();
                 if (@params.Length >= 5 && @params[4].ParameterType == typeof(bool))

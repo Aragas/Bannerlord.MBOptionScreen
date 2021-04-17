@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+﻿using HarmonyLib.BUTR.Extensions;
 
 using MCM.Extensions;
 
@@ -36,8 +36,8 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
 
         private static IEnumerable<SettingsPropertyGroupDefinition> GetSubGroups(object @object)
         {
-            var subGroupsProperty = AccessTools.Property(@object.GetType(), nameof(SubGroups)) ??
-                                    AccessTools.Property(@object.GetType(), "SettingPropertyGroups");
+            var subGroupsProperty = AccessTools2.Property(@object.GetType(), nameof(SubGroups)) ??
+                                    AccessTools2.Property(@object.GetType(), "SettingPropertyGroups");
             if (subGroupsProperty?.GetValue(@object) is IEnumerable list)
             {
                 foreach (var obj in list)
@@ -48,7 +48,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
         }
         private static IEnumerable<ISettingsPropertyDefinition> GetSettingProperties(object @object)
         {
-            var settingPropertiesProperty = AccessTools.Property(@object.GetType(), nameof(SettingProperties));
+            var settingPropertiesProperty = AccessTools2.Property(@object.GetType(), nameof(SettingProperties));
             if (settingPropertiesProperty?.GetValue(@object) is IEnumerable list)
             {
                 foreach (var obj in list)

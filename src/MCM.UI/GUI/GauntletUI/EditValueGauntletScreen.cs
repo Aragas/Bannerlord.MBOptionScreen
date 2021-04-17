@@ -1,5 +1,4 @@
-﻿using HarmonyLib;
-using HarmonyLib.BUTR.Extensions;
+﻿using HarmonyLib.BUTR.Extensions;
 
 using MCM.UI.GUI.ViewModels;
 
@@ -17,15 +16,14 @@ namespace MCM.UI.GUI.GauntletUI
         private delegate void ReleaseMovieDelegate(object instance, object movie);
 
         private static readonly LoadMovieDelegate? LoadMovie =
-            AccessTools2.GetDelegateObjectInstance<LoadMovieDelegate>(AccessTools.Method(typeof(GauntletLayer), "LoadMovie"));
+            AccessTools2.GetDelegateObjectInstance<LoadMovieDelegate>(typeof(GauntletLayer), "LoadMovie");
         private static readonly ReleaseMovieDelegate? ReleaseMovie =
-            AccessTools2.GetDelegateObjectInstance<ReleaseMovieDelegate>(AccessTools.Method(typeof(GauntletLayer), "ReleaseMovie"));
+            AccessTools2.GetDelegateObjectInstance<ReleaseMovieDelegate>(typeof(GauntletLayer), "ReleaseMovie");
 
         private readonly SettingsPropertyVM _settingProperty;
         private GauntletLayer _gauntletLayer = default!;
         private object? _gauntletMovie;
         private EditValueVM _dataSource = default!;
-        private ReleaseMovieDelegate? _releaseMovie;
 
         public EditValueGauntletScreen(SettingsPropertyVM settingProperty)
         {
@@ -37,7 +35,6 @@ namespace MCM.UI.GUI.GauntletUI
             base.OnInitialize();
             _dataSource = new EditValueVM(_settingProperty);
             _gauntletLayer = new GauntletLayer(4000, "GauntletLayer");
-            _releaseMovie = AccessTools2.GetDelegate<ReleaseMovieDelegate>(typeof(GauntletLayer), "ReleaseMovie");
             _gauntletMovie = LoadMovie is not null ? LoadMovie(_gauntletLayer, "EditValueView_MCM", _dataSource) : null;
             _gauntletLayer.Input.RegisterHotKeyCategory(HotKeyManager.GetCategory("ChatLogHotKeyCategory"));
             _gauntletLayer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);

@@ -1,6 +1,6 @@
 ﻿extern alias v4;
 
-using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using v4::MCM.Abstractions.Settings.Definitions;
 using v4::MCM.Abstractions.Settings.Definitions.Wrapper;
@@ -19,9 +19,9 @@ namespace MCM.Adapter.MBO.Settings.Definitions
         {
             var type = @object.GetType();
 
-            MinValue = (decimal) (AccessTools.Property(type, "MinValue")?.GetValue(@object) as float? ?? 0);
-            MaxValue = (decimal) (AccessTools.Property(type, "MaxValue")?.GetValue(@object) as float? ?? 0);
-            ValueFormat = AccessTools.Property(type, "ValueFormat")?.GetValue(@object) as string ?? "0.00";
+            MinValue = (decimal) (AccessTools2.Property(type, "MinValue")?.GetValue(@object) as float? ?? 0);
+            MaxValue = (decimal) (AccessTools2.Property(type, "MaxValue")?.GetValue(@object) as float? ?? 0);
+            ValueFormat = AccessTools2.Property(type, "ValueFormat")?.GetValue(@object) as string ?? "0.00";
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using HarmonyLib;
-using HarmonyLib.BUTR.Extensions;
+﻿using HarmonyLib.BUTR.Extensions;
 
 namespace MCM.Abstractions.Common
 {
@@ -25,9 +24,8 @@ namespace MCM.Abstractions.Common
             Object = @object;
             var type = @object.GetType();
 
-            var selectedIndexProperty = AccessTools.Property(type, nameof(SelectedIndex));
-            _getSelectedIndexDelegate = AccessTools2.GetDelegate<GetSelectedIndexDelegate>(@object, selectedIndexProperty.GetGetMethod())!;
-            _setSelectedIndexDelegate = AccessTools2.GetDelegate<SetSelectedIndexDelegate>(@object, selectedIndexProperty.GetSetMethod());
+            _getSelectedIndexDelegate = AccessTools2.GetPropertyGetterDelegate<GetSelectedIndexDelegate>(@object, type, nameof(SelectedIndex));
+            _setSelectedIndexDelegate = AccessTools2.GetPropertySetterDelegate<SetSelectedIndexDelegate>(@object, type, nameof(SelectedIndex));
         }
     }
 }

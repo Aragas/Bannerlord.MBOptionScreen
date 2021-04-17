@@ -1,10 +1,12 @@
+extern alias v4;
+
+using Bannerlord.BUTR.Shared.Helpers;
+using Bannerlord.BUTR.Shared.ModuleInfoExtended;
+
 using Bannerlord.ButterLib;
-using Bannerlord.ButterLib.Common.Helpers;
 using Bannerlord.ButterLib.SubModuleWrappers;
 
 using HarmonyLib;
-
-using MCM.Implementation;
 
 using NUnit.Framework;
 
@@ -13,6 +15,11 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 using TaleWorlds.Engine;
+
+using v4::MCM;
+using v4::MCM.Implementation;
+
+using SymbolExtensions2 = v4::HarmonyLib.BUTR.Extensions.SymbolExtensions2;
 
 namespace MCM.Tests
 {
@@ -26,9 +33,9 @@ namespace MCM.Tests
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private static bool MockedGetLoadedModules(ref List<ExtendedModuleInfo> __result)
+        private static bool MockedGetLoadedModules(ref IEnumerable<ModuleInfo2> __result)
         {
-            __result = new List<ExtendedModuleInfo>();
+            __result = new List<ModuleInfo2>();
             return false;
         }
 
@@ -44,11 +51,11 @@ namespace MCM.Tests
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _harmony.Patch(SymbolExtensions.GetMethodInfo(() => Utilities.GetConfigsPath()),
+            _harmony.Patch(SymbolExtensions2.GetMethodInfo(() => Utilities.GetConfigsPath()),
                 prefix: new HarmonyMethod(DelegateHelper.GetMethodInfo(MockedGetConfigsPath)));
-            _harmony.Patch(SymbolExtensions.GetMethodInfo(() => ModuleInfoHelper.GetExtendedLoadedModules()),
+            _harmony.Patch(SymbolExtensions2.GetMethodInfo(() => ModuleInfoHelper.GetLoadedModules()),
                 prefix: new HarmonyMethod(DelegateHelper.GetMethodInfo(MockedGetLoadedModules)));
-            _harmony.Patch(SymbolExtensions.GetMethodInfo(() => Utilities.GetModulesNames()),
+            _harmony.Patch(SymbolExtensions2.GetMethodInfo(() => Utilities.GetModulesNames()),
                 prefix: new HarmonyMethod(DelegateHelper.GetMethodInfo(MockedGetModulesNames)));
 
             var butterLib = new MBSubModuleBaseWrapper(new ButterLibSubModule());
@@ -63,11 +70,11 @@ namespace MCM.Tests
         [OneTimeTearDown]
         public void TearDown()
         {
-            _harmony.Unpatch(SymbolExtensions.GetMethodInfo(() => Utilities.GetConfigsPath()),
+            _harmony.Unpatch(SymbolExtensions2.GetMethodInfo(() => Utilities.GetConfigsPath()),
                 DelegateHelper.GetMethodInfo(MockedGetConfigsPath));
-            _harmony.Unpatch(SymbolExtensions.GetMethodInfo(() => ModuleInfoHelper.GetExtendedLoadedModules()),
+            _harmony.Unpatch(SymbolExtensions2.GetMethodInfo(() => ModuleInfoHelper.GetLoadedModules()),
                 DelegateHelper.GetMethodInfo(MockedGetLoadedModules));
-            _harmony.Unpatch(SymbolExtensions.GetMethodInfo(() => Utilities.GetModulesNames()),
+            _harmony.Unpatch(SymbolExtensions2.GetMethodInfo(() => Utilities.GetModulesNames()),
                 DelegateHelper.GetMethodInfo(MockedGetModulesNames));
         }
     }

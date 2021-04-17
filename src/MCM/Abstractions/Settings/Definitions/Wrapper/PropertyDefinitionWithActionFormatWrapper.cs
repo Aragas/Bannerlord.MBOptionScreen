@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+﻿using HarmonyLib.BUTR.Extensions;
 
 using System;
 
@@ -14,7 +14,7 @@ namespace MCM.Abstractions.Settings.Definitions.Wrapper
         {
             var type = @object.GetType();
 
-            ValueFormatFunc = AccessTools.Property(type, nameof(ValueFormatFunc))?.GetValue(@object) as Func<object, string> ?? (obj => obj.ToString());
+            ValueFormatFunc = AccessTools2.Property(type, nameof(ValueFormatFunc))?.GetValue(@object) as Func<object, string> ?? (obj => obj.ToString());
         }
     }
 }

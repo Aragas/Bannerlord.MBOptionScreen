@@ -1,7 +1,6 @@
 ﻿extern alias v3;
 extern alias v4;
 
-using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
 using System;
@@ -57,15 +56,15 @@ namespace MCM.Adapter.MCMv3.Settings.Base
         {
             var type = @object.GetType();
 
-            _getIdDelegate = AccessTools2.GetDelegate<GetIdDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.Id)).GetMethod);
-            _getFolderNameDelegate = AccessTools2.GetDelegate<GetFolderNameDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.FolderName)).GetMethod);
-            _getDisplayNameDelegate = AccessTools2.GetDelegate<GetDisplayNameDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.DisplayName)).GetMethod);
-            _getUIVersionDelegate = AccessTools2.GetDelegate<GetUIVersionDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.UIVersion)).GetMethod);
-            _getSubFolderDelegate = AccessTools2.GetDelegate<GetSubFolderDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.SubFolder)).GetMethod);
-            _getSubGroupDelimiterDelegate = AccessTools2.GetDelegate<GetSubGroupDelimiterDelegate>(@object, AccessTools.Property(type, "SubGroupDelimiter").GetMethod);
-            _getFormatDelegate = AccessTools2.GetDelegate<GetFormatDelegate>(@object, AccessTools.Property(type, nameof(MCMv3BaseSettings.Format)).GetMethod);
-            _methodOnPropertyChangedDelegate = AccessTools2.GetDelegate<OnPropertyChangedDelegate>(@object, AccessTools.Method(type, nameof(MCMv3BaseSettings.OnPropertyChanged)));
-            _methodGetAvailablePresetsDelegate = AccessTools2.GetDelegate<GetAvailablePresetsDelegate>(@object, AccessTools.Method(type, nameof(MCMv3BaseSettings.GetAvailablePresets)));
+            _getIdDelegate = AccessTools2.GetPropertyGetterDelegate<GetIdDelegate>(@object, type, nameof(MCMv3BaseSettings.Id));
+            _getFolderNameDelegate = AccessTools2.GetPropertyGetterDelegate<GetFolderNameDelegate>(@object, type, nameof(MCMv3BaseSettings.FolderName));
+            _getDisplayNameDelegate = AccessTools2.GetPropertyGetterDelegate<GetDisplayNameDelegate>(@object, type, nameof(MCMv3BaseSettings.DisplayName));
+            _getUIVersionDelegate = AccessTools2.GetPropertyGetterDelegate<GetUIVersionDelegate>(@object, type, nameof(MCMv3BaseSettings.UIVersion));
+            _getSubFolderDelegate = AccessTools2.GetPropertyGetterDelegate<GetSubFolderDelegate>(@object, type, nameof(MCMv3BaseSettings.SubFolder));
+            _getSubGroupDelimiterDelegate = AccessTools2.GetPropertyGetterDelegate<GetSubGroupDelimiterDelegate>(@object, type, "SubGroupDelimiter");
+            _getFormatDelegate = AccessTools2.GetPropertyGetterDelegate<GetFormatDelegate>(@object, type, nameof(MCMv3BaseSettings.Format));
+            _methodOnPropertyChangedDelegate = AccessTools2.GetDelegate<OnPropertyChangedDelegate>(@object, type, nameof(MCMv3BaseSettings.OnPropertyChanged));
+            _methodGetAvailablePresetsDelegate = AccessTools2.GetDelegate<GetAvailablePresetsDelegate>(@object, type, nameof(MCMv3BaseSettings.GetAvailablePresets));
         }
 
         public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>

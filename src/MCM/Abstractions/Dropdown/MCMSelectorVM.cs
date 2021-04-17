@@ -1,5 +1,4 @@
-﻿using HarmonyLib;
-using HarmonyLib.BUTR.Extensions;
+﻿using HarmonyLib.BUTR.Extensions;
 
 using MCM.Extensions;
 
@@ -22,7 +21,7 @@ namespace MCM.Abstractions.Dropdown
 
         static MCMSelectorVM()
         {
-            var methodInfo = AccessTools.Property(typeof(TSelectorItemVM), "CanBeSelected")?.GetMethod;
+            var methodInfo = AccessTools2.Property(typeof(TSelectorItemVM), "CanBeSelected")?.GetMethod;
             _canBeSelectedDelegate = methodInfo is not null
                 ? AccessTools2.GetDelegate<CanBeSelectedDelegate>(methodInfo)!
                 : _ => false;

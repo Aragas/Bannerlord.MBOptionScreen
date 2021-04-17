@@ -1,6 +1,6 @@
 ﻿using Bannerlord.BUTR.Shared.Helpers;
 
-using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using MCM.Utils;
 
@@ -44,7 +44,7 @@ namespace MCM.Abstractions.Settings.Base
         protected virtual BaseSettings CreateNew()
         {
             var type = GetType();
-            var constructor = AccessTools.Constructor(type, Type.EmptyTypes);
+            var constructor = AccessTools2.Constructor(type, Type.EmptyTypes);
             return constructor is not null
                 ? (BaseSettings) constructor.Invoke(null)
                 : (BaseSettings) FormatterServices.GetUninitializedObject(type);

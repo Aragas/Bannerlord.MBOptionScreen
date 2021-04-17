@@ -1,6 +1,6 @@
 ﻿using Bannerlord.BUTR.Shared.Helpers;
 
-using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
@@ -54,24 +54,24 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
         {
             var type = @object.GetType();
 
-            var settingTypeProperty = AccessTools.Property(type, nameof(SettingType));
-            var propertyProperty = AccessTools.Property(type, nameof(PropertyReference));
-            var displayNameProperty = AccessTools.Property(type, nameof(DisplayName));
-            var hintTextProperty = AccessTools.Property(type, nameof(HintText));
-            var orderProperty = AccessTools.Property(type, nameof(Order));
-            var requireRestartProperty = AccessTools.Property(type, nameof(RequireRestart));
-            var groupNameProperty = AccessTools.Property(type, nameof(GroupName));
-            var groupOrderProperty = AccessTools.Property(type, nameof(GroupOrder));
-            var minValueProperty = AccessTools.Property(type, nameof(MinValue));
-            var maxValueProperty = AccessTools.Property(type, nameof(MaxValue));
-            var editableMinValueProperty = AccessTools.Property(type, nameof(EditableMinValue));
-            var editableMaxValueProperty = AccessTools.Property(type, nameof(EditableMaxValue));
-            var selectedIndexProperty = AccessTools.Property(type, nameof(SelectedIndex));
-            var valueFormatProperty = AccessTools.Property(type, nameof(ValueFormat));
-            var customFormatterProperty = AccessTools.Property(type, nameof(CustomFormatter));
-            var idProperty = AccessTools.Property(type, nameof(Id));
-            var isToggleProperty= AccessTools.Property(type, nameof(IsToggle));
-            var subGroupDelimiterProperty= AccessTools.Property(type, nameof(SubGroupDelimiter));
+            var settingTypeProperty = AccessTools2.Property(type, nameof(SettingType));
+            var propertyProperty = AccessTools2.Property(type, nameof(PropertyReference));
+            var displayNameProperty = AccessTools2.Property(type, nameof(DisplayName));
+            var hintTextProperty = AccessTools2.Property(type, nameof(HintText));
+            var orderProperty = AccessTools2.Property(type, nameof(Order));
+            var requireRestartProperty = AccessTools2.Property(type, nameof(RequireRestart));
+            var groupNameProperty = AccessTools2.Property(type, nameof(GroupName));
+            var groupOrderProperty = AccessTools2.Property(type, nameof(GroupOrder));
+            var minValueProperty = AccessTools2.Property(type, nameof(MinValue));
+            var maxValueProperty = AccessTools2.Property(type, nameof(MaxValue));
+            var editableMinValueProperty = AccessTools2.Property(type, nameof(EditableMinValue));
+            var editableMaxValueProperty = AccessTools2.Property(type, nameof(EditableMaxValue));
+            var selectedIndexProperty = AccessTools2.Property(type, nameof(SelectedIndex));
+            var valueFormatProperty = AccessTools2.Property(type, nameof(ValueFormat));
+            var customFormatterProperty = AccessTools2.Property(type, nameof(CustomFormatter));
+            var idProperty = AccessTools2.Property(type, nameof(Id));
+            var isToggleProperty= AccessTools2.Property(type, nameof(IsToggle));
+            var subGroupDelimiterProperty= AccessTools2.Property(type, nameof(SubGroupDelimiter));
 
 
             SettingType = settingTypeProperty?.GetValue(@object) is { } settingTypeObject

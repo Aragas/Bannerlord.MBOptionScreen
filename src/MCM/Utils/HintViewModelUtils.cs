@@ -1,6 +1,5 @@
 ﻿using Bannerlord.BUTR.Shared.Helpers;
 
-using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
 using TaleWorlds.Core.ViewModelCollection;
@@ -20,7 +19,7 @@ namespace MCM.Utils
 
         static HintViewModelUtils()
         {
-            foreach (var constructorInfo in AccessTools.GetDeclaredConstructors(typeof(HintViewModel), false))
+            foreach (var constructorInfo in HarmonyLib.AccessTools.GetDeclaredConstructors(typeof(HintViewModel), false))
             {
                 var @params = constructorInfo.GetParameters();
                 if (@params.Length == 0)

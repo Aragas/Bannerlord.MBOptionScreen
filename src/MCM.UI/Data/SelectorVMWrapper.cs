@@ -1,5 +1,4 @@
-﻿using HarmonyLib;
-using HarmonyLib.BUTR.Extensions;
+﻿using HarmonyLib.BUTR.Extensions;
 
 namespace MCM.UI.Data
 {
@@ -24,9 +23,8 @@ namespace MCM.UI.Data
         {
             var type = @object.GetType();
 
-            var selectedIndexProperty = AccessTools.Property(type, nameof(SelectedIndex));
-            _getSelectedIndexDelegate = AccessTools2.GetDelegate<GetSelectedIndexDelegate>(@object, selectedIndexProperty.GetMethod)!;
-            _setSelectedIndexDelegate = AccessTools2.GetDelegate<SetSelectedIndexDelegate>(@object, selectedIndexProperty.SetMethod)!;
+            _getSelectedIndexDelegate = AccessTools2.GetPropertyGetterDelegate<GetSelectedIndexDelegate>(@object, type, nameof(SelectedIndex));
+            _setSelectedIndexDelegate = AccessTools2.GetPropertySetterDelegate<SetSelectedIndexDelegate>(@object, type, nameof(SelectedIndex));
         }
     }
 }

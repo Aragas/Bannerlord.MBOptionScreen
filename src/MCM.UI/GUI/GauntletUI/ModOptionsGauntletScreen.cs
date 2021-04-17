@@ -1,5 +1,4 @@
-﻿using HarmonyLib;
-using HarmonyLib.BUTR.Extensions;
+﻿using HarmonyLib.BUTR.Extensions;
 
 using MCM.UI.GUI.ViewModels;
 
@@ -22,9 +21,9 @@ namespace MCM.UI.GUI.GauntletUI
         private delegate void ReleaseMovieDelegate(object instance, object movie);
 
         private static readonly LoadMovieDelegate? LoadMovie =
-            AccessTools2.GetDelegateObjectInstance<LoadMovieDelegate>(AccessTools.Method(typeof(GauntletLayer), "LoadMovie"));
+            AccessTools2.GetDelegateObjectInstance<LoadMovieDelegate>(typeof(GauntletLayer), "LoadMovie");
         private static readonly ReleaseMovieDelegate? ReleaseMovie =
-            AccessTools2.GetDelegateObjectInstance<ReleaseMovieDelegate>(AccessTools.Method(typeof(GauntletLayer), "ReleaseMovie"));
+            AccessTools2.GetDelegateObjectInstance<ReleaseMovieDelegate>(typeof(GauntletLayer), "ReleaseMovie");
 
         private readonly ILogger<ModOptionsGauntletScreen> _logger;
 
@@ -32,7 +31,6 @@ namespace MCM.UI.GUI.GauntletUI
         private object? _gauntletMovie;
         private ModOptionsVM _dataSource = default!;
         private SpriteCategory _spriteCategoryEncyclopedia = default!;
-        private ReleaseMovieDelegate? _releaseMovie;
 
         public ModOptionsGauntletScreen(ILogger<ModOptionsGauntletScreen> logger)
         {

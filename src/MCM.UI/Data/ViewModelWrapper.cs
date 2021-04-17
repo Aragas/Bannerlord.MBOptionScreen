@@ -1,6 +1,6 @@
-﻿using Bannerlord.ButterLib.Common.Extensions;
+﻿using Bannerlord.BUTR.Shared.Extensions;
 
-using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using MCM.Abstractions;
 using MCM.UI.Utils;
@@ -23,9 +23,9 @@ namespace MCM.UI.Data
             Object = @object;
 
             // Copy Object properties
-            var field = AccessTools.Field(typeof(ViewModel), "_propertyInfos");
-            var propsObject = field.GetValue(Object) as Dictionary<string, PropertyInfo> ?? new Dictionary<string, PropertyInfo>();
-            var propsThis = field.GetValue(this) as Dictionary<string, PropertyInfo> ?? new Dictionary<string, PropertyInfo>();
+            var field = AccessTools2.Field(typeof(ViewModel), "_propertyInfos");
+            var propsObject = field?.GetValue(Object) as Dictionary<string, PropertyInfo> ?? new Dictionary<string, PropertyInfo>();
+            var propsThis = field?.GetValue(this) as Dictionary<string, PropertyInfo> ?? new Dictionary<string, PropertyInfo>();
             if (clearOriginalProperties)
                 propsThis.Clear(); // clear properties
             foreach (var (key, value) in propsObject)

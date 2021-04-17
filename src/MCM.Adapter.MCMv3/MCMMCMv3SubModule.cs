@@ -20,7 +20,7 @@ namespace MCM.Adapter.MCMv3
     public class MCMMCMv3SubModule : MBSubModuleBase
     {
         private static readonly AccessTools.FieldRef<MCMv3BaseSettingsProvider>? Instance =
-            AccessTools2.StaticFieldRefAccess<MCMv3BaseSettingsProvider>(AccessTools.Field(typeof(MCMv3BaseSettingsProvider), "_instance"));
+            AccessTools2.StaticFieldRefAccess<MCMv3BaseSettingsProvider>(typeof(MCMv3BaseSettingsProvider), "_instance");
 
         private bool ServiceRegistrationWasCalled { get; set; }
 
