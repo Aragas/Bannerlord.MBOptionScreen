@@ -1,4 +1,6 @@
-﻿using MCM.Adapter.ModLib.Functionality;
+﻿using BUTR.DependencyInjection.Extensions;
+
+using MCM.Adapter.ModLib.Functionality;
 using MCM.Adapter.ModLib.Settings.Containers.v1;
 using MCM.Adapter.ModLib.Settings.Containers.v13;
 using MCM.Adapter.ModLib.Settings.Properties.v1;
