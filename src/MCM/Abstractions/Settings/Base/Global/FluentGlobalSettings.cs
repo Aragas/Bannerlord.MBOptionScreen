@@ -1,8 +1,9 @@
 ﻿using Bannerlord.BUTR.Shared.Extensions;
 
+using BUTR.DependencyInjection;
+
 using MCM.Abstractions.FluentBuilder;
 using MCM.Abstractions.Settings.Models;
-using MCM.DependencyInjection;
 using MCM.Extensions;
 using MCM.Implementation.FluentBuilder;
 using MCM.Implementation.Settings.Containers.Global;

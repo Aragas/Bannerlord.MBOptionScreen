@@ -4,19 +4,20 @@ using Bannerlord.ButterLib.DelayedSubModule;
 using Bannerlord.ButterLib.HotKeys;
 using Bannerlord.UIExtenderEx;
 
+using BUTR.DependencyInjection;
+using BUTR.DependencyInjection.ButterLib;
+using BUTR.DependencyInjection.Extensions;
+using BUTR.DependencyInjection.Logger;
+
 using HarmonyLib;
 
 using MCM.Abstractions.Settings.Base;
-using MCM.DependencyInjection;
 using MCM.Extensions;
-using MCM.Logger;
 using MCM.UI.ButterLib;
-using MCM.UI.DependencyInjection;
 using MCM.UI.Functionality;
 using MCM.UI.Functionality.Injectors;
 using MCM.UI.GUI.GauntletUI;
 using MCM.UI.HotKeys;
-using MCM.UI.Logger;
 using MCM.UI.Patches;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -84,8 +85,8 @@ Make sure MCM is loaded before them!";
                 services.AddTransient(typeof(IServiceProvider), () => this.GetTempServiceProvider() ?? this.GetServiceProvider()!);
                 //services.AddTransient<ILogger, LoggerWrapper>();
                 //services.AddTransient(typeof(ILogger<>), typeof(LoggerWrapper<>));
-                services.AddTransient<IMCMLogger, MCMLogger>();
-                services.AddTransient(typeof(IMCMLogger<>), typeof(MCMLogger<>));
+                services.AddTransient<IBUTRLogger, DefaultBUTRLogger>();
+                services.AddTransient(typeof(IBUTRLogger<>), typeof(DefaultBUTRLogger<>));
 
 
                 services.AddTransient<IMCMOptionsScreen, ModOptionsGauntletScreen>();

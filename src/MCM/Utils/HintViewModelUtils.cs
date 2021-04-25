@@ -2,6 +2,8 @@
 
 using HarmonyLib.BUTR.Extensions;
 
+using System.Runtime.Serialization;
+
 using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Localization;
 
@@ -35,10 +37,10 @@ namespace MCM.Utils
         {
             if (Empty is not null)
                 return Empty();
-            return null;
+            return (HintViewModel) FormatterServices.GetUninitializedObject(typeof(HintViewModel));
         }
 
-        public static HintViewModel Create(string text)
+        public static HintViewModel? Create(string text)
         {
             if (V1 is not null)
                 return V1(text);
@@ -47,7 +49,7 @@ namespace MCM.Utils
             return null;
         }
 
-        public static HintViewModel Create(TextObject text)
+        public static HintViewModel? Create(TextObject text)
         {
             if (V1 is not null)
                 return V1(text.ToString());

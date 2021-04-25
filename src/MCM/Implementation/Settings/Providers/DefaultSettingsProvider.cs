@@ -1,11 +1,12 @@
-﻿using MCM.Abstractions.Settings.Base;
+﻿using BUTR.DependencyInjection;
+using BUTR.DependencyInjection.Logger;
+
+using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Containers;
 using MCM.Abstractions.Settings.Containers.Global;
 using MCM.Abstractions.Settings.Containers.PerSave;
 using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.Providers;
-using MCM.DependencyInjection;
-using MCM.Logger;
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -17,13 +18,13 @@ namespace MCM.Implementation.Settings.Providers
 {
     internal sealed class DefaultSettingsProvider : BaseSettingsProvider
     {
-        private readonly IMCMLogger _logger;
+        private readonly IBUTRLogger _logger;
         private readonly List<ISettingsContainer> _settingsContainers;
 
         public override IEnumerable<SettingsDefinition> CreateModSettingsDefinitions => _settingsContainers
             .SelectMany(sp => sp.CreateModSettingsDefinitions);
 
-        public DefaultSettingsProvider(IMCMLogger<DefaultSettingsProvider> logger)
+        public DefaultSettingsProvider(IBUTRLogger<DefaultSettingsProvider> logger)
         {
             _logger = logger;
 

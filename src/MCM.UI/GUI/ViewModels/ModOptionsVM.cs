@@ -1,9 +1,10 @@
 ﻿using Bannerlord.BUTR.Shared.Helpers;
 
+using BUTR.DependencyInjection;
+
 using ComparerExtensions;
 
 using MCM.Abstractions.Settings.Providers;
-using MCM.DependencyInjection;
 using MCM.UI.Extensions;
 using MCM.Utils;
 

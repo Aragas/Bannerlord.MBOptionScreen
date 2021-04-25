@@ -1,6 +1,4 @@
 ﻿/*
-
-
 using HarmonyLib.BUTR.Extensions;
 
 using TaleWorlds.Core.ViewModelCollection;

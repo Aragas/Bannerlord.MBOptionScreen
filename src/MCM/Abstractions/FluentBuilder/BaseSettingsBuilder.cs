@@ -1,6 +1,7 @@
-﻿using MCM.Abstractions.Settings.Base.Global;
+﻿using BUTR.DependencyInjection;
+
+using MCM.Abstractions.Settings.Base.Global;
 using MCM.Abstractions.Settings.Base.PerSave;
-using MCM.DependencyInjection;
 
 using System;
 using System.ComponentModel;

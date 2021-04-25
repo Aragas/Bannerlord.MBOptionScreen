@@ -10,13 +10,13 @@ namespace MCM.UI.Data
         private delegate int GetSelectedIndexDelegate();
         private delegate void SetSelectedIndexDelegate(int value);
 
-        private readonly GetSelectedIndexDelegate _getSelectedIndexDelegate;
-        private readonly SetSelectedIndexDelegate _setSelectedIndexDelegate;
+        private readonly GetSelectedIndexDelegate? _getSelectedIndexDelegate;
+        private readonly SetSelectedIndexDelegate? _setSelectedIndexDelegate;
 
         public int SelectedIndex
         {
-            get => _getSelectedIndexDelegate.Invoke();
-            set => _setSelectedIndexDelegate.Invoke(value);
+            get => _getSelectedIndexDelegate?.Invoke() ?? -1;
+            set => _setSelectedIndexDelegate?.Invoke(value);
         }
 
         public SelectorVMWrapper(object @object) : base(@object)

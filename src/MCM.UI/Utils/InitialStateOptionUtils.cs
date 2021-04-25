@@ -27,7 +27,7 @@ namespace MCM.UI.Utils
             }
         }
 
-        public static InitialStateOption Create(string id, TextObject name, int orderIndex, Action action, Func<bool> isDisabled)
+        public static InitialStateOption? Create(string id, TextObject name, int orderIndex, Action action, Func<bool> isDisabled)
         {
             if (V1 is not null)
                 return V1(id, name, orderIndex, action, isDisabled());

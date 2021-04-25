@@ -15,6 +15,7 @@ using TaleWorlds.MountAndBlade;
 
 using v1::MBOptionScreen;
 using v1::MBOptionScreen.State;
+using v4::BUTR.DependencyInjection.Extensions;
 using v4::MCM.Extensions;
 
 using MBOv2SettingsBase = v2::MBOptionScreen.Settings.SettingsBase;

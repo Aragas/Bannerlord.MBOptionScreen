@@ -1,6 +1,7 @@
-﻿using MCM.Abstractions.Settings.Base;
+﻿using BUTR.DependencyInjection;
+
+using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Models;
-using MCM.DependencyInjection;
 
 using System.Collections.Generic;
 

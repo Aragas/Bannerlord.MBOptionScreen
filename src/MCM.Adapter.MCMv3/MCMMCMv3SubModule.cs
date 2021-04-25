@@ -11,6 +11,7 @@ using MCM.Adapter.MCMv3.Settings.Providers;
 
 using TaleWorlds.MountAndBlade;
 
+using v4::BUTR.DependencyInjection.Extensions;
 using v4::MCM.Extensions;
 
 using MCMv3BaseSettingsProvider = v3::MCM.Abstractions.Settings.Providers.BaseSettingsProvider;

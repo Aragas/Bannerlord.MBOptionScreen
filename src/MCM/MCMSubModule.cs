@@ -1,10 +1,15 @@
-﻿using MCM.Abstractions.Settings.Formats;
+﻿using BUTR.DependencyInjection;
+using BUTR.DependencyInjection.Extensions;
+using BUTR.DependencyInjection.LightInject;
+
+using MCM.Abstractions.Settings.Formats;
 using MCM.Abstractions.Settings.Properties;
-using MCM.DependencyInjection;
 using MCM.Extensions;
 using MCM.LightInject;
 
 using TaleWorlds.MountAndBlade;
+
+using ServiceCollectionExtensions = BUTR.DependencyInjection.Extensions.ServiceCollectionExtensions;
 
 namespace MCM
 {
@@ -58,11 +63,17 @@ namespace MCM
 
         public void OverrideServiceContainer(IGenericServiceContainer serviceContainer)
         {
-            var oldServiceContainer = ServiceCollectionExtensions.ServiceContainer;
-            ServiceCollectionExtensions.ServiceContainer = new WithHistoryGenericServiceContainer(serviceContainer);
-            foreach (var historyAction in oldServiceContainer.History)
+            if (ServiceCollectionExtensions.ServiceContainer is { } oldServiceContainer)
             {
-                historyAction(ServiceCollectionExtensions.ServiceContainer);
+                ServiceCollectionExtensions.ServiceContainer = new WithHistoryGenericServiceContainer(serviceContainer);
+                foreach (var historyAction in oldServiceContainer.History)
+                {
+                    historyAction(ServiceCollectionExtensions.ServiceContainer);
+                }
+            }
+            else
+            {
+                ServiceCollectionExtensions.ServiceContainer = new WithHistoryGenericServiceContainer(serviceContainer);
             }
         }
     }

@@ -1,7 +1,8 @@
-﻿using MCM.Abstractions;
+﻿using BUTR.DependencyInjection.Logger;
+
+using MCM.Abstractions;
 using MCM.Abstractions.Settings.Base.Global;
 using MCM.Abstractions.Settings.Containers.Global;
-using MCM.Logger;
 
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ namespace MCM.Implementation.Settings.Containers.Global
 {
     internal sealed class MCMGlobalSettingsContainer : BaseGlobalSettingsContainer, IMCMGlobalSettingsContainer
     {
-        public MCMGlobalSettingsContainer(IMCMLogger<MCMGlobalSettingsContainer> logger)
+        public MCMGlobalSettingsContainer(IBUTRLogger<MCMGlobalSettingsContainer> logger)
         {
             var settings = new List<GlobalSettings>();
             var allTypes = AppDomain.CurrentDomain

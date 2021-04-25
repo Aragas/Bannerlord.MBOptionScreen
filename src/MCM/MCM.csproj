@@ -1,10 +1,11 @@
-﻿<!--EXTERNAL_PROPERTIES: GameVersion;ButterLibVersion;HarmonyVersion;ButterLibVersion;BuildResourcesVersion-->
+﻿<!--EXTERNAL_PROPERTIES: DefineConstantsGameVersion;ButterLibVersion;HarmonyVersion;ButterLibVersion;BuildResourcesVersion-->
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <Authors>Aragas, mipen</Authors>
     <AssemblyName>MCMv4</AssemblyName>
     <Configurations>Debug;Release</Configurations>
+    <DefineConstants>$(DefineConstants);BUTRDEPENDENCYINJECTION_PUBLIC;BUTRDEPENDENCYINJECTION_BANNERLORD;</DefineConstants>
   </PropertyGroup>
 
   <!--NuGet Package-->
@@ -31,12 +32,23 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
-    <PackageReference Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)">
+    <PackageReference Include="BUTR.DependencyInjection" Version="1.0.0.7" >
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="BUTR.DependencyInjection.LightInject" Version="1.0.0.7" >
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)" >
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" IncludeAssets="compile" />
-    <PackageReference Include="LightInject.Source" Version="6.4.0" PrivateAssets="all" />
+    <PackageReference Include="LightInject.Source" Version="6.4.0" >
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>compile</IncludeAssets>

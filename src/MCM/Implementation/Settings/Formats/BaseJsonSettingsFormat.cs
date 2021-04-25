@@ -1,14 +1,15 @@
-﻿using MCM.Abstractions.Common;
+﻿using BUTR.DependencyInjection.Logger;
+
+using MCM.Abstractions.Common;
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Formats;
 using MCM.Abstractions.Settings.Models;
 using MCM.Extensions;
-using MCM.Logger;
 using MCM.Utils;
 
 using Newtonsoft.Json;
-
 using Newtonsoft.Json.Linq;
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,10 +21,10 @@ namespace MCM.Implementation.Settings.Formats
         private readonly object _lock = new();
         private readonly Dictionary<string, object?> _existingObjects = new();
 
-        protected readonly IMCMLogger Logger;
+        protected readonly IBUTRLogger Logger;
         protected virtual JsonSerializerSettings JsonSerializerSettings { get; }
 
-        protected BaseJsonSettingsFormat(IMCMLogger logger)
+        protected BaseJsonSettingsFormat(IBUTRLogger logger)
         {
             Logger = logger;
             JsonSerializerSettings = new JsonSerializerSettings
@@ -126,10 +127,10 @@ namespace MCM.Implementation.Settings.Formats
 
         private class DropdownJsonConverter : JsonConverter
         {
-            private readonly IMCMLogger _logger;
+            private readonly IBUTRLogger _logger;
             private readonly BaseJsonSettingsFormat _settingsFormat;
 
-            public DropdownJsonConverter(IMCMLogger logger, BaseJsonSettingsFormat settingsFormat)
+            public DropdownJsonConverter(IBUTRLogger logger, BaseJsonSettingsFormat settingsFormat)
             {
                 _logger = logger;
                 _settingsFormat = settingsFormat;
