@@ -12,15 +12,15 @@
    <a href="https://mcm.bannerlord.aragas.org/">
    <img src="https://img.shields.io/badge/Documentation-%F0%9F%94%8D-blue?style=flat" /></a>
    </br>
-   <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="Nexus Mod Configuration Menu">
-   <img src="https://img.shields.io/badge/Nexus-Mod%20Configuration%20Menu-yellow.svg" /></a>
-   <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="Nexus Mod Configuration Menu">
+   <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="NexusMods Mod Configuration Menu">
+   <img src="https://img.shields.io/badge/NexusMods-Mod%20Configuration%20Menu-yellow.svg" /></a>
+   <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="NexusMods Mod Configuration Menu">
    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-version-pzk4e0ejol6j.runkit.sh%3FgameId%3Dmountandblade2bannerlord%26modId%3D612" /></a>
-   <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="Nexus Mod Configuration Menu">
+   <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="NexusMods Mod Configuration Menu">
    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dunique%26gameId%3D3174%26modId%3D612" /></a>
-   <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="Nexus Mod Configuration Menu">
+   <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="NexusMods Mod Configuration Menu">
    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dtotal%26gameId%3D3174%26modId%3D612" /></a>
-   <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="Nexus Mod Configuration Menu">
+   <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="NexusMods Mod Configuration Menu">
    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dviews%26gameId%3D3174%26modId%3D612" /></a>
    </br>
    <img src="https://staticdelivery.nexusmods.com/mods/3174/images/headers/612_1592411190.jpg" width="800">
