@@ -19,6 +19,8 @@ using TaleWorlds.Engine;
 using v4::MCM;
 using v4::MCM.Implementation;
 
+using ModuleInfoHelper = Bannerlord.BUTR.Shared.Helpers.ModuleInfoHelper;
+using AccessTools2 = v4::HarmonyLib.BUTR.Extensions.AccessTools2;
 using SymbolExtensions2 = v4::HarmonyLib.BUTR.Extensions.SymbolExtensions2;
 
 namespace MCM.Tests
@@ -51,6 +53,8 @@ namespace MCM.Tests
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
+            _harmony.Patch(AccessTools2.Method(typeof(ButterLibSubModule).Assembly.GetType("Bannerlord.BUTR.Shared.Helpers.FSIOHelper"), "GetConfigPath"),
+                prefix: new HarmonyMethod(DelegateHelper.GetMethodInfo(MockedGetConfigsPath)));
             _harmony.Patch(SymbolExtensions2.GetMethodInfo(() => FSIOHelper.GetConfigPath()),
                 prefix: new HarmonyMethod(DelegateHelper.GetMethodInfo(MockedGetConfigsPath)));
             _harmony.Patch(SymbolExtensions2.GetMethodInfo(() => ModuleInfoHelper.GetLoadedModules()),
