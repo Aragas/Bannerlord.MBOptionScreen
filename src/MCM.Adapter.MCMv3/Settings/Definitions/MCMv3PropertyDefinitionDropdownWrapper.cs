@@ -1,6 +1,6 @@
 ﻿extern alias v4;
 
-using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using v4::MCM.Abstractions.Settings.Definitions;
 using v4::MCM.Abstractions.Settings.Definitions.Wrapper;
@@ -17,7 +17,7 @@ namespace MCM.Adapter.MCMv3.Settings.Definitions
         {
             var type = @object.GetType();
 
-            SelectedIndex = AccessTools.Property(type, nameof(SelectedIndex))?.GetValue(@object) as int? ?? 0;
+            SelectedIndex = AccessTools2.Property(type, nameof(SelectedIndex))?.GetValue(@object) as int? ?? 0;
         }
     }
 }

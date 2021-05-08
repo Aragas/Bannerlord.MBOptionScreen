@@ -2,14 +2,15 @@
 <Project>
 
   <PropertyGroup>
-    <Version>4.3.7</Version>
+    <Version>4.3.8</Version>
     <GameVersion>1.4.3</GameVersion>
     <HarmonyVersion>2.0.2</HarmonyVersion>
-    <ButterLibVersion>1.0.21</ButterLibVersion>
-    <UIExtenderExVersion>2.1.1</UIExtenderExVersion>
+    <ButterLibVersion>1.0.22</ButterLibVersion>
+    <UIExtenderExVersion>2.1.5</UIExtenderExVersion>
     <BuildResourcesVersion>1.0.0.33</BuildResourcesVersion>
-    <BUTRSharedVersion>1.6.1.31</BUTRSharedVersion>
-    <HarmonyExtensionsVersion>2.0.0.10</HarmonyExtensionsVersion>
+    <BUTRSharedVersion>1.6.1.35</BUTRSharedVersion>
+    <BUTRDependencyInjectionVersion>1.0.0.11</BUTRDependencyInjectionVersion>
+    <HarmonyExtensionsVersion>2.0.0.39</HarmonyExtensionsVersion>
     <TargetFramework>net472</TargetFramework>
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
@@ -18,6 +19,7 @@
     <GameFolder Condition="$(Configuration) == 'Stable_Debug' OR $(Configuration) == 'Stable_Release'">$(BANNERLORD_STABLE_DIR)</GameFolder>
     <GameFolder Condition="$(Configuration) == 'Beta_Debug' OR $(Configuration) == 'Beta_Release'">$(BANNERLORD_BETA_DIR)</GameFolder>
     <GameFolder Condition="$(BANNERLORD_STABLE_DIR) == '' AND $(BANNERLORD_BETA_DIR) == ''">$(BANNERLORD_GAME_DIR)</GameFolder>
+    <DefineConstants Condition="$(HarmonyVersion) &lt; '2.0.4'">$(DefineConstants);HARMONYEXTENSIONS_DISABLE_2_0_4;</DefineConstants>
   </PropertyGroup>
 
   <!--Automatic Path Resolution-->

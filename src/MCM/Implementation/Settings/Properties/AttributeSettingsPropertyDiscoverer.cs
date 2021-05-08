@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+﻿using HarmonyLib.BUTR.Extensions;
 
 using MCM.Abstractions;
 using MCM.Abstractions.Attributes;
@@ -39,7 +39,7 @@ namespace MCM.Implementation.Settings.Properties
         private static IEnumerable<ISettingsPropertyDefinition> GetPropertiesInternal(object @object)
         {
             var type = @object.GetType();
-            var subGroupDelimiter = AccessTools.Property(type, "SubGroupDelimiter")?.GetValue(@object) as char? ?? '/';
+            var subGroupDelimiter = AccessTools2.Property(type, "SubGroupDelimiter")?.GetValue(@object) as char? ?? '/';
             foreach (var property in type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
             {
                 if (property.Name == nameof(BaseSettings.Id))

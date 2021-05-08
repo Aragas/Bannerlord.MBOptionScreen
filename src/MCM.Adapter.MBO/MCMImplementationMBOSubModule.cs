@@ -15,6 +15,7 @@ using TaleWorlds.MountAndBlade;
 
 using v1::MBOptionScreen;
 using v1::MBOptionScreen.State;
+using v4::BUTR.DependencyInjection.Extensions;
 using v4::MCM.Extensions;
 
 using MBOv2SettingsBase = v2::MBOptionScreen.Settings.SettingsBase;
@@ -24,10 +25,10 @@ namespace MCM.Adapter.MBO
     public sealed class MCMImplementationMBOSubModule : MBSubModuleBase
     {
         private static readonly AccessTools.FieldRef<SharedStateObject>? MBOv1SharedStateObject =
-            AccessTools2.StaticFieldRefAccess<SharedStateObject>(AccessTools.Field(typeof(MBOptionScreenSubModule), "SharedStateObject"));
+            AccessTools2.StaticFieldRefAccess<SharedStateObject>(typeof(MBOptionScreenSubModule), "SharedStateObject");
 
         private static readonly PropertyInfo? MBOv2SettingsProvider =
-            AccessTools.Property(typeof(MBOv2SettingsBase).Assembly.GetType("MBOptionScreen.Settings.SettingsDatabase"), "MBOptionScreenSettingsProvider");
+            AccessTools2.Property(typeof(MBOv2SettingsBase).Assembly.GetType("MBOptionScreen.Settings.SettingsDatabase"), "MBOptionScreenSettingsProvider");
 
         private bool ServiceRegistrationWasCalled { get; set; }
 

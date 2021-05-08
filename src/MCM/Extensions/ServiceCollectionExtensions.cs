@@ -1,66 +1,17 @@
-﻿using MCM.Abstractions.FluentBuilder;
+﻿using BUTR.DependencyInjection;
+
+using MCM.Abstractions.FluentBuilder;
 using MCM.Abstractions.Settings.Containers;
 using MCM.Abstractions.Settings.Containers.Global;
 using MCM.Abstractions.Settings.Containers.PerSave;
 using MCM.Abstractions.Settings.Formats;
 using MCM.Abstractions.Settings.Properties;
 using MCM.Abstractions.Settings.Providers;
-using MCM.DependencyInjection;
-using MCM.LightInject;
-
-using System;
-
-using TaleWorlds.MountAndBlade;
 
 namespace MCM.Extensions
 {
     public static class ServiceCollectionExtensions
     {
-        internal static ServiceContainer LightInjectServiceContainer = new();
-
-        internal static WithHistoryGenericServiceContainer ServiceContainer;
-
-        public static IGenericServiceContainer GetServiceContainer(this MBSubModuleBase subModule) => ServiceContainer;
-
-        public static IGenericServiceContainer AddSingleton<TService, TImplementation>(this IGenericServiceContainer services)
-            where TService : class
-            where TImplementation : class, TService
-        {
-            services.RegisterSingleton<TService, TImplementation>();
-            return services;
-        }
-
-        public static IGenericServiceContainer AddScoped<TService>(this IGenericServiceContainer services)
-            where TService : class
-        {
-            services.RegisterScoped<TService>();
-            return services;
-        }
-
-        public static IGenericServiceContainer AddTransient<TService, TImplementation>(this IGenericServiceContainer services)
-            where TService : class
-            where TImplementation : class, TService
-        {
-            services.RegisterTransient<TService, TImplementation>();
-            return services;
-        }
-        public static IGenericServiceContainer AddTransient(this IGenericServiceContainer services, Type serviceType, Type implementationType)
-        {
-            services.RegisterTransient(serviceType, implementationType);
-            return services;
-        }
-        public static IGenericServiceContainer AddTransient<TService>(this IGenericServiceContainer services, Func<TService> factory)
-            where TService : class
-        {
-            services.RegisterTransient<TService>(factory);
-            return services;
-        }
-        public static IGenericServiceContainer AddTransient(this IGenericServiceContainer services, Type serviceType, Func<object> factory)
-        {
-            services.RegisterTransient(serviceType, factory);
-            return services;
-        }
-
         public static IGenericServiceContainer AddSettingsProvider<TService, TImplementation>(this IGenericServiceContainer services)
             where TService : BaseSettingsProvider
             where TImplementation : class, TService

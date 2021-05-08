@@ -1,5 +1,6 @@
-﻿using MCM.Abstractions.Common;
-using MCM.Logger;
+﻿using BUTR.DependencyInjection.Logger;
+
+using MCM.Abstractions.Common;
 using MCM.Utils;
 
 using Newtonsoft.Json;
@@ -15,7 +16,7 @@ namespace MCM.Implementation.Settings.Formats.Json2
         public override IEnumerable<string> FormatTypes => new[] { "json2" };
         protected override JsonSerializerSettings JsonSerializerSettings { get; }
 
-        public Json2SettingsFormat(IMCMLogger<Json2SettingsFormat> logger) : base(logger)
+        public Json2SettingsFormat(IBUTRLogger<Json2SettingsFormat> logger) : base(logger)
         {
             JsonSerializerSettings = new JsonSerializerSettings
             {
@@ -26,10 +27,10 @@ namespace MCM.Implementation.Settings.Formats.Json2
 
         private class DropdownJson2Converter : JsonConverter
         {
-            private readonly IMCMLogger _logger;
+            private readonly IBUTRLogger _logger;
             private readonly BaseJsonSettingsFormat _settingsFormat;
 
-            public DropdownJson2Converter(IMCMLogger logger, BaseJsonSettingsFormat settingsFormat)
+            public DropdownJson2Converter(IBUTRLogger logger, BaseJsonSettingsFormat settingsFormat)
             {
                 _logger = logger;
                 _settingsFormat = settingsFormat;

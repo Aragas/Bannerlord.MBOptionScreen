@@ -30,8 +30,8 @@ namespace MCM.Adapter.MCMv3.Patches
 
         public static void Patch(Harmony harmony)
         {
-            harmony.Patch(AccessTools.Constructor(typeof(MCMv3IntegratedLoaderSubModule)),
-                prefix: new HarmonyMethod(SymbolExtensions.GetMethodInfo(() => StopIntegratedLoaderSubModuleCtor(null!))));
+            harmony.Patch(AccessTools2.Constructor(typeof(MCMv3IntegratedLoaderSubModule)),
+                prefix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo(() => StopIntegratedLoaderSubModuleCtor(null!))));
         }
 
         // Prevent any Integrated MCMv3 from loading

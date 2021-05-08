@@ -8,8 +8,8 @@ using System.Collections.Generic;
 
 using TaleWorlds.Core;
 
+using v4::BUTR.DependencyInjection;
 using v4::MCM.Abstractions.Settings.Providers;
-using v4::MCM.DependencyInjection;
 
 using MCMv3BaseSettings = v3::MCM.Abstractions.Settings.Base.BaseSettings;
 using MCMv3BaseSettingsProvider = v3::MCM.Abstractions.Settings.Providers.BaseSettingsProvider;

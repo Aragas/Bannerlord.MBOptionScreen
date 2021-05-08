@@ -1,6 +1,7 @@
-﻿using MCM.Abstractions;
+﻿using BUTR.DependencyInjection.Logger;
+
+using MCM.Abstractions;
 using MCM.Abstractions.Settings.Base;
-using MCM.Logger;
 
 using Newtonsoft.Json;
 
@@ -14,7 +15,7 @@ namespace MCM.Implementation.Settings.Formats.Xml
     {
         public override IEnumerable<string> FormatTypes => new[] { "xml" };
 
-        public XmlSettingsFormat(IMCMLogger<XmlSettingsFormat> logger) : base(logger) { }
+        public XmlSettingsFormat(IBUTRLogger<XmlSettingsFormat> logger) : base(logger) { }
 
         public override bool Save(BaseSettings settings, string directoryPath, string filename)
         {

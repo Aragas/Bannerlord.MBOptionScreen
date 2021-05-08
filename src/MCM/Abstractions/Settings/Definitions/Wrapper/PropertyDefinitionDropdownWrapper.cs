@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+﻿using HarmonyLib.BUTR.Extensions;
 
 namespace MCM.Abstractions.Settings.Definitions.Wrapper
 {
@@ -11,7 +11,7 @@ namespace MCM.Abstractions.Settings.Definitions.Wrapper
         {
             var type = @object.GetType();
 
-            SelectedIndex = AccessTools.Property(type, nameof(SelectedIndex))?.GetValue(@object) as int? ?? 0;
+            SelectedIndex = AccessTools2.Property(type, nameof(SelectedIndex))?.GetValue(@object) as int? ?? 0;
         }
     }
 }

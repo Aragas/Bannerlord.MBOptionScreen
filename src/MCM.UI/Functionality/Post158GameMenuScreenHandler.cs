@@ -1,6 +1,7 @@
 ﻿using Bannerlord.BUTR.Shared.Extensions;
 
 using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using MCM.UI.Utils;
 
@@ -26,8 +27,8 @@ namespace MCM.UI.Functionality
         {
             var harmony = new Harmony("bannerlord.mcm.mainmenuscreeninjection_v4");
             harmony.Patch(
-                AccessTools.Method(typeof(InitialMenuVM), "RefreshMenuOptions"),
-                postfix: new HarmonyMethod(AccessTools.Method(typeof(Post158GameMenuScreenHandler), nameof(RefreshMenuOptionsPostfix)), 300));
+                AccessTools2.Method(typeof(InitialMenuVM), "RefreshMenuOptions"),
+                postfix: new HarmonyMethod(AccessTools2.Method(typeof(Post158GameMenuScreenHandler), nameof(RefreshMenuOptionsPostfix)), 300));
         }
 
         [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]

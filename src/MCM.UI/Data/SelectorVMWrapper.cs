@@ -1,5 +1,4 @@
-﻿using HarmonyLib;
-using HarmonyLib.BUTR.Extensions;
+﻿using HarmonyLib.BUTR.Extensions;
 
 namespace MCM.UI.Data
 {
@@ -11,22 +10,21 @@ namespace MCM.UI.Data
         private delegate int GetSelectedIndexDelegate();
         private delegate void SetSelectedIndexDelegate(int value);
 
-        private readonly GetSelectedIndexDelegate _getSelectedIndexDelegate;
-        private readonly SetSelectedIndexDelegate _setSelectedIndexDelegate;
+        private readonly GetSelectedIndexDelegate? _getSelectedIndexDelegate;
+        private readonly SetSelectedIndexDelegate? _setSelectedIndexDelegate;
 
         public int SelectedIndex
         {
-            get => _getSelectedIndexDelegate.Invoke();
-            set => _setSelectedIndexDelegate.Invoke(value);
+            get => _getSelectedIndexDelegate?.Invoke() ?? -1;
+            set => _setSelectedIndexDelegate?.Invoke(value);
         }
 
         public SelectorVMWrapper(object @object) : base(@object)
         {
             var type = @object.GetType();
 
-            var selectedIndexProperty = AccessTools.Property(type, nameof(SelectedIndex));
-            _getSelectedIndexDelegate = AccessTools2.GetDelegate<GetSelectedIndexDelegate>(@object, selectedIndexProperty.GetMethod)!;
-            _setSelectedIndexDelegate = AccessTools2.GetDelegate<SetSelectedIndexDelegate>(@object, selectedIndexProperty.SetMethod)!;
+            _getSelectedIndexDelegate = AccessTools2.GetPropertyGetterDelegate<GetSelectedIndexDelegate>(@object, type, nameof(SelectedIndex));
+            _setSelectedIndexDelegate = AccessTools2.GetPropertySetterDelegate<SetSelectedIndexDelegate>(@object, type, nameof(SelectedIndex));
         }
     }
 }

@@ -173,6 +173,8 @@ namespace MCM.UI.GUI.ViewModels
             _ => string.Empty
         };
 
+        public bool IsSelected { get; set; }
+
         public SettingsPropertyVM(ISettingsPropertyDefinition definition, SettingsVM settingsVM)
         {
             SettingsVM = settingsVM;
@@ -201,9 +203,15 @@ namespace MCM.UI.GUI.ViewModels
             }
 
             RefreshValues();
+
+            if (MCMUISubModule.ResetValueToDefault is { } key)
+                key.OnReleasedEvent += ResetValueToDefaultOnReleasedEvent;
         }
         public override void OnFinalize()
         {
+            if (MCMUISubModule.ResetValueToDefault is { } key)
+                key.OnReleasedEvent -= ResetValueToDefaultOnReleasedEvent;
+
             PropertyReference.PropertyChanged -= PropertyReference_OnPropertyChanged;
 
             if (IsDropdownVisible)
@@ -234,6 +242,14 @@ namespace MCM.UI.GUI.ViewModels
             {
                 URS.Do(new SetSelectedIndexAction(PropertyReference, new SelectedIndexWrapper(obj)));
                 SettingsVM.RecalculateIndex();
+            }
+        }
+
+        private void ResetValueToDefaultOnReleasedEvent()
+        {
+            if (IsSelected)
+            {
+                SettingsVM.ResetSettingsValue(SettingPropertyDefinition.Id);
             }
         }
 
@@ -285,12 +301,23 @@ namespace MCM.UI.GUI.ViewModels
 
             RefreshValues();
         }
+
         [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
         [SuppressMessage("Redundancy", "RCS1213:Remove unused member declaration.", Justification = "Reflection is used.")]
-        public void OnHover() => MainView.HintText = HintText;
+        public void OnHover()
+        {
+            IsSelected = true;
+            MainView.HintText = HintText;
+        }
+
         [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
         [SuppressMessage("Redundancy", "RCS1213:Remove unused member declaration.", Justification = "Reflection is used.")]
-        public void OnHoverEnd() => MainView.HintText = string.Empty;
+        public void OnHoverEnd()
+        {
+            IsSelected = false;
+            MainView.HintText = string.Empty;
+        }
+
         [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
         [SuppressMessage("Redundancy", "RCS1213:Remove unused member declaration.", Justification = "Reflection is used.")]
         public void OnValueClick() => ScreenManager.PushScreen(new EditValueGauntletScreen(this));

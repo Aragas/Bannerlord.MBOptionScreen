@@ -1,7 +1,5 @@
 ﻿/*
-using Bannerlord.ButterLib.Common.Helpers;
-
-using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Library;
@@ -38,7 +36,7 @@ namespace MCM.Abstractions.Dropdown
 
         public CheckboxDropdownSelectorItemVM(T @object) : base(@object)
         {
-            var isSelectedProperty = AccessTools.Property(typeof(T), "IsSelected");
+            var isSelectedProperty = AccessTools2.Property(typeof(T), "IsSelected");
             if (isSelectedProperty is not null)
             {
                 _getIsSelectedDelegate = AccessTools2.GetDelegate<GetIsSelectedDelegate>(@object, isSelectedProperty.GetMethod)!;
@@ -50,9 +48,9 @@ namespace MCM.Abstractions.Dropdown
                 _setIsSelectedDelegate = _ => { };
             }
 
-            StringItem = AccessTools.Property(typeof(T), "Name")?.GetValue(@object) is string name ? name : @object.ToString() ?? "ERROR";
+            StringItem = AccessTools2.Property(typeof(T), "Name")?.GetValue(@object) is string name ? name : @object.ToString() ?? "ERROR";
 
-            Hint = AccessTools.Property(typeof(T), "HintText")?.GetValue(@object) is string hintText ? new HintViewModel(hintText) : new HintViewModel(string.Empty);
+            Hint = AccessTools2.Property(typeof(T), "HintText")?.GetValue(@object) is string hintText ? new HintViewModel(hintText) : new HintViewModel(string.Empty);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿using HarmonyLib;
+﻿using HarmonyLib.BUTR.Extensions;
 
 namespace MCM.Abstractions.Settings.Definitions.Wrapper
 {
@@ -11,7 +11,7 @@ namespace MCM.Abstractions.Settings.Definitions.Wrapper
         {
             var type = @object.GetType();
 
-            IsToggle = AccessTools.Property(type, nameof(IsToggle))?.GetValue(@object) as bool? ?? false;
+            IsToggle = AccessTools2.Property(type, nameof(IsToggle))?.GetValue(@object) as bool? ?? false;
         }
     }
 }

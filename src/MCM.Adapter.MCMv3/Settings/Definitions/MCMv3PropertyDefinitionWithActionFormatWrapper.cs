@@ -2,7 +2,7 @@
 
 using System;
 
-using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using v4::MCM.Abstractions.Settings.Definitions;
 using v4::MCM.Abstractions.Settings.Definitions.Wrapper;
@@ -19,7 +19,7 @@ namespace MCM.Adapter.MCMv3.Settings.Definitions
         {
             var type = @object.GetType();
 
-            ValueFormatFunc = AccessTools.Property(type, nameof(ValueFormatFunc))?.GetValue(@object) as Func<object, string> ?? (obj => obj.ToString() ?? string.Empty);
+            ValueFormatFunc = AccessTools2.Property(type, nameof(ValueFormatFunc))?.GetValue(@object) as Func<object, string> ?? (obj => obj.ToString() ?? string.Empty);
         }
     }
 }

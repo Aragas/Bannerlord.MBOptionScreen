@@ -1,6 +1,8 @@
-﻿using MCM.Abstractions.FluentBuilder;
-using MCM.Abstractions.Ref;
-using MCM.Abstractions.Settings.Formats;
+﻿extern alias v4;
+
+using v4::MCM.Abstractions.FluentBuilder;
+using v4::MCM.Abstractions.Ref;
+using v4::MCM.Abstractions.Settings.Formats;
 
 using NUnit.Framework;
 

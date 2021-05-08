@@ -6,8 +6,8 @@ using MCM.Adapter.MBO.Settings.Containers;
 
 using System.Collections.Generic;
 
+using v4::BUTR.DependencyInjection;
 using v4::MCM.Abstractions.Settings.Providers;
-using v4::MCM.DependencyInjection;
 
 using ISettingsProvider = v1::MBOptionScreen.Interfaces.ISettingsProvider;
 using ModSettingsDefinition = v1::MBOptionScreen.Settings.ModSettingsDefinition;

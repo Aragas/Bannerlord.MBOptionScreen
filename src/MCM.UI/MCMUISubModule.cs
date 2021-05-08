@@ -1,20 +1,23 @@
 ﻿using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.ButterLib.Common.Extensions;
 using Bannerlord.ButterLib.DelayedSubModule;
+using Bannerlord.ButterLib.HotKeys;
 using Bannerlord.UIExtenderEx;
+
+using BUTR.DependencyInjection;
+using BUTR.DependencyInjection.ButterLib;
+using BUTR.DependencyInjection.Extensions;
+using BUTR.DependencyInjection.Logger;
 
 using HarmonyLib;
 
 using MCM.Abstractions.Settings.Base;
-using MCM.DependencyInjection;
 using MCM.Extensions;
-using MCM.Logger;
 using MCM.UI.ButterLib;
-using MCM.UI.DependencyInjection;
 using MCM.UI.Functionality;
 using MCM.UI.Functionality.Injectors;
 using MCM.UI.GUI.GauntletUI;
-using MCM.UI.Logger;
+using MCM.UI.HotKeys;
 using MCM.UI.Patches;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -57,7 +60,8 @@ Make sure MCM is loaded before them!";
 
 
         internal static ILogger<MCMUISubModule> Logger = NullLogger<MCMUISubModule>.Instance;
-        private static readonly UIExtender Extender = new("MCM.UI");
+        private static UIExtender Extender = new("MCM.UI");
+        internal static ResetValueToDefault? ResetValueToDefault;
 
         private bool DelayedServiceCreation { get; set; }
         private bool ServiceRegistrationWasCalled { get; set; }
@@ -79,15 +83,13 @@ Make sure MCM is loaded before them!";
                 services.AddSettingsContainer<ButterLibSettingsContainer>();
 
                 services.AddTransient(typeof(IServiceProvider), () => this.GetTempServiceProvider() ?? this.GetServiceProvider()!);
-                //services.AddTransient<ILogger, LoggerWrapper>();
-                //services.AddTransient(typeof(ILogger<>), typeof(LoggerWrapper<>));
-                services.AddTransient<IMCMLogger, MCMLogger>();
-                services.AddTransient(typeof(IMCMLogger<>), typeof(MCMLogger<>));
+                services.AddTransient<IBUTRLogger, LoggerWrapper>();
+                services.AddTransient(typeof(IBUTRLogger<>), typeof(LoggerWrapper<>));
 
 
                 services.AddTransient<IMCMOptionsScreen, ModOptionsGauntletScreen>();
 
-                if (Bannerlord.ButterLib.Common.Helpers.ApplicationVersionUtils.GameVersion() is { } gameVersion)
+                if (ApplicationVersionHelper.GameVersion() is { } gameVersion)
                 {
                     if (gameVersion.Major <= 1 && gameVersion.Minor <= 5 && gameVersion.Revision <= 7)
                         services.AddSingleton<BaseGameMenuScreenHandler, Pre158GameMenuScreenHandler>();
@@ -162,6 +164,12 @@ Make sure MCM is loaded before them!";
                         MCMUISettings.Instance!.PropertyChanged += MCMSettings_PropertyChanged;
                     });
             }
+
+            if (HotKeyManager.Create("MCM.UI") is { } hkm)
+            {
+                ResetValueToDefault = hkm.Add<ResetValueToDefault>();
+                hkm.Build();
+            }
         }
 
         protected override void OnSubModuleUnloaded()
@@ -204,7 +212,7 @@ Make sure MCM is loaded before them!";
 
         private static void CheckLoadOrder()
         {
-            var loadedModules = Bannerlord.ButterLib.Common.Helpers.ModuleInfoHelper.GetExtendedLoadedModules();
+            var loadedModules = ModuleInfoHelper.GetLoadedModules().ToList();
             if (loadedModules.Count == 0) return;
 
             var sb = new StringBuilder();

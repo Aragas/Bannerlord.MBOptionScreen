@@ -1,7 +1,6 @@
 ﻿extern alias v1;
 extern alias v4;
 
-using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
 using System;
@@ -48,12 +47,12 @@ namespace MCM.Adapter.MBO.Settings.Base
         {
             var type = @object.GetType();
 
-            _getIdDelegate = AccessTools2.GetDelegate<GetIdDelegate>(@object, AccessTools.Property(type, nameof(MCMv1BaseSettings.Id)).GetMethod);
-            _getFolderNameDelegate = AccessTools2.GetDelegate<GetFolderNameDelegate>(@object, AccessTools.Property(type, nameof(MCMv1BaseSettings.ModuleFolderName)).GetMethod);
-            _getDisplayNameDelegate = AccessTools2.GetDelegate<GetDisplayNameDelegate>(@object, AccessTools.Property(type, nameof(MCMv1BaseSettings.ModName)).GetMethod);
-            _getUIVersionDelegate = AccessTools2.GetDelegate<GetUIVersionDelegate>(@object, AccessTools.Property(type, nameof(MCMv1BaseSettings.UIVersion)).GetMethod);
-            _getSubFolderDelegate = AccessTools2.GetDelegate<GetSubFolderDelegate>(@object, AccessTools.Property(type, nameof(MCMv1BaseSettings.SubFolder)).GetMethod);
-            _getSubGroupDelimiterDelegate = AccessTools2.GetDelegate<GetSubGroupDelimiterDelegate>(@object, AccessTools.Property(type, "SubGroupDelimiter").GetMethod);
+            _getIdDelegate = AccessTools2.GetDelegate<GetIdDelegate>(@object, type, nameof(MCMv1BaseSettings.Id));
+            _getFolderNameDelegate = AccessTools2.GetDelegate<GetFolderNameDelegate>(@object, type, nameof(MCMv1BaseSettings.ModuleFolderName));
+            _getDisplayNameDelegate = AccessTools2.GetDelegate<GetDisplayNameDelegate>(@object, type, nameof(MCMv1BaseSettings.ModName));
+            _getUIVersionDelegate = AccessTools2.GetDelegate<GetUIVersionDelegate>(@object, type, nameof(MCMv1BaseSettings.UIVersion));
+            _getSubFolderDelegate = AccessTools2.GetDelegate<GetSubFolderDelegate>(@object, type, nameof(MCMv1BaseSettings.SubFolder));
+            _getSubGroupDelimiterDelegate = AccessTools2.GetDelegate<GetSubGroupDelimiterDelegate>(@object, type, "SubGroupDelimiter");
         }
 
         protected override BaseSettings CreateNew() => new MBOv1GlobalSettingsWrapper(Activator.CreateInstance(Object.GetType())!);

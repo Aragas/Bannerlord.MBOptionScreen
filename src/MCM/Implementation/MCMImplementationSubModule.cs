@@ -1,6 +1,8 @@
-﻿using MCM.Abstractions.Settings.Properties;
+﻿using BUTR.DependencyInjection;
+using BUTR.DependencyInjection.Extensions;
+
+using MCM.Abstractions.Settings.Properties;
 using MCM.Abstractions.Settings.Providers;
-using MCM.DependencyInjection;
 using MCM.Extensions;
 using MCM.Implementation.FluentBuilder;
 using MCM.Implementation.Settings.Containers.Global;

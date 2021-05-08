@@ -8,10 +8,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
+using v4::BUTR.DependencyInjection;
 using v4::MCM.Abstractions.Settings.Base.Global;
 using v4::MCM.Abstractions.Settings.Containers.Global;
 using v4::MCM.Abstractions.Settings.Formats;
-using v4::MCM.DependencyInjection;
 
 using SettingsBase = v1::MBOptionScreen.Settings.SettingsBase;
 
