@@ -89,7 +89,7 @@ Make sure MCM is loaded before them!";
 
                 services.AddTransient<IMCMOptionsScreen, ModOptionsGauntletScreen>();
 
-                if (Bannerlord.ButterLib.Common.Helpers.ApplicationVersionUtils.GameVersion() is { } gameVersion)
+                if (ApplicationVersionHelper.GameVersion() is { } gameVersion)
                 {
                     if (gameVersion.Major <= 1 && gameVersion.Minor <= 5 && gameVersion.Revision <= 7)
                         services.AddSingleton<BaseGameMenuScreenHandler, Pre158GameMenuScreenHandler>();
@@ -212,7 +212,7 @@ Make sure MCM is loaded before them!";
 
         private static void CheckLoadOrder()
         {
-            var loadedModules = Bannerlord.ButterLib.Common.Helpers.ModuleInfoHelper.GetExtendedLoadedModules();
+            var loadedModules = ModuleInfoHelper.GetLoadedModules().ToList();
             if (loadedModules.Count == 0) return;
 
             var sb = new StringBuilder();
