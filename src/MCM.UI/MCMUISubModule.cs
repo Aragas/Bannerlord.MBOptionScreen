@@ -83,10 +83,8 @@ Make sure MCM is loaded before them!";
                 services.AddSettingsContainer<ButterLibSettingsContainer>();
 
                 services.AddTransient(typeof(IServiceProvider), () => this.GetTempServiceProvider() ?? this.GetServiceProvider()!);
-                //services.AddTransient<ILogger, LoggerWrapper>();
-                //services.AddTransient(typeof(ILogger<>), typeof(LoggerWrapper<>));
-                services.AddTransient<IBUTRLogger, DefaultBUTRLogger>();
-                services.AddTransient(typeof(IBUTRLogger<>), typeof(DefaultBUTRLogger<>));
+                services.AddTransient<IBUTRLogger, LoggerWrapper>();
+                services.AddTransient(typeof(IBUTRLogger<>), typeof(LoggerWrapper<>));
 
 
                 services.AddTransient<IMCMOptionsScreen, ModOptionsGauntletScreen>();

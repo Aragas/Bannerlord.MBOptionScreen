@@ -51,7 +51,7 @@ namespace MCM.Tests
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _harmony.Patch(SymbolExtensions2.GetMethodInfo(() => Utilities.GetConfigsPath()),
+            _harmony.Patch(SymbolExtensions2.GetMethodInfo(() => FSIOHelper.GetConfigPath()),
                 prefix: new HarmonyMethod(DelegateHelper.GetMethodInfo(MockedGetConfigsPath)));
             _harmony.Patch(SymbolExtensions2.GetMethodInfo(() => ModuleInfoHelper.GetLoadedModules()),
                 prefix: new HarmonyMethod(DelegateHelper.GetMethodInfo(MockedGetLoadedModules)));
@@ -70,7 +70,7 @@ namespace MCM.Tests
         [OneTimeTearDown]
         public void TearDown()
         {
-            _harmony.Unpatch(SymbolExtensions2.GetMethodInfo(() => Utilities.GetConfigsPath()),
+            _harmony.Unpatch(SymbolExtensions2.GetMethodInfo(() => FSIOHelper.GetConfigPath()),
                 DelegateHelper.GetMethodInfo(MockedGetConfigsPath));
             _harmony.Unpatch(SymbolExtensions2.GetMethodInfo(() => ModuleInfoHelper.GetLoadedModules()),
                 DelegateHelper.GetMethodInfo(MockedGetLoadedModules));

@@ -32,20 +32,20 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
-    <PackageReference Include="BUTR.DependencyInjection" Version="1.0.0.7" >
+    <PackageReference Include="BUTR.DependencyInjection" Version="$(BUTRDependencyInjectionVersion)">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="BUTR.DependencyInjection.LightInject" Version="1.0.0.7" >
+    <PackageReference Include="BUTR.DependencyInjection.LightInject" Version="$(BUTRDependencyInjectionVersion)">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)" >
+    <PackageReference Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" IncludeAssets="compile" />
-    <PackageReference Include="LightInject.Source" Version="6.4.0" >
+    <PackageReference Include="LightInject.Source" Version="6.4.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

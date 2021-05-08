@@ -1,4 +1,6 @@
-﻿using BUTR.DependencyInjection;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using BUTR.DependencyInjection;
 
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Formats;
@@ -8,15 +10,13 @@ using MCM.Utils;
 using System.Collections.Generic;
 using System.Linq;
 
-using TaleWorlds.Engine;
-
 using Path = System.IO.Path;
 
 namespace MCM.Abstractions.Settings.Containers
 {
     public abstract class BaseSettingsContainer<TSettings> : ISettingsContainer where TSettings : BaseSettings
     {
-        protected virtual string RootFolder { get; } = Path.Combine(Utilities.GetConfigsPath(), "ModSettings");
+        protected virtual string RootFolder { get; } = Path.Combine(FSIOHelper.GetConfigPath(), "ModSettings");
         protected virtual Dictionary<string, TSettings> LoadedSettings { get; } = new();
 
         /// <inheritdoc/>

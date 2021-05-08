@@ -1,5 +1,7 @@
 ﻿extern alias v13;
 
+using Bannerlord.BUTR.Shared.Helpers;
+
 using ModLib.Debugging;
 using ModLib.Interfaces;
 
@@ -325,7 +327,7 @@ namespace ModLib
         /// <returns></returns>
         public static string GetPathForModule(string moduleFolderName, Location location) => location == Location.Modules
             ? Path.Combine(TaleWorlds.Library.BasePath.Name, "Modules", moduleFolderName)
-            : Path.Combine(TaleWorlds.Engine.Utilities.GetConfigsPath(), moduleFolderName);
+            : Path.Combine(FSIOHelper.GetConfigPath(), moduleFolderName);
 
         private class TypeData
         {

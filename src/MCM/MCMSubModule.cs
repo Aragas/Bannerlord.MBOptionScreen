@@ -1,11 +1,13 @@
 ﻿using BUTR.DependencyInjection;
 using BUTR.DependencyInjection.Extensions;
 using BUTR.DependencyInjection.LightInject;
+using BUTR.DependencyInjection.Logger;
 
 using MCM.Abstractions.Settings.Formats;
 using MCM.Abstractions.Settings.Properties;
 using MCM.Extensions;
 using MCM.LightInject;
+using MCM.Utils;
 
 using TaleWorlds.MountAndBlade;
 
@@ -38,6 +40,9 @@ namespace MCM
 
                 services.AddSettingsFormat<MemorySettingsFormat>();
                 services.AddSettingsPropertyDiscoverer<NoneSettingsPropertyDiscoverer>();
+
+                services.AddTransient<IBUTRLogger, BUTRLogger>();
+                services.AddTransient(typeof(IBUTRLogger<>), typeof(BUTRLogger<>));
             }
         }
 
