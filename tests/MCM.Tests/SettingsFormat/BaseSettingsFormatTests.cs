@@ -1,14 +1,24 @@
 ﻿extern alias v4;
 
+using NUnit.Framework;
+
+using System;
+using System.Runtime.CompilerServices;
+
 using v4::MCM.Abstractions.Settings.Base.Global;
 using v4::MCM.Abstractions.Settings.Formats;
-
-using NUnit.Framework;
 
 namespace MCM.Tests.SettingsFormat
 {
     public class BaseSettingsFormatTests : BaseTests
     {
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        protected static bool MockedGetConfigPath(ref string __result)
+        {
+            __result = AppDomain.CurrentDomain.BaseDirectory;
+            return false;
+        }
+
         protected bool _boolValue;
         protected int _intValue;
         protected float _floatValue;
