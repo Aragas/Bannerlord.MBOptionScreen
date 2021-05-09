@@ -163,12 +163,12 @@ Make sure MCM is loaded before them!";
                         UpdateOptionScreen(MCMUISettings.Instance!);
                         MCMUISettings.Instance!.PropertyChanged += MCMSettings_PropertyChanged;
                     });
-            }
 
-            if (HotKeyManager.Create("MCM.UI") is { } hkm)
-            {
-                ResetValueToDefault = hkm.Add<ResetValueToDefault>();
-                hkm.Build();
+                if (HotKeyManager.Create("MCM.UI") is { } hkm)
+                {
+                    ResetValueToDefault = hkm.Add<ResetValueToDefault>();
+                    hkm.Build();
+                }
             }
         }
 

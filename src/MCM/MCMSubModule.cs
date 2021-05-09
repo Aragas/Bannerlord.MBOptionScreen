@@ -22,6 +22,7 @@ namespace MCM
         public static MCMSubModule? Instance { get; private set; }
 
         private bool ServiceRegistrationWasCalled { get; set; }
+        private bool OnBeforeInitialModuleScreenSetAsRootWasCalled { get; set; }
 
         public MCMSubModule()
         {
@@ -63,7 +64,14 @@ namespace MCM
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
-            GenericServiceProvider.ServiceProvider = ServiceCollectionExtensions.ServiceContainer.Build();
+            base.OnBeforeInitialModuleScreenSetAsRoot();
+
+            if (!OnBeforeInitialModuleScreenSetAsRootWasCalled)
+            {
+                OnBeforeInitialModuleScreenSetAsRootWasCalled = true;
+
+                GenericServiceProvider.ServiceProvider = ServiceCollectionExtensions.ServiceContainer.Build();
+            }
         }
 
         public void OverrideServiceContainer(IGenericServiceContainer serviceContainer)
