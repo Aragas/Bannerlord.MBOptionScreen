@@ -11,9 +11,11 @@ namespace MCM.UI.Utils
     {
         private delegate InitialStateOption V1Delegate(string id, TextObject name, int orderIndex, Action action, bool isDisabled);
         private delegate InitialStateOption V2Delegate(string id, TextObject name, int orderIndex, Action action, Func<bool> isDisabled, TextObject? disabledReason = null);
+        private delegate InitialStateOption V3Delegate(string id, TextObject name, int orderIndex, Action action, Func<ValueTuple<bool, TextObject?>> isDisabledAndReason);
 
         private static readonly V1Delegate? V1;
         private static readonly V2Delegate? V2;
+        private static readonly V3Delegate? V3;
 
         static InitialStateOptionUtils()
         {
@@ -24,6 +26,8 @@ namespace MCM.UI.Utils
                     V1 = AccessTools2.GetDelegate<V1Delegate>(constructorInfo);
                 if (@params.Length >= 5 && @params[4].ParameterType == typeof(Func<bool>))
                     V2 = AccessTools2.GetDelegate<V2Delegate>(constructorInfo);
+                if (@params.Length >= 5 && @params[4].ParameterType == typeof(Func<ValueTuple<bool, TextObject>>))
+                    V3 = AccessTools2.GetDelegate<V3Delegate>(constructorInfo);
             }
         }
 
@@ -33,6 +37,8 @@ namespace MCM.UI.Utils
                 return V1(id, name, orderIndex, action, isDisabled());
             if (V2 is not null)
                 return V2(id, name, orderIndex, action, isDisabled);
+            if (V3 is not null)
+                return V3(id, name, orderIndex, action, () => (isDisabled(), null));
             return null;
         }
     }
