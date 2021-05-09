@@ -1,5 +1,7 @@
 ﻿using Bannerlord.BUTR.Shared.Extensions;
 
+using BUTR.DependencyInjection.Logger;
+
 using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
@@ -23,8 +25,12 @@ namespace MCM.UI.Functionality
         private static readonly WeakReference<InitialMenuVM> _instance = new(null!);
         private static Dictionary<string, (int, Func<ScreenBase?>, TextObject)> ScreensCache { get; } = new();
 
-        public Post158GameMenuScreenHandler()
+        private readonly IBUTRLogger _logger;
+
+        public Post158GameMenuScreenHandler(IBUTRLogger<Post158GameMenuScreenHandler> logger)
         {
+            _logger = logger;
+
             var harmony = new Harmony("bannerlord.mcm.mainmenuscreeninjection_v4");
             harmony.Patch(
                 AccessTools2.Method(typeof(InitialMenuVM), "RefreshMenuOptions"),
@@ -41,9 +47,7 @@ namespace MCM.UI.Functionality
             {
                 var (index, screenFactory, text) = value;
 
-                var insertIndex = ____menuOptions.FindIndex(i => i.InitialStateOption.OrderIndex > index);
-                ____menuOptions.Insert(insertIndex, new InitialMenuOptionVM(InitialStateOptionUtils.Create(
-                    key,
+                var initialState = InitialStateOptionUtils.Create(key,
                     text,
                     9000,
                     () =>
@@ -52,7 +56,13 @@ namespace MCM.UI.Functionality
                         if (screen is not null)
                             ScreenManager.PushScreen(screen);
                     },
-                    () => false)));
+                    () => false);
+                if (initialState is null)
+                {
+                    return;
+                }
+                var insertIndex = ____menuOptions.FindIndex(i => i.InitialStateOption.OrderIndex > index);
+                ____menuOptions?.Insert(insertIndex, new InitialMenuOptionVM(initialState));
             }
         }
 
@@ -62,9 +72,7 @@ namespace MCM.UI.Functionality
 
             if (_instance.TryGetTarget(out var instance))
             {
-                var insertIndex = instance.MenuOptions.FindIndex(i => i.InitialStateOption.OrderIndex > index);
-                instance.MenuOptions.Insert(insertIndex, new InitialMenuOptionVM(InitialStateOptionUtils.Create(
-                    internalName,
+                var initialState = InitialStateOptionUtils.Create(internalName,
                     text,
                     index,
                     () =>
@@ -73,7 +81,14 @@ namespace MCM.UI.Functionality
                         if (screen is not null)
                             ScreenManager.PushScreen(screen);
                     },
-                    () => false)));
+                    () => false);
+                if (initialState is null)
+                {
+                    _logger.LogError("AddScreen: 'initialState' was null! Something was changed again by the game!");
+                    return;
+                }
+                var insertIndex = instance.MenuOptions.FindIndex(i => i.InitialStateOption.OrderIndex > index);
+                instance.MenuOptions.Insert(insertIndex, new InitialMenuOptionVM(initialState));
             }
 
             ScreensCache[internalName] = (index, screenFactory, text);

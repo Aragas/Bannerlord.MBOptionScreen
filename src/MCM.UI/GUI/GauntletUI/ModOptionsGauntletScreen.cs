@@ -1,6 +1,7 @@
 ﻿using HarmonyLib.BUTR.Extensions;
 
 using MCM.UI.GUI.ViewModels;
+using MCM.UI.Utils;
 
 using Microsoft.Extensions.Logging;
 
@@ -27,7 +28,7 @@ namespace MCM.UI.GUI.GauntletUI
 
         private readonly ILogger<ModOptionsGauntletScreen> _logger;
 
-        private GauntletLayer _gauntletLayer = default!;
+        private GauntletLayer? _gauntletLayer;
         private object? _gauntletMovie;
         private ModOptionsVM _dataSource = default!;
         private SpriteCategory _spriteCategoryEncyclopedia = default!;
@@ -46,19 +47,22 @@ namespace MCM.UI.GUI.GauntletUI
             _spriteCategoryEncyclopedia = spriteData.SpriteCategories["ui_encyclopedia"];
             _spriteCategoryEncyclopedia.Load(resourceContext, uiresourceDepot);
             _dataSource = new ModOptionsVM();
-            _gauntletLayer = new GauntletLayer(4000, "GauntletLayer");
-            _gauntletMovie = LoadMovie is not null ? LoadMovie(_gauntletLayer, "ModOptionsView_MCM", _dataSource) : null;
-            _gauntletLayer.Input.RegisterHotKeyCategory(HotKeyManager.GetCategory("GenericPanelGameKeyCategory"));
-            _gauntletLayer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);
-            _gauntletLayer.IsFocusLayer = true;
-            AddLayer(_gauntletLayer);
-            ScreenManager.TrySetFocus(_gauntletLayer);
+            if (GauntletLayerUtils.Create(4000, "GauntletLayer") is { } gauntletLayer)
+            {
+                _gauntletLayer = gauntletLayer;
+                _gauntletMovie = LoadMovie is not null ? LoadMovie(_gauntletLayer, "ModOptionsView_MCM", _dataSource) : null;
+                _gauntletLayer.Input.RegisterHotKeyCategory(HotKeyManager.GetCategory("GenericPanelGameKeyCategory"));
+                _gauntletLayer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);
+                _gauntletLayer.IsFocusLayer = true;
+                AddLayer(_gauntletLayer);
+                ScreenManager.TrySetFocus(_gauntletLayer);
+            }
         }
 
         protected override void OnFrameTick(float dt)
         {
             base.OnFrameTick(dt);
-            if (_gauntletLayer.Input.IsHotKeyReleased("Exit"))
+            if (_gauntletLayer is not null && _gauntletLayer.Input.IsHotKeyReleased("Exit"))
             {
                 _dataSource.ExecuteClose();
                 ScreenManager.TryLoseFocus(_gauntletLayer);
@@ -71,10 +75,12 @@ namespace MCM.UI.GUI.GauntletUI
             base.OnFinalize();
             // TODO: There was a report that the encyclopedia UI is bugged
             //_spriteCategoryEncyclopedia.Unload();
-            RemoveLayer(_gauntletLayer);
-            if (_gauntletMovie is not null && ReleaseMovie is not null) ReleaseMovie(_gauntletLayer, _gauntletMovie);
-            _gauntletLayer = null!;
-            _gauntletMovie = null!;
+            if (_gauntletLayer is not null)
+                RemoveLayer(_gauntletLayer);
+            if (_gauntletLayer is not null &&_gauntletMovie is not null && ReleaseMovie is not null)
+                ReleaseMovie(_gauntletLayer, _gauntletMovie);
+            _gauntletLayer = null;
+            _gauntletMovie = null;
             _dataSource.ExecuteSelect(null);
             _dataSource = null!;
         }

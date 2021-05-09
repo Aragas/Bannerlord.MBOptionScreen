@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------------------------------
+Version: 4.3.10
+Game Versions: e1.4.3,e1.5.0,e1.5.1,e1.5.2,e1.5.3,e1.5.4,e1.5.5,e1.5.6,e1.5.7,e1.5.8,e1.5.9,e1.5.10
+* Fixed crash at startup with Mod Settings entry in Main Menu enabled
+---------------------------------------------------------------------------------------------------
 Version: 4.3.9
 Game Versions: e1.4.3,e1.5.0,e1.5.1,e1.5.2,e1.5.3,e1.5.4,e1.5.5,e1.5.6,e1.5.7,e1.5.8,e1.5.9,e1.5.10
 * Fixed crash related to second call of OnBeforeInitialModuleScreenSetAsRoot

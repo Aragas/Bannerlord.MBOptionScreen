@@ -41,6 +41,7 @@ namespace MCM.Adapter.MCMv3.Patches
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static bool StopIntegratedLoaderSubModuleCtor(MCMv3IntegratedLoaderSubModule __instance)
         {
+            // MCMv3 that we distribute is empty, but in case someone uses a real MCMv3, we should disable its loading
             if (Loader is not null)
                 Loader(__instance) = new EmptyIntegratedLoader();
 
