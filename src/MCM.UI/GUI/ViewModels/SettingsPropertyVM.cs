@@ -1,4 +1,6 @@
-﻿using MCM.Abstractions.Common;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using MCM.Abstractions.Common;
 using MCM.Abstractions.Dropdown;
 using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings;
@@ -165,11 +167,11 @@ namespace MCM.UI.GUI.ViewModels
         public string TextBoxValue => SettingType switch
         {
             SettingType.Int when PropertyReference.Value is int val => string.IsNullOrWhiteSpace(ValueFormat)
-                ? string.Format(ValueFormatProvider, "{0}", (val).ToString("0"))
-                : string.Format(ValueFormatProvider, "{0}", (val).ToString(ValueFormat)),
+                ? string.Format(ValueFormatProvider, "{0}", val.ToString("0"))
+                : string.Format(ValueFormatProvider, "{0}", val.ToString(TextObjectHelper.Create(ValueFormat)?.ToString())),
             SettingType.Float when PropertyReference.Value is float val => string.IsNullOrWhiteSpace(ValueFormat)
-                ? string.Format(ValueFormatProvider, "{0}", (val).ToString("0.00"))
-                : string.Format(ValueFormatProvider, "{0}", (val).ToString(ValueFormat)),
+                ? string.Format(ValueFormatProvider, "{0}", val.ToString("0.00"))
+                : string.Format(ValueFormatProvider, "{0}", val.ToString(TextObjectHelper.Create(ValueFormat)?.ToString())),
             _ => string.Empty
         };
 
