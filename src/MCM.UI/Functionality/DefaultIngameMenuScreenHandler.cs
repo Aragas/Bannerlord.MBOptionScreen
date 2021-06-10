@@ -3,6 +3,8 @@
 using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
+using MCM.UI.Utils;
+
 using SandBox.View.Map;
 
 using System;
@@ -66,8 +68,7 @@ namespace MCM.UI.Functionality
             foreach (var (key, value) in ScreensCache)
             {
                 var (index, screenFactory, text) = value;
-                __result.Insert(index, new EscapeMenuItemVM(
-                    text,
+                var escapeMenuItemVM = EscapeMenuItemVMUtils.Create(text,
                     _ =>
                     {
                         var screen = screenFactory();
@@ -77,7 +78,12 @@ namespace MCM.UI.Functionality
                             ScreenManager.PushScreen(screen);
                         }
                     },
-                    key, false));
+                    key, false);
+                if (escapeMenuItemVM is null)
+                {
+                    return;
+                }
+                __result.Insert(index, escapeMenuItemVM);
             }
         }
         [MethodImpl(MethodImplOptions.NoInlining)]
@@ -86,8 +92,7 @@ namespace MCM.UI.Functionality
             foreach (var (key, value) in ScreensCache)
             {
                 var (index, screenFactory, text) = value;
-                __result.Insert(index, new EscapeMenuItemVM(
-                    text,
+                var escapeMenuItemVM = EscapeMenuItemVMUtils.Create(text,
                     _ =>
                     {
                         var screen = screenFactory();
@@ -97,7 +102,12 @@ namespace MCM.UI.Functionality
                             ScreenManager.PushScreen(screen);
                         }
                     },
-                    key, false));
+                    key, false);
+                if (escapeMenuItemVM is null)
+                {
+                    return;
+                }
+                __result.Insert(index, escapeMenuItemVM);
             }
         }
         [MethodImpl(MethodImplOptions.NoInlining)]
@@ -124,10 +134,14 @@ namespace MCM.UI.Functionality
             if (_instance.TryGetTarget(out var instance) && DataSource is not null)
             {
                 var dataSource = DataSource(instance);
-                dataSource.MenuItems.Insert(index, new EscapeMenuItemVM(
-                    text,
+                var escapeMenuItemVM = EscapeMenuItemVMUtils.Create(text,
                     _ => ScreenManager.PushScreen(screenFactory()),
-                    internalName, false));
+                    internalName, false);
+                if (escapeMenuItemVM is null)
+                {
+                    return;
+                }
+                dataSource.MenuItems.Insert(index, escapeMenuItemVM);
             }
 
             ScreensCache[internalName] = (index, screenFactory, text);
