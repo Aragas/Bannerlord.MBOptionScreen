@@ -2,10 +2,10 @@
 <Project>
 
   <PropertyGroup>
-    <Version>4.3.10</Version>
+    <Version>4.3.11</Version>
     <GameVersion>1.4.3</GameVersion>
     <HarmonyVersion>2.0.2</HarmonyVersion>
-    <ButterLibVersion>1.0.22</ButterLibVersion>
+    <ButterLibVersion>1.0.23</ButterLibVersion>
     <UIExtenderExVersion>2.1.5</UIExtenderExVersion>
     <BuildResourcesVersion>1.0.0.33</BuildResourcesVersion>
     <BUTRSharedVersion>1.6.1.35</BUTRSharedVersion>
