@@ -1,6 +1,8 @@
 ﻿extern alias v3;
 extern alias v4;
 
+using HarmonyLib.BUTR.Extensions;
+
 using MCM.Adapter.MCMv3.Settings.Base;
 using MCM.Adapter.MCMv3.Utils;
 
@@ -27,10 +29,7 @@ namespace MCM.Adapter.MCMv3.Settings.Containers
             {
                 Settings = new List<GlobalSettings>();
 
-                var allTypes = AppDomain.CurrentDomain
-                    .GetAssemblies()
-                    .Where(a => !a.IsDynamic)
-                    .SelectMany(a => a.GetTypes())
+                var allTypes = AccessTools2.AllTypes()
                     .Where(t => t.IsClass && !t.IsAbstract && t.GetConstructor(Type.EmptyTypes) is not null)
                     .ToList();
 

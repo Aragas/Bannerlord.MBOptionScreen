@@ -1,6 +1,8 @@
 ﻿extern alias v2;
 extern alias v4;
 
+using HarmonyLib.BUTR.Extensions;
+
 using MCM.Adapter.MBO.Settings.Base;
 
 using System;
@@ -25,12 +27,10 @@ namespace MCM.Adapter.MBO.Settings.Containers
             {
                 Settings = new List<GlobalSettings>();
 
-                var allTypes = AppDomain.CurrentDomain
-                    .GetAssemblies()
-                    .Where(a => !a.IsDynamic)
+                var allTypes = AccessTools2.AllAssemblies()
                     // ignore v1 and v2 classes
                     .Where(a => !Path.GetFileNameWithoutExtension(a.Location).StartsWith("MBOptionScreen"))
-                    .SelectMany(a => a.GetTypes())
+                    .SelectMany(AccessTools2.GetTypesFromAssembly)
                     .Where(t => t.IsClass && !t.IsAbstract)
                     .Where(t => t.GetConstructor(Type.EmptyTypes) is not null)
                     .ToList();

@@ -1,5 +1,7 @@
 ﻿using BUTR.DependencyInjection.Logger;
 
+using HarmonyLib.BUTR.Extensions;
+
 using MCM.Abstractions;
 using MCM.Abstractions.Settings.Base.Global;
 using MCM.Abstractions.Settings.Containers.Global;
@@ -15,10 +17,7 @@ namespace MCM.Implementation.Settings.Containers.Global
         public MCMGlobalSettingsContainer(IBUTRLogger<MCMGlobalSettingsContainer> logger)
         {
             var settings = new List<GlobalSettings>();
-            var allTypes = AppDomain.CurrentDomain
-                .GetAssemblies()
-                .Where(a => !a.IsDynamic)
-                .SelectMany(a => a.GetTypes())
+            var allTypes = AccessTools2.AllTypes()
                 .Where(t => t.IsClass && !t.IsAbstract)
                 .Where(t => t.GetConstructor(Type.EmptyTypes) is not null)
                 .ToList();

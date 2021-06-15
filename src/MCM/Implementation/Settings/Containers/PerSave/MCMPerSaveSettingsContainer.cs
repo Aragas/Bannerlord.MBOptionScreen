@@ -1,5 +1,7 @@
 ﻿using BUTR.DependencyInjection;
 
+using HarmonyLib.BUTR.Extensions;
+
 using MCM.Abstractions;
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Base.PerSave;
@@ -51,10 +53,7 @@ namespace MCM.Implementation.Settings.Containers.PerSave
         public void LoadSettings()
         {
             var settings = new List<PerSaveSettings>();
-            var allTypes = AppDomain.CurrentDomain
-                .GetAssemblies()
-                .Where(a => !a.IsDynamic)
-                .SelectMany(a => a.GetTypes())
+            var allTypes = AccessTools2.AllTypes()
                 .Where(t => t.IsClass && !t.IsAbstract && t.GetConstructor(Type.EmptyTypes) is not null)
                 .ToList();
 
