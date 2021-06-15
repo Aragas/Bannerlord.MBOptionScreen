@@ -30,6 +30,7 @@ namespace MCM.Adapter.MBO.Settings.Containers
                 Settings = new List<GlobalSettings>();
 
                 var allTypes = AccessTools2.AllAssemblies()
+                    .Where(a => !a.IsDynamic)
                     // ignore v1 and v2 classes
                     .Where(a => !Path.GetFileNameWithoutExtension(a.Location).StartsWith("MBOptionScreen"))
                     .SelectMany(AccessTools2.GetTypesFromAssembly)
