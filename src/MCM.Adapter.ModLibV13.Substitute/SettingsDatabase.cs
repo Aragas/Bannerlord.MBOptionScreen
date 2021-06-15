@@ -83,7 +83,9 @@ namespace ModLib.Definitions
 
         internal static void LoadAllSettings()
         {
-            var types = AccessTools2.AllTypes()
+            var types = AccessTools2.AllAssemblies()
+                .Where(a => !a.IsDynamic)
+                .SelectMany(AccessTools2.GetTypesFromAssembly)
                 .Where(t => t != typeof(SettingsBase) && t.IsSubclassOf(typeof(SettingsBase)) && !t.IsAbstract && !t.IsInterface);
 
             foreach (var type in types)

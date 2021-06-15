@@ -17,7 +17,9 @@ namespace MCM.Implementation.Settings.Containers.Global
         public MCMGlobalSettingsContainer(IBUTRLogger<MCMGlobalSettingsContainer> logger)
         {
             var settings = new List<GlobalSettings>();
-            var allTypes = AccessTools2.AllTypes()
+            var allTypes = AccessTools2.AllAssemblies()
+                .Where(a => !a.IsDynamic)
+                .SelectMany(AccessTools2.GetTypesFromAssembly)
                 .Where(t => t.IsClass && !t.IsAbstract)
                 .Where(t => t.GetConstructor(Type.EmptyTypes) is not null)
                 .ToList();
