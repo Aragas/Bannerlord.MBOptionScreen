@@ -2,13 +2,13 @@
 <Project>
 
   <PropertyGroup>
-    <Version>4.3.11</Version>
+    <Version>4.3.12</Version>
     <GameVersion>1.4.3</GameVersion>
     <HarmonyVersion>2.0.2</HarmonyVersion>
     <ButterLibVersion>1.0.23</ButterLibVersion>
     <UIExtenderExVersion>2.1.5</UIExtenderExVersion>
     <BuildResourcesVersion>1.0.0.33</BuildResourcesVersion>
-    <BUTRSharedVersion>1.6.1.35</BUTRSharedVersion>
+    <BUTRSharedVersion>1.6.1.39</BUTRSharedVersion>
     <BUTRDependencyInjectionVersion>1.0.0.11</BUTRDependencyInjectionVersion>
     <HarmonyExtensionsVersion>2.0.0.39</HarmonyExtensionsVersion>
     <TargetFramework>net472</TargetFramework>

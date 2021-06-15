@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HarmonyLib.BUTR.Extensions;
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -81,24 +83,12 @@ namespace ModLib.Definitions
 
         internal static void LoadAllSettings()
         {
-            var types = new List<Type>();
+            var types = AccessTools2.AllTypes()
+                .Where(t => t != typeof(SettingsBase) && t.IsSubclassOf(typeof(SettingsBase)) && !t.IsAbstract && !t.IsInterface);
 
-            foreach (var asm in AppDomain.CurrentDomain.GetAssemblies())
+            foreach (var type in types)
             {
-                var list = asm.GetTypes()
-                    .Where(t => t != typeof(SettingsBase) && t.IsSubclassOf(typeof(SettingsBase)) && !t.IsAbstract && !t.IsInterface)
-                    .ToList();
-
-                if (list.Count > 0)
-                    types.AddRange(list);
-            }
-
-            if (types.Count > 0)
-            {
-                foreach (var t in types)
-                {
-                    LoadSettingsFromType(t);
-                }
+                LoadSettingsFromType(type);
             }
         }
 

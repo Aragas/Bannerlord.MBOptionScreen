@@ -63,7 +63,7 @@ jobs:
     - name: Build MCM and DocFx.Plugin.LastModified
       run: >-
         dotnet build src/MCM/MCM.csproj;
-        dotnet build build/DocFx.Plugin.LastModified/DocFx.Plugin.LastModified --configuration Release --output docs/_template/last-modified/plugins;
+        #dotnet build build/DocFx.Plugin.LastModified/DocFx.Plugin.LastModified --configuration Release --output docs/_template/last-modified/plugins;
       shell: pwsh
 
     - name: Run DocFX
