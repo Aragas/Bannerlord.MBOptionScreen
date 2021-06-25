@@ -4,20 +4,20 @@ MCMv4 consists of three core libraries:
 * **MCMv4.UI** - GauntletUI implementations.
   
 MCMv4 also provides compatibility layers for other API's (Modules):
-* **MCMv3.Implementation.MBO** - MBOv1/MCMv2.  
-* **MCMv3.Implementation.MCMv3** - MCMv3.  
-* **MCMv3.Implementation.ModLib** - ModLib, pre 1.3 and post 1.3.  
+* **MCM.Adapter.MBO** - MBOv1/MCMv2.  
+* **MCM.Adapter.MCMv3** - MCMv3.  
+* **MCM.Adapter.ModLib** - ModLib, pre 1.3 and post 1.3.  
 
 The compatibility layers replace the original libraries to ensure maximum compatibility with MCM.
 
 ## Supported API
 MCMv4 support 6 API sets:
 * **MCMv4** - main API.
-* **MBOv1** - MBOptionScreen v1.1.15 (Requires **MCM.Implementation.MBO**)
-* **MBOv2**/**MCMv2** - v2.0.10 (Requires **MCM.Implementation.MBO**)
-* **MCMv3** - v3.1.9 (Requires **MCM.Implementation.MCMv3**)
-* **ModLibV1** - v1.0.0-v1.0.2       (Requires **MCM.Implementation.ModLib**)
-* **ModLibV13** - v1.3.0-v1.4.0      (Requires **MCM.Implementation.ModLib**)
+* **MBOv1** - MBOptionScreen v1.1.15 (Requires **MCM.Adapter.MBO**)
+* **MBOv2**/**MCMv2** - v2.0.10 (Requires **MCM.Adapter.MBO**)
+* **MCMv3** - v3.1.9 (Requires **MCM.Adapter.MCMv3**)
+* **ModLibV1** - v1.0.0-v1.0.2       (Requires **MCM.Adapter.ModLib**)
+* **ModLibV13** - v1.3.0-v1.4.0      (Requires **MCM.Adapter.ModLib**)
 
 ## Using with your mods
 You have two options as to how to use MCMv4:
@@ -25,12 +25,7 @@ You have two options as to how to use MCMv4:
 * Directly depend on the NexusMods Standalone mod and use NuGet packet **[Bannerlord.MCM](https://www.nuget.org/packages/Bannerlord.MCM)**. Don't include anything in your `/bin` folder from MCM.
 
 By including MCMv4 you will be able to save/load settings programmatically, without having the UI Options screen when the Standalone module is not installed.
-You also need to add ``Bannerlord.ButterLib`` as a dependency and include this to your SubModules.xml!
 ```xml
-  ...
-  <DependedModules>
-    <DependedModule Id="Bannerlord.ButterLib"/>
-  </DependedModules>
   ...
   <SubModules>
     <SubModule>
@@ -83,7 +78,7 @@ protected override void OnSubModuleLoad()
 {
     base.OnSubModuleLoad();
 
-    if (this.GetServices() is not null services)
+    if (this.GetServiceContainer() is not null services)
     {
         services.AddSettingsFormat<YamlSettingsFormat>();
     }
@@ -160,7 +155,7 @@ MCM will also trigger PropertyChanged event when the setting are saved by provid
 MCMv4 has several implementations:
 * @"MCM.Abstractions.Ref.PropertyRef?text=PropertyRef" - links to an actual property (``PropertyRef(PropertyInfo propInfo, object instance)``).
 * @"MCM.Abstractions.Ref.ProxyRef`1?text=ProxyRef<T>" - links to get/set actions (``ProxyRef(Func<T> getter, Action<T>? setter)``) that will set/return whatever you want.
-* @"MCM.Abstractions.Ref.StorageRef `1?text=StorageRef <T>" - holds a value within itself.
+* @"MCM.Abstractions.Ref.StorageRef?text=StorageRef" - holds a value within itself.
 
 ## Defining Settings
 ![](~/resources/properties.png)
@@ -173,7 +168,7 @@ MCMv4 has several implementations:
 >
 ### Attribute API
 ```csharp
-internal sealed class MCMUISettings : AttributeGlobalSettings<MCMUISettings> // AttributePerCharacterSettings<MCMUISettings>
+internal sealed class MCMUISettings : AttributeGlobalSettings<MCMUISettings> // AttributePerSaveSettings<MCMUISettings>
 {
     private bool _useStandardOptionScreen = false;
 
@@ -237,12 +232,7 @@ perSaveSettings.Unregister();
 
 ## Translating MCM
 Just create a module and include in the module folder root folders ``ModuleData/Languages`` and include the translations of the following files:  
-* [std_MCM.xml](https://github.com/Aragas/Bannerlord.MBOptionScreen/tree/dev/src/Localization/std_MCM.xml)  
-* [std_MCM_Implementation.xml](https://github.com/Aragas/Bannerlord.MBOptionScreen/tree/dev/src/Localization/std_MCM_Implementation.xml)  
-* [std_MCM_MBO.xml](https://github.com/Aragas/Bannerlord.MBOptionScreen/tree/dev/src/Localization/std_MCM_MBO.xml)  
-* [std_MCM_MCMv3.xml](https://github.com/Aragas/Bannerlord.MBOptionScreen/tree/dev/src/Localization/std_MCM_MCMv3.xml) 
-* [std_MCM_ModLib.xml](https://github.com/Aragas/Bannerlord.MBOptionScreen/tree/dev/src/Localization/std_MCM_ModLib.xml)  
-* [std_MCM_UI.xml](https://github.com/Aragas/Bannerlord.MBOptionScreen/tree/dev/Localization/std_MCM_UI.xml)  
+* [sta_strings.xml](https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Publish/_Module/ModuleData/Languages/EN/sta_strings.xml)   
 
 The game will load them automatically! 
 
