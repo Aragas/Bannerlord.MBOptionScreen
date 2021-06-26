@@ -1,6 +1,6 @@
 ## Overview
-MCMv4 consists of three core libraries:
-* **MCMv4** - abstraction layer. Includes v1/v2 Attribute API and a Fluent Builder API that allows to define settings at runtime. Includes a basic implementation of all abstract interfaces.
+MCMv4 consists of two libraries:
+* **MCMv4** - Core. Includes v1/v2 Attribute API and a Fluent Builder API that allows to define settings at runtime. Includes a basic implementation of all abstract interfaces.
 * **MCMv4.UI** - GauntletUI implementations.
   
 MCMv4 also provides compatibility layers for other API's (Modules):
@@ -56,7 +56,7 @@ By depending on the standalone module the experience is basically the same as wi
 ## Types of settings
 As of now, Mod Option libraries provided **_Global_** options that are shared across different games/saves.  
   
-MCMv4 introduces a second type of settings - **_PerSave_**. They are stored in the save file itself. When MCM is removed, the save file will still be playable. Basically, they do not brick the saves.
+MCMv4 introduces a second type of settings - **_PerSave_**. They are stored in the save file itself. When MCM is removed, the save file will still be playable. Basically, they do not brick the saves. Be aware that saving even once without MCM will wipe all settings from the save file permanently.
 
 ## Included Settings Formats and implementing your own
 > [!WARNING]
@@ -74,6 +74,7 @@ internal class YamlSettingsFormat : ISettingsFormat
 ```
 You also need to register the new interface:
 ```csharp
+// In your MBSubModuleBase override
 protected override void OnSubModuleLoad()
 {
     base.OnSubModuleLoad();
