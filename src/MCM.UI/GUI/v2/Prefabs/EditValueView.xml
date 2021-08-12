@@ -7,7 +7,7 @@
         <!-- Background -->
         <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Sprite="StdAssets\Popup\canvas" IsEnabled="false" />
         <!-- Frame Border -->
-        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Frame" IsEnabled="false" />
+        <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Frame" IsEnabled="false" />
 
         <ListPanel Id="ContentsPanel" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" LayoutImp.LayoutMethod="VerticalBottomToTop">
           <Children>
@@ -21,14 +21,14 @@
                             HorizontalAlignment="Center" Brush="MCMv3.EditValue.Description" MarginTop="15" MarginRight="10" MarginLeft="10"/>
 
             <!-- Text Input -->
-            <Widget DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="70" MarginRight="30" MarginLeft="30"
-                    Sprite="CharacterCreation\name_input_area" HorizontalAlignment="Center" MarginTop="30">
+            <BrushWidget DoNotAcceptEvents="true" WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="70" MarginRight="30" MarginLeft="30"
+                    Brush="MCM.CharacterCreation.NameInputArea" HorizontalAlignment="Center" MarginTop="30">
               <Children>
                 <EditValueTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center" VerticalAlignment="Center"
                                     MarginLeft="10" MarginRight="10" MarginTop="12" MarginBottom="12" Brush="Review.NameInput.Text" RealText="@TextInput"
                                     IsObfuscationEnabled="false" SettingType="@SettingType" MaxValue="@MaxValue" MinValue="@MinValue"/>
               </Children>
-            </Widget>
+            </BrushWidget>
 
             <!-- Buttons Area -->
             <ListPanel HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" LayoutImp.LayoutMethod="HorizontalCentered" MarginTop="40" MarginBottom="10">

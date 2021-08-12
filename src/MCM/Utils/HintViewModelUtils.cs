@@ -24,12 +24,18 @@ namespace MCM.Utils
             foreach (var constructorInfo in HarmonyLib.AccessTools.GetDeclaredConstructors(typeof(HintViewModel), false))
             {
                 var @params = constructorInfo.GetParameters();
-                if (@params.Length == 0)
-                    Empty = AccessTools2.GetDelegate<EmptyDelegate>(constructorInfo);
-                if (@params.Length >= 1 && @params[1].ParameterType == typeof(string))
-                    V1 = AccessTools2.GetDelegate<V1Delegate>(constructorInfo);
-                if (@params.Length >= 1 && @params[1].ParameterType == typeof(TextObject))
-                    V2 = AccessTools2.GetDelegate<V2Delegate>(constructorInfo);
+                switch (@params.Length)
+                {
+                    case 0:
+                        Empty = AccessTools2.GetDelegate<EmptyDelegate>(constructorInfo);
+                        break;
+                    case 2 when @params[0].ParameterType == typeof(string) && @params[1].ParameterType == typeof(string):
+                        V1 = AccessTools2.GetDelegate<V1Delegate>(constructorInfo);
+                        break;
+                    case 2 when @params[0].ParameterType == typeof(TextObject) && @params[1].ParameterType == typeof(string):
+                        V2 = AccessTools2.GetDelegate<V2Delegate>(constructorInfo);
+                        break;
+                }
             }
         }
 

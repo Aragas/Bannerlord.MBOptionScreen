@@ -25,7 +25,7 @@
             <Widget Id="DropdownClipWidget" WidthSizePolicy="CoverChildren" HeightSizePolicy="Fixed" ClipContents="true" WidgetToCopyHeightFrom="DropdownContainerWidget\ScrollablePanel">
               <Children>
 
-                <Widget Id="DropdownContainerWidget" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" VerticalAlignment="Bottom" SuggestedWidth="!Extension.Width" SuggestedHeight="380" HorizontalAlignment="Center" Brush="SPOptions.Dropdown.Extension" >
+                <BrushWidget Id="DropdownContainerWidget" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" VerticalAlignment="Bottom" SuggestedWidth="!Extension.Width" SuggestedHeight="380" HorizontalAlignment="Center" Brush="SPOptions.Dropdown.Extension" >
                   <Children>
 
                     <ScrollablePanel Id="ScrollablePanel" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" AutoHideScrollBars="true" ClipRect="ClipRect" MarginBottom="20" VerticalAlignment="Bottom" InnerPanel="ClipRect\PrimaryUsageSelectorList" MaxHeight="355" VerticalScrollbar="..\VerticalScrollbar">
@@ -61,7 +61,7 @@
                     </ScrollbarWidget>
 
                   </Children>
-                </Widget>
+                </BrushWidget>
               </Children>
             </Widget>
 

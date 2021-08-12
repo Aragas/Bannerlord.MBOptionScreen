@@ -48,8 +48,8 @@ namespace MCM.UI
 @"{=dzeWx4xSfR}Warning from MCM!";
 
 
+        private static readonly UIExtender Extender = new("MCM.UI");
         internal static ILogger<MCMUISubModule> Logger = NullLogger<MCMUISubModule>.Instance;
-        private static UIExtender Extender = new("MCM.UI");
         internal static ResetValueToDefault? ResetValueToDefault;
 
         private bool DelayedServiceCreation { get; set; }

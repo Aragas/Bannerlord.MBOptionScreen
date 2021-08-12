@@ -2,8 +2,8 @@
 <Project>
 
   <PropertyGroup>
-    <Version>4.3.13</Version>
     <GameVersion>1.4.3</GameVersion>
+    <Version>4.3.14</Version>
     <HarmonyVersion>2.0.2</HarmonyVersion>
     <ButterLibVersion>1.0.23</ButterLibVersion>
     <UIExtenderExVersion>2.1.5</UIExtenderExVersion>

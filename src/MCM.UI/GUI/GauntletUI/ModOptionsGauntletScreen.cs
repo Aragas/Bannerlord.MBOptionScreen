@@ -1,4 +1,6 @@
-﻿using HarmonyLib.BUTR.Extensions;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using HarmonyLib.BUTR.Extensions;
 
 using MCM.UI.GUI.ViewModels;
 using MCM.UI.Utils;
@@ -31,7 +33,8 @@ namespace MCM.UI.GUI.GauntletUI
         private GauntletLayer? _gauntletLayer;
         private object? _gauntletMovie;
         private ModOptionsVM _dataSource = default!;
-        private SpriteCategory _spriteCategoryEncyclopedia = default!;
+        private SpriteCategory? _spriteCategoryEncyclopedia;
+        private SpriteCategory? _spriteCategorySaveLoad;
 
         public ModOptionsGauntletScreen(ILogger<ModOptionsGauntletScreen> logger)
         {
@@ -44,8 +47,14 @@ namespace MCM.UI.GUI.GauntletUI
             var spriteData = UIResourceManager.SpriteData;
             var resourceContext = UIResourceManager.ResourceContext;
             var uiresourceDepot = UIResourceManager.UIResourceDepot;
-            _spriteCategoryEncyclopedia = spriteData.SpriteCategories["ui_encyclopedia"];
-            _spriteCategoryEncyclopedia.Load(resourceContext, uiresourceDepot);
+            _spriteCategoryEncyclopedia = spriteData.SpriteCategories.TryGetValue("ui_encyclopedia", out var spriteCategoryEncyclopediaVal) ? spriteCategoryEncyclopediaVal : null;
+            if (ApplicationVersionHelper.GameVersion() is { } gameVersion)
+            {
+                if (gameVersion.Major >= 1 && gameVersion.Minor >= 6 && gameVersion.Revision >= 1)
+                    _spriteCategorySaveLoad = spriteData.SpriteCategories.TryGetValue("ui_saveload", out var spriteCategorySaveLoadVal) ? spriteCategorySaveLoadVal : null;
+            }
+            _spriteCategoryEncyclopedia?.Load(resourceContext, uiresourceDepot);
+            _spriteCategorySaveLoad?.Load(resourceContext, uiresourceDepot);
             _dataSource = new ModOptionsVM();
             if (GauntletLayerUtils.Create(4000, "GauntletLayer") is { } gauntletLayer)
             {

@@ -22,10 +22,15 @@ namespace MCM.UI.Utils
             foreach (var constructorInfo in HarmonyLib.AccessTools.GetDeclaredConstructors(typeof(EscapeMenuItemVM), false))
             {
                 var @params = constructorInfo.GetParameters();
-                if (@params.Length >= 5 && @params[4].ParameterType == typeof(bool))
-                    V1 = AccessTools2.GetDelegate<V1Delegate>(constructorInfo);
-                if (@params.Length >= 5 && @params[4].ParameterType == typeof(Tuple<bool, TextObject>))
-                    V2 = AccessTools2.GetDelegate<V2Delegate>(constructorInfo);
+                switch (@params.Length)
+                {
+                    case 5 when @params[4].ParameterType == typeof(bool):
+                        V1 = AccessTools2.GetDelegate<V1Delegate>(constructorInfo);
+                        break;
+                    case 5 when @params[4].ParameterType == typeof(Tuple<bool, TextObject>):
+                        V2 = AccessTools2.GetDelegate<V2Delegate>(constructorInfo);
+                        break;
+                }
             }
         }
 
