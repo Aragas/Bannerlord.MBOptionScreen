@@ -132,7 +132,7 @@ public string SettingVariableName { get; set; } = "The textbox data is here";
 ```
 
 #### Group Toggle
-You can make a setting property a group toggle via the [``IsToggle``](xref:MCM.Abstractions.Attributes.SettingPropertyBoolAttribute#collapsible-MCM_Abstractions_Attributes_SettingPropertyBoolAttribute_IsToggle) attribute property
+You can make a setting property a group toggle via the [``IsToggle``](xref:MCM.Abstractions.Attributes.v2.SettingPropertyBoolAttribute#collapsible-MCM_Abstractions_Attributes_v2_SettingPropertyBoolAttribute_IsToggle) attribute property
 ```csharp
 [SettingPropertyBool("Main Group Name Toggle", IsToggle = true)]
 [SettingPropertyGroup("Main Group Name")]        
