@@ -40,15 +40,15 @@ namespace MCM.Abstractions.Common
                 {
                     if (@object is null)
                     {
-                        logger.LogError(null, "@object is null!");
+                        logger.LogError(default!, "@object is null!");
                     }
                     if (_getSelectedIndexDelegate is null)
                     {
-                        logger.LogError(null, $"@_getSelectedIndexDelegate is null! Type {type}" );
+                        logger.LogError(default!, $"@_getSelectedIndexDelegate is null! Type {type}" );
                     }
                     if (_setSelectedIndexDelegate is null)
                     {
-                        logger.LogError(null, $"@_setSelectedIndexDelegate is null! Type {type}");
+                        logger.LogError(default!, $"@_setSelectedIndexDelegate is null! Type {type}");
                     }
                 }
             }

@@ -17,10 +17,15 @@ namespace MCM.UI.Utils
             foreach (var constructorInfo in HarmonyLib.AccessTools.GetDeclaredConstructors(typeof(GauntletLayer), false))
             {
                 var @params = constructorInfo.GetParameters();
-                if (@params.Length == 2)
-                    V1 = AccessTools2.GetDelegate<V1Delegate>(constructorInfo);
-                if (@params.Length == 3)
-                    V2 = AccessTools2.GetDelegate<V2Delegate>(constructorInfo);
+                switch (@params.Length)
+                {
+                    case 2:
+                        V1 = AccessTools2.GetDelegate<V1Delegate>(constructorInfo);
+                        break;
+                    case 3:
+                        V2 = AccessTools2.GetDelegate<V2Delegate>(constructorInfo);
+                        break;
+                }
             }
         }
 

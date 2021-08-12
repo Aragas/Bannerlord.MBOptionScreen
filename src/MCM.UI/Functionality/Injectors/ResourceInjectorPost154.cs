@@ -9,6 +9,7 @@ namespace MCM.UI.Functionality.Injectors
         public override void Inject()
         {
             BrushFactoryManager.CreateAndRegister(Load("MCM.UI.GUI.v2.Brushes.ButtonBrushes.xml"));
+            BrushFactoryManager.CreateAndRegister(Load("MCM.UI.GUI.v2.Brushes.CompatibilityBrushes.xml"));
             BrushFactoryManager.CreateAndRegister(Load("MCM.UI.GUI.v2.Brushes.DividerBrushes.xml"));
             BrushFactoryManager.CreateAndRegister(Load("MCM.UI.GUI.v2.Brushes.ExpandIndicator.xml"));
             BrushFactoryManager.CreateAndRegister(Load("MCM.UI.GUI.v2.Brushes.SettingsBrush.xml"));

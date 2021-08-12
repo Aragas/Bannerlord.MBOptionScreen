@@ -1,3 +1,4 @@
+## Overview
 Fluent Builder gives the ability to create Settings at runtime.  
 This can be useful for mod specific sections that should not be displayed if the mod is not loaded.  
   
@@ -20,3 +21,6 @@ Any property is set by a ``Set%PropertyName%`` method.
  
 ``BuildAsGlobal`` returns a Global setting instance. Use ``Register`` and ``Unregister`` for MCM to use it.  
 ``BuildAsPerCharacter`` returns a PerCharacter setting  instance. Use ``Register`` and ``Unregister`` for MCM to use it. The registered settings will be cleared before and after player joins the campaign, so do the register thing when the campaign was already joined in.   
+
+## Example
+* [TrainingTweak](https://github.com/Aragas/TrainingTweak/blob/fba9bb60cdbd5ff61418f4cea30c625b01cd71de/TroopTraining/Settings.cs) - mimics the standard MCM Global Settings flow.
