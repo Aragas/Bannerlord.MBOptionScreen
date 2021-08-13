@@ -6,6 +6,8 @@
     <AssemblyName>MCMv4.UI</AssemblyName>
     <RootNamespace>MCM.UI</RootNamespace>
     <Configurations>Debug;Release</Configurations>
+    <!--Some code analyzers don't support common.props parsing-->
+    <TargetFramework Condition="'$(TargetFramework)'==''">net471</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
