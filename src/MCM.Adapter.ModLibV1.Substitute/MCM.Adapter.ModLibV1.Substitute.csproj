@@ -7,7 +7,7 @@
     <RootNamespace>ModLib</RootNamespace>
     <Configurations>Debug;Release</Configurations>
     <!--Some code analyzers don't support common.props parsing-->
-    <TargetFramework Condition="'$(TargetFramework)'==''">net471</TargetFramework>
+    <TargetFrameworks Condition=" '$(TargetFrameworks)' == '' ">net471;</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
