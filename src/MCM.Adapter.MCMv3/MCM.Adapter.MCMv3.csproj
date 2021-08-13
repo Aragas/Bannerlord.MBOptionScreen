@@ -5,6 +5,8 @@
     <Authors>Aragas</Authors>
     <AssemblyName>MCMv4.Adapter.MCMv3</AssemblyName>
     <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
+    <!--Some code analyzers don't support common.props parsing-->
+    <TargetFramework Condition="'$(TargetFramework)'==''">net471</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
