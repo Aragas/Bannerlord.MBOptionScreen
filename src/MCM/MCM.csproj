@@ -7,7 +7,7 @@
     <Configurations>Debug;Release</Configurations>
     <DefineConstants>$(DefineConstants);BUTRDEPENDENCYINJECTION_PUBLIC;BUTRDEPENDENCYINJECTION_BANNERLORD;</DefineConstants>
     <!--Some code analyzers don't support common.props parsing-->
-    <TargetFramework Condition="'$(TargetFramework)'==''">net471</TargetFramework>
+    <TargetFramework>net471</TargetFramework>
   </PropertyGroup>
 
   <!--NuGet Package-->
