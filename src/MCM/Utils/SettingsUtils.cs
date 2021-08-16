@@ -14,6 +14,7 @@ using MCM.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace MCM.Utils
 {
@@ -277,47 +278,49 @@ namespace MCM.Utils
             return topGroupName;
         }
 
-        public static IEnumerable<IPropertyDefinitionBase> GetPropertyDefinitionWrappers(object property)
+        public static IEnumerable<IPropertyDefinitionBase> GetPropertyDefinitionWrappers(object property) => GetPropertyDefinitionWrappers(new [] { property });
+
+        public static IEnumerable<IPropertyDefinitionBase> GetPropertyDefinitionWrappers(IReadOnlyCollection<object> properties)
         {
             object? propAttr;
 
-            propAttr = property as IPropertyDefinitionBool;
+            propAttr = properties.SingleOrDefault(a => a is IPropertyDefinitionBool);
             if (propAttr is not null)
                 yield return new PropertyDefinitionBoolWrapper(propAttr);
 
-            propAttr = property as IPropertyDefinitionDropdown;
+            propAttr = properties.SingleOrDefault(a => a is IPropertyDefinitionDropdown);
             if (propAttr is not null)
                 yield return new PropertyDefinitionDropdownWrapper(propAttr);
 
-            propAttr = property as IPropertyDefinitionGroupToggle;
+            propAttr = properties.SingleOrDefault(a => a is IPropertyDefinitionGroupToggle);
             if (propAttr is not null)
                 yield return new PropertyDefinitionGroupToggleWrapper(propAttr);
 
-            propAttr = property as IPropertyDefinitionText;
+            propAttr = properties.SingleOrDefault(a => a is IPropertyDefinitionText);
             if (propAttr is not null)
                 yield return new PropertyDefinitionTextWrapper(propAttr);
 
-            propAttr = property as IPropertyDefinitionWithActionFormat;
+            propAttr = properties.SingleOrDefault(a => a is IPropertyDefinitionWithActionFormat);
             if (propAttr is not null)
                 yield return new PropertyDefinitionWithActionFormatWrapper(propAttr);
 
-            propAttr = property as IPropertyDefinitionWithCustomFormatter;
+            propAttr = properties.SingleOrDefault(a => a is IPropertyDefinitionWithCustomFormatter);
             if (propAttr is not null)
                 yield return new PropertyDefinitionWithCustomFormatterWrapper(propAttr);
 
-            propAttr = property as IPropertyDefinitionWithEditableMinMax;
+            propAttr = properties.SingleOrDefault(a => a is IPropertyDefinitionWithEditableMinMax);
             if (propAttr is not null)
                 yield return new PropertyDefinitionWithEditableMinMaxWrapper(propAttr);
 
-            propAttr = property as IPropertyDefinitionWithFormat;
+            propAttr = properties.SingleOrDefault(a => a is IPropertyDefinitionWithFormat);
             if (propAttr is not null)
                 yield return new PropertyDefinitionWithFormatWrapper(propAttr);
 
-            propAttr = property as IPropertyDefinitionWithId;
+            propAttr = properties.SingleOrDefault(a => a is IPropertyDefinitionWithId);
             if (propAttr is not null)
                 yield return new PropertyDefinitionWithIdWrapper(propAttr);
 
-            propAttr = property as IPropertyDefinitionWithMinMax;
+            propAttr = properties.SingleOrDefault(a => a is IPropertyDefinitionWithMinMax);
             if (propAttr is not null)
                 yield return new PropertyDefinitionWithMinMaxWrapper(propAttr);
         }

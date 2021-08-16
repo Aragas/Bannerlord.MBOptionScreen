@@ -78,7 +78,7 @@ namespace MCM.Abstractions.Settings.Models
 
             foreach (var propertyDefinition in propertyDefinitions)
             {
-                if (propertyDefinition is IPropertyDefinitionBase propertyBase)
+                if (propertyDefinition is { } propertyBase)
                 {
                     DisplayName = TextObjectHelper.Create(propertyBase.DisplayName)?.ToString() ?? "ERROR";
                     Order = propertyBase.Order;
