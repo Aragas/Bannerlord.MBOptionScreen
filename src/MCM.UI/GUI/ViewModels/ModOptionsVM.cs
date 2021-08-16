@@ -177,14 +177,25 @@ namespace MCM.UI.GUI.ViewModels
             ModsText = TextObjectHelper.Create("{=ModOptionsPageView_Mods}Mods")?.ToString() ?? string.Empty;
             SearchText = string.Empty;
 
+            InitializeModSettings();
+            RefreshValues();
+        }
+
+        private void InitializeModSettings()
+        {
             ModSettingsList = new MBBindingList<SettingsVM>();
-            // Fancy
-            new TaskFactory().StartNew(syncContext => // Build the options in a separate context if possible
+            // Execute code in a non UI-Thread to avoid blokcking
+            _ = Task.Factory.StartNew(syncContext => // Build the options in a separate context if possible
             {
                 try
                 {
                     if (syncContext is SynchronizationContext uiContext)
                     {
+                        if (SynchronizationContext.Current == uiContext)
+                        {
+                            _logger.LogWarning("SynchronizationContext.Current is the UI SynchronizationContext");
+                        }
+
                         var settingsVM = BaseSettingsProvider.Instance!.CreateModSettingsDefinitions
                             .Parallel()
                             .Select(s =>
@@ -202,12 +213,13 @@ namespace MCM.UI.GUI.ViewModels
                                     return null;
                                 }
                             })
-                            .ToList();
+                            .Where(vm => vm is not null);
+
                         foreach (var viewModel in settingsVM)
                         {
-                            uiContext.Send(o =>
+                            uiContext.Send(state =>
                             {
-                                if (o is SettingsVM vm)
+                                if (state is SettingsVM vm)
                                 {
                                     vm.AddSelectCommand(ExecuteSelect);
                                     ModSettingsList.Add(vm);
@@ -233,8 +245,6 @@ namespace MCM.UI.GUI.ViewModels
                         Colors.Red));
                 }
             }, SynchronizationContext.Current);
-
-            RefreshValues();
         }
 
         public override void RefreshValues()
