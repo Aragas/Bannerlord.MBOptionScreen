@@ -1,47 +1,45 @@
 <p align="center">
-   <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen" alt="Lines Of Code">
-   <img src="https://tokei.rs/b1/github/Aragas/Bannerlord.MBOptionScreen?category=code" /></a>
-   <a href="https://www.codefactor.io/repository/github/aragas/bannerlord.mboptionscreen"><img src="https://www.codefactor.io/repository/github/aragas/bannerlord.mboptionscreen/badge" alt="CodeFactor" /></a>
-   </br>
-   <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen/actions/workflows/test-and-publish.yml?query=branch%3Adev+event%3Apush">
-        <img alt="GitHub Workflow Status (event)" src="https://img.shields.io/github/workflow/status/Aragas/Bannerlord.MBOptionScreen/Test%20and%20Publish?branch=dev&event=push&label=Latest%20Commit">
-   </a>
-   <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen/actions/workflows/test-and-publish.yml?query=branch%3Adev+event%3Arepository_dispatch">
-     <img alt="GitHub Workflow Status (event)" src="https://img.shields.io/github/workflow/status/Aragas/Bannerlord.MBOptionScreen/Test%20and%20Publish?ranch=dev&event=repository_dispatch&label=Latest%20Game%20Release">
-   </a>
-   <a href="https://codecov.io/gh/Aragas/Bannerlord.MBOptionScreen">
-     <img src="https://codecov.io/gh/Aragas/Bannerlord.MBOptionScreen/branch/dev/graph/badge.svg" />
-   </a>
-   </br>
-   <a href="https://www.nuget.org/packages/Bannerlord.MCM" alt="NuGet Bannerlord.MCM">
-     <img src="https://img.shields.io/nuget/v/Bannerlord.MCM.svg?label=NuGet%20Bannerlord.MCM&colorB=blue" />
-   </a>
-   <a href="https://mcm.bannerlord.aragas.org/">
-     <img src="https://img.shields.io/badge/Documentation-%F0%9F%94%8D-blue?style=flat" />
-   </a>
-   </br>
-   <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="NexusMods Mod Configuration Menu">
-     <img src="https://img.shields.io/badge/NexusMods-Mod%20Configuration%20Menu-yellow.svg" />
-   </a>
-   <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="NexusMods Mod Configuration Menu">
-     <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-version-pzk4e0ejol6j.runkit.sh%3FgameId%3Dmountandblade2bannerlord%26modId%3D612" />
-   </a>
-   <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="NexusMods Mod Configuration Menu">
-     <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dunique%26gameId%3D3174%26modId%3D612" />
-   </a>
-   <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="NexusMods Mod Configuration Menu">
-     <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dtotal%26gameId%3D3174%26modId%3D612" />
-   </a>
-   <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="NexusMods Mod Configuration Menu">
-     <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dviews%26gameId%3D3174%26modId%3D612" />
-   </a>
-   </br>
-   <img src="https://staticdelivery.nexusmods.com/mods/3174/images/headers/612_1592411190.jpg" width="800">
-   </br>
-   <img src="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/resources/main.png?raw=true" width="800">
+  <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen" alt="Lines Of Code">
+  <img src="https://tokei.rs/b1/github/Aragas/Bannerlord.MBOptionScreen?category=code" /></a>
+  <a href="https://www.codefactor.io/repository/github/aragas/bannerlord.mboptionscreen"><img src="https://www.codefactor.io/repository/github/aragas/bannerlord.mboptionscreen/badge" alt="CodeFactor" /></a>
+  </br>
+  <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen/actions/workflows/test-and-publish.yml?query=branch%3Adev+event%3Apush">
+    <img alt="GitHub Workflow Status (event)" src="https://img.shields.io/github/workflow/status/Aragas/Bannerlord.MBOptionScreen/Test%20and%20Publish?branch=dev&event=push&label=Latest%20Commit">
+  </a>
+  <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen/actions/workflows/test-and-publish.yml?query=branch%3Adev+event%3Arepository_dispatch">
+    <img alt="GitHub Workflow Status (event)" src="https://img.shields.io/github/workflow/status/Aragas/Bannerlord.MBOptionScreen/Test%20and%20Publish?ranch=dev&event=repository_dispatch&label=Latest%20Game%20Release">
+  </a>
+  <a href="https://codecov.io/gh/Aragas/Bannerlord.MBOptionScreen">
+    <img src="https://codecov.io/gh/Aragas/Bannerlord.MBOptionScreen/branch/dev/graph/badge.svg" />
+  </a>
+  </br>
+  <a href="https://www.nuget.org/packages/Bannerlord.MCM" alt="NuGet Bannerlord.MCM">
+    <img src="https://img.shields.io/nuget/v/Bannerlord.MCM.svg?label=NuGet%20Bannerlord.MCM&colorB=blue" />
+  </a>
+  <a href="https://mcm.bannerlord.aragas.org/">
+    <img src="https://img.shields.io/badge/Documentation-%F0%9F%94%8D-blue?style=flat" />
+  </a>
+  </br>
+  <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="NexusMods Mod Configuration Menu">
+    <img src="https://img.shields.io/badge/NexusMods-Mod%20Configuration%20Menu-yellow.svg" />
+  </a>
+  <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="NexusMods Mod Configuration Menu">
+    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-version-pzk4e0ejol6j.runkit.sh%3FgameId%3Dmountandblade2bannerlord%26modId%3D612" />
+  </a>
+  <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="NexusMods Mod Configuration Menu">
+    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dunique%26gameId%3D3174%26modId%3D612" />
+  </a>
+  <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="NexusMods Mod Configuration Menu">
+    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dtotal%26gameId%3D3174%26modId%3D612" />
+  </a>
+  <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="NexusMods Mod Configuration Menu">
+    <img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dviews%26gameId%3D3174%26modId%3D612" />
+  </a>
+  </br>
+  <img src="https://staticdelivery.nexusmods.com/mods/3174/images/headers/612_1592411190.jpg" width="800">
+  </br>
+  <img src="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/resources/main.png?raw=true" width="800">
 </p>
-
-
 
 AKA MBOptionScreen Standalone.  
 Previously, a fork of [ModLib](https://github.com/mipen/ModLib) that was de-forked.  
