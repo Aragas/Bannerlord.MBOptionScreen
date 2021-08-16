@@ -6,7 +6,7 @@
     <AssemblyName>MCMv4.Adapter.ModLib</AssemblyName>
     <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
     <!--Some code analyzers don't support common.props parsing-->
-    <TargetFrameworks Condition=" '$(TargetFrameworks)' == '' ">net471;</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(TargetFrameworks)' == '' ">net472</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
