@@ -1,7 +1,13 @@
 <p align="center">
   <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen" alt="Lines Of Code">
-  <img src="https://tokei.rs/b1/github/Aragas/Bannerlord.MBOptionScreen?category=code" /></a>
-  <a href="https://www.codefactor.io/repository/github/aragas/bannerlord.mboptionscreen"><img src="https://www.codefactor.io/repository/github/aragas/bannerlord.mboptionscreen/badge" alt="CodeFactor" /></a>
+    <img src="https://tokei.rs/b1/github/Aragas/Bannerlord.MBOptionScreen?category=code" />
+  </a>
+  <a href="https://www.codefactor.io/repository/github/aragas/bannerlord.mboptionscreen">
+    <img src="https://www.codefactor.io/repository/github/aragas/bannerlord.mboptionscreen/badge" alt="CodeFactor" />
+  </a>
+  <a href="https://codeclimate.com/github/Aragas/Bannerlord.MBOptionScreen/maintainability">
+    <img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability-percentage/Aragas/Bannerlord.MBOptionScreen">
+  </a>
   </br>
   <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen/actions/workflows/test-and-publish.yml?query=branch%3Adev+event%3Apush">
     <img alt="GitHub Workflow Status (event)" src="https://img.shields.io/github/workflow/status/Aragas/Bannerlord.MBOptionScreen/Test%20and%20Publish?branch=dev&event=push&label=Latest%20Commit">
