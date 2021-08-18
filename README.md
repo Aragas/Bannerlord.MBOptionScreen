@@ -8,6 +8,9 @@
   <a href="https://codeclimate.com/github/Aragas/Bannerlord.MBOptionScreen/maintainability">
     <img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability-percentage/Aragas/Bannerlord.MBOptionScreen">
   </a>
+  <a href="https://mcm.bannerlord.aragas.org/">
+    <img src="https://img.shields.io/badge/Documentation-%F0%9F%94%8D-blue?style=flat" />
+  </a>
   </br>
   <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen/actions/workflows/test-and-publish.yml?query=branch%3Adev+event%3Apush">
     <img alt="GitHub Workflow Status (event)" src="https://img.shields.io/github/workflow/status/Aragas/Bannerlord.MBOptionScreen/Test%20and%20Publish?branch=dev&event=push&label=Latest%20Commit">
@@ -21,9 +24,6 @@
   </br>
   <a href="https://www.nuget.org/packages/Bannerlord.MCM" alt="NuGet Bannerlord.MCM">
     <img src="https://img.shields.io/nuget/v/Bannerlord.MCM.svg?label=NuGet%20Bannerlord.MCM&colorB=blue" />
-  </a>
-  <a href="https://mcm.bannerlord.aragas.org/">
-    <img src="https://img.shields.io/badge/Documentation-%F0%9F%94%8D-blue?style=flat" />
   </a>
   </br>
   <a href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="NexusMods Mod Configuration Menu">
