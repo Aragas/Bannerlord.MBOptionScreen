@@ -33,6 +33,7 @@ env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: true
   # Disable sending .NET CLI telemetry to Microsoft.
   DOTNET_CLI_TELEMETRY_OPTOUT: true
+  MCM_TEST_FILTER: "+[MCMv*]* -[MCM*.*Tests]* -[MCMv*]MCM.LightInject* -[*]System.Diagnostics.CodeAnalysis* -[*]BUTR.DependencyInjection* -[*]Bannerlord.BUTR.Shared* -[*]HarmonyLib.BUTR*"
 
 jobs:
   test:
@@ -114,10 +115,10 @@ jobs:
 
     - name: Test Coverage
       run: >-
-          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test tests/MCM.Tests/MCM.Tests.csproj --configuration Stable_Debug --no-build" -filter:"+[MCMv*]* -[MCM*.*Tests]* -[MCMv*]MCM.LightInject*" -output:coverage_mcm_stable_debug.xml -mergebyhash;
-          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test tests/MCM.Tests/MCM.Tests.csproj --configuration Stable_Release --no-build" -filter:"+[MCMv*]* -[MCM*.*Tests]* -[MCMv*]MCM.LightInject*" -output:coverage_mcm_stable_release.xml -mergebyhash;
-          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test tests/MCM.Tests/MCM.Tests.csproj --configuration Beta_Debug --no-build" -filter:"+[MCMv*]* -[MCM*.*Tests]* -[MCMv*]MCM.LightInject*" -output:coverage_mcm_beta_debug.xml -mergebyhash;
-          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test tests/MCM.Tests/MCM.Tests.csproj --configuration Beta_Release --no-build" -filter:"+[MCMv*]* -[MCM*.*Tests]* -[MCMv*]MCM.LightInject*" -output:coverage_mcm_beta_release.xml -mergebyhash;
+          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test tests/MCM.Tests/MCM.Tests.csproj --configuration Stable_Debug --no-build" -filter:"${{env.MCM_TEST_FILTER}}" -output:coverage_mcm_stable_debug.xml -mergebyhash;
+          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test tests/MCM.Tests/MCM.Tests.csproj --configuration Stable_Release --no-build" -filter:"${{env.MCM_TEST_FILTER}}" -output:coverage_mcm_stable_release.xml -mergebyhash;
+          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test tests/MCM.Tests/MCM.Tests.csproj --configuration Beta_Debug --no-build" -filter:"${{env.MCM_TEST_FILTER}}" -output:coverage_mcm_beta_debug.xml -mergebyhash;
+          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test tests/MCM.Tests/MCM.Tests.csproj --configuration Beta_Release --no-build" -filter:"${{env.MCM_TEST_FILTER}}" -output:coverage_mcm_beta_release.xml -mergebyhash;
       shell: pwsh
 
     - name: ReportGenerator
