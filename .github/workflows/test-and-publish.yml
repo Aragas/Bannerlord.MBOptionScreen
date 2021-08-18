@@ -114,10 +114,10 @@ jobs:
 
     - name: Test Coverage
       run: >-
-          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test tests/MCM.Tests/MCM.Tests.csproj --configuration Stable_Debug --no-build" -filter:"+[MCMv*]* -[MCM*.*Tests]*" -output:coverage_mcm_stable_debug.xml -mergebyhash;
-          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test tests/MCM.Tests/MCM.Tests.csproj --configuration Stable_Release --no-build" -filter:"+[MCMv*]* -[MCM*.*Tests]*" -output:coverage_mcm_stable_release.xml -mergebyhash;
-          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test tests/MCM.Tests/MCM.Tests.csproj --configuration Beta_Debug --no-build" -filter:"+[MCMv*]* -[MCM*.*Tests]*" -output:coverage_mcm_beta_debug.xml -mergebyhash;
-          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test tests/MCM.Tests/MCM.Tests.csproj --configuration Beta_Release --no-build" -filter:"+[MCMv*]* -[MCM*.*Tests]*" -output:coverage_mcm_beta_release.xml -mergebyhash;
+          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test tests/MCM.Tests/MCM.Tests.csproj --configuration Stable_Debug --no-build" -filter:"+[MCMv*]* -[MCM*.*Tests]* -[MCM.LightInject*]*" -output:coverage_mcm_stable_debug.xml -mergebyhash;
+          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test tests/MCM.Tests/MCM.Tests.csproj --configuration Stable_Release --no-build" -filter:"+[MCMv*]* -[MCM*.*Tests]* -[MCM.LightInject*]*" -output:coverage_mcm_stable_release.xml -mergebyhash;
+          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test tests/MCM.Tests/MCM.Tests.csproj --configuration Beta_Debug --no-build" -filter:"+[MCMv*]* -[MCM*.*Tests]* -[MCM.LightInject*]*" -output:coverage_mcm_beta_debug.xml -mergebyhash;
+          opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test tests/MCM.Tests/MCM.Tests.csproj --configuration Beta_Release --no-build" -filter:"+[MCMv*]* -[MCM*.*Tests]* -[MCM.LightInject*]*" -output:coverage_mcm_beta_release.xml -mergebyhash;
       shell: pwsh
 
     - name: ReportGenerator
