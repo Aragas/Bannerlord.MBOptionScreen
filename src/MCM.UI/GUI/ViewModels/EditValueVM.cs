@@ -133,7 +133,7 @@ namespace MCM.UI.GUI.ViewModels
                 SettingType.Float => SettingProperty.FloatValue.ToString(),
                 SettingType.String => SettingProperty.StringValue,
                 _ => string.Empty,
-            }
+            };
         }
 
         public void ExecuteDone()
