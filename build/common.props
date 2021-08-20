@@ -9,7 +9,7 @@
     <UIExtenderExVersion>2.1.6</UIExtenderExVersion>
     <BuildResourcesVersion>1.0.0.33</BuildResourcesVersion>
     <BUTRSharedVersion>1.6.1.51</BUTRSharedVersion>
-    <BUTRDependencyInjectionVersion>1.0.0.17</BUTRDependencyInjectionVersion>
+    <BUTRDependencyInjectionVersion>1.0.0.19</BUTRDependencyInjectionVersion>
     <HarmonyExtensionsVersion>2.0.0.41</HarmonyExtensionsVersion>
     <TargetFrameworks>net472</TargetFrameworks>
     <LangVersion>9.0</LangVersion>
