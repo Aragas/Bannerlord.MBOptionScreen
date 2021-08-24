@@ -20,7 +20,7 @@ namespace MCM.Adapter.ModLib.Settings.Properties.v13
 {
     internal sealed class ModLibDefinitionsSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
     {
-        public IEnumerable<string> DiscoveryTypes { get; } = new [] { "modlib_v13_attributes" };
+        public IEnumerable<string> DiscoveryTypes { get; } = new[] { "modlib_v13_attributes" };
 
         public IEnumerable<ISettingsPropertyDefinition> GetProperties(BaseSettings settings)
         {

@@ -86,7 +86,7 @@ namespace MCM.Implementation.FluentBuilder
             return this;
         }
         /// <inheritdoc/>
-        public ISettingsPropertyGroupBuilder AddCustom<TSettingsPropertyBuilder>(ISettingsPropertyBuilder<TSettingsPropertyBuilder> builder)where TSettingsPropertyBuilder : ISettingsPropertyBuilder
+        public ISettingsPropertyGroupBuilder AddCustom<TSettingsPropertyBuilder>(ISettingsPropertyBuilder<TSettingsPropertyBuilder> builder) where TSettingsPropertyBuilder : ISettingsPropertyBuilder
         {
             if (!Properties.ContainsKey(builder.Name))
                 Properties[builder.Name] = builder;

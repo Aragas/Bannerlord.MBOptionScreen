@@ -28,8 +28,8 @@ namespace MCM.Implementation.Settings.Providers
         {
             _logger = logger;
 
-             var globalSettingsContainers = (GenericServiceProvider.GetService<IEnumerable<IGlobalSettingsContainer>>() ??
-                                             Enumerable.Empty<IGlobalSettingsContainer>()).ToList();
+            var globalSettingsContainers = (GenericServiceProvider.GetService<IEnumerable<IGlobalSettingsContainer>>() ??
+                                            Enumerable.Empty<IGlobalSettingsContainer>()).ToList();
             var perSaveSettingsContainers = (GenericServiceProvider.GetService<IEnumerable<IPerSaveSettingsContainer>>() ??
                                              Enumerable.Empty<IPerSaveSettingsContainer>()).ToList();
 

@@ -44,7 +44,7 @@ namespace MCM.Abstractions.Common
                     }
                     if (_getSelectedIndexDelegate is null)
                     {
-                        logger.LogError(default!, $"@_getSelectedIndexDelegate is null! Type {type}" );
+                        logger.LogError(default!, $"@_getSelectedIndexDelegate is null! Type {type}");
                     }
                     if (_setSelectedIndexDelegate is null)
                     {
