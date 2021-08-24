@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
-using Bannerlord.BUTR.Shared.Helpers;
+﻿using Bannerlord.BUTR.Shared.Helpers;
 
 using MCM.Abstractions.Settings;
 using MCM.UI.Actions;
+
+using System.Collections.Generic;
 
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;

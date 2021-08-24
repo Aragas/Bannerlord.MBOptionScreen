@@ -23,15 +23,19 @@ namespace ModLib.Attributes
         }
 
         public SettingPropertyAttribute(string displayName, int minValue, int maxValue, int editableMinValue, int editableMaxValue, string hintText = "") :
-            this(displayName, (float) minValue, (float) maxValue, (float) editableMinValue, (float) editableMaxValue, hintText) { }
+            this(displayName, (float) minValue, (float) maxValue, (float) editableMinValue, (float) editableMaxValue, hintText)
+        { }
 
         public SettingPropertyAttribute(string displayName, float minValue, float maxValue, string hintText = "") :
-            this(displayName, minValue, maxValue, minValue, maxValue, hintText) { }
+            this(displayName, minValue, maxValue, minValue, maxValue, hintText)
+        { }
 
         public SettingPropertyAttribute(string displayName, int minValue, int maxValue, string hintText = "") :
-            this(displayName, minValue, maxValue, minValue, maxValue, hintText) { }
+            this(displayName, minValue, maxValue, minValue, maxValue, hintText)
+        { }
 
         public SettingPropertyAttribute(string displayName, string tooltip = "") :
-            this(displayName, 0f, 0f, tooltip) { }
+            this(displayName, 0f, 0f, tooltip)
+        { }
     }
 }

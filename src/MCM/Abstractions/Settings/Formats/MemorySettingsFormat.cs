@@ -11,7 +11,7 @@ namespace MCM.Abstractions.Settings.Formats
         private readonly Dictionary<string, BaseSettings> _settings = new();
 
         /// <inheritdoc/>
-        public IEnumerable<string> FormatTypes { get; } = new [] { "memory" };
+        public IEnumerable<string> FormatTypes { get; } = new[] { "memory" };
 
         /// <inheritdoc/>
         public BaseSettings Load(BaseSettings settings, string directoryPath, string filename)

@@ -278,7 +278,7 @@ namespace MCM.Utils
             return topGroupName;
         }
 
-        public static IEnumerable<IPropertyDefinitionBase> GetPropertyDefinitionWrappers(object property) => GetPropertyDefinitionWrappers(new [] { property });
+        public static IEnumerable<IPropertyDefinitionBase> GetPropertyDefinitionWrappers(object property) => GetPropertyDefinitionWrappers(new[] { property });
 
         public static IEnumerable<IPropertyDefinitionBase> GetPropertyDefinitionWrappers(IReadOnlyCollection<object> properties)
         {

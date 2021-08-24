@@ -19,7 +19,7 @@ namespace MCM.Implementation.Settings.Properties
 {
     internal sealed class AttributeSettingsPropertyDiscoverer : IAttributeSettingsPropertyDiscoverer
     {
-        public IEnumerable<string> DiscoveryTypes { get; } = new [] { "attributes" };
+        public IEnumerable<string> DiscoveryTypes { get; } = new[] { "attributes" };
 
         public IEnumerable<ISettingsPropertyDefinition> GetProperties(BaseSettings settings)
         {
