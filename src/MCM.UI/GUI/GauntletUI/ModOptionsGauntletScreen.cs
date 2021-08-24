@@ -86,7 +86,7 @@ namespace MCM.UI.GUI.GauntletUI
             //_spriteCategoryEncyclopedia.Unload();
             if (_gauntletLayer is not null)
                 RemoveLayer(_gauntletLayer);
-            if (_gauntletLayer is not null &&_gauntletMovie is not null && ReleaseMovie is not null)
+            if (_gauntletLayer is not null && _gauntletMovie is not null && ReleaseMovie is not null)
                 ReleaseMovie(_gauntletLayer, _gauntletMovie);
             _gauntletLayer = null;
             _gauntletMovie = null;

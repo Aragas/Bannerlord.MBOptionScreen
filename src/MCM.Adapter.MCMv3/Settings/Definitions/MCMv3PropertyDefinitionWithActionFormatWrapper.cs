@@ -1,8 +1,8 @@
 ﻿extern alias v4;
 
-using System;
-
 using HarmonyLib.BUTR.Extensions;
+
+using System;
 
 using v4::MCM.Abstractions.Settings.Definitions;
 using v4::MCM.Abstractions.Settings.Definitions.Wrapper;

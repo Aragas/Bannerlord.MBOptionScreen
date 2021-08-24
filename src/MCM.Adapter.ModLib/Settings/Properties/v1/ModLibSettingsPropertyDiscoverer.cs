@@ -20,7 +20,7 @@ namespace MCM.Adapter.ModLib.Settings.Properties.v1
 {
     internal sealed class ModLibSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
     {
-        public IEnumerable<string> DiscoveryTypes { get; } = new [] { "modlib_v1_attributes" };
+        public IEnumerable<string> DiscoveryTypes { get; } = new[] { "modlib_v1_attributes" };
 
         public IEnumerable<ISettingsPropertyDefinition> GetProperties(BaseSettings settings)
         {
@@ -84,11 +84,11 @@ namespace MCM.Adapter.ModLib.Settings.Properties.v1
 
         private static IEnumerable<IPropertyDefinitionBase> GetPropertyDefinitionWrappers(IReadOnlyCollection<Attribute> attributes)
         {
-                object? propAttr;
+            object? propAttr;
 
-                propAttr = attributes.FirstOrDefault(a => a is v1::ModLib.Attributes.SettingPropertyAttribute);
-                if (propAttr is not null)
-                    yield return new ModLibSettingPropertyAttributeWrapper(propAttr);
+            propAttr = attributes.FirstOrDefault(a => a is v1::ModLib.Attributes.SettingPropertyAttribute);
+            if (propAttr is not null)
+                yield return new ModLibSettingPropertyAttributeWrapper(propAttr);
         }
     }
 }

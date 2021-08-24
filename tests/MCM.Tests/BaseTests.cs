@@ -1,8 +1,7 @@
-extern alias v4;
+﻿extern alias v4;
 
 using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.BUTR.Shared.ModuleInfoExtended;
-
 using Bannerlord.ButterLib;
 using Bannerlord.ButterLib.SubModuleWrappers;
 
@@ -19,8 +18,8 @@ using TaleWorlds.Engine;
 using v4::MCM;
 using v4::MCM.Implementation;
 
-using ModuleInfoHelper = Bannerlord.BUTR.Shared.Helpers.ModuleInfoHelper;
 using AccessTools2 = v4::HarmonyLib.BUTR.Extensions.AccessTools2;
+using ModuleInfoHelper = Bannerlord.BUTR.Shared.Helpers.ModuleInfoHelper;
 using SymbolExtensions2 = v4::HarmonyLib.BUTR.Extensions.SymbolExtensions2;
 
 namespace MCM.Tests

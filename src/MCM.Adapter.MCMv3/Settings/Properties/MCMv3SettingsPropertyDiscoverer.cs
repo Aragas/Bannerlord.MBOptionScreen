@@ -24,7 +24,7 @@ namespace MCM.Adapter.MCMv3.Settings.Properties
 {
     internal sealed class MCMv3SettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
     {
-        public IEnumerable<string> DiscoveryTypes { get; } = new [] { "mcm_v3_attributes" };
+        public IEnumerable<string> DiscoveryTypes { get; } = new[] { "mcm_v3_attributes" };
 
         public IEnumerable<ISettingsPropertyDefinition> GetProperties(BaseSettings settings)
         {

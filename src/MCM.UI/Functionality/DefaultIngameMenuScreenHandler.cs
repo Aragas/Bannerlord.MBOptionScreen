@@ -148,7 +148,7 @@ namespace MCM.UI.Functionality
         }
         public override void RemoveScreen(string internalName)
         {
-            if (_instance.TryGetTarget(out var instance)&& DataSource is not null && Identifier is not null)
+            if (_instance.TryGetTarget(out var instance) && DataSource is not null && Identifier is not null)
             {
                 var dataSource = DataSource(instance);
                 var found = dataSource.MenuItems.FirstOrDefault(i => Identifier(i) is string text && text == internalName);
