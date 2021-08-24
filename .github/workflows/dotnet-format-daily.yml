@@ -10,7 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Code Formatting
-        uses: butr/actions-code-format-setup@v1.4
+        uses: butr/actions-code-format-setup@v1.5
         with:
           workspace: "src/Mod Configuration Menu.sln"
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          assignees: aragas
+          reviewers: aragas
