@@ -70,8 +70,8 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
             var valueFormatProperty = AccessTools2.Property(type, nameof(ValueFormat));
             var customFormatterProperty = AccessTools2.Property(type, nameof(CustomFormatter));
             var idProperty = AccessTools2.Property(type, nameof(Id));
-            var isToggleProperty= AccessTools2.Property(type, nameof(IsToggle));
-            var subGroupDelimiterProperty= AccessTools2.Property(type, nameof(SubGroupDelimiter));
+            var isToggleProperty = AccessTools2.Property(type, nameof(IsToggle));
+            var subGroupDelimiterProperty = AccessTools2.Property(type, nameof(SubGroupDelimiter));
 
 
             SettingType = settingTypeProperty?.GetValue(@object) is { } settingTypeObject
