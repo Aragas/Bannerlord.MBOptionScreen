@@ -11,7 +11,7 @@
     <PackageReference Include="Microsoft.DocAsCode.Build.Engine" Version="2.41.0" />
     <PackageReference Include="Mono.Cecil" Version="0.10.0-beta5" />
     <PackageReference Include="MoreLinq" Version="2.3.0" />
-    <PackageReference Include="SharpCompress" Version="0.24.0" />
+    <PackageReference Include="SharpCompress" Version="0.29.0" />
     <PackageReference Include="YamlDotNet" Version="6.0.0" />
     <Reference Include="System.Net.Http" />
 
