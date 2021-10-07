@@ -41,7 +41,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: Tests Setup
-      uses: butr/actions-tests-setup@v1.4
+      uses: butr/actions-tests-setup@v1.5.2
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
         steam-login: ${{secrets.STEAM_LOGIN}}
