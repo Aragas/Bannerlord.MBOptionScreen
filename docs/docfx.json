@@ -7,7 +7,8 @@
           "files": [ "MCM/*.csproj" ]
         }
       ],
-      "dest": "api"
+      "dest": "api",
+      "filter": "filterConfig.yml"
     }
   ],
   "build": {
