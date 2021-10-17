@@ -22,7 +22,7 @@ env:
 jobs:
   docfx:
     name: DocFX documentation
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - name: DocFX Setup
       uses: butr/actions-docfx-setup@v3.0
