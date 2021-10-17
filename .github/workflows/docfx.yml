@@ -25,7 +25,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: DocFX Setup
-      uses: butr/actions-docfx-setup@v2.3
+      uses: butr/actions-docfx-setup@v3.0
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
 
