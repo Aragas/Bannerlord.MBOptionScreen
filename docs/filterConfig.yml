@@ -6,5 +6,5 @@ apiRules:
     uidRegex: ^Bannerlord\.BUTR\.Shared$
     type: Namespace
 - exclude:
-    uidRegex: ^Bannerlord\.DependencyInjection$
+    uidRegex: ^BUTR\.DependencyInjection$
     type: Namespace
