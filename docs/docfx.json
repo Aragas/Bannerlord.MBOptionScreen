@@ -39,7 +39,7 @@
     "resource": [
       {
         "files": [
-		  "langwordMapping.yml",
+          "langwordMapping.yml",
           "images/**",
           "CNAME"
         ]
