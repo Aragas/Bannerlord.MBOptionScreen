@@ -60,8 +60,7 @@
     "fileMetadataFiles": [],
     "template": [
       "default",
-      "_template/dark-theme",
-      "_template/last-modified"
+      "_template/dark-theme"
     ],
     "postProcessors": ["ExtractSearchIndex"],
     "markdownEngineName": "markdig"
