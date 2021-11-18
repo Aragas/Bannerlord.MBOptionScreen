@@ -2,10 +2,7 @@ name: Test and Publish
 
 on:
   repository_dispatch:
-    types:
-      # If a new version of the game is released, test the repo against it.
-      # This way we will always know if the repo is broken on a new update.
-      - game_version_update
+    types: [game_version_update, game_version_update_patch]
   push:
     branches:
       - master
