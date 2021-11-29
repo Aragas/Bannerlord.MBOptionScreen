@@ -32,7 +32,8 @@ namespace MCM.UI.Functionality
             AccessTools2.GetDelegateObjectInstance<OnEscapeMenuToggledGauntletMissionEscapeMenuBaseDelegate>(typeof(GauntletMissionEscapeMenuBase), "OnEscapeMenuToggled");
 
         private static readonly AccessTools.FieldRef<GauntletMissionEscapeMenuBase, EscapeMenuVM>? DataSource =
-            AccessTools2.FieldRefAccess<GauntletMissionEscapeMenuBase, EscapeMenuVM>("_dataSource");
+            AccessTools2.FieldRefAccess<GauntletMissionEscapeMenuBase, EscapeMenuVM>("_dataSource") ??
+            AccessTools2.FieldRefAccess<GauntletMissionEscapeMenuBase, EscapeMenuVM>("DataSource");
         private static readonly AccessTools.FieldRef<EscapeMenuItemVM, object>? Identifier =
             AccessTools2.FieldRefAccess<EscapeMenuItemVM, object>("_identifier");
 
