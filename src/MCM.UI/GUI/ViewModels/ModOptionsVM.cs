@@ -6,6 +6,7 @@ using ComparerExtensions;
 
 using MCM.Abstractions.Settings.Providers;
 using MCM.UI.Extensions;
+using MCM.UI.Utils;
 using MCM.Utils;
 
 using Microsoft.Extensions.Logging;
@@ -266,16 +267,18 @@ namespace MCM.UI.GUI.ViewModels
 
         private void OnPresetsSelectorChange(SelectorVM<SelectorItemVM> selector)
         {
-            InformationManager.ShowInquiry(new InquiryData(TextObjectHelper.Create("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new Dictionary<string, TextObject?>
+            var data = InquiryDataUtils.Create(
+                TextObjectHelper.Create("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new Dictionary<string, TextObject?>
                 {
-                    { "PRESET", TextObjectHelper.Create(selector.SelectedItem.StringItem) }
+                    {"PRESET", TextObjectHelper.Create(selector.SelectedItem.StringItem)}
                 })?.ToString(),
                 TextObjectHelper.Create("{=ModOptionsVM_Discard}Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?", new Dictionary<string, TextObject?>
                 {
-                    { "NAME", TextObjectHelper.Create(SelectedMod!.DisplayName) },
-                    { "ITEM", TextObjectHelper.Create(selector.SelectedItem.StringItem) }
+                    {"NAME", TextObjectHelper.Create(SelectedMod!.DisplayName)},
+                    {"ITEM", TextObjectHelper.Create(selector.SelectedItem.StringItem)}
                 })?.ToString(),
-                true, true, TextObjectHelper.Create("{=aeouhelq}Yes")?.ToString(), TextObjectHelper.Create("{=8OkPHu4f}No")?.ToString(),
+                true, true, TextObjectHelper.Create("{=aeouhelq}Yes")?.ToString(),
+                TextObjectHelper.Create("{=8OkPHu4f}No")?.ToString(),
                 () =>
                 {
                     SelectedMod!.ChangePreset(PresetsSelector.SelectedItem.StringItem);
@@ -288,7 +291,8 @@ namespace MCM.UI.GUI.ViewModels
                     PresetsSelector.SetOnChangeAction(null);
                     PresetsSelector.SelectedIndex = SelectedMod.PresetsSelector?.SelectedIndex ?? -1;
                     PresetsSelector.SetOnChangeAction(OnPresetsSelectorChange);
-                }));
+                });
+            InformationManagerUtils.ShowInquiry(data);
         }
         private void OnModPresetsSelectorChange(SelectorVM<SelectorItemVM> selector)
         {
@@ -337,7 +341,7 @@ namespace MCM.UI.GUI.ViewModels
             var requireRestart = changedModSettings.Any(x => x.RestartRequired());
             if (requireRestart)
             {
-                InformationManager.ShowInquiry(new InquiryData(TextObjectHelper.Create("{=ModOptionsVM_RestartTitle}Game Needs to Restart")?.ToString(),
+                var data = InquiryDataUtils.Create(TextObjectHelper.Create("{=ModOptionsVM_RestartTitle}Game Needs to Restart")?.ToString(),
                     TextObjectHelper.Create("{=ModOptionsVM_RestartDesc}The game needs to be restarted to apply mod settings changes. Do you want to close the game now?")?.ToString(),
                     true, true, TextObjectHelper.Create("{=aeouhelq}Yes")?.ToString(), TextObjectHelper.Create("{=3CpNUnVl}Cancel")?.ToString(),
                     () =>
@@ -351,7 +355,8 @@ namespace MCM.UI.GUI.ViewModels
                         OnFinalize();
                         onClose?.Invoke();
                         Utilities.QuitGame();
-                    }, () => { }));
+                    }, () => { });
+                InformationManagerUtils.ShowInquiry(data);
             }
             else
             {
