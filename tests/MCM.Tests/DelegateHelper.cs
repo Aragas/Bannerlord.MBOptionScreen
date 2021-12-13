@@ -1,4 +1,4 @@
-using Bannerlord.BUTR.Shared.ModuleInfoExtended;
+﻿using Bannerlord.BUTR.Shared.ModuleInfoExtended;
 
 using System.Collections.Generic;
 using System.Reflection;

@@ -6,6 +6,8 @@
     <AssemblyName>MCMv4.UI</AssemblyName>
     <RootNamespace>MCM.UI</RootNamespace>
     <Configurations>Debug;Release</Configurations>
+    <!--Some code analyzers don't support common.props parsing-->
+    <TargetFrameworks Condition=" '$(TargetFrameworks)' == '' ">net472</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -69,6 +71,10 @@
     <PackageReference Include="Bannerlord.ReferenceAssemblies.SandBox.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
     <PackageReference Include="Bannerlord.UIExtenderEx" Version="$(UIExtenderExVersion)" IncludeAssets="compile" />
     <PackageReference Include="BUTR.DependencyInjection.ButterLib" Version="$(BUTRDependencyInjectionVersion)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="BUTR.Harmony.Analyzer" Version="$(HarmonyAnalyzerVersion)">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

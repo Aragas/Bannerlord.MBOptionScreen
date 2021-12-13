@@ -50,7 +50,7 @@ namespace MCM.UI.UIExtenderEx
     {
         public override List<Attribute> Attributes => new()
         {
-            new Attribute( "SuggestedWidth", "@DescriptionWidth" )
+            new Attribute("SuggestedWidth", "@DescriptionWidth")
         };
     }
 }

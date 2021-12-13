@@ -1,3 +1,0 @@
-[submodule "build/DocFx.Plugin.LastModified"]
-	path = build/DocFx.Plugin.LastModified
-	url = https://github.com/Still34/DocFx.Plugin.LastModified

@@ -32,7 +32,8 @@ namespace MCM.UI.Functionality
             AccessTools2.GetDelegateObjectInstance<OnEscapeMenuToggledGauntletMissionEscapeMenuBaseDelegate>(typeof(GauntletMissionEscapeMenuBase), "OnEscapeMenuToggled");
 
         private static readonly AccessTools.FieldRef<GauntletMissionEscapeMenuBase, EscapeMenuVM>? DataSource =
-            AccessTools2.FieldRefAccess<GauntletMissionEscapeMenuBase, EscapeMenuVM>("_dataSource");
+            AccessTools2.FieldRefAccess<GauntletMissionEscapeMenuBase, EscapeMenuVM>("_dataSource") ??
+            AccessTools2.FieldRefAccess<GauntletMissionEscapeMenuBase, EscapeMenuVM>("DataSource");
         private static readonly AccessTools.FieldRef<EscapeMenuItemVM, object>? Identifier =
             AccessTools2.FieldRefAccess<EscapeMenuItemVM, object>("_identifier");
 
@@ -148,7 +149,7 @@ namespace MCM.UI.Functionality
         }
         public override void RemoveScreen(string internalName)
         {
-            if (_instance.TryGetTarget(out var instance)&& DataSource is not null && Identifier is not null)
+            if (_instance.TryGetTarget(out var instance) && DataSource is not null && Identifier is not null)
             {
                 var dataSource = DataSource(instance);
                 var found = dataSource.MenuItems.FirstOrDefault(i => Identifier(i) is string text && text == internalName);

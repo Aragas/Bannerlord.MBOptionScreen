@@ -24,7 +24,7 @@ namespace MCM.Adapter.MBO.Settings.Properties
 {
     internal sealed class MBOv1SettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
     {
-        public IEnumerable<string> DiscoveryTypes { get; } = new [] { "mbo_v1_attributes" };
+        public IEnumerable<string> DiscoveryTypes { get; } = new[] { "mbo_v1_attributes" };
 
         public IEnumerable<ISettingsPropertyDefinition> GetProperties(BaseSettings settings)
         {

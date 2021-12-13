@@ -7,7 +7,8 @@
           "files": [ "MCM/*.csproj" ]
         }
       ],
-      "dest": "api"
+      "dest": "api",
+      "filter": "filterConfig.yml"
     }
   ],
   "build": {
@@ -39,7 +40,7 @@
     "resource": [
       {
         "files": [
-		  "langwordMapping.yml",
+          "langwordMapping.yml",
           "images/**",
           "CNAME"
         ]
@@ -60,8 +61,7 @@
     "fileMetadataFiles": [],
     "template": [
       "default",
-      "_template/dark-theme",
-      "_template/last-modified"
+      "_template/dark-theme"
     ],
     "postProcessors": ["ExtractSearchIndex"],
     "markdownEngineName": "markdig"

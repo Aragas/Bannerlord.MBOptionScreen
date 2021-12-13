@@ -7,7 +7,7 @@ namespace MCM.Abstractions.Settings.Formats
     public sealed class NoneSettingsFormat : ISettingsFormat
     {
         /// <inheritdoc/>
-        public IEnumerable<string> FormatTypes { get; } = new [] { "none" };
+        public IEnumerable<string> FormatTypes { get; } = new[] { "none" };
 
         /// <inheritdoc/>
         public BaseSettings Load(BaseSettings settings, string directoryPath, string filename) => settings;

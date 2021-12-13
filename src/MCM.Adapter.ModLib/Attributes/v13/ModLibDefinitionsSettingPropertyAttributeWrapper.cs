@@ -1,8 +1,10 @@
 ﻿extern alias v13;
-using System;
+
 using Bannerlord.BUTR.Shared.Helpers;
 
 using MCM.Abstractions.Settings.Definitions;
+
+using System;
 
 using v13SettingPropertyAttribute = v13::ModLib.Definitions.Attributes.SettingPropertyAttribute;
 

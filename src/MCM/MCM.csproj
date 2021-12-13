@@ -6,6 +6,8 @@
     <AssemblyName>MCMv4</AssemblyName>
     <Configurations>Debug;Release</Configurations>
     <DefineConstants>$(DefineConstants);BUTRDEPENDENCYINJECTION_PUBLIC;BUTRDEPENDENCYINJECTION_BANNERLORD;</DefineConstants>
+    <!--Some code analyzers don't support common.props parsing-->
+    <TargetFrameworks Condition=" '$(TargetFrameworks)' == '' ">net472</TargetFrameworks>
   </PropertyGroup>
 
   <!--NuGet Package-->
@@ -37,6 +39,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="BUTR.DependencyInjection.LightInject" Version="$(BUTRDependencyInjectionVersion)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="BUTR.Harmony.Analyzer" Version="$(HarmonyAnalyzerVersion)">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

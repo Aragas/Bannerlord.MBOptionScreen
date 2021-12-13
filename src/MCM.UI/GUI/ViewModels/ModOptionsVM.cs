@@ -6,6 +6,7 @@ using ComparerExtensions;
 
 using MCM.Abstractions.Settings.Providers;
 using MCM.UI.Extensions;
+using MCM.UI.Utils;
 using MCM.Utils;
 
 using Microsoft.Extensions.Logging;
@@ -177,14 +178,25 @@ namespace MCM.UI.GUI.ViewModels
             ModsText = TextObjectHelper.Create("{=ModOptionsPageView_Mods}Mods")?.ToString() ?? string.Empty;
             SearchText = string.Empty;
 
+            InitializeModSettings();
+            RefreshValues();
+        }
+
+        private void InitializeModSettings()
+        {
             ModSettingsList = new MBBindingList<SettingsVM>();
-            // Fancy
-            new TaskFactory().StartNew(syncContext => // Build the options in a separate context if possible
+            // Execute code in a non UI-Thread to avoid blokcking
+            _ = Task.Factory.StartNew(syncContext => // Build the options in a separate context if possible
             {
                 try
                 {
                     if (syncContext is SynchronizationContext uiContext)
                     {
+                        if (SynchronizationContext.Current == uiContext)
+                        {
+                            _logger.LogWarning("SynchronizationContext.Current is the UI SynchronizationContext");
+                        }
+
                         var settingsVM = BaseSettingsProvider.Instance!.CreateModSettingsDefinitions
                             .Parallel()
                             .Select(s =>
@@ -202,12 +214,13 @@ namespace MCM.UI.GUI.ViewModels
                                     return null;
                                 }
                             })
-                            .ToList();
+                            .Where(vm => vm is not null);
+
                         foreach (var viewModel in settingsVM)
                         {
-                            uiContext.Send(o =>
+                            uiContext.Send(state =>
                             {
-                                if (o is SettingsVM vm)
+                                if (state is SettingsVM vm)
                                 {
                                     vm.AddSelectCommand(ExecuteSelect);
                                     ModSettingsList.Add(vm);
@@ -233,8 +246,6 @@ namespace MCM.UI.GUI.ViewModels
                         Colors.Red));
                 }
             }, SynchronizationContext.Current);
-
-            RefreshValues();
         }
 
         public override void RefreshValues()
@@ -256,16 +267,18 @@ namespace MCM.UI.GUI.ViewModels
 
         private void OnPresetsSelectorChange(SelectorVM<SelectorItemVM> selector)
         {
-            InformationManager.ShowInquiry(new InquiryData(TextObjectHelper.Create("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new Dictionary<string, TextObject?>
+            var data = InquiryDataUtils.Create(
+                TextObjectHelper.Create("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new Dictionary<string, TextObject?>
                 {
-                    { "PRESET", TextObjectHelper.Create(selector.SelectedItem.StringItem) }
+                    {"PRESET", TextObjectHelper.Create(selector.SelectedItem.StringItem)}
                 })?.ToString(),
                 TextObjectHelper.Create("{=ModOptionsVM_Discard}Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?", new Dictionary<string, TextObject?>
                 {
-                    { "NAME", TextObjectHelper.Create(SelectedMod!.DisplayName) },
-                    { "ITEM", TextObjectHelper.Create(selector.SelectedItem.StringItem) }
+                    {"NAME", TextObjectHelper.Create(SelectedMod!.DisplayName)},
+                    {"ITEM", TextObjectHelper.Create(selector.SelectedItem.StringItem)}
                 })?.ToString(),
-                true, true, TextObjectHelper.Create("{=aeouhelq}Yes")?.ToString(), TextObjectHelper.Create("{=8OkPHu4f}No")?.ToString(),
+                true, true, TextObjectHelper.Create("{=aeouhelq}Yes")?.ToString(),
+                TextObjectHelper.Create("{=8OkPHu4f}No")?.ToString(),
                 () =>
                 {
                     SelectedMod!.ChangePreset(PresetsSelector.SelectedItem.StringItem);
@@ -278,7 +291,8 @@ namespace MCM.UI.GUI.ViewModels
                     PresetsSelector.SetOnChangeAction(null);
                     PresetsSelector.SelectedIndex = SelectedMod.PresetsSelector?.SelectedIndex ?? -1;
                     PresetsSelector.SetOnChangeAction(OnPresetsSelectorChange);
-                }));
+                });
+            InformationManagerUtils.ShowInquiry(data);
         }
         private void OnModPresetsSelectorChange(SelectorVM<SelectorItemVM> selector)
         {
@@ -327,7 +341,7 @@ namespace MCM.UI.GUI.ViewModels
             var requireRestart = changedModSettings.Any(x => x.RestartRequired());
             if (requireRestart)
             {
-                InformationManager.ShowInquiry(new InquiryData(TextObjectHelper.Create("{=ModOptionsVM_RestartTitle}Game Needs to Restart")?.ToString(),
+                var data = InquiryDataUtils.Create(TextObjectHelper.Create("{=ModOptionsVM_RestartTitle}Game Needs to Restart")?.ToString(),
                     TextObjectHelper.Create("{=ModOptionsVM_RestartDesc}The game needs to be restarted to apply mod settings changes. Do you want to close the game now?")?.ToString(),
                     true, true, TextObjectHelper.Create("{=aeouhelq}Yes")?.ToString(), TextObjectHelper.Create("{=3CpNUnVl}Cancel")?.ToString(),
                     () =>
@@ -341,7 +355,8 @@ namespace MCM.UI.GUI.ViewModels
                         OnFinalize();
                         onClose?.Invoke();
                         Utilities.QuitGame();
-                    }, () => { }));
+                    }, () => { });
+                InformationManagerUtils.ShowInquiry(data);
             }
             else
             {

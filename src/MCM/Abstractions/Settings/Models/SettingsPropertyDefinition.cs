@@ -51,7 +51,7 @@ namespace MCM.Abstractions.Settings.Models
         private char SubGroupDelimiter { get; }
 
         public SettingsPropertyDefinition(IPropertyDefinitionBase propertyDefinition, IPropertyGroupDefinition propertyGroupDefinition, IRef propertyReference, char subGroupDelimiter)
-            : this(new [] { propertyDefinition }, propertyGroupDefinition, propertyReference, subGroupDelimiter) { }
+            : this(new[] { propertyDefinition }, propertyGroupDefinition, propertyReference, subGroupDelimiter) { }
         public SettingsPropertyDefinition(IEnumerable<IPropertyDefinitionBase> propertyDefinitions, IPropertyGroupDefinition propertyGroupDefinition, IRef propertyReference, char subGroupDelimiter)
         {
             SubGroupDelimiter = subGroupDelimiter;
@@ -78,7 +78,7 @@ namespace MCM.Abstractions.Settings.Models
 
             foreach (var propertyDefinition in propertyDefinitions)
             {
-                if (propertyDefinition is IPropertyDefinitionBase propertyBase)
+                if (propertyDefinition is { } propertyBase)
                 {
                     DisplayName = TextObjectHelper.Create(propertyBase.DisplayName)?.ToString() ?? "ERROR";
                     Order = propertyBase.Order;

@@ -19,7 +19,7 @@ namespace MCM.Implementation.Settings.Properties
 {
     internal sealed class AttributeSettingsPropertyDiscoverer : IAttributeSettingsPropertyDiscoverer
     {
-        public IEnumerable<string> DiscoveryTypes { get; } = new [] { "attributes" };
+        public IEnumerable<string> DiscoveryTypes { get; } = new[] { "attributes" };
 
         public IEnumerable<ISettingsPropertyDefinition> GetProperties(BaseSettings settings)
         {
@@ -62,7 +62,7 @@ namespace MCM.Implementation.Settings.Properties
                     ? new PropertyGroupDefinitionWrapper(groupAttrObj)
                     : SettingPropertyGroupAttribute.Default;
 
-                var propertyDefinitions = GetPropertyDefinitionWrappers(attributes).ToList();
+                var propertyDefinitions = SettingsUtils.GetPropertyDefinitionWrappers(attributes).ToList();
                 if (propertyDefinitions.Count > 0)
                 {
                     yield return new SettingsPropertyDefinition(propertyDefinitions,
@@ -71,51 +71,6 @@ namespace MCM.Implementation.Settings.Properties
                         subGroupDelimiter);
                 }
             }
-        }
-
-        private static IEnumerable<IPropertyDefinitionBase> GetPropertyDefinitionWrappers(IReadOnlyCollection<Attribute> attributes)
-        {
-            object? propAttr;
-
-            propAttr = attributes.SingleOrDefault(a => a is IPropertyDefinitionBool);
-            if (propAttr is not null)
-                yield return new PropertyDefinitionBoolWrapper(propAttr);
-
-            propAttr = attributes.SingleOrDefault(a => a is IPropertyDefinitionDropdown);
-            if (propAttr is not null)
-                yield return new PropertyDefinitionDropdownWrapper(propAttr);
-
-            propAttr = attributes.SingleOrDefault(a => a is IPropertyDefinitionGroupToggle);
-            if (propAttr is not null)
-                yield return new PropertyDefinitionGroupToggleWrapper(propAttr);
-
-            propAttr = attributes.SingleOrDefault(a => a is IPropertyDefinitionText);
-            if (propAttr is not null)
-                yield return new PropertyDefinitionTextWrapper(propAttr);
-
-            propAttr = attributes.SingleOrDefault(a => a is IPropertyDefinitionWithActionFormat);
-            if (propAttr is not null)
-                yield return new PropertyDefinitionWithActionFormatWrapper(propAttr);
-
-            propAttr = attributes.SingleOrDefault(a => a is IPropertyDefinitionWithCustomFormatter);
-            if (propAttr is not null)
-                yield return new PropertyDefinitionWithCustomFormatterWrapper(propAttr);
-
-            propAttr = attributes.SingleOrDefault(a => a is IPropertyDefinitionWithEditableMinMax);
-            if (propAttr is not null)
-                yield return new PropertyDefinitionWithEditableMinMaxWrapper(propAttr);
-
-            propAttr = attributes.SingleOrDefault(a => a is IPropertyDefinitionWithFormat);
-            if (propAttr is not null)
-                yield return new PropertyDefinitionWithFormatWrapper(propAttr);
-
-            propAttr = attributes.SingleOrDefault(a => a is IPropertyDefinitionWithId);
-            if (propAttr is not null)
-                yield return new PropertyDefinitionWithIdWrapper(propAttr);
-
-            propAttr = attributes.SingleOrDefault(a => a is IPropertyDefinitionWithMinMax);
-            if (propAttr is not null)
-                yield return new PropertyDefinitionWithMinMaxWrapper(propAttr);
         }
     }
 }

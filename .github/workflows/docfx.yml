@@ -22,54 +22,21 @@ env:
 jobs:
   docfx:
     name: DocFX documentation
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v2
+    - name: DocFX Setup
+      uses: butr/actions-docfx-setup@v3.0
       with:
-        submodules: recursive
-        fetch-depth: 0
+        github-token: ${{secrets.GITHUB_TOKEN}}
 
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@master
-      with:
-        dotnet-version: 5.0.x
-    - name: Setup BUTR GPR
-      uses: actions/setup-dotnet@master
-      with:
-        source-url: https://nuget.pkg.github.com/BUTR/index.json
-      env:
-        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
-
-    - name: Setup NuGet
-      uses: nuget/setup-nuget@v1
-      with:
-        nuget-version: 'latest'
-
-    - name: Ensure NuGet Source
-      uses: fabriciomurta/ensure-nuget-source@v1
-      with:
-        name: 'nuget.org'
-        url: 'https://api.nuget.org/v3/index.json'
-
-    - name: Generating Newtonsoft.Json xref maps
-      run: >-
-        dotnet run -p build/SandcastleXrefGenerator -- `
-            Newtonsoft.Json 11.0.2 netstandard2.0 `
-            https://www.newtonsoft.com/json/help/html/ `
-            $PWD/docs/xrefs/Newtonsoft.Json-xrefmap.yml
-      shell: pwsh
-
-    - name: Build MCM and DocFx.Plugin.LastModified
+    - name: Build MCM
       run: >-
         dotnet build src/MCM/MCM.csproj;
-        #dotnet build build/DocFx.Plugin.LastModified/DocFx.Plugin.LastModified --configuration Release --output docs/_template/last-modified/plugins;
       shell: pwsh
 
     - name: Run DocFX
       run: >-
         Copy-Item "README.md" -Destination "docs/index.md";
-        nuget install docfx.console -ExcludeVersion;
         if ($${{runner.os == 'Windows'}}) {
           docfx.console/tools/docfx.exe metadata docs/docfx.json;
           docfx.console/tools/docfx.exe build docs/docfx.json;

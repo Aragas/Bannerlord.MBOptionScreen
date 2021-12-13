@@ -68,12 +68,12 @@ namespace MCM.UI.GUI.ViewModels
 
             // new TaskFactory().StartNew(() =>
             // {
-                _cachedPresets = SettingsInstance.GetAvailablePresets().ToDictionary(pair => pair.Key, pair => pair.Value());
+            _cachedPresets = SettingsInstance.GetAvailablePresets().ToDictionary(pair => pair.Key, pair => pair.Value());
 
-                PresetsSelector = new SelectorVM<SelectorItemVM>(new List<string> { TextObjectHelper.Create("{=SettingsVM_Custom}Custom")?.ToString() ?? "ERROR" }.Concat(_cachedPresets.Keys.Select(x => TextObjectHelper.Create(x)?.ToString())), -1, null);
-                PresetsSelector.ItemList[0].CanBeSelected = false;
+            PresetsSelector = new SelectorVM<SelectorItemVM>(new List<string> { TextObjectHelper.Create("{=SettingsVM_Custom}Custom")?.ToString() ?? "ERROR" }.Concat(_cachedPresets.Keys.Select(x => TextObjectHelper.Create(x)?.ToString())), -1, null);
+            PresetsSelector.ItemList[0].CanBeSelected = false;
 
-                RecalculateIndex();
+            RecalculateIndex();
             // });
 
             // Can easily backfire as I do not hold the reference

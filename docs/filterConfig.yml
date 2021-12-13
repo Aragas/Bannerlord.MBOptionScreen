@@ -1,0 +1,10 @@
+apiRules:
+- exclude:
+    uidRegex: ^HarmonyLib\.BUTR\.Extensions$
+    type: Namespace
+- exclude:
+    uidRegex: ^Bannerlord\.BUTR\.Shared$
+    type: Namespace
+- exclude:
+    uidRegex: ^BUTR\.DependencyInjection$
+    type: Namespace

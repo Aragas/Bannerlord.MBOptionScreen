@@ -6,10 +6,16 @@
     <AssemblyName>ModLib.Definitions</AssemblyName>
     <RootNamespace>ModLib.Definitions</RootNamespace>
     <Configurations>Debug;Release</Configurations>
+    <!--Some code analyzers don't support common.props parsing-->
+    <TargetFrameworks Condition=" '$(TargetFrameworks)' == '' ">net472</TargetFrameworks>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="BUTR.Harmony.Analyzer" Version="$(HarmonyAnalyzerVersion)">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
