@@ -8,7 +8,7 @@
     <ButterLibVersion>1.0.31</ButterLibVersion>
     <UIExtenderExVersion>2.1.8</UIExtenderExVersion>
     <BuildResourcesVersion>1.0.0.39</BuildResourcesVersion>
-    <BUTRSharedVersion>1.6.1.61</BUTRSharedVersion>
+    <BUTRSharedVersion>2.0.0.69</BUTRSharedVersion>
     <BUTRDependencyInjectionVersion>1.0.0.19</BUTRDependencyInjectionVersion>
     <HarmonyExtensionsVersion>2.0.0.51</HarmonyExtensionsVersion>
     <HarmonyAnalyzerVersion>1.0.1.15</HarmonyAnalyzerVersion>
