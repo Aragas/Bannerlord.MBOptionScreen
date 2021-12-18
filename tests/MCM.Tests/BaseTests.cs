@@ -1,7 +1,6 @@
 ﻿extern alias v4;
 
 using Bannerlord.BUTR.Shared.Helpers;
-using Bannerlord.BUTR.Shared.ModuleInfoExtended;
 using Bannerlord.ButterLib;
 using Bannerlord.ButterLib.SubModuleWrappers;
 
@@ -14,6 +13,8 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
 using TaleWorlds.Engine;
+
+using v4::Bannerlord.ModuleManager;
 
 using v4::MCM;
 using v4::MCM.Implementation;
@@ -34,9 +35,9 @@ namespace MCM.Tests
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private static bool MockedGetLoadedModules(ref IEnumerable<ModuleInfo2> __result)
+        private static bool MockedGetLoadedModules(ref IEnumerable<ModuleInfoExtended> __result)
         {
-            __result = new List<ModuleInfo2>();
+            __result = new List<ModuleInfoExtended>();
             return false;
         }
 
