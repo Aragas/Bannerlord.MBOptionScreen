@@ -1,7 +1,9 @@
 ﻿using Bannerlord.BUTR.Shared.Helpers;
+using Bannerlord.ButterLib;
 using Bannerlord.ButterLib.Common.Extensions;
 using Bannerlord.ButterLib.DelayedSubModule;
 using Bannerlord.ButterLib.HotKeys;
+using Bannerlord.ButterLib.SubSystems;
 using Bannerlord.UIExtenderEx;
 
 using BUTR.DependencyInjection;
@@ -10,10 +12,14 @@ using BUTR.DependencyInjection.Extensions;
 using BUTR.DependencyInjection.Logger;
 
 using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
+using MCM.Abstractions.FluentBuilder;
+using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings.Base;
 using MCM.Extensions;
 using MCM.UI.ButterLib;
+using MCM.UI.Extensions;
 using MCM.UI.Functionality;
 using MCM.UI.Functionality.Injectors;
 using MCM.UI.GUI.GauntletUI;
@@ -27,6 +33,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using SandBox;
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -34,7 +41,10 @@ using System.Text;
 using System.Windows.Forms;
 
 using TaleWorlds.Engine.Screens;
+using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
+
+using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
 namespace MCM.UI
 {
