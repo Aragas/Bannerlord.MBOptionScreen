@@ -119,6 +119,9 @@ namespace MCM.UI
             var viewmodelwrapperHarmony = new Harmony("bannerlord.mcm.ui.viewmodelpatch");
             ViewModelPatch.Patch(viewmodelwrapperHarmony);
 
+            var optionsGauntletScreenHarmony = new Harmony("bannerlord.mcm.ui.optionsgauntletscreenpatch");
+            OptionsGauntletScreenPatch.Patch(optionsGauntletScreenHarmony);
+
 
             DelayedSubModuleManager.Register<SandBoxSubModule>();
             DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
