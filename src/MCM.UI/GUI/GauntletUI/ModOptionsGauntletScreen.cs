@@ -50,7 +50,7 @@ namespace MCM.UI.GUI.GauntletUI
             _spriteCategoryEncyclopedia = spriteData.SpriteCategories.TryGetValue("ui_encyclopedia", out var spriteCategoryEncyclopediaVal) ? spriteCategoryEncyclopediaVal : null;
             if (ApplicationVersionHelper.GameVersion() is { } gameVersion)
             {
-                if (gameVersion.Major >= 1 && gameVersion.Minor >= 6 && gameVersion.Revision >= 1)
+                if ((gameVersion.Major >= 1 && gameVersion.Minor >= 6 && gameVersion.Revision >= 1) || (gameVersion.Major >= 1 && gameVersion.Minor >= 7))
                     _spriteCategorySaveLoad = spriteData.SpriteCategories.TryGetValue("ui_saveload", out var spriteCategorySaveLoadVal) ? spriteCategorySaveLoadVal : null;
             }
             _spriteCategoryEncyclopedia?.Load(resourceContext, uiresourceDepot);
