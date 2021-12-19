@@ -4,8 +4,6 @@ using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
 using MCM.Abstractions.Settings.Base.Global;
 
-using Microsoft.Extensions.Logging;
-
 using System.Collections.Generic;
 
 using TaleWorlds.Localization;

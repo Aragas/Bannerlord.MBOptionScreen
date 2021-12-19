@@ -3,8 +3,6 @@
 using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
-using MCM.UI.Utils;
-
 using SandBox.View.Map;
 
 using System;
@@ -69,7 +67,7 @@ namespace MCM.UI.Functionality
             foreach (var (key, value) in ScreensCache)
             {
                 var (index, screenFactory, text) = value;
-                var escapeMenuItemVM = EscapeMenuItemVMUtils.Create(text,
+                var escapeMenuItemVM = new EscapeMenuItemVM(text,
                     _ =>
                     {
                         var screen = screenFactory();
@@ -79,7 +77,7 @@ namespace MCM.UI.Functionality
                             ScreenManager.PushScreen(screen);
                         }
                     },
-                    key, false);
+                    key, new Tuple<bool, TextObject>(false, null!));
                 if (escapeMenuItemVM is null)
                 {
                     return;
@@ -93,7 +91,7 @@ namespace MCM.UI.Functionality
             foreach (var (key, value) in ScreensCache)
             {
                 var (index, screenFactory, text) = value;
-                var escapeMenuItemVM = EscapeMenuItemVMUtils.Create(text,
+                var escapeMenuItemVM = new EscapeMenuItemVM(text,
                     _ =>
                     {
                         var screen = screenFactory();
@@ -103,7 +101,7 @@ namespace MCM.UI.Functionality
                             ScreenManager.PushScreen(screen);
                         }
                     },
-                    key, false);
+                    key, new Tuple<bool, TextObject>(false, null!));
                 if (escapeMenuItemVM is null)
                 {
                     return;
@@ -135,9 +133,9 @@ namespace MCM.UI.Functionality
             if (_instance.TryGetTarget(out var instance) && DataSource is not null)
             {
                 var dataSource = DataSource(instance);
-                var escapeMenuItemVM = EscapeMenuItemVMUtils.Create(text,
+                var escapeMenuItemVM = new EscapeMenuItemVM(text,
                     _ => ScreenManager.PushScreen(screenFactory()),
-                    internalName, false);
+                    internalName, new Tuple<bool, TextObject>(false, null!));
                 if (escapeMenuItemVM is null)
                 {
                     return;

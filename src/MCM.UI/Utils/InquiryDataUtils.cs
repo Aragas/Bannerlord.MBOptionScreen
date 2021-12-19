@@ -16,6 +16,9 @@ namespace MCM.UI.Utils
         }
     }
 
+    /// <summary>
+    /// Introduced V1, V2 by e1.7.0
+    /// </summary>
     internal static class InquiryDataUtils
     {
         private delegate object V1Delegate(

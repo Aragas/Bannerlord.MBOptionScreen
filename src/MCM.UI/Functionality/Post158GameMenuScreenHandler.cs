@@ -5,8 +5,6 @@ using BUTR.DependencyInjection.Logger;
 using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
-using MCM.UI.Utils;
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -16,6 +14,7 @@ using System.Runtime.CompilerServices;
 using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
+using TaleWorlds.MountAndBlade;
 using TaleWorlds.MountAndBlade.ViewModelCollection;
 
 namespace MCM.UI.Functionality
@@ -47,7 +46,7 @@ namespace MCM.UI.Functionality
             {
                 var (index, screenFactory, text) = value;
 
-                var initialState = InitialStateOptionUtils.Create(key,
+                var initialState = new InitialStateOption(key,
                     text,
                     9000,
                     () =>
@@ -56,7 +55,7 @@ namespace MCM.UI.Functionality
                         if (screen is not null)
                             ScreenManager.PushScreen(screen);
                     },
-                    () => false);
+                    () => (false, null));
                 if (initialState is null)
                 {
                     return;
@@ -72,7 +71,7 @@ namespace MCM.UI.Functionality
 
             if (_instance.TryGetTarget(out var instance))
             {
-                var initialState = InitialStateOptionUtils.Create(internalName,
+                var initialState = new InitialStateOption(internalName,
                     text,
                     index,
                     () =>
@@ -81,7 +80,7 @@ namespace MCM.UI.Functionality
                         if (screen is not null)
                             ScreenManager.PushScreen(screen);
                     },
-                    () => false);
+                    () => (false, null));
                 if (initialState is null)
                 {
                     _logger.LogError("AddScreen: 'initialState' was null! Something was changed again by the game!");

@@ -4,6 +4,9 @@ using System;
 
 namespace MCM.UI.Utils
 {
+    /// <summary>
+    /// Introduced V1, V2 by e1.7.0
+    /// </summary>
     internal static class InformationManagerUtils
     {
         private delegate void ShowInquiryV1Delegate(object data, bool pauseGameActiveState = false);
