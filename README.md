@@ -64,3 +64,11 @@ It provides 5 types of options:
 * Dropdown  
   
 The settings can be defined at compile time by using the Attribute API and at runtime by using the Fluent Builder.  
+
+## Installation
+Add this to your `.csproj`. Please not that `IncludeAssets="compile"` is very important!
+```xml
+  <ItemGroup>
+    <PackageReference Include="Bannerlord.MCM" Version="4.3.16" IncludeAssets="compile" />
+  </ItemGroup>
+```
