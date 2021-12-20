@@ -7,7 +7,6 @@ using MCM.Abstractions.Settings.Formats;
 using MCM.Abstractions.Settings.Properties;
 using MCM.Extensions;
 using MCM.LightInject;
-using MCM.Utils;
 
 using TaleWorlds.MountAndBlade;
 
@@ -17,6 +16,8 @@ namespace MCM
 {
     public sealed class MCMSubModule : MBSubModuleBase
     {
+        internal static IBUTRLogger<MCMSubModule> Logger = new DefaultBUTRLogger<MCMSubModule>();
+
         internal static ServiceContainer LightInjectServiceContainer = new();
 
         public static MCMSubModule? Instance { get; private set; }
@@ -42,8 +43,8 @@ namespace MCM
                 services.AddSettingsFormat<MemorySettingsFormat>();
                 services.AddSettingsPropertyDiscoverer<NoneSettingsPropertyDiscoverer>();
 
-                services.AddTransient<IBUTRLogger, BUTRLogger>();
-                services.AddTransient(typeof(IBUTRLogger<>), typeof(BUTRLogger<>));
+                services.AddTransient<IBUTRLogger, DefaultBUTRLogger>();
+                services.AddTransient(typeof(IBUTRLogger<>), typeof(DefaultBUTRLogger<>));
             }
         }
 
@@ -71,6 +72,7 @@ namespace MCM
                 OnBeforeInitialModuleScreenSetAsRootWasCalled = true;
 
                 GenericServiceProvider.ServiceProvider = ServiceCollectionExtensions.ServiceContainer.Build();
+                Logger = GenericServiceProvider.ServiceProvider.GetService<IBUTRLogger<MCMSubModule>>() ?? Logger;
             }
         }
 
