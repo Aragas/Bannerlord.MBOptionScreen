@@ -10,6 +10,17 @@ MCMv4 also provides compatibility layers for other API's (Modules):
 
 The compatibility layers replace the original libraries to ensure maximum compatibility with MCM.
 
+## Installation
+### Players
+Requires ``Bannerlord.Harmony`, ``Bannerlord.UIExtenderEx`, ``Bannerlord.ButterLib`.
+### Developers
+Add this to your `.csproj`. Please not that `IncludeAssets="compile"` is very important!
+```xml
+  <ItemGroup>
+    <PackageReference Include="Bannerlord.MCM" Version="4.3.16" IncludeAssets="compile" />
+  </ItemGroup>
+```
+
 ## Supported API
 MCMv4 support 6 API sets:
 * **MCMv4** - main API.
