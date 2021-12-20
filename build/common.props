@@ -75,4 +75,11 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup Condition="'$(GITHUB_ACTIONS)' != 'true'">
+    <PackageReference Include="BUTR.Harmony.Analyzer" Version="$(HarmonyAnalyzerVersion)">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
 </Project>
