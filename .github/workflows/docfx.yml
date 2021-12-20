@@ -10,6 +10,7 @@ on:
       - '.github/workflows/docfx.yml'
       - 'src/MCM/**.cs'
       - 'docs/**'
+  workflow_dispatch:
 
 env:
   # Disable the .NET logo in the console output.
