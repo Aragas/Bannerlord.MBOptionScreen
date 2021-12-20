@@ -19,8 +19,6 @@
     <EmbeddedResource Include="GUI\v2\Brushes\SettingsValueDisplayBrush.xml" />
     <EmbeddedResource Include="GUI\v2\Brushes\CompatibilityBrushes.xml" />
     <EmbeddedResource Include="GUI\v2\Brushes\TextBrushes.xml" />
-
-    <EmbeddedResource Include="GUI\v2\Prefabs\EditValueView.xml" />
     <EmbeddedResource Include="GUI\v2\Prefabs\ModOptionsPageView.xml" />
     <EmbeddedResource Include="GUI\v2\Prefabs\ModOptionsView.xml" />
     <EmbeddedResource Include="GUI\v2\Prefabs\SettingsItemView.xml" />

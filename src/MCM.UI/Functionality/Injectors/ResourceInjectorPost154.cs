@@ -18,7 +18,6 @@ namespace MCM.UI.Functionality.Injectors
             BrushFactoryManager.CreateAndRegister(Load("MCM.UI.GUI.v2.Brushes.TextBrushes.xml"));
 
             WidgetFactoryManager.CreateAndRegister("ModOptionsView_MCM", Load("MCM.UI.GUI.v2.Prefabs.ModOptionsView.xml"));
-            WidgetFactoryManager.CreateAndRegister("EditValueView_MCM", Load("MCM.UI.GUI.v2.Prefabs.EditValueView.xml"));
             WidgetFactoryManager.CreateAndRegister("DropdownWithHorizontalControlCheckboxView_v2", Load("MCM.UI.GUI.v2.Prefabs.DropdownWithHorizontalControl.Checkbox.xml"));
             WidgetFactoryManager.CreateAndRegister("ModOptionsPageView_v2", Load("MCM.UI.GUI.v2.Prefabs.ModOptionsPageView.xml"));
             WidgetFactoryManager.CreateAndRegister("SettingsItemView_v2", Load("MCM.UI.GUI.v2.Prefabs.SettingsItemView.xml"));

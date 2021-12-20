@@ -61,8 +61,6 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public bool IsEnabled => Group.GroupToggle;
         [DataSourceProperty]
-        public bool HasEditableText { get; }
-        [DataSourceProperty]
         public bool IsSettingVisible
         {
             get
@@ -160,9 +158,16 @@ namespace MCM.UI.GUI.ViewModels
         }
 
         [DataSourceProperty]
-        public float MaxValue => (float) SettingPropertyDefinition.MaxValue;
+        public int MaxInt => (int) SettingPropertyDefinition.MaxValue;
         [DataSourceProperty]
-        public float MinValue => (float) SettingPropertyDefinition.MinValue;
+        public int MinInt => (int) SettingPropertyDefinition.MinValue;
+        [DataSourceProperty]
+        public float MaxFloat => (float) SettingPropertyDefinition.MaxValue;
+        [DataSourceProperty]
+        public float MinFloat => (float) SettingPropertyDefinition.MinValue;
+
+        [DataSourceProperty]
+        public bool HasNoEditableText { get; }
         [DataSourceProperty]
         public string TextBoxValue => SettingType switch
         {
@@ -193,7 +198,7 @@ namespace MCM.UI.GUI.ViewModels
             IsDropdownDefaultVisible = SettingType == SettingType.Dropdown && SettingsUtils.IsForTextDropdown(PropertyReference.Value);
             IsDropdownCheckboxVisible = SettingType == SettingType.Dropdown && SettingsUtils.IsForCheckboxDropdown(PropertyReference.Value);
             IsDropdownVisible = IsDropdownDefaultVisible || IsDropdownCheckboxVisible;
-            HasEditableText = IsIntVisible || IsFloatVisible;
+            HasNoEditableText = !(IsIntVisible || IsFloatVisible);
             // Moved to constructor
 
             PropertyReference.PropertyChanged += PropertyReference_OnPropertyChanged;
@@ -319,10 +324,6 @@ namespace MCM.UI.GUI.ViewModels
             IsSelected = false;
             MainView.HintText = string.Empty;
         }
-
-        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
-        [SuppressMessage("Redundancy", "RCS1213:Remove unused member declaration.", Justification = "Reflection is used.")]
-        public void OnValueClick() => ScreenManager.PushScreen(new EditValueGauntletScreen(this));
 
         public override string ToString() => Name;
         public override int GetHashCode() => Name.GetHashCode();
