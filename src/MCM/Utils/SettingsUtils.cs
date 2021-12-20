@@ -1,4 +1,8 @@
-﻿using HarmonyLib.BUTR.Extensions;
+﻿using Bannerlord.BUTR.Shared.Extensions;
+
+using BUTR.DependencyInjection.Logger;
+
+using HarmonyLib.BUTR.Extensions;
 
 using MCM.Abstractions;
 using MCM.Abstractions.Common;
@@ -29,7 +33,7 @@ namespace MCM.Utils
                 if (prop.SettingType != SettingType.Dropdown && !propertyRef.PropertyInfo.CanWrite)
                     throw new Exception($"Property {propertyRef.PropertyInfo.Name} in {settings.GetType().FullName} must have a setter.");
 
-                if (prop.SettingType == SettingType.Float || prop.SettingType == SettingType.Int)
+                if (prop.SettingType is SettingType.Float or SettingType.Int)
                 {
                     if (prop.MinValue == prop.MaxValue)
                         throw new Exception($"Property {propertyRef.PropertyInfo.Name} in {settings.GetType().FullName} is a numeric type but the MinValue and MaxValue are the same.");
@@ -50,6 +54,7 @@ namespace MCM.Utils
             else if (Activator.CreateInstance(settings.GetType()) is BaseSettings copySettings)
                 OverrideSettings(settings, copySettings);
         }
+
         public static void OverrideSettings(BaseSettings settings, BaseSettings overrideSettings)
         {
             OverrideValues(settings, overrideSettings);
@@ -58,16 +63,15 @@ namespace MCM.Utils
 
         public static bool Equals(BaseSettings settings1, BaseSettings settings2)
         {
-            var set1 = settings1.GetAllSettingPropertyDefinitions().ToList();
-            var set2 = settings2.GetAllSettingPropertyDefinitions().ToList();
+            var setDict1 = settings1.GetAllSettingPropertyDefinitions().ToDictionary(x => (x.DisplayName, x.GroupName), x => x);
+            var setDict2 = settings2.GetAllSettingPropertyDefinitions().ToDictionary(x => (x.DisplayName, x.GroupName), x => x);
 
-            foreach (var settingsPropertyDefinition1 in set1)
+            if (setDict1.Count != setDict2.Count)
+                return false;
+
+            foreach (var (id, spd1) in setDict1)
             {
-                var settingsPropertyDefinition2 = set2.Find(x =>
-                    x.DisplayName == settingsPropertyDefinition1.DisplayName &&
-                    x.GroupName == settingsPropertyDefinition1.GroupName);
-
-                if (!Equals(settingsPropertyDefinition1, settingsPropertyDefinition2))
+                if (!setDict2.TryGetValue(id, out var spd2) || !Equals(spd1, spd2))
                     return false;
             }
 
@@ -111,32 +115,34 @@ namespace MCM.Utils
 
         public static void OverrideValues(BaseSettings current, BaseSettings @new)
         {
-            foreach (var newSettingPropertyGroup in @new.GetSettingPropertyGroups())
+            var currentDict = current.GetUnsortedSettingPropertyGroups().ToDictionary(x => x.GroupName, x => x);
+
+            foreach (var nspg in @new.GetUnsortedSettingPropertyGroups())
             {
-                var settingPropertyGroup = current.GetSettingPropertyGroups()
-                    .Find(x => x.GroupName == newSettingPropertyGroup.GroupName);
-                if (settingPropertyGroup is not null)
-                    OverrideValues(settingPropertyGroup, newSettingPropertyGroup);
-                // else log
+                if (currentDict.TryGetValue(nspg.GroupName, out var spg))
+                    OverrideValues(spg, nspg);
+                else
+                    MCMSubModule.Logger.LogWarning("{NewId}::{GroupName} was not found on, {CurrentId}", @new.Id, nspg.GroupName, current.Id);
             }
         }
         public static void OverrideValues(SettingsPropertyGroupDefinition current, SettingsPropertyGroupDefinition @new)
         {
-            foreach (var newSettingPropertyGroup in @new.SubGroups)
+            var currentSubGroups = current.SubGroups.ToDictionary(x => x.GroupName, x => x);
+            var currentSettingProperties = current.SettingProperties.ToDictionary(x => x.DisplayName, x => x);
+
+            foreach (var nspg in @new.SubGroups)
             {
-                var settingPropertyGroup = current.SubGroups
-                    .FirstOrDefault(x => x.GroupName == newSettingPropertyGroup.GroupName);
-                if (settingPropertyGroup is not null)
-                    OverrideValues(settingPropertyGroup, newSettingPropertyGroup);
-                // else log
+                if (currentSubGroups.TryGetValue(nspg.GroupName, out var spg))
+                    OverrideValues(spg, nspg);
+                else
+                    MCMSubModule.Logger.LogWarning("{NewId}::{GroupName} was not found on, {CurrentId}", @new.DisplayGroupName, nspg.GroupName, current.DisplayGroupName);
             }
-            foreach (var newSettingProperty in @new.SettingProperties)
+            foreach (var nsp in @new.SettingProperties)
             {
-                var settingProperty = current.SettingProperties
-                    .FirstOrDefault(x => x.DisplayName == newSettingProperty.DisplayName);
-                if (settingProperty is not null)
-                    OverrideValues(settingProperty, newSettingProperty);
-                // else log
+                if (currentSettingProperties.TryGetValue(nsp.DisplayName, out var sp))
+                    OverrideValues(sp, nsp);
+                else
+                    MCMSubModule.Logger.LogWarning("{NewId}::{GroupName} was not found on, {CurrentId}", @new.DisplayGroupName, nsp.DisplayName, current.DisplayGroupName);
             }
         }
         public static void OverrideValues(ISettingsPropertyDefinition current, ISettingsPropertyDefinition @new)
@@ -164,13 +170,9 @@ namespace MCM.Utils
         public static bool IsForTextDropdown(object? obj) => obj is not null && IsForTextDropdown(obj.GetType());
         public static bool IsForCheckboxDropdown(object? obj) => obj is not null && IsForCheckboxDropdown(obj.GetType());
 
-        public static object GetSelector(object dropdown)
-        {
-            var selectorProperty = AccessTools2.Property(dropdown.GetType(), "Selector");
-            return selectorProperty?.GetValue(dropdown) is { } value
-                ? value
-                : MCMSelectorVM<MCMSelectorItemVM>.Empty;
-        }
+        public static object GetSelector(object dropdown) => AccessTools2.Property(dropdown.GetType(), "Selector")?.GetValue(dropdown) is { } value
+            ? value
+            : MCMSelectorVM<MCMSelectorItemVM>.Empty;
 
         public static IEnumerable<ISettingsPropertyDefinition> GetAllSettingPropertyDefinitions(SettingsPropertyGroupDefinition settingPropertyGroup1)
         {
@@ -187,21 +189,20 @@ namespace MCM.Utils
                 }
             }
         }
-        public static IEnumerable<SettingsPropertyGroupDefinition> GetAllSettingPropertyGroupDefinitions(SettingsPropertyGroupDefinition settingPropertyGroup1)
+        public static IEnumerable<SettingsPropertyGroupDefinition> GetAllSettingPropertyGroupDefinitions(SettingsPropertyGroupDefinition settingPropertyGroup)
         {
-            yield return settingPropertyGroup1;
+            yield return settingPropertyGroup;
 
-            foreach (var settingPropertyGroup in settingPropertyGroup1.SubGroups)
-                yield return settingPropertyGroup;
+            foreach (var settingPropertyGroup1 in settingPropertyGroup.SubGroups)
+                yield return settingPropertyGroup1;
         }
-
         public static List<SettingsPropertyGroupDefinition> GetSettingsPropertyGroups(char subGroupDelimiter, IEnumerable<ISettingsPropertyDefinition> settingsPropertyDefinitions)
         {
             var groups = new List<SettingsPropertyGroupDefinition>();
-            foreach (var settingProp in settingsPropertyDefinitions)
+            foreach (var settingsPropertyDefinition in settingsPropertyDefinitions)
             {
-                var group = GetGroupFor(subGroupDelimiter, settingProp, groups);
-                group.Add(settingProp);
+                var group = GetGroupFor(subGroupDelimiter, settingsPropertyDefinition, groups);
+                group.Add(settingsPropertyDefinition);
             }
             return groups;
         }

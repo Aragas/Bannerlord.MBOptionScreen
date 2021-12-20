@@ -22,35 +22,34 @@ namespace MCM.UI.Utils
         /// <param name="new"></param>
         public static void OverrideValues(UndoRedoStack urs, BaseSettings current, BaseSettings @new)
         {
-            foreach (var newSettingPropertyGroup in @new.GetAllSettingPropertyGroupDefinitions())
+            var currentDict = current.GetUnsortedSettingPropertyGroups().ToDictionary(x => x.GroupName, x => x);
+
+            foreach (var nspg in @new.GetAllSettingPropertyGroupDefinitions())
             {
-                var settingPropertyGroup = current.GetAllSettingPropertyGroupDefinitions()
-                    .FirstOrDefault(x => x.GroupName == newSettingPropertyGroup.GroupName);
-                if (settingPropertyGroup is not null)
-                    OverrideValues(urs, settingPropertyGroup, newSettingPropertyGroup);
+                if (currentDict.TryGetValue(nspg.GroupName, out var spg))
+                    OverrideValues(urs, spg, nspg);
                 else
-                    MCMUISubModule.Logger.LogWarning("{NewId}::{GroupName} was not found on, {CurrentId}", @new.Id, newSettingPropertyGroup.GroupName, current.Id);
+                    MCMUISubModule.Logger.LogWarning("{NewId}::{GroupName} was not found on, {CurrentId}", @new.Id, nspg.GroupName, current.Id);
             }
         }
         public static void OverrideValues(UndoRedoStack urs, SettingsPropertyGroupDefinition current, SettingsPropertyGroupDefinition @new)
         {
-            foreach (var newSettingPropertyGroup in @new.SubGroups)
+            var currentSubGroups = current.SubGroups.ToDictionary(x => x.GroupName, x => x);
+            var currentSettingProperties = current.SettingProperties.ToDictionary(x => x.DisplayName, x => x);
+
+            foreach (var nspg in @new.SubGroups)
             {
-                var settingPropertyGroup = current.SubGroups
-                    .FirstOrDefault(x => x.GroupName == newSettingPropertyGroup.GroupName);
-                if (settingPropertyGroup is not null)
-                    OverrideValues(urs, settingPropertyGroup, newSettingPropertyGroup);
+                if (currentSubGroups.TryGetValue(nspg.GroupName, out var spg))
+                    OverrideValues(urs, spg, nspg);
                 else
-                    MCMUISubModule.Logger.LogWarning("{NewId}::{GroupName} was not found on, {CurrentId}", @new.DisplayGroupName, newSettingPropertyGroup.GroupName, current.DisplayGroupName);
+                    MCMUISubModule.Logger.LogWarning("{NewId}::{GroupName} was not found on, {CurrentId}", @new.DisplayGroupName, nspg.GroupName, current.DisplayGroupName);
             }
-            foreach (var newSettingProperty in @new.SettingProperties)
+            foreach (var nsp in @new.SettingProperties)
             {
-                var settingProperty = current.SettingProperties
-                    .FirstOrDefault(x => x.DisplayName == newSettingProperty.DisplayName);
-                if (settingProperty is not null)
-                    OverrideValues(urs, settingProperty, newSettingProperty);
+                if (currentSettingProperties.TryGetValue(nsp.DisplayName, out var sp))
+                    OverrideValues(urs, sp, nsp);
                 else
-                    MCMUISubModule.Logger.LogWarning("{NewId}::{GroupName} was not found on, {CurrentId}", @new.DisplayGroupName, newSettingProperty.DisplayName, current.DisplayGroupName);
+                    MCMUISubModule.Logger.LogWarning("{NewId}::{GroupName} was not found on, {CurrentId}", @new.DisplayGroupName, nsp.DisplayName, current.DisplayGroupName);
             }
         }
         public static void OverrideValues(UndoRedoStack urs, ISettingsPropertyDefinition current, ISettingsPropertyDefinition @new)
