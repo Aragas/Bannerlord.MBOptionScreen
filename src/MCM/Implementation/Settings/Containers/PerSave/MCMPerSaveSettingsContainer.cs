@@ -39,10 +39,10 @@ namespace MCM.Implementation.Settings.Containers.PerSave
             if (behavior is null)
                 return false;
 
-            if (settings is not PerSaveSettings || !LoadedSettings.ContainsKey(settings.Id))
+            if (settings is not PerSaveSettings saveSettings || !LoadedSettings.ContainsKey(saveSettings.Id))
                 return false;
 
-            return behavior.SaveSettings((PerSaveSettings) settings);
+            return behavior.SaveSettings(saveSettings);
         }
 
         public void OnGameStarted(Game game)

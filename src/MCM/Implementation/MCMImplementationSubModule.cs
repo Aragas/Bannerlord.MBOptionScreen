@@ -6,6 +6,7 @@ using MCM.Abstractions.Settings.Providers;
 using MCM.Extensions;
 using MCM.Implementation.FluentBuilder;
 using MCM.Implementation.Settings.Containers.Global;
+using MCM.Implementation.Settings.Containers.PerCampaign;
 using MCM.Implementation.Settings.Containers.PerSave;
 using MCM.Implementation.Settings.Formats.Json;
 using MCM.Implementation.Settings.Formats.Json2;
@@ -33,6 +34,8 @@ namespace MCM.Implementation
                 services.AddSettingsContainer<IMCMGlobalSettingsContainer, MCMGlobalSettingsContainer>();
                 services.AddSettingsContainer<IMCMFluentPerSaveSettingsContainer, FluentPerSaveSettingsContainer>();
                 services.AddSettingsContainer<IMCMPerSaveSettingsContainer, MCMPerSaveSettingsContainer>();
+                services.AddSettingsContainer<IMCMFluentPerCampaignSettingsContainer, FluentPerCampaignSettingsContainer>();
+                services.AddSettingsContainer<IMCMPerCampaignSettingsContainer, MCMPerCampaignSettingsContainer>();
 
                 services.AddSettingsFormat<IJsonSettingsFormat, JsonSettingsFormat>();
                 services.AddSettingsFormat<IJson2SettingsFormat, Json2SettingsFormat>();
