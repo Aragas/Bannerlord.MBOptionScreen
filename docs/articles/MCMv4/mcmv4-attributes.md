@@ -74,25 +74,25 @@ To understand how to format the strings take a look at [this](https://docs.micro
   
 #### Dropdown (@"MCM.Abstractions.Attributes.v2.SettingPropertyDropdownAttribute?text=SettingPropertyDropdown")
 ```csharp
-[SettingPropertyDropdown("Setting Name")]
+[SettingPropertyDropdown("Setting Name", Order = 4, RequireRestart = false, HintText = "Setting explanation.")]
 [SettingPropertyGroup("Main Group Name/Nested Group Name/Second Nested Group Name")]
-public DropdownDefault <string> SettingVariableName { get; set; } = new DropdownDefault <string>(new string[]
+public DropdownDefault<string> SettingVariableName { get; set; } = new DropdownDefault<string>(new string[]
 {
     "Test1",
     "Test2",
     "Test3"
-}, 0);
+}, selectedIndex: 0);
 ```
 It can also use custom classes. Don't forget to override .ToString()!
 ```csharp
-[SettingPropertyDropdown("Setting Name")]
+[SettingPropertyDropdown("Setting Name", Order = 5, RequireRestart = false, HintText = "Setting explanation.")]
 [SettingPropertyGroup("Main Group Name/Nested Group Name/Second Nested Group Name")]
 public DropdownDefault <CustomObject> SettingVariableName { get; set; } = new DropdownDefault <CustomObject>(new CustomObject[]
 {
     new CustomObject("Test1"),
     new CustomObject("Test2"),
     new CustomObject("Test3")
-}, 0);
+}, selectedIndex: 0);
 public class CustomObject
 {
     private readonly string _value;
@@ -105,7 +105,7 @@ public class CustomObject
 #### Ordering
 You can order properties via the [``Order``](xref:MCM.Abstractions.Attributes.BaseSettingPropertyAttribute#collapsible-MCM_Abstractions_Attributes_BaseSettingPropertyAttribute_Order) attribute property
 ```csharp
-[SettingPropertyText("Setting Name", Order = 3)]
+[SettingPropertyText("Setting Name", Order = 6)]
 public string SettingVariableName { get; set; } = "The textbox data is here";
 ```
 

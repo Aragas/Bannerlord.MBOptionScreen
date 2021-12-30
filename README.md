@@ -67,7 +67,7 @@ The settings can be defined at compile time by using the Attribute API and at ru
 
 ## Installation
 ### Players
-Requires ``Bannerlord.Harmony`, ``Bannerlord.UIExtenderEx`, ``Bannerlord.ButterLib`.
+Requires `Bannerlord.Harmony`, `Bannerlord.UIExtenderEx`, `Bannerlord.ButterLib`.
 ### Developers
 Add this to your `.csproj`. Please not that `IncludeAssets="compile"` is very important!
 ```xml
