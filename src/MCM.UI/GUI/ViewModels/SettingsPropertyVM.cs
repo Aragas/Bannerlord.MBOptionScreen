@@ -59,6 +59,8 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public bool IsDropdownCheckboxVisible { get; }
         [DataSourceProperty]
+        public bool IsButtonVisible { get; }
+        [DataSourceProperty]
         public bool IsEnabled => Group.GroupToggle;
         [DataSourceProperty]
         public bool HasEditableText { get; }
@@ -164,6 +166,8 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public float MinValue => (float) SettingPropertyDefinition.MinValue;
         [DataSourceProperty]
+        public string ButtonContent => SettingPropertyDefinition.Content;
+        [DataSourceProperty]
         public string TextBoxValue => SettingType switch
         {
             SettingType.Int when PropertyReference.Value is int val => string.IsNullOrWhiteSpace(ValueFormat)
@@ -193,6 +197,7 @@ namespace MCM.UI.GUI.ViewModels
             IsDropdownDefaultVisible = SettingType == SettingType.Dropdown && SettingsUtils.IsForTextDropdown(PropertyReference.Value);
             IsDropdownCheckboxVisible = SettingType == SettingType.Dropdown && SettingsUtils.IsForCheckboxDropdown(PropertyReference.Value);
             IsDropdownVisible = IsDropdownDefaultVisible || IsDropdownCheckboxVisible;
+            IsButtonVisible = SettingType == SettingType.Button;
             HasEditableText = IsIntVisible || IsFloatVisible;
             // Moved to constructor
 
@@ -275,6 +280,8 @@ namespace MCM.UI.GUI.ViewModels
                     break;
                 case SettingType.Dropdown:
                     OnPropertyChanged(nameof(DropdownValue));
+                    break;
+                case SettingType.Button:
                     break;
             }
             OnPropertyChanged(nameof(TextBoxValue));

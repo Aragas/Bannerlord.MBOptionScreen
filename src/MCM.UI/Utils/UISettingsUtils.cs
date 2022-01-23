@@ -8,6 +8,7 @@ using MCM.Utils;
 
 using Microsoft.Extensions.Logging;
 
+using System;
 using System.Linq;
 
 namespace MCM.UI.Utils
@@ -73,6 +74,8 @@ namespace MCM.UI.Utils
                     break;
                 case SettingType.Dropdown when @new.PropertyReference.Value is { } val:
                     urs.Do(new SetSelectedIndexAction(current.PropertyReference, new SelectedIndexWrapper(val)));
+                    break;
+                case SettingType.Button when @new.PropertyReference.Value is Action val:
                     break;
             }
         }
