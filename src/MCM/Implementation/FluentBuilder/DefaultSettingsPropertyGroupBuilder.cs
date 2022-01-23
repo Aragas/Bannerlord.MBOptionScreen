@@ -86,6 +86,14 @@ namespace MCM.Implementation.FluentBuilder
             return this;
         }
         /// <inheritdoc/>
+        public ISettingsPropertyGroupBuilder AddButton(string id, string name, IRef @ref, string content, Action<ISettingsPropertyButtonBuilder>? builder)
+        {
+            if (!Properties.ContainsKey(name))
+                Properties[name] = new DefaultSettingsPropertyButtonBuilder(id, name, @ref, content);
+            builder?.Invoke((ISettingsPropertyButtonBuilder) Properties[name]);
+            return this;
+        }
+        /// <inheritdoc/>
         public ISettingsPropertyGroupBuilder AddCustom<TSettingsPropertyBuilder>(ISettingsPropertyBuilder<TSettingsPropertyBuilder> builder) where TSettingsPropertyBuilder : ISettingsPropertyBuilder
         {
             if (!Properties.ContainsKey(builder.Name))

@@ -49,6 +49,8 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
         /// <inheritdoc/>
         public bool IsToggle { get; }
         private char SubGroupDelimiter { get; }
+        /// <inheritdoc/>
+        public string Content { get; }
 
         public SettingsPropertyDefinitionWrapper(object @object)
         {
@@ -72,6 +74,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
             var idProperty = AccessTools2.Property(type, nameof(Id));
             var isToggleProperty = AccessTools2.Property(type, nameof(IsToggle));
             var subGroupDelimiterProperty = AccessTools2.Property(type, nameof(SubGroupDelimiter));
+            var contentProperty = AccessTools2.Property(type, nameof(Content));
 
 
             SettingType = settingTypeProperty?.GetValue(@object) is { } settingTypeObject
@@ -119,6 +122,7 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
             IsToggle = isToggleProperty?.GetValue(@object) as bool? ?? false;
 
             SubGroupDelimiter = subGroupDelimiterProperty?.GetValue(@object) as char? ?? '/';
+            Content = contentProperty?.GetValue(@object) as string ?? string.Empty;
         }
 
         public SettingsPropertyDefinition Clone(bool keepRefs = true)

@@ -90,6 +90,7 @@ namespace MCM.Utils
                 case SettingType.Int:
                 case SettingType.Float:
                 case SettingType.String:
+                case SettingType.Button:
                 {
                     if (currentDefinition.PropertyReference.Value is null || newDefinition.PropertyReference.Value is null)
                         return false;
@@ -324,6 +325,10 @@ namespace MCM.Utils
             propAttr = properties.SingleOrDefault(a => a is IPropertyDefinitionWithMinMax);
             if (propAttr is not null)
                 yield return new PropertyDefinitionWithMinMaxWrapper(propAttr);
+
+            propAttr = properties.SingleOrDefault(a => a is IPropertyDefinitionButton);
+            if (propAttr is not null)
+                yield return new PropertyDefinitionButtonWrapper(propAttr);
         }
     }
 }

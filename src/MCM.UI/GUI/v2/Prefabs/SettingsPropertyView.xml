@@ -95,6 +95,15 @@
                   </Children>
                 </Widget>
 
+                <!-- Button -->
+                <ButtonWidget SuggestedWidth="362" SuggestedHeight="42" VerticalAlignment="Center" HorizontalAlignment="Center"
+                              IsEnabled="@IsEnabled" IsVisible="@IsStringVisible" DoNotPassEventsToChildren="true" Brush="SPOptions.Dropdown.Center" Command.Click="OnValueClick">
+                  <Children>
+                    <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                IsEnabled="@IsEnabled" IsVisible="@IsButtonVisible" Text="@DoneButtonText" Brush="Popup.Button.Text" />
+                  </Children>
+                </ButtonWidget>
+
               </Children>
             </Widget>
 
