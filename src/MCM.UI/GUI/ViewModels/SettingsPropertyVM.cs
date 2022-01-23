@@ -59,6 +59,8 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public bool IsDropdownCheckboxVisible { get; }
         [DataSourceProperty]
+        public bool IsButtonVisible { get; }
+        [DataSourceProperty]
         public bool IsEnabled => Group.GroupToggle;
         [DataSourceProperty]
         public bool IsSettingVisible
@@ -165,6 +167,8 @@ namespace MCM.UI.GUI.ViewModels
         public float MaxFloat => (float) SettingPropertyDefinition.MaxValue;
         [DataSourceProperty]
         public float MinFloat => (float) SettingPropertyDefinition.MinValue;
+        [DataSourceProperty]
+        public string ButtonContent => SettingPropertyDefinition.Content;
 
         [DataSourceProperty]
         public bool HasNoEditableText { get; }
@@ -198,6 +202,7 @@ namespace MCM.UI.GUI.ViewModels
             IsDropdownDefaultVisible = SettingType == SettingType.Dropdown && SettingsUtils.IsForTextDropdown(PropertyReference.Value);
             IsDropdownCheckboxVisible = SettingType == SettingType.Dropdown && SettingsUtils.IsForCheckboxDropdown(PropertyReference.Value);
             IsDropdownVisible = IsDropdownDefaultVisible || IsDropdownCheckboxVisible;
+            IsButtonVisible = SettingType == SettingType.Button;
             HasNoEditableText = !(IsIntVisible || IsFloatVisible);
             // Moved to constructor
 
@@ -281,6 +286,8 @@ namespace MCM.UI.GUI.ViewModels
                 case SettingType.Dropdown:
                     OnPropertyChanged(nameof(DropdownValue));
                     break;
+                case SettingType.Button:
+                    break;
             }
             OnPropertyChanged(nameof(TextBoxValue));
         }
@@ -323,6 +330,16 @@ namespace MCM.UI.GUI.ViewModels
         {
             IsSelected = false;
             MainView.HintText = string.Empty;
+        }
+
+        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
+        [SuppressMessage("Redundancy", "RCS1213:Remove unused member declaration.", Justification = "Reflection is used.")]
+        public void OnValueClick()
+        {
+            if (PropertyReference.Value is Action val)
+            {
+                val();
+            }
         }
 
         public override string ToString() => Name;

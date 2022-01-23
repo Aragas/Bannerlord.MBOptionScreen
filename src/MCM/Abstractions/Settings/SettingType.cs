@@ -11,6 +11,7 @@ namespace MCM.Abstractions.Settings
         Int,
         Float,
         String,
-        Dropdown
+        Dropdown,
+        Button
     }
 }

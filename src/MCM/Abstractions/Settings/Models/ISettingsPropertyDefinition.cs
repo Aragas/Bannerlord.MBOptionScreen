@@ -14,7 +14,8 @@ namespace MCM.Abstractions.Settings.Models
         IPropertyDefinitionWithId,
         IPropertyDefinitionText,
         IPropertyDefinitionGroupToggle,
-        IPropertyGroupDefinition
+        IPropertyGroupDefinition,
+        IPropertyDefinitionButton
     {
         IRef PropertyReference { get; }
 

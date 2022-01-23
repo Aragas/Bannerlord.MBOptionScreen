@@ -49,6 +49,8 @@ namespace MCM.Abstractions.Settings.Models
         /// <inheritdoc/>
         public int GroupOrder { get; }
         private char SubGroupDelimiter { get; }
+        /// <inheritdoc/>
+        public string Content { get; }
 
         public SettingsPropertyDefinition(IPropertyDefinitionBase propertyDefinition, IPropertyGroupDefinition propertyGroupDefinition, IRef propertyReference, char subGroupDelimiter)
             : this(new[] { propertyDefinition }, propertyGroupDefinition, propertyReference, subGroupDelimiter) { }
@@ -75,6 +77,8 @@ namespace MCM.Abstractions.Settings.Models
                 SettingType = SettingType.String;
             else if (SettingsUtils.IsForGenericDropdown(PropertyReference.Type))
                 SettingType = SettingType.Dropdown;
+            else if (PropertyReference.Type == typeof(Action))
+                SettingType = SettingType.Button;
 
             foreach (var propertyDefinition in propertyDefinitions)
             {
@@ -135,6 +139,10 @@ namespace MCM.Abstractions.Settings.Models
                 if (propertyDefinition is IPropertyDefinitionGroupToggle propertyDefinitionGroupToggle)
                 {
                     IsToggle = propertyDefinitionGroupToggle.IsToggle;
+                }
+                if (propertyDefinition is IPropertyDefinitionButton propertyDefinitionButton)
+                {
+                    Content = propertyDefinitionButton.Content;
                 }
             }
         }

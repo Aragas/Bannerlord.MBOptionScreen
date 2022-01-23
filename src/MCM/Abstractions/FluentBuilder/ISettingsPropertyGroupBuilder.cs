@@ -82,6 +82,16 @@ namespace MCM.Abstractions.FluentBuilder
         /// <returns>The settings property group builder.</returns>
         ISettingsPropertyGroupBuilder AddText(string id, string name, IRef @ref, Action<ISettingsPropertyTextBuilder>? builder);
         /// <summary>
+        /// Creates an Button property.
+        /// </summary>
+        /// <param name="id">Internal ID that will be used for serialization.</param>
+        /// <param name="name">Will be shown at the setting screen.</param>
+        /// <param name="ref">Reference to the value used by the property.</param>
+        /// <param name="content">Button content.</param>
+        /// <param name="builder">Settings property builder.</param>
+        /// <returns>The settings property group builder.</returns>
+        ISettingsPropertyGroupBuilder AddButton(string id, string name, IRef @ref, string content, Action<ISettingsPropertyButtonBuilder>? builder);
+        /// <summary>
         /// Adds a custom property.
         /// The custom property should implement one of the interfaces defined in MCM.Abstractions.Settings.Definitions namespace.
         /// Currently there is no way of defining a custom UI Control.
