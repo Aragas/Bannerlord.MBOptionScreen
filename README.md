@@ -62,6 +62,7 @@ It provides 5 types of options:
 * Float Slider / Textbox 
 * Textbox
 * Dropdown  
+* Button  
   
 The settings can be defined at compile time by using the Attribute API and at runtime by using the Fluent Builder.  
 
