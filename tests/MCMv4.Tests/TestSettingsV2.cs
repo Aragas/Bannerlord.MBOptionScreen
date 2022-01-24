@@ -183,7 +183,7 @@ namespace MCMv4.Tests
 
         [SettingPropertyButton("Property Button Default Empty", Content = "Default Empty", RequireRestart = false)]
         [SettingPropertyGroup("Button")]
-        public Action PropertyButtonDefaultEmpty { get; set; } = () =>  { InformationManager.DisplayMessage(new("Default Empty")); };
+        public Action PropertyButtonDefaultEmpty { get; set; } = () => { InformationManager.DisplayMessage(new("Default Empty")); };
         [SettingPropertyButton("Property Button Default Text", Content = "Default Text", RequireRestart = false)]
         [SettingPropertyGroup("Button")]
         public Action PropertyButtonDefaultText { get; set; } = () => { InformationManager.DisplayMessage(new("Default Text")); };
