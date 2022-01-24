@@ -7,6 +7,7 @@ Right now, the mod provides these types in the setting menu:
 * Float Slider / Textbox 
 * Textbox
 * Dropdown
+* Button
 
 ## v1
 With v1 of the API, @"MCM.Abstractions.Attributes.v1.SettingPropertyAttribute?text=SettingProperty" has multiple constructors, each designed for the specific value it represents.
@@ -99,6 +100,14 @@ public class CustomObject
     public CustomObject(string value) => _value = value;
     public override string ToString() => _value;
 }
+```
+
+#### Button (@"MCM.Abstractions.Attributes.v2.SettingPropertyButtonAttribute?text=SettingPropertyButton")
+```csharp
+// Value is displayed as a percentage
+[SettingPropertyButton("Setting Name", Content = "Press Me", Order = 2, RequireRestart = false, HintText = "Setting explanation.")]
+[SettingPropertyGroup("Main Group Name/Nested Group Name/Second Nested Group Name")]
+public Actiom SettingVariableName { get; set; } = (() => { });
 ```
 
 
