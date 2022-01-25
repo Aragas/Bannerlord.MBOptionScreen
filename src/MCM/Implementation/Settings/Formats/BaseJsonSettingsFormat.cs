@@ -1,6 +1,7 @@
 ﻿using BUTR.DependencyInjection.Logger;
 
 using MCM.Abstractions.Common;
+using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Formats;
 using MCM.Abstractions.Settings.Models;
@@ -45,6 +46,9 @@ namespace MCM.Implementation.Settings.Formats
 
             foreach (var definition in settings.GetAllSettingPropertyDefinitions())
             {
+                if (definition.SettingType == SettingType.Button)
+                    continue;
+
                 var id = GetPropertyDefinitionId(definition);
 
                 jo.Add(id, JToken.FromObject(definition.PropertyReference.Value, serializer));
@@ -69,6 +73,9 @@ namespace MCM.Implementation.Settings.Formats
                 _existingObjects.Clear();
                 foreach (var definition in settings.GetAllSettingPropertyDefinitions())
                 {
+                    if (definition.SettingType == SettingType.Button)
+                        continue;
+
                     var id = GetPropertyDefinitionId(definition);
 
                     if (jo.TryGetValue(id, out var value))

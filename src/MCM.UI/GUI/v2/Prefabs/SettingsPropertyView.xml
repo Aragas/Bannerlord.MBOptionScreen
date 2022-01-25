@@ -70,16 +70,16 @@
                   </Children>
                 </SliderWidget>
 
-                <!-- String textbox -->
-                <ButtonWidget SuggestedWidth="362" SuggestedHeight="42" VerticalAlignment="Center" HorizontalAlignment="Center"
-                              IsEnabled="@IsEnabled" IsVisible="@IsStringVisible" DoNotPassEventsToChildren="true" Brush="SPOptions.Dropdown.Center" Command.Click="OnValueClick">
+                <!-- String TextBox -->
+                <BrushWidget SuggestedWidth="362" SuggestedHeight="42" VerticalAlignment="Center" HorizontalAlignment="Center"
+                             IsEnabled="@IsEnabled" IsVisible="@IsStringVisible" Sprite="SaveLoad\load_tuple_selected" Brush="SPOptions.Dropdown.Center">
                   <Children>
-                    <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                    IsEnabled="@IsEnabled" IsVisible="@IsStringVisible" Text="@StringValue" Brush="MCMv3.Text" />
+                    <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                        IsEnabled="@IsEnabled" IsVisible="@IsStringVisible" RealText="@StringValue" IsObfuscationEnabled="false" Brush="MCMv3.Text" />
                   </Children>
-                </ButtonWidget>
+                </BrushWidget>
 
-                <!-- Dropdown list -->
+                <!-- Dropdown List -->
                 <Widget SuggestedWidth="362" SuggestedHeight="42" VerticalAlignment="Center" HorizontalAlignment="Center"
                         IsEnabled="@IsEnabled" IsVisible="@IsDropdownDefaultVisible">
                   <Children>
@@ -87,7 +87,7 @@
                   </Children>
                 </Widget>
 
-                <!-- Checkbox Dropdown list -->
+                <!-- Checkbox Dropdown List -->
                 <Widget SuggestedWidth="362" SuggestedHeight="42" VerticalAlignment="Center" HorizontalAlignment="Center"
                         IsEnabled="@IsEnabled" IsVisible="@IsDropdownCheckboxVisible">
                   <Children>
@@ -96,11 +96,11 @@
                 </Widget>
 
                 <!-- Button -->
-                <ButtonWidget SuggestedWidth="362" SuggestedHeight="42" VerticalAlignment="Center" HorizontalAlignment="Center"
-                              IsEnabled="@IsEnabled" IsVisible="@IsStringVisible" DoNotPassEventsToChildren="true" Brush="SPOptions.Dropdown.Center" Command.Click="OnValueClick">
+                <ButtonWidget SuggestedWidth="251" SuggestedHeight="64" VerticalAlignment="Center" HorizontalAlignment="Center"
+                              IsEnabled="@IsEnabled" IsVisible="@IsButtonVisible" DoNotPassEventsToChildren="true" Brush="MCMv3.Cancel.Button" Command.Click="OnValueClick">
                   <Children>
                     <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                IsEnabled="@IsEnabled" IsVisible="@IsButtonVisible" Text="@DoneButtonText" Brush="Popup.Button.Text" />
+                                IsEnabled="@IsEnabled" IsVisible="@IsButtonVisible" Text="@ButtonContent" Brush="Popup.Button.Text" />
                   </Children>
                 </ButtonWidget>
 
