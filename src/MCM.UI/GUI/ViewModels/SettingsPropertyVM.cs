@@ -329,7 +329,17 @@ namespace MCM.UI.GUI.ViewModels
 
         [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
         [SuppressMessage("Redundancy", "RCS1213:Remove unused member declaration.", Justification = "Reflection is used.")]
-        public void OnValueClick() => ScreenManager.PushScreen(new EditValueGauntletScreen(this));
+        public void OnValueClick2() => ScreenManager.PushScreen(new EditValueGauntletScreen(this));
+
+        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
+        [SuppressMessage("Redundancy", "RCS1213:Remove unused member declaration.", Justification = "Reflection is used.")]
+        public void OnValueClick()
+        {
+            if (PropertyReference.Value is Action val)
+            {
+                val();
+            }
+        }
 
         public override string ToString() => Name;
         public override int GetHashCode() => Name.GetHashCode();
