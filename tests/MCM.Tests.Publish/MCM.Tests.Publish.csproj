@@ -2,7 +2,8 @@
 
   <PropertyGroup>
     <Authors>Aragas</Authors>
-    <ModuleName>Bannerlord.MBOptionScreen.Tests</ModuleName>
+    <ModuleId>Bannerlord.MBOptionScreen.Tests</ModuleId>
+    <ModuleName>Mod Configuration Menu v4 Tests</ModuleName>
     <PostBuildCopyToModulesRegex>^(?!MCM.Tests.Publish).*\.dll|.*\.config</PostBuildCopyToModulesRegex>
     <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
   </PropertyGroup>
