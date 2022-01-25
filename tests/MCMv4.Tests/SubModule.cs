@@ -41,6 +41,8 @@ namespace MCMv4.Tests
                         .SetHintText("Test")))
                 .CreateGroup("Testing 3", groupBuilder => groupBuilder
                     .AddText("prop_4", "Test", new ProxyRef<string>(() => _stringValue, o => _stringValue = o), null))
+                .CreateGroup("Testing 4", groupBuilder => groupBuilder
+                    .AddButton("prop_5", "Test2", new StorageRef((Action) (() => { })), "Test", null))
                 .CreatePreset("Test", presetBuilder => presetBuilder
                     .SetPropertyValue("prop_1", true)
                     .SetPropertyValue("prop_2", 2)
