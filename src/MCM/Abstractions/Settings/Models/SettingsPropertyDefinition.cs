@@ -142,7 +142,7 @@ namespace MCM.Abstractions.Settings.Models
                 }
                 if (propertyDefinition is IPropertyDefinitionButton propertyDefinitionButton)
                 {
-                    Content = propertyDefinitionButton.Content;
+                    Content = TextObjectHelper.Create(propertyDefinitionButton.Content)?.ToString() ?? "ERROR";
                 }
             }
         }
