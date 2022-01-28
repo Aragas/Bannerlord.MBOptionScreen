@@ -61,7 +61,7 @@ public int SettingVariableName { get; set; } = 25;
 // Value is displayed as a percentage
 [SettingPropertyFloatingInteger("Setting Name", 0f, 1f, "#0%", Order = 2, RequireRestart = false, HintText = "Setting explanation.")]
 [SettingPropertyGroup("Main Group Name/Nested Group Name/Second Nested Group Name")]
-public bool SettingVariableName { get; set; } = 0.75;
+public float SettingVariableName { get; set; } = 0.75;
 ```
 
 #### String (@"MCM.Abstractions.Attributes.v2.SettingPropertyTextAttribute?text=SettingPropertyText")
