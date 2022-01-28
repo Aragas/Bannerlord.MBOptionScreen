@@ -48,7 +48,7 @@ namespace MCM.UI.Utils
                 return V1(item, onExecute, identifier, isDisabled, isPositiveBehavioured);
             if (V2 is not null)
                 return V2(item, onExecute, identifier, new Tuple<bool, TextObject>(isDisabled, TextObjectHelper.Create(string.Empty)!), isPositiveBehavioured);
-            if (V2 is not null)
+            if (V3 is not null)
                 return V3(item, onExecute, identifier, () => new Tuple<bool, TextObject>(isDisabled, TextObjectHelper.Create(string.Empty)!), isPositiveBehavioured);
             return null;
         }
