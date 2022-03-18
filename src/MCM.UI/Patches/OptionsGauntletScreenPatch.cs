@@ -1,6 +1,4 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
-
-using HarmonyLib;
+﻿using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
 using System.Diagnostics.CodeAnalysis;
@@ -33,17 +31,11 @@ namespace MCM.UI.Patches
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void OnInitializePostfix(OptionsGauntletScreen __instance)
         {
-            if (ApplicationVersionHelper.GameVersion() is { } gameVersion)
-            {
-                if ((gameVersion.Major >= 1 && gameVersion.Minor >= 6 && gameVersion.Revision >= 1) || (gameVersion.Major >= 1 && gameVersion.Minor >= 7))
-                {
-                    var spriteCategorySaveLoad = UIResourceManager.SpriteData.SpriteCategories.TryGetValue("ui_saveload", out var spriteCategorySaveLoadVal)
-                            ? spriteCategorySaveLoadVal
-                            : null;
-                    spriteCategorySaveLoad?.Load(UIResourceManager.ResourceContext, UIResourceManager.UIResourceDepot);
-                    _spriteCategorySaveLoads.Add(__instance, spriteCategorySaveLoad);
-                }
-            }
+            var spriteCategorySaveLoad = UIResourceManager.SpriteData.SpriteCategories.TryGetValue("ui_saveload", out var spriteCategorySaveLoadVal)
+                ? spriteCategorySaveLoadVal
+                : null;
+            spriteCategorySaveLoad?.Load(UIResourceManager.ResourceContext, UIResourceManager.UIResourceDepot);
+            _spriteCategorySaveLoads.Add(__instance, spriteCategorySaveLoad);
         }
 
         [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
@@ -52,13 +44,7 @@ namespace MCM.UI.Patches
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void OnFinalizePostfix(OptionsGauntletScreen __instance)
         {
-            if (ApplicationVersionHelper.GameVersion() is { } gameVersion)
-            {
-                if ((gameVersion.Major >= 1 && gameVersion.Minor >= 6 && gameVersion.Revision >= 1) || (gameVersion.Major >= 1 && gameVersion.Minor >= 7))
-                {
-                    _spriteCategorySaveLoads.Remove(__instance);
-                }
-            }
+            _spriteCategorySaveLoads.Remove(__instance);
         }
     }
 }

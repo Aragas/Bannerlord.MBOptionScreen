@@ -3,7 +3,8 @@
 
   <PropertyGroup>
     <Authors>Aragas</Authors>
-    <ModuleName>Bannerlord.MBOptionScreen</ModuleName>
+    <ModuleId>Bannerlord.MBOptionScreen</ModuleId>
+    <ModuleName>Mod Configuration Menu v4</ModuleName>
     <PostBuildCopyToModulesRegex>^(?!MCM.Publish).*\.dll|^(?!MCM.Publish).*\.pdb</PostBuildCopyToModulesRegex>
     <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
   </PropertyGroup>

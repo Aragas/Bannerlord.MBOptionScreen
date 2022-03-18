@@ -131,7 +131,6 @@ namespace MCM.Implementation.Settings.Formats
             }
         }
 
-
         private class DropdownJsonConverter : JsonConverter
         {
             private readonly IBUTRLogger _logger;

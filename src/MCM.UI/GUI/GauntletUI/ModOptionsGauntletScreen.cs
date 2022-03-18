@@ -1,6 +1,4 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
-
-using MCM.UI.GUI.ViewModels;
+﻿using MCM.UI.GUI.ViewModels;
 
 using Microsoft.Extensions.Logging;
 
