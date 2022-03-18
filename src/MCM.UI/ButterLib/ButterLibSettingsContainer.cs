@@ -11,8 +11,6 @@ using MCM.UI.Extensions;
 
 using Microsoft.Extensions.Logging;
 
-using System.Collections.Generic;
-
 using TaleWorlds.Localization;
 
 using Path = System.IO.Path;
@@ -25,7 +23,7 @@ namespace MCM.UI.ButterLib
 
         public ButterLibSettingsContainer(ILogger<ButterLibSettingsContainer> logger)
         {
-            RootFolder = Path.Combine(FSIOHelper.GetConfigPath(), "ModSettings");
+            RootFolder = Path.Combine(FSIOHelper.GetConfigPath()!, "ModSettings");
 
             var prop = new StorageRef<DropdownDefault<string>>(new(new[]
             {
@@ -37,11 +35,11 @@ namespace MCM.UI.ButterLib
                 $"{{=CarGIPlL}}{LogLevel.Critical}",
                 $"{{=T3FtC5hh}}{LogLevel.None}"
             }, 2));
-            var displayName = TextObjectHelper.Create("{=ButterLibSettings_Name}ButterLib {VERSION}", new Dictionary<string, TextObject?>
+            var displayName = new TextObject("{=ButterLibSettings_Name}ButterLib {VERSION}", new()
             {
-                { "VERSION", TextObjectHelper.Create(typeof(ButterLibSubModule).Assembly.GetName().Version?.ToString(3) ?? "ERROR") }
-            })?.ToString() ?? "ERROR";
-            var settings = BaseSettingsBuilder.Create("Options", displayName).SetFolderName("ButterLib").SetFormat("json2")
+                { "VERSION", typeof(ButterLibSubModule).Assembly.GetName().Version?.ToString(3) ?? "ERROR" }
+            }).ToString();
+            var settings = BaseSettingsBuilder.Create("Options", displayName)?.SetFolderName("ButterLib").SetFormat("json2")
                 .CreateGroup("{=ButterLibSettings_Name_Logging}Logging", builder =>
                     builder.AddDropdown("MinLogLevel", "{=ButterLibSettings_Name_LogLevel}Log Level", 0, prop, dBuilder =>
                         dBuilder.SetOrder(1).SetRequireRestart(true).SetHintText("{=ButterLibSettings_Name_LogLevelDesc}Level of logs to write.")))

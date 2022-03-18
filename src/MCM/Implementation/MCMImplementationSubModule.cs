@@ -82,7 +82,7 @@ namespace MCM.Implementation
                 var settingsProvider = GenericServiceProvider.GetService<BaseSettingsProvider>();
                 settingsProvider?.OnGameStarted(game);
 
-                CampaignGameStarter gameStarter = (CampaignGameStarter) gameStarterObject;
+                var gameStarter = (CampaignGameStarter) gameStarterObject;
                 gameStarter.AddBehavior(GenericServiceProvider.GetService<PerSaveCampaignBehavior>());
             }
         }

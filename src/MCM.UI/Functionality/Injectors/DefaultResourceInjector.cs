@@ -1,10 +1,8 @@
 ﻿using Bannerlord.UIExtenderEx.ResourceManager;
 
-using MCM.UI.GUI.Views;
-
 namespace MCM.UI.Functionality.Injectors
 {
-    internal class ResourceInjectorPost154 : ResourceInjector
+    internal class DefaultResourceInjector : ResourceInjector
     {
         public override void Inject()
         {
@@ -24,7 +22,6 @@ namespace MCM.UI.Functionality.Injectors
             WidgetFactoryManager.CreateAndRegister("SettingsPropertyGroupView_v2", Load("MCM.UI.GUI.v2.Prefabs.SettingsPropertyGroupView.xml"));
             WidgetFactoryManager.CreateAndRegister("SettingsPropertyView_v2", Load("MCM.UI.GUI.v2.Prefabs.SettingsPropertyView.xml"));
             WidgetFactoryManager.CreateAndRegister("SettingsView_v2", Load("MCM.UI.GUI.v2.Prefabs.SettingsView.xml"));
-            WidgetFactoryManager.Register(typeof(EditValueTextWidget));
         }
     }
 }

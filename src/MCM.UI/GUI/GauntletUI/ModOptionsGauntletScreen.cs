@@ -5,10 +5,10 @@ using MCM.UI.GUI.ViewModels;
 using Microsoft.Extensions.Logging;
 
 using TaleWorlds.Engine.GauntletUI;
-using TaleWorlds.Engine.Screens;
 using TaleWorlds.GauntletUI.Data;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
+using TaleWorlds.ScreenSystem;
 using TaleWorlds.TwoDimension;
 
 namespace MCM.UI.GUI.GauntletUI
@@ -38,11 +38,7 @@ namespace MCM.UI.GUI.GauntletUI
             var resourceContext = UIResourceManager.ResourceContext;
             var uiresourceDepot = UIResourceManager.UIResourceDepot;
             _spriteCategoryEncyclopedia = spriteData.SpriteCategories.TryGetValue("ui_encyclopedia", out var spriteCategoryEncyclopediaVal) ? spriteCategoryEncyclopediaVal : null;
-            if (ApplicationVersionHelper.GameVersion() is { } gameVersion)
-            {
-                if ((gameVersion.Major >= 1 && gameVersion.Minor >= 6 && gameVersion.Revision >= 1) || (gameVersion.Major >= 1 && gameVersion.Minor >= 7))
-                    _spriteCategorySaveLoad = spriteData.SpriteCategories.TryGetValue("ui_saveload", out var spriteCategorySaveLoadVal) ? spriteCategorySaveLoadVal : null;
-            }
+            _spriteCategorySaveLoad = spriteData.SpriteCategories.TryGetValue("ui_saveload", out var spriteCategorySaveLoadVal) ? spriteCategorySaveLoadVal : null;
             _spriteCategoryEncyclopedia?.Load(resourceContext, uiresourceDepot);
             _spriteCategorySaveLoad?.Load(resourceContext, uiresourceDepot);
             _dataSource = new ModOptionsVM();

@@ -20,15 +20,15 @@ namespace MCM.Abstractions.Settings.Models
         /// <summary>
         /// The default group used for settings that don't have a group explicitly set.
         /// </summary>
-        public static readonly string DefaultGroupName = TextObjectHelper.Create("{=SettingsPropertyGroupDefinition_Misc}Misc")?.ToString() ?? "ERROR";
+        public static readonly string DefaultGroupName = new TextObject("{=SettingsPropertyGroupDefinition_Misc}Misc").ToString();
 
         /// <summary>
         /// The default group used for settings that don't have a group explicitly set.
         /// </summary>
         public static readonly IPropertyGroupDefinition DefaultGroup = new DefaultPropertyGroupDefinition();
 
-        protected readonly TextObject? _groupName;
-        protected readonly TextObject? _groupNameOverride;
+        protected readonly TextObject _groupName;
+        protected readonly TextObject _groupNameOverride;
         protected readonly List<SettingsPropertyGroupDefinition> subGroups = new();
         protected readonly List<ISettingsPropertyDefinition> settingProperties = new();
 
@@ -40,8 +40,8 @@ namespace MCM.Abstractions.Settings.Models
 
         public SettingsPropertyGroupDefinition(string groupName, string? groupNameOverride = "", int order = -1)
         {
-            _groupName = TextObjectHelper.Create(groupName);
-            _groupNameOverride = TextObjectHelper.Create(groupNameOverride ?? string.Empty);
+            _groupName = new TextObject(groupName);
+            _groupNameOverride = new TextObject(groupNameOverride ?? string.Empty);
             GroupName = DisplayGroupName?.ToString() ?? "ERROR";
             Order = order;
         }

@@ -1,21 +1,18 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
-
-using MCM.Abstractions.Common;
+﻿using MCM.Abstractions.Common;
 using MCM.Abstractions.Dropdown;
 using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Models;
 using MCM.UI.Actions;
 using MCM.UI.Data;
-using MCM.UI.GUI.GauntletUI;
 using MCM.Utils;
 
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
-using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
+using TaleWorlds.Localization;
 
 namespace MCM.UI.GUI.ViewModels
 {
@@ -177,10 +174,10 @@ namespace MCM.UI.GUI.ViewModels
         {
             SettingType.Int when PropertyReference.Value is int val => string.IsNullOrWhiteSpace(ValueFormat)
                 ? string.Format(ValueFormatProvider, "{0}", val.ToString("0"))
-                : string.Format(ValueFormatProvider, "{0}", val.ToString(TextObjectHelper.Create(ValueFormat)?.ToString())),
+                : string.Format(ValueFormatProvider, "{0}", val.ToString(new TextObject(ValueFormat).ToString())),
             SettingType.Float when PropertyReference.Value is float val => string.IsNullOrWhiteSpace(ValueFormat)
                 ? string.Format(ValueFormatProvider, "{0}", val.ToString("0.00"))
-                : string.Format(ValueFormatProvider, "{0}", val.ToString(TextObjectHelper.Create(ValueFormat)?.ToString())),
+                : string.Format(ValueFormatProvider, "{0}", val.ToString(new TextObject(ValueFormat).ToString())),
             _ => string.Empty
         };
 

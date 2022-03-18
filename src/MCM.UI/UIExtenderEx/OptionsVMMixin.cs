@@ -43,8 +43,6 @@ namespace MCM.UI.UIExtenderEx
                 harmony.Patch(m5, postfix: new HarmonyMethod(AccessTools2.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
             if (AccessTools2.Property(typeof(OptionsVM), "PerformanceOptions")?.GetMethod is { } m6)
                 harmony.Patch(m6, postfix: new HarmonyMethod(AccessTools2.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
-            if (AccessTools2.Property(typeof(OptionsVM), "GraphicsOptions")?.GetMethod is { } m7)
-                harmony.Patch(m7, postfix: new HarmonyMethod(AccessTools2.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
 
             harmony.CreateReversePatcher(
                 AccessTools2.Method(typeof(OptionsVM), nameof(OptionsVM.ExecuteCloseOptions)),

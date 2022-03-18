@@ -11,29 +11,29 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.MountAndBlade.ViewModelCollection;
+using TaleWorlds.ScreenSystem;
 
 namespace MCM.UI.Functionality
 {
-    internal sealed class Post158GameMenuScreenHandler : BaseGameMenuScreenHandler
+    internal sealed class DefaultGameMenuScreenHandler : BaseGameMenuScreenHandler
     {
         private static readonly WeakReference<InitialMenuVM> _instance = new(null!);
         private static Dictionary<string, (int, Func<ScreenBase?>, TextObject)> ScreensCache { get; } = new();
 
         private readonly IBUTRLogger _logger;
 
-        public Post158GameMenuScreenHandler(IBUTRLogger<Post158GameMenuScreenHandler> logger)
+        public DefaultGameMenuScreenHandler(IBUTRLogger<DefaultGameMenuScreenHandler> logger)
         {
             _logger = logger;
 
             var harmony = new Harmony("bannerlord.mcm.mainmenuscreeninjection_v4");
             harmony.Patch(
                 AccessTools2.Method(typeof(InitialMenuVM), "RefreshMenuOptions"),
-                postfix: new HarmonyMethod(AccessTools2.Method(typeof(Post158GameMenuScreenHandler), nameof(RefreshMenuOptionsPostfix)), 300));
+                postfix: new HarmonyMethod(AccessTools2.Method(typeof(DefaultGameMenuScreenHandler), nameof(RefreshMenuOptionsPostfix)), 300));
         }
 
         [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
@@ -56,10 +56,6 @@ namespace MCM.UI.Functionality
                             ScreenManager.PushScreen(screen);
                     },
                     () => (false, null));
-                if (initialState is null)
-                {
-                    return;
-                }
                 var insertIndex = ____menuOptions.FindIndex(i => i.InitialStateOption.OrderIndex > index);
                 ____menuOptions?.Insert(insertIndex, new InitialMenuOptionVM(initialState));
             }
@@ -81,11 +77,6 @@ namespace MCM.UI.Functionality
                             ScreenManager.PushScreen(screen);
                     },
                     () => (false, null));
-                if (initialState is null)
-                {
-                    _logger.LogError("AddScreen: 'initialState' was null! Something was changed again by the game!");
-                    return;
-                }
                 var insertIndex = instance.MenuOptions.FindIndex(i => i.InitialStateOption.OrderIndex > index);
                 instance.MenuOptions.Insert(insertIndex, new InitialMenuOptionVM(initialState));
             }

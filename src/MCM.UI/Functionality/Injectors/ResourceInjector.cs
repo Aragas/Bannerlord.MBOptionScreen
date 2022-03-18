@@ -8,7 +8,7 @@ namespace MCM.UI.Functionality.Injectors
     {
         protected static XmlDocument Load(string embedPath)
         {
-            using var stream = typeof(ResourceInjectorPost154).Assembly.GetManifestResourceStream(embedPath);
+            using var stream = typeof(DefaultResourceInjector).Assembly.GetManifestResourceStream(embedPath);
             if (stream is null) throw new MCMUIEmbedResourceNotFoundException($"Could not find embed resource '{embedPath}'!");
             using var xmlReader = XmlReader.Create(stream, new XmlReaderSettings { IgnoreComments = true });
             var doc = new XmlDocument();

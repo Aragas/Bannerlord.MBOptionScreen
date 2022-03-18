@@ -33,8 +33,9 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using TaleWorlds.Engine.Screens;
+using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
+using TaleWorlds.ScreenSystem;
 
 namespace MCM.UI
 {
@@ -78,8 +79,8 @@ namespace MCM.UI
 
                 services.AddTransient<IMCMOptionsScreen, ModOptionsGauntletScreen>();
 
-                services.AddSingleton<BaseGameMenuScreenHandler, Post158GameMenuScreenHandler>();
-                services.AddSingleton<ResourceInjector, ResourceInjectorPost154>();
+                services.AddSingleton<BaseGameMenuScreenHandler, DefaultGameMenuScreenHandler>();
+                services.AddSingleton<ResourceInjector, DefaultResourceInjector>();
             }
         }
 
@@ -102,9 +103,6 @@ namespace MCM.UI
 
             Logger = serviceProvider.GetRequiredService<ILogger<MCMUISubModule>>();
             Logger.LogTrace("OnSubModuleLoad: Logging started...");
-
-            var editabletextpatchHarmony = new Harmony("bannerlord.mcm.ui.editabletextpatch");
-            EditableTextPatch.Patch(editabletextpatchHarmony);
 
             var viewmodelwrapperHarmony = new Harmony("bannerlord.mcm.ui.viewmodelpatch");
             ViewModelPatch.Patch(viewmodelwrapperHarmony);
@@ -189,7 +187,7 @@ namespace MCM.UI
                     "MCM_OptionScreen",
                     9990,
                     () => GenericServiceProvider.GetService<IMCMOptionsScreen>() as ScreenBase,
-                    TextObjectHelper.Create("{=MainMenu_ModOptions}Mod Options"));
+                    new TextObject("{=MainMenu_ModOptions}Mod Options"));
             }
         }
 
@@ -203,8 +201,8 @@ namespace MCM.UI
             {
                 sb.AppendLine(report);
                 sb.AppendLine();
-                sb.AppendLine(TextObjectHelper.Create(SMessageContinue)?.ToString() ?? "ERROR");
-                switch (MessageBox.Show(sb.ToString(), TextObjectHelper.Create(SWarningTitle)?.ToString() ?? "ERROR", MessageBoxButtons.YesNo))
+                sb.AppendLine(new TextObject(SMessageContinue).ToString());
+                switch (MessageBox.Show(sb.ToString(), new TextObject(SWarningTitle).ToString(), MessageBoxButtons.YesNo))
                 {
                     case DialogResult.Yes:
                         Environment.Exit(1);

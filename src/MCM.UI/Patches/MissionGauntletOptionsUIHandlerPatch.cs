@@ -14,7 +14,7 @@ namespace MCM.UI.Patches
 {
     internal static class MissionGauntletOptionsUIHandlerPatch
     {
-        private static readonly ConditionalWeakTable<MissionGauntletOptionsUIHandler, SpriteCategory> _spriteCategorySaveLoads = new();
+        private static readonly ConditionalWeakTable<MissionGauntletOptionsUIHandler, SpriteCategory?> _spriteCategorySaveLoads = new();
 
         public static void Patch(Harmony harmony)
         {
