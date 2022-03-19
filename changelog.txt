@@ -1,5 +1,5 @@
 ---------------------------------------------------------------------------------------------------
-Version: 5.0.0
+Version: 4.4.0
 Game Versions: e1.7.2
 * Code cleanup
 * Minimal version supported is now e1.7.2
