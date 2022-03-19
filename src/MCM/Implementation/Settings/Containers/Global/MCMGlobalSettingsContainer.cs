@@ -16,24 +16,37 @@ namespace MCM.Implementation.Settings.Containers.Global
     {
         public MCMGlobalSettingsContainer(IBUTRLogger<MCMGlobalSettingsContainer> logger)
         {
-            var settings = new List<GlobalSettings>();
-            var allTypes = AccessTools2.AllAssemblies()
-                .Where(a => !a.IsDynamic)
-                .SelectMany(AccessTools2.GetTypesFromAssembly)
-                .Where(t => t.IsClass && !t.IsAbstract)
-                .Where(t => t.GetConstructor(Type.EmptyTypes) is not null)
-                .ToList();
+            IEnumerable<GlobalSettings> GetGlobalSettings()
+            {
+                foreach (var assembly in AccessTools2.AllAssemblies().Where(a => !a.IsDynamic))
+                {
+                    IEnumerable<GlobalSettings> settings;
+                    try
+                    {
+                        settings = AccessTools2.GetTypesFromAssemblyIfValid(assembly)
+                            .Where(t => t.IsClass && !t.IsAbstract)
+                            .Where(t => t.GetConstructor(Type.EmptyTypes) is not null)
+                            .Where(t => typeof(GlobalSettings).IsAssignableFrom(t))
+                            .Where(t => !typeof(EmptyGlobalSettings).IsAssignableFrom(t))
+                            .Where(t => !typeof(IWrapper).IsAssignableFrom(t))
+                            .Select(t => Activator.CreateInstance(t) as GlobalSettings)
+                            .OfType<GlobalSettings>()
+                            .ToList();
+                    }
+                    catch (TypeLoadException ex)
+                    {
+                        settings = Array.Empty<GlobalSettings>();
+                        logger.LogError(ex, "Error while handling assembly {Assembly}!", assembly);
+                    }
 
-            var mbOptionScreenSettings = allTypes
-                .Where(t => typeof(GlobalSettings).IsAssignableFrom(t))
-                .Where(t => !typeof(EmptyGlobalSettings).IsAssignableFrom(t))
-                .Where(t => !typeof(IWrapper).IsAssignableFrom(t))
-                .Select(t => Activator.CreateInstance(t) as GlobalSettings)
-                .Where(t => t is not null)
-                .Cast<GlobalSettings>();
-            settings.AddRange(mbOptionScreenSettings);
+                    foreach (var setting in settings)
+                    {
+                        yield return setting;
+                    }
+                }
+            }
 
-            foreach (var setting in settings)
+            foreach (var setting in GetGlobalSettings())
             {
                 logger.LogTrace("Registering settings {type}.", setting.GetType());
                 RegisterSettings(setting);
