@@ -3,9 +3,9 @@
 
   <PropertyGroup>
     <GameVersion>1.7.2</GameVersion>
-    <Version>4.4.0</Version>
+    <Version>4.5.0</Version>
     <HarmonyVersion>2.2.1</HarmonyVersion>
-    <ButterLibVersion>2.1.0</ButterLibVersion>
+    <ButterLibVersion>2.1.1</ButterLibVersion>
     <UIExtenderExVersion>2.1.8</UIExtenderExVersion>
     <BuildResourcesVersion>1.0.1.68</BuildResourcesVersion>
     <BUTRSharedVersion>2.0.0.78</BUTRSharedVersion>
