@@ -265,12 +265,12 @@ namespace MCM.UI.GUI.ViewModels
             var data = new InquiryData(
                 new TextObject("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new()
                 {
-                    {"PRESET", selector.SelectedItem.StringItem}
+                    { "PRESET", selector.SelectedItem.StringItem }
                 }).ToString(),
                 new TextObject("{=ModOptionsVM_Discard}Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?", new()
                 {
-                    {"NAME", SelectedMod?.DisplayName },
-                    {"ITEM", selector.SelectedItem.StringItem }
+                    { "NAME", SelectedMod?.DisplayName },
+                    { "ITEM", selector.SelectedItem.StringItem }
                 }).ToString(),
                 true, true, new TextObject("{=aeouhelq}Yes").ToString(),
                 new TextObject("{=8OkPHu4f}No").ToString(),
