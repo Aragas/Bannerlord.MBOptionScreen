@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MCM.Adapter.MBO\MCM.Adapter.MBO.csproj" />
     <ProjectReference Include="..\MCM.Adapter.MCMv3\MCM.Adapter.MCMv3.csproj" />
     <ProjectReference Include="..\MCM.Adapter.ModLib\MCM.Adapter.ModLib.csproj" />
     <ProjectReference Include="..\MCM.UI\MCM.UI.csproj" />

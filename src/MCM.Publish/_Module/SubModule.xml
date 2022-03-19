@@ -56,17 +56,6 @@
       <SubModuleClassType value="MCM.UI.MCMUISubModule" />
       <Tags />
     </SubModule>
-    <!--MBO-->
-    <SubModule>
-      <Name value="MCMv4 MBO Adapter"/>
-      <DLLName value="MCMv4.Adapter.MBO.dll"/>
-      <SubModuleClassType value="MCM.Adapter.MBO.MCMImplementationMBOSubModule"/>
-      <Assemblies>
-        <Assembly value="MBOptionScreen.dll"/>
-        <Assembly value="MBOptionScreen.v2.0.10.dll"/>
-      </Assemblies>
-      <Tags/>
-    </SubModule>
     <!--ModLib-->
     <SubModule>
       <Name value="ModLib Substitute"/>
