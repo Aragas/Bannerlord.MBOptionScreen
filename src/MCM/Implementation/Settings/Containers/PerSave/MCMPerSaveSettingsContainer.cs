@@ -1,4 +1,5 @@
 ﻿using BUTR.DependencyInjection;
+using BUTR.DependencyInjection.Logger;
 
 using HarmonyLib.BUTR.Extensions;
 
@@ -17,6 +18,13 @@ namespace MCM.Implementation.Settings.Containers.PerSave
 {
     internal sealed class MCMPerSaveSettingsContainer : BaseSettingsContainer<PerSaveSettings>, IMCMPerSaveSettingsContainer
     {
+        private readonly IBUTRLogger _logger;
+
+        public MCMPerSaveSettingsContainer(IBUTRLogger<MCMPerSaveSettingsContainer> logger)
+        {
+            _logger = logger;
+        }
+
         /// <inheritdoc/>
         protected override void RegisterSettings(PerSaveSettings? perSaveSettings)
         {
@@ -52,23 +60,37 @@ namespace MCM.Implementation.Settings.Containers.PerSave
 
         public void LoadSettings()
         {
-            var settings = new List<PerSaveSettings>();
-            var allTypes = AccessTools2.AllAssemblies()
-                .Where(a => !a.IsDynamic)
-                .SelectMany(AccessTools2.GetTypesFromAssembly)
-                .Where(t => t.IsClass && !t.IsAbstract && t.GetConstructor(Type.EmptyTypes) is not null)
-                .ToList();
+            IEnumerable<PerSaveSettings> GetPerSaveSettings()
+            {
+                foreach (var assembly in AccessTools2.AllAssemblies().Where(a => !a.IsDynamic))
+                {
+                    IEnumerable<PerSaveSettings> settings;
+                    try
+                    {
+                        settings = AccessTools2.GetTypesFromAssemblyIfValid(assembly)
+                            .Where(t => t.IsClass && !t.IsAbstract)
+                            .Where(t => t.GetConstructor(Type.EmptyTypes) is not null)
+                            .Where(t => typeof(PerSaveSettings).IsAssignableFrom(t))
+                            .Where(t => !typeof(EmptyPerSaveSettings).IsAssignableFrom(t))
+                            .Where(t => !typeof(IWrapper).IsAssignableFrom(t))
+                            .Select(t => Activator.CreateInstance(t) as PerSaveSettings)
+                            .OfType<PerSaveSettings>()
+                            .ToList();
+                    }
+                    catch (TypeLoadException ex)
+                    {
+                        settings = Array.Empty<PerSaveSettings>();
+                        _logger.LogError(ex, "Error while handling assembly {Assembly}!", assembly);
+                    }
 
-            var mbOptionScreenSettings = allTypes
-                .Where(t => typeof(PerSaveSettings).IsAssignableFrom(t))
-                .Where(t => !typeof(EmptyPerSaveSettings).IsAssignableFrom(t))
-                .Where(t => !typeof(IWrapper).IsAssignableFrom(t))
-                .Select(t => Activator.CreateInstance(t) as PerSaveSettings)
-                .Where(t => t is not null)
-                .Cast<PerSaveSettings>();
-            settings.AddRange(mbOptionScreenSettings);
+                    foreach (var setting in settings)
+                    {
+                        yield return setting;
+                    }
+                }
+            }
 
-            foreach (var setting in settings)
+            foreach (var setting in GetPerSaveSettings())
                 RegisterSettings(setting);
         }
 

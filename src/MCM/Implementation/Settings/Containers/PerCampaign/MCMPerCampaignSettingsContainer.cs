@@ -21,11 +21,14 @@ namespace MCM.Implementation.Settings.Containers.PerCampaign
 {
     internal sealed class MCMPerCampaignSettingsContainer : BaseSettingsContainer<PerCampaignSettings>, IMCMPerCampaignSettingsContainer
     {
+        private readonly IBUTRLogger _logger;
+
         /// <inheritdoc/>
         protected override string RootFolder { get; }
 
         public MCMPerCampaignSettingsContainer(IBUTRLogger<MCMPerCampaignSettingsContainer> logger)
         {
+            _logger = logger;
             RootFolder = Path.Combine(base.RootFolder, "PerCampaign");
         }
 
@@ -64,23 +67,37 @@ namespace MCM.Implementation.Settings.Containers.PerCampaign
 
         private void LoadSettings()
         {
-            var settings = new List<PerCampaignSettings>();
-            var allTypes = AccessTools2.AllAssemblies()
-                .Where(a => !a.IsDynamic)
-                .SelectMany(AccessTools2.GetTypesFromAssembly)
-                .Where(t => t.IsClass && !t.IsAbstract && t.GetConstructor(Type.EmptyTypes) is not null)
-                .ToList();
+            IEnumerable<PerCampaignSettings> GetPerCampaignSettings()
+            {
+                foreach (var assembly in AccessTools2.AllAssemblies().Where(a => !a.IsDynamic))
+                {
+                    IEnumerable<PerCampaignSettings> settings;
+                    try
+                    {
+                        settings = AccessTools2.GetTypesFromAssemblyIfValid(assembly)
+                            .Where(t => t.IsClass && !t.IsAbstract)
+                            .Where(t => t.GetConstructor(Type.EmptyTypes) is not null)
+                            .Where(t => typeof(PerCampaignSettings).IsAssignableFrom(t))
+                            .Where(t => !typeof(EmptyPerCampaignSettings).IsAssignableFrom(t))
+                            .Where(t => !typeof(IWrapper).IsAssignableFrom(t))
+                            .Select(t => Activator.CreateInstance(t) as PerCampaignSettings)
+                            .OfType<PerCampaignSettings>()
+                            .ToList();
+                    }
+                    catch (TypeLoadException ex)
+                    {
+                        settings = Array.Empty<PerCampaignSettings>();
+                        _logger.LogError(ex, "Error while handling assembly {Assembly}!", assembly);
+                    }
 
-            var mbOptionScreenSettings = allTypes
-                .Where(t => typeof(PerCampaignSettings).IsAssignableFrom(t))
-                .Where(t => !typeof(EmptyPerCampaignSettings).IsAssignableFrom(t))
-                .Where(t => !typeof(IWrapper).IsAssignableFrom(t))
-                .Select(t => Activator.CreateInstance(t) as PerCampaignSettings)
-                .Where(t => t is not null)
-                .Cast<PerCampaignSettings>();
-            settings.AddRange(mbOptionScreenSettings);
+                    foreach (var setting in settings)
+                    {
+                        yield return setting;
+                    }
+                }
+            }
 
-            foreach (var setting in settings)
+            foreach (var setting in GetPerCampaignSettings())
                 RegisterSettings(setting);
         }
 
