@@ -1,6 +1,4 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
-
-using MCM.Abstractions.Settings.Base;
+﻿using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Models;
 using MCM.Abstractions.Settings.Providers;
 using MCM.Extensions;
@@ -15,6 +13,7 @@ using System.Linq;
 
 using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Library;
+using TaleWorlds.Localization;
 
 namespace MCM.UI.GUI.ViewModels
 {
@@ -70,7 +69,7 @@ namespace MCM.UI.GUI.ViewModels
             // {
             _cachedPresets = SettingsInstance.GetAvailablePresets().ToDictionary(pair => pair.Key, pair => pair.Value());
 
-            PresetsSelector = new SelectorVM<SelectorItemVM>(new List<string> { TextObjectHelper.Create("{=SettingsVM_Custom}Custom")?.ToString() ?? "ERROR" }.Concat(_cachedPresets.Keys.Select(x => TextObjectHelper.Create(x)?.ToString())), -1, null);
+            PresetsSelector = new SelectorVM<SelectorItemVM>(new List<string> { new TextObject("{=SettingsVM_Custom}Custom").ToString() }.Concat(_cachedPresets.Keys.Select(x => new TextObject(x).ToString())), -1, null);
             PresetsSelector.ItemList[0].CanBeSelected = false;
 
             RecalculateIndex();
@@ -168,7 +167,7 @@ namespace MCM.UI.GUI.ViewModels
         }
         public void ResetSettings()
         {
-            ChangePreset(TextObjectHelper.Create("{=BaseSettings_Default}Default")?.ToString() ?? string.Empty);
+            ChangePreset(new TextObject("{=BaseSettings_Default}Default").ToString());
         }
         public void SaveSettings()
         {
@@ -176,7 +175,7 @@ namespace MCM.UI.GUI.ViewModels
         }
         public void ResetSettingsValue(string valueId)
         {
-            ChangePresetValue(TextObjectHelper.Create("{=BaseSettings_Default}Default")?.ToString() ?? string.Empty, valueId);
+            ChangePresetValue(new TextObject("{=BaseSettings_Default}Default").ToString(), valueId);
         }
 
 

@@ -11,25 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="GUI\v1\Brushes\ButtonBrushes.xml" />
-    <EmbeddedResource Include="GUI\v1\Brushes\DividerBrushes.xml" />
-    <EmbeddedResource Include="GUI\v1\Brushes\ExpandIndicator.xml" />
-    <EmbeddedResource Include="GUI\v1\Brushes\SettingsBrush.xml" />
-    <EmbeddedResource Include="GUI\v1\Brushes\ResetButtonBrush.xml" />
-    <EmbeddedResource Include="GUI\v1\Brushes\SettingsValueDisplayBrush.xml" />
-    <EmbeddedResource Include="GUI\v1\Brushes\TextBrushes.xml" />
-
-    <EmbeddedResource Include="GUI\v1\Prefabs\EditValueView.xml" />
-    <EmbeddedResource Include="GUI\v1\Prefabs\ModOptionsPageView.xml" />
-    <EmbeddedResource Include="GUI\v1\Prefabs\ModOptionsView.xml" />
-    <EmbeddedResource Include="GUI\v1\Prefabs\SettingsItemView.xml" />
-    <EmbeddedResource Include="GUI\v1\Prefabs\SettingsPropertyGroupView.xml" />
-    <EmbeddedResource Include="GUI\v1\Prefabs\SettingsPropertyView.xml" />
-    <EmbeddedResource Include="GUI\v1\Prefabs\SettingsView.xml" />
-    <EmbeddedResource Include="GUI\v1\Prefabs\DropdownWithHorizontalControl.Checkbox.xml" />
-  </ItemGroup>
-
-  <ItemGroup>
     <EmbeddedResource Include="GUI\v2\Brushes\ButtonBrushes.xml" />
     <EmbeddedResource Include="GUI\v2\Brushes\DividerBrushes.xml" />
     <EmbeddedResource Include="GUI\v2\Brushes\ExpandIndicator.xml" />
@@ -38,8 +19,6 @@
     <EmbeddedResource Include="GUI\v2\Brushes\SettingsValueDisplayBrush.xml" />
     <EmbeddedResource Include="GUI\v2\Brushes\CompatibilityBrushes.xml" />
     <EmbeddedResource Include="GUI\v2\Brushes\TextBrushes.xml" />
-
-    <EmbeddedResource Include="GUI\v2\Prefabs\EditValueView.xml" />
     <EmbeddedResource Include="GUI\v2\Prefabs\ModOptionsPageView.xml" />
     <EmbeddedResource Include="GUI\v2\Prefabs\ModOptionsView.xml" />
     <EmbeddedResource Include="GUI\v2\Prefabs\SettingsItemView.xml" />
@@ -65,16 +44,13 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Bannerlord.ModuleManager.Source" Version="$(BUTRModuleManagerVersion)" />
     <PackageReference Include="Bannerlord.ButterLib" Version="$(ButterLibVersion)" IncludeAssets="compile" />
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Native.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
     <PackageReference Include="Bannerlord.ReferenceAssemblies.SandBox.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
     <PackageReference Include="Bannerlord.UIExtenderEx" Version="$(UIExtenderExVersion)" IncludeAssets="compile" />
     <PackageReference Include="BUTR.DependencyInjection.ButterLib" Version="$(BUTRDependencyInjectionVersion)">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="BUTR.Harmony.Analyzer" Version="$(HarmonyAnalyzerVersion)">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>

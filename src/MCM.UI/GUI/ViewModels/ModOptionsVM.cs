@@ -1,4 +1,4 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
+﻿using Bannerlord.ModuleManager;
 
 using BUTR.DependencyInjection;
 
@@ -6,14 +6,11 @@ using ComparerExtensions;
 
 using MCM.Abstractions.Settings.Providers;
 using MCM.UI.Extensions;
-using MCM.UI.Utils;
-using MCM.Utils;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,9 +18,9 @@ using System.Threading.Tasks;
 using TaleWorlds.Core;
 using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Engine;
-using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
+using TaleWorlds.ScreenSystem;
 
 namespace MCM.UI.GUI.ViewModels
 {
@@ -50,8 +47,6 @@ namespace MCM.UI.GUI.ViewModels
                 OnPropertyChanged(nameof(Name));
             }
         }
-        [DataSourceProperty]
-        public bool ChangesMade => ModSettingsList.Any(x => x.URS.ChangesMade);
         [DataSourceProperty]
         public string DoneButtonText
         {
@@ -126,7 +121,7 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
         [DataSourceProperty]
-        public string SelectedDisplayName => SelectedMod is null ? TextObjectHelper.Create("{=ModOptionsVM_NotSpecified}Mod Name not Specified.")?.ToString() ?? string.Empty : SelectedMod.DisplayName;
+        public string SelectedDisplayName => SelectedMod is null ? new TextObject("{=ModOptionsVM_NotSpecified}Mod Name not Specified.").ToString() : SelectedMod.DisplayName;
         [DataSourceProperty]
         public bool SomethingSelected => SelectedMod is not null;
         [DataSourceProperty]
@@ -172,10 +167,10 @@ namespace MCM.UI.GUI.ViewModels
         {
             _logger = GenericServiceProvider.GetService<ILogger<ModOptionsVM>>() ?? NullLogger<ModOptionsVM>.Instance;
 
-            Name = TextObjectHelper.Create("{=ModOptionsVM_Name}Mod Options")?.ToString() ?? string.Empty;
-            DoneButtonText = TextObjectHelper.Create("{=WiNRdfsm}Done")?.ToString() ?? string.Empty;
-            CancelButtonText = TextObjectHelper.Create("{=3CpNUnVl}Cancel")?.ToString() ?? string.Empty;
-            ModsText = TextObjectHelper.Create("{=ModOptionsPageView_Mods}Mods")?.ToString() ?? string.Empty;
+            Name = new TextObject("{=ModOptionsVM_Name}Mod Options").ToString();
+            DoneButtonText = new TextObject("{=WiNRdfsm}Done").ToString();
+            CancelButtonText = new TextObject("{=3CpNUnVl}Cancel").ToString();
+            ModsText = new TextObject("{=ModOptionsPageView_Mods}Mods").ToString();
             SearchText = string.Empty;
 
             InitializeModSettings();
@@ -209,7 +204,7 @@ namespace MCM.UI.GUI.ViewModels
                                 {
                                     _logger.LogError(e, "Error while creating a ViewModel for settings {Id}", s.SettingsId);
                                     InformationManager.DisplayMessage(new InformationMessage(
-                                        TextObjectHelper.Create($"{{=HNduGf7H5a}}There was an error while parsing settings from '{s.SettingsId}'! Please contact the MCM developers and the mod developer!")?.ToString(),
+                                        new TextObject($"{{=HNduGf7H5a}}There was an error while parsing settings from '{s.SettingsId}'! Please contact the MCM developers and the mod developer!").ToString(),
                                         Colors.Red));
                                     return null;
                                 }
@@ -242,7 +237,7 @@ namespace MCM.UI.GUI.ViewModels
                 {
                     _logger.LogError(e, "Error while creating ViewModels for the settings");
                     InformationManager.DisplayMessage(new InformationMessage(
-                        TextObjectHelper.Create("{=JLKaTyJcyu}There was a major error while building the settings list! Please contact the MCM developers!")?.ToString(),
+                        new TextObject("{=JLKaTyJcyu}There was a major error while building the settings list! Please contact the MCM developers!").ToString(),
                         Colors.Red));
                 }
             }, SynchronizationContext.Current);
@@ -267,18 +262,18 @@ namespace MCM.UI.GUI.ViewModels
 
         private void OnPresetsSelectorChange(SelectorVM<SelectorItemVM> selector)
         {
-            var data = InquiryDataUtils.Create(
-                TextObjectHelper.Create("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new Dictionary<string, TextObject?>
+            var data = new InquiryData(
+                new TextObject("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new()
                 {
-                    {"PRESET", TextObjectHelper.Create(selector.SelectedItem.StringItem)}
-                })?.ToString(),
-                TextObjectHelper.Create("{=ModOptionsVM_Discard}Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?", new Dictionary<string, TextObject?>
+                    {"PRESET", selector.SelectedItem.StringItem}
+                }).ToString(),
+                new TextObject("{=ModOptionsVM_Discard}Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?", new()
                 {
-                    {"NAME", TextObjectHelper.Create(SelectedMod!.DisplayName)},
-                    {"ITEM", TextObjectHelper.Create(selector.SelectedItem.StringItem)}
-                })?.ToString(),
-                true, true, TextObjectHelper.Create("{=aeouhelq}Yes")?.ToString(),
-                TextObjectHelper.Create("{=8OkPHu4f}No")?.ToString(),
+                    {"NAME", SelectedMod?.DisplayName },
+                    {"ITEM", selector.SelectedItem.StringItem }
+                }).ToString(),
+                true, true, new TextObject("{=aeouhelq}Yes").ToString(),
+                new TextObject("{=8OkPHu4f}No").ToString(),
                 () =>
                 {
                     SelectedMod!.ChangePreset(PresetsSelector.SelectedItem.StringItem);
@@ -289,10 +284,10 @@ namespace MCM.UI.GUI.ViewModels
                 () =>
                 {
                     PresetsSelector.SetOnChangeAction(null);
-                    PresetsSelector.SelectedIndex = SelectedMod.PresetsSelector?.SelectedIndex ?? -1;
+                    PresetsSelector.SelectedIndex = SelectedMod?.PresetsSelector?.SelectedIndex ?? -1;
                     PresetsSelector.SetOnChangeAction(OnPresetsSelectorChange);
                 });
-            InformationManagerUtils.ShowInquiry(data);
+            InformationManager.ShowInquiry(data);
         }
         private void OnModPresetsSelectorChange(SelectorVM<SelectorItemVM> selector)
         {
@@ -341,9 +336,9 @@ namespace MCM.UI.GUI.ViewModels
             var requireRestart = changedModSettings.Any(x => x.RestartRequired());
             if (requireRestart)
             {
-                var data = InquiryDataUtils.Create(TextObjectHelper.Create("{=ModOptionsVM_RestartTitle}Game Needs to Restart")?.ToString(),
-                    TextObjectHelper.Create("{=ModOptionsVM_RestartDesc}The game needs to be restarted to apply mod settings changes. Do you want to close the game now?")?.ToString(),
-                    true, true, TextObjectHelper.Create("{=aeouhelq}Yes")?.ToString(), TextObjectHelper.Create("{=3CpNUnVl}Cancel")?.ToString(),
+                var data = new InquiryData(new TextObject("{=ModOptionsVM_RestartTitle}Game Needs to Restart").ToString(),
+                    new TextObject("{=ModOptionsVM_RestartDesc}The game needs to be restarted to apply mod settings changes. Do you want to close the game now?").ToString(),
+                    true, true, new TextObject("{=aeouhelq}Yes").ToString(), new TextObject("{=3CpNUnVl}Cancel").ToString(),
                     () =>
                     {
                         foreach (var changedModSetting in changedModSettings)
@@ -356,7 +351,7 @@ namespace MCM.UI.GUI.ViewModels
                         onClose?.Invoke();
                         Utilities.QuitGame();
                     }, () => { });
-                InformationManagerUtils.ShowInquiry(data);
+                InformationManager.ShowInquiry(data);
             }
             else
             {

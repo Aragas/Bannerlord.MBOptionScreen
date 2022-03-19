@@ -1,5 +1,4 @@
 ﻿using MCM.Abstractions.Ref;
-using MCM.Utils;
 
 using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Library;
@@ -14,7 +13,7 @@ namespace MCM.Abstractions.Dropdown
         public override string StringItem => _ref.Value?.ToString() ?? "ERROR";
 
         [DataSourceProperty]
-        public override HintViewModel Hint { get; } = HintViewModelUtils.Create();
+        public override HintViewModel Hint { get; } = new();
 
         public DropdownRefSelectorItemVM(IRef @ref)
         {

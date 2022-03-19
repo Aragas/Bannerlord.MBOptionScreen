@@ -5,6 +5,8 @@ using MCM.Abstractions.Settings.Definitions;
 using System;
 using System.Diagnostics.CodeAnalysis;
 
+using TaleWorlds.Localization;
+
 // ReSharper disable once CheckNamespace
 namespace MCM.Abstractions.Attributes
 {
@@ -20,11 +22,11 @@ namespace MCM.Abstractions.Attributes
         /// <inheritdoc/>
         public bool RequireRestart { get; set; }
         /// <inheritdoc/>
-        public string HintText { get => _hintText; set => _hintText = TextObjectHelper.Create(value)?.ToString() ?? "ERROR"; }
+        public string HintText { get => _hintText; set => _hintText = new TextObject(value).ToString(); }
 
         protected BaseSettingPropertyAttribute(string displayName, int order = -1, bool requireRestart = true, string hintText = "")
         {
-            DisplayName = TextObjectHelper.Create(displayName)?.ToString() ?? "ERROR";
+            DisplayName = new TextObject(displayName).ToString();
             Order = order;
             RequireRestart = requireRestart;
             HintText = hintText;

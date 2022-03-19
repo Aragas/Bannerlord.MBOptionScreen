@@ -1,5 +1,6 @@
-﻿using MCM.Abstractions.Settings.Models;
-using MCM.Utils;
+﻿using Bannerlord.ModuleManager;
+
+using MCM.Abstractions.Settings.Models;
 
 using System;
 using System.Collections.Generic;

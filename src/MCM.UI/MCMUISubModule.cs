@@ -33,8 +33,10 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
-using TaleWorlds.Engine.Screens;
+using TaleWorlds.Library;
+using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
+using TaleWorlds.ScreenSystem;
 
 namespace MCM.UI
 {
@@ -46,6 +48,8 @@ namespace MCM.UI
 @"{=eXs6FLm5DP}It's strongly recommended to terminate the game now. Do you wish to terminate it?";
         private const string SWarningTitle =
 @"{=dzeWx4xSfR}Warning from MCM!";
+        private const string SMessageWrongGameVersion =
+@"{=fGt6Gthg5y}This version of MCM is intended for e1.7.2 and higher! You are running {GAMEVERSION}!";
 
 
         private static readonly UIExtender Extender = new("MCM.UI");
@@ -60,6 +64,7 @@ namespace MCM.UI
         {
             MCMSubModule.Instance?.OverrideServiceContainer(new ButterLibServiceContainer());
 
+            CheckGameVersion();
             CheckLoadOrder();
         }
 
@@ -78,18 +83,8 @@ namespace MCM.UI
 
                 services.AddTransient<IMCMOptionsScreen, ModOptionsGauntletScreen>();
 
-                if (ApplicationVersionHelper.GameVersion() is { } gameVersion)
-                {
-                    if (gameVersion.Major <= 1 && gameVersion.Minor <= 5 && gameVersion.Revision <= 7)
-                        services.AddSingleton<BaseGameMenuScreenHandler, Pre158GameMenuScreenHandler>();
-                    else
-                        services.AddSingleton<BaseGameMenuScreenHandler, Post158GameMenuScreenHandler>();
-
-                    if (gameVersion.Major <= 1 && gameVersion.Minor <= 5 && gameVersion.Revision <= 3)
-                        services.AddSingleton<ResourceInjector, ResourceInjectorPre154>();
-                    else
-                        services.AddSingleton<ResourceInjector, ResourceInjectorPost154>();
-                }
+                services.AddSingleton<BaseGameMenuScreenHandler, DefaultGameMenuScreenHandler>();
+                services.AddSingleton<ResourceInjector, DefaultResourceInjector>();
             }
         }
 
@@ -113,14 +108,12 @@ namespace MCM.UI
             Logger = serviceProvider.GetRequiredService<ILogger<MCMUISubModule>>();
             Logger.LogTrace("OnSubModuleLoad: Logging started...");
 
-            var editabletextpatchHarmony = new Harmony("bannerlord.mcm.ui.editabletextpatch");
-            EditableTextPatch.Patch(editabletextpatchHarmony);
-
             var viewmodelwrapperHarmony = new Harmony("bannerlord.mcm.ui.viewmodelpatch");
             ViewModelPatch.Patch(viewmodelwrapperHarmony);
 
             var optionsGauntletScreenHarmony = new Harmony("bannerlord.mcm.ui.optionsgauntletscreenpatch");
             OptionsGauntletScreenPatch.Patch(optionsGauntletScreenHarmony);
+            MissionGauntletOptionsUIHandlerPatch.Patch(optionsGauntletScreenHarmony);
 
 
             DelayedSubModuleManager.Register<SandBoxSubModule>();
@@ -198,10 +191,29 @@ namespace MCM.UI
                     "MCM_OptionScreen",
                     9990,
                     () => GenericServiceProvider.GetService<IMCMOptionsScreen>() as ScreenBase,
-                    TextObjectHelper.Create("{=MainMenu_ModOptions}Mod Options"));
+                    new TextObject("{=MainMenu_ModOptions}Mod Options"));
             }
         }
 
+        private static void CheckGameVersion()
+        {
+            var e172 = new ApplicationVersion(ApplicationVersionType.EarlyAccess, 1, 7, 2, 0, ApplicationVersionGameType.Singleplayer);
+            if (ApplicationVersionHelper.GameVersion() is { } gameVersion && gameVersion < e172)
+            {
+                var sb = new StringBuilder();
+                sb.AppendLine(new TextObject(SMessageWrongGameVersion, new() { {"GAMEVERSION", ApplicationVersionHelper.ToString(gameVersion)} }).ToString());
+                sb.AppendLine();
+                sb.AppendLine(new TextObject(SMessageContinue).ToString());
+                switch (MessageBox.Show(sb.ToString(),
+                            new TextObject(SWarningTitle).ToString(), MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, (MessageBoxOptions) 0x40000))
+                {
+                    case DialogResult.Yes:
+                        Environment.Exit(1);
+                        break;
+                }
+            }
+        }
         private static void CheckLoadOrder()
         {
             var loadedModules = ModuleInfoHelper.GetLoadedModules().ToList();
@@ -212,8 +224,10 @@ namespace MCM.UI
             {
                 sb.AppendLine(report);
                 sb.AppendLine();
-                sb.AppendLine(TextObjectHelper.Create(SMessageContinue)?.ToString() ?? "ERROR");
-                switch (MessageBox.Show(sb.ToString(), TextObjectHelper.Create(SWarningTitle)?.ToString() ?? "ERROR", MessageBoxButtons.YesNo))
+                sb.AppendLine(new TextObject(SMessageContinue).ToString());
+                switch (MessageBox.Show(sb.ToString(),
+                            new TextObject(SWarningTitle).ToString(), MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, (MessageBoxOptions) 0x40000))
                 {
                     case DialogResult.Yes:
                         Environment.Exit(1);

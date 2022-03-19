@@ -1,16 +1,12 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
-
-using HarmonyLib.BUTR.Extensions;
-
-using MCM.UI.GUI.ViewModels;
-using MCM.UI.Utils;
+﻿using MCM.UI.GUI.ViewModels;
 
 using Microsoft.Extensions.Logging;
 
 using TaleWorlds.Engine.GauntletUI;
-using TaleWorlds.Engine.Screens;
+using TaleWorlds.GauntletUI.Data;
 using TaleWorlds.InputSystem;
 using TaleWorlds.Library;
+using TaleWorlds.ScreenSystem;
 using TaleWorlds.TwoDimension;
 
 namespace MCM.UI.GUI.GauntletUI
@@ -20,18 +16,10 @@ namespace MCM.UI.GUI.GauntletUI
     /// </summary>
     internal sealed class ModOptionsGauntletScreen : ScreenBase, IMCMOptionsScreen
     {
-        private delegate object LoadMovieDelegate(object instance, string movieName, ViewModel dataSource);
-        private delegate void ReleaseMovieDelegate(object instance, object movie);
-
-        private static readonly LoadMovieDelegate? LoadMovie =
-            AccessTools2.GetDelegateObjectInstance<LoadMovieDelegate>(typeof(GauntletLayer), "LoadMovie");
-        private static readonly ReleaseMovieDelegate? ReleaseMovie =
-            AccessTools2.GetDelegateObjectInstance<ReleaseMovieDelegate>(typeof(GauntletLayer), "ReleaseMovie");
-
         private readonly ILogger<ModOptionsGauntletScreen> _logger;
 
         private GauntletLayer? _gauntletLayer;
-        private object? _gauntletMovie;
+        private IGauntletMovie? _gauntletMovie;
         private ModOptionsVM _dataSource = default!;
         private SpriteCategory? _spriteCategoryEncyclopedia;
         private SpriteCategory? _spriteCategorySaveLoad;
@@ -48,24 +36,17 @@ namespace MCM.UI.GUI.GauntletUI
             var resourceContext = UIResourceManager.ResourceContext;
             var uiresourceDepot = UIResourceManager.UIResourceDepot;
             _spriteCategoryEncyclopedia = spriteData.SpriteCategories.TryGetValue("ui_encyclopedia", out var spriteCategoryEncyclopediaVal) ? spriteCategoryEncyclopediaVal : null;
-            if (ApplicationVersionHelper.GameVersion() is { } gameVersion)
-            {
-                if ((gameVersion.Major >= 1 && gameVersion.Minor >= 6 && gameVersion.Revision >= 1) || (gameVersion.Major >= 1 && gameVersion.Minor >= 7))
-                    _spriteCategorySaveLoad = spriteData.SpriteCategories.TryGetValue("ui_saveload", out var spriteCategorySaveLoadVal) ? spriteCategorySaveLoadVal : null;
-            }
+            _spriteCategorySaveLoad = spriteData.SpriteCategories.TryGetValue("ui_saveload", out var spriteCategorySaveLoadVal) ? spriteCategorySaveLoadVal : null;
             _spriteCategoryEncyclopedia?.Load(resourceContext, uiresourceDepot);
             _spriteCategorySaveLoad?.Load(resourceContext, uiresourceDepot);
             _dataSource = new ModOptionsVM();
-            if (GauntletLayerUtils.Create(4000, "GauntletLayer") is { } gauntletLayer)
-            {
-                _gauntletLayer = gauntletLayer;
-                _gauntletMovie = LoadMovie is not null ? LoadMovie(_gauntletLayer, "ModOptionsView_MCM", _dataSource) : null;
-                _gauntletLayer.Input.RegisterHotKeyCategory(HotKeyManager.GetCategory("GenericPanelGameKeyCategory"));
-                _gauntletLayer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);
-                _gauntletLayer.IsFocusLayer = true;
-                AddLayer(_gauntletLayer);
-                ScreenManager.TrySetFocus(_gauntletLayer);
-            }
+            _gauntletLayer = new GauntletLayer(4000, "GauntletLayer");
+            _gauntletMovie = _gauntletLayer.LoadMovie("ModOptionsView_MCM", _dataSource);
+            _gauntletLayer.Input.RegisterHotKeyCategory(HotKeyManager.GetCategory("GenericPanelGameKeyCategory"));
+            _gauntletLayer.InputRestrictions.SetInputRestrictions(true, InputUsageMask.All);
+            _gauntletLayer.IsFocusLayer = true;
+            AddLayer(_gauntletLayer);
+            ScreenManager.TrySetFocus(_gauntletLayer);
         }
 
         protected override void OnFrameTick(float dt)
@@ -86,8 +67,8 @@ namespace MCM.UI.GUI.GauntletUI
             //_spriteCategoryEncyclopedia.Unload();
             if (_gauntletLayer is not null)
                 RemoveLayer(_gauntletLayer);
-            if (_gauntletLayer is not null && _gauntletMovie is not null && ReleaseMovie is not null)
-                ReleaseMovie(_gauntletLayer, _gauntletMovie);
+            if (_gauntletLayer is not null && _gauntletMovie is not null)
+                _gauntletLayer.ReleaseMovie(_gauntletMovie);
             _gauntletLayer = null;
             _gauntletMovie = null;
             _dataSource.ExecuteSelect(null);

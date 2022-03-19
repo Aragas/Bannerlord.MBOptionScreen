@@ -2,8 +2,8 @@
 
 using System;
 
-using TaleWorlds.Engine.Screens;
 using TaleWorlds.Localization;
+using TaleWorlds.ScreenSystem;
 
 namespace MCM.UI.Functionality
 {

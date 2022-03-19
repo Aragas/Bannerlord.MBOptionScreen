@@ -14,6 +14,7 @@ Any property is set by a ``Set%PropertyName%`` method.
 ``AddFloatingInteger`` creates an Float Slider property.  
 ``AddText`` creates an Textbox property.  
 ``AddDropdown`` creates a Dropdown property.  
+``AddButton`` creates a Button property.  
 ``AddCustom`` can add a custom property. The custom property should implement one of the interfaces defined in @"MCM.Abstractions.Settings.Definitions" namespace. Currently there is no way of defining a custom UI Control. One of the possible fixes would be to use UIExtender library.  
  
 ``CreatePreset`` creates a new Preset.  

@@ -16,6 +16,7 @@
     <string id="5G9zffrgMh" text="{MODULE} is loaded before the {DEPENDENT_MODULE}!{NL}Make sure {MODULE} is loaded after it!" />
     <string id="UZ8zfvudMs" text="{MODULE} is loaded after the {DEPENDENT_MODULE}!{NL}Make sure {MODULE} is loaded before it!" />
     <string id="eXs6FLm5DP" text="It's strongly recommended to terminate the game now. Do you wish to terminate it?" />
+    <string id="fGt6Gthg5y" text="This version of MCM is intended for e1.7.2 and higher! You are running {GAMEVERSION}!" />
 
     <string id="EditValueVM_TitleText" text="Mod Options"/>
     <string id="EditValueVM_TitleText" text="Edit &quot;{PROPERTYNAME}&quot;"/>

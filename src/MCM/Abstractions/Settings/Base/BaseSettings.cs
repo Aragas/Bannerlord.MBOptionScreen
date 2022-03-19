@@ -11,6 +11,8 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
+using TaleWorlds.Localization;
+
 namespace MCM.Abstractions.Settings.Base
 {
     public abstract class BaseSettings : INotifyPropertyChanged
@@ -58,7 +60,7 @@ namespace MCM.Abstractions.Settings.Base
         public virtual IDictionary<string, Func<BaseSettings>> GetAvailablePresets() => new Dictionary<string, Func<BaseSettings>>()
         {
             // TODO: computable name
-            { TextObjectHelper.Create("{=BaseSettings_Default}Default")?.ToString() ?? "ERROR", CreateNew }
+            { new TextObject("{=BaseSettings_Default}Default").ToString(), CreateNew }
         };
     }
 }

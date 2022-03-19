@@ -1,21 +1,18 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
-
-using MCM.Abstractions.Common;
+﻿using MCM.Abstractions.Common;
 using MCM.Abstractions.Dropdown;
 using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Models;
 using MCM.UI.Actions;
 using MCM.UI.Data;
-using MCM.UI.GUI.GauntletUI;
 using MCM.Utils;
 
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
-using TaleWorlds.Engine.Screens;
 using TaleWorlds.Library;
+using TaleWorlds.Localization;
 
 namespace MCM.UI.GUI.ViewModels
 {
@@ -62,8 +59,6 @@ namespace MCM.UI.GUI.ViewModels
         public bool IsButtonVisible { get; }
         [DataSourceProperty]
         public bool IsEnabled => Group.GroupToggle;
-        [DataSourceProperty]
-        public bool HasEditableText { get; }
         [DataSourceProperty]
         public bool IsSettingVisible
         {
@@ -162,20 +157,27 @@ namespace MCM.UI.GUI.ViewModels
         }
 
         [DataSourceProperty]
-        public float MaxValue => (float) SettingPropertyDefinition.MaxValue;
+        public int MaxInt => (int) SettingPropertyDefinition.MaxValue;
         [DataSourceProperty]
-        public float MinValue => (float) SettingPropertyDefinition.MinValue;
+        public int MinInt => (int) SettingPropertyDefinition.MinValue;
+        [DataSourceProperty]
+        public float MaxFloat => (float) SettingPropertyDefinition.MaxValue;
+        [DataSourceProperty]
+        public float MinFloat => (float) SettingPropertyDefinition.MinValue;
         [DataSourceProperty]
         public string ButtonContent => SettingPropertyDefinition.Content;
+
+        [DataSourceProperty]
+        public bool HasNoEditableText { get; }
         [DataSourceProperty]
         public string TextBoxValue => SettingType switch
         {
             SettingType.Int when PropertyReference.Value is int val => string.IsNullOrWhiteSpace(ValueFormat)
                 ? string.Format(ValueFormatProvider, "{0}", val.ToString("0"))
-                : string.Format(ValueFormatProvider, "{0}", val.ToString(TextObjectHelper.Create(ValueFormat)?.ToString())),
+                : string.Format(ValueFormatProvider, "{0}", val.ToString(new TextObject(ValueFormat).ToString())),
             SettingType.Float when PropertyReference.Value is float val => string.IsNullOrWhiteSpace(ValueFormat)
                 ? string.Format(ValueFormatProvider, "{0}", val.ToString("0.00"))
-                : string.Format(ValueFormatProvider, "{0}", val.ToString(TextObjectHelper.Create(ValueFormat)?.ToString())),
+                : string.Format(ValueFormatProvider, "{0}", val.ToString(new TextObject(ValueFormat).ToString())),
             _ => string.Empty
         };
 
@@ -198,7 +200,7 @@ namespace MCM.UI.GUI.ViewModels
             IsDropdownCheckboxVisible = SettingType == SettingType.Dropdown && SettingsUtils.IsForCheckboxDropdown(PropertyReference.Value);
             IsDropdownVisible = IsDropdownDefaultVisible || IsDropdownCheckboxVisible;
             IsButtonVisible = SettingType == SettingType.Button;
-            HasEditableText = IsIntVisible || IsFloatVisible;
+            HasNoEditableText = !(IsIntVisible || IsFloatVisible);
             // Moved to constructor
 
             PropertyReference.PropertyChanged += PropertyReference_OnPropertyChanged;
@@ -326,10 +328,6 @@ namespace MCM.UI.GUI.ViewModels
             IsSelected = false;
             MainView.HintText = string.Empty;
         }
-
-        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
-        [SuppressMessage("Redundancy", "RCS1213:Remove unused member declaration.", Justification = "Reflection is used.")]
-        public void OnValueClick2() => ScreenManager.PushScreen(new EditValueGauntletScreen(this));
 
         [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
         [SuppressMessage("Redundancy", "RCS1213:Remove unused member declaration.", Justification = "Reflection is used.")]

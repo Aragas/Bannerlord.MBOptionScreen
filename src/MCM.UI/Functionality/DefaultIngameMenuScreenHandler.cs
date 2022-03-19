@@ -1,4 +1,5 @@
 ﻿using Bannerlord.BUTR.Shared.Extensions;
+using Bannerlord.BUTR.Shared.Helpers;
 
 using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
@@ -12,12 +13,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-using TaleWorlds.Engine.Screens;
 using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade.GauntletUI;
 using TaleWorlds.MountAndBlade.LegacyGUI.Missions.Singleplayer;
 using TaleWorlds.MountAndBlade.View.Missions;
 using TaleWorlds.MountAndBlade.ViewModelCollection;
+using TaleWorlds.ScreenSystem;
 
 namespace MCM.UI.Functionality
 {
@@ -69,31 +70,7 @@ namespace MCM.UI.Functionality
             foreach (var (key, value) in ScreensCache)
             {
                 var (index, screenFactory, text) = value;
-                var escapeMenuItemVM = EscapeMenuItemVMUtils.Create(text,
-                    _ =>
-                    {
-                        var screen = screenFactory();
-                        if (screen is not null)
-                        {
-                            OnEscapeMenuToggledMapScreen?.Invoke(__instance, true);
-                            ScreenManager.PushScreen(screen);
-                        }
-                    },
-                    key, false);
-                if (escapeMenuItemVM is null)
-                {
-                    return;
-                }
-                __result.Insert(index, escapeMenuItemVM);
-            }
-        }
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static void MissionSingleplayerEscapeMenu_GetEscapeMenuItems(GauntletMissionEscapeMenuBase __instance, ref List<EscapeMenuItemVM> __result)
-        {
-            foreach (var (key, value) in ScreensCache)
-            {
-                var (index, screenFactory, text) = value;
-                var escapeMenuItemVM = EscapeMenuItemVMUtils.Create(text,
+                var escapeMenuItemVM = new EscapeMenuItemVM(text,
                     _ =>
                     {
                         var screen = screenFactory();
@@ -103,11 +80,27 @@ namespace MCM.UI.Functionality
                             ScreenManager.PushScreen(screen);
                         }
                     },
-                    key, false);
-                if (escapeMenuItemVM is null)
-                {
-                    return;
-                }
+                    key, () => new Tuple<bool, TextObject>(false, new TextObject(string.Empty)));
+                __result.Insert(index, escapeMenuItemVM);
+            }
+        }
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static void MissionSingleplayerEscapeMenu_GetEscapeMenuItems(GauntletMissionEscapeMenuBase __instance, ref List<EscapeMenuItemVM> __result)
+        {
+            foreach (var (key, value) in ScreensCache)
+            {
+                var (index, screenFactory, text) = value;
+                var escapeMenuItemVM = new EscapeMenuItemVM(text,
+                    _ =>
+                    {
+                        var screen = screenFactory();
+                        if (screen is not null)
+                        {
+                            OnEscapeMenuToggledGauntletMissionEscapeMenuBase?.Invoke(__instance, true);
+                            ScreenManager.PushScreen(screen);
+                        }
+                    },
+                    key, () => new Tuple<bool, TextObject>(false, new TextObject(string.Empty)));
                 __result.Insert(index, escapeMenuItemVM);
             }
         }
@@ -135,13 +128,9 @@ namespace MCM.UI.Functionality
             if (_instance.TryGetTarget(out var instance) && DataSource is not null)
             {
                 var dataSource = DataSource(instance);
-                var escapeMenuItemVM = EscapeMenuItemVMUtils.Create(text,
+                var escapeMenuItemVM = new EscapeMenuItemVM(text,
                     _ => ScreenManager.PushScreen(screenFactory()),
-                    internalName, false);
-                if (escapeMenuItemVM is null)
-                {
-                    return;
-                }
+                    internalName, () => new Tuple<bool, TextObject>(false, new TextObject(string.Empty)));
                 dataSource.MenuItems.Insert(index, escapeMenuItemVM);
             }
 

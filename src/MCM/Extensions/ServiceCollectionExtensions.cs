@@ -3,6 +3,7 @@
 using MCM.Abstractions.FluentBuilder;
 using MCM.Abstractions.Settings.Containers;
 using MCM.Abstractions.Settings.Containers.Global;
+using MCM.Abstractions.Settings.Containers.PerCampaign;
 using MCM.Abstractions.Settings.Containers.PerSave;
 using MCM.Abstractions.Settings.Formats;
 using MCM.Abstractions.Settings.Properties;
@@ -79,10 +80,14 @@ namespace MCM.Extensions
 
             services.RegisterSingleton<ISettingsContainer>(sp => sp.GetService<TImplementation>());
 
+            if (typeof(IPerCampaignSettingsContainer).IsAssignableFrom(typeof(TImplementation)))
+                services.RegisterSingleton<IPerCampaignSettingsContainer>(sp => (IPerCampaignSettingsContainer) sp.GetService<TImplementation>());
             if (typeof(IPerSaveSettingsContainer).IsAssignableFrom(typeof(TImplementation)))
                 services.RegisterSingleton<IPerSaveSettingsContainer>(sp => (IPerSaveSettingsContainer) sp.GetService<TImplementation>());
             if (typeof(IGlobalSettingsContainer).IsAssignableFrom(typeof(TImplementation)))
                 services.RegisterSingleton<IGlobalSettingsContainer>(sp => (IGlobalSettingsContainer) sp.GetService<TImplementation>());
+            if (typeof(IFluentPerCampaignSettingsContainer).IsAssignableFrom(typeof(TImplementation)))
+                services.RegisterSingleton<IFluentPerCampaignSettingsContainer>(sp => (IFluentPerCampaignSettingsContainer) sp.GetService<TImplementation>());
             if (typeof(IFluentPerSaveSettingsContainer).IsAssignableFrom(typeof(TImplementation)))
                 services.RegisterSingleton<IFluentPerSaveSettingsContainer>(sp => (IFluentPerSaveSettingsContainer) sp.GetService<TImplementation>());
             if (typeof(IFluentGlobalSettingsContainer).IsAssignableFrom(typeof(TImplementation)))

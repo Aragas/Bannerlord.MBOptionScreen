@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using TaleWorlds.Localization;
+
 namespace MCM.Abstractions.Settings.Models
 {
     public sealed class SettingsPropertyDefinition : ISettingsPropertyDefinition
@@ -59,7 +61,7 @@ namespace MCM.Abstractions.Settings.Models
             SubGroupDelimiter = subGroupDelimiter;
 
             var groups = propertyGroupDefinition.GroupName.Split(SubGroupDelimiter);
-            GroupName = string.Join(SubGroupDelimiter.ToString(), groups.Select(x => TextObjectHelper.Create(x)?.ToString()));
+            GroupName = string.Join(SubGroupDelimiter.ToString(), groups.Select(x => new TextObject(x).ToString()));
             GroupOrder = propertyGroupDefinition.GroupOrder;
 
             PropertyReference = propertyReference;
@@ -84,10 +86,10 @@ namespace MCM.Abstractions.Settings.Models
             {
                 if (propertyDefinition is { } propertyBase)
                 {
-                    DisplayName = TextObjectHelper.Create(propertyBase.DisplayName)?.ToString() ?? "ERROR";
+                    DisplayName = new TextObject(propertyBase.DisplayName).ToString();
                     Order = propertyBase.Order;
                     RequireRestart = propertyBase.RequireRestart;
-                    HintText = TextObjectHelper.Create(propertyBase.HintText)?.ToString() ?? "ERROR";
+                    HintText = new TextObject(propertyBase.HintText).ToString();
                 }
                 if (propertyDefinition is SettingPropertyAttribute settingPropertyAttribute) // v1
                 {
@@ -142,7 +144,7 @@ namespace MCM.Abstractions.Settings.Models
                 }
                 if (propertyDefinition is IPropertyDefinitionButton propertyDefinitionButton)
                 {
-                    Content = TextObjectHelper.Create(propertyDefinitionButton.Content)?.ToString() ?? "ERROR";
+                    Content = new TextObject(propertyDefinitionButton.Content).ToString();
                 }
             }
         }

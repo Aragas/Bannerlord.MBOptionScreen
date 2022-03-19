@@ -1,6 +1,7 @@
 ﻿using BUTR.DependencyInjection;
 
 using MCM.Abstractions.Settings.Base.Global;
+using MCM.Abstractions.Settings.Base.PerCampaign;
 using MCM.Abstractions.Settings.Base.PerSave;
 
 using System;
@@ -25,5 +26,6 @@ namespace MCM.Abstractions.FluentBuilder
 
         public abstract FluentGlobalSettings BuildAsGlobal();
         public abstract FluentPerSaveSettings BuildAsPerSave();
+        public abstract FluentPerCampaignSettings BuildAsPerCampaign();
     }
 }

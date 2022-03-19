@@ -9,12 +9,12 @@ namespace ModLib.Debugging
     {
         public static void ShowError(string message, string title = "", Exception? exception = null)
         {
-            InformationManager.DisplayMessage(new InformationMessage($"ModLibV1: {message}! {exception}", Colors.Red));
+            InformationManager.DisplayMessage(new($"ModLibV1: {message}! {exception}", Colors.Red));
         }
 
         public static void ShowMessage(string message, string title = "", bool nonModal = false)
         {
-            InformationManager.DisplayMessage(new InformationMessage($"ModLibV1: {message}", Colors.Yellow));
+            InformationManager.DisplayMessage(new($"ModLibV1: {message}", Colors.Yellow));
         }
 
         public static void LogError(string error, Exception? ex = null) { }

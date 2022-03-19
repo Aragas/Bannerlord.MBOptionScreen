@@ -38,13 +38,13 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: Tests Setup
-      uses: butr/actions-tests-setup@v1.5.2
+      uses: butr/actions-tests-setup@v1.5.3
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
         steam-login: ${{secrets.STEAM_LOGIN}}
         steam-password: ${{secrets.STEAM_PASSWORD}}
-        stable-version: e1.7.0
-        beta-version: e1.7.1
+        stable-version: ${{secrets.SYNCED_GAME_STABLE_VERSION}}
+        beta-version: ${{secrets.SYNCED_GAME_BETA_VERSION}}
         stable-directory: 'bannerlord-stable'
         beta-directory: 'bannerlord-beta'
 
@@ -59,8 +59,8 @@ jobs:
           dotnet test "tests/MCM.Tests/MCM.Tests.csproj" --configuration Beta_Debug -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord-beta";
           dotnet test "tests/MCM.Tests/MCM.Tests.csproj" --configuration Beta_Release -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord-beta";
       env:
-        STABLE_VERSION: e1.7.0
-        BETA_VERSION: e1.7.1
+        STABLE_VERSION: ${{secrets.SYNCED_GAME_STABLE_VERSION}}
+        BETA_VERSION: ${{secrets.SYNCED_GAME_BETA_VERSION}}
       shell: pwsh
 
     - name: Test Coverage

@@ -1,9 +1,6 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
-
-using MCM.Abstractions.Settings.Models;
+﻿using MCM.Abstractions.Settings.Models;
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 using TaleWorlds.Library;
@@ -47,10 +44,10 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public string GroupNameDisplay => GroupToggle
             ? GroupName
-            : TextObjectHelper.Create("{=SettingsPropertyGroupVM_Disabled}{GROUPNAME} (Disabled)", new Dictionary<string, TextObject?>
+            : new TextObject("{=SettingsPropertyGroupVM_Disabled}{GROUPNAME} (Disabled)", new()
             {
-                { "GROUPNAME", TextObjectHelper.Create(GroupName) }
-            })?.ToString() ?? string.Empty;
+                { "GROUPNAME", GroupName }
+            }).ToString();
         [DataSourceProperty]
         public MBBindingList<SettingsPropertyVM> SettingProperties { get; } = new();
         [DataSourceProperty]
@@ -95,8 +92,6 @@ namespace MCM.UI.GUI.ViewModels
                     return true;
             }
         }
-        [DataSourceProperty]
-        public bool HasSettingsProperties => SettingProperties.Count > 0;
         [DataSourceProperty]
         public bool IsExpanded
         {
