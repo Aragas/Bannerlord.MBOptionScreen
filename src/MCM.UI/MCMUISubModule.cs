@@ -201,7 +201,7 @@ namespace MCM.UI
             if (ApplicationVersionHelper.GameVersion() is { } gameVersion && gameVersion < e172)
             {
                 var sb = new StringBuilder();
-                sb.AppendLine(new TextObject(SMessageWrongGameVersion, new() { {"GAMEVERSION", ApplicationVersionHelper.ToString(gameVersion)} }).ToString());
+                sb.AppendLine(new TextObject(SMessageWrongGameVersion, new() { { "GAMEVERSION", ApplicationVersionHelper.ToString(gameVersion) } }).ToString());
                 sb.AppendLine();
                 sb.AppendLine(new TextObject(SMessageContinue).ToString());
                 switch (MessageBox.Show(sb.ToString(),
