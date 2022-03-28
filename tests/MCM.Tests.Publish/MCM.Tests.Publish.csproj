@@ -9,15 +9,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Bannerlord.BuildResources" Version="$(BuildResourcesVersion)">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="Bannerlord.BuildResources" Version="$(BuildResourcesVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MBOv1.Tests\MBOv1.Tests.csproj" />
-    <ProjectReference Include="..\MBOv2.Tests\MBOv2.Tests.csproj" />
     <ProjectReference Include="..\MCMv3.Tests\MCMv3.Tests.csproj" />
     <ProjectReference Include="..\MCMv4.Tests\MCMv4.Tests.csproj" />
     <ProjectReference Include="..\ModLibV1.Tests\ModLibV1.Tests.csproj" />

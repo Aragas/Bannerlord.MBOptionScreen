@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 4.6.0
+Game Versions: e1.7.2
+* Fixed EditBox formatting not being shown
+* Added a Campaign and Mission Behaviors for accessing the settings in an OOP way
+---------------------------------------------------------------------------------------------------
 Version: 4.5.0
 Game Versions: e1.7.2
 * Dropped MBO (MCMv1) API

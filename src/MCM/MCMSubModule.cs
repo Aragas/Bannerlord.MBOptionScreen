@@ -5,9 +5,12 @@ using BUTR.DependencyInjection.Logger;
 
 using MCM.Abstractions.Settings.Formats;
 using MCM.Abstractions.Settings.Properties;
+using MCM.Abstractions.Settings.Providers;
 using MCM.Extensions;
 using MCM.LightInject;
 
+using TaleWorlds.CampaignSystem;
+using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
 
 using ServiceCollectionExtensions = BUTR.DependencyInjection.Extensions.ServiceCollectionExtensions;
@@ -90,6 +93,24 @@ namespace MCM
             {
                 ServiceCollectionExtensions.ServiceContainer = new WithHistoryGenericServiceContainer(serviceContainer);
             }
+        }
+
+
+        public override void OnCampaignStart(Game game, object starterObject)
+        {
+            base.OnCampaignStart(game, starterObject);
+
+            if (starterObject is CampaignGameStarter campaignGameStarter)
+            {
+                campaignGameStarter.AddBehavior(new SettingsProviderCampaignBehavior(GenericServiceProvider.GetService<BaseSettingsProvider>()));
+            }
+        }
+
+        public override void OnMissionBehaviorInitialize(Mission mission)
+        {
+            base.OnMissionBehaviorInitialize(mission);
+
+            mission.AddMissionBehavior(new SettingsProviderMissionBehavior(GenericServiceProvider.GetService<BaseSettingsProvider>()));
         }
     }
 }

@@ -13,9 +13,8 @@ using System.Runtime.CompilerServices;
 
 using TaleWorlds.Engine;
 
-using v4::Bannerlord.ModuleManager;
 using v4::Bannerlord.BUTR.Shared.Helpers;
-
+using v4::Bannerlord.ModuleManager;
 using v4::MCM;
 using v4::MCM.Implementation;
 
