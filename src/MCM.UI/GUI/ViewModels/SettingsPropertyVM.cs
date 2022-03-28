@@ -12,11 +12,10 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 
 using TaleWorlds.Library;
-using TaleWorlds.Localization;
 
 namespace MCM.UI.GUI.ViewModels
 {
-    internal sealed class SettingsPropertyVM : ViewModel
+    internal sealed partial class SettingsPropertyVM : ViewModel
     {
         private SelectorVMWrapper? _selectorVMWrapper;
 
@@ -42,23 +41,8 @@ namespace MCM.UI.GUI.ViewModels
         public string Name => SettingPropertyDefinition.DisplayName;
 
         [DataSourceProperty]
-        public bool IsIntVisible { get; }
-        [DataSourceProperty]
-        public bool IsFloatVisible { get; }
-        [DataSourceProperty]
-        public bool IsBoolVisible { get; }
-        [DataSourceProperty]
-        public bool IsStringVisible { get; }
-        [DataSourceProperty]
-        public bool IsDropdownVisible { get; }
-        [DataSourceProperty]
-        public bool IsDropdownDefaultVisible { get; }
-        [DataSourceProperty]
-        public bool IsDropdownCheckboxVisible { get; }
-        [DataSourceProperty]
-        public bool IsButtonVisible { get; }
-        [DataSourceProperty]
         public bool IsEnabled => Group.GroupToggle;
+
         [DataSourceProperty]
         public bool IsSettingVisible
         {
@@ -75,111 +59,6 @@ namespace MCM.UI.GUI.ViewModels
                 return true;
             }
         }
-        [DataSourceProperty]
-        public float FloatValue
-        {
-            get => IsFloatVisible ? PropertyReference.Value is float val ? val : float.MinValue : 0f;
-            set
-            {
-                if (IsFloatVisible && FloatValue != value)
-                {
-                    URS.Do(new SetValueTypeAction<float>(PropertyReference, value));
-                    OnPropertyChanged(nameof(FloatValue));
-                    OnPropertyChanged(nameof(TextBoxValue));
-                }
-            }
-        }
-        [DataSourceProperty]
-        public int IntValue
-        {
-            get => IsIntVisible ? PropertyReference.Value is int val ? val : int.MinValue : 0;
-            set
-            {
-                if (IsIntVisible && IntValue != value)
-                {
-                    URS.Do(new SetValueTypeAction<int>(PropertyReference, value));
-                    OnPropertyChanged(nameof(IntValue));
-                    OnPropertyChanged(nameof(TextBoxValue));
-                }
-            }
-        }
-        [DataSourceProperty]
-        public bool BoolValue
-        {
-            get => IsBoolVisible && PropertyReference.Value is bool val ? val : false;
-            set
-            {
-                if (IsBoolVisible && BoolValue != value)
-                {
-                    URS.Do(new SetValueTypeAction<bool>(PropertyReference, value));
-                    OnPropertyChanged(nameof(BoolValue));
-                }
-            }
-        }
-        [DataSourceProperty]
-        public string StringValue
-        {
-            get => IsStringVisible ? PropertyReference.Value is string val ? val : "ERROR" : string.Empty;
-            set
-            {
-                if (IsStringVisible && StringValue != value)
-                {
-                    URS.Do(new SetStringAction(PropertyReference, value));
-                    OnPropertyChanged(nameof(StringValue));
-                }
-            }
-        }
-        [DataSourceProperty]
-        public SelectorVMWrapper DropdownValue
-        {
-            get => _selectorVMWrapper ??= new SelectorVMWrapper(IsDropdownVisible && PropertyReference.Value is { } val
-                    ? SettingsUtils.GetSelector(val)
-                    : MCMSelectorVM<MCMSelectorItemVM>.Empty);
-            set
-            {
-                if (IsDropdownVisible && DropdownValue != value)
-                {
-                    // TODO
-                    URS.Do(new ComplexReferenceTypeAction<SelectedIndexWrapper>(PropertyReference, selector =>
-                    {
-                        //selector.ItemList = DropdownValue.ItemList;
-                        if (selector is not null)
-                            selector.SelectedIndex = DropdownValue.SelectedIndex;
-                    }, selector =>
-                    {
-                        //selector.ItemList = DropdownValue.ItemList;
-                        if (selector is not null)
-                            selector.SelectedIndex = DropdownValue.SelectedIndex;
-                    }));
-                    OnPropertyChanged(nameof(DropdownValue));
-                }
-            }
-        }
-
-        [DataSourceProperty]
-        public int MaxInt => (int) SettingPropertyDefinition.MaxValue;
-        [DataSourceProperty]
-        public int MinInt => (int) SettingPropertyDefinition.MinValue;
-        [DataSourceProperty]
-        public float MaxFloat => (float) SettingPropertyDefinition.MaxValue;
-        [DataSourceProperty]
-        public float MinFloat => (float) SettingPropertyDefinition.MinValue;
-        [DataSourceProperty]
-        public string ButtonContent => SettingPropertyDefinition.Content;
-
-        [DataSourceProperty]
-        public bool HasNoEditableText { get; }
-        [DataSourceProperty]
-        public string TextBoxValue => SettingType switch
-        {
-            SettingType.Int when PropertyReference.Value is int val => string.IsNullOrWhiteSpace(ValueFormat)
-                ? string.Format(ValueFormatProvider, "{0}", val.ToString("0"))
-                : string.Format(ValueFormatProvider, "{0}", val.ToString(new TextObject(ValueFormat).ToString())),
-            SettingType.Float when PropertyReference.Value is float val => string.IsNullOrWhiteSpace(ValueFormat)
-                ? string.Format(ValueFormatProvider, "{0}", val.ToString("0.00"))
-                : string.Format(ValueFormatProvider, "{0}", val.ToString(new TextObject(ValueFormat).ToString())),
-            _ => string.Empty
-        };
 
         public bool IsSelected { get; set; }
 
@@ -192,20 +71,21 @@ namespace MCM.UI.GUI.ViewModels
                 : null;
 
             // Moved to constructor
-            IsIntVisible = SettingType == SettingType.Int;
-            IsFloatVisible = SettingType == SettingType.Float;
-            IsBoolVisible = SettingType == SettingType.Bool;
-            IsStringVisible = SettingType == SettingType.String;
-            IsDropdownDefaultVisible = SettingType == SettingType.Dropdown && SettingsUtils.IsForTextDropdown(PropertyReference.Value);
-            IsDropdownCheckboxVisible = SettingType == SettingType.Dropdown && SettingsUtils.IsForCheckboxDropdown(PropertyReference.Value);
-            IsDropdownVisible = IsDropdownDefaultVisible || IsDropdownCheckboxVisible;
-            IsButtonVisible = SettingType == SettingType.Button;
-            HasNoEditableText = !(IsIntVisible || IsFloatVisible);
+            IsInt = SettingType == SettingType.Int;
+            IsFloat = SettingType == SettingType.Float;
+            IsBool = SettingType == SettingType.Bool;
+            IsString = SettingType == SettingType.String;
+            IsDropdownDefault = SettingType == SettingType.Dropdown && SettingsUtils.IsForTextDropdown(PropertyReference.Value);
+            IsDropdownCheckbox = SettingType == SettingType.Dropdown && SettingsUtils.IsForCheckboxDropdown(PropertyReference.Value);
+            IsDropdown = IsDropdownDefault || IsDropdownCheckbox;
+            IsButton = SettingType == SettingType.Button;
+            IsNotNumeric = !(IsInt || IsFloat);
+            NumericValueToggle = IsInt || IsFloat;
             // Moved to constructor
 
             PropertyReference.PropertyChanged += PropertyReference_OnPropertyChanged;
 
-            if (IsDropdownVisible)
+            if (IsDropdown)
             {
                 DropdownValue.PropertyChanged += DropdownValue_PropertyChanged;
                 DropdownValue.PropertyChangedWithValue += DropdownValue_PropertyChangedWithValue;
@@ -223,7 +103,7 @@ namespace MCM.UI.GUI.ViewModels
 
             PropertyReference.PropertyChanged -= PropertyReference_OnPropertyChanged;
 
-            if (IsDropdownVisible)
+            if (IsDropdown)
             {
                 DropdownValue.PropertyChanged -= DropdownValue_PropertyChanged;
                 DropdownValue.PropertyChangedWithValue -= DropdownValue_PropertyChangedWithValue;
@@ -236,22 +116,6 @@ namespace MCM.UI.GUI.ViewModels
             RefreshValues();
             SettingsVM.RecalculateIndex();
             //SettingsVM.RefreshValues();
-        }
-        private void DropdownValue_PropertyChanged(object? obj, PropertyChangedEventArgs args)
-        {
-            if (obj is not null && args.PropertyName == "SelectedIndex")
-            {
-                URS.Do(new SetSelectedIndexAction(PropertyReference, new SelectedIndexWrapper(obj)));
-                SettingsVM.RecalculateIndex();
-            }
-        }
-        private void DropdownValue_PropertyChangedWithValue(object obj, PropertyChangedWithValueEventArgs args)
-        {
-            if (args.PropertyName == "SelectedIndex")
-            {
-                URS.Do(new SetSelectedIndexAction(PropertyReference, new SelectedIndexWrapper(obj)));
-                SettingsVM.RecalculateIndex();
-            }
         }
 
         private void ResetValueToDefaultOnReleasedEvent()
@@ -286,7 +150,7 @@ namespace MCM.UI.GUI.ViewModels
                 case SettingType.Button:
                     break;
             }
-            OnPropertyChanged(nameof(TextBoxValue));
+            OnPropertyChanged(nameof(NumericValue));
         }
 
 
@@ -294,7 +158,7 @@ namespace MCM.UI.GUI.ViewModels
         {
             PropertyReference.PropertyChanged -= PropertyReference_OnPropertyChanged;
 
-            if (IsDropdownVisible)
+            if (IsDropdown)
             {
                 DropdownValue.PropertyChanged -= DropdownValue_PropertyChanged;
                 DropdownValue.PropertyChangedWithValue -= DropdownValue_PropertyChangedWithValue;
@@ -304,7 +168,7 @@ namespace MCM.UI.GUI.ViewModels
         {
             PropertyReference.PropertyChanged -= PropertyReference_OnPropertyChanged;
 
-            if (IsDropdownVisible)
+            if (IsDropdown)
             {
                 DropdownValue.PropertyChanged -= DropdownValue_PropertyChanged;
                 DropdownValue.PropertyChangedWithValue -= DropdownValue_PropertyChangedWithValue;

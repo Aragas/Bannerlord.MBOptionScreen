@@ -26,7 +26,7 @@
 
                 <!-- Boolean switch widget -->
                 <Widget WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="362" VerticalAlignment="Center" HorizontalAlignment="Center"
-                        IsVisible="@IsBoolVisible" UpdateChildrenStates="true" IsEnabled="@IsEnabled">
+                        IsVisible="@IsBool" UpdateChildrenStates="true" IsEnabled="@IsEnabled">
                   <Children>
                     <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" VerticalAlignment="Center" HorizontalAlignment="Center"
                                   Brush="SPOptions.Checkbox.Empty.Button" ButtonType="Toggle" IsSelected="@BoolValue" ToggleIndicator="ToggleIndicator" UpdateChildrenStates="true" IsEnabled="@IsEnabled">
@@ -41,7 +41,7 @@
                 <!-- Float Slider -->
                 <SliderWidget SuggestedWidth="338" SuggestedHeight="42" VerticalAlignment="Center" HorizontalAlignment="Center"
                               Filler="Filler" Handle="SliderHandle" MaxValueFloat="@MaxFloat" MinValueFloat="@MinFloat" ValueFloat="@FloatValue"
-                              IsEnabled="@IsEnabled" IsVisible="@IsFloatVisible" IsDiscrete="false" DoNotUpdateHandleSize="true">
+                              IsEnabled="@IsEnabled" IsVisible="@IsFloat" IsDiscrete="false" DoNotUpdateHandleSize="true">
                   <Children>
                     <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="362" SuggestedHeight="38" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="MCM.Slider.Canvas" IsEnabled="false" />
                     <BrushWidget Id="Filler" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="345" SuggestedHeight="35" VerticalAlignment="Center" Brush="MCM.Slider.Filler" ClipContents="true" >
@@ -57,7 +57,7 @@
                 <!-- Int Slider -->
                 <SliderWidget SuggestedWidth="338" SuggestedHeight="42" VerticalAlignment="Center" HorizontalAlignment="Center"
                               Filler="Filler" Handle="SliderHandle" MaxValueInt="@MaxInt" MinValueInt="@MinInt" ValueInt="@IntValue"
-                              IsEnabled="@IsEnabled" IsVisible="@IsIntVisible" IsDiscrete="false" DoNotUpdateHandleSize="true">
+                              IsEnabled="@IsEnabled" IsVisible="@IsInt" IsDiscrete="false" DoNotUpdateHandleSize="true">
                   <Children>
                     <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="362" SuggestedHeight="38" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="MCM.Slider.Canvas" IsEnabled="false" />
                     <BrushWidget Id="Filler" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="345" SuggestedHeight="35" VerticalAlignment="Center" Brush="MCM.Slider.Filler" ClipContents="true" >
@@ -72,16 +72,16 @@
 
                 <!-- String TextBox -->
                 <BrushWidget SuggestedWidth="362" SuggestedHeight="42" VerticalAlignment="Center" HorizontalAlignment="Center"
-                             IsEnabled="@IsEnabled" IsVisible="@IsStringVisible" Sprite="SaveLoad\load_tuple_selected" Brush="SPOptions.Dropdown.Center">
+                             IsEnabled="@IsEnabled" IsVisible="@IsString" Sprite="SaveLoad\load_tuple_selected" Brush="SPOptions.Dropdown.Center">
                   <Children>
                     <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                        IsEnabled="@IsEnabled" IsVisible="@IsStringVisible" RealText="@StringValue" IsObfuscationEnabled="false" Brush="MCMv3.Text" />
+                                        IsEnabled="@IsEnabled" IsVisible="@IsFloatVisible" RealText="@StringValue" IsObfuscationEnabled="false" Brush="MCMv3.Text" />
                   </Children>
                 </BrushWidget>
 
                 <!-- Dropdown List -->
                 <Widget SuggestedWidth="362" SuggestedHeight="42" VerticalAlignment="Center" HorizontalAlignment="Center"
-                        IsEnabled="@IsEnabled" IsVisible="@IsDropdownDefaultVisible">
+                        IsEnabled="@IsEnabled" IsVisible="@IsDropdownDefault">
                   <Children>
                     <Standard.DropdownWithHorizontalControl VerticalAlignment="Center" HorizontalAlignment="Center" Parameter.SelectorDataSource="{DropdownValue}" />
                   </Children>
@@ -89,7 +89,7 @@
 
                 <!-- Checkbox Dropdown List -->
                 <Widget SuggestedWidth="362" SuggestedHeight="42" VerticalAlignment="Center" HorizontalAlignment="Center"
-                        IsEnabled="@IsEnabled" IsVisible="@IsDropdownCheckboxVisible">
+                        IsEnabled="@IsEnabled" IsVisible="@IsDropdownCheckbox">
                   <Children>
                     <DropdownWithHorizontalControlCheckboxView_v2 VerticalAlignment="Center" HorizontalAlignment="Center" Parameter.SelectorDataSource="{DropdownValue}" />
                   </Children>
@@ -97,10 +97,10 @@
 
                 <!-- Button -->
                 <ButtonWidget SuggestedWidth="251" SuggestedHeight="64" VerticalAlignment="Center" HorizontalAlignment="Center"
-                              IsEnabled="@IsEnabled" IsVisible="@IsButtonVisible" DoNotPassEventsToChildren="true" Brush="MCMv3.Cancel.Button" Command.Click="OnValueClick">
+                              IsEnabled="@IsEnabled" IsVisible="@IsButton" DoNotPassEventsToChildren="true" Brush="MCMv3.Cancel.Button" Command.Click="OnValueClick">
                   <Children>
                     <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                IsEnabled="@IsEnabled" IsVisible="@IsButtonVisible" Text="@ButtonContent" Brush="Popup.Button.Text" />
+                                IsEnabled="@IsEnabled" IsVisible="@IsButton" Text="@ButtonContent" Brush="Popup.Button.Text" />
                   </Children>
                 </ButtonWidget>
 
@@ -108,25 +108,34 @@
             </Widget>
 
             <!-- Value text/button -->
+            <!-- SHow the formatted values of Int/Float -->
+            <RichTextWidget HeightSizePolicy="StretchToParent" WidthSizePolicy="Fixed" SuggestedWidth="150" MarginLeft="50" VerticalAlignment="Center" HorizontalAlignment="Right"
+                        Brush="CustomBattle.SliderValue.Text" Command.HoverBegin="OnEditBoxHover"
+                        Text="@NumericValue"
+                        IsEnabled="@NumericValueToggle" IsVisible="@NumericValueToggle" ClipContents="false" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+              <Children>
+                <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="CustomBattle.SliderValue.Input" ClipContents="false"/>
+              </Children>
+            </RichTextWidget>
             <FloatInputTextWidget HeightSizePolicy="StretchToParent" WidthSizePolicy="Fixed" SuggestedWidth="150" MarginLeft="50" VerticalAlignment="Center" HorizontalAlignment="Right"
-                                  Brush="CustomBattle.SliderValue.Text"
+                                  Brush="CustomBattle.SliderValue.Text" Command.HoverEnd="OnEditBoxHoverEnd"
                                   FloatText="@FloatValue" MaxFloat="@MaxFloat" MinFloat="@MinFloat" EnableClamp="true"
                                   IsEnabled="@IsEnabled" IsVisible="@IsFloatVisible" ClipContents="false" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
               <Children>
-                <BrushWidget  WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="CustomBattle.SliderValue.Input" ClipContents="false"/>
+                <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="CustomBattle.SliderValue.Input" ClipContents="false"/>
               </Children>
             </FloatInputTextWidget>
             <IntegerInputTextWidget HeightSizePolicy="StretchToParent" WidthSizePolicy="Fixed" SuggestedWidth="150" MarginLeft="50" VerticalAlignment="Center" HorizontalAlignment="Right"
-                                    Brush="CustomBattle.SliderValue.Text"
+                                    Brush="CustomBattle.SliderValue.Text" Command.HoverEnd="OnEditBoxHoverEnd"
                                     IntText="@IntValue" MaxInt="@MaxInt" MinInt="@MinInt" EnableClamp="true"
                                     IsEnabled="@IsEnabled" IsVisible="@IsIntVisible" ClipContents="false" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
               <Children>
-                <BrushWidget  WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="CustomBattle.SliderValue.Input" ClipContents="false"/>
+                <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="CustomBattle.SliderValue.Input" ClipContents="false"/>
               </Children>
             </IntegerInputTextWidget>
             <!-- To keep items aligned for now -->
             <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="Fixed" SuggestedWidth="150" MarginLeft="50" VerticalAlignment="Center" HorizontalAlignment="Right"
-                    IsEnabled="false" IsVisible="@HasNoEditableText" ClipContents="false">
+                    IsEnabled="false" IsVisible="@IsNotNumeric" ClipContents="false">
             </Widget>
 
           </Children>
