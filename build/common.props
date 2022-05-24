@@ -12,7 +12,7 @@
     <BUTRDependencyInjectionVersion>1.0.0.19</BUTRDependencyInjectionVersion>
     <BUTRModuleManagerVersion>3.0.94</BUTRModuleManagerVersion>
     <HarmonyExtensionsVersion>2.0.0.55</HarmonyExtensionsVersion>
-    <HarmonyAnalyzerVersion>1.0.1.17</HarmonyAnalyzerVersion>
+    <HarmonyAnalyzerVersion>1.0.1.27</HarmonyAnalyzerVersion>
     <TargetFrameworks>net472</TargetFrameworks>
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
