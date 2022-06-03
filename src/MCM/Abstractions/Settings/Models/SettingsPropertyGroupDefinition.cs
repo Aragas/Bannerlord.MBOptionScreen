@@ -1,6 +1,4 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
-
-using MCM.Abstractions.Settings.Definitions;
+﻿using MCM.Abstractions.Settings.Definitions;
 using MCM.Extensions;
 
 using System.Collections.Generic;
@@ -33,7 +31,7 @@ namespace MCM.Abstractions.Settings.Models
         protected readonly List<ISettingsPropertyDefinition> settingProperties = new();
 
         public string GroupName { get; }
-        public TextObject? DisplayGroupName => _groupNameOverride?.Length > 0 ? _groupNameOverride : _groupName;
+        public TextObject DisplayGroupName => _groupNameOverride.Length > 0 ? _groupNameOverride : _groupName;
         public int Order { get; }
         public IEnumerable<SettingsPropertyGroupDefinition> SubGroups => subGroups.SortDefault();
         public IEnumerable<ISettingsPropertyDefinition> SettingProperties => settingProperties.SortDefault();
@@ -42,7 +40,7 @@ namespace MCM.Abstractions.Settings.Models
         {
             _groupName = new TextObject(groupName);
             _groupNameOverride = new TextObject(groupNameOverride ?? string.Empty);
-            GroupName = DisplayGroupName?.ToString() ?? "ERROR";
+            GroupName = DisplayGroupName.ToString();
             Order = order;
         }
 
