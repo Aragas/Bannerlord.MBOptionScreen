@@ -30,20 +30,6 @@
   <SubModules>
 
     <SubModule>
-      <Name value="MBOv1 Tests"/>
-      <DLLName value="MBOv1.Tests.dll"/>
-      <SubModuleClassType value="MBOv1.Tests.SubModule"/>
-      <Tags/>
-    </SubModule>
-
-    <SubModule>
-      <Name value="MBOv2 Tests"/>
-      <DLLName value="MBOv2.Tests.dll"/>
-      <SubModuleClassType value="MBOv2.Tests.SubModule"/>
-      <Tags/>
-    </SubModule>
-
-    <SubModule>
       <Name value="MCMv3 Tests"/>
       <DLLName value="MCMv3.Tests.dll"/>
       <SubModuleClassType value="MCMv3.Tests.SubModule"/>
