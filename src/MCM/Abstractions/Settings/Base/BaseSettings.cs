@@ -1,13 +1,10 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
-
-using HarmonyLib.BUTR.Extensions;
+﻿using HarmonyLib.BUTR.Extensions;
 
 using MCM.Utils;
 
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
@@ -20,7 +17,6 @@ namespace MCM.Abstractions.Settings.Base
         public const string SaveTriggered = "SAVE_TRIGGERED";
 
         /// <inheritdoc/>
-        [SuppressMessage("Design", "CA1070:Do not declare event fields as virtual", Justification = "<Pending>")]
         public virtual event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>

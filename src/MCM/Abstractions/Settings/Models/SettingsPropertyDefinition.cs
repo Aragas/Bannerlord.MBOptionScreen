@@ -1,6 +1,4 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
-
-using MCM.Abstractions.Attributes.v1;
+﻿using MCM.Abstractions.Attributes.v1;
 using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings.Definitions;
 using MCM.Abstractions.Settings.Definitions.Wrapper;
@@ -52,7 +50,7 @@ namespace MCM.Abstractions.Settings.Models
         public int GroupOrder { get; }
         private char SubGroupDelimiter { get; }
         /// <inheritdoc/>
-        public string Content { get; }
+        public string Content { get; } = string.Empty;
 
         public SettingsPropertyDefinition(IPropertyDefinitionBase propertyDefinition, IPropertyGroupDefinition propertyGroupDefinition, IRef propertyReference, char subGroupDelimiter)
             : this(new[] { propertyDefinition }, propertyGroupDefinition, propertyReference, subGroupDelimiter) { }

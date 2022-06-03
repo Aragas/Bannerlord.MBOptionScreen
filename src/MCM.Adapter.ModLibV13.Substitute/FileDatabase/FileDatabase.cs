@@ -103,13 +103,11 @@ namespace ModLib
                 if (File.Exists(path))
                     File.Delete(path);
 
-                using (var writer = XmlWriter.Create(path, new XmlWriterSettings() { Indent = true, OmitXmlDeclaration = true }))
-                {
-                    var rootNode = new XmlRootAttribute { ElementName = $"{sf.GetType().Assembly.GetName().Name}-{sf.GetType().FullName}" };
-                    var xmlns = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
-                    var serializer = new XmlSerializer(sf.GetType(), rootNode);
-                    serializer.Serialize(writer, sf, xmlns);
-                }
+                using var writer = XmlWriter.Create(path, new XmlWriterSettings() { Indent = true, OmitXmlDeclaration = true });
+                var rootNode = new XmlRootAttribute { ElementName = $"{sf.GetType().Assembly.GetName().Name}-{sf.GetType().FullName}" };
+                var xmlns = new XmlSerializerNamespaces(new[] { XmlQualifiedName.Empty });
+                var serializer = new XmlSerializer(sf.GetType(), rootNode);
+                serializer.Serialize(writer, sf, xmlns);
                 return true;
             }
             catch (Exception ex)
@@ -184,37 +182,35 @@ namespace ModLib
 
         internal static void LoadFromFile(string filePath)
         {
-            using (var reader = XmlReader.Create(filePath))
+            using var reader = XmlReader.Create(filePath);
+            var nodeData = string.Empty;
+            try
             {
-                var nodeData = string.Empty;
-                try
-                {
-                    //Find the type name
-                    if (reader.MoveToContent() == XmlNodeType.Element)
-                        nodeData = reader.Name;
-                    //If we couldn't find the type name, throw an exception saying so. If the root node doesn't include the namespace, throw an exception saying so.
-                    if (string.IsNullOrWhiteSpace(nodeData))
-                        throw new Exception($"Could not find the root node in xml document located at {filePath}");
+                //Find the type name
+                if (reader.MoveToContent() == XmlNodeType.Element)
+                    nodeData = reader.Name;
+                //If we couldn't find the type name, throw an exception saying so. If the root node doesn't include the namespace, throw an exception saying so.
+                if (string.IsNullOrWhiteSpace(nodeData))
+                    throw new Exception($"Could not find the root node in xml document located at {filePath}");
 
-                    var data = new TypeData(nodeData);
-                    //Find the type from the root node name. The root node should be the full name of the type, including the namespace and the assembly.
+                var data = new TypeData(nodeData);
+                //Find the type from the root node name. The root node should be the full name of the type, including the namespace and the assembly.
 
-                    if (data.Type == null)
-                        throw new Exception($"Unable to find type {data.FullName}");
+                if (data.Type == null)
+                    throw new Exception($"Unable to find type {data.FullName}");
 
-                    var root = new XmlRootAttribute { ElementName = nodeData, IsNullable = true };
-                    var serialiser = new XmlSerializer(data.Type, root);
-                    if (serialiser.Deserialize(reader) is ISerialisableFile loaded)
-                        Add(loaded);
-                    else
-                        throw new Exception($"Unable to load {data.FullName} from file {filePath}.");
-                }
-                catch (Exception ex)
-                {
-                    if (ex is ArgumentNullException { ParamName: "type" } argumentNullException)
-                        throw new Exception($"Cannot get a type from type name {nodeData} in file {filePath}", ex);
-                    throw new Exception($"An error occurred whilst loading file {filePath}", ex);
-                }
+                var root = new XmlRootAttribute { ElementName = nodeData, IsNullable = true };
+                var serialiser = new XmlSerializer(data.Type, root);
+                if (serialiser.Deserialize(reader) is ISerialisableFile loaded)
+                    Add(loaded);
+                else
+                    throw new Exception($"Unable to load {data.FullName} from file {filePath}.");
+            }
+            catch (Exception ex)
+            {
+                if (ex is ArgumentNullException { ParamName: "type" } argumentNullException)
+                    throw new Exception($"Cannot get a type from type name {nodeData} in file {filePath}", ex);
+                throw new Exception($"An error occurred whilst loading file {filePath}", ex);
             }
         }
 
