@@ -145,7 +145,7 @@ namespace MCM.UI.GUI.ViewModels
                     OnPropertyChanged(nameof(StringValue));
                     break;
                 case SettingType.Dropdown:
-                    OnPropertyChanged(nameof(DropdownValue));
+                    // Nested ViewModel, don't need to trigger change
                     break;
                 case SettingType.Button:
                     break;

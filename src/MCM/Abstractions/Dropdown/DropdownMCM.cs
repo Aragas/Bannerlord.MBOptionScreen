@@ -1,6 +1,4 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,35 +14,16 @@ namespace MCM.Abstractions.Dropdown
     {
         public static DropdownMCM<T> Empty => new(Enumerable.Empty<T>(), 0);
 
-        private MCMSelectorVM<DropdownSelectorItemVM, string> _selector;
-        private int _selectedIndex;
-
-        internal MCMSelectorVM<DropdownSelectorItemVM, string> Selector
-        {
-            get
-            {
-                _selector.Refresh(this.Select(x => new TextObject(x?.ToString() ?? "ERROR").ToString()), SelectedIndex, OnSelectionChanged);
-                return _selector;
-            }
-            set
-            {
-                if (_selector != value)
-                {
-                    _selector = value;
-                    _selector.SetOnChangeAction(OnSelectionChanged);
-                }
-            }
-        }
+        internal MCMSelectorVM<DropdownSelectorItemVM, string> Selector { get; private set; }
 
         public int SelectedIndex
         {
-            get => _selectedIndex;
+            get => Selector.SelectedIndex;
             set
             {
-                if (_selectedIndex != value)
+                if (Selector.SelectedIndex != value)
                 {
-                    _selectedIndex = value;
-                    Selector.SelectedIndex = _selectedIndex;
+                    Selector.SelectedIndex = value;
                 }
             }
         }
@@ -64,13 +43,11 @@ namespace MCM.Abstractions.Dropdown
         public DropdownMCM(IEnumerable<T> values, int selectedIndex) : base(values)
         {
             var select = this.Select(x => new TextObject(x?.ToString() ?? "ERROR").ToString());
-            _selector = new MCMSelectorVM<DropdownSelectorItemVM, string>(select, selectedIndex, OnSelectionChanged);
+            Selector = new MCMSelectorVM<DropdownSelectorItemVM, string>(select, selectedIndex, null);
 
             if (SelectedIndex != 0 && SelectedIndex >= Count)
                 throw new Exception();
         }
-
-        private void OnSelectionChanged(MCMSelectorVM<DropdownSelectorItemVM> obj) => _selectedIndex = obj.SelectedIndex;
 
         /// <inheritdoc/>
         public bool Equals(DropdownMCM<T>? x, DropdownMCM<T>? y) => x?.SelectedIndex == y?.SelectedIndex;

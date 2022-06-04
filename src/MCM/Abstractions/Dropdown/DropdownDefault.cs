@@ -14,35 +14,16 @@ namespace MCM.Abstractions.Dropdown
     {
         public static DropdownDefault<T> Empty => new(Enumerable.Empty<T>(), 0);
 
-        private SelectorVM<SelectorItemVM> _selector;
-        private int _selectedIndex;
-
-        internal SelectorVM<SelectorItemVM> Selector
-        {
-            get
-            {
-                _selector.Refresh(this.Select(x => new TextObject(x?.ToString() ?? "ERROR").ToString()), SelectedIndex, OnSelectionChanged);
-                return _selector;
-            }
-            set
-            {
-                if (_selector != value)
-                {
-                    _selector = value;
-                    _selector.SetOnChangeAction(OnSelectionChanged);
-                }
-            }
-        }
+        internal SelectorVM<SelectorItemVM> Selector { get; set; }
 
         public int SelectedIndex
         {
-            get => _selectedIndex;
+            get => Selector.SelectedIndex;
             set
             {
-                if (_selectedIndex != value)
+                if (Selector.SelectedIndex != value)
                 {
-                    _selectedIndex = value;
-                    _selector.SelectedIndex = _selectedIndex;
+                    Selector.SelectedIndex = value;
                 }
             }
         }
@@ -62,13 +43,11 @@ namespace MCM.Abstractions.Dropdown
         public DropdownDefault(IEnumerable<T> values, int selectedIndex) : base(values)
         {
             var select = this.Select(x => new TextObject(x?.ToString() ?? "ERROR").ToString());
-            _selector = new SelectorVM<SelectorItemVM>(select, selectedIndex, OnSelectionChanged);
+            Selector = new SelectorVM<SelectorItemVM>(select, selectedIndex, null);
 
             if (SelectedIndex != 0 && SelectedIndex >= Count)
                 throw new Exception();
         }
-
-        private void OnSelectionChanged(SelectorVM<SelectorItemVM> obj) => _selectedIndex = obj.SelectedIndex;
 
         /// <inheritdoc/>
         public bool Equals(DropdownDefault<T>? x, DropdownDefault<T>? y) => x?.SelectedIndex == y?.SelectedIndex;
