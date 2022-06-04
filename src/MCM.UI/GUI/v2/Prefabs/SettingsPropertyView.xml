@@ -75,7 +75,7 @@
                              IsEnabled="@IsEnabled" IsVisible="@IsString" Sprite="SaveLoad\load_tuple_selected" Brush="SPOptions.Dropdown.Center">
                   <Children>
                     <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                        IsEnabled="@IsEnabled" IsVisible="@IsFloatVisible" RealText="@StringValue" IsObfuscationEnabled="false" Brush="MCMv3.Text" />
+                                        IsEnabled="@IsEnabled" IsVisible="@IsString" RealText="@StringValue" IsObfuscationEnabled="false" Brush="MCMv3.Text" />
                   </Children>
                 </BrushWidget>
 
@@ -108,7 +108,7 @@
             </Widget>
 
             <!-- Value text/button -->
-            <!-- SHow the formatted values of Int/Float -->
+            <!-- Show the formatted values of Int/Float -->
             <RichTextWidget HeightSizePolicy="StretchToParent" WidthSizePolicy="Fixed" SuggestedWidth="150" MarginLeft="50" VerticalAlignment="Center" HorizontalAlignment="Right"
                         Brush="CustomBattle.SliderValue.Text" Command.HoverBegin="OnEditBoxHover"
                         Text="@NumericValue"

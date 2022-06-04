@@ -6,6 +6,7 @@ using ComparerExtensions;
 
 using MCM.Abstractions.Settings.Providers;
 using MCM.UI.Extensions;
+using MCM.UI.Patches;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -306,6 +307,10 @@ namespace MCM.UI.GUI.ViewModels
         }
 
         public bool ExecuteCancel() => ExecuteCancelInternal(true);
+        
+        public void StartTyping() => OptionsVMPatch.BlockSwitch = true;
+        public void StopTyping() => OptionsVMPatch.BlockSwitch = false;
+        
         public bool ExecuteCancelInternal(bool popScreen, Action? onClose = null)
         {
             OnFinalize();

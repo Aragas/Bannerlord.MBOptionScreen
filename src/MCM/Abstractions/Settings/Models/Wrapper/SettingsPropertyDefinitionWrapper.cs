@@ -1,6 +1,4 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
-
-using HarmonyLib.BUTR.Extensions;
+﻿using HarmonyLib.BUTR.Extensions;
 
 using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings.Definitions.Wrapper;

@@ -52,13 +52,13 @@ namespace MCM.Tests
         public void OneTimeSetUp()
         {
             _harmony.Patch(AccessTools2.Method(typeof(ButterLibSubModule).Assembly.GetType("Bannerlord.BUTR.Shared.Helpers.FSIOHelper"), "GetConfigPath"),
-                prefix: new HarmonyMethod(DelegateHelper.GetMethodInfo(MockedGetConfigsPath)));
+                prefix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((string x) => MockedGetConfigsPath(ref x))));
             _harmony.Patch(SymbolExtensions2.GetMethodInfo(() => FSIOHelper.GetConfigPath()),
-                prefix: new HarmonyMethod(DelegateHelper.GetMethodInfo(MockedGetConfigsPath)));
+                prefix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((string x) => MockedGetConfigsPath(ref x))));
             _harmony.Patch(SymbolExtensions2.GetMethodInfo(() => ModuleInfoHelper.GetLoadedModules()),
-                prefix: new HarmonyMethod(DelegateHelper.GetMethodInfo(MockedGetLoadedModules)));
+                prefix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((IEnumerable<ModuleInfoExtended> x) => MockedGetLoadedModules(ref x))));
             _harmony.Patch(SymbolExtensions2.GetMethodInfo(() => Utilities.GetModulesNames()),
-                prefix: new HarmonyMethod(DelegateHelper.GetMethodInfo(MockedGetModulesNames)));
+                prefix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((string[] x) => MockedGetModulesNames(ref x))));
 
             var butterLib = new MBSubModuleBaseWrapper(new ButterLibSubModule());
             butterLib.SubModuleLoad();
@@ -72,12 +72,7 @@ namespace MCM.Tests
         [OneTimeTearDown]
         public void TearDown()
         {
-            _harmony.Unpatch(SymbolExtensions2.GetMethodInfo(() => FSIOHelper.GetConfigPath()),
-                DelegateHelper.GetMethodInfo(MockedGetConfigsPath));
-            _harmony.Unpatch(SymbolExtensions2.GetMethodInfo(() => ModuleInfoHelper.GetLoadedModules()),
-                DelegateHelper.GetMethodInfo(MockedGetLoadedModules));
-            _harmony.Unpatch(SymbolExtensions2.GetMethodInfo(() => Utilities.GetModulesNames()),
-                DelegateHelper.GetMethodInfo(MockedGetModulesNames));
+            _harmony.UnpatchAll(_harmony.Id);
         }
     }
 }

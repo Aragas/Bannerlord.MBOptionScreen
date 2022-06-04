@@ -5,7 +5,7 @@ namespace ModLib
 {
     public static class ExceptionExtensionMethods
     {
-        public static string ToStringFull(this Exception ex)
+        public static string ToStringFull(this Exception? ex)
         {
             if (ex != null)
                 return GetString(ex);
@@ -25,12 +25,18 @@ namespace ModLib
 
         private static void GetStringRecursive(Exception ex, StringBuilder sb)
         {
-            sb.Append(ex.GetType().Name).AppendLine(":");
-            sb.AppendLine(ex.Message);
-            if (ex.InnerException != null)
+            while (true)
             {
-                sb.AppendLine();
-                GetStringRecursive(ex.InnerException, sb);
+                sb.Append(ex.GetType().Name).AppendLine(":");
+                sb.AppendLine(ex.Message);
+                if (ex.InnerException != null)
+                {
+                    sb.AppendLine();
+                    ex = ex.InnerException;
+                    continue;
+                }
+
+                break;
             }
         }
     }

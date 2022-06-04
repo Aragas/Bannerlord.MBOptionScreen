@@ -21,8 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\MCM.Adapter.MBO\_Module\bin\Win64_Shipping_Client\MBOptionScreen.dll" Link="_Module\bin\Win64_Shipping_Client\MBOptionScreen.dll" />
-    <None Include="..\MCM.Adapter.MBO\_Module\bin\Win64_Shipping_Client\MBOptionScreen.v2.0.10.dll" Link="_Module\bin\Win64_Shipping_Client\MBOptionScreen.v2.0.10.dll" />
     <None Include="..\MCM.Adapter.MCMv3\_Module\bin\Win64_Shipping_Client\MCMv3.dll" Link="_Module\bin\Win64_Shipping_Client\MCMv3.dll" />
   </ItemGroup>
 

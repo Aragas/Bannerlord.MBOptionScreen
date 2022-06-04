@@ -1,6 +1,4 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
-
-using MCM.Abstractions.Settings.Definitions;
+﻿using MCM.Abstractions.Settings.Definitions;
 
 using System;
 using System.Diagnostics.CodeAnalysis;

@@ -58,8 +58,8 @@ namespace MCM.Abstractions.Dropdown
                 if (value != _selectedIndex)
                 {
                     _selectedIndex = value;
-                    OnPropertyChangedWithValue(value, nameof(SelectedIndex));
                     SelectedItem = GetCurrentItem();
+                    OnPropertyChanged(nameof(SelectedIndex));
                     _onChange?.Invoke(this);
                 }
             }
