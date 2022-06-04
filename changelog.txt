@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 4.6.1
+Game Versions: e1.7.2
+* Fixed Text property not being show
+* Fixed Dropdown not refreshing if changed programmatically
+---------------------------------------------------------------------------------------------------
 Version: 4.6.0
 Game Versions: e1.7.2
 * Fixed EditBox formatting not being shown
