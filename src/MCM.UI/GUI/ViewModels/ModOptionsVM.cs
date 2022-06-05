@@ -307,10 +307,10 @@ namespace MCM.UI.GUI.ViewModels
         }
 
         public bool ExecuteCancel() => ExecuteCancelInternal(true);
-        
+
         public void StartTyping() => OptionsVMPatch.BlockSwitch = true;
         public void StopTyping() => OptionsVMPatch.BlockSwitch = false;
-        
+
         public bool ExecuteCancelInternal(bool popScreen, Action? onClose = null)
         {
             OnFinalize();

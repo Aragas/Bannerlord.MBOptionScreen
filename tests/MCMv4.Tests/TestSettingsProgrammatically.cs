@@ -181,7 +181,7 @@ namespace MCMv4.Tests
             new CustomObject("Test3"),
         }, 1);
 
-        
+
         [SettingPropertyBool("Property Dropdown Default Switch", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown Default")]
         public bool PropertyDropdownDefaultSwitch
@@ -244,7 +244,7 @@ namespace MCMv4.Tests
             new CustomObject("Test2"),
             new CustomObject("Test3"),
         }, 1);
-        
+
         public class CustomObject
         {
             private readonly string _value;
