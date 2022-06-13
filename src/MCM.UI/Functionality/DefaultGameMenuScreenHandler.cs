@@ -87,9 +87,10 @@ namespace MCM.UI.Functionality
                             ScreenManager.PushScreen(screen);
                     },
                     () => (false, null));
-                var menuOptionsCopy = new MenuOptionsWrapper(instance).MenuOptions.Cast<object>().ToArray();
+                var menuOptions = new MenuOptionsWrapper(instance).MenuOptions;
+                var menuOptionsCopy = menuOptions?.Cast<object>().ToArray();
                 var insertIndex = menuOptionsCopy.FindIndex(i => new OrderIndexWrapper(InitialStateOption(i)).OrderIndex > index);
-                new MenuOptionsWrapper(instance).MenuOptions.Insert(insertIndex, InitialMenuOptionVMUtils.Create(initialState));
+                menuOptions?.Insert(insertIndex, InitialMenuOptionVMUtils.Create(initialState));
             }
 
             ScreensCache[internalName] = (index, screenFactory, text);
@@ -98,9 +99,10 @@ namespace MCM.UI.Functionality
         {
             if (_instance.TryGetTarget(out var instance) && InitialStateOption is not null)
             {
-                var found = new MenuOptionsWrapper(instance).MenuOptions.Cast<object>().FirstOrDefault(i => new IdWrapper(InitialStateOption(i)).Id == internalName);
+                var menuOptions = new MenuOptionsWrapper(instance).MenuOptions;
+                var found = menuOptions?.Cast<object>().FirstOrDefault(i => new IdWrapper(InitialStateOption(i)).Id == internalName);
                 if (found is not null)
-                    new MenuOptionsWrapper(instance).MenuOptions.Remove(found);
+                    menuOptions?.Remove(found);
             }
 
             if (ScreensCache.ContainsKey(internalName))

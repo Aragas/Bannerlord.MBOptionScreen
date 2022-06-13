@@ -138,7 +138,7 @@ namespace MCM.UI.Functionality
                 var escapeMenuItemVM = EscapeMenuItemVMUtils.Create(text,
                     _ => ScreenManager.PushScreen(screenFactory()),
                     internalName, () => new Tuple<bool, TextObject>(false, new TextObject(string.Empty)));
-                new MenuItemsWrapper(dataSource).MenuItems.Insert(index, escapeMenuItemVM);
+                new MenuItemsWrapper(dataSource).MenuItems?.Insert(index, escapeMenuItemVM);
             }
 
             ScreensCache[internalName] = (index, screenFactory, text);
@@ -148,9 +148,10 @@ namespace MCM.UI.Functionality
             if (_instance.TryGetTarget(out var instance) && DataSource is not null && Identifier is not null)
             {
                 var dataSource = DataSource(instance);
-                var found = new MenuItemsWrapper(dataSource).MenuItems.Cast<object>().FirstOrDefault(i => Identifier(i) is string text && text == internalName);
+                var menuItems = new MenuItemsWrapper(dataSource).MenuItems;
+                var found = menuItems?.Cast<object>().FirstOrDefault(i => Identifier(i) is string text && text == internalName);
                 if (found is not null)
-                    new MenuItemsWrapper(dataSource).MenuItems.Remove(found);
+                    menuItems?.Remove(found);
             }
 
             if (ScreensCache.ContainsKey(internalName))

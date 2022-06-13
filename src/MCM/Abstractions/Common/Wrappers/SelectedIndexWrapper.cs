@@ -1,30 +1,39 @@
 ﻿using HarmonyLib.BUTR.Extensions;
 
+using System;
+using System.Collections.Concurrent;
+
 namespace MCM.Abstractions.Common.Wrappers
 {
     public readonly ref struct SelectedIndexWrapper
     {
-        private delegate int GetSelectedIndexDelegate();
-        private delegate void SetSelectedIndexDelegate(int value);
+        private static readonly ConcurrentDictionary<Type, GetSelectedIndexDelegate?> _getSelectedIndexCache = new();
+        private static readonly ConcurrentDictionary<Type, SetSelectedIndexDelegate?> _setSelectedIndexCache = new();
+        
+        private delegate int GetSelectedIndexDelegate(object instance);
+        private delegate void SetSelectedIndexDelegate(object instance, int value);
 
-        private readonly GetSelectedIndexDelegate? _getSelectedIndexDelegate;
-        private readonly SetSelectedIndexDelegate? _setSelectedIndexDelegate;
+        private readonly GetSelectedIndexDelegate? _getSelectedIndex;
+        private readonly SetSelectedIndexDelegate? _setSelectedIndex;
+
+        private readonly object? _object;
 
         public int SelectedIndex
         {
-            get => _getSelectedIndexDelegate?.Invoke() ?? -1;
-            set => _setSelectedIndexDelegate?.Invoke(value);
+            get => _getSelectedIndex?.Invoke(_object!) ?? -1;
+            set => _setSelectedIndex?.Invoke(_object!, value);
         }
 
-        public SelectedIndexWrapper(object @object)
+        public SelectedIndexWrapper(object? @object)
         {
+            _object = @object;
             var type = @object?.GetType();
 
-            _getSelectedIndexDelegate = type is not null
-                ? AccessTools2.GetPropertyGetterDelegate<GetSelectedIndexDelegate>(@object, type, nameof(SelectedIndex))
+            _getSelectedIndex = type is not null
+                ? _getSelectedIndexCache.GetOrAdd(type, static t => AccessTools2.GetPropertyGetterDelegate<GetSelectedIndexDelegate>(t, "SelectedIndex"))
                 : null;
-            _setSelectedIndexDelegate = type is not null
-                ? AccessTools2.GetPropertySetterDelegate<SetSelectedIndexDelegate>(@object, type, nameof(SelectedIndex))
+            _setSelectedIndex = type is not null
+                ? _setSelectedIndexCache.GetOrAdd(type, static t => AccessTools2.GetPropertySetterDelegate<SetSelectedIndexDelegate>(t, "SelectedIndex"))
                 : null;
         }
     }

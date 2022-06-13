@@ -2,31 +2,40 @@
 
 using TaleWorlds.Library;
 
+using System;
+using System.Collections.Concurrent;
+
 namespace MCM.Abstractions.Common.Wrappers
 {
     public readonly ref struct MenuItemsWrapper
     {
-        private delegate IMBBindingList GetMenuItemsDelegate();
-        private delegate void SetMenuItemsDelegate(IMBBindingList value);
+        private static readonly ConcurrentDictionary<Type, GetMenuItemsDelegate?> _getMenuItemsCache = new();
+        private static readonly ConcurrentDictionary<Type, SetMenuItemsDelegate?> _setMenuItemsCache = new();
+        
+        private delegate IMBBindingList GetMenuItemsDelegate(object instance);
+        private delegate void SetMenuItemsDelegate(object instance, IMBBindingList? value);
 
-        private readonly GetMenuItemsDelegate? _getMenuItemsDelegate;
-        private readonly SetMenuItemsDelegate? _setMenuItemsDelegate;
+        private readonly GetMenuItemsDelegate? _getMenuItems;
+        private readonly SetMenuItemsDelegate? _setMenuItems;
 
-        public IMBBindingList MenuItems
+        private readonly object? _object;
+
+        public IMBBindingList? MenuItems
         {
-            get => _getMenuItemsDelegate?.Invoke() ?? default!;
-            set => _setMenuItemsDelegate?.Invoke(value);
+            get => _getMenuItems?.Invoke(_object!);
+            set => _setMenuItems?.Invoke(_object!, value);
         }
 
-        public MenuItemsWrapper(object @object)
+        public MenuItemsWrapper(object? @object)
         {
+            _object = @object;
             var type = @object?.GetType();
 
-            _getMenuItemsDelegate = type is not null
-                ? AccessTools2.GetPropertyGetterDelegate<GetMenuItemsDelegate>(@object, type, nameof(MenuItems))
+            _getMenuItems = type is not null
+                ? _getMenuItemsCache.GetOrAdd(type, static t => AccessTools2.GetPropertyGetterDelegate<GetMenuItemsDelegate>(t, "MenuItems"))
                 : null;
-            _setMenuItemsDelegate = type is not null
-                ? AccessTools2.GetPropertySetterDelegate<SetMenuItemsDelegate>(@object, type, nameof(MenuItems))
+            _setMenuItems = type is not null
+                ? _setMenuItemsCache.GetOrAdd(type, static t => AccessTools2.GetPropertySetterDelegate<SetMenuItemsDelegate>(t, "MenuItems"))
                 : null;
         }
     }
