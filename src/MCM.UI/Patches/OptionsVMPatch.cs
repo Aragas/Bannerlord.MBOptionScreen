@@ -4,8 +4,6 @@ using HarmonyLib.BUTR.Extensions;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
-using TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions;
-
 namespace MCM.UI.Patches
 {
     internal static class OptionsVMPatch
@@ -15,7 +13,7 @@ namespace MCM.UI.Patches
         public static void Patch(Harmony harmony)
         {
             harmony.Patch(
-                AccessTools2.Method(typeof(OptionsVM), "SetSelectedCategory"),
+                AccessTools2.Method("TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions.OptionsVM:SetSelectedCategory"),
                 prefix: new HarmonyMethod(typeof(OptionsVMPatch), nameof(SetSelectedCategoryPatch)));
         }
 

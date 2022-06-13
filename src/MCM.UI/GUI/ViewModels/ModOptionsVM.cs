@@ -4,9 +4,12 @@ using BUTR.DependencyInjection;
 
 using ComparerExtensions;
 
+using MCM.Abstractions.Common.ViewModelWrappers;
+using MCM.Abstractions.Common.Wrappers;
 using MCM.Abstractions.Settings.Providers;
 using MCM.UI.Extensions;
 using MCM.UI.Patches;
+using MCM.Utils;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -16,8 +19,6 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-using TaleWorlds.Core;
-using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Engine;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
@@ -160,7 +161,7 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
         [DataSourceProperty]
-        public SelectorVM<SelectorItemVM> PresetsSelector { get; } = new(Enumerable.Empty<string>(), -1, null);
+        public SelectorVMWrapper PresetsSelector { get; } = new(SelectorVMUtils.Create(Enumerable.Empty<string>(), -1, null));
         [DataSourceProperty]
         public bool IsPresetsSelectorVisible => SelectedMod is not null;
 
@@ -204,7 +205,7 @@ namespace MCM.UI.GUI.ViewModels
                                 catch (Exception e)
                                 {
                                     _logger.LogError(e, "Error while creating a ViewModel for settings {Id}", s.SettingsId);
-                                    InformationManager.DisplayMessage(new InformationMessage(
+                                    InformationManagerUtils.DisplayMessage(InformationMessageUtils.Create(
                                         new TextObject($"{{=HNduGf7H5a}}There was an error while parsing settings from '{s.SettingsId}'! Please contact the MCM developers and the mod developer!").ToString(),
                                         Colors.Red));
                                     return null;
@@ -237,7 +238,7 @@ namespace MCM.UI.GUI.ViewModels
                 catch (Exception e)
                 {
                     _logger.LogError(e, "Error while creating ViewModels for the settings");
-                    InformationManager.DisplayMessage(new InformationMessage(
+                    InformationManagerUtils.DisplayMessage(InformationMessageUtils.Create(
                         new TextObject("{=JLKaTyJcyu}There was a major error while building the settings list! Please contact the MCM developers!").ToString(),
                         Colors.Red));
                 }
@@ -261,23 +262,23 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
 
-        private void OnPresetsSelectorChange(SelectorVM<SelectorItemVM> selector)
+        private void OnPresetsSelectorChange(SelectorVMWrapper selector)
         {
-            var data = new InquiryData(
+            var data = InquiryDataUtils.Create(
                 new TextObject("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new()
                 {
-                    { "PRESET", selector.SelectedItem.StringItem }
+                    { "PRESET", new StringItemWrapper(selector.SelectedItem).StringItem }
                 }).ToString(),
                 new TextObject("{=ModOptionsVM_Discard}Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?", new()
                 {
                     { "NAME", SelectedMod?.DisplayName },
-                    { "ITEM", selector.SelectedItem.StringItem }
+                    { "ITEM", new StringItemWrapper(selector.SelectedItem).StringItem }
                 }).ToString(),
                 true, true, new TextObject("{=aeouhelq}Yes").ToString(),
                 new TextObject("{=8OkPHu4f}No").ToString(),
                 () =>
                 {
-                    SelectedMod!.ChangePreset(PresetsSelector.SelectedItem.StringItem);
+                    SelectedMod!.ChangePreset(new StringItemWrapper(PresetsSelector.SelectedItem).StringItem);
                     var selectedMod = SelectedMod;
                     ExecuteSelect(null);
                     ExecuteSelect(selectedMod);
@@ -288,9 +289,9 @@ namespace MCM.UI.GUI.ViewModels
                     PresetsSelector.SelectedIndex = SelectedMod?.PresetsSelector?.SelectedIndex ?? -1;
                     PresetsSelector.SetOnChangeAction(OnPresetsSelectorChange);
                 });
-            InformationManager.ShowInquiry(data);
+            InformationManagerUtils.ShowInquiry(data);
         }
-        private void OnModPresetsSelectorChange(SelectorVM<SelectorItemVM> selector)
+        private void OnModPresetsSelectorChange(SelectorVMWrapper selector)
         {
             PresetsSelector.SetOnChangeAction(null);
             PresetsSelector.SelectedIndex = selector.SelectedIndex;
@@ -341,7 +342,7 @@ namespace MCM.UI.GUI.ViewModels
             var requireRestart = changedModSettings.Any(x => x.RestartRequired());
             if (requireRestart)
             {
-                var data = new InquiryData(new TextObject("{=ModOptionsVM_RestartTitle}Game Needs to Restart").ToString(),
+                var data = InquiryDataUtils.Create(new TextObject("{=ModOptionsVM_RestartTitle}Game Needs to Restart").ToString(),
                     new TextObject("{=ModOptionsVM_RestartDesc}The game needs to be restarted to apply mod settings changes. Do you want to close the game now?").ToString(),
                     true, true, new TextObject("{=aeouhelq}Yes").ToString(), new TextObject("{=3CpNUnVl}Cancel").ToString(),
                     () =>
@@ -356,7 +357,7 @@ namespace MCM.UI.GUI.ViewModels
                         onClose?.Invoke();
                         Utilities.QuitGame();
                     }, () => { });
-                InformationManager.ShowInquiry(data);
+                InformationManagerUtils.ShowInquiry(data);
             }
             else
             {

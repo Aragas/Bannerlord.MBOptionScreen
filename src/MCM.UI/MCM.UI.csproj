@@ -35,7 +35,7 @@
 
   <!--Windows Forms-->
   <ItemGroup>
-    <_SDKImplicitReference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Forms" />
   </ItemGroup>
   <!--Windows Forms-->
 

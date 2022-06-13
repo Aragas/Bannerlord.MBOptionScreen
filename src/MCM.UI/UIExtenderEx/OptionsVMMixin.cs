@@ -23,34 +23,34 @@ namespace MCM.UI.UIExtenderEx
         private delegate void ExecuteCancelDelegate(OptionsVM instance);
 
         private static readonly ExecuteDoneDelegate? ExecuteDoneMethod =
-            AccessTools2.GetDelegate<ExecuteDoneDelegate>(typeof(OptionsVM), "ExecuteDone");
+            AccessTools2.GetDelegate<ExecuteDoneDelegate>("TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions.OptionsVM:ExecuteDone");
         private static readonly ExecuteCancelDelegate? ExecuteCancelMethod =
-            AccessTools2.GetDelegate<ExecuteCancelDelegate>(typeof(OptionsVM), "ExecuteCancel");
+            AccessTools2.GetDelegate<ExecuteCancelDelegate>("TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions.OptionsVM:ExecuteCancel");
 
         static OptionsVMMixin()
         {
             var harmony = new Harmony("bannerlord.mcm.ui.optionsvm");
 
-            if (AccessTools2.Property(typeof(OptionsVM), "VideoOptions")?.GetMethod is { } m1)
-                harmony.Patch(m1, postfix: new HarmonyMethod(AccessTools2.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
-            if (AccessTools2.Property(typeof(OptionsVM), "AudioOptions")?.GetMethod is { } m2)
-                harmony.Patch(m2, postfix: new HarmonyMethod(AccessTools2.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
-            if (AccessTools2.Property(typeof(OptionsVM), "GameKeyOptionGroups")?.GetMethod is { } m3)
-                harmony.Patch(m3, postfix: new HarmonyMethod(AccessTools2.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
-            if (AccessTools2.Property(typeof(OptionsVM), "GamepadOptions")?.GetMethod is { } m4)
-                harmony.Patch(m4, postfix: new HarmonyMethod(AccessTools2.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
-            if (AccessTools2.Property(typeof(OptionsVM), "GameplayOptions")?.GetMethod is { } m5)
-                harmony.Patch(m5, postfix: new HarmonyMethod(AccessTools2.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
-            if (AccessTools2.Property(typeof(OptionsVM), "PerformanceOptions")?.GetMethod is { } m6)
-                harmony.Patch(m6, postfix: new HarmonyMethod(AccessTools2.Method(typeof(OptionsVMMixin), nameof(OptionsPostfix)), 300));
+            if (AccessTools2.Property("TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions.OptionsVM:VideoOptions")?.GetMethod is { } m1)
+                harmony.Patch(m1, postfix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((OptionsVM x) => OptionsPostfix(x)), 300));
+            if (AccessTools2.Property("TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions.OptionsVM:AudioOptions")?.GetMethod is { } m2)
+                harmony.Patch(m2, postfix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((OptionsVM x) => OptionsPostfix(x)), 300));
+            if (AccessTools2.Property("TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions.OptionsVM:GameKeyOptionGroups")?.GetMethod is { } m3)
+                harmony.Patch(m3, postfix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((OptionsVM x) => OptionsPostfix(x)), 300));
+            if (AccessTools2.Property("TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions.OptionsVM:GamepadOptions")?.GetMethod is { } m4)
+                harmony.Patch(m4, postfix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((OptionsVM x) => OptionsPostfix(x)), 300));
+            if (AccessTools2.Property("TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions.OptionsVM:GameplayOptions")?.GetMethod is { } m5)
+                harmony.Patch(m5, postfix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((OptionsVM x) => OptionsPostfix(x)), 300));
+            if (AccessTools2.Property("TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions.OptionsVM:PerformanceOptions")?.GetMethod is { } m6)
+                harmony.Patch(m6, postfix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((OptionsVM x) => OptionsPostfix(x)), 300));
 
             harmony.CreateReversePatcher(
-                AccessTools2.Method(typeof(OptionsVM), nameof(OptionsVM.ExecuteCloseOptions)),
-                new HarmonyMethod(SymbolExtensions2.GetMethodInfo(() => OriginalExecuteCloseOptions(null!)))).Patch();
+                AccessTools2.Method("TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions.OptionsVM:ExecuteCloseOptions"),
+                new HarmonyMethod(SymbolExtensions2.GetMethodInfo((OptionsVM x) => OriginalExecuteCloseOptions(x)))).Patch();
 
             harmony.Patch(
-                AccessTools2.Method(typeof(OptionsVM), nameof(OptionsVM.ExecuteCloseOptions)),
-                postfix: new HarmonyMethod(AccessTools2.Method(typeof(OptionsVMMixin), nameof(ExecuteCloseOptionsPostfix)), 300));
+                AccessTools2.Method("TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions.OptionsVM:ExecuteCloseOptions"),
+                postfix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((OptionsVM x) => ExecuteCloseOptionsPostfix(x)), 300));
         }
 
         [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]

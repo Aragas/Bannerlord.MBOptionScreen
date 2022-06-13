@@ -1,6 +1,6 @@
 ﻿using BUTR.DependencyInjection.Logger;
 
-using MCM.Abstractions.Common;
+using MCM.Abstractions.Common.Wrappers;
 using MCM.Utils;
 
 using Newtonsoft.Json;
@@ -40,8 +40,7 @@ namespace MCM.Implementation.Settings.Formats.Json2
 
             public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
             {
-                var wrapper = new SelectedIndexWrapper(value);
-                var token = JToken.FromObject(wrapper.SelectedIndex);
+                var token = JToken.FromObject(new SelectedIndexWrapper(value).SelectedIndex);
                 token.WriteTo(writer);
             }
 

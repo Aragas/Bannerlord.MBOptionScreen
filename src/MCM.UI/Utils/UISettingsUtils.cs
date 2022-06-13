@@ -1,5 +1,4 @@
-﻿using MCM.Abstractions.Common;
-using MCM.Abstractions.Settings;
+﻿using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Models;
 using MCM.Extensions;
@@ -73,7 +72,7 @@ namespace MCM.UI.Utils
                     urs.Do(new SetStringAction(current.PropertyReference, val));
                     break;
                 case SettingType.Dropdown when @new.PropertyReference.Value is { } val:
-                    urs.Do(new SetSelectedIndexAction(current.PropertyReference, new SelectedIndexWrapper(val)));
+                    urs.Do(new SetSelectedIndexAction(current.PropertyReference, val));
                     break;
                 case SettingType.Button when @new.PropertyReference.Value is Action val:
                     break;

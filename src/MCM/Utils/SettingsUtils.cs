@@ -5,7 +5,7 @@ using BUTR.DependencyInjection.Logger;
 using HarmonyLib.BUTR.Extensions;
 
 using MCM.Abstractions;
-using MCM.Abstractions.Common;
+using MCM.Abstractions.Common.Wrappers;
 using MCM.Abstractions.Dropdown;
 using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings;

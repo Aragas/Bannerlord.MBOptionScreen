@@ -1,7 +1,7 @@
-﻿using MCM.Abstractions.Common;
+﻿using MCM.Abstractions.Common.ViewModelWrappers;
+using MCM.Abstractions.Common.Wrappers;
 using MCM.Abstractions.Dropdown;
 using MCM.UI.Actions;
-using MCM.UI.Data;
 using MCM.Utils;
 
 using System.ComponentModel;
@@ -30,16 +30,22 @@ namespace MCM.UI.GUI.ViewModels
                 if (IsDropdown && DropdownValue != value)
                 {
                     // TODO
-                    URS.Do(new ComplexReferenceTypeAction<SelectedIndexWrapper>(PropertyReference, selector =>
+                    URS.Do(new ComplexReferenceTypeAction<object>(PropertyReference, selector =>
                     {
                         //selector.ItemList = DropdownValue.ItemList;
                         if (selector is not null)
-                            selector.SelectedIndex = DropdownValue.SelectedIndex;
+                        {
+                            var wrapper = new SelectedIndexWrapper(selector);
+                            wrapper.SelectedIndex = DropdownValue.SelectedIndex;
+                        }
                     }, selector =>
                     {
                         //selector.ItemList = DropdownValue.ItemList;
                         if (selector is not null)
-                            selector.SelectedIndex = DropdownValue.SelectedIndex;
+                        {
+                            var wrapper = new SelectedIndexWrapper(selector);
+                            wrapper.SelectedIndex = DropdownValue.SelectedIndex;
+                        }
                     }));
                     OnPropertyChanged(nameof(DropdownValue));
                 }
@@ -50,7 +56,7 @@ namespace MCM.UI.GUI.ViewModels
         {
             if (obj is not null && args.PropertyName == "SelectedIndex")
             {
-                URS.Do(new SetSelectedIndexAction(PropertyReference, new SelectedIndexWrapper(obj)));
+                URS.Do(new SetSelectedIndexAction(PropertyReference, obj));
                 SettingsVM.RecalculateIndex();
             }
         }
@@ -58,7 +64,7 @@ namespace MCM.UI.GUI.ViewModels
         {
             if (args.PropertyName == "SelectedIndex")
             {
-                URS.Do(new SetSelectedIndexAction(PropertyReference, new SelectedIndexWrapper(obj)));
+                URS.Do(new SetSelectedIndexAction(PropertyReference, obj));
                 SettingsVM.RecalculateIndex();
             }
         }

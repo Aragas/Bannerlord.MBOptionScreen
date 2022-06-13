@@ -63,7 +63,34 @@ namespace MCMv4.Tests
         [SettingPropertyGroup("Int")]
         public int PropertyInt { get; set; }
 
+        
+        [SettingPropertyBool("Property Int Overflow Switch", RequireRestart = false)]
+        [SettingPropertyGroup("Int Overflow")]
+        public bool PropertyIntOverflowSwitch
+        {
+            get => _propertyIntOverflowSwitch;
+            set
+            {
+                _propertyIntOverflowSwitch = value;
+                if (_propertyIntOverflowSwitch)
+                {
+                    PropertyIntOverflow = 200;
+                    OnPropertyChanged(nameof(PropertyIntOverflow));
+                }
+                else
+                {
+                    PropertyIntOverflow = 0;
+                    OnPropertyChanged(nameof(PropertyIntOverflow));
+                }
+            }
+        }
+        private bool _propertyIntOverflowSwitch;
 
+        [SettingPropertyInteger("Property Int Overflow", 0, 100, RequireRestart = false)]
+        [SettingPropertyGroup("Int Overflow")]
+        public int PropertyIntOverflow { get; set; }
+
+        
         [SettingPropertyBool("Property Float Switch", RequireRestart = false)]
         [SettingPropertyGroup("Float")]
         public bool PropertyFloatSwitch

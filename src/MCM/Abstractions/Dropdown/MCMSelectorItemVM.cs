@@ -1,4 +1,5 @@
-﻿using TaleWorlds.Core.ViewModelCollection;
+﻿using MCM.Utils;
+
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
 
@@ -9,7 +10,7 @@ namespace MCM.Abstractions.Dropdown
         private string _stringItem = string.Empty;
         private bool _canBeSelected = true;
         private TextObject? _hintObj;
-        private HintViewModel? _hint;
+        private ViewModel? _hint;
 
         public object Element { get; }
 
@@ -42,7 +43,7 @@ namespace MCM.Abstractions.Dropdown
         }
 
         [DataSourceProperty]
-        public HintViewModel? Hint
+        public ViewModel? Hint
         {
             get => _hint;
             set
@@ -74,7 +75,9 @@ namespace MCM.Abstractions.Dropdown
             _stringItem = Element.ToString() ?? "ERROR";
 
             if (_hintObj is not null)
-                _hint = new HintViewModel(_hintObj);
+            {
+                _hint = HintViewModelUtils.Create(_hintObj);
+            }
         }
     }
 }
