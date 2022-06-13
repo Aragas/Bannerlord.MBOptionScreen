@@ -1,8 +1,10 @@
-﻿using System;
+﻿using MCM.Abstractions.Common.ViewModelWrappers;
+using MCM.Utils;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using TaleWorlds.Core.ViewModelCollection;
 using TaleWorlds.Localization;
 
 namespace MCM.Abstractions.Dropdown
@@ -14,7 +16,7 @@ namespace MCM.Abstractions.Dropdown
     {
         public static DropdownDefault<T> Empty => new(Enumerable.Empty<T>(), 0);
 
-        internal SelectorVM<SelectorItemVM> Selector { get; set; }
+        internal SelectedIndexVMWrapper Selector { get; set; }
 
         public int SelectedIndex
         {
@@ -43,7 +45,7 @@ namespace MCM.Abstractions.Dropdown
         public DropdownDefault(IEnumerable<T> values, int selectedIndex) : base(values)
         {
             var select = this.Select(x => new TextObject(x?.ToString() ?? "ERROR").ToString());
-            Selector = new SelectorVM<SelectorItemVM>(select, selectedIndex, null);
+            Selector = new(SelectorVMUtils.Create(select, selectedIndex, null)!);
 
             if (SelectedIndex != 0 && SelectedIndex >= Count)
                 throw new Exception();

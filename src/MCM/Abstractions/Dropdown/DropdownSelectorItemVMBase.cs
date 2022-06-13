@@ -1,5 +1,4 @@
-﻿using TaleWorlds.Core.ViewModelCollection;
-using TaleWorlds.Library;
+﻿using TaleWorlds.Library;
 
 namespace MCM.Abstractions.Dropdown
 {
@@ -12,6 +11,6 @@ namespace MCM.Abstractions.Dropdown
         public abstract string StringItem { get; }
 
         [DataSourceProperty]
-        public abstract HintViewModel Hint { get; }
+        public abstract ViewModel? Hint { get; }
     }
 }

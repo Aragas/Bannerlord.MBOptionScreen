@@ -29,7 +29,6 @@
 
     <DependedModuleMetadata id="ModLib" order="LoadAfterThis" optional="true" />
 
-    <DependedModuleMetadata id="Bannerlord.MBOptionScreen.MCMv3" incompatible="true" />
     <DependedModuleMetadata id="Bannerlord.MBOptionScreen.ModLib" incompatible="true" />
     <DependedModuleMetadata id="Bannerlord.MBOptionScreen.MBO" incompatible="true" />
   </DependedModuleMetadatas>
@@ -73,16 +72,6 @@
       <Name value="MCMv4 ModLib Adapter"/>
       <DLLName value="MCMv4.Adapter.ModLib.dll"/>
       <SubModuleClassType value="MCM.Adapter.ModLib.MCMModLibSubModule"/>
-      <Tags/>
-    </SubModule>
-    <!--MCMv3-->
-    <SubModule>
-      <Name value="MCMv4 MCMv3 Adapter"/>
-      <DLLName value="MCMv4.Adapter.MCMv3.dll"/>
-      <SubModuleClassType value="MCM.Adapter.MCMv3.MCMMCMv3SubModule"/>
-      <Assemblies>
-        <Assembly value="MCMv3.dll"/>
-      </Assemblies>
       <Tags/>
     </SubModule>
   </SubModules>

@@ -1,10 +1,15 @@
 ---------------------------------------------------------------------------------------------------
+Version: 4.7.0
+Game Versions: e1.7.2,e1.8.0
+* Adapted to e1.8.0
+* Removed support of MCMv3 API
+---------------------------------------------------------------------------------------------------
 Version: 4.6.1
 Game Versions: e1.7.2
 * Fixed Text property not being show
 * Fixed Dropdown not refreshing if changed programmatically
--* Fixed E and Q in search box
---------------------------------------------------------------------------------------------------
+* Fixed E and Q in search box
+---------------------------------------------------------------------------------------------------
 Version: 4.6.0
 Game Versions: e1.7.2
 * Fixed EditBox formatting not being shown

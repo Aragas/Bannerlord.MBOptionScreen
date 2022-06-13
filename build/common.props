@@ -3,20 +3,20 @@
 
   <PropertyGroup>
     <GameVersion>1.7.2</GameVersion>
-    <Version>4.6.1</Version>
+    <Version>4.7.0</Version>
     <HarmonyVersion>2.2.1</HarmonyVersion>
-    <ButterLibVersion>2.1.2</ButterLibVersion>
-    <UIExtenderExVersion>2.1.13</UIExtenderExVersion>
+    <ButterLibVersion>2.1.3</ButterLibVersion>
+    <UIExtenderExVersion>2.2.0</UIExtenderExVersion>
     <BuildResourcesVersion>1.0.1.68</BuildResourcesVersion>
     <BUTRSharedVersion>2.0.0.82</BUTRSharedVersion>
     <BUTRDependencyInjectionVersion>1.0.0.19</BUTRDependencyInjectionVersion>
-    <BUTRModuleManagerVersion>3.0.94</BUTRModuleManagerVersion>
-    <HarmonyExtensionsVersion>2.0.0.57</HarmonyExtensionsVersion>
-    <HarmonyAnalyzerVersion>1.0.1.27</HarmonyAnalyzerVersion>
-    <TargetFrameworks>net472</TargetFrameworks>
+    <BUTRModuleManagerVersion>3.0.97</BUTRModuleManagerVersion>
+    <HarmonyExtensionsVersion>3.0.0.59</HarmonyExtensionsVersion>
+    <HarmonyAnalyzerVersion>1.0.1.32</HarmonyAnalyzerVersion>
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
+    <TargetFramework>net472</TargetFramework>
     <!--Bannerlord's Root Folder. Leave empty if you want it to be tried to be autoresolved.-->
     <GameFolder Condition="$(Configuration) == 'Stable_Debug' OR $(Configuration) == 'Stable_Release'">$(BANNERLORD_STABLE_DIR)</GameFolder>
     <GameFolder Condition="$(Configuration) == 'Beta_Debug' OR $(Configuration) == 'Beta_Release'">$(BANNERLORD_BETA_DIR)</GameFolder>

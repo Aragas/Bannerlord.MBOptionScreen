@@ -1,6 +1,7 @@
 ﻿using BUTR.DependencyInjection.Logger;
 
 using MCM.Abstractions.Common;
+using MCM.Abstractions.Common.Wrappers;
 using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Base;
 using MCM.Abstractions.Settings.Formats;
@@ -146,8 +147,7 @@ namespace MCM.Implementation.Settings.Formats
 
             public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
             {
-                var wrapper = new SelectedIndexWrapper(value);
-                var jo = new JObject { { "SelectedIndex", wrapper.SelectedIndex } };
+                var jo = new JObject { { "SelectedIndex", new SelectedIndexWrapper(value).SelectedIndex } };
                 jo.WriteTo(writer);
             }
 

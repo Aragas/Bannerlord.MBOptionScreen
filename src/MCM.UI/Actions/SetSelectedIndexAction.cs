@@ -1,4 +1,4 @@
-﻿using MCM.Abstractions.Common;
+﻿using MCM.Abstractions.Common.Wrappers;
 using MCM.Abstractions.Ref;
 
 namespace MCM.UI.Actions
@@ -19,7 +19,10 @@ namespace MCM.UI.Actions
                 o =>
                 {
                     if (Context.Value is not null)
-                        new SelectedIndexWrapper(Context.Value).SelectedIndex = o;
+                    {
+                        var wrapper = new SelectedIndexWrapper(Context.Value);
+                        wrapper.SelectedIndex = o;
+                    }
                 });
             Value = new SelectedIndexWrapper(value).SelectedIndex;
             Original = SelectedIndexContext.Value;

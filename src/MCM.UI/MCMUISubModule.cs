@@ -114,7 +114,7 @@ namespace MCM.UI
             var optionsGauntletScreenHarmony = new Harmony("bannerlord.mcm.ui.optionsgauntletscreenpatch");
             OptionsGauntletScreenPatch.Patch(optionsGauntletScreenHarmony);
             MissionGauntletOptionsUIHandlerPatch.Patch(optionsGauntletScreenHarmony);
-            
+
             var optionsSwitchHarmony = new Harmony("bannerlord.mcm.ui.optionsswitchpatch");
             OptionsVMPatch.Patch(optionsSwitchHarmony);
 
@@ -200,7 +200,7 @@ namespace MCM.UI
 
         private static void CheckGameVersion()
         {
-            var e172 = new ApplicationVersion(ApplicationVersionType.EarlyAccess, 1, 7, 2, 0, ApplicationVersionGameType.Singleplayer);
+            var e172 = ApplicationVersionHelper.TryParse("e1.7.2", out var e172Var) ? e172Var : ApplicationVersion.Empty;
             if (ApplicationVersionHelper.GameVersion() is { } gameVersion && gameVersion < e172)
             {
                 var sb = new StringBuilder();

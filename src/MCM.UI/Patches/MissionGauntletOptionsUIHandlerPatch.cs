@@ -7,23 +7,24 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 using TaleWorlds.Engine.GauntletUI;
-using TaleWorlds.MountAndBlade.GauntletUI;
 using TaleWorlds.TwoDimension;
 
 namespace MCM.UI.Patches
 {
     internal static class MissionGauntletOptionsUIHandlerPatch
     {
-        private static readonly ConditionalWeakTable<MissionGauntletOptionsUIHandler, SpriteCategory?> _spriteCategorySaveLoads = new();
+        private static readonly ConditionalWeakTable<object, SpriteCategory?> _spriteCategorySaveLoads = new();
 
         public static void Patch(Harmony harmony)
         {
             harmony.Patch(
-                AccessTools2.Constructor(typeof(MissionGauntletOptionsUIHandler)),
+                AccessTools2.Constructor("TaleWorlds.MountAndBlade.GauntletUI.MissionGauntletOptionsUIHandler") ??
+                AccessTools2.Constructor("TaleWorlds.MountAndBlade.GauntletUI.Mission.MissionGauntletOptionsUIHandler"),
                 postfix: new HarmonyMethod(typeof(MissionGauntletOptionsUIHandlerPatch), nameof(OnInitializePostfix)));
 
             harmony.Patch(
-                AccessTools2.Method(typeof(MissionGauntletOptionsUIHandler), "OnMissionScreenFinalize"),
+                AccessTools2.Method("TaleWorlds.MountAndBlade.GauntletUI.MissionGauntletOptionsUIHandler:OnMissionScreenFinalize") ??
+                AccessTools2.Method("TaleWorlds.MountAndBlade.GauntletUI.Mission.MissionGauntletOptionsUIHandler:OnMissionScreenFinalize"),
                 postfix: new HarmonyMethod(typeof(MissionGauntletOptionsUIHandlerPatch), nameof(OnFinalizePostfix)));
         }
 
@@ -31,7 +32,7 @@ namespace MCM.UI.Patches
         [SuppressMessage("ReSharper", "InconsistentNaming")]
         [SuppressMessage("ReSharper", "UnusedParameter.Local")]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private static void OnInitializePostfix(MissionGauntletOptionsUIHandler __instance)
+        private static void OnInitializePostfix(object __instance)
         {
             if (ApplicationVersionHelper.GameVersion() is { } gameVersion)
             {
@@ -50,7 +51,7 @@ namespace MCM.UI.Patches
         [SuppressMessage("ReSharper", "InconsistentNaming")]
         [SuppressMessage("ReSharper", "UnusedParameter.Local")]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private static void OnFinalizePostfix(MissionGauntletOptionsUIHandler __instance)
+        private static void OnFinalizePostfix(object __instance)
         {
             if (ApplicationVersionHelper.GameVersion() is { } gameVersion)
             {
