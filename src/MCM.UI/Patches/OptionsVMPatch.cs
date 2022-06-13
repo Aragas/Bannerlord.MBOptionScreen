@@ -9,7 +9,7 @@ namespace MCM.UI.Patches
     internal static class OptionsVMPatch
     {
         public static bool BlockSwitch { get; set; }
-        
+
         public static void Patch(Harmony harmony)
         {
             harmony.Patch(

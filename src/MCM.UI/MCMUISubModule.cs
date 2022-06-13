@@ -114,7 +114,7 @@ namespace MCM.UI
             var optionsGauntletScreenHarmony = new Harmony("bannerlord.mcm.ui.optionsgauntletscreenpatch");
             OptionsGauntletScreenPatch.Patch(optionsGauntletScreenHarmony);
             MissionGauntletOptionsUIHandlerPatch.Patch(optionsGauntletScreenHarmony);
-            
+
             var optionsSwitchHarmony = new Harmony("bannerlord.mcm.ui.optionsswitchpatch");
             OptionsVMPatch.Patch(optionsSwitchHarmony);
 
