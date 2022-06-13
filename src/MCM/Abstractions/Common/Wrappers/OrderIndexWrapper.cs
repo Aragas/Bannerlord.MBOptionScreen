@@ -1,30 +1,39 @@
 ﻿using HarmonyLib.BUTR.Extensions;
 
+using System;
+using System.Collections.Concurrent;
+
 namespace MCM.Abstractions.Common.Wrappers
 {
     public readonly ref struct OrderIndexWrapper
     {
-        private delegate int GetOrderIndexDelegate();
-        private delegate void SetOrderIndexDelegate(int value);
+        private static readonly ConcurrentDictionary<Type, GetOrderIndexDelegate?> _getOrderIndexCache = new();
+        private static readonly ConcurrentDictionary<Type, SetOrderIndexDelegate?> _setOrderIndexCache = new();
 
-        private readonly GetOrderIndexDelegate? _getOrderIndexDelegate;
-        private readonly SetOrderIndexDelegate? _setOrderIndexDelegate;
+        private delegate int GetOrderIndexDelegate(object instance);
+        private delegate void SetOrderIndexDelegate(object instance, int value);
 
+        private readonly GetOrderIndexDelegate? _getOrderIndex;
+        private readonly SetOrderIndexDelegate? _setOrderIndex;
+        
+        private readonly object? _object;
+        
         public int OrderIndex
         {
-            get => _getOrderIndexDelegate?.Invoke() ?? -1;
-            set => _setOrderIndexDelegate?.Invoke(value);
+            get => _getOrderIndex?.Invoke(_object!) ?? -1;
+            set => _setOrderIndex?.Invoke(_object!, value);
         }
 
-        public OrderIndexWrapper(object @object)
+        public OrderIndexWrapper(object? @object)
         {
+            _object = @object;
             var type = @object?.GetType();
 
-            _getOrderIndexDelegate = type is not null
-                ? AccessTools2.GetPropertyGetterDelegate<GetOrderIndexDelegate>(@object, type, nameof(OrderIndex))
+            _getOrderIndex = type is not null
+                ? _getOrderIndexCache.GetOrAdd(type, static t => AccessTools2.GetPropertyGetterDelegate<GetOrderIndexDelegate>(t, "OrderIndex"))
                 : null;
-            _setOrderIndexDelegate = type is not null
-                ? AccessTools2.GetPropertySetterDelegate<SetOrderIndexDelegate>(@object, type, nameof(OrderIndex))
+            _setOrderIndex = type is not null
+                ? _setOrderIndexCache.GetOrAdd(type, static t => AccessTools2.GetPropertySetterDelegate<SetOrderIndexDelegate>(t, "OrderIndex"))
                 : null;
         }
     }

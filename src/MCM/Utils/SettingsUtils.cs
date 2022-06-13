@@ -171,10 +171,6 @@ namespace MCM.Utils
         public static bool IsForTextDropdown(object? obj) => obj is not null && IsForTextDropdown(obj.GetType());
         public static bool IsForCheckboxDropdown(object? obj) => obj is not null && IsForCheckboxDropdown(obj.GetType());
 
-        public static object GetSelector(object dropdown) => AccessTools2.Property(dropdown.GetType(), "Selector")?.GetValue(dropdown) is { } value
-            ? value
-            : MCMSelectorVM<MCMSelectorItemVM>.Empty;
-
         public static IEnumerable<ISettingsPropertyDefinition> GetAllSettingPropertyDefinitions(SettingsPropertyGroupDefinition settingPropertyGroup1)
         {
             foreach (var settingProperty in settingPropertyGroup1.SettingProperties)

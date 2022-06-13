@@ -1,32 +1,41 @@
 ﻿using HarmonyLib.BUTR.Extensions;
 
+using System;
+using System.Collections.Concurrent;
+
 using TaleWorlds.Library;
 
 namespace MCM.Abstractions.Common.Wrappers
 {
     public readonly ref struct MenuOptionsWrapper
     {
-        private delegate IMBBindingList GetMenuOptionsDelegate();
-        private delegate void SetMenuOptionsDelegate(IMBBindingList value);
+        private static readonly ConcurrentDictionary<Type, GetMenuOptionsDelegate?> _getMenuOptionsCache = new();
+        private static readonly ConcurrentDictionary<Type, SetMenuOptionsDelegate?> _setMenuOptionsCache = new();
+        
+        private delegate IMBBindingList GetMenuOptionsDelegate(object instance);
+        private delegate void SetMenuOptionsDelegate(object instance, IMBBindingList? value);
 
-        private readonly GetMenuOptionsDelegate? _getMenuOptionsDelegate;
-        private readonly SetMenuOptionsDelegate? _setMenuOptionsDelegate;
+        private readonly GetMenuOptionsDelegate? _getMenuOptions;
+        private readonly SetMenuOptionsDelegate? _setMenuOptions;
 
-        public IMBBindingList MenuOptions
+        private readonly object? _object;
+
+        public IMBBindingList? MenuOptions
         {
-            get => _getMenuOptionsDelegate?.Invoke() ?? default!;
-            set => _setMenuOptionsDelegate?.Invoke(value);
+            get => _getMenuOptions?.Invoke(_object!);
+            set => _setMenuOptions?.Invoke(_object!, value);
         }
 
-        public MenuOptionsWrapper(object @object)
+        public MenuOptionsWrapper(object? @object)
         {
+            _object = @object;
             var type = @object?.GetType();
 
-            _getMenuOptionsDelegate = type is not null
-                ? AccessTools2.GetPropertyGetterDelegate<GetMenuOptionsDelegate>(@object, type, nameof(MenuOptions))
+            _getMenuOptions = type is not null
+                ? _getMenuOptionsCache.GetOrAdd(type, static t => AccessTools2.GetPropertyGetterDelegate<GetMenuOptionsDelegate>(t, "MenuOptions"))
                 : null;
-            _setMenuOptionsDelegate = type is not null
-                ? AccessTools2.GetPropertySetterDelegate<SetMenuOptionsDelegate>(@object, type, nameof(MenuOptions))
+            _setMenuOptions = type is not null
+                ? _setMenuOptionsCache.GetOrAdd(type, static t => AccessTools2.GetPropertySetterDelegate<SetMenuOptionsDelegate>(t, "MenuOptions"))
                 : null;
         }
     }

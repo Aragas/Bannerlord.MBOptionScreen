@@ -264,21 +264,22 @@ namespace MCM.UI.GUI.ViewModels
 
         private void OnPresetsSelectorChange(SelectorVMWrapper selector)
         {
+            var stringItem = new StringItemWrapper(selector.SelectedItem).StringItem;
             var data = InquiryDataUtils.Create(
                 new TextObject("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new()
                 {
-                    { "PRESET", new StringItemWrapper(selector.SelectedItem).StringItem }
+                    { "PRESET", stringItem }
                 }).ToString(),
                 new TextObject("{=ModOptionsVM_Discard}Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?", new()
                 {
                     { "NAME", SelectedMod?.DisplayName },
-                    { "ITEM", new StringItemWrapper(selector.SelectedItem).StringItem }
+                    { "ITEM", stringItem }
                 }).ToString(),
                 true, true, new TextObject("{=aeouhelq}Yes").ToString(),
                 new TextObject("{=8OkPHu4f}No").ToString(),
                 () =>
                 {
-                    SelectedMod!.ChangePreset(new StringItemWrapper(PresetsSelector.SelectedItem).StringItem);
+                    SelectedMod!.ChangePreset(stringItem);
                     var selectedMod = SelectedMod;
                     ExecuteSelect(null);
                     ExecuteSelect(selectedMod);

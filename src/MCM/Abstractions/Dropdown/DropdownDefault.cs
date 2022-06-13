@@ -1,4 +1,4 @@
-﻿using MCM.Abstractions.Common.ViewModelWrappers;
+﻿using MCM.Abstractions.Common.Wrappers;
 using MCM.Utils;
 
 using System;
@@ -16,16 +16,17 @@ namespace MCM.Abstractions.Dropdown
     {
         public static DropdownDefault<T> Empty => new(Enumerable.Empty<T>(), 0);
 
-        internal SelectedIndexVMWrapper Selector { get; set; }
+        internal object Selector { get; private set; }
 
         public int SelectedIndex
         {
-            get => Selector.SelectedIndex;
+            get => new SelectedIndexWrapper(Selector).SelectedIndex;
             set
             {
-                if (Selector.SelectedIndex != value)
+                var wrapper = new SelectedIndexWrapper(Selector);
+                if (wrapper.SelectedIndex != value)
                 {
-                    Selector.SelectedIndex = value;
+                    wrapper.SelectedIndex = value;
                 }
             }
         }
@@ -45,7 +46,7 @@ namespace MCM.Abstractions.Dropdown
         public DropdownDefault(IEnumerable<T> values, int selectedIndex) : base(values)
         {
             var select = this.Select(x => new TextObject(x?.ToString() ?? "ERROR").ToString());
-            Selector = new(SelectorVMUtils.Create(select, selectedIndex, null)!);
+            Selector = SelectorVMUtils.Create(select, selectedIndex, null) ?? MCMSelectorVM<MCMSelectorItemVM>.Empty;
 
             if (SelectedIndex != 0 && SelectedIndex >= Count)
                 throw new Exception();

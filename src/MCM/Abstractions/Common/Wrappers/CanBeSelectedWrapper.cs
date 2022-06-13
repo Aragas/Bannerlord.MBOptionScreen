@@ -1,30 +1,39 @@
 ﻿using HarmonyLib.BUTR.Extensions;
 
+using System;
+using System.Collections.Concurrent;
+
 namespace MCM.Abstractions.Common.Wrappers
 {
     public readonly ref struct CanBeSelectedWrapper
     {
-        private delegate bool GetCanBeSelectedDelegate();
-        private delegate void SetCanBeSelectedDelegate(bool value);
+        private static readonly ConcurrentDictionary<Type, GetCanBeSelectedDelegate?> _getCanBeSelectedCache = new();
+        private static readonly ConcurrentDictionary<Type, SetCanBeSelectedDelegate?> _setCanBeSelectedCache = new();
+        
+        private delegate bool GetCanBeSelectedDelegate(object instance);
+        private delegate void SetCanBeSelectedDelegate(object instance, bool value);
 
-        private readonly GetCanBeSelectedDelegate? _getCanBeSelectedDelegate;
-        private readonly SetCanBeSelectedDelegate? _setCanBeSelectedDelegate;
+        private readonly GetCanBeSelectedDelegate? _getCanBeSelected;
+        private readonly SetCanBeSelectedDelegate? _setCanBeSelected;
+
+        private readonly object? _object;
 
         public bool CanBeSelected
         {
-            get => _getCanBeSelectedDelegate?.Invoke() ?? false;
-            set => _setCanBeSelectedDelegate?.Invoke(value);
+            get => _getCanBeSelected?.Invoke(_object!) ?? false;
+            set => _setCanBeSelected?.Invoke(_object!, value);
         }
 
-        public CanBeSelectedWrapper(object @object)
+        public CanBeSelectedWrapper(object? @object)
         {
+            _object = @object;
             var type = @object?.GetType();
 
-            _getCanBeSelectedDelegate = type is not null
-                ? AccessTools2.GetPropertyGetterDelegate<GetCanBeSelectedDelegate>(@object, type, nameof(CanBeSelected))
+            _getCanBeSelected = type is not null
+                ? _getCanBeSelectedCache.GetOrAdd(type, static t => AccessTools2.GetPropertyGetterDelegate<GetCanBeSelectedDelegate>(t, "CanBeSelected"))
                 : null;
-            _setCanBeSelectedDelegate = type is not null
-                ? AccessTools2.GetPropertySetterDelegate<SetCanBeSelectedDelegate>(@object, type, nameof(CanBeSelected))
+            _setCanBeSelected = type is not null
+                ? _setCanBeSelectedCache.GetOrAdd(type, static t => AccessTools2.GetPropertyGetterDelegate<SetCanBeSelectedDelegate>(t, "CanBeSelected"))
                 : null;
         }
     }

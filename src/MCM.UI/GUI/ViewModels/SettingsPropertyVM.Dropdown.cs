@@ -22,8 +22,8 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public SelectorVMWrapper DropdownValue
         {
-            get => _selectorVMWrapper ??= new SelectorVMWrapper(IsDropdown && PropertyReference.Value is { } val
-                ? SettingsUtils.GetSelector(val)
+            get => _selectorVMWrapper ??= new SelectorVMWrapper(IsDropdown
+                ? new SelectorWrapper(PropertyReference.Value).Selector
                 : MCMSelectorVM<MCMSelectorItemVM>.Empty);
             set
             {
