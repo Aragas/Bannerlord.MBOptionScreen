@@ -1,10 +1,11 @@
 ﻿using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
 using MCM.Abstractions.Dropdown;
+using MCM.Utils;
 
 using System;
 
-using TaleWorlds.Core;
+using TaleWorlds.Library;
 
 namespace MCMv4.Tests
 {
@@ -183,16 +184,16 @@ namespace MCMv4.Tests
 
         [SettingPropertyButton("Property Button Default Empty", Content = "Default Empty", RequireRestart = false)]
         [SettingPropertyGroup("Button")]
-        public Action PropertyButtonDefaultEmpty { get; set; } = () => { InformationManager.DisplayMessage(new("Default Empty")); };
+        public Action PropertyButtonDefaultEmpty { get; set; } = () => { InformationManagerUtils.DisplayMessage(InformationMessageUtils.Create("Default Empty", Color.White)); };
         [SettingPropertyButton("Property Button Default Text", Content = "Default Text", RequireRestart = false)]
         [SettingPropertyGroup("Button")]
-        public Action PropertyButtonDefaultText { get; set; } = () => { InformationManager.DisplayMessage(new("Default Text")); };
+        public Action PropertyButtonDefaultText { get; set; } = () => { InformationManagerUtils.DisplayMessage(InformationMessageUtils.Create("Default Text", Color.White)); };
         [SettingPropertyButton("Property Button Require Restart", Content = "Require Restart")]
         [SettingPropertyGroup("Button")]
-        public Action PropertyButtonRequireRestart { get; set; } = () => { InformationManager.DisplayMessage(new("Require Restart")); };
+        public Action PropertyButtonRequireRestart { get; set; } = () => { InformationManagerUtils.DisplayMessage(InformationMessageUtils.Create("Require Restart", Color.White)); };
         [SettingPropertyButton("Property Button With Hint", Content = "With Hint: Hint Text", RequireRestart = false, HintText = "Hint Text")]
         [SettingPropertyGroup("Button")]
-        public Action PropertyButtonWithHint { get; set; } = () => { InformationManager.DisplayMessage(new("With Hint: Hint Text")); };
+        public Action PropertyButtonWithHint { get; set; } = () => { InformationManagerUtils.DisplayMessage(InformationMessageUtils.Create("With Hint: Hint Text", Color.White)); };
 
         public class TestIntFormatter : IFormatProvider, ICustomFormatter
         {

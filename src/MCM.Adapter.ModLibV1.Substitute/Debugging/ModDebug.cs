@@ -1,7 +1,8 @@
-﻿using System;
+﻿using ModLib.Utils;
+
+using System;
 using System.Diagnostics.CodeAnalysis;
 
-using TaleWorlds.Core;
 using TaleWorlds.Library;
 
 namespace ModLib.Debugging
@@ -11,13 +12,13 @@ namespace ModLib.Debugging
         [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
         public static void ShowError(string message, string title = "", Exception? exception = null)
         {
-            InformationManager.DisplayMessage(new($"ModLibV1: {message}! {exception}", Colors.Red));
+            InformationManagerUtils.DisplayMessage(InformationMessageUtils.Create($"ModLibV1: {message}! {exception}", Colors.Red));
         }
 
         [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]
         public static void ShowMessage(string message, string title = "", bool nonModal = false)
         {
-            InformationManager.DisplayMessage(new($"ModLibV1: {message}", Colors.Yellow));
+            InformationManagerUtils.DisplayMessage(InformationMessageUtils.Create($"ModLibV1: {message}", Colors.Yellow));
         }
 
         [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "<Pending>")]

@@ -1,8 +1,6 @@
 ﻿using MCM.Abstractions.Common.ViewModelWrappers;
 using MCM.Abstractions.Common.Wrappers;
-using MCM.Abstractions.Dropdown;
 using MCM.UI.Actions;
-using MCM.Utils;
 
 using System.ComponentModel;
 
@@ -12,6 +10,8 @@ namespace MCM.UI.GUI.ViewModels
 {
     internal sealed partial class SettingsPropertyVM : ViewModel
     {
+        private SelectorVMWrapper? _selectorVMWrapper;
+        
         [DataSourceProperty]
         public bool IsDropdown { get; }
         [DataSourceProperty]
@@ -20,37 +20,7 @@ namespace MCM.UI.GUI.ViewModels
         public bool IsDropdownCheckbox { get; }
 
         [DataSourceProperty]
-        public SelectorVMWrapper DropdownValue
-        {
-            get => _selectorVMWrapper ??= new SelectorVMWrapper(IsDropdown
-                ? new SelectorWrapper(PropertyReference.Value).Selector
-                : MCMSelectorVM<MCMSelectorItemVM>.Empty);
-            set
-            {
-                if (IsDropdown && DropdownValue != value)
-                {
-                    // TODO
-                    URS.Do(new ComplexReferenceTypeAction<object>(PropertyReference, selector =>
-                    {
-                        //selector.ItemList = DropdownValue.ItemList;
-                        if (selector is not null)
-                        {
-                            var wrapper = new SelectedIndexWrapper(selector);
-                            wrapper.SelectedIndex = DropdownValue.SelectedIndex;
-                        }
-                    }, selector =>
-                    {
-                        //selector.ItemList = DropdownValue.ItemList;
-                        if (selector is not null)
-                        {
-                            var wrapper = new SelectedIndexWrapper(selector);
-                            wrapper.SelectedIndex = DropdownValue.SelectedIndex;
-                        }
-                    }));
-                    OnPropertyChanged(nameof(DropdownValue));
-                }
-            }
-        }
+        public SelectorVMWrapper DropdownValue => _selectorVMWrapper ??= new SelectorVMWrapper(new SelectorWrapper(PropertyReference.Value).Selector);
 
         private void DropdownValue_PropertyChanged(object? obj, PropertyChangedEventArgs args)
         {
