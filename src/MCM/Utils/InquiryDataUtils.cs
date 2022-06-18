@@ -19,7 +19,7 @@ namespace MCM.Utils
             Action negativeAction,
             string soundEventPath = "");
         private static readonly CtorV1Delegate? V1;
-        
+
         private delegate object CtorV2Delegate(string titleText,
             string text,
             bool isAffirmativeOptionShown,
@@ -75,7 +75,7 @@ namespace MCM.Utils
                     soundEventPath);
                 return InquiryDataWrapper.Create(obj);
             }
-            
+
             if (V2 is not null)
             {
                 var obj = V2(titleText,

@@ -9,7 +9,7 @@ namespace MCM.Abstractions.Common.Wrappers
     {
         private static readonly ConcurrentDictionary<Type, GetSelectorDelegate?> _getSelectorCache = new();
         private static readonly ConcurrentDictionary<Type, SetSelectorDelegate?> _setSelectorCache = new();
-        
+
         private delegate object GetSelectorDelegate(object instance);
         private delegate void SetSelectorDelegate(object instance, object? value);
 
@@ -17,7 +17,7 @@ namespace MCM.Abstractions.Common.Wrappers
         private readonly SetSelectorDelegate? _setSelector;
 
         private readonly object? _object;
-        
+
         public object? Selector
         {
             get => _getSelector?.Invoke(_object!);

@@ -26,7 +26,7 @@ namespace MCM.UI.Functionality
         private static readonly AccessTools.FieldRef<object, object>? InitialStateOption =
             AccessTools2.FieldRefAccess<object>("TaleWorlds.MountAndBlade.ViewModelCollection.InitialMenuOptionVM:InitialStateOption") ??
             AccessTools2.FieldRefAccess<object>("TaleWorlds.MountAndBlade.ViewModelCollection.InitialMenu.InitialMenuOptionVM:InitialStateOption");
-        
+
         private static readonly WeakReference<object> _instance = new(null!);
         private static Dictionary<string, (int, Func<ScreenBase?>, TextObject)> ScreensCache { get; } = new();
 
@@ -49,7 +49,7 @@ namespace MCM.UI.Functionality
         private static void RefreshMenuOptionsPostfix(object __instance, ref IMBBindingList? ____menuOptions)
         {
             if (____menuOptions is null || InitialStateOption is null) return;
-            
+
             _instance.SetTarget(__instance);
             foreach (var (key, value) in ScreensCache)
             {

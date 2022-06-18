@@ -15,9 +15,9 @@ namespace MCM.Abstractions.Common.Wrappers
 
         private readonly GetOrderIndexDelegate? _getOrderIndex;
         private readonly SetOrderIndexDelegate? _setOrderIndex;
-        
+
         private readonly object? _object;
-        
+
         public int OrderIndex
         {
             get => _getOrderIndex?.Invoke(_object!) ?? -1;

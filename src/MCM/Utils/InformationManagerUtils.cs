@@ -10,7 +10,7 @@ namespace MCM.Utils
     {
         private delegate void DisplayMessageV1Delegate(object data);
         private static readonly DisplayMessageV1Delegate? DisplayMessageV1;
-        
+
         private delegate void ShowInquiryV1Delegate(object data, bool pauseGameActiveState = false);
         private static readonly ShowInquiryV1Delegate? ShowInquiryV1;
 
@@ -18,7 +18,7 @@ namespace MCM.Utils
         {
             var type = AccessTools2.TypeByName("TaleWorlds.Core.InformationManager") ??
                        AccessTools2.TypeByName("TaleWorlds.Library.InformationManager");
-            foreach (var methodInfo in HarmonyLib.AccessTools.GetDeclaredMethods(type)  ?? Enumerable.Empty<MethodInfo>())
+            foreach (var methodInfo in HarmonyLib.AccessTools.GetDeclaredMethods(type) ?? Enumerable.Empty<MethodInfo>())
             {
                 var @params = methodInfo.GetParameters();
                 if (@params.Length == 1 && @params[0].ParameterType.Name.Equals("InformationMessage", StringComparison.Ordinal))
@@ -47,7 +47,7 @@ namespace MCM.Utils
         {
             if (data is null)
                 return;
-            
+
             if (ShowInquiryV1 is not null)
             {
                 ShowInquiryV1(data.Object, pauseGameActiveState);

@@ -9,7 +9,7 @@ namespace MCM.Abstractions.Common.Wrappers
     {
         private static readonly ConcurrentDictionary<Type, GetStringItemDelegate?> _getStringItemCache = new();
         private static readonly ConcurrentDictionary<Type, SetStringItemDelegate?> _setStringItemCache = new();
-        
+
         private delegate string GetStringItemDelegate(object instance);
         private delegate void SetStringItemDelegate(object instance, string value);
 

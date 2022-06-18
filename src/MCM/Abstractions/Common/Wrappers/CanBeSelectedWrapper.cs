@@ -9,7 +9,7 @@ namespace MCM.Abstractions.Common.Wrappers
     {
         private static readonly ConcurrentDictionary<Type, GetCanBeSelectedDelegate?> _getCanBeSelectedCache = new();
         private static readonly ConcurrentDictionary<Type, SetCanBeSelectedDelegate?> _setCanBeSelectedCache = new();
-        
+
         private delegate bool GetCanBeSelectedDelegate(object instance);
         private delegate void SetCanBeSelectedDelegate(object instance, bool value);
 
