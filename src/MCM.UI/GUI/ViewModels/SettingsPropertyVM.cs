@@ -1,4 +1,5 @@
 ﻿using MCM.Abstractions.Common.ViewModelWrappers;
+using MCM.Abstractions.Common.Wrappers;
 using MCM.Abstractions.Ref;
 using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Models;
@@ -15,8 +16,6 @@ namespace MCM.UI.GUI.ViewModels
 {
     internal sealed partial class SettingsPropertyVM : ViewModel
     {
-        private SelectorVMWrapper? _selectorVMWrapper;
-
         public ModOptionsVM MainView => SettingsVM.MainView;
         public SettingsVM SettingsVM { get; }
         public SettingsPropertyGroupVM Group { get; set; } = default!;

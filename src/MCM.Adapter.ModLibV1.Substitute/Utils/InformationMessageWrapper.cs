@@ -1,6 +1,6 @@
-﻿namespace MCM.Utils
+﻿namespace ModLib.Utils
 {
-    public sealed record InformationMessageWrapper(object Object)
+    internal sealed record InformationMessageWrapper(object Object)
     {
         public static InformationMessageWrapper Create(object @object) => new(@object);
     }

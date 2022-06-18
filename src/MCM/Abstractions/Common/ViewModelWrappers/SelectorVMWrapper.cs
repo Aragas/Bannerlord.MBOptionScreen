@@ -64,28 +64,28 @@ namespace MCM.Abstractions.Common.ViewModelWrappers
 
             _getSelectedIndexDelegate = AccessTools2.GetPropertyGetterDelegate<GetSelectedIndexDelegate>(@object, type, nameof(SelectedIndex));
             _setSelectedIndexDelegate = AccessTools2.GetPropertySetterDelegate<SetSelectedIndexDelegate>(@object, type, nameof(SelectedIndex));
-            _getItemList = AccessTools2.GetDeclaredPropertyGetterDelegate<GetItemListDelegate>(@object, type, nameof(ItemList));
-            _setItemList = AccessTools2.GetDeclaredPropertySetterDelegate<SetItemListDelegate>(@object, type, nameof(ItemList));
-            _getHasSingleItem = AccessTools2.GetDeclaredPropertyGetterDelegate<GetHasSingleItemDelegate>(@object, type, nameof(HasSingleItem));
-            _setHasSingleItem = AccessTools2.GetDeclaredPropertySetterDelegate<SetHasSingleItemDelegate>(@object, type, nameof(HasSingleItem));
-            _getSelectedItem = AccessTools2.GetDeclaredPropertyGetterDelegate<GetSelectedItemDelegate>(@object, type, nameof(SelectedItem));
-            _setSelectedItem = AccessTools2.GetDeclaredPropertySetterDelegate<SetSelectedItemDelegate>(@object, type, nameof(SelectedItem));
-            _setOnChangeAction = AccessTools2.GetDeclaredDelegate<SetOnChangeActionDelegate>(@object, type, nameof(SetOnChangeAction));
+            _getItemList = AccessTools2.GetPropertyGetterDelegate<GetItemListDelegate>(@object, type, nameof(ItemList));
+            _setItemList = AccessTools2.GetPropertySetterDelegate<SetItemListDelegate>(@object, type, nameof(ItemList));
+            _getHasSingleItem = AccessTools2.GetPropertyGetterDelegate<GetHasSingleItemDelegate>(@object, type, nameof(HasSingleItem));
+            _setHasSingleItem = AccessTools2.GetPropertySetterDelegate<SetHasSingleItemDelegate>(@object, type, nameof(HasSingleItem));
+            _getSelectedItem = AccessTools2.GetPropertyGetterDelegate<GetSelectedItemDelegate>(@object, type, nameof(SelectedItem));
+            _setSelectedItem = AccessTools2.GetPropertySetterDelegate<SetSelectedItemDelegate>(@object, type, nameof(SelectedItem));
+            _setOnChangeAction = AccessTools2.GetDelegate<SetOnChangeActionDelegate>(@object, type, nameof(SetOnChangeAction));
         }
 
-        public void SetOnChangeAction(Action<SelectorVMWrapper>? onPresetsSelectorChange)
+        public void SetOnChangeAction(Action<SelectorVMWrapper>? onChangeAction)
         {
             void SelectorSetOnChangeAction(object selectorVM)
             {
-                if (onPresetsSelectorChange is not null)
+                if (onChangeAction is not null)
                 {
-                    onPresetsSelectorChange(this);
+                    onChangeAction(this);
                 }
             }
 
             if (_setOnChangeAction is not null)
             {
-                _setOnChangeAction((Action<object>)((x) => SelectorSetOnChangeAction(x)));
+                _setOnChangeAction((Action<object>)(SelectorSetOnChangeAction));
             }
         }
     }

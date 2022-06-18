@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 4.7.2
+Game Versions: e1.7.2,e1.8.0
+* Possible ModLib InformationManager crash fix
+* Fixed some Dropdown being empty
+---------------------------------------------------------------------------------------------------
 Version: 4.7.1
 Game Versions: e1.7.2,e1.8.0
 * Fixed Dropdown
