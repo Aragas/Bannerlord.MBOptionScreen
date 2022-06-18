@@ -1,9 +1,9 @@
 ﻿using HarmonyLib.BUTR.Extensions;
 
-using TaleWorlds.Library;
-
 using System;
 using System.Collections.Concurrent;
+
+using TaleWorlds.Library;
 
 namespace MCM.Abstractions.Common.Wrappers
 {
@@ -11,7 +11,7 @@ namespace MCM.Abstractions.Common.Wrappers
     {
         private static readonly ConcurrentDictionary<Type, GetMenuItemsDelegate?> _getMenuItemsCache = new();
         private static readonly ConcurrentDictionary<Type, SetMenuItemsDelegate?> _setMenuItemsCache = new();
-        
+
         private delegate IMBBindingList GetMenuItemsDelegate(object instance);
         private delegate void SetMenuItemsDelegate(object instance, IMBBindingList? value);
 

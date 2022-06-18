@@ -11,7 +11,7 @@ namespace MCM.Abstractions.Common.Wrappers
     {
         private static readonly ConcurrentDictionary<Type, GetMenuOptionsDelegate?> _getMenuOptionsCache = new();
         private static readonly ConcurrentDictionary<Type, SetMenuOptionsDelegate?> _setMenuOptionsCache = new();
-        
+
         private delegate IMBBindingList GetMenuOptionsDelegate(object instance);
         private delegate void SetMenuOptionsDelegate(object instance, IMBBindingList? value);
 

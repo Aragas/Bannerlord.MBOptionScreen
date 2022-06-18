@@ -1,4 +1,4 @@
-namespace MCM.Utils
+﻿namespace MCM.Utils
 {
     public sealed class InquiryDataWrapper
     {

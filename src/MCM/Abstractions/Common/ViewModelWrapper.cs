@@ -21,14 +21,14 @@ namespace MCM.Abstractions.Common
     {
         private static readonly AccessTools.FieldRef<object, Dictionary<string, PropertyInfo>>? PropertyInfosField =
             AccessTools2.FieldRefAccess<Dictionary<string, PropertyInfo>>("TaleWorlds.Library.ViewModel:_propertyInfos");
-        
-        
+
+
         private delegate Dictionary<string, PropertyInfo> GetPropertiesDelegate(object instance);
         private delegate Dictionary<string, MethodInfo> GetMethodsDelegate(object instance);
-        
+
         private static readonly AccessTools.FieldRef<object, object>? PropertiesAndMethods =
             AccessTools2.FieldRefAccess<object>("TaleWorlds.Library.ViewModel:_propertiesAndMethods");
-        
+
         private static readonly GetPropertiesDelegate? GetProperties =
             AccessTools2.GetDeclaredPropertyGetterDelegate<GetPropertiesDelegate>("TaleWorlds.Library.ViewModel+DataSourceTypeBindingPropertiesCollection:Properties");
         private static readonly GetMethodsDelegate? GetMethods =
@@ -36,7 +36,7 @@ namespace MCM.Abstractions.Common
 
         private static readonly AccessTools.FieldRef<IDictionary>? CachedViewModelProperties =
             AccessTools2.StaticFieldRefAccess<IDictionary>("TaleWorlds.Library.ViewModel:_cachedViewModelProperties");
-        
+
         /// <inheritdoc/>
         public object Object { get; }
 
@@ -59,7 +59,7 @@ namespace MCM.Abstractions.Common
             if (PropertyInfosField is not null && PropertyInfosField(Object) is { } propsObject && PropertyInfosField(this) is { } propsThis)
             {
                 if (clearOriginalProperties) propsThis.Clear(); // clear properties
-                
+
                 foreach (var (key, value) in propsObject)
                 {
                     propsThis[key] = new WrappedPropertyInfo(value, Object, () =>
@@ -69,7 +69,7 @@ namespace MCM.Abstractions.Common
                     });
                 }
             }
-            
+
             if (PropertiesAndMethods is not null && PropertiesAndMethods(Object) is { } storageObject && PropertiesAndMethods(this) is { } storageThis)
             {
                 if (GetProperties is not null && GetProperties(storageObject) is { } propsObject2 && GetProperties(storageThis) is { } propsThis2 && CachedViewModelProperties is not null)
@@ -80,9 +80,9 @@ namespace MCM.Abstractions.Common
                     var staticPropsDict = staticStorage is not null ? GetProperties(staticStorage) : null;
                     if (propsThis2 == staticPropsDict)
                         propsThis2 = new(propsThis2);
-                    
+
                     if (clearOriginalProperties) propsThis2.Clear(); // clear properties
-                
+
                     foreach (var (key, value) in propsObject2)
                     {
                         propsThis2[key] = new WrappedPropertyInfo(value, Object, () =>
@@ -94,7 +94,7 @@ namespace MCM.Abstractions.Common
                 }
             }
         }
-        
+
         private void CopyMethods(bool clearOriginalProperties)
         {
             if (PropertiesAndMethods is not null && PropertiesAndMethods(Object) is { } storageObject && PropertiesAndMethods(this) is { } storageThis)
@@ -107,9 +107,9 @@ namespace MCM.Abstractions.Common
                     var staticMethodDict = staticStorage is not null ? GetMethods(staticStorage) : null;
                     if (methodsThis == staticMethodDict)
                         methodsThis = new(methodsThis);
-                    
+
                     if (clearOriginalProperties) methodsThis.Clear(); // clear properties
-                
+
                     foreach (var (key, value) in methodsObject)
                     {
                         methodsThis[key] = new WrappedMethodInfo(value, Object);
@@ -117,7 +117,7 @@ namespace MCM.Abstractions.Common
                 }
             }
         }
-        
+
         private void OnPropertyChangedEventHandler(object? sender, PropertyChangedEventArgs args)
         {
             OnPropertyChanged(args.PropertyName);

@@ -63,7 +63,7 @@ namespace MCMv4.Tests
         [SettingPropertyGroup("Int")]
         public int PropertyInt { get; set; }
 
-        
+
         [SettingPropertyBool("Property Int Overflow Switch", RequireRestart = false)]
         [SettingPropertyGroup("Int Overflow")]
         public bool PropertyIntOverflowSwitch
@@ -90,7 +90,7 @@ namespace MCMv4.Tests
         [SettingPropertyGroup("Int Overflow")]
         public int PropertyIntOverflow { get; set; }
 
-        
+
         [SettingPropertyBool("Property Float Switch", RequireRestart = false)]
         [SettingPropertyGroup("Float")]
         public bool PropertyFloatSwitch

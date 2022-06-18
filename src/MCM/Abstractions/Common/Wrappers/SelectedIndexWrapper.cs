@@ -9,7 +9,7 @@ namespace MCM.Abstractions.Common.Wrappers
     {
         private static readonly ConcurrentDictionary<Type, GetSelectedIndexDelegate?> _getSelectedIndexCache = new();
         private static readonly ConcurrentDictionary<Type, SetSelectedIndexDelegate?> _setSelectedIndexCache = new();
-        
+
         private delegate int GetSelectedIndexDelegate(object instance);
         private delegate void SetSelectedIndexDelegate(object instance, int value);
 

@@ -11,7 +11,7 @@ namespace MCM.UI.GUI.ViewModels
     internal sealed partial class SettingsPropertyVM : ViewModel
     {
         private SelectorVMWrapper? _selectorVMWrapper;
-        
+
         [DataSourceProperty]
         public bool IsDropdown { get; }
         [DataSourceProperty]

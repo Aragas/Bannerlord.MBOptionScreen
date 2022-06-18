@@ -44,14 +44,14 @@ namespace MCM.Abstractions.Common.ViewModelWrappers
             get => _getItemList?.Invoke();
             set => _setItemList?.Invoke(value);
         }
-        
+
         public bool HasSingleItem
         {
             get => _getHasSingleItem?.Invoke() ?? false;
             set => _setHasSingleItem?.Invoke(value);
         }
 
-        public object SelectedItem      
+        public object SelectedItem
         {
             get => _getSelectedItem?.Invoke() ?? default!;
             set => _setSelectedItem?.Invoke(value);
@@ -85,7 +85,7 @@ namespace MCM.Abstractions.Common.ViewModelWrappers
 
             if (_setOnChangeAction is not null)
             {
-                _setOnChangeAction((Action<object>)(SelectorSetOnChangeAction));
+                _setOnChangeAction((Action<object>) (SelectorSetOnChangeAction));
             }
         }
     }
