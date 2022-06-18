@@ -35,7 +35,7 @@ namespace MCM.UI.Functionality
         private static readonly AccessTools.FieldRef<Dictionary<Type, Type>?>? ActualViewTypes =
             AccessTools2.StaticFieldRefAccess<Dictionary<Type, Type>>("TaleWorlds.MountAndBlade.View.ViewCreatorManager:_actualViewTypes") ??
             AccessTools2.StaticFieldRefAccess<Dictionary<Type, Type>>("TaleWorlds.MountAndBlade.View.Missions.ViewCreatorManager:_actualViewTypes");
-        
+
         private static readonly Type? MissionSingleplayerEscapeMenuType =
             AccessTools2.TypeByName("TaleWorlds.MountAndBlade.View.MissionViews.Singleplayer.MissionSingleplayerEscapeMenu") ??
             AccessTools2.TypeByName("TaleWorlds.MountAndBlade.LegacyGUI.Missions.Singleplayer.MissionSingleplayerEscapeMenu");

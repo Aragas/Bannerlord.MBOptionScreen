@@ -10,17 +10,17 @@ namespace MCM.Utils
     {
         private delegate object CtorV1Delegate(IEnumerable<string> hintText, int selectedIndex, object? onChange);
         private static readonly CtorV1Delegate? CtorV1;
-        
+
         static SelectorVMUtils()
         {
             var type1 = AccessTools2.TypeByName("TaleWorlds.Core.ViewModelCollection.SelectorVM`1") ??
                         AccessTools2.TypeByName("TaleWorlds.Core.ViewModelCollection.Selector.SelectorVM`1");
-            
+
             var type2 = AccessTools2.TypeByName("TaleWorlds.Core.ViewModelCollection.SelectorItemVM") ??
                         AccessTools2.TypeByName("TaleWorlds.Core.ViewModelCollection.Selector.SelectorItemVM");
 
             var type = type1!.MakeGenericType(type2)!;
-            
+
             foreach (var constructorInfo in HarmonyLib.AccessTools.GetDeclaredConstructors(type) ?? Enumerable.Empty<ConstructorInfo>())
             {
                 var @params = constructorInfo.GetParameters();

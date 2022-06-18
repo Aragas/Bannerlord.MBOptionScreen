@@ -24,7 +24,8 @@ namespace MCM.UI.GUI.ViewModels
             get => IsFloat ? PropertyReference.Value is float val ? val : float.MinValue : 0f;
             set
             {
-                if (IsFloat && FloatValue != value)
+                value = MathF.Max(MathF.Min(value, MaxFloat), MinFloat);
+                if (IsFloat && MathF.Abs(FloatValue - value) >= Constants.Tolerance) // Todo: check other float comparisons
                 {
                     URS.Do(new SetValueTypeAction<float>(PropertyReference, value));
                     OnPropertyChanged(nameof(FloatValue));
@@ -38,6 +39,7 @@ namespace MCM.UI.GUI.ViewModels
             get => IsInt ? PropertyReference.Value is int val ? val : int.MinValue : 0;
             set
             {
+                value = MathF.Max(MathF.Min(value, MaxInt), MinInt);
                 if (IsInt && IntValue != value)
                 {
                     URS.Do(new SetValueTypeAction<int>(PropertyReference, value));

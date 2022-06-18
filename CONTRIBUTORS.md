@@ -7,9 +7,11 @@ Katarn
 Adonnay  
 PoPoWanObi  
 zijistark  
+artifixer  
 ̑🅠  
 shdwp  
-mgemperl    
+mgemperl  
+Tomwa  
   
 TESTERS:  
 Drogean  
@@ -23,6 +25,8 @@ DeltaScorch105
 Pbpro  
 Ping827  
 irulannaba  
+zijistark  
+Tomwa  
 
 TRANSLATIONS:  
 Velkhla  

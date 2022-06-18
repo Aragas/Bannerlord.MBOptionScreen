@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------------------------------
+Version: 4.7.3
+Game Versions: e1.7.2,e1.8.0
+* Fixed editing values via text box freeze - thanks to Tomwa for the investigation!
+---------------------------------------------------------------------------------------------------
 Version: 4.7.2
 Game Versions: e1.7.2,e1.8.0
 * Possible ModLib InformationManager crash fix
