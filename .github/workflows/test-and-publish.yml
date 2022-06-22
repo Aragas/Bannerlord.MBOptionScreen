@@ -5,8 +5,7 @@ on:
     types: [game_version_update, game_version_update_patch]
   push:
     branches:
-      - master
-      - dev
+      - v4.3.16
     paths:
       - '.github/workflows/test-and-publish.yml'
       - 'src/**'
@@ -14,7 +13,7 @@ on:
       - 'tests/**'
   pull_request:
     branches:
-      - dev
+      - v4.3.16
     # will be triggereg when undrafting or requesting review
     types: [review_requested, ready_for_review]
     paths:
@@ -95,14 +94,14 @@ jobs:
 
     # ignore Stable_Release and treat is as Release
     - name: Build MCM (Release)
-      if: ${{ github.ref == 'refs/heads/master' }}
+      #if: ${{ github.ref == 'refs/heads/master' }}
       run: >-
         mkdir bannerlord-publish;
         dotnet build src/MCM.Publish/MCM.Publish.csproj --configuration Stable_Release -p:GameFolder="$PWD/bannerlord-publish";
       shell: pwsh
 
     - name: Upload Bannerlord folder
-      if: ${{ github.ref == 'refs/heads/master' }}
+      #if: ${{ github.ref == 'refs/heads/master' }}
       uses: actions/upload-artifact@v2
       with:
         name: bannerlord
@@ -115,7 +114,7 @@ jobs:
   publish-on-nuget:
     name: Publish on NuGet
     runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/master' }}
+    #if: ${{ github.ref == 'refs/heads/master' }}
     needs: test
     steps:
     - name: Setup
@@ -156,78 +155,12 @@ jobs:
       shell: bash
 
 ###########################
-#          NEXUS          #
-###########################
-  publish-on-nexusmods:
-    name: Publish on NexusMods
-    runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/master' && false }}
-    needs: test
-    steps:
-    - name: Setup
-      uses: butr/actions-common-setup@v2.0
-      with:
-        github-token: ${{secrets.GITHUB_TOKEN}}
-
-    - name: Download bannerlord folder
-      uses: actions/download-artifact@v2
-      with:
-        name: bannerlord
-        path: ./bannerlord
-
-    - name: Zip MCM.Standalone
-      run: 7z a -t7z MCM.Standalone.7z ./bannerlord/*
-      #shell: pwsh
-      # pwsh casues it to include the root folder
-
-    - name: Install Bannerlord.ChangelogParser and Bannerlord.NexusmodsUploader
-      run: >-
-        dotnet tool install -g Bannerlord.ChangelogParser;
-        dotnet tool install -g Bannerlord.NexusmodsUploader;
-      shell: pwsh
-
-    - name: Run ChangelogParser
-      id: changelog
-      run: |
-        vers="$(bannerlord_changelog_parser latestversion -f "$PWD/changelog.txt")"
-        echo "::set-output name=mod_version::$vers"
-        desc="$(bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt")"
-        desc="${desc//'%'/'%25'}"
-        desc="${desc//$'\n'/'%0A'}"
-        desc="${desc//$'\r'/'%0D'}"
-        echo "::set-output name=mod_description::$desc"
-      shell: bash
-
-    - name: Start Selenoid
-      uses: Xotabu4/selenoid-github-action@v1
-
-    - name: Run NexusmodsUploader
-      run: >-
-        bannerlord_nexusmods_uploader upload -g mountandblade2bannerlord -m 612 -n "Mod Configuration Menu"
-        -v "v${{steps.changelog.outputs.mod_version}}" -l true -e true -d "${{steps.changelog.outputs.mod_description}}"
-        -p "$PWD/MCM.Standalone.7z";
-      env:
-        NEXUSMODS_COOKIES_JSON: '${{secrets.NEXUSMODS_COOKIES_JSON}}'
-      shell: pwsh
-
-    - name: Password protect Screenshots
-      run: 7z a -p${{secrets.SCREENSHOTS_PASSWORD}} Screenshots.7z ./Screenshots/*
-      #shell: pwsh
-      # pwsh casues it to include the root folder
-
-    - name: Upload Screenshots Artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: Screenshots
-        path: Screenshots.7z
-
-###########################
 #         GITHUB          #
 ###########################
   publish-on-github:
     name: Publish on GitHub
     runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/master' }}
+    #if: ${{ github.ref == 'refs/heads/master' }}
     needs: test
     steps:
     - name: Setup
