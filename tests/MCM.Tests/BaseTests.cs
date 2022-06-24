@@ -1,4 +1,4 @@
-﻿extern alias v4;
+﻿extern alias v5;
 
 using Bannerlord.ButterLib;
 using Bannerlord.ButterLib.SubModuleWrappers;
@@ -13,13 +13,13 @@ using System.Runtime.CompilerServices;
 
 using TaleWorlds.Engine;
 
-using v4::Bannerlord.BUTR.Shared.Helpers;
-using v4::Bannerlord.ModuleManager;
-using v4::MCM;
-using v4::MCM.Implementation;
+using v5::Bannerlord.BUTR.Shared.Helpers;
+using v5::Bannerlord.ModuleManager;
+using v5::MCM;
+using v5::MCM.Implementation;
 
-using AccessTools2 = v4::HarmonyLib.BUTR.Extensions.AccessTools2;
-using SymbolExtensions2 = v4::HarmonyLib.BUTR.Extensions.SymbolExtensions2;
+using AccessTools2 = v5::HarmonyLib.BUTR.Extensions.AccessTools2;
+using SymbolExtensions2 = v5::HarmonyLib.BUTR.Extensions.SymbolExtensions2;
 
 namespace MCM.Tests
 {

@@ -1,14 +1,14 @@
-﻿extern alias v4;
+﻿extern alias v5;
 
 using NUnit.Framework;
 
 using System;
 using System.IO;
 
-using v4::BUTR.DependencyInjection.Logger;
-using v4::MCM.Abstractions.FluentBuilder;
-using v4::MCM.Abstractions.Ref;
-using v4::MCM.Implementation.Settings.Formats.Json;
+using v5::BUTR.DependencyInjection.Logger;
+using v5::MCM.Abstractions.FluentBuilder;
+using v5::MCM.Abstractions.Ref;
+using v5::MCM.Implementation.Settings.Formats;
 
 namespace MCM.Tests.SettingsFormat
 {

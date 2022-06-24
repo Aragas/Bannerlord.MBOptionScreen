@@ -30,25 +30,11 @@
   <SubModules>
 
     <SubModule>
-      <Name value="MCMv4 Tests" />
-      <DLLName value="MCMv4.Tests.dll" />
-      <SubModuleClassType value="MCMv4.Tests.SubModule" />
+      <Name value="MCMv5 Tests" />
+      <DLLName value="MCMv5.Tests.dll" />
+      <SubModuleClassType value="MCMv5.Tests.SubModule" />
       <Tags />
     </SubModule>
-
-    <SubModule>
-      <Name value="ModLibV1 Tests"/>
-      <DLLName value="ModLibV1.Tests.dll"/>
-      <SubModuleClassType value="ModLibV1.Tests.SubModule"/>
-      <Tags/>
-    </SubModule>
-
-    <SubModule>
-      <Name value="ModLibV13 Tests"/>
-      <DLLName value="ModLibV13.Tests.dll"/>
-      <SubModuleClassType value="ModLibV13.Tests.SubModule"/>
-      <Tags/>
-    </SubModule>
-
+    
   </SubModules>
 </Module>

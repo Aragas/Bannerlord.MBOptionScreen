@@ -45,7 +45,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\MCM.UI\MCM.UI.csproj" Aliases="UI" />
-    <ProjectReference Include="..\..\src\MCM\MCM.csproj" Aliases="v4" />
+    <ProjectReference Include="..\..\src\MCM\MCM.csproj" Aliases="v5" />
   </ItemGroup>
 
 </Project>

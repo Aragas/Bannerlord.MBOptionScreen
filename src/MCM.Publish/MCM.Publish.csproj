@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Authors>Aragas</Authors>
     <ModuleId>Bannerlord.MBOptionScreen</ModuleId>
-    <ModuleName>Mod Configuration Menu v4</ModuleName>
+    <ModuleName>Mod Configuration Menu v5</ModuleName>
     <PostBuildCopyToModulesRegex>^(?!MCM.Publish).*\.dll|^(?!MCM.Publish).*\.pdb</PostBuildCopyToModulesRegex>
     <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
   </PropertyGroup>
@@ -17,10 +17,6 @@
     <ProjectReference Include="..\MCM.Adapter.ModLib\MCM.Adapter.ModLib.csproj" />
     <ProjectReference Include="..\MCM.UI\MCM.UI.csproj" />
     <ProjectReference Include="..\MCM\MCM.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\MCM.Adapter.MCMv3\_Module\bin\Win64_Shipping_Client\MCMv3.dll" Link="_Module\bin\Win64_Shipping_Client\MCMv3.dll" />
   </ItemGroup>
 
 </Project>

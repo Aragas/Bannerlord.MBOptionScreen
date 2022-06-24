@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <Authors>Aragas, mipen</Authors>
-    <AssemblyName>MCMv4.UI</AssemblyName>
+    <AssemblyName>MCMv5.UI</AssemblyName>
     <RootNamespace>MCM.UI</RootNamespace>
     <Configurations>Debug;Release</Configurations>
     <!--Some code analyzers don't support common.props parsing-->

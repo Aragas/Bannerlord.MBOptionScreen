@@ -1,12 +1,12 @@
-﻿extern alias v4;
+﻿extern alias v5;
 
 using NUnit.Framework;
 
 using System;
 using System.Runtime.CompilerServices;
 
-using v4::MCM.Abstractions.Settings.Base.Global;
-using v4::MCM.Abstractions.Settings.Formats;
+using v5::MCM.Abstractions.Settings.Base.Global;
+using v5::MCM.Abstractions.Settings.Formats;
 
 namespace MCM.Tests.SettingsFormat
 {

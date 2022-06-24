@@ -4,8 +4,7 @@ using BUTR.DependencyInjection;
 
 using ComparerExtensions;
 
-using MCM.Abstractions.Common.ViewModelWrappers;
-using MCM.Abstractions.Common.Wrappers;
+using MCM.Abstractions.Dropdown;
 using MCM.Abstractions.Settings.Providers;
 using MCM.UI.Extensions;
 using MCM.UI.Patches;
@@ -161,7 +160,8 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
         [DataSourceProperty]
-        public SelectorVMWrapper PresetsSelector { get; } = new(SelectorVMUtils.Create(Enumerable.Empty<string>(), -1, null));
+        public MCMSelectorVM<DropdownSelectorItemVM<PresetKey>> PresetsSelector { get; } = new MCMSelectorVM<DropdownSelectorItemVM<PresetKey>>(Enumerable.Empty<PresetKey>(), -1, null);
+        //new(SelectorVMUtils.Create(Enumerable.Empty<string>(), -1, null));
         [DataSourceProperty]
         public bool IsPresetsSelectorVisible => SelectedMod is not null;
 
@@ -194,7 +194,7 @@ namespace MCM.UI.GUI.ViewModels
                             _logger.LogWarning("SynchronizationContext.Current is the UI SynchronizationContext");
                         }
 
-                        var settingsVM = BaseSettingsProvider.Instance!.CreateModSettingsDefinitions
+                        var settingsVM = BaseSettingsProvider.Instance!.SettingsDefinitions
                             .Parallel()
                             .Select(s =>
                             {
@@ -262,24 +262,24 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
 
-        private void OnPresetsSelectorChange(SelectorVMWrapper selector)
+        private void OnPresetsSelectorChange(MCMSelectorVM<DropdownSelectorItemVM<PresetKey>> selector)
         {
-            var stringItem = new StringItemWrapper(selector.SelectedItem).StringItem;
+            var presetKey = selector.SelectedItem.OriginalItem;
             var data = InquiryDataUtils.Create(
                 new TextObject("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new()
                 {
-                    { "PRESET", stringItem }
+                    { "PRESET", presetKey.Name }
                 }).ToString(),
                 new TextObject("{=ModOptionsVM_Discard}Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?", new()
                 {
                     { "NAME", SelectedMod?.DisplayName },
-                    { "ITEM", stringItem }
+                    { "ITEM", presetKey.Name }
                 }).ToString(),
                 true, true, new TextObject("{=aeouhelq}Yes").ToString(),
                 new TextObject("{=8OkPHu4f}No").ToString(),
                 () =>
                 {
-                    SelectedMod!.ChangePreset(stringItem);
+                    SelectedMod!.ChangePreset(presetKey.Id);
                     var selectedMod = SelectedMod;
                     ExecuteSelect(null);
                     ExecuteSelect(selectedMod);
@@ -292,7 +292,7 @@ namespace MCM.UI.GUI.ViewModels
                 });
             InformationManagerUtils.ShowInquiry(data);
         }
-        private void OnModPresetsSelectorChange(SelectorVMWrapper selector)
+        private void OnModPresetsSelectorChange(MCMSelectorVM<DropdownSelectorItemVM<PresetKey>> selector)
         {
             PresetsSelector.SetOnChangeAction(null);
             PresetsSelector.SelectedIndex = selector.SelectedIndex;
