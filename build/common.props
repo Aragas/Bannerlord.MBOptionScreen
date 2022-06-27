@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <GameVersion>1.7.2</GameVersion>
-    <Version>4.7.3</Version>
+    <Version>4.7.4</Version>
     <HarmonyVersion>2.2.1</HarmonyVersion>
     <ButterLibVersion>2.1.5</ButterLibVersion>
     <UIExtenderExVersion>2.2.1</UIExtenderExVersion>
