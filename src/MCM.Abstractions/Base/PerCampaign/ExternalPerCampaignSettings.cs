@@ -1,8 +1,6 @@
-﻿using MCM.Abstractions.Definitions;
-using MCM.Abstractions.Definitions.Xml;
-using MCM.Abstractions.Models;
-using MCM.Abstractions.Utils;
-using MCM.Common.Ref;
+﻿using MCM.Abstractions.FluentBuilder;
+using MCM.Abstractions.Xml;
+using MCM.Common;
 
 using System;
 using System.Collections.Generic;

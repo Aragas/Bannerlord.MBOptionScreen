@@ -1,10 +1,9 @@
-﻿using MCM.Abstractions.Settings.Base;
-using MCM.Abstractions.Settings.Models;
+﻿using MCM.Abstractions.Base;
 
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MCM.Abstractions.Settings.Properties
+namespace MCM.Abstractions.Properties
 {
     public sealed class NoneSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
     {

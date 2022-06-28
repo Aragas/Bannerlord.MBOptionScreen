@@ -1,7 +1,4 @@
-﻿using MCM.Abstractions.Settings.Definitions;
-using MCM.Abstractions.Settings.Models;
-
-using System;
+﻿using System;
 
 // ReSharper disable once CheckNamespace
 namespace MCM.Abstractions.Attributes

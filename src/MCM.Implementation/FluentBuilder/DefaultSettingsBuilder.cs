@@ -1,10 +1,9 @@
-﻿using MCM.Abstractions.FluentBuilder;
-using MCM.Abstractions.Settings.Base.Global;
-using MCM.Abstractions.Settings.Base.PerCampaign;
-using MCM.Abstractions.Settings.Base.PerSave;
-using MCM.Abstractions.Settings.Definitions.Wrapper;
-using MCM.Abstractions.Settings.Models;
-using MCM.Utils;
+﻿using MCM.Abstractions;
+using MCM.Abstractions.Base.Global;
+using MCM.Abstractions.Base.PerCampaign;
+using MCM.Abstractions.Base.PerSave;
+using MCM.Abstractions.FluentBuilder;
+using MCM.Abstractions.Wrapper;
 
 using System;
 using System.Collections.Generic;

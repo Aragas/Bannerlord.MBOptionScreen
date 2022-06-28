@@ -1,6 +1,7 @@
-﻿using TaleWorlds.Localization;
+﻿
+using MCM.Common;
 
-namespace MCM.Abstractions.Settings.Definitions.Wrapper
+namespace MCM.Abstractions.Wrapper
 {
     public abstract class BasePropertyDefinitionWrapper : IPropertyDefinitionBase
     {
@@ -17,10 +18,10 @@ namespace MCM.Abstractions.Settings.Definitions.Wrapper
         {
             var type = @object.GetType();
 
-            DisplayName = new TextObject(type.GetProperty(nameof(DisplayName))?.GetValue(@object) as string ?? "ERROR").ToString();
+            DisplayName = LocalizationUtils.Localize(type.GetProperty(nameof(DisplayName))?.GetValue(@object) as string ?? "ERROR");
             Order = type.GetProperty(nameof(Order))?.GetValue(@object) as int? ?? -1;
             RequireRestart = type.GetProperty(nameof(RequireRestart))?.GetValue(@object) as bool? ?? true;
-            HintText = new TextObject(type.GetProperty(nameof(HintText))?.GetValue(@object) as string ?? "ERROR").ToString();
+            HintText = LocalizationUtils.Localize(type.GetProperty(nameof(HintText))?.GetValue(@object) as string ?? "ERROR");
         }
     }
 }

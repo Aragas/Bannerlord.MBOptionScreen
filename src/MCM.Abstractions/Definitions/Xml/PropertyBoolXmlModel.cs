@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace MCM.Abstractions.Settings.Definitions.Xml
+namespace MCM.Abstractions.Xml
 {
     [Serializable]
     [XmlType("PropertyBool")]
@@ -9,5 +9,8 @@ namespace MCM.Abstractions.Settings.Definitions.Xml
     {
         [XmlAttribute("IsToggle")]
         public bool IsToggle { get; set; }
+        
+        [XmlElement("Value")]
+        public bool Value { get; set; }
     }
 }

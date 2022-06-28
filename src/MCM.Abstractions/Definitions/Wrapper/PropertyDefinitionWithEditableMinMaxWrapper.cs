@@ -1,4 +1,4 @@
-﻿namespace MCM.Abstractions.Settings.Definitions.Wrapper
+﻿namespace MCM.Abstractions.Wrapper
 {
     public sealed class PropertyDefinitionWithEditableMinMaxWrapper : BasePropertyDefinitionWrapper, IPropertyDefinitionWithEditableMinMax
     {

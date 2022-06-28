@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace MCM.Common.Exceptions
+namespace MCM.Common
 {
     [Serializable]
     public class MCMException : Exception

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace MCM.Abstractions.Settings.Definitions.Xml
+namespace MCM.Abstractions.Xml
 {
     [Serializable]
     public abstract class PropertyBaseXmlModel : IPropertyDefinitionBase, IPropertyDefinitionWithId

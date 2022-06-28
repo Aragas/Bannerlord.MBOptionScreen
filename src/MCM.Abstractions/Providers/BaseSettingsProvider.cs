@@ -1,12 +1,10 @@
 ﻿using BUTR.DependencyInjection;
 
-using MCM.Abstractions.Settings.Base;
-using MCM.Abstractions.Settings.Models;
-using MCM.Abstractions.Settings.Presets;
+using MCM.Abstractions.Base;
 
 using System.Collections.Generic;
 
-namespace MCM.Abstractions.Settings.Providers
+namespace MCM.Abstractions
 {
     /// <summary>
     /// The interface that is responsible for providing and manipulating settings

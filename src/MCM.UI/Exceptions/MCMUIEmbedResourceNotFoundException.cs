@@ -1,4 +1,4 @@
-﻿using MCM.Exceptions;
+﻿using MCM.Common;
 
 using System;
 using System.Runtime.Serialization;

@@ -1,11 +1,9 @@
 ﻿using HarmonyLib.BUTR.Extensions;
 
-using MCM.Extensions;
-
 using System.Collections;
 using System.Collections.Generic;
 
-namespace MCM.Abstractions.Settings.Models.Wrapper
+namespace MCM.Abstractions.Wrapper
 {
     public sealed class SettingsPropertyGroupDefinitionWrapper : SettingsPropertyGroupDefinition
     {

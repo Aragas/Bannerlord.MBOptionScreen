@@ -3,10 +3,9 @@ using BUTR.DependencyInjection.Extensions;
 using BUTR.DependencyInjection.LightInject;
 using BUTR.DependencyInjection.Logger;
 
-using MCM.Abstractions.Settings.Formats;
-using MCM.Abstractions.Settings.Properties;
-using MCM.Abstractions.Settings.Providers;
-using MCM.Extensions;
+using MCM.Abstractions;
+using MCM.Abstractions.Properties;
+using MCM.Internal.Extensions;
 using MCM.LightInject;
 
 using TaleWorlds.CampaignSystem;
@@ -19,9 +18,9 @@ namespace MCM
 {
     public sealed class MCMSubModule : MBSubModuleBase
     {
-        internal static IBUTRLogger<MCMSubModule> Logger = new DefaultBUTRLogger<MCMSubModule>();
+        private static IBUTRLogger<MCMSubModule> Logger = new DefaultBUTRLogger<MCMSubModule>();
 
-        internal static ServiceContainer LightInjectServiceContainer = new();
+        private static ServiceContainer LightInjectServiceContainer = new();
 
         public static MCMSubModule? Instance { get; private set; }
 

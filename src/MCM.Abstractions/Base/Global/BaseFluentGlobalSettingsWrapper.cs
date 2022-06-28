@@ -1,4 +1,4 @@
-﻿using MCM.Abstractions.Models;
+﻿using MCM.Abstractions.FluentBuilder;
 using MCM.Common;
 
 using System.Collections.Generic;

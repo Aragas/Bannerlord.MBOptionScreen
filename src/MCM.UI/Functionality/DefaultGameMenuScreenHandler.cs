@@ -5,8 +5,8 @@ using BUTR.DependencyInjection.Logger;
 using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
-using MCM.Abstractions.Common.Wrappers;
-using MCM.Utils;
+using MCM.UI.Utils;
+using MCM.UI.Wrappers;
 
 using System;
 using System.Collections.Generic;

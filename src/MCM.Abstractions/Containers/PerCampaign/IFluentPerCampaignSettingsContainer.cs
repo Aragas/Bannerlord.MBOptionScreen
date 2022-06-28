@@ -1,6 +1,6 @@
-﻿using MCM.Abstractions.Settings.Base.PerCampaign;
+﻿using MCM.Abstractions.Base.PerCampaign;
 
-namespace MCM.Abstractions.Settings.Containers.PerCampaign
+namespace MCM.Abstractions.PerCampaign
 {
     public interface IFluentPerCampaignSettingsContainer : IPerCampaignSettingsContainer
     {

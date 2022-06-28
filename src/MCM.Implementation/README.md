@@ -1,0 +1,1 @@
+﻿Contains the defaukt implementation of MCM Abstraction API. Contains uses the Bannerlord API

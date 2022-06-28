@@ -1,4 +1,4 @@
-﻿namespace MCM.Abstractions.Settings.Properties
+﻿namespace MCM.Abstractions.Properties
 {
     /// <summary>
     /// So it can be overriden by an external library

@@ -1,6 +1,5 @@
 ﻿using MCM.Abstractions.FluentBuilder.Models;
-using MCM.Abstractions.Ref;
-using MCM.Abstractions.Settings.Definitions;
+using MCM.Common;
 
 using System;
 using System.Collections.Generic;

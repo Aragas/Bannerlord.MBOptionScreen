@@ -6,9 +6,10 @@ using System;
 using System.IO;
 
 using v5::BUTR.DependencyInjection.Logger;
+
 using v5::MCM.Abstractions.FluentBuilder;
-using v5::MCM.Abstractions.Ref;
-using v5::MCM.Implementation.Settings.Formats;
+using v5::MCM.Common;
+using v5::MCM.Implementation;
 
 namespace MCM.Tests.SettingsFormat
 {

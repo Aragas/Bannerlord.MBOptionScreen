@@ -1,4 +1,4 @@
-﻿using MCM.Abstractions.Settings.Base.PerSave;
+﻿using MCM.Abstractions.Base.PerSave;
 
 namespace MCMv5.Tests
 {

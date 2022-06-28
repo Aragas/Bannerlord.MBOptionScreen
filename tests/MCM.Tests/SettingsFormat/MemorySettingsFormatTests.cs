@@ -5,9 +5,9 @@ using NUnit.Framework;
 using System;
 using System.IO;
 
+using v5::MCM.Abstractions;
 using v5::MCM.Abstractions.FluentBuilder;
-using v5::MCM.Abstractions.Ref;
-using v5::MCM.Abstractions.Settings.Formats;
+using v5::MCM.Common;
 
 namespace MCM.Tests.SettingsFormat
 {

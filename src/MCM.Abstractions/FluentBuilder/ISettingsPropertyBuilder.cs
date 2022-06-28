@@ -1,6 +1,4 @@
-﻿using MCM.Abstractions.Ref;
-using MCM.Abstractions.Settings.Definitions;
-using MCM.Abstractions.Settings.Models;
+﻿using MCM.Common;
 
 using System.Collections.Generic;
 
@@ -17,7 +15,7 @@ namespace MCM.Abstractions.FluentBuilder
         /// </summary>
         string Name { get; }
         /// <summary>
-        /// <see cref="ISettingsPropertyDefinition.PropertyReference"/>
+        /// <see cref="Mono.Cecil.PropertyReference"/>
         /// </summary>
         IRef PropertyReference { get; }
 

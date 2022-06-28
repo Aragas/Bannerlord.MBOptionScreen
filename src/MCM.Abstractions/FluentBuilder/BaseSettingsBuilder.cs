@@ -1,8 +1,8 @@
 ﻿using BUTR.DependencyInjection;
 
-using MCM.Abstractions.Settings.Base.Global;
-using MCM.Abstractions.Settings.Base.PerCampaign;
-using MCM.Abstractions.Settings.Base.PerSave;
+using MCM.Abstractions.Base.Global;
+using MCM.Abstractions.Base.PerCampaign;
+using MCM.Abstractions.Base.PerSave;
 
 using System;
 using System.ComponentModel;

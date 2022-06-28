@@ -1,6 +1,6 @@
 ﻿using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
-using MCM.Abstractions.Dropdown;
+using MCM.Common;
 
 namespace MCMv5.Tests
 {
@@ -169,7 +169,7 @@ namespace MCMv5.Tests
 
         [SettingPropertyDropdown("Property Dropdown MCM SelectedIndex", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown MCM")]
-        public DropdownMCM<string> PropertyDropdownMCM { get; set; } = new(new[]
+        public Dropdown<string> PropertyDropdownMCM { get; set; } = new(new[]
         {
             "Test1",
             "Test2",
@@ -201,7 +201,7 @@ namespace MCMv5.Tests
 
         [SettingPropertyDropdown("Property Dropdown MCM Custom", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown MCM Custom")]
-        public DropdownMCM<CustomObject> PropertyDropdownMCMCustom { get; set; } = new(new[]
+        public Dropdown<CustomObject> PropertyDropdownMCMCustom { get; set; } = new(new[]
         {
             new CustomObject("Test1"),
             new CustomObject("Test2"),
@@ -233,7 +233,7 @@ namespace MCMv5.Tests
 
         [SettingPropertyDropdown("Property Dropdown Default SelectedIndex", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown Default")]
-        public DropdownDefault<string> PropertyDropdownDefault { get; set; } = new(new[]
+        public Dropdown<string> PropertyDropdownDefault { get; set; } = new(new[]
         {
             "Test1",
             "Test2",
@@ -265,7 +265,7 @@ namespace MCMv5.Tests
 
         [SettingPropertyDropdown("Property Dropdown Default Custom", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown Default Custom")]
-        public DropdownDefault<CustomObject> PropertyDropdownDefaultCustom { get; set; } = new(new[]
+        public Dropdown<CustomObject> PropertyDropdownDefaultCustom { get; set; } = new(new[]
         {
             new CustomObject("Test1"),
             new CustomObject("Test2"),

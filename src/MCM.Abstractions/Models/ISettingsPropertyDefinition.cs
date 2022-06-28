@@ -1,7 +1,6 @@
-﻿using MCM.Abstractions.Ref;
-using MCM.Abstractions.Settings.Definitions;
+﻿using MCM.Common;
 
-namespace MCM.Abstractions.Settings.Models
+namespace MCM.Abstractions
 {
     public interface ISettingsPropertyDefinition :
         IPropertyDefinitionBase,

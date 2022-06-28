@@ -1,8 +1,7 @@
 ﻿using BUTR.DependencyInjection;
 
-using MCM.Abstractions.Containers.Global;
-using MCM.Abstractions.Models;
-using MCM.Abstractions.Presets;
+using MCM.Abstractions.FluentBuilder;
+using MCM.Abstractions.Global;
 
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -52,7 +51,6 @@ namespace MCM.Abstractions.Base.Global
 
         public void Register()
         {
-            // TODO: check
             var containers = GenericServiceProvider.GetService<IEnumerable<IFluentGlobalSettingsContainer>>() ?? Enumerable.Empty<IFluentGlobalSettingsContainer>();
             foreach (var container in containers)
             {
@@ -61,7 +59,6 @@ namespace MCM.Abstractions.Base.Global
         }
         public void Unregister()
         {
-            // TODO: check
             var containers = GenericServiceProvider.GetService<IEnumerable<IFluentGlobalSettingsContainer>>() ?? Enumerable.Empty<IFluentGlobalSettingsContainer>();
             foreach (var container in containers)
             {

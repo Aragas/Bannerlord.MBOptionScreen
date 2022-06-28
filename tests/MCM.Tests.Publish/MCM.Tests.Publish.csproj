@@ -15,8 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MCMv5.Tests\MCMv5.Tests.csproj" />
-    <ProjectReference Include="..\ModLibV1.Tests\ModLibV1.Tests.csproj" />
-    <ProjectReference Include="..\ModLibV13.Tests\ModLibV13.Tests.csproj" />
   </ItemGroup>
 
   <!--

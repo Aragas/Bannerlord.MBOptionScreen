@@ -1,4 +1,4 @@
-﻿namespace MCM
+﻿namespace MCM.Common
 {
     public static class Constants
     {

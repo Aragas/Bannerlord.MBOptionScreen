@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace MCM.Abstractions.Settings
+namespace MCM.Abstractions
 {
     public enum SettingType
     {

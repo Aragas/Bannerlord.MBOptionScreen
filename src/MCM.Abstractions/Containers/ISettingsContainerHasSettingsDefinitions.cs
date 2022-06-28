@@ -1,8 +1,6 @@
-﻿using MCM.Abstractions.Settings.Models;
+﻿using System.Collections.Generic;
 
-using System.Collections.Generic;
-
-namespace MCM.Abstractions.Settings.Containers
+namespace MCM.Abstractions
 {
     /// <summary>
     /// Interface that declares that the <see cref="ISettingsContainer"/> provides <see cref="SettingsDefinition"/>

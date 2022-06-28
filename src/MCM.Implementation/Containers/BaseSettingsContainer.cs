@@ -1,12 +1,8 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
+﻿using BUTR.DependencyInjection;
 
-using BUTR.DependencyInjection;
-
-using MCM.Abstractions.Settings.Base;
-using MCM.Abstractions.Settings.Formats;
-using MCM.Abstractions.Settings.Models;
-using MCM.Abstractions.Settings.Presets;
-using MCM.Utils;
+using MCM.Abstractions;
+using MCM.Abstractions.Base;
+using MCM.Abstractions.GameFeatures;
 
 using System.Collections.Generic;
 using System.IO;
@@ -14,7 +10,7 @@ using System.Linq;
 
 using Path = System.IO.Path;
 
-namespace MCM.Abstractions.Settings.Containers
+namespace MCM.Implementation
 {
     public abstract class BaseSettingsContainer<TSettings> :
         ISettingsContainer,
@@ -24,7 +20,7 @@ namespace MCM.Abstractions.Settings.Containers
         ISettingsContainerPresets
         where TSettings : BaseSettings
     {
-        protected virtual string RootFolder { get; } = Path.Combine(FSIOHelper.GetConfigPath(), "ModSettings");
+        protected virtual string RootFolder { get; } = Path.Combine(GenericServiceProvider.GetService<IPathProvider>()?.GetDocumentsPath(), "ModSettings");
         protected virtual Dictionary<string, TSettings> LoadedSettings { get; } = new();
 
         /// <inheritdoc/>
@@ -83,11 +79,12 @@ namespace MCM.Abstractions.Settings.Containers
         {
             if (!LoadedSettings.TryGetValue(settingsId, out var settings))
                 yield break;
-            
-            var directoryPath = Path.Combine(RootFolder, settings.FolderName, settings.SubFolder, "Presets");
-            foreach (var filePath in Directory.GetFiles(directoryPath, "*.json", SearchOption.TopDirectoryOnly))
+
+            var directoryPath = new DirectoryInfo(Path.Combine(RootFolder, settings.FolderName, settings.SubFolder, "Presets"));
+            directoryPath.Create();
+            foreach (var filePath in directoryPath.GetFiles("*.json", SearchOption.TopDirectoryOnly))
             {
-                if (JsonSettingsPreset.FromFile(settings, Path.GetFileName(filePath)) is { } preset)
+                if (JsonSettingsPreset.FromFile(settings, filePath.FullName) is { } preset)
                     yield return preset;
             }
         }

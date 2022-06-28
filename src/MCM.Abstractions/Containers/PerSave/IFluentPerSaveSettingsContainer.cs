@@ -1,6 +1,6 @@
-﻿using MCM.Abstractions.Settings.Base.PerSave;
+﻿using MCM.Abstractions.Base.PerSave;
 
-namespace MCM.Abstractions.Settings.Containers.PerSave
+namespace MCM.Abstractions.PerSave
 {
     public interface IFluentPerSaveSettingsContainer : IPerSaveSettingsContainer
     {

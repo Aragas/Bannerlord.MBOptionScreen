@@ -1,8 +1,8 @@
-﻿using MCM.Abstractions.FluentBuilder;
+﻿using MCM.Abstractions;
+using MCM.Abstractions.FluentBuilder;
 using MCM.Abstractions.FluentBuilder.Models;
-using MCM.Abstractions.Ref;
-using MCM.Abstractions.Settings.Definitions;
-using MCM.Abstractions.Settings.Definitions.Wrapper;
+using MCM.Abstractions.Wrapper;
+using MCM.Common;
 using MCM.Implementation.FluentBuilder.Models;
 
 using System;

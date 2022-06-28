@@ -1,8 +1,8 @@
-﻿using MCM.Abstractions.Settings.Base;
+﻿using MCM.Abstractions.Base;
 
 using System;
 
-namespace MCM.Abstractions.Settings.Presets
+namespace MCM.Abstractions
 {
     /// <summary>
     /// A readonly non serializable preset

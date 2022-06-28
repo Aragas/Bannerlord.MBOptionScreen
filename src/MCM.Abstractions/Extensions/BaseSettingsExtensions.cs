@@ -1,16 +1,12 @@
 ﻿using BUTR.DependencyInjection;
 
-using MCM.Abstractions.Settings.Base;
-using MCM.Abstractions.Settings.Models;
-using MCM.Abstractions.Settings.Presets;
-using MCM.Abstractions.Settings.Properties;
-using MCM.Abstractions.Settings.Providers;
-using MCM.Utils;
+using MCM.Abstractions.Base;
+using MCM.Abstractions.Properties;
 
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MCM.Extensions
+namespace MCM.Abstractions
 {
     public static class BaseSettingsExtensions
     {

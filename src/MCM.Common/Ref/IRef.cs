@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace MCM.Common.Ref
+namespace MCM.Common
 {
     /// <summary>
     /// An interface that provides access to some value for MCM to get/set.

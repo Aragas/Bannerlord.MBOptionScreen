@@ -1,8 +1,6 @@
-﻿using MCM.Abstractions.Settings.Presets;
+﻿using System.Collections.Generic;
 
-using System.Collections.Generic;
-
-namespace MCM.Abstractions.Settings.Containers
+namespace MCM.Abstractions
 {
     public interface ISettingsContainerPresets
     {

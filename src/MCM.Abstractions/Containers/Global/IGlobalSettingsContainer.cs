@@ -1,4 +1,4 @@
-﻿namespace MCM.Abstractions.Settings.Containers.Global
+﻿namespace MCM.Abstractions.Global
 {
     public interface IGlobalSettingsContainer :
         ISettingsContainer,

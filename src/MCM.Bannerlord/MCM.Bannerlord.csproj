@@ -1,20 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <RootNamespace>MCM.Common.TW</RootNamespace>
-  </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" IncludeAssets="compile" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MCM.Abstractions\MCM.Abstractions.csproj" />
     <ProjectReference Include="..\MCM.Common\MCM.Common.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <InternalsVisibleTo Include="MCM.Abstractions" />
-    <InternalsVisibleTo Include="MCM.Implementation" />
+    <ProjectReference Include="..\MCM.Implementation\MCM.Implementation.csproj" />
   </ItemGroup>
 
 </Project>

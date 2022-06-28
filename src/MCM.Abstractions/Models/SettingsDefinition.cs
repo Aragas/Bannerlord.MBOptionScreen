@@ -1,10 +1,6 @@
-﻿using MCM.Abstractions.Settings.Providers;
-using MCM.Extensions;
-using MCM.Utils;
+﻿using System.Collections.Generic;
 
-using System.Collections.Generic;
-
-namespace MCM.Abstractions.Settings.Models
+namespace MCM.Abstractions
 {
     public class SettingsDefinition
     {

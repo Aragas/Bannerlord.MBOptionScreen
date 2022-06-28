@@ -1,9 +1,6 @@
-﻿using Bannerlord.BUTR.Shared.Extensions;
-
+﻿using MCM.Abstractions;
+using MCM.Abstractions.Base;
 using MCM.Abstractions.FluentBuilder;
-using MCM.Abstractions.Settings.Base;
-using MCM.Abstractions.Settings.Presets;
-using MCM.Extensions;
 
 using System.Collections.Generic;
 using System.Linq;
@@ -33,10 +30,10 @@ namespace MCM.Implementation.FluentBuilder
         public ISettingsPreset Build(BaseSettings settings) => new MemorySettingsPreset(settings.Id, Id, Name, () =>
         {
             var props = settings.GetAllSettingPropertyDefinitions().ToList();
-            foreach (var (propertyId, propertyValue) in PropertyValues)
+            foreach (var kv in PropertyValues)
             {
-                if (props.Find(x => x.Id == propertyId) is { } property)
-                    property.PropertyReference.Value = propertyValue;
+                if (props.Find(x => x.Id == kv.Key) is { } property)
+                    property.PropertyReference.Value = kv.Value;
             }
             return settings;
         });

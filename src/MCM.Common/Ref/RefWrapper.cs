@@ -3,7 +3,7 @@
 using System;
 using System.ComponentModel;
 
-namespace MCM.Common.Ref
+namespace MCM.Common
 {
     /// <summary>
     /// Wrapper around any type that implements <see cref="IRef"/>.

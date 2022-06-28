@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 
 // ReSharper disable once CheckNamespace
@@ -16,8 +17,8 @@ namespace ComparerExtensions
         /// <param name="baseComparer">The comparer to extend.</param>
         /// <param name="comparer">The comparer to use if two items compare as equal using the base comparer.</param>
         /// <returns>A comparer that performs comparisons using both comparison operations.</returns>
-        /// <exception cref="System.ArgumentNullException">The base comparer is null.</exception>
-        /// <exception cref="System.ArgumentNullException">The comparer is null.</exception>
+        /// <exception cref="ArgumentNullException">The base comparer is null.</exception>
+        /// <exception cref="ArgumentNullException">The comparer is null.</exception>
         public static IComparer<T> ThenBy<T>(this IComparer<T> baseComparer, IComparer<T> comparer)
         {
             if (baseComparer is null)
@@ -39,8 +40,8 @@ namespace ComparerExtensions
         /// <param name="baseComparer">The comparer to extend.</param>
         /// <param name="comparison">The comparison to use if two items compare as equal using the base comparer.</param>
         /// <returns>A comparer that performs comparisons using both comparison operations.</returns>
-        /// <exception cref="System.ArgumentNullException">The base comparer is null.</exception>
-        /// <exception cref="System.ArgumentNullException">The comparison delegate is null.</exception>
+        /// <exception cref="ArgumentNullException">The base comparer is null.</exception>
+        /// <exception cref="ArgumentNullException">The comparison delegate is null.</exception>
         public static IComparer<T> ThenBy<T>(this IComparer<T> baseComparer, Func<T, T, int> comparison)
         {
             if (baseComparer is null)
@@ -64,8 +65,8 @@ namespace ComparerExtensions
         /// <param name="baseComparer">The comparer to extend.</param>
         /// <param name="keySelector">The key of the type to use for comparison.</param>
         /// <returns>A comparer that performs comparisons using both comparison operations.</returns>
-        /// <exception cref="System.ArgumentNullException">The base comparer is null.</exception>
-        /// <exception cref="System.ArgumentNullException">The key selector is null.</exception>
+        /// <exception cref="ArgumentNullException">The base comparer is null.</exception>
+        /// <exception cref="ArgumentNullException">The key selector is null.</exception>
         public static IComparer<T> ThenBy<T, TKey>(this IComparer<T> baseComparer, Func<T, TKey> keySelector)
         {
             if (baseComparer is null)
@@ -86,9 +87,9 @@ namespace ComparerExtensions
         /// <param name="keySelector">The key of the type to use for comparison.</param>
         /// <param name="keyComparer">The comparer to use to compare the keys.</param>
         /// <returns>A comparer that performs comparisons using both comparison operations.</returns>
-        /// <exception cref="System.ArgumentNullException">The base comparer is null.</exception>
-        /// <exception cref="System.ArgumentNullException">The key selector is null.</exception>
-        /// <exception cref="System.ArgumentNullException">The key comparison delegate is null.</exception>
+        /// <exception cref="ArgumentNullException">The base comparer is null.</exception>
+        /// <exception cref="ArgumentNullException">The key selector is null.</exception>
+        /// <exception cref="ArgumentNullException">The key comparison delegate is null.</exception>
         public static IComparer<T> ThenBy<T, TKey>(
             this IComparer<T> baseComparer,
             Func<T, TKey> keySelector,
@@ -112,9 +113,9 @@ namespace ComparerExtensions
         /// <param name="keySelector">The key of the type to use for comparison.</param>
         /// <param name="keyComparison">The comparison delegate to use to compare the keys.</param>
         /// <returns>A comparer that performs comparisons using both comparison operations.</returns>
-        /// <exception cref="System.ArgumentNullException">The base comparer is null.</exception>
-        /// <exception cref="System.ArgumentNullException">The key selector is null.</exception>
-        /// <exception cref="System.ArgumentNullException">The key comparison delegate is null.</exception>
+        /// <exception cref="ArgumentNullException">The base comparer is null.</exception>
+        /// <exception cref="ArgumentNullException">The key selector is null.</exception>
+        /// <exception cref="ArgumentNullException">The key comparison delegate is null.</exception>
         public static IComparer<T> ThenBy<T, TKey>(
             this IComparer<T> baseComparer,
             Func<T, TKey> keySelector,
@@ -137,8 +138,8 @@ namespace ComparerExtensions
         /// <param name="baseComparer">The comparer to extend.</param>
         /// <param name="keySelector">The key of the type to use for comparison.</param>
         /// <returns>A comparer that performs comparisons using both comparison operations.</returns>
-        /// <exception cref="System.ArgumentNullException">The base comparer is null.</exception>
-        /// <exception cref="System.ArgumentNullException">The key selector is null.</exception>
+        /// <exception cref="ArgumentNullException">The base comparer is null.</exception>
+        /// <exception cref="ArgumentNullException">The key selector is null.</exception>
         public static IComparer<T> ThenByDescending<T, TKey>(this IComparer<T> baseComparer, Func<T, TKey> keySelector)
         {
             if (baseComparer is null)
@@ -159,9 +160,9 @@ namespace ComparerExtensions
         /// <param name="keySelector">The key of the type to use for comparison.</param>
         /// <param name="keyComparer">The comparer to use to compare the keys.</param>
         /// <returns>A comparer that performs comparisons using both comparison operations.</returns>
-        /// <exception cref="System.ArgumentNullException">The base comparer is null.</exception>
-        /// <exception cref="System.ArgumentNullException">The key selector is null.</exception>
-        /// <exception cref="System.ArgumentNullException">The key comparison delegate is null.</exception>
+        /// <exception cref="ArgumentNullException">The base comparer is null.</exception>
+        /// <exception cref="ArgumentNullException">The key selector is null.</exception>
+        /// <exception cref="ArgumentNullException">The key comparison delegate is null.</exception>
         public static IComparer<T> ThenByDescending<T, TKey>(
             this IComparer<T> baseComparer,
             Func<T, TKey> keySelector,
@@ -185,9 +186,9 @@ namespace ComparerExtensions
         /// <param name="keySelector">The key of the type to use for comparison.</param>
         /// <param name="keyComparison">The comparison delegate to use to compare the keys.</param>
         /// <returns>A comparer that performs comparisons using both comparison operations.</returns>
-        /// <exception cref="System.ArgumentNullException">The base comparer is null.</exception>
-        /// <exception cref="System.ArgumentNullException">The key selector is null.</exception>
-        /// <exception cref="System.ArgumentNullException">The key comparison delegate is null.</exception>
+        /// <exception cref="ArgumentNullException">The base comparer is null.</exception>
+        /// <exception cref="ArgumentNullException">The key selector is null.</exception>
+        /// <exception cref="ArgumentNullException">The key comparison delegate is null.</exception>
         public static IComparer<T> ThenByDescending<T, TKey>(
             this IComparer<T> baseComparer,
             Func<T, TKey> keySelector,
@@ -208,7 +209,7 @@ namespace ComparerExtensions
         /// <typeparam name="T">The type of the items that are compared.</typeparam>
         /// <param name="comparison">The comparison function to convert.</param>
         /// <returns>A new comparer that wraps the comparison function.</returns>
-        /// <exception cref="System.ArgumentNullException">The comparison function is null.</exception>
+        /// <exception cref="ArgumentNullException">The comparison function is null.</exception>
         public static IComparer<T> ToComparer<T>(this Func<T, T, int> comparison)
         {
             if (comparison is null)

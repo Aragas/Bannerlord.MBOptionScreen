@@ -1,4 +1,4 @@
-﻿namespace MCM.Abstractions.Settings.Definitions
+﻿namespace MCM.Abstractions
 {
     public interface IPropertyGroupDefinition
     {

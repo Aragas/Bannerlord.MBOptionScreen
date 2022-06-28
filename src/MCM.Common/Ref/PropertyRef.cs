@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace MCM.Common.Ref
+namespace MCM.Common
 {
     /// <summary>
     /// Wraps a class property for MCM to get/set its value

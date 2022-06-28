@@ -1,6 +1,6 @@
-﻿using MCM.Abstractions.Settings.Base;
+﻿using MCM.Abstractions.Base;
 
-namespace MCM.Abstractions.Settings.Containers
+namespace MCM.Abstractions
 {
     /// <summary>
     /// Interface that declares that the <see cref="ISettingsContainer"/> can reset its settings

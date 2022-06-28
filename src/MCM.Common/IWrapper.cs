@@ -1,4 +1,4 @@
-﻿namespace MCM.Abstractions
+﻿namespace MCM.Common
 {
     public interface IWrapper
     {

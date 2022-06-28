@@ -1,10 +1,11 @@
-﻿using MCM.Abstractions.Settings.Base.Global;
+﻿using MCM.Abstractions.Base.Global;
+using MCM.Abstractions.Global;
 
 using System.IO;
 
-namespace MCM.Abstractions.Settings.Containers.Global
+namespace MCM.Implementation.Global
 {
-    public abstract class BaseGlobalSettingsContainer : BaseSettingsContainer<GlobalSettings>, IGlobalSettingsContainer
+    internal abstract class BaseGlobalSettingsContainer : BaseSettingsContainer<GlobalSettings>, IGlobalSettingsContainer
     {
         /// <inheritdoc/>
         protected override string RootFolder { get; }

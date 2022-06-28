@@ -1,10 +1,9 @@
-﻿using MCM.Abstractions.Settings.Base;
-using MCM.Utils;
+﻿using MCM.Abstractions.Base;
 
 using System.Collections.Generic;
 using System.IO;
 
-namespace MCM.Abstractions.Settings.Formats
+namespace MCM.Abstractions
 {
     public sealed class MemorySettingsFormat : ISettingsFormat
     {

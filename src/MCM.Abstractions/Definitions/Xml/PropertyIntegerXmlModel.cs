@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace MCM.Abstractions.Settings.Definitions.Xml
+namespace MCM.Abstractions.Xml
 {
     [Serializable]
     [XmlType("PropertyInteger")]
@@ -12,5 +12,8 @@ namespace MCM.Abstractions.Settings.Definitions.Xml
 
         [XmlAttribute("MaxValue")]
         public decimal MaxValue { get; set; }
+        
+        [XmlElement("Value")]
+        public decimal Value { get; set; }
     }
 }

@@ -1,6 +1,6 @@
-﻿using MCM.Abstractions.Settings.Base.Global;
+﻿using MCM.Abstractions.Base.Global;
 
-namespace MCM.Abstractions.Settings.Containers.Global
+namespace MCM.Abstractions.Global
 {
     public interface IFluentGlobalSettingsContainer : IGlobalSettingsContainer
     {

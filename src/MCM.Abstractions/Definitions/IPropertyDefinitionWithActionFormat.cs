@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MCM.Abstractions.Settings.Definitions
+namespace MCM.Abstractions
 {
     public interface IPropertyDefinitionWithActionFormat
     {

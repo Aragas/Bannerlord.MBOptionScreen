@@ -1,12 +1,11 @@
 ﻿using MCM.Abstractions;
-using MCM.Abstractions.Settings.Base.PerSave;
-using MCM.Abstractions.Settings.Containers;
+using MCM.Abstractions.Base.PerSave;
+using MCM.Abstractions.GameFeatures;
+using MCM.Abstractions.PerSave;
 
-using TaleWorlds.Core;
-
-namespace MCM.Implementation.Settings.Containers.PerSave
+namespace MCM.Implementation.PerSave
 {
-    internal sealed class FluentPerSaveSettingsContainer : BaseSettingsContainer<FluentPerSaveSettings>, IMCMFluentPerSaveSettingsContainer
+    internal sealed class FluentPerSaveSettingsContainer : BaseSettingsContainer<FluentPerSaveSettings>, IFluentPerSaveSettingsContainer
     {
         private readonly IGameEventListener _gameEventListener;
         
@@ -27,8 +26,8 @@ namespace MCM.Implementation.Settings.Containers.PerSave
                 LoadedSettings.Remove(settings.Id);
         }
 
-        public void OnGameStarted(Game game) => LoadedSettings.Clear();
+        public void OnGameStarted() => LoadedSettings.Clear();
         public void LoadSettings() { }
-        public void OnGameEnded(Game game) => LoadedSettings.Clear();
+        public void OnGameEnded() => LoadedSettings.Clear();
     }
 }

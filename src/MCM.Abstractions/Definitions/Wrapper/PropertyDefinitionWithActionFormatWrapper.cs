@@ -2,7 +2,7 @@
 
 using System;
 
-namespace MCM.Abstractions.Settings.Definitions.Wrapper
+namespace MCM.Abstractions.Wrapper
 {
     public sealed class PropertyDefinitionWithActionFormatWrapper : BasePropertyDefinitionWrapper,
         IPropertyDefinitionWithActionFormat

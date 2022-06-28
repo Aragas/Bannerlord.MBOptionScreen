@@ -32,7 +32,7 @@ namespace ComparerExtensions
         /// <typeparam name="TKey">The type of the key.</typeparam>
         /// <param name="keySelector">A function that selects a key.</param>
         /// <returns>A KeyComparer using the key selector.</returns>
-        /// <exception cref="System.ArgumentNullException">The key selector is null.</exception>
+        /// <exception cref="ArgumentNullException">The key selector is null.</exception>
         public static KeyComparer<T> OrderBy<TKey>(Func<T, TKey> keySelector)
         {
             if (keySelector is null)
@@ -50,8 +50,8 @@ namespace ComparerExtensions
         /// <param name="keySelector">A function that selects a key.</param>
         /// <param name="keyComparer">The comparer to use to compare keys.</param>
         /// <returns>A KeyComparer using the key selector.</returns>
-        /// <exception cref="System.ArgumentNullException">The key selector is null.</exception>
-        /// <exception cref="System.ArgumentNullException">The key comparison delegate is null.</exception>
+        /// <exception cref="ArgumentNullException">The key selector is null.</exception>
+        /// <exception cref="ArgumentNullException">The key comparison delegate is null.</exception>
         public static KeyComparer<T> OrderBy<TKey>(Func<T, TKey> keySelector, IComparer<TKey> keyComparer)
         {
             if (keySelector is null)
@@ -74,8 +74,8 @@ namespace ComparerExtensions
         /// <param name="keySelector">A function that selects a key.</param>
         /// <param name="keyComparison">The comparison delegate to use to compare keys.</param>
         /// <returns>A KeyComparer using the key selector.</returns>
-        /// <exception cref="System.ArgumentNullException">The key selector is null.</exception>
-        /// <exception cref="System.ArgumentNullException">The key comparison delegate is null.</exception>
+        /// <exception cref="ArgumentNullException">The key selector is null.</exception>
+        /// <exception cref="ArgumentNullException">The key comparison delegate is null.</exception>
         public static KeyComparer<T> OrderBy<TKey>(Func<T, TKey> keySelector, Func<TKey, TKey, int> keyComparison)
         {
             if (keySelector is null)
@@ -98,7 +98,7 @@ namespace ComparerExtensions
         /// <typeparam name="TKey">The type of the key.</typeparam>
         /// <param name="keySelector">A function that selects a key.</param>
         /// <returns>A KeyComparer using the key selector.</returns>
-        /// <exception cref="System.ArgumentNullException">The key selector is null.</exception>
+        /// <exception cref="ArgumentNullException">The key selector is null.</exception>
         public static KeyComparer<T> OrderByDescending<TKey>(Func<T, TKey> keySelector)
         {
             if (keySelector is null)
@@ -116,8 +116,8 @@ namespace ComparerExtensions
         /// <param name="keySelector">A function that selects a key.</param>
         /// <param name="keyComparer">The comparer to use to compare keys.</param>
         /// <returns>A KeyComparer using the key selector.</returns>
-        /// <exception cref="System.ArgumentNullException">The key selector is null.</exception>
-        /// <exception cref="System.ArgumentNullException">The key comparison delegate is null.</exception>
+        /// <exception cref="ArgumentNullException">The key selector is null.</exception>
+        /// <exception cref="ArgumentNullException">The key comparison delegate is null.</exception>
         public static KeyComparer<T> OrderByDescending<TKey>(Func<T, TKey> keySelector, IComparer<TKey> keyComparer)
         {
             if (keySelector is null)
@@ -140,8 +140,8 @@ namespace ComparerExtensions
         /// <param name="keySelector">A function that selects a key.</param>
         /// <param name="keyComparison">The comparison delegate to use to compare keys.</param>
         /// <returns>A KeyComparer using the key selector.</returns>
-        /// <exception cref="System.ArgumentNullException">The key selector is null.</exception>
-        /// <exception cref="System.ArgumentNullException">The key comparison delegate is null.</exception>
+        /// <exception cref="ArgumentNullException">The key selector is null.</exception>
+        /// <exception cref="ArgumentNullException">The key comparison delegate is null.</exception>
         public static KeyComparer<T> OrderByDescending<TKey>(Func<T, TKey> keySelector,
             Func<TKey, TKey, int> keyComparison)
         {

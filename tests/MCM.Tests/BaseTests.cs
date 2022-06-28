@@ -1,5 +1,5 @@
 ﻿extern alias v5;
-
+extern alias UI;
 using Bannerlord.ButterLib;
 using Bannerlord.ButterLib.SubModuleWrappers;
 
@@ -13,10 +13,11 @@ using System.Runtime.CompilerServices;
 
 using TaleWorlds.Engine;
 
-using v5::Bannerlord.BUTR.Shared.Helpers;
+using UI::Bannerlord.BUTR.Shared.Helpers;
+
 using v5::Bannerlord.ModuleManager;
 using v5::MCM;
-using v5::MCM.Implementation;
+using v5::MCM.Internal;
 
 using AccessTools2 = v5::HarmonyLib.BUTR.Extensions.AccessTools2;
 using SymbolExtensions2 = v5::HarmonyLib.BUTR.Extensions.SymbolExtensions2;

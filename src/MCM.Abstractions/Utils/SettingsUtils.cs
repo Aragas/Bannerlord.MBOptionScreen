@@ -1,26 +1,19 @@
-﻿using Bannerlord.BUTR.Shared.Extensions;
-
+﻿using BUTR.DependencyInjection;
 using BUTR.DependencyInjection.Logger;
 
 using HarmonyLib.BUTR.Extensions;
 
-using MCM.Abstractions;
-using MCM.Abstractions.Common.Wrappers;
-using MCM.Abstractions.Ref;
-using MCM.Abstractions.Settings;
-using MCM.Abstractions.Settings.Base;
-using MCM.Abstractions.Settings.Definitions;
-using MCM.Abstractions.Settings.Definitions.Wrapper;
-using MCM.Abstractions.Settings.Models;
-using MCM.Extensions;
+using MCM.Abstractions.Base;
+using MCM.Abstractions.Wrapper;
+using MCM.Common;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MCM.Utils
+namespace MCM.Abstractions
 {
-    public static class SettingsUtils
+    public class SettingsUtils
     {
         public static void CheckIsValid(ISettingsPropertyDefinition prop, object settings)
         {
@@ -68,9 +61,9 @@ namespace MCM.Utils
             if (setDict1.Count != setDict2.Count)
                 return false;
 
-            foreach (var (id, spd1) in setDict1)
+            foreach (var kv in setDict1)
             {
-                if (!setDict2.TryGetValue(id, out var spd2) || !Equals(spd1, spd2))
+                if (!setDict2.TryGetValue(kv.Key, out var spd2) || !Equals(kv.Value, spd2))
                     return false;
             }
 
@@ -122,7 +115,10 @@ namespace MCM.Utils
                 if (currentDict.TryGetValue(nspg.GroupName, out var spg))
                     OverrideValues(spg, nspg);
                 else
-                    MCMSubModule.Logger.LogWarning("{NewId}::{GroupName} was not found on, {CurrentId}", @new.Id, nspg.GroupName, current.Id);
+                {
+                    var logger = GenericServiceProvider.GetService<IBUTRLogger<SettingsUtils>>();
+                    logger?.LogWarning($"{@new.Id}::{nspg.GroupName} was not found on, {current.Id}");
+                }
             }
         }
         public static void OverrideValues(SettingsPropertyGroupDefinition current, SettingsPropertyGroupDefinition @new)
@@ -135,14 +131,20 @@ namespace MCM.Utils
                 if (currentSubGroups.TryGetValue(nspg.GroupName, out var spg))
                     OverrideValues(spg, nspg);
                 else
-                    MCMSubModule.Logger.LogWarning("{NewId}::{GroupName} was not found on, {CurrentId}", @new.DisplayGroupName, nspg.GroupName, current.DisplayGroupName);
+                {
+                    var logger = GenericServiceProvider.GetService<IBUTRLogger<SettingsUtils>>();
+                    logger?.LogWarning($"{@new.GroupName}::{nspg.GroupName} was not found on, {current.GroupName}");
+                }
             }
             foreach (var nsp in @new.SettingProperties)
             {
                 if (currentSettingProperties.TryGetValue(nsp.DisplayName, out var sp))
                     OverrideValues(sp, nsp);
                 else
-                    MCMSubModule.Logger.LogWarning("{NewId}::{GroupName} was not found on, {CurrentId}", @new.DisplayGroupName, nsp.DisplayName, current.DisplayGroupName);
+                {
+                    var logger = GenericServiceProvider.GetService<IBUTRLogger<SettingsUtils>>();
+                    logger?.LogWarning($"{@new.GroupName}::{nsp.DisplayName} was not found on, {current.GroupName}");
+                }
             }
         }
         public static void OverrideValues(ISettingsPropertyDefinition current, ISettingsPropertyDefinition @new)

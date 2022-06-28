@@ -1,15 +1,12 @@
 ﻿using BUTR.DependencyInjection;
 
 using MCM.Abstractions.FluentBuilder;
-using MCM.Abstractions.Settings.Containers;
-using MCM.Abstractions.Settings.Containers.Global;
-using MCM.Abstractions.Settings.Containers.PerCampaign;
-using MCM.Abstractions.Settings.Containers.PerSave;
-using MCM.Abstractions.Settings.Formats;
-using MCM.Abstractions.Settings.Properties;
-using MCM.Abstractions.Settings.Providers;
+using MCM.Abstractions.Global;
+using MCM.Abstractions.PerCampaign;
+using MCM.Abstractions.PerSave;
+using MCM.Abstractions.Properties;
 
-namespace MCM.Extensions
+namespace MCM.Abstractions
 {
     public static class ServiceCollectionExtensions
     {

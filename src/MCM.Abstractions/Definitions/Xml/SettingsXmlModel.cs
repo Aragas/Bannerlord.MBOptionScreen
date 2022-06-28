@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace MCM.Abstractions.Settings.Definitions.Xml
+namespace MCM.Abstractions.Xml
 {
     [Serializable]
     [XmlRoot("Settings")]

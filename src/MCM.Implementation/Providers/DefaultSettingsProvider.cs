@@ -1,20 +1,17 @@
 ﻿using BUTR.DependencyInjection;
 using BUTR.DependencyInjection.Logger;
 
-using MCM.Abstractions.Settings.Base;
-using MCM.Abstractions.Settings.Containers;
-using MCM.Abstractions.Settings.Containers.Global;
-using MCM.Abstractions.Settings.Containers.PerCampaign;
-using MCM.Abstractions.Settings.Containers.PerSave;
-using MCM.Abstractions.Settings.Models;
-using MCM.Abstractions.Settings.Presets;
-using MCM.Abstractions.Settings.Providers;
+using MCM.Abstractions;
+using MCM.Abstractions.Base;
+using MCM.Abstractions.Global;
+using MCM.Abstractions.PerCampaign;
+using MCM.Abstractions.PerSave;
 
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace MCM.Implementation.Settings.Providers
+namespace MCM.Implementation
 {
     internal sealed class DefaultSettingsProvider : BaseSettingsProvider
     {
@@ -37,15 +34,15 @@ namespace MCM.Implementation.Settings.Providers
 
             foreach (var globalSettingsContainer in globalSettingsContainers)
             {
-                logger.LogInformation("Found Global container {type}.", globalSettingsContainer.GetType());
+                logger.LogInformation($"Found Global container {globalSettingsContainer.GetType()}.");
             }
             foreach (var perSaveSettingsContainer in perSaveSettingsContainers)
             {
-                logger.LogInformation("Found PerSave container {type}.", perSaveSettingsContainer.GetType());
+                logger.LogInformation($"Found PerSave container {perSaveSettingsContainer.GetType()}.");
             }
             foreach (var perCampaignSettingsContainer in perCampaignSettingsContainers)
             {
-                logger.LogInformation("Found Campaign container {type}.", perCampaignSettingsContainer.GetType());
+                logger.LogInformation($"Found Campaign container {perCampaignSettingsContainer.GetType()}.");
             }
 
             _settingsContainers = Enumerable.Empty<ISettingsContainer>()
@@ -60,11 +57,11 @@ namespace MCM.Implementation.Settings.Providers
             {
                 if (settingsContainer.GetSettings(id) is { } settings)
                 {
-                    _logger.LogTrace("GetSettings {id} returned {type}", id, settings.GetType());
+                    _logger.LogTrace($"GetSettings {id} returned {settings.GetType()}");
                     return settings;
                 }
             }
-            _logger.LogWarning("GetSettings {id} returned null", id);
+            _logger.LogWarning($"GetSettings {id} returned null");
             return null;
         }
 

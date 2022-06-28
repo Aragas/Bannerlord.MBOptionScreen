@@ -2,7 +2,7 @@
 using Bannerlord.ButterLib.SubSystems;
 
 using MCM.Abstractions.FluentBuilder;
-using MCM.Abstractions.Ref;
+using MCM.Common;
 
 using Microsoft.Extensions.DependencyInjection;
 

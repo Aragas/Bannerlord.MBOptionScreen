@@ -1,6 +1,4 @@
-﻿using MCM.Abstractions.Models;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace MCM.Abstractions.Base
 {

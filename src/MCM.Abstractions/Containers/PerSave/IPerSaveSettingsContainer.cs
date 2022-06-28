@@ -1,4 +1,4 @@
-﻿namespace MCM.Abstractions.Settings.Containers.PerSave
+﻿namespace MCM.Abstractions.PerSave
 {
     public interface IPerSaveSettingsContainer : ISettingsContainer, ISettingsContainerHasSettingsDefinitions, ISettingsContainerCanOverride, ISettingsContainerCanReset
     {

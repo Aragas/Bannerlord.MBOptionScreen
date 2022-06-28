@@ -1,8 +1,5 @@
 ﻿using HarmonyLib.BUTR.Extensions;
 
-using MCM.Abstractions.Presets;
-using MCM.Abstractions.Utils;
-
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;

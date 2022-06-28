@@ -1,6 +1,6 @@
 ﻿using HarmonyLib.BUTR.Extensions;
 
-namespace MCM.Abstractions.Settings.Definitions.Wrapper
+namespace MCM.Abstractions.Wrapper
 {
     public sealed class PropertyDefinitionWithMinMaxWrapper : BasePropertyDefinitionWrapper, IPropertyDefinitionWithMinMax
     {

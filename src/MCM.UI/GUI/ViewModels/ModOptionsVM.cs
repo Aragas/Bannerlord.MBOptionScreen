@@ -4,11 +4,11 @@ using BUTR.DependencyInjection;
 
 using ComparerExtensions;
 
-using MCM.Abstractions.Dropdown;
-using MCM.Abstractions.Settings.Providers;
+using MCM.Abstractions;
+using MCM.UI.Dropdown;
 using MCM.UI.Extensions;
 using MCM.UI.Patches;
-using MCM.Utils;
+using MCM.UI.Utils;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -160,8 +160,7 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
         [DataSourceProperty]
-        public MCMSelectorVM<DropdownSelectorItemVM<PresetKey>> PresetsSelector { get; } = new MCMSelectorVM<DropdownSelectorItemVM<PresetKey>>(Enumerable.Empty<PresetKey>(), -1, null);
-        //new(SelectorVMUtils.Create(Enumerable.Empty<string>(), -1, null));
+        public MCMSelectorVM<DropdownSelectorItemVM<PresetKey>> PresetsSelector { get; } = new(Enumerable.Empty<PresetKey>(), -1, null);
         [DataSourceProperty]
         public bool IsPresetsSelectorVisible => SelectedMod is not null;
 

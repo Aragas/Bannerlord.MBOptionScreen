@@ -1,0 +1,1 @@
+﻿Contains non specific shared code that isn't depending on the Bannerlord API

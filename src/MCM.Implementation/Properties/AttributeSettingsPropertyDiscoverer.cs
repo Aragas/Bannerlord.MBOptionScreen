@@ -2,19 +2,16 @@
 
 using MCM.Abstractions;
 using MCM.Abstractions.Attributes;
-using MCM.Abstractions.Ref;
-using MCM.Abstractions.Settings.Base;
-using MCM.Abstractions.Settings.Definitions;
-using MCM.Abstractions.Settings.Definitions.Wrapper;
-using MCM.Abstractions.Settings.Models;
-using MCM.Abstractions.Settings.Properties;
-using MCM.Utils;
+using MCM.Abstractions.Base;
+using MCM.Abstractions.Properties;
+using MCM.Abstractions.Wrapper;
+using MCM.Common;
 
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace MCM.Implementation.Settings.Properties
+namespace MCM.Implementation
 {
     internal sealed class AttributeSettingsPropertyDiscoverer : IAttributeSettingsPropertyDiscoverer
     {

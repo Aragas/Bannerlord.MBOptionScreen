@@ -1,4 +1,4 @@
-﻿using MCM.Abstractions.Settings.Models;
+﻿using MCM.Abstractions;
 
 using System;
 using System.Linq;

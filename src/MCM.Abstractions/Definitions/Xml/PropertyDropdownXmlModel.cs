@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Xml.Serialization;
 
-namespace MCM.Abstractions.Settings.Definitions.Xml
+namespace MCM.Abstractions.Xml
 {
     [Serializable]
     [XmlType("PropertyDropdown")]
@@ -9,5 +9,8 @@ namespace MCM.Abstractions.Settings.Definitions.Xml
     {
         [XmlAttribute("SelectedIndex")]
         public int SelectedIndex { get; set; }
+        
+        [XmlArray("Values")]
+        public string[] Values { get; set; }
     }
 }

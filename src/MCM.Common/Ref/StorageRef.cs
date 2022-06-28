@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace MCM.Common.Ref
+namespace MCM.Common
 {
     public sealed class StorageRef : IRef
     {

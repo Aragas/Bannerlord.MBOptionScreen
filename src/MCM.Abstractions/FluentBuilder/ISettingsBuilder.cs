@@ -1,7 +1,7 @@
-﻿using MCM.Abstractions.Settings.Base;
-using MCM.Abstractions.Settings.Base.Global;
-using MCM.Abstractions.Settings.Base.PerCampaign;
-using MCM.Abstractions.Settings.Base.PerSave;
+﻿using MCM.Abstractions.Base;
+using MCM.Abstractions.Base.Global;
+using MCM.Abstractions.Base.PerCampaign;
+using MCM.Abstractions.Base.PerSave;
 
 using System;
 using System.ComponentModel;
@@ -63,6 +63,7 @@ namespace MCM.Abstractions.FluentBuilder
         /// <summary>
         ///
         /// </summary>
+        /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="builder"></param>
         /// <returns>The settings builder.</returns>

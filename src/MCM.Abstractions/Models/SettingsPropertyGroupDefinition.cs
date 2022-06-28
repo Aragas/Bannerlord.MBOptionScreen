@@ -1,11 +1,8 @@
-﻿using MCM.Abstractions.Settings.Definitions;
-using MCM.Extensions;
+﻿using MCM.Common;
 
 using System.Collections.Generic;
 
-using TaleWorlds.Localization;
-
-namespace MCM.Abstractions.Settings.Models
+namespace MCM.Abstractions
 {
     public class SettingsPropertyGroupDefinition
     {
@@ -18,29 +15,29 @@ namespace MCM.Abstractions.Settings.Models
         /// <summary>
         /// The default group used for settings that don't have a group explicitly set.
         /// </summary>
-        public static readonly string DefaultGroupName = new TextObject("{=SettingsPropertyGroupDefinition_Misc}Misc").ToString();
+        public static readonly string DefaultGroupName = LocalizationUtils.Localize("{=SettingsPropertyGroupDefinition_Misc}Misc");
 
         /// <summary>
         /// The default group used for settings that don't have a group explicitly set.
         /// </summary>
         public static readonly IPropertyGroupDefinition DefaultGroup = new DefaultPropertyGroupDefinition();
 
-        protected readonly TextObject _groupName;
-        protected readonly TextObject _groupNameOverride;
+        protected readonly string _groupNameRaw;
+        protected readonly string _groupNameOverrideRaw;
         protected readonly List<SettingsPropertyGroupDefinition> subGroups = new();
         protected readonly List<ISettingsPropertyDefinition> settingProperties = new();
 
         public string GroupName { get; }
-        public TextObject DisplayGroupName => _groupNameOverride.Length > 0 ? _groupNameOverride : _groupName;
+        public string DisplayGroupNameRaw => _groupNameOverrideRaw.Length > 0 ? _groupNameOverrideRaw : _groupNameRaw;
         public int Order { get; }
         public IEnumerable<SettingsPropertyGroupDefinition> SubGroups => subGroups.SortDefault();
         public IEnumerable<ISettingsPropertyDefinition> SettingProperties => settingProperties.SortDefault();
 
         public SettingsPropertyGroupDefinition(string groupName, string? groupNameOverride = "", int order = -1)
         {
-            _groupName = new TextObject(groupName);
-            _groupNameOverride = new TextObject(groupNameOverride ?? string.Empty);
-            GroupName = DisplayGroupName.ToString();
+            _groupNameRaw = groupName;
+            _groupNameOverrideRaw = groupNameOverride ?? string.Empty;
+            GroupName = LocalizationUtils.Localize(DisplayGroupNameRaw);
             Order = order;
         }
 

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <DefineConstants>$(DefineConstants);BUTRDEPENDENCYINJECTION_PUBLIC;</DefineConstants>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Bannerlord.ModuleManager.Source" Version="$(BUTRModuleManagerVersion)" PrivateAssets="all" IncludeAssets="contentfiles" />
+    <PackageReference Include="BUTR.DependencyInjection" Version="$(BUTRDependencyInjectionVersion)" PrivateAssets="all" IncludeAssets="contentfiles" />
+    <PackageReference Include="BUTR.DependencyInjection.LightInject" Version="$(BUTRDependencyInjectionVersion)" PrivateAssets="all" IncludeAssets="contentfiles" />
+    <PackageReference Include="LightInject.Source" Version="6.4.1" PrivateAssets="all" IncludeAssets="contentfiles" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" PrivateAssets="all" IncludeAssets="compile" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MCM.Common\MCM.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="MCM.Implementation" />
+    <InternalsVisibleTo Include="MCM.Bannerlord" />
+  </ItemGroup>
+
+</Project>

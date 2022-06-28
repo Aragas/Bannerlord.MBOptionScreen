@@ -1,16 +1,12 @@
 ﻿using MCM.Abstractions.Attributes.v1;
-using MCM.Abstractions.Ref;
-using MCM.Abstractions.Settings.Definitions;
-using MCM.Abstractions.Settings.Definitions.Wrapper;
-using MCM.Utils;
+using MCM.Abstractions.Wrapper;
+using MCM.Common;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using TaleWorlds.Localization;
-
-namespace MCM.Abstractions.Settings.Models
+namespace MCM.Abstractions
 {
     public sealed class SettingsPropertyDefinition : ISettingsPropertyDefinition
     {
@@ -59,7 +55,7 @@ namespace MCM.Abstractions.Settings.Models
             SubGroupDelimiter = subGroupDelimiter;
 
             var groups = propertyGroupDefinition.GroupName.Split(SubGroupDelimiter);
-            GroupName = string.Join(SubGroupDelimiter.ToString(), groups.Select(x => new TextObject(x).ToString()));
+            GroupName = string.Join(SubGroupDelimiter.ToString(), groups.Select(x => LocalizationUtils.Localize(x)));
             GroupOrder = propertyGroupDefinition.GroupOrder;
 
             PropertyReference = propertyReference;
@@ -84,10 +80,10 @@ namespace MCM.Abstractions.Settings.Models
             {
                 if (propertyDefinition is { } propertyBase)
                 {
-                    DisplayName = new TextObject(propertyBase.DisplayName).ToString();
+                    DisplayName = LocalizationUtils.Localize(propertyBase.DisplayName);
                     Order = propertyBase.Order;
                     RequireRestart = propertyBase.RequireRestart;
-                    HintText = new TextObject(propertyBase.HintText).ToString();
+                    HintText = LocalizationUtils.Localize(propertyBase.HintText);
                 }
                 if (propertyDefinition is SettingPropertyAttribute settingPropertyAttribute) // v1
                 {
@@ -142,7 +138,7 @@ namespace MCM.Abstractions.Settings.Models
                 }
                 if (propertyDefinition is IPropertyDefinitionButton propertyDefinitionButton)
                 {
-                    Content = new TextObject(propertyDefinitionButton.Content).ToString();
+                    Content = LocalizationUtils.Localize(propertyDefinitionButton.Content);
                 }
             }
         }

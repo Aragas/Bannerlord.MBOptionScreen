@@ -6,8 +6,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 using v5::BUTR.DependencyInjection;
-using v5::MCM.Abstractions.Settings.Formats;
-using v5::MCM.Implementation.Settings.Formats;
+
+using v5::MCM.Abstractions;
+using v5::MCM.Implementation;
 
 namespace MCM.Tests
 {

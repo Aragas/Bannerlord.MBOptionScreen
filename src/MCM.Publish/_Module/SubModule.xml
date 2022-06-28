@@ -1,20 +1,21 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<Module>
-  <Name value="$modulename$" />
+<Module xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/SubModule.xsd" >
   <Id value="$moduleid$" />
+  <Name value="$modulename$" />
   <Version value="v$version$" />
   <Official value="false" />
   <DefaultModule value="false" />
   <SingleplayerModule value="true" />
   <MultiplayerModule value="false" />
+  <ModuleCategory value="Singleplayer" />
   <Url value="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" />
   <DependedModules>
     <DependedModule Id="Bannerlord.Harmony" DependentVersion="v$harmonyversion$" />
-    <!--<DependedModule Id="Bannerlord.ModuleLoader" />-->
     <DependedModule Id="Bannerlord.ButterLib" DependentVersion="v$butterlibversion$" />
     <DependedModule Id="Bannerlord.UIExtenderEx" DependentVersion="v$uiextenderexversion$" />
   </DependedModules>
-  <!-- Prototype -->
+  <!-- Community Metadata -->
   <DependedModuleMetadatas>
     <DependedModuleMetadata id="Bannerlord.Harmony" order="LoadBeforeThis" version="v$harmonyversion$" />
     <DependedModuleMetadata id="Bannerlord.ModuleLoader" order="LoadBeforeThis" version="v$moduleloaderversion$" optional="true" />
@@ -29,23 +30,23 @@
 
     <DependedModuleMetadata id="ModLib" order="LoadAfterThis" incompatible="true" />
   </DependedModuleMetadatas>
-  <!-- Prototype -->
+  <!-- Community Metadata -->
   <SubModules>
-    <!--Abstraction-->
+    <!--Abstraction -->
     <SubModule>
       <Name value="MCMv5" />
       <DLLName value="MCMv5.dll" />
       <SubModuleClassType value="MCM.MCMSubModule" />
       <Tags />
     </SubModule>
-    <!--General Implementation-->
+    <!--Builtin SubModule -->
     <SubModule>
       <Name value="MCMv5 Basic Implementation" />
       <DLLName value="MCMv5.dll" />
-      <SubModuleClassType value="MCM.Implementation.MCMImplementationSubModule" />
+      <SubModuleClassType value="MCM.Internal.MCMImplementationSubModule" />
       <Tags />
     </SubModule>
-    <!--UI Implementation-->
+    <!--UI SubModule -->
     <SubModule>
       <Name value="MCMv5 UI" />
       <DLLName value="MCMv5.UI.dll" />

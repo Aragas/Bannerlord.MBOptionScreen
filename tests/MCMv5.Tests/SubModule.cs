@@ -1,15 +1,9 @@
 ﻿using MCM.Abstractions.FluentBuilder;
-using MCM.Abstractions.Ref;
-using MCM.Abstractions.Settings.Base.Global;
-using MCM.Abstractions.Settings.Definitions;
+using MCM.Common;
 
 using System;
-using System.IO;
 
-using TaleWorlds.Engine;
 using TaleWorlds.MountAndBlade;
-
-using Path = System.IO.Path;
 
 namespace MCMv5.Tests
 {
@@ -56,22 +50,6 @@ namespace MCMv5.Tests
             //var perSaveSettings = builder.BuildAsPerSave();
             //perSaveSettings.Register();
             //perSaveSettings.Unregister();
-
-            var path = Path.Combine(Utilities.GetBasePath(), "Modules", "Bannerlord.MBOptionScreen.Tests", "ExternalSettingsTest.xml");
-            if (!File.Exists(path))
-                throw new Exception("Settings does not exist in '/Modules' folder");
-            using var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            var externalSettings = ExternalGlobalSettings.CreateFromXmlStream(fs, AssignRefDelegate);
-            externalSettings?.Register();
         }
-
-        private static IRef AssignRefDelegate(IPropertyDefinitionBase propertyDefinition) => propertyDefinition switch
-        {
-            IPropertyDefinitionBool _ => new ProxyRef<bool>(() => false, null),
-            IPropertyDefinitionDropdown _ => new ProxyRef<bool>(() => false, null),
-            IPropertyDefinitionWithMinMax _ => new ProxyRef<int>(() => 0, null),
-            IPropertyDefinitionText _ => new ProxyRef<string>(() => string.Empty, null),
-            _ => new ProxyRef<object?>(() => null, null)
-        };
     }
 }

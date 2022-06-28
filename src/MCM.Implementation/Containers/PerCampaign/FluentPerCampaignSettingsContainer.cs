@@ -1,21 +1,18 @@
 ﻿using BUTR.DependencyInjection;
 
 using MCM.Abstractions;
-using MCM.Abstractions.Settings.Base;
-using MCM.Abstractions.Settings.Base.PerCampaign;
-using MCM.Abstractions.Settings.Containers;
-using MCM.Abstractions.Settings.Formats;
+using MCM.Abstractions.Base;
+using MCM.Abstractions.Base.PerCampaign;
+using MCM.Abstractions.GameFeatures;
+using MCM.Abstractions.PerCampaign;
 
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
-using TaleWorlds.CampaignSystem;
-using TaleWorlds.Core;
-
-namespace MCM.Implementation.Settings.Containers.PerCampaign
+namespace MCM.Implementation.PerCampaign
 {
-    internal sealed class FluentPerCampaignSettingsContainer : BaseSettingsContainer<FluentPerCampaignSettings>, IMCMFluentPerCampaignSettingsContainer
+    internal sealed class FluentPerCampaignSettingsContainer : BaseSettingsContainer<FluentPerCampaignSettings>, IFluentPerCampaignSettingsContainer
     {
         private readonly IGameEventListener _gameEventListener;
         
@@ -32,7 +29,10 @@ namespace MCM.Implementation.Settings.Containers.PerCampaign
             if (perCampaignSettings is null)
                 return;
 
-            var directoryPath = Path.Combine(RootFolder, Campaign.Current.UniqueGameId, perCampaignSettings.FolderName, perCampaignSettings.SubFolder);
+            if (GenericServiceProvider.GetService<ICampaignIdProvider>() is not { } campaignIdProvider || campaignIdProvider.GetCurrentCampaignId() is not { } id)
+                return;
+            
+            var directoryPath = Path.Combine(RootFolder, id, perCampaignSettings.FolderName, perCampaignSettings.SubFolder);
             var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == perCampaignSettings.FormatType));
             settingsFormat?.Load(perCampaignSettings, directoryPath, perCampaignSettings.Id);
@@ -44,7 +44,10 @@ namespace MCM.Implementation.Settings.Containers.PerCampaign
             if (settings is not PerCampaignSettings campaignSettings)
                 return false;
 
-            var directoryPath = Path.Combine(RootFolder, Campaign.Current.UniqueGameId, campaignSettings.FolderName, campaignSettings.SubFolder);
+            if (GenericServiceProvider.GetService<ICampaignIdProvider>() is not { } campaignIdProvider || campaignIdProvider.GetCurrentCampaignId() is not { } id)
+                return false;
+            
+            var directoryPath = Path.Combine(RootFolder, id, campaignSettings.FolderName, campaignSettings.SubFolder);
             var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == campaignSettings.FormatType));
             settingsFormat?.Save(campaignSettings, directoryPath, campaignSettings.Id);
@@ -62,7 +65,7 @@ namespace MCM.Implementation.Settings.Containers.PerCampaign
                 LoadedSettings.Remove(settings.Id);
         }
 
-        private void OnGameStarted(Game game) => LoadedSettings.Clear();
-        private void OnGameEnded(Game game) => LoadedSettings.Clear();
+        private void OnGameStarted() => LoadedSettings.Clear();
+        private void OnGameEnded() => LoadedSettings.Clear();
     }
 }

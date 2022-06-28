@@ -1,8 +1,8 @@
-﻿using MCM.Abstractions.Settings.Base;
+﻿using MCM.Abstractions.Base;
 
 using System.Collections.Generic;
 
-namespace MCM.Abstractions.Settings.Formats
+namespace MCM.Abstractions
 {
     public sealed class NoneSettingsFormat : ISettingsFormat
     {

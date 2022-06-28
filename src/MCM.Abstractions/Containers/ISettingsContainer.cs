@@ -1,6 +1,6 @@
-﻿using MCM.Abstractions.Settings.Base;
+﻿using MCM.Abstractions.Base;
 
-namespace MCM.Abstractions.Settings.Containers
+namespace MCM.Abstractions
 {
     public interface ISettingsContainer
     {

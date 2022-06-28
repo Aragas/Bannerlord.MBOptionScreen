@@ -1,7 +1,8 @@
 ﻿using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
-using MCM.Abstractions.Dropdown;
-using MCM.Utils;
+using MCM.Common;
+
+using MCMv5.Tests.Utils;
 
 using System;
 
@@ -87,7 +88,7 @@ namespace MCMv5.Tests
 
         [SettingPropertyDropdown("Property Dropdown SelectedIndex 0", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown")]
-        public DropdownMCM<string> PropertyDropdownSelectedIndex0 { get; set; } = new(new[]
+        public Dropdown<string> PropertyDropdownSelectedIndex0 { get; set; } = new(new[]
         {
             "Test1",
             "Test2",
@@ -95,7 +96,7 @@ namespace MCMv5.Tests
         }, 0);
         [SettingPropertyDropdown("Property Dropdown SelectedIndex 1", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown")]
-        public DropdownMCM<string> PropertyDropdownSelectedIndex1 { get; set; } = new(new[]
+        public Dropdown<string> PropertyDropdownSelectedIndex1 { get; set; } = new(new[]
         {
             "Test1",
             "Test2",
@@ -103,7 +104,7 @@ namespace MCMv5.Tests
         }, 1);
         [SettingPropertyDropdown("Property Dropdown SelectedIndex 2", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown")]
-        public DropdownMCM<string> PropertyDropdownSelectedIndex2 { get; set; } = new(new[]
+        public Dropdown<string> PropertyDropdownSelectedIndex2 { get; set; } = new(new[]
         {
             "Test1",
             "Test2",
@@ -111,7 +112,7 @@ namespace MCMv5.Tests
         }, 2);
         [SettingPropertyDropdown("Property Dropdown Require Restart")]
         [SettingPropertyGroup("Dropdown")]
-        public DropdownMCM<string> PropertyDropdownRequireRestart { get; set; } = new(new[]
+        public Dropdown<string> PropertyDropdownRequireRestart { get; set; } = new(new[]
         {
             "Test1",
             "Test2",
@@ -119,7 +120,7 @@ namespace MCMv5.Tests
         }, 0);
         [SettingPropertyDropdown("Property Dropdown With Hint", RequireRestart = false, HintText = "Hint Text")]
         [SettingPropertyGroup("Dropdown")]
-        public DropdownMCM<string> PropertyDropdownWithHint { get; set; } = new(new[]
+        public Dropdown<string> PropertyDropdownWithHint { get; set; } = new(new[]
         {
             "Test1",
             "Test2",
@@ -127,7 +128,7 @@ namespace MCMv5.Tests
         }, 0);
         [SettingPropertyDropdown("Property Dropdown With Localization", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown")]
-        public DropdownMCM<string> PropertyDropdownWithLocalization { get; set; } = new(new[]
+        public Dropdown<string> PropertyDropdownWithLocalization { get; set; } = new(new[]
         {
             "{=NoPeRandoM}Test1",
             "{=BaseSettings_Default}ERROR",
@@ -137,7 +138,7 @@ namespace MCMv5.Tests
 
         [SettingPropertyDropdown("Property Dropdown Custom SelectedIndex 0", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown Custom")]
-        public DropdownMCM<CustomObject> PropertyDropdownCustomSelectedIndex0 { get; set; } = new(new[]
+        public Dropdown<CustomObject> PropertyDropdownCustomSelectedIndex0 { get; set; } = new(new[]
         {
             new CustomObject("Test1"),
             new CustomObject("Test2"),
@@ -145,7 +146,7 @@ namespace MCMv5.Tests
         }, 0);
         [SettingPropertyDropdown("Property Dropdown Custom SelectedIndex 1", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown Custom")]
-        public DropdownMCM<CustomObject> PropertyDropdownCustomSelectedIndex1 { get; set; } = new(new[]
+        public Dropdown<CustomObject> PropertyDropdownCustomSelectedIndex1 { get; set; } = new(new[]
         {
             new CustomObject("Test1"),
             new CustomObject("Test2"),
@@ -153,7 +154,7 @@ namespace MCMv5.Tests
         }, 1);
         [SettingPropertyDropdown("Property Dropdown Custom SelectedIndex 2", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown Custom")]
-        public DropdownMCM<CustomObject> PropertyDropdownCustomSelectedIndex2 { get; set; } = new(new[]
+        public Dropdown<CustomObject> PropertyDropdownCustomSelectedIndex2 { get; set; } = new(new[]
         {
             new CustomObject("Test1"),
             new CustomObject("Test2"),
@@ -161,7 +162,7 @@ namespace MCMv5.Tests
         }, 2);
         [SettingPropertyDropdown("Property Dropdown Custom Require Restart")]
         [SettingPropertyGroup("Dropdown Custom")]
-        public DropdownMCM<CustomObject> PropertyDropdownCustomRequireRestart { get; set; } = new(new[]
+        public Dropdown<CustomObject> PropertyDropdownCustomRequireRestart { get; set; } = new(new[]
         {
             new CustomObject("Test1"),
             new CustomObject("Test2"),
@@ -169,7 +170,7 @@ namespace MCMv5.Tests
         }, 0);
         [SettingPropertyDropdown("Property Dropdown Custom With Hint", RequireRestart = false, HintText = "Hint Text")]
         [SettingPropertyGroup("Dropdown Custom")]
-        public DropdownMCM<CustomObject> PropertyDropdownCustomWithHint { get; set; } = new(new[]
+        public Dropdown<CustomObject> PropertyDropdownCustomWithHint { get; set; } = new(new[]
         {
             new CustomObject("Test1"),
             new CustomObject("Test2"),

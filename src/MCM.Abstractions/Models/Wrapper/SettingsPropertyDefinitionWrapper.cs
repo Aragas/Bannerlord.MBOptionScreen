@@ -1,14 +1,10 @@
 ﻿using HarmonyLib.BUTR.Extensions;
 
-using MCM.Abstractions.Ref;
-using MCM.Abstractions.Settings.Definitions.Wrapper;
-using MCM.Utils;
+using MCM.Common;
 
 using System;
 
-using TaleWorlds.Localization;
-
-namespace MCM.Abstractions.Settings.Models.Wrapper
+namespace MCM.Abstractions.Wrapper
 {
     public sealed class SettingsPropertyDefinitionWrapper : ISettingsPropertyDefinition
     {
@@ -86,20 +82,20 @@ namespace MCM.Abstractions.Settings.Models.Wrapper
 
             DisplayName = displayNameProperty?.GetValue(@object) switch
             {
-                string str => new TextObject(str).ToString(),
-                TextObject to => to.ToString(),
+                string str => LocalizationUtils.Localize(str),
+                { } to => to.ToString(),
                 _ => "ERROR"
             };
             HintText = hintTextProperty?.GetValue(@object) switch
             {
-                string str => new TextObject(str).ToString(),
-                TextObject to => to.ToString(),
+                string str => LocalizationUtils.Localize(str),
+                { } to => to.ToString(),
                 _ => "ERROR"
             };
             Order = orderProperty?.GetValue(@object) as int? ?? -1;
             RequireRestart = requireRestartProperty?.GetValue(@object) as bool? ?? true;
 
-            GroupName = new TextObject(groupNameProperty?.GetValue(@object) as string ?? string.Empty).ToString();
+            GroupName = LocalizationUtils.Localize(groupNameProperty?.GetValue(@object) as string ?? string.Empty);
             GroupOrder = groupOrderProperty?.GetValue(@object) as int? ?? -1;
 
             MinValue = minValueProperty?.GetValue(@object) is { } minVal ? minVal as decimal? ?? 0 : 0;

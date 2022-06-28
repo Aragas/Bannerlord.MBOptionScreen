@@ -1,9 +1,8 @@
-﻿using MCM.Abstractions.Settings.Base;
-using MCM.Abstractions.Settings.Models;
+﻿using MCM.Abstractions.Base;
 
 using System.Collections.Generic;
 
-namespace MCM.Abstractions.Settings.Properties
+namespace MCM.Abstractions.Properties
 {
     public interface ISettingsPropertyDiscoverer
     {

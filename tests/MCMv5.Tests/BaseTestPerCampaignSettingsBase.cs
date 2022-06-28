@@ -1,4 +1,4 @@
-﻿using MCM.Abstractions.Settings.Base.PerCampaign;
+﻿using MCM.Abstractions.Base.PerCampaign;
 
 namespace MCMv5.Tests
 {
