@@ -1,4 +1,6 @@
-﻿using BUTR.DependencyInjection;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using BUTR.DependencyInjection;
 using BUTR.DependencyInjection.Extensions;
 using BUTR.DependencyInjection.LightInject;
 using BUTR.DependencyInjection.Logger;
@@ -8,6 +10,7 @@ using MCM.Abstractions.Settings.Properties;
 using MCM.Abstractions.Settings.Providers;
 using MCM.Extensions;
 using MCM.LightInject;
+using MCM.Utils;
 
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
@@ -57,6 +60,14 @@ namespace MCM
 
             if (!ServiceRegistrationWasCalled)
                 OnServiceRegistration();
+            
+            if (ApplicationVersionHelper.GameVersion() is { } gameVersion)
+            {
+                if (gameVersion.Major is 1 && gameVersion.Minor is 8 && gameVersion.Revision is >= 0)
+                {
+                    LocalizedTextManagerUtils.LoadLanguageData();
+                }
+            }
         }
 
         protected override void OnSubModuleUnloaded()
