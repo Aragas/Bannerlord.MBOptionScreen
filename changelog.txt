@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------------------------------
+Version: 4.7.5
+Game Versions: e1.7.2,e1.8.0
+* Workaround for the language issue
+---------------------------------------------------------------------------------------------------
 Version: 4.7.4
 Game Versions: e1.7.2,e1.8.0
 * Restored translation, fixed SubModule metadata!
