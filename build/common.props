@@ -8,11 +8,11 @@
     <ButterLibVersion>2.1.4</ButterLibVersion>
     <UIExtenderExVersion>2.2.0</UIExtenderExVersion>
     <BuildResourcesVersion>1.0.1.68</BuildResourcesVersion>
-    <BUTRSharedVersion>2.0.0.82</BUTRSharedVersion>
+    <BUTRSharedVersion>2.0.0.96</BUTRSharedVersion>
     <BUTRDependencyInjectionVersion>1.0.0.30</BUTRDependencyInjectionVersion>
-    <BUTRModuleManagerVersion>3.0.97</BUTRModuleManagerVersion>
+    <BUTRModuleManagerVersion>4.0.123</BUTRModuleManagerVersion>
     <HarmonyExtensionsVersion>3.1.0.61</HarmonyExtensionsVersion>
-    <HarmonyAnalyzerVersion>1.0.1.42</HarmonyAnalyzerVersion>
+    <HarmonyAnalyzerVersion>1.0.1.44</HarmonyAnalyzerVersion>
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
@@ -37,11 +37,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="IsExternalInit" Version="1.0.2">
+    <PackageReference Include="IsExternalInit" Version="1.0.3">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Nullable" Version="1.3.0">
+    <PackageReference Include="Nullable" Version="1.3.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
