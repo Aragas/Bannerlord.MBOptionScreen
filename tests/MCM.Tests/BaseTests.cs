@@ -8,13 +8,11 @@ using HarmonyLib;
 using NUnit.Framework;
 
 using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 using TaleWorlds.Engine;
 
-using v4::Bannerlord.BUTR.Shared.Helpers;
-using v4::Bannerlord.ModuleManager;
 using v4::MCM;
 using v4::MCM.Implementation;
 
@@ -33,13 +31,6 @@ namespace MCM.Tests
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private static bool MockedGetLoadedModules(ref IEnumerable<ModuleInfoExtended> __result)
-        {
-            __result = new List<ModuleInfoExtended>();
-            return false;
-        }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
         private static bool MockedGetModulesNames(ref string[] __result)
         {
             __result = Array.Empty<string>();
@@ -51,12 +42,11 @@ namespace MCM.Tests
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            _harmony.Patch(AccessTools2.Method(typeof(ButterLibSubModule).Assembly.GetType("Bannerlord.BUTR.Shared.Helpers.FSIOHelper"), "GetConfigPath"),
-                prefix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((string x) => MockedGetConfigsPath(ref x))));
-            _harmony.Patch(SymbolExtensions2.GetMethodInfo(() => FSIOHelper.GetConfigPath()),
-                prefix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((string x) => MockedGetConfigsPath(ref x))));
-            _harmony.Patch(SymbolExtensions2.GetMethodInfo(() => ModuleInfoHelper.GetLoadedModules()),
-                prefix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((IEnumerable<ModuleInfoExtended> x) => MockedGetLoadedModules(ref x))));
+            foreach (var fsioHelper in AccessTools2.AllTypes().Where(x => x.FullName == "Bannerlord.BUTR.Shared.Helpers.FSIOHelper"))
+            {
+                _harmony.Patch(AccessTools2.Method(fsioHelper, "GetConfigPath"),
+                    prefix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((string x) => MockedGetConfigsPath(ref x))));
+            }
             _harmony.Patch(SymbolExtensions2.GetMethodInfo(() => Utilities.GetModulesNames()),
                 prefix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((string[] x) => MockedGetModulesNames(ref x))));
 
