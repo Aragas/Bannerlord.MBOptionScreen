@@ -1,7 +1,7 @@
 ﻿extern alias v4;
 
 using Bannerlord.ButterLib;
-using Bannerlord.ButterLib.SubModuleWrappers;
+using Bannerlord.ButterLib.SubModuleWrappers2;
 
 using HarmonyLib;
 
@@ -61,12 +61,12 @@ namespace MCM.Tests
                 prefix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((string[] x) => MockedGetModulesNames(ref x))));
 
             var butterLib = new MBSubModuleBaseWrapper(new ButterLibSubModule());
-            butterLib.SubModuleLoad();
+            butterLib.OnSubModuleLoad();
             var mcm = new MBSubModuleBaseWrapper(new MCMSubModule());
-            mcm.SubModuleLoad();
-            new MBSubModuleBaseWrapper(new MCMImplementationSubModule()).SubModuleLoad();
-            butterLib.BeforeInitialModuleScreenSetAsRoot();
-            mcm.BeforeInitialModuleScreenSetAsRoot();
+            mcm.OnSubModuleLoad();
+            new MBSubModuleBaseWrapper(new MCMImplementationSubModule()).OnSubModuleLoad();
+            butterLib.OnBeforeInitialModuleScreenSetAsRoot();
+            mcm.OnBeforeInitialModuleScreenSetAsRoot();
         }
 
         [OneTimeTearDown]
