@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------------------------------
+Version: 4.7.9
+Game Versions: e1.7.2,e1.8.0
+* Fixed localization loader
+---------------------------------------------------------------------------------------------------
 Version: 4.7.8
 Game Versions: e1.7.2,e1.8.0
 * Added support for ButterLib's settings declarations
