@@ -64,8 +64,8 @@ namespace MCM.UI
         {
             MCMSubModule.Instance?.OverrideServiceContainer(new ButterLibServiceContainer());
 
-            CheckGameVersion();
-            CheckLoadOrder();
+            ValidateGameVersion();
+            ValidateLoadOrder();
         }
 
         public void OnServiceRegistration()
@@ -198,7 +198,7 @@ namespace MCM.UI
             }
         }
 
-        private static void CheckGameVersion()
+        private static void ValidateGameVersion()
         {
             var e172 = ApplicationVersionHelper.TryParse("e1.7.2", out var e172Var) ? e172Var : ApplicationVersion.Empty;
             if (ApplicationVersionHelper.GameVersion() is { } gameVersion && gameVersion < e172)
@@ -217,7 +217,7 @@ namespace MCM.UI
                 }
             }
         }
-        private static void CheckLoadOrder()
+        private static void ValidateLoadOrder()
         {
             var loadedModules = ModuleInfoHelper.GetLoadedModules().ToList();
             if (loadedModules.Count == 0) return;
