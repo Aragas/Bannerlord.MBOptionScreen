@@ -148,6 +148,7 @@ jobs:
     uses: BUTR/workflows/.github/workflows/release-steam.yml@master
     with:
       workshop_id: 2859232415
+      mod_id: MCM.Standalone
       mod_description: ${{ needs.build-module.outputs.mod_description }}
       artifact_name: bannerlord
     secrets:
