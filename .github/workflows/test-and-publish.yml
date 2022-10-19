@@ -111,6 +111,10 @@ jobs:
         dotnet build src/MCM.Publish/MCM.Publish.csproj --configuration Stable_Release -p:GameFolder="$PWD/bannerlord";
       shell: pwsh
 
+    - name: Install Bannerlord.ChangelogParser
+      run: dotnet tool install -g Bannerlord.ChangelogParser;
+      shell: pwsh
+
     - name: Run ChangelogParser
       id: changelog
       run: |
