@@ -17,8 +17,7 @@ namespace MCM.Adapter.ModLib.Functionality
             var oldOptionScreen = Module.CurrentModule.GetInitialStateOptionWithId("ModOptionsMenu");
             if (oldOptionScreen is not null)
             {
-                if (InitialStateOptions is not null)
-                    InitialStateOptions(Module.CurrentModule).Remove(oldOptionScreen);
+                InitialStateOptions?.Invoke(Module.CurrentModule).Remove(oldOptionScreen);
             }
         }
     }

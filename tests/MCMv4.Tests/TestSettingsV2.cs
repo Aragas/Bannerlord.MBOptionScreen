@@ -1,4 +1,6 @@
-﻿using MCM.Abstractions.Attributes;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
 using MCM.Abstractions.Dropdown;
 using MCM.Utils;
@@ -184,16 +186,16 @@ namespace MCMv4.Tests
 
         [SettingPropertyButton("Property Button Default Empty", Content = "Default Empty", RequireRestart = false)]
         [SettingPropertyGroup("Button")]
-        public Action PropertyButtonDefaultEmpty { get; set; } = () => { InformationManagerUtils.DisplayMessage(InformationMessageUtils.Create("Default Empty", Color.White)); };
+        public Action PropertyButtonDefaultEmpty { get; set; } = () => { InformationManagerHelper.DisplayMessage("Default Empty", Color.White); };
         [SettingPropertyButton("Property Button Default Text", Content = "Default Text", RequireRestart = false)]
         [SettingPropertyGroup("Button")]
-        public Action PropertyButtonDefaultText { get; set; } = () => { InformationManagerUtils.DisplayMessage(InformationMessageUtils.Create("Default Text", Color.White)); };
+        public Action PropertyButtonDefaultText { get; set; } = () => { InformationManagerHelper.DisplayMessage("Default Text", Color.White); };
         [SettingPropertyButton("Property Button Require Restart", Content = "Require Restart")]
         [SettingPropertyGroup("Button")]
-        public Action PropertyButtonRequireRestart { get; set; } = () => { InformationManagerUtils.DisplayMessage(InformationMessageUtils.Create("Require Restart", Color.White)); };
+        public Action PropertyButtonRequireRestart { get; set; } = () => { InformationManagerHelper.DisplayMessage("Require Restart", Color.White); };
         [SettingPropertyButton("Property Button With Hint", Content = "With Hint: Hint Text", RequireRestart = false, HintText = "Hint Text")]
         [SettingPropertyGroup("Button")]
-        public Action PropertyButtonWithHint { get; set; } = () => { InformationManagerUtils.DisplayMessage(InformationMessageUtils.Create("With Hint: Hint Text", Color.White)); };
+        public Action PropertyButtonWithHint { get; set; } = () => { InformationManagerHelper.DisplayMessage("With Hint: Hint Text", Color.White); };
 
         public class TestIntFormatter : IFormatProvider, ICustomFormatter
         {
