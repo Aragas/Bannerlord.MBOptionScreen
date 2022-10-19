@@ -152,7 +152,7 @@ jobs:
     uses: BUTR/workflows/.github/workflows/release-steam.yml@master
     with:
       workshop_id: 2859232415
-      mod_id: MCM.Standalone
+      mod_id: Bannerlord.MBOptionScreen
       mod_description: ${{ needs.build-module.outputs.mod_description }}
       artifact_name: bannerlord
     secrets:
@@ -167,7 +167,7 @@ jobs:
     needs: ["build-module"]
     uses: BUTR/workflows/.github/workflows/release-github.yml@master
     with:
-      mod_id: MCM.Standalone
+      mod_id: Bannerlord.MBOptionScreen
       mod_version: ${{ needs.build-module.outputs.mod_version }}
       mod_description: ${{ needs.build-module.outputs.mod_description }}
       artifact_name: bannerlord
