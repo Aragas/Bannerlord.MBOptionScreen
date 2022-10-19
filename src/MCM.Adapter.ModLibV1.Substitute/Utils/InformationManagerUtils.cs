@@ -30,10 +30,7 @@ namespace ModLib.Utils
             if (message is null)
                 return;
 
-            if (DisplayMessageV1 is not null)
-            {
-                DisplayMessageV1(message.Object);
-            }
+            DisplayMessageV1?.Invoke(message.Object);
         }
     }
 }
