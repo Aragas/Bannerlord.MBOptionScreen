@@ -8,7 +8,7 @@
     <PackageReference Include="Bannerlord.ModuleManager.Source" Version="$(BUTRModuleManagerVersion)" PrivateAssets="all" IncludeAssets="contentfiles" />
     <PackageReference Include="BUTR.DependencyInjection" Version="$(BUTRDependencyInjectionVersion)" PrivateAssets="all" IncludeAssets="contentfiles" />
     <PackageReference Include="BUTR.DependencyInjection.LightInject" Version="$(BUTRDependencyInjectionVersion)" PrivateAssets="all" IncludeAssets="contentfiles" />
-    <PackageReference Include="LightInject.Source" Version="6.4.1" PrivateAssets="all" IncludeAssets="contentfiles" />
+    <PackageReference Include="LightInject.Source" Version="6.6.1" PrivateAssets="all" IncludeAssets="contentfiles" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" PrivateAssets="all" IncludeAssets="compile" />
   </ItemGroup>
 

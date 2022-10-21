@@ -1,4 +1,6 @@
-﻿using BUTR.DependencyInjection;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+
+using BUTR.DependencyInjection;
 using BUTR.DependencyInjection.Extensions;
 using BUTR.DependencyInjection.Logger;
 
@@ -77,6 +79,14 @@ namespace MCM.Internal
 
             if (!ServiceRegistrationWasCalled)
                 OnServiceRegistration();
+
+            if (ApplicationVersionHelper.GameVersion() is { } gameVersion)
+            {
+                if (gameVersion.Major is 1 && gameVersion.Minor is 8 && gameVersion.Revision is >= 0)
+                {
+                    LocalizedTextManagerHelper.LoadLanguageData(ModuleInfoHelper.GetModuleByType(typeof(MCMImplementationSubModule)));
+                }
+            }
         }
 
         /// <inheritdoc />

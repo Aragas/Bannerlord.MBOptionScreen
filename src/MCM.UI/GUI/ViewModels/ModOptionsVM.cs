@@ -1,4 +1,5 @@
-﻿using Bannerlord.ModuleManager;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+using Bannerlord.ModuleManager;
 
 using BUTR.DependencyInjection;
 
@@ -8,7 +9,6 @@ using MCM.Abstractions;
 using MCM.UI.Dropdown;
 using MCM.UI.Extensions;
 using MCM.UI.Patches;
-using MCM.UI.Utils;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -204,9 +204,9 @@ namespace MCM.UI.GUI.ViewModels
                                 catch (Exception e)
                                 {
                                     _logger.LogError(e, "Error while creating a ViewModel for settings {Id}", s.SettingsId);
-                                    InformationManagerUtils.DisplayMessage(InformationMessageUtils.Create(
+                                    InformationManagerHelper.DisplayMessage(
                                         new TextObject($"{{=HNduGf7H5a}}There was an error while parsing settings from '{s.SettingsId}'! Please contact the MCM developers and the mod developer!").ToString(),
-                                        Colors.Red));
+                                        Colors.Red);
                                     return null;
                                 }
                             })
@@ -237,9 +237,9 @@ namespace MCM.UI.GUI.ViewModels
                 catch (Exception e)
                 {
                     _logger.LogError(e, "Error while creating ViewModels for the settings");
-                    InformationManagerUtils.DisplayMessage(InformationMessageUtils.Create(
+                    InformationManagerHelper.DisplayMessage(
                         new TextObject("{=JLKaTyJcyu}There was a major error while building the settings list! Please contact the MCM developers!").ToString(),
-                        Colors.Red));
+                        Colors.Red);
                 }
             }, SynchronizationContext.Current);
         }
@@ -264,7 +264,7 @@ namespace MCM.UI.GUI.ViewModels
         private void OnPresetsSelectorChange(MCMSelectorVM<DropdownSelectorItemVM<PresetKey>> selector)
         {
             var presetKey = selector.SelectedItem.OriginalItem;
-            var data = InquiryDataUtils.Create(
+            InformationManagerHelper.ShowInquiry(
                 new TextObject("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new()
                 {
                     { "PRESET", presetKey.Name }
@@ -289,7 +289,6 @@ namespace MCM.UI.GUI.ViewModels
                     PresetsSelector.SelectedIndex = SelectedMod?.PresetsSelector?.SelectedIndex ?? -1;
                     PresetsSelector.SetOnChangeAction(OnPresetsSelectorChange);
                 });
-            InformationManagerUtils.ShowInquiry(data);
         }
         private void OnModPresetsSelectorChange(MCMSelectorVM<DropdownSelectorItemVM<PresetKey>> selector)
         {
@@ -342,7 +341,7 @@ namespace MCM.UI.GUI.ViewModels
             var requireRestart = changedModSettings.Any(x => x.RestartRequired());
             if (requireRestart)
             {
-                var data = InquiryDataUtils.Create(new TextObject("{=ModOptionsVM_RestartTitle}Game Needs to Restart").ToString(),
+                InformationManagerHelper.ShowInquiry(new TextObject("{=ModOptionsVM_RestartTitle}Game Needs to Restart").ToString(),
                     new TextObject("{=ModOptionsVM_RestartDesc}The game needs to be restarted to apply mod settings changes. Do you want to close the game now?").ToString(),
                     true, true, new TextObject("{=aeouhelq}Yes").ToString(), new TextObject("{=3CpNUnVl}Cancel").ToString(),
                     () =>
@@ -357,7 +356,6 @@ namespace MCM.UI.GUI.ViewModels
                         onClose?.Invoke();
                         Utilities.QuitGame();
                     }, () => { });
-                InformationManagerUtils.ShowInquiry(data);
             }
             else
             {

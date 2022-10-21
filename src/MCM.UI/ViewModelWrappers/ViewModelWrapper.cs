@@ -70,9 +70,9 @@ namespace MCM.UI.ViewModelWrappers
                 }
             }
 
-            if (PropertiesAndMethods is not null && PropertiesAndMethods(Object) is { } storageObject && PropertiesAndMethods(this) is { } storageThis)
+            if (PropertiesAndMethods?.Invoke(Object) is { } storageObject && PropertiesAndMethods(this) is { } storageThis)
             {
-                if (GetProperties is not null && GetProperties(storageObject) is { } propsObject2 && GetProperties(storageThis) is { } propsThis2 && CachedViewModelProperties is not null)
+                if (GetProperties?.Invoke(storageObject) is { } propsObject2 && GetProperties(storageThis) is { } propsThis2 && CachedViewModelProperties is not null)
                 {
                     // TW caches the properties, since we modify each VM individually, we need to copy them
                     var type = GetType();
@@ -97,9 +97,9 @@ namespace MCM.UI.ViewModelWrappers
 
         private void CopyMethods(bool clearOriginalProperties)
         {
-            if (PropertiesAndMethods is not null && PropertiesAndMethods(Object) is { } storageObject && PropertiesAndMethods(this) is { } storageThis)
+            if (PropertiesAndMethods?.Invoke(Object) is { } storageObject && PropertiesAndMethods(this) is { } storageThis)
             {
-                if (GetMethods is not null && GetMethods(storageObject) is { } methodsObject && GetMethods(storageThis) is { } methodsThis && CachedViewModelProperties is not null)
+                if (GetMethods?.Invoke(storageObject) is { } methodsObject && GetMethods(storageThis) is { } methodsThis && CachedViewModelProperties is not null)
                 {
                     // TW caches the methods, since we modify each VM individually, we need to copy them
                     var type = GetType();

@@ -83,16 +83,10 @@ namespace MCM.UI.ViewModelWrappers
         {
             void SelectorSetOnChangeAction(object selectorVM)
             {
-                if (onChangeAction is not null)
-                {
-                    onChangeAction(this);
-                }
+                onChangeAction?.Invoke(this);
             }
 
-            if (_setOnChangeAction is not null)
-            {
-                _setOnChangeAction((Action<object>)(SelectorSetOnChangeAction));
-            }
+            _setOnChangeAction?.Invoke((Action<object>)SelectorSetOnChangeAction);
         }
     }
 }

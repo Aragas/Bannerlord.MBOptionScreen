@@ -19,7 +19,7 @@ namespace MCM.UI.Utils
             var type2 = AccessTools2.TypeByName("TaleWorlds.Core.ViewModelCollection.SelectorItemVM") ??
                         AccessTools2.TypeByName("TaleWorlds.Core.ViewModelCollection.Selector.SelectorItemVM");
 
-            var type = type1!.MakeGenericType(type2)!;
+            var type = type1!.MakeGenericType(type2);
 
             foreach (var constructorInfo in HarmonyLib.AccessTools.GetDeclaredConstructors(type) ?? Enumerable.Empty<ConstructorInfo>())
             {

@@ -9,8 +9,4 @@
     <InternalsVisibleTo Include="MCM.Bannerlord" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Utils" />
-  </ItemGroup>
-  
 </Project>
