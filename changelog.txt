@@ -1,4 +1,36 @@
 ---------------------------------------------------------------------------------------------------
+Version: 5.0.0
+Game Versions: e1.9.0
+* API v5 release
+---------------------------------------------------------------------------------------------------
+Version: 4.7.10
+Game Versions: e1.7.2,e1.8.0,e1.8.1,e1.9.0
+* Adapted to e1.9.0
+---------------------------------------------------------------------------------------------------
+Version: 4.7.9
+Game Versions: e1.7.2,e1.8.0
+* Fixed localization loader
+---------------------------------------------------------------------------------------------------
+Version: 4.7.8
+Game Versions: e1.7.2,e1.8.0
+* Added support for ButterLib's settings declarations
+---------------------------------------------------------------------------------------------------
+Version: 4.7.7
+Game Versions: e1.7.2,e1.8.0
+* Third workaround for the language issue
+---------------------------------------------------------------------------------------------------
+Version: 4.7.6
+Game Versions: e1.7.2,e1.8.0
+* Second workaround for the language issue
+---------------------------------------------------------------------------------------------------
+Version: 4.7.5
+Game Versions: e1.7.2,e1.8.0
+* Workaround for the language issue
+---------------------------------------------------------------------------------------------------
+Version: 4.7.4
+Game Versions: e1.7.2,e1.8.0
+* Restored translation, fixed SubModule metadata!
+---------------------------------------------------------------------------------------------------
 Version: 4.7.3
 Game Versions: e1.7.2,e1.8.0
 * Fixed editing values via text box freeze - thanks to Tomwa for the investigation!
