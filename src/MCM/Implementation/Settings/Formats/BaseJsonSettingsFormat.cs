@@ -14,6 +14,7 @@ using Newtonsoft.Json.Linq;
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 
 namespace MCM.Implementation.Settings.Formats
@@ -40,6 +41,20 @@ namespace MCM.Implementation.Settings.Formats
 
         protected static string GetPropertyDefinitionId(ISettingsPropertyDefinition definition) => definition.Id;
 
+        private static bool TryParse(string content, [NotNullWhen(true)] out JObject? jObject)
+        {
+            try
+            {
+                jObject = JObject.Parse(content);
+                return true;
+            }
+            catch (JsonReaderException)
+            {
+                jObject = null;
+                return false;
+            }
+        }
+        
         public string SaveJson(BaseSettings settings)
         {
             var jo = new JObject();
@@ -66,9 +81,18 @@ namespace MCM.Implementation.Settings.Formats
         // An exception for the dropdown could be made, but a generic approach would be better
         public BaseSettings LoadFromJson(BaseSettings settings, string content)
         {
+            TryLoadFromJson(ref settings, content);
+            return settings;
+        }
+        protected bool TryLoadFromJson(ref BaseSettings settings, string content)
+        {
             lock (_lock)
             {
-                var jo = JObject.Parse(content);
+                if (!TryParse(content, out var jo))
+                {
+                    return false;
+                }
+
                 var serializer = JsonSerializer.CreateDefault(JsonSerializerSettings);
 
                 _existingObjects.Clear();
@@ -88,7 +112,7 @@ namespace MCM.Implementation.Settings.Formats
                 _existingObjects.Clear();
             }
 
-            return settings;
+            return true;
         }
 
         public virtual bool Save(BaseSettings settings, string directoryPath, string filename)
@@ -115,13 +139,15 @@ namespace MCM.Implementation.Settings.Formats
                 var content = reader.ReadToEnd();
                 reader.Dispose();
 
-                return LoadFromJson(settings, content);
+                if (!TryLoadFromJson(ref settings, content))
+                    Save(settings, directoryPath, filename);
             }
             else
             {
                 Save(settings, directoryPath, filename);
-                return settings;
             }
+
+            return settings;
         }
 
         public object? FindExistingValue(string path)
