@@ -53,13 +53,15 @@ namespace MCM.Implementation.Settings.Formats.Xml
 
                 var content = JsonConvert.SerializeXmlNode(root, Newtonsoft.Json.Formatting.None, true);
 
-                return LoadFromJson(settings, content);
+                if (!TryLoadFromJson(ref settings, content))
+                    Save(settings, directoryPath, filename);
             }
             else
             {
                 Save(settings, directoryPath, filename);
-                return settings;
             }
+
+            return settings;
         }
     }
 }
