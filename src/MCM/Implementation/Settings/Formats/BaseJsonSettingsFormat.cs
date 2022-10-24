@@ -53,7 +53,7 @@ namespace MCM.Implementation.Settings.Formats
                 return false;
             }
         }
-        
+
         public string SaveJson(BaseSettings settings)
         {
             var jo = new JObject();
