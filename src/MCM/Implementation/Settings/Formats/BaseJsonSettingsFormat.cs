@@ -140,12 +140,14 @@ namespace MCM.Implementation.Settings.Formats
             var file = new FileInfo(path);
             if (file.Exists)
             {
-                var reader = file.OpenText();
-                var content = reader.ReadToEnd();
-                reader.Dispose();
-
-                if (!TryLoadFromJson(ref settings, content))
-                    Save(settings, directoryPath, filename);
+                try
+                {
+                    using var reader = file.OpenText();
+                    var content = reader.ReadToEnd();
+                    if (!TryLoadFromJson(ref settings, content))
+                        Save(settings, directoryPath, filename);
+                }
+                catch (Exception) { }
             }
             else
             {
