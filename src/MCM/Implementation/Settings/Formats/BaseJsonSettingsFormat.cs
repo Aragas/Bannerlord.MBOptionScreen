@@ -1,6 +1,5 @@
 ﻿using BUTR.DependencyInjection.Logger;
 
-using MCM.Abstractions.Common;
 using MCM.Abstractions.Common.Wrappers;
 using MCM.Abstractions.Settings;
 using MCM.Abstractions.Settings.Base;
@@ -117,21 +116,27 @@ namespace MCM.Implementation.Settings.Formats
 
         public virtual bool Save(BaseSettings settings, string directoryPath, string filename)
         {
-            var path = Path.Combine(directoryPath, filename + ".json");
+            var path = Path.Combine(directoryPath, $"{filename}.json");
 
             var content = SaveJson(settings);
 
-            var file = new FileInfo(path);
-            file.Directory?.Create();
-            var writer = file.CreateText();
-            writer.Write(content);
-            writer.Dispose();
+            try
+            {
+                var file = new FileInfo(path);
+                file.Directory?.Create();
+                using var writer = file.CreateText();
+                writer.Write(content);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
 
             return true;
         }
         public virtual BaseSettings Load(BaseSettings settings, string directoryPath, string filename)
         {
-            var path = Path.Combine(directoryPath, filename + ".json");
+            var path = Path.Combine(directoryPath, $"{filename}.json");
             var file = new FileInfo(path);
             if (file.Exists)
             {
