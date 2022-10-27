@@ -20,7 +20,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\MCM\MCM.csproj" />
-    <ProjectReference Include="..\ModLibV1.Tests\ModLibV1.Tests.csproj" />
   </ItemGroup>
 
 </Project>
