@@ -1,3 +1,6 @@
+- name: MCMv5
+  href: MCMv5/toc.yml
+  homepage: MCMv5/mcmv5.md
 - name: MCMv4
   href: MCMv4/toc.yml
   homepage: MCMv4/mcmv4.md
