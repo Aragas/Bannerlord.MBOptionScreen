@@ -22,7 +22,7 @@ namespace MCM.UI.Functionality
     internal sealed class DefaultGameMenuScreenHandler : BaseGameMenuScreenHandler
     {
         private static readonly AccessTools.FieldRef<InitialMenuOptionVM, InitialStateOption>? InitialStateOption =
-            AccessTools2.FieldRefAccess<InitialStateOption>("InitialStateOption");
+            AccessTools2.FieldRefAccess<InitialMenuOptionVM, InitialStateOption>("InitialStateOption");
 
         private static readonly WeakReference<InitialMenuVM> _instance = new(null!);
         private static Dictionary<string, (int, Func<ScreenBase?>, TextObject)> ScreensCache { get; } = new();

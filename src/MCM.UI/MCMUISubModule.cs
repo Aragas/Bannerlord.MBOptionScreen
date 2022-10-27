@@ -51,7 +51,7 @@ namespace MCM.UI
         private const string SWarningTitle =
 @"{=dzeWx4xSfR}Warning from MCM!";
         private const string SMessageWrongGameVersion =
-@"{=fGt6Gthg5y}This version of MCM is intended for e1.7.2 and higher! You are running {GAMEVERSION}!";
+@"{=fGt6Gthg5y}This version of MCM is intended for v1.0.0 and higher! You are running {GAMEVERSION}!";
 
 
         private static readonly UIExtender Extender = new("MCM.UI");

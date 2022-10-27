@@ -28,7 +28,7 @@ namespace MCM.UI.Functionality
             AccessTools2.GetDelegate<OnEscapeMenuToggledGauntletMissionEscapeMenuBaseDelegate>("TaleWorlds.MountAndBlade.GauntletUI.Mission.MissionGauntletEscapeMenuBase:OnEscapeMenuToggled");
 
         private static readonly AccessTools.FieldRef<MissionGauntletEscapeMenuBase, EscapeMenuVM>? DataSource =
-            AccessTools2.FieldRefAccess<EscapeMenuVM>("DataSource");
+            AccessTools2.FieldRefAccess<MissionGauntletEscapeMenuBase, EscapeMenuVM>("DataSource");
 
         private static readonly AccessTools.FieldRef<Dictionary<Type, Type>?>? ActualViewTypes =
             AccessTools2.StaticFieldRefAccess<Dictionary<Type, Type>>("TaleWorlds.MountAndBlade.View.Missions.ViewCreatorManager:_actualViewTypes");
@@ -37,7 +37,7 @@ namespace MCM.UI.Functionality
             AccessTools2.TypeByName("TaleWorlds.MountAndBlade.View.MissionViews.Singleplayer.MissionSingleplayerEscapeMenu");
 
         private static readonly AccessTools.FieldRef<EscapeMenuItemVM, object>? Identifier =
-            AccessTools2.FieldRefAccess<object>("_identifier");
+            AccessTools2.FieldRefAccess<EscapeMenuItemVM, object>("_identifier");
 
         private static readonly WeakReference<MissionGauntletEscapeMenuBase> _instance = new(null!);
         private static Dictionary<string, (int, Func<ScreenBase?>, TextObject)> ScreensCache { get; } = new();

@@ -19,7 +19,7 @@ namespace MCMv5.Tests
         /// </summary>
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
-            var builder = BaseSettingsBuilder.Create("Testing_Global_v4", "MCMv4 Testing Fluent Settings")!
+            var builder = BaseSettingsBuilder.Create("Testing_Global_v5", "MCMv5 Testing Fluent Settings")!
                 .SetFormat("xml")
                 .SetFolderName(string.Empty)
                 .SetSubFolder(string.Empty)

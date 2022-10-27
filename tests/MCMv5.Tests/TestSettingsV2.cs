@@ -10,8 +10,8 @@ namespace MCMv5.Tests
 {
     internal sealed class TestSettingsV2 : BaseTestGlobalSettings<TestSettingsV2>
     {
-        public override string Id => "Testing_v2_v4";
-        public override string DisplayName => "MCMv4 Testing v2 API";
+        public override string Id => "Testing_v2_v5";
+        public override string DisplayName => "MCMv5 Testing v2 API";
 
 
         [SettingPropertyBool("Property Bool Default False", RequireRestart = false)]

@@ -5,8 +5,8 @@ namespace MCMv5.Tests
 {
     internal sealed class TestSettingsNested : BaseTestGlobalSettings<TestSettingsNested>
     {
-        public override string Id => "Testing_Nested_v4";
-        public override string DisplayName => "MCMv4 Testing Nested";
+        public override string Id => "Testing_Nested_v5";
+        public override string DisplayName => "MCMv5 Testing Nested";
 
 
         [SettingPropertyInteger("Option 1", 0, 100, Order = 0, RequireRestart = false, HintText = "Option 1")]

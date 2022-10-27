@@ -6,8 +6,8 @@ namespace MCMv5.Tests
 {
     internal sealed class TestSettingsProgrammatically : BaseTestGlobalSettings<TestSettingsProgrammatically>
     {
-        public override string Id => "Testing_Programmatically_v4";
-        public override string DisplayName => "MCMv4 Testing Programmatically";
+        public override string Id => "Testing_Programmatically_v5";
+        public override string DisplayName => "MCMv5 Testing Programmatically";
 
 
         [SettingPropertyBool("Property Bool Switch", RequireRestart = false)]

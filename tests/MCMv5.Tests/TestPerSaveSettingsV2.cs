@@ -6,8 +6,8 @@ namespace MCMv5.Tests
 {
     internal sealed class TestPerSaveSettingsV2 : BaseTestPerSaveSettingsBase<TestPerSaveSettingsV2>
     {
-        public override string Id => "Testing_PerSave_v2_v4";
-        public override string DisplayName => "MCMv4 Testing PerSave";
+        public override string Id => "Testing_PerSave_v2_v5";
+        public override string DisplayName => "MCMv5 Testing PerSave";
 
 
         [SettingPropertyBool("Property Bool Default False", RequireRestart = false)]

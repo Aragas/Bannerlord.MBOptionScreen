@@ -4,8 +4,6 @@ using Bannerlord.BUTR.Shared.Utils;
 using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
-using MCM.Common;
-
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,13 +15,13 @@ using WrappedPropertyInfo = MCM.UI.Utils.WrappedPropertyInfo;
 
 namespace MCM.UI.ViewModelWrappers
 {
-    public class ViewModelWrapper : ViewModel, IWrapper
+    public class ViewModelWrapper : ViewModel
     {
         private delegate Dictionary<string, PropertyInfo> GetPropertiesDelegate(object instance);
         private delegate Dictionary<string, MethodInfo> GetMethodsDelegate(object instance);
 
-        private static readonly AccessTools.FieldRef<object, object>? PropertiesAndMethods =
-            AccessTools2.FieldRefAccess<object>("TaleWorlds.Library.ViewModel:_propertiesAndMethods");
+        private static readonly AccessTools.FieldRef<ViewModel, object>? PropertiesAndMethods =
+            AccessTools2.FieldRefAccess<ViewModel, object>("_propertiesAndMethods");
 
         private static readonly GetPropertiesDelegate? GetProperties =
             AccessTools2.GetDeclaredPropertyGetterDelegate<GetPropertiesDelegate>("TaleWorlds.Library.ViewModel+DataSourceTypeBindingPropertiesCollection:Properties");
@@ -34,9 +32,9 @@ namespace MCM.UI.ViewModelWrappers
             AccessTools2.StaticFieldRefAccess<IDictionary>("TaleWorlds.Library.ViewModel:_cachedViewModelProperties");
 
         /// <inheritdoc/>
-        public object Object { get; }
+        public ViewModel Object { get; }
 
-        protected ViewModelWrapper(object @object, bool clearOriginalProperties = true)
+        protected ViewModelWrapper(ViewModel @object, bool clearOriginalProperties = true)
         {
             Object = @object;
 
