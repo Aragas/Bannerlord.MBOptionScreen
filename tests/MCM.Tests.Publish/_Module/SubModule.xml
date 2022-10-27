@@ -1,12 +1,14 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<Module>
-  <Name value="$modulename$" />
+<Module xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/SubModule.xsd" >
   <Id value="$moduleid$" />
+  <Name value="$modulename$" />
   <Version value="v$version$" />
   <Official value="false" />
   <DefaultModule value="false" />
   <SingleplayerModule value="true" />
   <MultiplayerModule value="false" />
+  <ModuleCategory value="Singleplayer" />
   <DependedModules>
     <DependedModule Id="Bannerlord.Harmony" />
     <DependedModule Id="Bannerlord.ButterLib" />
@@ -30,25 +32,11 @@
   <SubModules>
 
     <SubModule>
-      <Name value="MCMv4 Tests" />
-      <DLLName value="MCMv4.Tests.dll" />
-      <SubModuleClassType value="MCMv4.Tests.SubModule" />
+      <Name value="MCMv5 Tests" />
+      <DLLName value="MCMv5.Tests.dll" />
+      <SubModuleClassType value="MCMv5.Tests.SubModule" />
       <Tags />
     </SubModule>
-
-    <SubModule>
-      <Name value="ModLibV1 Tests"/>
-      <DLLName value="ModLibV1.Tests.dll"/>
-      <SubModuleClassType value="ModLibV1.Tests.SubModule"/>
-      <Tags/>
-    </SubModule>
-
-    <SubModule>
-      <Name value="ModLibV13 Tests"/>
-      <DLLName value="ModLibV13.Tests.dll"/>
-      <SubModuleClassType value="ModLibV13.Tests.SubModule"/>
-      <Tags/>
-    </SubModule>
-
+    
   </SubModules>
 </Module>

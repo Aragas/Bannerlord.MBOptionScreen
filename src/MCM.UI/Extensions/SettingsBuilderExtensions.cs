@@ -5,7 +5,7 @@ using Bannerlord.ButterLib.SubSystems.Settings;
 using HarmonyLib.BUTR.Extensions;
 
 using MCM.Abstractions.FluentBuilder;
-using MCM.Abstractions.Ref;
+using MCM.Common;
 
 using Microsoft.Extensions.DependencyInjection;
 
@@ -87,7 +87,7 @@ namespace MCM.UI.Extensions
                 if (subSystemType.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ISubSystemSettings<>)))
                 {
                     var method = AccessTools2.DeclaredMethod("MCM.UI.Extensions.SettingsBuilderExtensions:AddForSubSystem")?.MakeGenericMethod(subSystemType);
-                    method?.Invoke(null, new object[] { subSystem, settings });
+                    method?.Invoke(null, new object[]{ subSystem, settings });
                 }
             }
             return settings;

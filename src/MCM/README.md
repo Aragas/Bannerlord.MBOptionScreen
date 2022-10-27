@@ -1,0 +1,1 @@
+﻿The final assembly that contains all 4 component projects. Used for NuGet and as the .dll that will be used by modders

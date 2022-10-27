@@ -1,0 +1,1 @@
+﻿Contains only MCM abstractions that do not depend on or expose the Bannerlord API

@@ -3,9 +3,9 @@
 
   <PropertyGroup>
     <Authors>Aragas, mipen</Authors>
-    <AssemblyName>MCMv4</AssemblyName>
+    <AssemblyName>MCMv5</AssemblyName>
     <Configurations>Debug;Release</Configurations>
-    <DefineConstants>$(DefineConstants);BUTRDEPENDENCYINJECTION_PUBLIC;BUTRDEPENDENCYINJECTION_BANNERLORD;</DefineConstants>
+    <DefineConstants>$(DefineConstants);BUTRDEPENDENCYINJECTION_PUBLIC;</DefineConstants>
     <!--Some code analyzers don't support common.props parsing-->
     <TargetFrameworks Condition=" '$(TargetFrameworks)' == '' ">net472</TargetFrameworks>
   </PropertyGroup>
@@ -25,10 +25,9 @@
   <!--NuGet Package-->
 
   <ItemGroup>
-    <PackageReference Include="Bannerlord.BuildResources" Version="$(BuildResourcesVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-    <PackageReference Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)" />
+    <PackageReference Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="Bannerlord.ModuleManager.Source" Version="$(BUTRModuleManagerVersion)" />
-    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*" PrivateAssets="all" />
     <PackageReference Include="BUTR.DependencyInjection" Version="$(BUTRDependencyInjectionVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="BUTR.DependencyInjection.LightInject" Version="$(BUTRDependencyInjectionVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
@@ -40,6 +39,13 @@
   <ItemGroup>
     <InternalsVisibleTo Include="MCMv4.Custom.ScreenTests" />
     <InternalsVisibleTo Include="MCM.Tests" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\MCM.Abstractions\**\*.cs" Exclude="..\MCM.Abstractions\obj\**\*;..\MCM.Abstractions\bin\**\*" LinkBase="Abstractions" />
+    <Compile Include="..\MCM.Common\**\*.cs" Exclude="..\MCM.Common\obj\**\*;..\MCM.Common\bin\**\*" LinkBase="Common" />
+    <Compile Include="..\MCM.Bannerlord\**\*.cs" Exclude="..\MCM.Bannerlord\obj\**\*;..\MCM.Bannerlord\bin\**\*" LinkBase="Bannerlord" />
+    <Compile Include="..\MCM.Implementation\**\*.cs" Exclude="..\MCM.Implementation\obj\**\*;..\MCM.Implementation\bin\**\*" LinkBase="Implementation" />
   </ItemGroup>
 
 </Project>

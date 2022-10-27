@@ -11,8 +11,10 @@ using BUTR.DependencyInjection.Logger;
 
 using HarmonyLib;
 
-using MCM.Abstractions.Settings.Base;
-using MCM.Extensions;
+using MCM.Abstractions;
+using MCM.Abstractions.Base;
+using MCM.Internal;
+using MCM.Internal.Extensions;
 using MCM.UI.ButterLib;
 using MCM.UI.Functionality;
 using MCM.UI.Functionality.Injectors;

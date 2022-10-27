@@ -1,0 +1,1 @@
+﻿The meta project that is used to create the Module and to run\debug MCM Tests

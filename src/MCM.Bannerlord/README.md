@@ -1,0 +1,1 @@
+﻿Contains internal code that provides implementations for Bannerlord API

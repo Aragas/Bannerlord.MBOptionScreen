@@ -1,5 +1,5 @@
-﻿using MCM.Abstractions.Settings.Base;
-using MCM.Abstractions.Settings.Providers;
+﻿using MCM.Abstractions;
+using MCM.Abstractions.Base;
 
 using System;
 using System.Collections.Concurrent;

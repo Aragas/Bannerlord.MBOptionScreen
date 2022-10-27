@@ -1,7 +1,7 @@
 ﻿using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
-using MCM.Abstractions;
+using MCM.Common;
 
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
