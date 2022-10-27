@@ -5,6 +5,7 @@ using MCM.Abstractions.Base;
 
 using Newtonsoft.Json;
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -41,12 +42,24 @@ namespace MCM.Implementation
 
         public BaseSettings LoadFromJson(BaseSettings settings, string content)
         {
+            TryLoadFromJson(ref settings, content);
+            return settings;
+        }
+        protected bool TryLoadFromJson(ref BaseSettings settings, string content)
+        {
             lock (_lock)
             {
-                JsonConvert.PopulateObject(content, settings, JsonSerializerSettings);
+                try
+                {
+                    JsonConvert.PopulateObject(content, settings, JsonSerializerSettings);
+                }
+                catch (JsonSerializationException e)
+                {
+                    return false;
+                }
             }
 
-            return settings;
+            return true;
         }
 
         public virtual bool Save(BaseSettings settings, string directoryPath, string filename)
@@ -55,11 +68,17 @@ namespace MCM.Implementation
 
             var content = SaveJson(settings);
 
-            var file = new FileInfo(path);
-            file.Directory?.Create();
-            var writer = file.CreateText();
-            writer.Write(content);
-            writer.Dispose();
+            try
+            {
+                var file = new FileInfo(path);
+                file.Directory?.Create();
+                using var writer = file.CreateText();
+                writer.Write(content);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
 
             return true;
         }
@@ -69,17 +88,21 @@ namespace MCM.Implementation
             var file = new FileInfo(path);
             if (file.Exists)
             {
-                var reader = file.OpenText();
-                var content = reader.ReadToEnd();
-                reader.Dispose();
-
-                return LoadFromJson(settings, content);
+                try
+                {
+                    using var reader = file.OpenText();
+                    var content = reader.ReadToEnd();
+                    if (!TryLoadFromJson(ref settings, content))
+                        Save(settings, directoryPath, filename);
+                }
+                catch (Exception) { }
             }
             else
             {
                 Save(settings, directoryPath, filename);
-                return settings;
             }
+
+            return settings;
         }
 
         protected object? GetSerializationProperty(string path)
@@ -89,12 +112,12 @@ namespace MCM.Implementation
                 return _existingObjects.TryGetValue(path, out var value) ? value : null;
             }
         }
-        
+
         protected void AddSerializationProperty(string path, object? value)
         {
             _existingObjects.Add(path, value);
         }
-        
+
         protected void ClearSerializationProperties()
         {
             _existingObjects.Clear();

@@ -206,7 +206,7 @@ namespace MCM.UI.GUI.ViewModels
                                     _logger.LogError(e, "Error while creating a ViewModel for settings {Id}", s.SettingsId);
                                     InformationManager.DisplayMessage(new InformationMessage(
                                         new TextObject($"{{=HNduGf7H5a}}There was an error while parsing settings from '{s.SettingsId}'! Please contact the MCM developers and the mod developer!").ToString(),
-                                        Colors.Red);
+                                        Colors.Red));
                                     return null;
                                 }
                             })
@@ -239,7 +239,7 @@ namespace MCM.UI.GUI.ViewModels
                     _logger.LogError(e, "Error while creating ViewModels for the settings");
                     InformationManager.DisplayMessage(new InformationMessage(
                         new TextObject("{=JLKaTyJcyu}There was a major error while building the settings list! Please contact the MCM developers!").ToString(),
-                        Colors.Red);
+                        Colors.Red));
                 }
             }, SynchronizationContext.Current);
         }
