@@ -187,16 +187,16 @@ namespace MCMv5.Tests
 
         [SettingPropertyButton("Property Button Default Empty", Content = "Default Empty", RequireRestart = false)]
         [SettingPropertyGroup("Button")]
-        public Action PropertyButtonDefaultEmpty { get; set; } = () => { InformationManagerHelper.DisplayMessage("Default Empty", Color.White); };
+        public Action PropertyButtonDefaultEmpty { get; set; } = () => { InformationManager.DisplayMessage(new InformationMessage("Default Empty", Color.White)); };
         [SettingPropertyButton("Property Button Default Text", Content = "Default Text", RequireRestart = false)]
         [SettingPropertyGroup("Button")]
-        public Action PropertyButtonDefaultText { get; set; } = () => { InformationManagerHelper.DisplayMessage("Default Text", Color.White); };
+        public Action PropertyButtonDefaultText { get; set; } = () => { InformationManager.DisplayMessage(new InformationMessage("Default Text", Color.White)); };
         [SettingPropertyButton("Property Button Require Restart", Content = "Require Restart")]
         [SettingPropertyGroup("Button")]
-        public Action PropertyButtonRequireRestart { get; set; } = () => { InformationManagerHelper.DisplayMessage("Require Restart", Color.White); };
+        public Action PropertyButtonRequireRestart { get; set; } = () => { InformationManager.DisplayMessage(new InformationMessage("Require Restart", Color.White)); };
         [SettingPropertyButton("Property Button With Hint", Content = "With Hint: Hint Text", RequireRestart = false, HintText = "Hint Text")]
         [SettingPropertyGroup("Button")]
-        public Action PropertyButtonWithHint { get; set; } = () => { InformationManagerHelper.DisplayMessage("With Hint: Hint Text", Color.White); };
+        public Action PropertyButtonWithHint { get; set; } = () => { InformationManager.DisplayMessage(new InformationMessage("With Hint: Hint Text", Color.White)); };
 
         public class TestIntFormatter : IFormatProvider, ICustomFormatter
         {

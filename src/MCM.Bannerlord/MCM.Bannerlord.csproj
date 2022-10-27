@@ -3,7 +3,7 @@
   <ItemGroup>
     <PackageReference Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="Bannerlord.ModuleManager.Source" Version="$(BUTRModuleManagerVersion)" />
-    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core.EarlyAccess" Version="$(GameVersion).*" PrivateAssets="all" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>

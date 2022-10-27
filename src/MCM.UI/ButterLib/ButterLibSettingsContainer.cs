@@ -1,5 +1,4 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
-using Bannerlord.ButterLib;
+﻿using Bannerlord.ButterLib;
 
 using MCM.Abstractions.Base;
 using MCM.Abstractions.FluentBuilder;
@@ -10,6 +9,7 @@ using MCM.UI.Extensions;
 
 using Microsoft.Extensions.Logging;
 
+using TaleWorlds.Engine;
 using TaleWorlds.Localization;
 
 using Path = System.IO.Path;
@@ -22,7 +22,7 @@ namespace MCM.UI.ButterLib
 
         public ButterLibSettingsContainer(ILogger<ButterLibSettingsContainer> logger)
         {
-            RootFolder = Path.Combine(FSIOHelper.GetConfigPath()!, "ModSettings");
+            RootFolder = Path.Combine(EngineFilePaths.ConfigsPath.Path, "ModSettings");
 
             var prop = new StorageRef<Dropdown<string>>(new(new[]
             {

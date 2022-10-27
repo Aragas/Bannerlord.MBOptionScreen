@@ -204,9 +204,9 @@ namespace MCM.UI.GUI.ViewModels
                                 catch (Exception e)
                                 {
                                     _logger.LogError(e, "Error while creating a ViewModel for settings {Id}", s.SettingsId);
-                                    InformationManagerHelper.DisplayMessage(
+                                    InformationManager.DisplayMessage(new InformationMessage(
                                         new TextObject($"{{=HNduGf7H5a}}There was an error while parsing settings from '{s.SettingsId}'! Please contact the MCM developers and the mod developer!").ToString(),
-                                        Colors.Red);
+                                        Colors.Red));
                                     return null;
                                 }
                             })
@@ -237,9 +237,9 @@ namespace MCM.UI.GUI.ViewModels
                 catch (Exception e)
                 {
                     _logger.LogError(e, "Error while creating ViewModels for the settings");
-                    InformationManagerHelper.DisplayMessage(
+                    InformationManager.DisplayMessage(new InformationMessage(
                         new TextObject("{=JLKaTyJcyu}There was a major error while building the settings list! Please contact the MCM developers!").ToString(),
-                        Colors.Red);
+                        Colors.Red));
                 }
             }, SynchronizationContext.Current);
         }
@@ -264,7 +264,7 @@ namespace MCM.UI.GUI.ViewModels
         private void OnPresetsSelectorChange(MCMSelectorVM<DropdownSelectorItemVM<PresetKey>> selector)
         {
             var presetKey = selector.SelectedItem.OriginalItem;
-            InformationManagerHelper.ShowInquiry(
+            InformationManager.ShowInquiry(new InquiryData(
                 new TextObject("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new()
                 {
                     { "PRESET", presetKey.Name }
@@ -288,7 +288,7 @@ namespace MCM.UI.GUI.ViewModels
                     PresetsSelector.SetOnChangeAction(null);
                     PresetsSelector.SelectedIndex = SelectedMod?.PresetsSelector?.SelectedIndex ?? -1;
                     PresetsSelector.SetOnChangeAction(OnPresetsSelectorChange);
-                });
+                }));
         }
         private void OnModPresetsSelectorChange(MCMSelectorVM<DropdownSelectorItemVM<PresetKey>> selector)
         {
@@ -341,7 +341,7 @@ namespace MCM.UI.GUI.ViewModels
             var requireRestart = changedModSettings.Any(x => x.RestartRequired());
             if (requireRestart)
             {
-                InformationManagerHelper.ShowInquiry(new TextObject("{=ModOptionsVM_RestartTitle}Game Needs to Restart").ToString(),
+                InformationManager.ShowInquiry(new InquiryData(new TextObject("{=ModOptionsVM_RestartTitle}Game Needs to Restart").ToString(),
                     new TextObject("{=ModOptionsVM_RestartDesc}The game needs to be restarted to apply mod settings changes. Do you want to close the game now?").ToString(),
                     true, true, new TextObject("{=aeouhelq}Yes").ToString(), new TextObject("{=3CpNUnVl}Cancel").ToString(),
                     () =>
@@ -355,7 +355,7 @@ namespace MCM.UI.GUI.ViewModels
                         OnFinalize();
                         onClose?.Invoke();
                         Utilities.QuitGame();
-                    }, () => { });
+                    }, () => { }));
             }
             else
             {
