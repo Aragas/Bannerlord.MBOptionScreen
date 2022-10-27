@@ -1,4 +1,5 @@
-﻿using TaleWorlds.Library;
+﻿using TaleWorlds.Core.ViewModelCollection.Information;
+using TaleWorlds.Library;
 
 namespace MCM.UI.Dropdown
 {
@@ -11,6 +12,6 @@ namespace MCM.UI.Dropdown
         public abstract string StringItem { get; }
 
         [DataSourceProperty]
-        public abstract ViewModel? Hint { get; }
+        public abstract HintViewModel? Hint { get; }
     }
 }

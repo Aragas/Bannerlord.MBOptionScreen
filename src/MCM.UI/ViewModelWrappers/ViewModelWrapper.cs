@@ -19,10 +19,6 @@ namespace MCM.UI.ViewModelWrappers
 {
     public class ViewModelWrapper : ViewModel, IWrapper
     {
-        private static readonly AccessTools.FieldRef<object, Dictionary<string, PropertyInfo>>? PropertyInfosField =
-            AccessTools2.FieldRefAccess<Dictionary<string, PropertyInfo>>("TaleWorlds.Library.ViewModel:_propertyInfos");
-
-
         private delegate Dictionary<string, PropertyInfo> GetPropertiesDelegate(object instance);
         private delegate Dictionary<string, MethodInfo> GetMethodsDelegate(object instance);
 
@@ -56,20 +52,6 @@ namespace MCM.UI.ViewModelWrappers
 
         private void CopyProperties(bool clearOriginalProperties)
         {
-            if (PropertyInfosField?.Invoke(Object) is { } propsObject && PropertyInfosField(this) is { } propsThis)
-            {
-                if (clearOriginalProperties) propsThis.Clear(); // clear properties
-
-                foreach (var (key, value) in propsObject)
-                {
-                    propsThis[key] = new WrappedPropertyInfo(value, Object, () =>
-                    {
-                        OnPropertyChangedWithValue(value.GetValue(Object), value.Name);
-                        OnPropertyChanged(value.Name);
-                    });
-                }
-            }
-
             if (PropertiesAndMethods?.Invoke(Object) is { } storageObject && PropertiesAndMethods(this) is { } storageThis)
             {
                 if (GetProperties?.Invoke(storageObject) is { } propsObject2 && GetProperties(storageThis) is { } propsThis2 && CachedViewModelProperties is not null)

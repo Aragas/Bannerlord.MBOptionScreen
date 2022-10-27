@@ -1,5 +1,6 @@
 ﻿using MCM.UI.Utils;
 
+using TaleWorlds.Core.ViewModelCollection.Information;
 using TaleWorlds.Library;
 
 namespace MCM.UI.Dropdown
@@ -18,7 +19,7 @@ namespace MCM.UI.Dropdown
         public override string StringItem => OriginalItem.ToString() ?? "ERROR";
 
         [DataSourceProperty]
-        public override ViewModel? Hint { get; } = HintViewModelUtils.Create();
+        public override HintViewModel? Hint { get; } = new HintViewModel();
 
         public DropdownSelectorItemVM(T @object)
         {

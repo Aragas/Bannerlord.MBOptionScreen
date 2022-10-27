@@ -1,10 +1,10 @@
 ﻿using MCM.Common;
-using MCM.UI.Utils;
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
+using TaleWorlds.Core.ViewModelCollection.Selector;
 using TaleWorlds.Localization;
 
 namespace MCM.UI.Dropdown
@@ -16,7 +16,7 @@ namespace MCM.UI.Dropdown
     {
         public static DropdownDefault<T> Empty => new(Enumerable.Empty<T>(), 0);
 
-        internal object Selector { get; private set; }
+        internal SelectorVM<SelectorItemVM> Selector { get; private set; }
 
         public int SelectedIndex
         {
@@ -46,7 +46,7 @@ namespace MCM.UI.Dropdown
         public DropdownDefault(IEnumerable<T> values, int selectedIndex) : base(values)
         {
             var select = this.Select(x => new TextObject(x?.ToString() ?? "ERROR").ToString());
-            Selector = SelectorVMUtils.Create(select, selectedIndex, null) ?? MCMSelectorVM<DropdownSelectorItemVM>.Empty;
+            Selector = new SelectorVM<SelectorItemVM>(select, selectedIndex, null);
 
             if (SelectedIndex != 0 && SelectedIndex >= Count)
                 throw new Exception();

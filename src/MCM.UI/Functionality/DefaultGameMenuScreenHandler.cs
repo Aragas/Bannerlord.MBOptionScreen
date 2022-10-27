@@ -5,9 +5,6 @@ using BUTR.DependencyInjection.Logger;
 using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
-using MCM.UI.Utils;
-using MCM.UI.Wrappers;
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -17,17 +14,17 @@ using System.Runtime.CompilerServices;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
+using TaleWorlds.MountAndBlade.ViewModelCollection.InitialMenu;
 using TaleWorlds.ScreenSystem;
 
 namespace MCM.UI.Functionality
 {
     internal sealed class DefaultGameMenuScreenHandler : BaseGameMenuScreenHandler
     {
-        private static readonly AccessTools.FieldRef<object, object>? InitialStateOption =
-            AccessTools2.FieldRefAccess<object>("TaleWorlds.MountAndBlade.ViewModelCollection.InitialMenuOptionVM:InitialStateOption") ??
-            AccessTools2.FieldRefAccess<object>("TaleWorlds.MountAndBlade.ViewModelCollection.InitialMenu.InitialMenuOptionVM:InitialStateOption");
+        private static readonly AccessTools.FieldRef<InitialMenuOptionVM, InitialStateOption>? InitialStateOption =
+            AccessTools2.FieldRefAccess<InitialStateOption>("InitialStateOption");
 
-        private static readonly WeakReference<object> _instance = new(null!);
+        private static readonly WeakReference<InitialMenuVM> _instance = new(null!);
         private static Dictionary<string, (int, Func<ScreenBase?>, TextObject)> ScreensCache { get; } = new();
 
         private readonly IBUTRLogger _logger;
@@ -38,7 +35,6 @@ namespace MCM.UI.Functionality
 
             var harmony = new Harmony("bannerlord.mcm.mainmenuscreeninjection_v4");
             harmony.Patch(
-                AccessTools2.Method("TaleWorlds.MountAndBlade.ViewModelCollection.InitialMenuVM:RefreshMenuOptions") ??
                 AccessTools2.Method("TaleWorlds.MountAndBlade.ViewModelCollection.InitialMenu.InitialMenuVM:RefreshMenuOptions"),
                 postfix: new HarmonyMethod(AccessTools2.Method(typeof(DefaultGameMenuScreenHandler), nameof(RefreshMenuOptionsPostfix)), 300));
         }
@@ -46,7 +42,7 @@ namespace MCM.UI.Functionality
         [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
         [SuppressMessage("ReSharper", "InconsistentNaming")]
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private static void RefreshMenuOptionsPostfix(object __instance, ref IMBBindingList? ____menuOptions)
+        private static void RefreshMenuOptionsPostfix(InitialMenuVM __instance, ref MBBindingList<InitialMenuOptionVM>? ____menuOptions)
         {
             if (____menuOptions is null || InitialStateOption is null) return;
 
@@ -65,9 +61,8 @@ namespace MCM.UI.Functionality
                             ScreenManager.PushScreen(screen);
                     },
                     () => (false, null));
-                var menuOptionsCopy = ____menuOptions.Cast<object>().ToArray();
-                var insertIndex = menuOptionsCopy.FindIndex(i => new OrderIndexWrapper(InitialStateOption(i)).OrderIndex > index);
-                ____menuOptions.Insert(insertIndex, InitialMenuOptionVMUtils.Create(initialState));
+                var insertIndex = ____menuOptions.FindIndex(i => InitialStateOption(i).OrderIndex > index);
+                ____menuOptions.Insert(insertIndex, new InitialMenuOptionVM(initialState));
             }
         }
 
@@ -87,10 +82,9 @@ namespace MCM.UI.Functionality
                             ScreenManager.PushScreen(screen);
                     },
                     () => (false, null));
-                var menuOptions = new MenuOptionsWrapper(instance).MenuOptions;
-                var menuOptionsCopy = menuOptions?.Cast<object>().ToArray();
-                var insertIndex = menuOptionsCopy.FindIndex(i => new OrderIndexWrapper(InitialStateOption(i)).OrderIndex > index);
-                menuOptions?.Insert(insertIndex, InitialMenuOptionVMUtils.Create(initialState));
+                var menuOptions = instance.MenuOptions;
+                var insertIndex = menuOptions.FindIndex(i => InitialStateOption(i).OrderIndex > index);
+                menuOptions?.Insert(insertIndex, new InitialMenuOptionVM(initialState));
             }
 
             ScreensCache[internalName] = (index, screenFactory, text);
@@ -99,8 +93,8 @@ namespace MCM.UI.Functionality
         {
             if (_instance.TryGetTarget(out var instance) && InitialStateOption is not null)
             {
-                var menuOptions = new MenuOptionsWrapper(instance).MenuOptions;
-                var found = menuOptions?.Cast<object>().FirstOrDefault(i => new IdWrapper(InitialStateOption(i)).Id == internalName);
+                var menuOptions = instance.MenuOptions;
+                var found = menuOptions?.FirstOrDefault(i => InitialStateOption(i).Id == internalName);
                 if (found is not null)
                     menuOptions?.Remove(found);
             }
