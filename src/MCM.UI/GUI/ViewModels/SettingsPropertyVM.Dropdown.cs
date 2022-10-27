@@ -1,8 +1,10 @@
-﻿using MCM.Abstractions.Common.ViewModelWrappers;
-using MCM.Abstractions.Common.Wrappers;
+﻿using MCM.Common;
 using MCM.UI.Actions;
+using MCM.UI.Dropdown;
 
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 
 using TaleWorlds.Library;
 
@@ -10,8 +12,8 @@ namespace MCM.UI.GUI.ViewModels
 {
     internal sealed partial class SettingsPropertyVM : ViewModel
     {
-        private SelectorVMWrapper? _selectorVMWrapper;
-
+        private MCMSelectorVM<DropdownSelectorItemVM, string>? _selectorVMWrapper;
+        
         [DataSourceProperty]
         public bool IsDropdown { get; }
         [DataSourceProperty]
@@ -20,7 +22,9 @@ namespace MCM.UI.GUI.ViewModels
         public bool IsDropdownCheckbox { get; }
 
         [DataSourceProperty]
-        public SelectorVMWrapper DropdownValue => _selectorVMWrapper ??= new SelectorVMWrapper(new SelectorWrapper(PropertyReference.Value).Selector);
+        public MCMSelectorVM<DropdownSelectorItemVM, string> DropdownValue => _selectorVMWrapper ??= new MCMSelectorVM<DropdownSelectorItemVM, string>(
+            (PropertyReference.Value as IEnumerable<object> ?? Enumerable.Empty<object>()).Select(x => LocalizationUtils.Localize(x.ToString())),
+            new SelectedIndexWrapper(PropertyReference.Value).SelectedIndex, null);
 
         private void DropdownValue_PropertyChanged(object? obj, PropertyChangedEventArgs args)
         {

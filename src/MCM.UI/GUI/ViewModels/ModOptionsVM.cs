@@ -5,12 +5,10 @@ using BUTR.DependencyInjection;
 
 using ComparerExtensions;
 
-using MCM.Abstractions.Common.ViewModelWrappers;
-using MCM.Abstractions.Common.Wrappers;
-using MCM.Abstractions.Settings.Providers;
+using MCM.Abstractions;
+using MCM.UI.Dropdown;
 using MCM.UI.Extensions;
 using MCM.UI.Patches;
-using MCM.Utils;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -162,7 +160,7 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
         [DataSourceProperty]
-        public SelectorVMWrapper PresetsSelector { get; } = new(SelectorVMUtils.Create(Enumerable.Empty<string>(), -1, null));
+        public MCMSelectorVM<DropdownSelectorItemVM<PresetKey>> PresetsSelector { get; } = new(Enumerable.Empty<PresetKey>(), -1, null);
         [DataSourceProperty]
         public bool IsPresetsSelectorVisible => SelectedMod is not null;
 
@@ -195,7 +193,7 @@ namespace MCM.UI.GUI.ViewModels
                             _logger.LogWarning("SynchronizationContext.Current is the UI SynchronizationContext");
                         }
 
-                        var settingsVM = BaseSettingsProvider.Instance!.CreateModSettingsDefinitions
+                        var settingsVM = BaseSettingsProvider.Instance!.SettingsDefinitions
                             .Parallel()
                             .Select(s =>
                             {
@@ -206,9 +204,9 @@ namespace MCM.UI.GUI.ViewModels
                                 catch (Exception e)
                                 {
                                     _logger.LogError(e, "Error while creating a ViewModel for settings {Id}", s.SettingsId);
-                                    InformationManagerHelper.DisplayMessage(
+                                    InformationManager.DisplayMessage(new InformationMessage(
                                         new TextObject($"{{=HNduGf7H5a}}There was an error while parsing settings from '{s.SettingsId}'! Please contact the MCM developers and the mod developer!").ToString(),
-                                        Colors.Red);
+                                        Colors.Red));
                                     return null;
                                 }
                             })
@@ -239,9 +237,9 @@ namespace MCM.UI.GUI.ViewModels
                 catch (Exception e)
                 {
                     _logger.LogError(e, "Error while creating ViewModels for the settings");
-                    InformationManagerHelper.DisplayMessage(
+                    InformationManager.DisplayMessage(new InformationMessage(
                         new TextObject("{=JLKaTyJcyu}There was a major error while building the settings list! Please contact the MCM developers!").ToString(),
-                        Colors.Red);
+                        Colors.Red));
                 }
             }, SynchronizationContext.Current);
         }
@@ -263,23 +261,24 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
 
-        private void OnPresetsSelectorChange(SelectorVMWrapper selector)
+        private void OnPresetsSelectorChange(MCMSelectorVM<DropdownSelectorItemVM<PresetKey>> selector)
         {
-            var stringItem = new StringItemWrapper(selector.SelectedItem).StringItem;
-            InformationManagerHelper.ShowInquiry(new TextObject("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new()
+            var presetKey = selector.SelectedItem.OriginalItem;
+            InformationManager.ShowInquiry(new InquiryData(
+                new TextObject("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new()
                 {
-                    { "PRESET", stringItem }
+                    { "PRESET", presetKey.Name }
                 }).ToString(),
                 new TextObject("{=ModOptionsVM_Discard}Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?", new()
                 {
                     { "NAME", SelectedMod?.DisplayName },
-                    { "ITEM", stringItem }
+                    { "ITEM", presetKey.Name }
                 }).ToString(),
                 true, true, new TextObject("{=aeouhelq}Yes").ToString(),
                 new TextObject("{=8OkPHu4f}No").ToString(),
                 () =>
                 {
-                    SelectedMod!.ChangePreset(stringItem);
+                    SelectedMod!.ChangePreset(presetKey.Id);
                     var selectedMod = SelectedMod;
                     ExecuteSelect(null);
                     ExecuteSelect(selectedMod);
@@ -289,9 +288,9 @@ namespace MCM.UI.GUI.ViewModels
                     PresetsSelector.SetOnChangeAction(null);
                     PresetsSelector.SelectedIndex = SelectedMod?.PresetsSelector?.SelectedIndex ?? -1;
                     PresetsSelector.SetOnChangeAction(OnPresetsSelectorChange);
-                });
+                }));
         }
-        private void OnModPresetsSelectorChange(SelectorVMWrapper selector)
+        private void OnModPresetsSelectorChange(MCMSelectorVM<DropdownSelectorItemVM<PresetKey>> selector)
         {
             PresetsSelector.SetOnChangeAction(null);
             PresetsSelector.SelectedIndex = selector.SelectedIndex;
@@ -342,7 +341,7 @@ namespace MCM.UI.GUI.ViewModels
             var requireRestart = changedModSettings.Any(x => x.RestartRequired());
             if (requireRestart)
             {
-                InformationManagerHelper.ShowInquiry(new TextObject("{=ModOptionsVM_RestartTitle}Game Needs to Restart").ToString(),
+                InformationManager.ShowInquiry(new InquiryData(new TextObject("{=ModOptionsVM_RestartTitle}Game Needs to Restart").ToString(),
                     new TextObject("{=ModOptionsVM_RestartDesc}The game needs to be restarted to apply mod settings changes. Do you want to close the game now?").ToString(),
                     true, true, new TextObject("{=aeouhelq}Yes").ToString(), new TextObject("{=3CpNUnVl}Cancel").ToString(),
                     () =>
@@ -356,7 +355,7 @@ namespace MCM.UI.GUI.ViewModels
                         OnFinalize();
                         onClose?.Invoke();
                         Utilities.QuitGame();
-                    }, () => { });
+                    }, () => { }));
             }
             else
             {

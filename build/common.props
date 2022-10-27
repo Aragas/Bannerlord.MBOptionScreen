@@ -2,15 +2,15 @@
 <Project>
 
   <PropertyGroup>
-    <GameVersion>1.7.2</GameVersion>
-    <Version>4.7.11</Version>
+    <GameVersion>1.0.0</GameVersion>
+    <Version>5.0.0</Version>
     <HarmonyVersion>2.2.2</HarmonyVersion>
-    <ButterLibVersion>2.2.8</ButterLibVersion>
-    <UIExtenderExVersion>2.2.12</UIExtenderExVersion>
+    <ButterLibVersion>2.3.1</ButterLibVersion>
+    <UIExtenderExVersion>2.3.0</UIExtenderExVersion>
     <BuildResourcesVersion>1.0.1.68</BuildResourcesVersion>
-    <BUTRSharedVersion>2.0.0.114</BUTRSharedVersion>
+    <BUTRSharedVersion>3.0.0.118</BUTRSharedVersion>
     <BUTRDependencyInjectionVersion>1.0.0.30</BUTRDependencyInjectionVersion>
-    <BUTRModuleManagerVersion>4.0.147</BUTRModuleManagerVersion>
+    <BUTRModuleManagerVersion>4.0.149</BUTRModuleManagerVersion>
     <HarmonyExtensionsVersion>3.1.0.67</HarmonyExtensionsVersion>
     <HarmonyAnalyzerVersion>1.0.1.44</HarmonyAnalyzerVersion>
     <LangVersion>9.0</LangVersion>
@@ -37,14 +37,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="IsExternalInit" Version="1.0.3">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Nullable" Version="1.3.1">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="IsExternalInit" Version="1.0.3" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+    <PackageReference Include="Nullable" Version="1.3.1" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
   </ItemGroup>
 
   <!--GitHub Actions-->
@@ -76,10 +70,7 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(GITHUB_ACTIONS)' != 'true'">
-    <PackageReference Include="BUTR.Harmony.Analyzer" Version="$(HarmonyAnalyzerVersion)">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="BUTR.Harmony.Analyzer" Version="$(HarmonyAnalyzerVersion)" PrivateAssets="all" IncludeAssets="contentfiles"/>
   </ItemGroup>
 
 </Project>

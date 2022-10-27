@@ -1,12 +1,8 @@
-﻿using MCM.Abstractions.Common.ViewModelWrappers;
-using MCM.Abstractions.Common.Wrappers;
-using MCM.Abstractions.Settings.Base;
-using MCM.Abstractions.Settings.Models;
-using MCM.Abstractions.Settings.Providers;
-using MCM.Extensions;
+﻿using MCM.Abstractions;
+using MCM.Abstractions.Base;
 using MCM.UI.Actions;
+using MCM.UI.Dropdown;
 using MCM.UI.Utils;
-using MCM.Utils;
 
 using System;
 using System.Collections.Generic;
@@ -23,7 +19,7 @@ namespace MCM.UI.GUI.ViewModels
         private bool _isSelected;
         private Action<SettingsVM> _executeSelect = default!;
         private MBBindingList<SettingsPropertyGroupVM> _settingPropertyGroups = default!;
-        private readonly IDictionary<string, BaseSettings>? _cachedPresets;
+        private readonly IDictionary<PresetKey, BaseSettings>? _cachedPresets;
 
         public ModOptionsVM MainView { get; }
         public UndoRedoStack URS { get; } = new();
@@ -31,7 +27,7 @@ namespace MCM.UI.GUI.ViewModels
         public SettingsDefinition SettingsDefinition { get; }
         public BaseSettings SettingsInstance => BaseSettingsProvider.Instance!.GetSettings(SettingsDefinition.SettingsId)!;
 
-        public SelectorVMWrapper? PresetsSelector { get; }
+        public MCMSelectorVM<DropdownSelectorItemVM<PresetKey>>? PresetsSelector { get; }
 
         [DataSourceProperty]
         public int UIVersion => SettingsInstance.UIVersion;
@@ -68,11 +64,12 @@ namespace MCM.UI.GUI.ViewModels
 
             // new TaskFactory().StartNew(() =>
             // {
-            _cachedPresets = SettingsInstance.GetAvailablePresets().ToDictionary(pair => pair.Key, pair => pair.Value());
-
-            PresetsSelector = new(SelectorVMUtils.Create(new List<string> { new TextObject("{=SettingsVM_Custom}Custom").ToString() }.Concat(_cachedPresets.Keys.Select(x => new TextObject(x).ToString())), -1, null));
-            var wrapper = new CanBeSelectedWrapper(PresetsSelector.ItemList?[0]);
-            wrapper.CanBeSelected = false;
+            _cachedPresets = SettingsInstance.GetBuiltInPresets().Concat(SettingsInstance.GetExternalPresets()).ToDictionary(preset => new PresetKey(preset), preset => preset.LoadPreset());
+           
+            var customPresetText = new TextObject("{=SettingsVM_Custom}Custom").ToString();
+            var presets = new List<PresetKey> { new("custom", customPresetText) }.Concat(_cachedPresets.Keys);
+            PresetsSelector = new MCMSelectorVM<DropdownSelectorItemVM<PresetKey>>(presets, -1, null);
+            PresetsSelector.ItemList[0].CanBeSelected = false;
 
             RecalculateIndex();
             // });
@@ -137,26 +134,22 @@ namespace MCM.UI.GUI.ViewModels
             .SelectMany(x => SettingsUtils.GetAllSettingPropertyDefinitions(x.SettingPropertyGroupDefinition))
             .Any(p => p.RequireRestart && URS.RefChanged(p.PropertyReference));
 
-        public void ChangePreset(string presetName)
+        public void ChangePreset(string presetId)
         {
             if (_cachedPresets is null)
                 return;
 
-            var settings = SettingsInstance;
-
-            if (_cachedPresets.TryGetValue(presetName, out var preset))
-                UISettingsUtils.OverrideValues(URS, settings, preset);
+            if (_cachedPresets.TryGetValue(new PresetKey(presetId, string.Empty), out var preset))
+                UISettingsUtils.OverrideValues(URS, SettingsInstance, preset);
 
             RecalculateIndex();
         }
-        public void ChangePresetValue(string presetName, string valueId)
+        public void ChangePresetValue(string presetId, string valueId)
         {
             if (_cachedPresets is null)
                 return;
 
-            var settings = SettingsInstance;
-
-            if (_cachedPresets.TryGetValue(presetName, out var preset))
+            if (_cachedPresets.TryGetValue(new PresetKey(presetId, string.Empty), out var preset))
             {
                 var current = SettingsInstance.GetAllSettingPropertyDefinitions().FirstOrDefault(spd => spd.Id == valueId);
                 var @new = preset.GetAllSettingPropertyDefinitions().FirstOrDefault(spd => spd.Id == valueId);
@@ -169,7 +162,7 @@ namespace MCM.UI.GUI.ViewModels
         }
         public void ResetSettings()
         {
-            ChangePreset(new TextObject("{=BaseSettings_Default}Default").ToString());
+            ChangePreset(BaseSettings.DefaultPresetId);
         }
         public void SaveSettings()
         {
@@ -177,7 +170,7 @@ namespace MCM.UI.GUI.ViewModels
         }
         public void ResetSettingsValue(string valueId)
         {
-            ChangePresetValue(new TextObject("{=BaseSettings_Default}Default").ToString(), valueId);
+            ChangePresetValue(BaseSettings.DefaultPresetId, valueId);
         }
 
 

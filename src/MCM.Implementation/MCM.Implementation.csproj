@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\MCM.Abstractions\MCM.Abstractions.csproj" />
+    <ProjectReference Include="..\MCM.Common\MCM.Common.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="MCM.Bannerlord" />
+  </ItemGroup>
+
+</Project>

@@ -1,9 +1,6 @@
-﻿using MCM.Abstractions.Settings;
-using MCM.Abstractions.Settings.Base;
-using MCM.Abstractions.Settings.Models;
-using MCM.Extensions;
+﻿using MCM.Abstractions;
+using MCM.Abstractions.Base;
 using MCM.UI.Actions;
-using MCM.Utils;
 
 using Microsoft.Extensions.Logging;
 
@@ -42,14 +39,14 @@ namespace MCM.UI.Utils
                 if (currentSubGroups.TryGetValue(nspg.GroupName, out var spg))
                     OverrideValues(urs, spg, nspg);
                 else
-                    MCMUISubModule.Logger.LogWarning("{NewId}::{GroupName} was not found on, {CurrentId}", @new.DisplayGroupName, nspg.GroupName, current.DisplayGroupName);
+                    MCMUISubModule.Logger.LogWarning("{NewId}::{GroupName} was not found on, {CurrentId}", @new.GroupName, nspg.GroupName, current.GroupName);
             }
             foreach (var nsp in @new.SettingProperties)
             {
                 if (currentSettingProperties.TryGetValue(nsp.DisplayName, out var sp))
                     OverrideValues(urs, sp, nsp);
                 else
-                    MCMUISubModule.Logger.LogWarning("{NewId}::{GroupName} was not found on, {CurrentId}", @new.DisplayGroupName, nsp.DisplayName, current.DisplayGroupName);
+                    MCMUISubModule.Logger.LogWarning("{NewId}::{GroupName} was not found on, {CurrentId}", @new.GroupName, nsp.DisplayName, current.GroupName);
             }
         }
         public static void OverrideValues(UndoRedoStack urs, ISettingsPropertyDefinition current, ISettingsPropertyDefinition @new)

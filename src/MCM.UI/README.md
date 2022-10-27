@@ -1,0 +1,1 @@
+﻿The assembly that will be used by Bannerlord to render the MCM Settings

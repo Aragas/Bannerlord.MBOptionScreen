@@ -1,6 +1,4 @@
-﻿using MCM.UI.Actions;
-
-using TaleWorlds.Library;
+﻿using TaleWorlds.Library;
 
 namespace MCM.UI.GUI.ViewModels
 {

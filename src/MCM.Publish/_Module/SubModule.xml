@@ -1,21 +1,21 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <Module xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
         xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/SubModule.xsd" >
-  <Name value="$modulename$" />
   <Id value="$moduleid$" />
+  <Name value="$modulename$" />
   <Version value="v$version$" />
   <Official value="false" />
   <DefaultModule value="false" />
   <SingleplayerModule value="true" />
   <MultiplayerModule value="false" />
+  <ModuleCategory value="Singleplayer" />
   <Url value="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" />
   <DependedModules>
     <DependedModule Id="Bannerlord.Harmony" DependentVersion="v$harmonyversion$" />
-    <!--<DependedModule Id="Bannerlord.ModuleLoader" />-->
     <DependedModule Id="Bannerlord.ButterLib" DependentVersion="v$butterlibversion$" />
     <DependedModule Id="Bannerlord.UIExtenderEx" DependentVersion="v$uiextenderexversion$" />
   </DependedModules>
-  <!-- Prototype -->
+  <!-- Community Metadata -->
   <DependedModuleMetadatas>
     <DependedModuleMetadata id="Bannerlord.Harmony" order="LoadBeforeThis" version="v$harmonyversion$" />
     <DependedModuleMetadata id="Bannerlord.ModuleLoader" order="LoadBeforeThis" version="v$moduleloaderversion$" optional="true" />
@@ -28,52 +28,30 @@
     <DependedModuleMetadata id="StoryMode" order="LoadAfterThis" version="e$gameversion$.*" optional="true" />
     <DependedModuleMetadata id="CustomBattle" order="LoadAfterThis" version="e$gameversion$.*" optional="true" />
 
-    <DependedModuleMetadata id="ModLib" order="LoadAfterThis" optional="true" />
-
-    <DependedModuleMetadata id="Bannerlord.MBOptionScreen.ModLib" incompatible="true" />
-    <DependedModuleMetadata id="Bannerlord.MBOptionScreen.MBO" incompatible="true" />
+    <DependedModuleMetadata id="ModLib" order="LoadAfterThis" incompatible="true" />
   </DependedModuleMetadatas>
-  <!-- Prototype -->
+  <!-- Community Metadata -->
   <SubModules>
-    <!--Abstraction-->
+    <!--Abstraction -->
     <SubModule>
-      <Name value="MCMv4" />
-      <DLLName value="MCMv4.dll" />
+      <Name value="MCMv5" />
+      <DLLName value="MCMv5.dll" />
       <SubModuleClassType value="MCM.MCMSubModule" />
       <Tags />
     </SubModule>
-    <!--General Implementation-->
+    <!--Builtin SubModule -->
     <SubModule>
-      <Name value="MCMv4 Basic Implementation" />
-      <DLLName value="MCMv4.dll" />
-      <SubModuleClassType value="MCM.Implementation.MCMImplementationSubModule" />
+      <Name value="MCMv5 Basic Implementation" />
+      <DLLName value="MCMv5.dll" />
+      <SubModuleClassType value="MCM.Internal.MCMImplementationSubModule" />
       <Tags />
     </SubModule>
-    <!--UI Implementation-->
+    <!--UI SubModule -->
     <SubModule>
-      <Name value="MCMv4 UI" />
-      <DLLName value="MCMv4.UI.dll" />
+      <Name value="MCMv5 UI" />
+      <DLLName value="MCMv5.UI.dll" />
       <SubModuleClassType value="MCM.UI.MCMUISubModule" />
       <Tags />
-    </SubModule>
-    <!--ModLib-->
-    <SubModule>
-      <Name value="ModLib Substitute"/>
-      <DLLName value="ModLib.dll"/>
-      <SubModuleClassType value="ModLib.ModLibSubModule"/>
-      <Tags/>
-    </SubModule>
-    <SubModule>
-      <Name value="ModLib.Definitions Substitute"/>
-      <DLLName value="ModLib.Definitions.dll"/>
-      <SubModuleClassType value="ModLib.Definitions.ModLibSubModule"/>
-      <Tags/>
-    </SubModule>
-    <SubModule>
-      <Name value="MCMv4 ModLib Adapter"/>
-      <DLLName value="MCMv4.Adapter.ModLib.dll"/>
-      <SubModuleClassType value="MCM.Adapter.ModLib.MCMModLibSubModule"/>
-      <Tags/>
     </SubModule>
   </SubModules>
 </Module>

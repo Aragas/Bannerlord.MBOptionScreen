@@ -1,16 +1,12 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
-
-using BUTR.DependencyInjection;
+﻿using BUTR.DependencyInjection;
 using BUTR.DependencyInjection.Extensions;
 using BUTR.DependencyInjection.LightInject;
 using BUTR.DependencyInjection.Logger;
 
-using MCM.Abstractions.Settings.Formats;
-using MCM.Abstractions.Settings.Properties;
-using MCM.Abstractions.Settings.Providers;
-using MCM.Extensions;
+using MCM.Abstractions;
+using MCM.Abstractions.Properties;
+using MCM.Internal.Extensions;
 using MCM.LightInject;
-using MCM.Utils;
 
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
@@ -22,9 +18,9 @@ namespace MCM
 {
     public sealed class MCMSubModule : MBSubModuleBase
     {
-        internal static IBUTRLogger<MCMSubModule> Logger = new DefaultBUTRLogger<MCMSubModule>();
+        private static IBUTRLogger<MCMSubModule> Logger = new DefaultBUTRLogger<MCMSubModule>();
 
-        internal static ServiceContainer LightInjectServiceContainer = new();
+        private static ServiceContainer LightInjectServiceContainer = new();
 
         public static MCMSubModule? Instance { get; private set; }
 
@@ -60,14 +56,6 @@ namespace MCM
 
             if (!ServiceRegistrationWasCalled)
                 OnServiceRegistration();
-
-            if (ApplicationVersionHelper.GameVersion() is { } gameVersion)
-            {
-                if (gameVersion.Major is 1 && gameVersion.Minor is 8 && gameVersion.Revision is >= 0)
-                {
-                    LocalizedTextManagerHelper.LoadLanguageData(ModuleInfoHelper.GetModuleByType(typeof(MCMSubModule)));
-                }
-            }
         }
 
         protected override void OnSubModuleUnloaded()

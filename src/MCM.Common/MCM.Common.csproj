@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <PackageReference Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)" PrivateAssets="all" IncludeAssets="contentfiles" />
+    <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" IncludeAssets="compile" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="MCM.Bannerlord" />
+    <InternalsVisibleTo Include="MCM.Abstractions" />
+    <InternalsVisibleTo Include="MCM.Implementation" />
+  </ItemGroup>
+  
+</Project>

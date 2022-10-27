@@ -1,4 +1,13 @@
 ---------------------------------------------------------------------------------------------------
+Version: 5.0.0
+Game Versions: v1.0.0
+* API v5 release
+* One of the main new features - external presets, to be fully added soon
+---------------------------------------------------------------------------------------------------
+Version: 4.7.12
+Game Versions: e1.7.2,e1.8.0,e1.8.1,e1.9.0
+* Try/catch saving to filesystem
+---------------------------------------------------------------------------------------------------
 Version: 4.7.11
 Game Versions: e1.7.2,e1.8.0,e1.8.1,e1.9.0
 * When loading incorrect Json, reset with saving a correct default
