@@ -4,10 +4,13 @@ using MCM.Abstractions;
 using MCM.Abstractions.Base;
 
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 
 namespace MCM.Implementation
 {
@@ -51,9 +54,17 @@ namespace MCM.Implementation
             {
                 try
                 {
-                    JsonConvert.PopulateObject(content, settings, JsonSerializerSettings);
+                    if (!TryParse(content, out var jo))
+                        return false;
+
+                    using var reader = jo.CreateReader();
+                    var serializer = JsonSerializer.CreateDefault(JsonSerializerSettings);
+                    var settingsType = settings.GetType();
+                    var settingsConverter = JsonSerializerSettings.Converters.OfType<BaseSettingsJsonConverter>().FirstOrDefault();
+                    if (settingsConverter is not null && settingsConverter.CanConvert(settingsType))
+                        settingsConverter.ReadJson(reader, settingsType, settings, serializer);
                 }
-                catch (JsonSerializationException e)
+                catch (JsonSerializationException)
                 {
                     return false;
                 }
@@ -121,6 +132,20 @@ namespace MCM.Implementation
         protected void ClearSerializationProperties()
         {
             _existingObjects.Clear();
+        }
+
+        private static bool TryParse(string content, [NotNullWhen(true)] out JObject? jObject)
+        {
+            try
+            {
+                jObject = JObject.Parse(content);
+                return true;
+            }
+            catch (JsonReaderException)
+            {
+                jObject = null;
+                return false;
+            }
         }
     }
 }
