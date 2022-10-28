@@ -31,7 +31,7 @@ namespace MCM.Abstractions.Base.Global
                 _ => throw new Exception()
             };
         }
-        
+
         public static ExternalGlobalSettings? CreateFromXmlFile(string filePath, PropertyChangedEventHandler? propertyChanged = null)
         {
             using var xmlStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
@@ -62,7 +62,7 @@ namespace MCM.Abstractions.Base.Global
                 FilePath = filePath
             };
         }
-        
+
         public string FilePath { get; init; }
 
         private ExternalGlobalSettings(string id, string displayName, string folderName, string subFolder, string format, int uiVersion, char subGroupDelimiter, PropertyChangedEventHandler? onPropertyChanged, IEnumerable<SettingsPropertyGroupDefinition> settingPropertyGroups, IEnumerable<ISettingsPresetBuilder> presets)

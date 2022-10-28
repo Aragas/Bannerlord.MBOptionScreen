@@ -10,7 +10,7 @@ namespace MCM.Implementation.Global
             // Ignore derived types, only register concrete FluentGlobalSettings
             if (settings.GetType() != typeof(FluentGlobalSettings))
                 return;
-            
+
             RegisterSettings(settings);
         }
         public void Unregister(FluentGlobalSettings settings)
@@ -18,7 +18,7 @@ namespace MCM.Implementation.Global
             // Ignore derived types, only register concrete FluentGlobalSettings
             if (settings.GetType() != typeof(FluentGlobalSettings))
                 return;
-            
+
             if (LoadedSettings.ContainsKey(settings.Id))
                 LoadedSettings.Remove(settings.Id);
         }

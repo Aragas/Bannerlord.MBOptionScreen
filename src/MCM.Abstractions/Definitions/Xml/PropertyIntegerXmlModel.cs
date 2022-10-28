@@ -12,7 +12,7 @@ namespace MCM.Abstractions.Xml
 
         [XmlAttribute("MaxValue")]
         public decimal MaxValue { get; set; }
-        
+
         [XmlElement("Value")]
         public decimal Value { get; set; }
     }

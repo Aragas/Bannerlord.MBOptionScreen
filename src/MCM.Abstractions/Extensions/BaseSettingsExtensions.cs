@@ -29,7 +29,7 @@ namespace MCM.Abstractions
             settings.GetSettingPropertyGroups().SelectMany(SettingsUtils.GetAllSettingPropertyDefinitions);
         public static IEnumerable<SettingsPropertyGroupDefinition> GetAllSettingPropertyGroupDefinitions(this BaseSettings settings) =>
             settings.GetSettingPropertyGroups().SelectMany(SettingsUtils.GetAllSettingPropertyGroupDefinitions);
-        
+
         public static IEnumerable<ISettingsPreset> GetExternalPresets(this BaseSettings settings) =>
             GenericServiceProvider.GetService<BaseSettingsProvider>()?.GetPresets(settings.Id) ?? Enumerable.Empty<ISettingsPreset>();
     }

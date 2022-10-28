@@ -51,14 +51,14 @@ namespace MCM.Abstractions.Base
                                                                              (SettingsCtor) (() => (BaseSettings) FormatterServices.GetUninitializedObject(t)));
             return constructor();
         }
-        
+
         public virtual BaseSettings CopyAsNew()
         {
             var newSettings = CreateNew();
             SettingsUtils.OverrideSettings(newSettings, this);
             return newSettings;
         }
-        
+
         public virtual IEnumerable<ISettingsPreset> GetBuiltInPresets()
         {
             yield return new MemorySettingsPreset(Id, DefaultPresetId, DefaultPresetName, CreateNew);

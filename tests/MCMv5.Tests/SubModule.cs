@@ -37,7 +37,7 @@ namespace MCMv5.Tests
                     .AddText("prop_4", "Test", new ProxyRef<string>(() => _stringValue, o => _stringValue = o), null))
                 .CreateGroup("Testing 4", groupBuilder => groupBuilder
                     .AddButton("prop_5", "Test2", new StorageRef((Action) (() => { })), "Test", null))
-                .CreatePreset("test_v1","Test", presetBuilder => presetBuilder
+                .CreatePreset("test_v1", "Test", presetBuilder => presetBuilder
                     .SetPropertyValue("prop_1", true)
                     .SetPropertyValue("prop_2", 2)
                     .SetPropertyValue("prop_3", 1.5F)

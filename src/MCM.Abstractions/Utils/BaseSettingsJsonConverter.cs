@@ -31,7 +31,7 @@ namespace MCM.Implementation
         {
             if (value is not BaseSettings settings)
                 return;
-            
+
             var jo = new JObject();
 
             foreach (var definition in settings.GetAllSettingPropertyDefinitions())
@@ -51,7 +51,7 @@ namespace MCM.Implementation
         {
             if (existingValue is not BaseSettings settings)
                 return existingValue;
-            
+
             try
             {
                 var jo = JObject.Load(reader);

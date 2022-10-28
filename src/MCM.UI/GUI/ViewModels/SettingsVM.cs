@@ -65,7 +65,7 @@ namespace MCM.UI.GUI.ViewModels
             // new TaskFactory().StartNew(() =>
             // {
             _cachedPresets = SettingsInstance.GetBuiltInPresets().Concat(SettingsInstance.GetExternalPresets()).ToDictionary(preset => new PresetKey(preset), preset => preset.LoadPreset());
-           
+
             var customPresetText = new TextObject("{=SettingsVM_Custom}Custom").ToString();
             var presets = new List<PresetKey> { new("custom", customPresetText) }.Concat(_cachedPresets.Keys);
             PresetsSelector = new MCMSelectorVM<DropdownSelectorItemVM<PresetKey>>(presets, -1, null);
