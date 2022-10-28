@@ -13,10 +13,10 @@ namespace MCM.Implementation.Global
     internal sealed class ExternalGlobalSettingsContainer : IFluentGlobalSettingsContainer
     {
         private Dictionary<string, ExternalGlobalSettings> LoadedSettings { get; } = new();
-        
+
         /// <inheritdoc/>
         public IEnumerable<SettingsDefinition> SettingsDefinitions => LoadedSettings.Keys.Select(id => new SettingsDefinition(id));
-        
+
         public ExternalGlobalSettingsContainer(IBUTRLogger<ExternalGlobalSettingsContainer> logger)
         {
 
@@ -24,7 +24,7 @@ namespace MCM.Implementation.Global
 
         /// <inheritdoc/>
         public BaseSettings? GetSettings(string id) => LoadedSettings.TryGetValue(id, out var result) ? result : null;
-        
+
         /// <inheritdoc/>
         public bool SaveSettings(BaseSettings settings)
         {
@@ -37,7 +37,7 @@ namespace MCM.Implementation.Global
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == settings.FormatType));
             settingsFormat?.Save(settings, directoryPath, settings.Id);
             */
-            
+
             return true;
         }
 
@@ -83,7 +83,7 @@ namespace MCM.Implementation.Global
         {
             if (settings is not ExternalGlobalSettings externalGlobalSettings)
                 return;
-            
+
             LoadedSettings.Add(externalGlobalSettings.Id, externalGlobalSettings);
         }
 
@@ -92,11 +92,11 @@ namespace MCM.Implementation.Global
         {
             if (settings is not ExternalGlobalSettings externalGlobalSettings)
                 return;
-            
+
             if (LoadedSettings.ContainsKey(externalGlobalSettings.Id))
                 LoadedSettings.Remove(externalGlobalSettings.Id);
         }
-         
+
         /// <inheritdoc />
         public bool SavePresets(ISettingsPreset preset)
         {

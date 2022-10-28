@@ -76,7 +76,7 @@ namespace MCM.Abstractions.Base.PerSave
             SettingPropertyGroups.Select(g => g.Clone(false)),
             Presets);
 
-        
+
         /// <inheritdoc/>
         public sealed override IEnumerable<ISettingsPreset> GetBuiltInPresets() => Presets.Select(presetBuilder => presetBuilder.Build(CreateNew()));
     }

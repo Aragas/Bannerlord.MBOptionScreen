@@ -9,7 +9,7 @@ namespace MCM.Abstractions.Xml
     {
         [XmlAttribute("IsToggle")]
         public bool IsToggle { get; set; }
-        
+
         [XmlElement("Value")]
         public bool Value { get; set; }
     }

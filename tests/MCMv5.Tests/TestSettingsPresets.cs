@@ -24,19 +24,19 @@ namespace MCMv5.Tests
             {
                 yield return preset;
             }
-            
+
             yield return new MemorySettingsPreset(Id, "reverse", "Reverse", () => new TestSettingsPresets
             {
                 Property1 = false,
                 Property2 = true
             });
-            
+
             yield return new MemorySettingsPreset(Id, "false", "False", () => new TestSettingsPresets
             {
                 Property1 = false,
                 Property2 = false
             });
-            
+
             yield return new MemorySettingsPreset(Id, "true", "True", () => new TestSettingsPresets
             {
                 Property1 = true,

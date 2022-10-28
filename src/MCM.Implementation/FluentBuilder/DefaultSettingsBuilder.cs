@@ -64,7 +64,7 @@ namespace MCM.Implementation.FluentBuilder
             builder.Invoke(Presets[name]);
             return this;
         }
-        
+
         public ISettingsBuilder WithoutDefaultPreset()
         {
             Presets.Remove("default");

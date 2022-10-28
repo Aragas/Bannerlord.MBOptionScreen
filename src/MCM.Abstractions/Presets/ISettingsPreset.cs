@@ -7,7 +7,7 @@ namespace MCM.Abstractions
         string SettingsId { get; }
         string Id { get; }
         string Name { get; }
-        
+
         BaseSettings LoadPreset();
         bool SavePreset(BaseSettings settings);
     }

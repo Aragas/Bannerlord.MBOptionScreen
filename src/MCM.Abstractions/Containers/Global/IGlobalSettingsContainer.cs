@@ -7,6 +7,6 @@
         ISettingsContainerCanReset,
         ISettingsContainerPresets
     {
-        
+
     }
 }

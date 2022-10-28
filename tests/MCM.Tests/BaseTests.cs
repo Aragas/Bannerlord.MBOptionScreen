@@ -1,5 +1,6 @@
-﻿extern alias v5;
-extern alias UI;
+﻿extern alias UI;
+extern alias v5;
+
 using Bannerlord.ButterLib;
 using Bannerlord.ButterLib.SubModuleWrappers2;
 
