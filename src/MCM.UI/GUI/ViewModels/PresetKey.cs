@@ -2,13 +2,13 @@
 
 using TaleWorlds.Localization;
 
-namespace MCM.UI.GUI.ViewModels
+namespace MCM.UI
 {
     internal sealed record PresetKey
     {
         public string Id { get; init; }
         public string Name { get; init; }
-            
+
         public PresetKey(ISettingsPreset preset)
         {
             Id = preset.Id;

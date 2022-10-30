@@ -8,14 +8,14 @@ namespace MCM.Implementation.PerSave
     internal sealed class FluentPerSaveSettingsContainer : BaseSettingsContainer<FluentPerSaveSettings>, IFluentPerSaveSettingsContainer
     {
         private readonly IGameEventListener _gameEventListener;
-        
+
         public FluentPerSaveSettingsContainer(IGameEventListener gameEventListener)
         {
             _gameEventListener = gameEventListener;
             _gameEventListener.OnGameStarted += OnGameStarted;
             _gameEventListener.OnGameEnded += OnGameEnded;
         }
-        
+
         public void Register(FluentPerSaveSettings settings)
         {
             RegisterSettings(settings);

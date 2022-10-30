@@ -41,10 +41,10 @@ namespace MCM.Implementation
 
             return new JsonSettingsPreset(settingsId, container.Id, container.Name, filePath, getNewSettings);
         }
-        
+
         /// <inheritdoc />
-        public string SettingsId { get; }       
-        
+        public string SettingsId { get; }
+
         /// <inheritdoc />
         public string Id { get; }
 
@@ -82,7 +82,7 @@ namespace MCM.Implementation
         public BaseSettings LoadPreset()
         {
             var presetBase = _getNewSettings();
-            
+
             var file = new FileInfo(_filePath);
             if (file.Exists)
             {
@@ -101,7 +101,7 @@ namespace MCM.Implementation
             else
             {
                 SavePreset(presetBase);
-                
+
                 return presetBase;
             }
         }
@@ -111,7 +111,7 @@ namespace MCM.Implementation
         {
             var container = new PresetContainer { Id = Id, Name = Name, Settings = settings };
             var content = JsonConvert.SerializeObject(container, _jsonSerializerSettings);
-            
+
             var file = new FileInfo(_filePath);
             file.Directory?.Create();
             var writer = file.CreateText();
@@ -128,12 +128,12 @@ namespace MCM.Implementation
                 return _existingObjects.TryGetValue(path, out var value) ? value : null;
             }
         }
-        
+
         private void AddSerializationProperty(string path, object? value)
         {
             _existingObjects.Add(path, value);
         }
-        
+
         private void ClearSerializationProperties()
         {
             _existingObjects.Clear();

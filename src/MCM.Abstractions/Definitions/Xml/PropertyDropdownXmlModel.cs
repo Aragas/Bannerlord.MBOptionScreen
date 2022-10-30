@@ -9,7 +9,7 @@ namespace MCM.Abstractions.Xml
     {
         [XmlAttribute("SelectedIndex")]
         public int SelectedIndex { get; set; }
-        
+
         [XmlArray("Values")]
         public string[] Values { get; set; }
     }

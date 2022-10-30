@@ -33,13 +33,13 @@ namespace MCM.Implementation.PerCampaign
             _gameEventListener.OnGameEnded += OnGameEnded;
             RootFolder = Path.Combine(base.RootFolder, "PerCampaign");
         }
-        
+
         /// <inheritdoc/>
         protected override void RegisterSettings(PerCampaignSettings? perCampaignSettings)
         {
             if (perCampaignSettings is null)
                 return;
-            
+
             if (GenericServiceProvider.GetService<ICampaignIdProvider>() is not { } campaignIdProvider || campaignIdProvider.GetCurrentCampaignId() is not { } id)
                 return;
 
@@ -57,7 +57,7 @@ namespace MCM.Implementation.PerCampaign
 
             if (GenericServiceProvider.GetService<ICampaignIdProvider>() is not { } campaignIdProvider || campaignIdProvider.GetCurrentCampaignId() is not { } id)
                 return false;
-            
+
             var directoryPath = Path.Combine(RootFolder, id, campaignSettings.FolderName, campaignSettings.SubFolder);
             var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == campaignSettings.FormatType));

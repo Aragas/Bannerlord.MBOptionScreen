@@ -79,13 +79,13 @@ namespace MCM.Implementation
             foreach (var settingsContainer in _settingsContainers.OfType<ISettingsContainerCanReset>())
                 settingsContainer.ResetSettings(settings);
         }
-        
+
         public override void OverrideSettings(BaseSettings settings)
         {
             foreach (var settingsContainer in _settingsContainers.OfType<ISettingsContainerCanOverride>())
                 settingsContainer.OverrideSettings(settings);
         }
-        
+
         public override IEnumerable<ISettingsPreset> GetPresets(string id)
         {
             foreach (var settingsContainer in _settingsContainers.OfType<ISettingsContainerPresets>())

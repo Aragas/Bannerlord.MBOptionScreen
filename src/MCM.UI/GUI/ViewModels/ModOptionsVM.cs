@@ -1,5 +1,4 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
-using Bannerlord.ModuleManager;
+﻿using Bannerlord.ModuleManager;
 
 using BUTR.DependencyInjection;
 
@@ -164,6 +163,14 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public bool IsPresetsSelectorVisible => SelectedMod is not null;
 
+        /// <summary>
+        /// We have a strange bug and I'm not sure if this is the lack of my skills
+        /// Selecting via mouse in Gameplay section the language triggers preset change
+        /// Somehow ~palpatine returned~ the game triggers input change on my non visible VM
+        /// </summary>
+        [DataSourceProperty]
+        public bool IsDisabled { get; set; }
+
         public ModOptionsVM()
         {
             _logger = GenericServiceProvider.GetService<ILogger<ModOptionsVM>>() ?? NullLogger<ModOptionsVM>.Instance;
@@ -246,6 +253,8 @@ namespace MCM.UI.GUI.ViewModels
 
         public override void RefreshValues()
         {
+            if (IsDisabled) return;
+
             base.RefreshValues();
 
             foreach (var viewModel in ModSettingsList)
@@ -263,7 +272,10 @@ namespace MCM.UI.GUI.ViewModels
 
         private void OnPresetsSelectorChange(MCMSelectorVM<DropdownSelectorItemVM<PresetKey>> selector)
         {
+            if (IsDisabled) return;
+
             var presetKey = selector.SelectedItem.OriginalItem;
+            //var presetKey = selector.SelectedItem?.OriginalItem ?? new PresetKey("ERROR", "ERROR");
             InformationManager.ShowInquiry(new InquiryData(
                 new TextObject("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new()
                 {
@@ -299,6 +311,8 @@ namespace MCM.UI.GUI.ViewModels
 
         public void ExecuteClose()
         {
+            if (IsDisabled) return;
+
             foreach (var viewModel in ModSettingsList)
             {
                 viewModel.URS.UndoAll();
@@ -313,6 +327,8 @@ namespace MCM.UI.GUI.ViewModels
 
         public bool ExecuteCancelInternal(bool popScreen, Action? onClose = null)
         {
+            if (IsDisabled) return false;
+
             OnFinalize();
             if (popScreen) ScreenManager.PopScreen();
             else onClose?.Invoke();
@@ -327,6 +343,8 @@ namespace MCM.UI.GUI.ViewModels
         public void ExecuteDone() => ExecuteDoneInternal(true);
         public void ExecuteDoneInternal(bool popScreen, Action? onClose = null)
         {
+            if (IsDisabled) return;
+
             if (!ModSettingsList.Any(x => x.URS.ChangesMade))
             {
                 OnFinalize();
@@ -373,6 +391,8 @@ namespace MCM.UI.GUI.ViewModels
 
         public void ExecuteSelect(SettingsVM? viewModel)
         {
+            if (IsDisabled) return;
+
             if (SelectedMod != viewModel)
             {
                 if (SelectedMod is not null)

@@ -36,7 +36,7 @@ namespace MCM.Internal
 
         /// <inheritdoc />
         public event Action? OnGameEnded;
-        
+
         private bool ServiceRegistrationWasCalled { get; set; }
 
         public void OnServiceRegistration()
@@ -48,10 +48,10 @@ namespace MCM.Internal
                 services.AddSettingsContainer<FluentGlobalSettingsContainer>();
                 services.AddSettingsContainer<ExternalGlobalSettingsContainer>();
                 services.AddSettingsContainer<GlobalSettingsContainer>();
-                
+
                 services.AddSettingsContainer<FluentPerSaveSettingsContainer>();
                 services.AddSettingsContainer<PerSaveSettingsContainer>();
-                
+
                 services.AddSettingsContainer<FluentPerCampaignSettingsContainer>();
                 services.AddSettingsContainer<PerCampaignSettingsContainer>();
 
@@ -85,17 +85,17 @@ namespace MCM.Internal
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
             base.OnBeforeInitialModuleScreenSetAsRoot();
-            
+
             var logger = GenericServiceProvider.GetService<IBUTRLogger<MCMImplementationSubModule>>() ?? new DefaultBUTRLogger<MCMImplementationSubModule>();
             foreach (var moduleDirectory in Utilities.GetModulesNames().Select(x => new DirectoryInfo(System.IO.Path.Combine(PathPrefix, x, "Settings"))))
             {
                 if (!moduleDirectory.Exists) continue;
-                
+
                 foreach (var file in moduleDirectory.GetFiles("*.xml", SearchOption.TopDirectoryOnly))
                 {
                     var externalGlobalSettings = ExternalGlobalSettings.CreateFromXmlFile(file.FullName);
                     if (externalGlobalSettings is null) continue;
-                
+
                     logger.LogTrace($"Registering settings {externalGlobalSettings.GetType()}.");
                     externalGlobalSettings.Register();
                 }

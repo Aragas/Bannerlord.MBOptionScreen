@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 5.0.1
+Game Versions: v1.0.0
+* Language data fix
+* Fixed Preset change on Gameplay tag
+* Minor cleanup
+---------------------------------------------------------------------------------------------------
 Version: 5.0.0
 Game Versions: v1.0.0
 * API v5 release

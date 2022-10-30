@@ -12,7 +12,7 @@ The compatibility layers replace the original libraries to ensure maximum compat
 
 ## Installation
 ### Players
-Requires ``Bannerlord.Harmony`, ``Bannerlord.UIExtenderEx`, ``Bannerlord.ButterLib`.
+Requires `Bannerlord.Harmony`, `Bannerlord.UIExtenderEx`, `Bannerlord.ButterLib`.
 ### Developers
 Add this to your `.csproj`. Please not that `IncludeAssets="compile"` is very important!
 ```xml

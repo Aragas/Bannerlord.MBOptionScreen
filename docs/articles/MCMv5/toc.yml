@@ -1,2 +1,12 @@
 - name: MCMv5
   href: mcmv5.md
+- name: MCMv5 Attributes
+  href: mcmv5-attributes.md
+- name: MCMv5 Fluent Builder
+  href: mcmv5-fluent-builder.md
+- name: New Features - Persistent Presets
+  href: mcmv5-persistent-presets.md
+- name: Migrating from MCMv4
+  href: mcmv5-migrating-from-mcmv4.md
+- name: MCMv5 as a Soft Dependency
+  href: mcmv5-soft-dependency.md

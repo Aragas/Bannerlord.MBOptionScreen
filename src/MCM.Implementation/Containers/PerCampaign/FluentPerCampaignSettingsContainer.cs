@@ -15,14 +15,14 @@ namespace MCM.Implementation.PerCampaign
     internal sealed class FluentPerCampaignSettingsContainer : BaseSettingsContainer<FluentPerCampaignSettings>, IFluentPerCampaignSettingsContainer
     {
         private readonly IGameEventListener _gameEventListener;
-        
+
         public FluentPerCampaignSettingsContainer(IGameEventListener gameEventListener)
         {
             _gameEventListener = gameEventListener;
             _gameEventListener.OnGameStarted += OnGameStarted;
             _gameEventListener.OnGameEnded += OnGameEnded;
         }
-        
+
         /// <inheritdoc/>
         protected override void RegisterSettings(FluentPerCampaignSettings? perCampaignSettings)
         {
@@ -31,7 +31,7 @@ namespace MCM.Implementation.PerCampaign
 
             if (GenericServiceProvider.GetService<ICampaignIdProvider>() is not { } campaignIdProvider || campaignIdProvider.GetCurrentCampaignId() is not { } id)
                 return;
-            
+
             var directoryPath = Path.Combine(RootFolder, id, perCampaignSettings.FolderName, perCampaignSettings.SubFolder);
             var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == perCampaignSettings.FormatType));
@@ -46,7 +46,7 @@ namespace MCM.Implementation.PerCampaign
 
             if (GenericServiceProvider.GetService<ICampaignIdProvider>() is not { } campaignIdProvider || campaignIdProvider.GetCurrentCampaignId() is not { } id)
                 return false;
-            
+
             var directoryPath = Path.Combine(RootFolder, id, campaignSettings.FolderName, campaignSettings.SubFolder);
             var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == campaignSettings.FormatType));
