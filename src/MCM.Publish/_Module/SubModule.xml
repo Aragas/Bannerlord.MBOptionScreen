@@ -25,7 +25,7 @@
     <DependedModuleMetadata id="StoryMode" order="LoadAfterThis" version="v$gameversion$.*" optional="true" />
     <DependedModuleMetadata id="CustomBattle" order="LoadAfterThis" version="v$gameversion$.*" optional="true" />
 
-    <DependedModuleMetadatas>
+    </DependedModuleMetadatas>
   <!-- Community Metadata -->
   <SubModules>
     <!--Abstraction -->

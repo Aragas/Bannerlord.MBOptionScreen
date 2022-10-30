@@ -1,6 +1,6 @@
-MCMv4 has no issues with it being used as a soft dependency.  
-Mod Developers are required to include the ``MCMv4.dll`` library inside their /bin folder.  
-MCMv4.dll now includes the implementation details, so it can now Load/Save settings without the Standalone module. The Standalone module is now used to provide the UI implementation of MCMv4. You don't need it if the settings are changed only programmatically.  
+MCMv5 has no issues with it being used as a soft dependency.  
+Mod Developers are required to include the ``MCMv5.dll`` library inside their /bin folder.  
+It can Load/Save settings without the Standalone module. The Standalone module is used to provide the UI implementation of MCMv5. You don't need it if the settings are changed only programmatically.  
 
 #### Example of usage:
 The recommended approach is to define a provider interface and depending on certain conditions, switch between them either at the constructor stage or dynamically.  
@@ -49,7 +49,7 @@ public class CustomSettings : AttributeGlobalSettings<CustomSettings>, ICustomSe
         { "VERSION", TextObjectHelper.Create(typeof(CustomSettings).Assembly.GetName().Version.ToString(3)) }
     }).ToString();
     public override string FolderName { get; } = "Custom";
-    public override string FormatType { get; } = "json2";
+    public override string FormatType { get; } = "json";
 
     [SettingPropertyBool("{=CustomSettings_Override}Override Something", RequireRestart = true, HintText = "{=CustomSettings_OverrideDesc}If set, does something.")]
     [SettingPropertyGroup("{=CustomSettings_General}General")]

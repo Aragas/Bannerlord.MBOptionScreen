@@ -104,6 +104,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCM.Bannerlord", "MCM.Bannerlord\MCM.Bannerlord.csproj", "{A92EF614-2BEC-4FE9-B057-ECC482D05EE4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MCMv5", "MCMv5", "{19C69FE7-5DA2-48AC-BF35-EA1581F0A255}"
+	ProjectSection(SolutionItems) = preProject
+		..\docs\articles\MCMv5\mcmv5.md = ..\docs\articles\MCMv5\mcmv5.md
+		..\docs\articles\MCMv5\mcmv5-migrating-from-mcmv4.md = ..\docs\articles\MCMv5\mcmv5-migrating-from-mcmv4.md
+		..\docs\articles\MCMv5\toc.yml = ..\docs\articles\MCMv5\toc.yml
+		..\docs\articles\MCMv5\mcmv5-persistent-presets.md = ..\docs\articles\MCMv5\mcmv5-persistent-presets.md
+		..\docs\articles\MCMv5\mcmv5-attributes.md = ..\docs\articles\MCMv5\mcmv5-attributes.md
+		..\docs\articles\MCMv5\mcmv5-fluent-builder.md = ..\docs\articles\MCMv5\mcmv5-fluent-builder.md
+		..\docs\articles\MCMv5\mcmv5-soft-dependency.md = ..\docs\articles\MCMv5\mcmv5-soft-dependency.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Beta_Debug|Any CPU = Beta_Debug|Any CPU
@@ -262,6 +273,7 @@ Global
 		{F53BB833-77C5-4AE3-815B-F66E6593134C} = {C6865BFB-F02B-4217-AF48-0B1019ED4DB6}
 		{68C4862D-1F01-46D0-BD6A-4BF556620AB3} = {C6865BFB-F02B-4217-AF48-0B1019ED4DB6}
 		{A92EF614-2BEC-4FE9-B057-ECC482D05EE4} = {C6865BFB-F02B-4217-AF48-0B1019ED4DB6}
+		{19C69FE7-5DA2-48AC-BF35-EA1581F0A255} = {560DE987-D9C8-431C-A197-08C925905C24}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FF6EB7D0-C9CB-4A8B-AE72-0511907E6821}

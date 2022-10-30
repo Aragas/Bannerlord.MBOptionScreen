@@ -8,3 +8,6 @@
   By making most of the MCM's code independent from the game's abstractions we ensure that MCM won't break in a way that we can't fix without breaking our public ABI and API.
 
 * `DropdownDefault<>` was renamed to `Dropdown<>`
+* Preset system was changed:
+  * `GetAvailablePresets` was renamed to `GetBuiltInPresets`
+  * The signature changed. Instead of a dictionary with a lambda - constructor inside a class `MemorySettingsPreset` is used with a similar signature. Check MCMv5 docs for the new usage.

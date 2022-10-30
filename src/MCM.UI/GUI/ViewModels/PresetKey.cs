@@ -2,7 +2,7 @@
 
 using TaleWorlds.Localization;
 
-namespace MCM.UI.GUI.ViewModels
+namespace MCM.UI
 {
     internal sealed record PresetKey
     {

@@ -121,6 +121,7 @@ namespace MCM.UI.UIExtenderEx
                 if (_modOptionsSelected == value)
                     return;
 
+                _modOptions.IsDisabled = !value;
                 _modOptionsSelected = value;
                 DescriptionWidth = ModOptionsSelected ? 0 : 650;
             }

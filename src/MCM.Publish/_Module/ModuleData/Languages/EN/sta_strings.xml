@@ -11,11 +11,13 @@
     <string id="MCMImplementationSettings_Name" text="MCM Impl. {VERSION}"/>
     <!-- UI -->
     <string id="dzeWx4xSfR" text="Warning from MCM!" />
-    <string id="FE6ya1gzZR" text="{DEPENDENT_MODULE} module was not found!" />
+    <string id="FE6ya1gzZR" text="{REQUIRED_MODULE} module was not found!" />
+    <string id="EvI6KPAqTT" text="Incompatible module {DENIED_MODULE} was found!" />
     <string id="5G9zffrgMh" text="{MODULE} is loaded before the {DEPENDENT_MODULE}!{NL}Make sure {MODULE} is loaded after it!" />
     <string id="UZ8zfvudMs" text="{MODULE} is loaded after the {DEPENDENT_MODULE}!{NL}Make sure {MODULE} is loaded before it!" />
+    <string id="FcR4BXnhx8" text="{MODULE} has mutually exclusive mod order directives specified for the {REQUIRED_MODULE}!" />
     <string id="eXs6FLm5DP" text="It's strongly recommended to terminate the game now. Do you wish to terminate it?" />
-    <string id="fGt6Gthg5y" text="This version of MCM is intended for e1.7.2 and higher! You are running {GAMEVERSION}!" />
+    <string id="fGt6Gthg5y" text="This version of MCM is intended for v1.0.0 and higher! You are running {GAMEVERSION}!" />
 
     <string id="EditValueVM_TitleText" text="Mod Options"/>
     <string id="EditValueVM_TitleText" text="Edit &quot;{PROPERTYNAME}&quot;"/>
@@ -40,14 +42,5 @@
     <string id="ButterLibSettings_Name_Logging" text="Logging"/>
     <string id="ButterLibSettings_Name_LogLevel" text="Log Level"/>
     <string id="ButterLibSettings_Name_LogLevelDesc" text="Level of logs to write."/>
-    <!-- MBO -->
-    <string id="MCMMBOSettings_Name" text="MCM MBO Impl. {VERSION}"/>
-    <!-- MCMv3 -->
-    <string id="MCMMCMv3Settings_Name" text="MCM MCMv3 Impl. {VERSION}"/>
-    <!-- ModLib -->
-    <string id="MCMModLibSettings_Name" text="MCM ModLib Impl. {VERSION}"/>
-    <string id="MCMModLibSettings_HideMainMenuEntry" text="Hide Main Menu Entry"/>
-    <string id="MCMModLibSettings_HideMainMenuEntryDesc" text="Hides ModLibs 'Mod Options' Menu Entry."/>
-    <string id="MCMModLibSettings_General" text="General"/>
   </strings>
 </base>
