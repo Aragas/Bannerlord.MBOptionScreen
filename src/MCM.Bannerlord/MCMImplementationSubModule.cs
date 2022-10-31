@@ -150,7 +150,7 @@ namespace MCM.Internal
 
             var oldConfigPath = Path.GetFullPath("Configs");
             var oldPath = Path.Combine(oldConfigPath, "ModSettings");
-            var newPath = Path.Combine(PlatformFileHelperPCExtended.GetDirectoryFullPath(EngineFilePaths.ConfigsPath), "ModSettings");
+            var newPath = Path.Combine(PlatformFileHelperPCExtended.GetDirectoryFullPath(EngineFilePaths.ConfigsPath) ?? string.Empty, "ModSettings");
             if (Directory.Exists(oldPath) && Directory.Exists(newPath))
             {
                 foreach (var filePath in Directory.GetFiles(oldPath))
