@@ -174,11 +174,11 @@ namespace MCM.Internal
                     }
                     catch { }
                 }
+                if (Directory.GetFiles(oldPath) is { Length: 0 } && Directory.GetDirectories(oldPath) is { Length: 0})
+                    Directory.Delete(oldPath, true);
+                if (Directory.GetFiles(oldConfigPath) is { Length: 0 } && Directory.GetDirectories(oldConfigPath) is { Length: 0})
+                    Directory.Delete(oldConfigPath, true);
             }
-            if (Directory.GetFiles(oldPath) is { Length: 0 } && Directory.GetDirectories(oldPath) is { Length: 0})
-                Directory.Delete(oldPath, true);
-            if (Directory.GetFiles(oldConfigPath) is { Length: 0 } && Directory.GetDirectories(oldConfigPath) is { Length: 0})
-                Directory.Delete(oldConfigPath, true);
         }
     }
 }
