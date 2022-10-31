@@ -25,6 +25,8 @@ using TaleWorlds.Core;
 using TaleWorlds.Engine;
 using TaleWorlds.MountAndBlade;
 
+using Path = System.IO.Path;
+
 namespace MCM.Internal
 {
     internal sealed class MCMImplementationSubModule : MBSubModuleBase, IGameEventListener
@@ -77,6 +79,8 @@ namespace MCM.Internal
         {
             base.OnSubModuleLoad();
 
+            PerformMigration001();
+
             if (!ServiceRegistrationWasCalled)
                 OnServiceRegistration();
         }
@@ -122,6 +126,59 @@ namespace MCM.Internal
             {
                 OnGameEnded?.Invoke();
             }
+        }
+
+        private static void PerformMigration001()
+        {
+            static void MoveDirectory(string source, string target)
+            {
+                var sourcePath = source.TrimEnd('\\', ' ');
+                var targetPath = target.TrimEnd('\\', ' ');
+                foreach (var folder in Directory.EnumerateFiles(sourcePath, "*", SearchOption.AllDirectories).GroupBy(Path.GetDirectoryName))
+                {
+                    var targetFolder = folder.Key.Replace(sourcePath, targetPath);
+                    Directory.CreateDirectory(targetFolder);
+                    foreach (var file in folder)
+                    {
+                        var targetFile = Path.Combine(targetFolder, Path.GetFileName(file));
+                        if (File.Exists(targetFile)) File.Delete(targetFile);
+                        File.Move(file, targetFile);
+                    }
+                }
+                Directory.Delete(source, true);
+            }
+
+            var oldConfigPath = Path.GetFullPath("Configs");
+            var oldPath = Path.Combine(oldConfigPath, "ModSettings");
+            var newPath = Path.Combine(PlatformFileHelperPCExtended.GetDirectoryFullPath(EngineFilePaths.ConfigsPath), "ModSettings");
+            if (Directory.Exists(oldPath) && Directory.Exists(newPath))
+            {
+                foreach (var filePath in Directory.GetFiles(oldPath))
+                {
+                    var fileName = Path.GetFileName(filePath);
+                    var newFilePath = Path.Combine(newPath, fileName);
+                    try
+                    {
+                        File.Copy(filePath, newFilePath, true);
+                        File.Delete(filePath);
+                    }
+                    catch { }
+                }
+                foreach (var directoryPath in Directory.GetDirectories(oldPath))
+                {
+                    var directoryName = Path.GetFileName(directoryPath);
+                    var newDirectoryPath = Path.Combine(newPath, directoryName);
+                    try
+                    {
+                        MoveDirectory(directoryPath, newDirectoryPath);
+                    }
+                    catch { }
+                }
+            }
+            if (Directory.GetFiles(oldPath) is { Length: 0 } && Directory.GetDirectories(oldPath) is { Length: 0})
+                Directory.Delete(oldPath, true);
+            if (Directory.GetFiles(oldConfigPath) is { Length: 0 } && Directory.GetDirectories(oldConfigPath) is { Length: 0})
+                Directory.Delete(oldConfigPath, true);
         }
     }
 }
