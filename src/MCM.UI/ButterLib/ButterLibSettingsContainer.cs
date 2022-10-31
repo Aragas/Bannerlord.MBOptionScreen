@@ -1,4 +1,5 @@
-﻿using Bannerlord.ButterLib;
+﻿using Bannerlord.BUTR.Shared.Helpers;
+using Bannerlord.ButterLib;
 
 using MCM.Abstractions.Base;
 using MCM.Abstractions.FluentBuilder;
@@ -22,7 +23,7 @@ namespace MCM.UI.ButterLib
 
         public ButterLibSettingsContainer(ILogger<ButterLibSettingsContainer> logger)
         {
-            RootFolder = Path.Combine(EngineFilePaths.ConfigsPath.Path, "ModSettings");
+            RootFolder = Path.Combine(PlatformFileHelperPCExtended.GetDirectoryFullPath(EngineFilePaths.ConfigsPath), "ModSettings");
 
             var prop = new StorageRef<Dropdown<string>>(new(new[]
             {
