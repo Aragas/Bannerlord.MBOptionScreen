@@ -148,37 +148,43 @@ namespace MCM.Internal
                 Directory.Delete(source, true);
             }
 
-            var oldConfigPath = Path.GetFullPath("Configs");
-            var oldPath = Path.Combine(oldConfigPath, "ModSettings");
-            var newPath = Path.Combine(PlatformFileHelperPCExtended.GetDirectoryFullPath(EngineFilePaths.ConfigsPath) ?? string.Empty, "ModSettings");
-            if (Directory.Exists(oldPath) && Directory.Exists(newPath))
+            try
             {
-                foreach (var filePath in Directory.GetFiles(oldPath))
+                var oldConfigPath = Path.GetFullPath("Configs");
+                var oldPath = Path.Combine(oldConfigPath, "ModSettings");
+                var newPath = Path.Combine(PlatformFileHelperPCExtended.GetDirectoryFullPath(EngineFilePaths.ConfigsPath) ?? string.Empty, "ModSettings");
+                if (Directory.Exists(oldPath) && Directory.Exists(newPath))
                 {
-                    var fileName = Path.GetFileName(filePath);
-                    var newFilePath = Path.Combine(newPath, fileName);
-                    try
+                    foreach (var filePath in Directory.GetFiles(oldPath))
                     {
-                        File.Copy(filePath, newFilePath, true);
-                        File.Delete(filePath);
+                        var fileName = Path.GetFileName(filePath);
+                        var newFilePath = Path.Combine(newPath, fileName);
+                        try
+                        {
+                            File.Copy(filePath, newFilePath, true);
+                            File.Delete(filePath);
+                        }
+                        catch (Exception) { }
                     }
-                    catch { }
-                }
-                foreach (var directoryPath in Directory.GetDirectories(oldPath))
-                {
-                    var directoryName = Path.GetFileName(directoryPath);
-                    var newDirectoryPath = Path.Combine(newPath, directoryName);
-                    try
+
+                    foreach (var directoryPath in Directory.GetDirectories(oldPath))
                     {
-                        MoveDirectory(directoryPath, newDirectoryPath);
+                        var directoryName = Path.GetFileName(directoryPath);
+                        var newDirectoryPath = Path.Combine(newPath, directoryName);
+                        try
+                        {
+                            MoveDirectory(directoryPath, newDirectoryPath);
+                        }
+                        catch (Exception) { }
                     }
-                    catch { }
+
+                    if (Directory.GetFiles(oldPath) is {Length: 0} && Directory.GetDirectories(oldPath) is {Length: 0})
+                        Directory.Delete(oldPath, true);
+                    if (Directory.GetFiles(oldConfigPath) is {Length: 0} && Directory.GetDirectories(oldConfigPath) is {Length: 0})
+                        Directory.Delete(oldConfigPath, true);
                 }
-                if (Directory.GetFiles(oldPath) is { Length: 0 } && Directory.GetDirectories(oldPath) is { Length: 0})
-                    Directory.Delete(oldPath, true);
-                if (Directory.GetFiles(oldConfigPath) is { Length: 0 } && Directory.GetDirectories(oldConfigPath) is { Length: 0})
-                    Directory.Delete(oldConfigPath, true);
             }
+            catch (Exception) { }
         }
     }
 }
