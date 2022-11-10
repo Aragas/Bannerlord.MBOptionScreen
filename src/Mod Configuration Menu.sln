@@ -30,8 +30,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{01264F42-8EC3-4920-AF18-FB316F5BFB9A}"
 	ProjectSection(SolutionItems) = preProject
 		..\.github\workflows\docfx.yml = ..\.github\workflows\docfx.yml
-		..\.github\workflows\nexusmods-cookies.yml = ..\.github\workflows\nexusmods-cookies.yml
 		..\.github\workflows\test-and-publish.yml = ..\.github\workflows\test-and-publish.yml
+		..\.github\workflows\verify-unex-data.yml = ..\.github\workflows\verify-unex-data.yml
+		..\.github\workflows\dotnet-format-daily.yml = ..\.github\workflows\dotnet-format-daily.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{560DE987-D9C8-431C-A197-08C925905C24}"

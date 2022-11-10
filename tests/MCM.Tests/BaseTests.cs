@@ -12,6 +12,7 @@ using System;
 using System.Runtime.CompilerServices;
 
 using TaleWorlds.Engine;
+using TaleWorlds.Library;
 
 using v5::MCM;
 using v5::MCM.Internal;
@@ -23,16 +24,16 @@ namespace MCM.Tests
     public class BaseTests
     {
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private static bool MockedGetConfigsPath(ref string __result)
+        private static bool MockedGetModulesNames(ref string[] __result)
         {
-            __result = AppDomain.CurrentDomain.BaseDirectory;
+            __result = Array.Empty<string>();
             return false;
         }
 
         [MethodImpl(MethodImplOptions.NoInlining)]
-        private static bool MockedGetModulesNames(ref string[] __result)
+        private static bool MockedPlatformFileHelper(ref IPlatformFileHelper __result)
         {
-            __result = Array.Empty<string>();
+            __result = new PlatformFileHelperPC("");
             return false;
         }
 
@@ -49,6 +50,8 @@ namespace MCM.Tests
             //    prefix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((IEnumerable<ModuleInfoExtended> x) => MockedGetLoadedModules(ref x))));
             _harmony.Patch(SymbolExtensions2.GetMethodInfo(() => Utilities.GetModulesNames()),
                 prefix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((string[] x) => MockedGetModulesNames(ref x))));
+            _harmony.Patch(SymbolExtensions2.GetPropertyGetter(() => Common.PlatformFileHelper),
+                prefix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((IPlatformFileHelper x) => MockedPlatformFileHelper(ref x))));
 
             var butterLib = new MBSubModuleBaseWrapper(new ButterLibSubModule());
             butterLib.OnSubModuleLoad();
