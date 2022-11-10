@@ -26,8 +26,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
-using SandBox;
-
 using System;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -120,10 +118,14 @@ namespace MCM.UI
             var optionsSwitchHarmony = new Harmony("bannerlord.mcm.ui.optionsswitchpatch");
             OptionsVMPatch.Patch(optionsSwitchHarmony);
 
+            var calledDelayedOnce = false;
             var type = AccessTools2.TypeByName("SandBox.SandBoxSubModule");
             DelayedSubModuleManager.Register(type);
             DelayedSubModuleManager.Subscribe(type, this, nameof(OnSubModuleLoad), SubscriptionType.AfterMethod, (_, _) =>
             {
+                if (calledDelayedOnce) return;
+                calledDelayedOnce = true;
+
                 Extender.Register(typeof(MCMUISubModule).Assembly);
                 Extender.Enable();
             });
@@ -142,10 +144,14 @@ namespace MCM.UI
                     Logger = this.GetServiceProvider().GetRequiredService<ILogger<MCMUISubModule>>();
                 }
 
+                var calledDelayedOnce = false;
                 var type = AccessTools2.TypeByName("SandBox.SandBoxSubModule");
                 DelayedSubModuleManager.Register(type);
                 DelayedSubModuleManager.Subscribe(type, this, nameof(OnBeforeInitialModuleScreenSetAsRoot), SubscriptionType.AfterMethod, (_, _) =>
                 {
+                    if (calledDelayedOnce) return;
+                    calledDelayedOnce = true;
+
                     var resourceInjector = GenericServiceProvider.GetService<ResourceInjector>();
                     resourceInjector?.Inject();
 
@@ -165,12 +171,15 @@ namespace MCM.UI
         {
             base.OnSubModuleUnloaded();
 
+            var calledDelayedOnce = false;
             var type = AccessTools2.TypeByName("SandBox.SandBoxSubModule");
             DelayedSubModuleManager.Register(type);
             DelayedSubModuleManager.Subscribe(type, this, nameof(OnSubModuleUnloaded), SubscriptionType.AfterMethod, (_, _) =>
             {
-                var instance = MCMUISettings.Instance;
-                if (instance is not null)
+                if (calledDelayedOnce) return;
+                calledDelayedOnce = true;
+
+                if (MCMUISettings.Instance is { } instance)
                     instance.PropertyChanged -= MCMSettings_PropertyChanged;
             });
         }

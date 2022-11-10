@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------------------------------
+Version: 5.1.1
+Game Versions: v1.0.0,v1.0.1
+* Updated ButterLib
+---------------------------------------------------------------------------------------------------
 Version: 5.1.0
 Game Versions: v1.0.0,v1.0.1
 * Made the Mod Options dynamic, changing the language will change the localization correctly
