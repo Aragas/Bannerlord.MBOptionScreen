@@ -29,67 +29,25 @@ namespace MCM.UI.GUI.ViewModels
         private readonly ILogger<ModOptionsVM> _logger;
 
         private string _titleLabel = string.Empty;
-        private string _cancelButtonText = string.Empty;
         private string _doneButtonText = string.Empty;
+        private string _cancelButtonText = string.Empty;
         private string _modsText = string.Empty;
+        private string _selectedDisplayName = string.Empty;
+        private string _hintText = string.Empty;
         private SettingsVM? _selectedMod;
         private MBBindingList<SettingsVM> _modSettingsList = new();
-        private string _hintText = string.Empty;
         private string _searchText = string.Empty;
 
         [DataSourceProperty]
-        public string Name
-        {
-            get => _titleLabel;
-            set
-            {
-                _titleLabel = value;
-                OnPropertyChanged(nameof(Name));
-            }
-        }
+        public string Name { get => _titleLabel; set => SetField(ref _titleLabel, value, nameof(Name)); }
         [DataSourceProperty]
-        public string DoneButtonText
-        {
-            get => _doneButtonText;
-            set
-            {
-                _doneButtonText = value;
-                OnPropertyChanged(nameof(DoneButtonText));
-            }
-        }
+        public string DoneButtonText { get => _doneButtonText; set => SetField(ref _doneButtonText, value, nameof(DoneButtonText)); }
         [DataSourceProperty]
-        public string CancelButtonText
-        {
-            get => _cancelButtonText;
-            set
-            {
-                _cancelButtonText = value;
-                OnPropertyChanged(nameof(CancelButtonText));
-            }
-        }
+        public string CancelButtonText { get => _cancelButtonText; set => SetField(ref _cancelButtonText, value, nameof(CancelButtonText)); }
         [DataSourceProperty]
-        public string ModsText
-        {
-            get => _modsText;
-            set
-            {
-                _modsText = value;
-                OnPropertyChanged(nameof(ModsText));
-            }
-        }
+        public string ModsText { get => _modsText; set => SetField(ref _modsText, value, nameof(ModsText)); }
         [DataSourceProperty]
-        public MBBindingList<SettingsVM> ModSettingsList
-        {
-            get => _modSettingsList;
-            set
-            {
-                if (_modSettingsList != value)
-                {
-                    _modSettingsList = value;
-                    OnPropertyChanged(nameof(ModSettingsList));
-                }
-            }
-        }
+        public MBBindingList<SettingsVM> ModSettingsList { get => _modSettingsList; set => SetField(ref _modSettingsList, value, nameof(ModSettingsList)); }
         [DataSourceProperty]
         public SettingsVM? SelectedMod
         {
@@ -107,13 +65,13 @@ namespace MCM.UI.GUI.ViewModels
 
                     if (_selectedMod?.PresetsSelector is not null)
                     {
-                        PresetsSelector.SetOnChangeAction(null);
-                        OnPropertyChanged(nameof(PresetsSelector));
-                        PresetsSelector.ItemList = _selectedMod.PresetsSelector.ItemList;
-                        PresetsSelector.SelectedIndex = _selectedMod.PresetsSelector.SelectedIndex;
-                        PresetsSelector.HasSingleItem = _selectedMod.PresetsSelector.HasSingleItem;
+                        PresetsSelectorCopy.SetOnChangeAction(null);
+                        OnPropertyChanged(nameof(PresetsSelectorCopy));
+                        PresetsSelectorCopy.ItemList = _selectedMod.PresetsSelector.ItemList;
+                        PresetsSelectorCopy.SelectedIndex = _selectedMod.PresetsSelector.SelectedIndex;
+                        PresetsSelectorCopy.HasSingleItem = _selectedMod.PresetsSelector.HasSingleItem;
                         _selectedMod.PresetsSelector.SetOnChangeAction(OnModPresetsSelectorChange);
-                        PresetsSelector.SetOnChangeAction(OnPresetsSelectorChange);
+                        PresetsSelectorCopy.SetOnChangeAction(OnPresetsSelectorChange);
 
                         OnPropertyChanged(nameof(IsPresetsSelectorVisible));
                     }
@@ -122,6 +80,7 @@ namespace MCM.UI.GUI.ViewModels
         }
         [DataSourceProperty]
         public string SelectedDisplayName => SelectedMod is null ? new TextObject("{=ModOptionsVM_NotSpecified}Mod Name not Specified.").ToString() : SelectedMod.DisplayName;
+
         [DataSourceProperty]
         public bool SomethingSelected => SelectedMod is not null;
         [DataSourceProperty]
@@ -130,10 +89,8 @@ namespace MCM.UI.GUI.ViewModels
             get => _hintText;
             set
             {
-                if (_hintText != value)
+                if (SetField(ref _hintText, value, nameof(HintText)))
                 {
-                    _hintText = value;
-                    OnPropertyChanged(nameof(HintText));
                     OnPropertyChanged(nameof(IsHintVisible));
                 }
             }
@@ -146,20 +103,15 @@ namespace MCM.UI.GUI.ViewModels
             get => _searchText;
             set
             {
-                if (_searchText != value)
+                if (SetField(ref _searchText, value, nameof(SearchText)) && SelectedMod?.SettingPropertyGroups.Count > 0)
                 {
-                    _searchText = value;
-                    OnPropertyChanged(nameof(SearchText));
-                    if (SelectedMod?.SettingPropertyGroups.Count > 0)
-                    {
-                        foreach (var group in SelectedMod.SettingPropertyGroups)
-                            group.NotifySearchChanged();
-                    }
+                    foreach (var group in SelectedMod.SettingPropertyGroups)
+                        group.NotifySearchChanged();
                 }
             }
         }
         [DataSourceProperty]
-        public MCMSelectorVM<DropdownSelectorItemVM<PresetKey>> PresetsSelector { get; } = new(Enumerable.Empty<PresetKey>(), -1, null);
+        public MCMSelectorVM<DropdownSelectorItemVM<PresetKey>> PresetsSelectorCopy { get; } = new(Enumerable.Empty<PresetKey>(), -1, null);
         [DataSourceProperty]
         public bool IsPresetsSelectorVisible => SelectedMod is not null;
 
@@ -175,10 +127,6 @@ namespace MCM.UI.GUI.ViewModels
         {
             _logger = GenericServiceProvider.GetService<ILogger<ModOptionsVM>>() ?? NullLogger<ModOptionsVM>.Instance;
 
-            Name = new TextObject("{=ModOptionsVM_Name}Mod Options").ToString();
-            DoneButtonText = new TextObject("{=WiNRdfsm}Done").ToString();
-            CancelButtonText = new TextObject("{=3CpNUnVl}Cancel").ToString();
-            ModsText = new TextObject("{=ModOptionsPageView_Mods}Mods").ToString();
             SearchText = string.Empty;
 
             InitializeModSettings();
@@ -253,26 +201,22 @@ namespace MCM.UI.GUI.ViewModels
 
         public override void RefreshValues()
         {
-            if (IsDisabled) return;
-
             base.RefreshValues();
+
+            Name = new TextObject("{=ModOptionsVM_Name}Mod Options").ToString();
+            DoneButtonText = new TextObject("{=WiNRdfsm}Done").ToString();
+            CancelButtonText = new TextObject("{=3CpNUnVl}Cancel").ToString();
+            ModsText = new TextObject("{=ModOptionsPageView_Mods}Mods").ToString();
 
             foreach (var viewModel in ModSettingsList)
                 viewModel.RefreshValues();
-
-            OnPropertyChanged(nameof(SelectedMod));
-
-            if (SelectedMod is not null)
-            {
-                PresetsSelector.SetOnChangeAction(null);
-                PresetsSelector.SelectedIndex = SelectedMod?.PresetsSelector?.SelectedIndex ?? -1;
-                PresetsSelector.SetOnChangeAction(OnPresetsSelectorChange);
-            }
         }
 
         private void OnPresetsSelectorChange(MCMSelectorVM<DropdownSelectorItemVM<PresetKey>> selector)
         {
             if (IsDisabled) return;
+
+            if (selector.SelectedItem is null) return;
 
             var presetKey = selector.SelectedItem.OriginalItem;
             //var presetKey = selector.SelectedItem?.OriginalItem ?? new PresetKey("ERROR", "ERROR");
@@ -297,16 +241,16 @@ namespace MCM.UI.GUI.ViewModels
                 },
                 () =>
                 {
-                    PresetsSelector.SetOnChangeAction(null);
-                    PresetsSelector.SelectedIndex = SelectedMod?.PresetsSelector?.SelectedIndex ?? -1;
-                    PresetsSelector.SetOnChangeAction(OnPresetsSelectorChange);
+                    PresetsSelectorCopy.SetOnChangeAction(null);
+                    PresetsSelectorCopy.SelectedIndex = SelectedMod?.PresetsSelector?.SelectedIndex ?? -1;
+                    PresetsSelectorCopy.SetOnChangeAction(OnPresetsSelectorChange);
                 }));
         }
         private void OnModPresetsSelectorChange(MCMSelectorVM<DropdownSelectorItemVM<PresetKey>> selector)
         {
-            PresetsSelector.SetOnChangeAction(null);
-            PresetsSelector.SelectedIndex = selector.SelectedIndex;
-            PresetsSelector.SetOnChangeAction(OnPresetsSelectorChange);
+            PresetsSelectorCopy.SetOnChangeAction(null);
+            PresetsSelectorCopy.SelectedIndex = selector.SelectedIndex;
+            PresetsSelectorCopy.SetOnChangeAction(OnPresetsSelectorChange);
         }
 
         public void ExecuteClose()

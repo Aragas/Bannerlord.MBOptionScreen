@@ -9,19 +9,13 @@ using HarmonyLib;
 using NUnit.Framework;
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 using TaleWorlds.Engine;
 
-using UI::Bannerlord.BUTR.Shared.Helpers;
-
-using v5::Bannerlord.ModuleManager;
 using v5::MCM;
 using v5::MCM.Internal;
 
-using AccessTools2 = v5::HarmonyLib.BUTR.Extensions.AccessTools2;
 using SymbolExtensions2 = v5::HarmonyLib.BUTR.Extensions.SymbolExtensions2;
 
 namespace MCM.Tests

@@ -55,7 +55,7 @@ namespace MCM.Abstractions
             SubGroupDelimiter = subGroupDelimiter;
 
             var groups = propertyGroupDefinition.GroupName.Split(SubGroupDelimiter);
-            GroupName = string.Join(SubGroupDelimiter.ToString(), groups.Select(x => LocalizationUtils.Localize(x)));
+            GroupName = string.Join(SubGroupDelimiter.ToString(), groups);
             GroupOrder = propertyGroupDefinition.GroupOrder;
 
             PropertyReference = propertyReference;
@@ -80,10 +80,10 @@ namespace MCM.Abstractions
             {
                 if (propertyDefinition is { } propertyBase)
                 {
-                    DisplayName = LocalizationUtils.Localize(propertyBase.DisplayName);
+                    DisplayName = propertyBase.DisplayName;
                     Order = propertyBase.Order;
                     RequireRestart = propertyBase.RequireRestart;
-                    HintText = LocalizationUtils.Localize(propertyBase.HintText);
+                    HintText = propertyBase.HintText;
                 }
                 if (propertyDefinition is SettingPropertyAttribute settingPropertyAttribute) // v1
                 {
@@ -138,7 +138,7 @@ namespace MCM.Abstractions
                 }
                 if (propertyDefinition is IPropertyDefinitionButton propertyDefinitionButton)
                 {
-                    Content = LocalizationUtils.Localize(propertyDefinitionButton.Content);
+                    Content = propertyDefinitionButton.Content;
                 }
             }
         }

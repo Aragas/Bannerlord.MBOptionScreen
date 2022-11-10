@@ -10,6 +10,7 @@ using BUTR.DependencyInjection.Extensions;
 using BUTR.DependencyInjection.Logger;
 
 using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
 
 using MCM.Abstractions;
 using MCM.Abstractions.Base;
@@ -119,14 +120,13 @@ namespace MCM.UI
             var optionsSwitchHarmony = new Harmony("bannerlord.mcm.ui.optionsswitchpatch");
             OptionsVMPatch.Patch(optionsSwitchHarmony);
 
-
-            DelayedSubModuleManager.Register<SandBoxSubModule>();
-            DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
-                nameof(OnSubModuleLoad), SubscriptionType.AfterMethod, (_, _) =>
-                {
-                    Extender.Register(typeof(MCMUISubModule).Assembly);
-                    Extender.Enable();
-                });
+            var type = AccessTools2.TypeByName("SandBox.SandBoxSubModule");
+            DelayedSubModuleManager.Register(type);
+            DelayedSubModuleManager.Subscribe(type, this, nameof(OnSubModuleLoad), SubscriptionType.AfterMethod, (_, _) =>
+            {
+                Extender.Register(typeof(MCMUISubModule).Assembly);
+                Extender.Enable();
+            });
         }
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
@@ -142,16 +142,16 @@ namespace MCM.UI
                     Logger = this.GetServiceProvider().GetRequiredService<ILogger<MCMUISubModule>>();
                 }
 
-                DelayedSubModuleManager.Register<SandBoxSubModule>();
-                DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
-                    nameof(OnBeforeInitialModuleScreenSetAsRoot), SubscriptionType.AfterMethod, (_, _) =>
-                    {
-                        var resourceInjector = GenericServiceProvider.GetService<ResourceInjector>();
-                        resourceInjector?.Inject();
+                var type = AccessTools2.TypeByName("SandBox.SandBoxSubModule");
+                DelayedSubModuleManager.Register(type);
+                DelayedSubModuleManager.Subscribe(type, this, nameof(OnBeforeInitialModuleScreenSetAsRoot), SubscriptionType.AfterMethod, (_, _) =>
+                {
+                    var resourceInjector = GenericServiceProvider.GetService<ResourceInjector>();
+                    resourceInjector?.Inject();
 
-                        UpdateOptionScreen(MCMUISettings.Instance!);
-                        MCMUISettings.Instance!.PropertyChanged += MCMSettings_PropertyChanged;
-                    });
+                    UpdateOptionScreen(MCMUISettings.Instance!);
+                    MCMUISettings.Instance!.PropertyChanged += MCMSettings_PropertyChanged;
+                });
 
                 if (HotKeyManager.Create("MCM.UI") is { } hkm)
                 {
@@ -165,14 +165,14 @@ namespace MCM.UI
         {
             base.OnSubModuleUnloaded();
 
-            DelayedSubModuleManager.Register<SandBoxSubModule>();
-            DelayedSubModuleManager.Subscribe<SandBoxSubModule, MCMUISubModule>(
-                nameof(OnSubModuleUnloaded), SubscriptionType.AfterMethod, (_, _) =>
-                {
-                    var instance = MCMUISettings.Instance;
-                    if (instance is not null)
-                        instance.PropertyChanged -= MCMSettings_PropertyChanged;
-                });
+            var type = AccessTools2.TypeByName("SandBox.SandBoxSubModule");
+            DelayedSubModuleManager.Register(type);
+            DelayedSubModuleManager.Subscribe(type, this, nameof(OnSubModuleUnloaded), SubscriptionType.AfterMethod, (_, _) =>
+            {
+                var instance = MCMUISettings.Instance;
+                if (instance is not null)
+                    instance.PropertyChanged -= MCMSettings_PropertyChanged;
+            });
         }
 
         private static void MCMSettings_PropertyChanged(object? sender, PropertyChangedEventArgs e)

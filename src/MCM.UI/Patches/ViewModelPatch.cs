@@ -15,7 +15,7 @@ namespace MCM.UI.Patches
         public static void Patch(Harmony harmony)
         {
             harmony.Patch(
-                AccessTools2.Method("TaleWorlds.Library.ViewModel:ExecuteCommand"),
+                AccessTools2.Method(typeof(ViewModel), "ExecuteCommand"),
                 prefix: new HarmonyMethod(typeof(ViewModelPatch), nameof(ExecuteCommandPatch)));
         }
 

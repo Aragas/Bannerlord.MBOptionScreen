@@ -1,4 +1,5 @@
 ﻿using MCM.Abstractions;
+using MCM.Abstractions.Base;
 using MCM.Abstractions.Base.Global;
 using MCM.Abstractions.Base.PerCampaign;
 using MCM.Abstractions.Base.PerSave;
@@ -31,7 +32,7 @@ namespace MCM.Implementation.FluentBuilder
             DisplayName = displayName;
 
             CreateGroup(SettingsPropertyGroupDefinition.DefaultGroupName, _ => { });
-            CreatePreset("default", "Default", _ => { });
+            CreatePreset(BaseSettings.DefaultPresetId, BaseSettings.DefaultPresetName, _ => { });
         }
 
         /// <inheritdoc/>
@@ -67,7 +68,7 @@ namespace MCM.Implementation.FluentBuilder
 
         public ISettingsBuilder WithoutDefaultPreset()
         {
-            Presets.Remove("default");
+            Presets.Remove(BaseSettings.DefaultPresetId);
             return this;
         }
 

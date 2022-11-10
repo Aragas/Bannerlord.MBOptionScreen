@@ -29,7 +29,7 @@ namespace MCM.UI.ViewModelWrappers
             AccessTools2.GetDeclaredPropertyGetterDelegate<GetMethodsDelegate>("TaleWorlds.Library.ViewModel+DataSourceTypeBindingPropertiesCollection:Methods");
 
         private static readonly AccessTools.FieldRef<IDictionary>? CachedViewModelProperties =
-            AccessTools2.StaticFieldRefAccess<IDictionary>("TaleWorlds.Library.ViewModel:_cachedViewModelProperties");
+            AccessTools2.StaticFieldRefAccess<IDictionary>(typeof(ViewModel), "_cachedViewModelProperties");
 
         /// <inheritdoc/>
         public ViewModel Object { get; }

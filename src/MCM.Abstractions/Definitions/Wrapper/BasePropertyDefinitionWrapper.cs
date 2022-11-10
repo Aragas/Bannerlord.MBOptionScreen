@@ -18,10 +18,10 @@ namespace MCM.Abstractions.Wrapper
         {
             var type = @object.GetType();
 
-            DisplayName = LocalizationUtils.Localize(type.GetProperty(nameof(DisplayName))?.GetValue(@object) as string ?? "ERROR");
+            DisplayName = type.GetProperty(nameof(DisplayName))?.GetValue(@object) as string ?? "ERROR";
             Order = type.GetProperty(nameof(Order))?.GetValue(@object) as int? ?? -1;
             RequireRestart = type.GetProperty(nameof(RequireRestart))?.GetValue(@object) as bool? ?? true;
-            HintText = LocalizationUtils.Localize(type.GetProperty(nameof(HintText))?.GetValue(@object) as string ?? "ERROR");
+            HintText = type.GetProperty(nameof(HintText))?.GetValue(@object) as string ?? "ERROR";
         }
     }
 }

@@ -3,10 +3,10 @@
 
   <PropertyGroup>
     <GameVersion>1.0.0</GameVersion>
-    <Version>5.0.4</Version>
+    <Version>5.1.0</Version>
     <HarmonyVersion>2.2.2</HarmonyVersion>
-    <ButterLibVersion>2.3.1</ButterLibVersion>
-    <UIExtenderExVersion>2.3.0</UIExtenderExVersion>
+    <ButterLibVersion>2.5.0</ButterLibVersion>
+    <UIExtenderExVersion>2.3.1</UIExtenderExVersion>
     <BuildResourcesVersion>1.0.1.68</BuildResourcesVersion>
     <BUTRSharedVersion>3.0.0.121</BUTRSharedVersion>
     <BUTRDependencyInjectionVersion>1.0.0.30</BUTRDependencyInjectionVersion>

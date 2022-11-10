@@ -1,4 +1,8 @@
-﻿using MCM.Abstractions;
+﻿using Bannerlord.ModuleManager;
+
+using ComparerExtensions;
+
+using MCM.Abstractions;
 
 using System;
 using System.Linq;
@@ -11,25 +15,19 @@ namespace MCM.UI.GUI.ViewModels
     internal sealed class SettingsPropertyGroupVM : ViewModel
     {
         private bool _isExpanded = true;
+        private string _groupName;
+        private string _hintText;
+        private string _groupNameDisplay;
 
         private ModOptionsVM MainView => SettingsVM.MainView;
         private SettingsVM SettingsVM { get; }
 
         public SettingsPropertyGroupDefinition SettingPropertyGroupDefinition { get; }
-        public string GroupName => SettingPropertyGroupDefinition.GroupName;
+
+        public string GroupName { get => _groupName; private set => SetField(ref _groupName, value,nameof(GroupName)); }
         public SettingsPropertyGroupVM? ParentGroup { get; }
         public SettingsPropertyVM? GroupToggleSettingProperty { get; private set; }
-        public string HintText
-        {
-            get
-            {
-                if (GroupToggleSettingProperty is not null && !string.IsNullOrWhiteSpace(GroupToggleSettingProperty.HintText))
-                {
-                    return GroupToggleSettingProperty.HintText;
-                }
-                return string.Empty;
-            }
-        }
+        public string HintText { get => _hintText; private set => SetField(ref _hintText, value, nameof(HintText)); }
         public bool SatisfiesSearch
         {
             get
@@ -42,12 +40,7 @@ namespace MCM.UI.GUI.ViewModels
         public bool AnyChildSettingSatisfiesSearch => SettingProperties.Any(x => x.SatisfiesSearch) || SettingPropertyGroups.Any(x => x.SatisfiesSearch);
 
         [DataSourceProperty]
-        public string GroupNameDisplay => GroupToggle
-            ? GroupName
-            : new TextObject("{=SettingsPropertyGroupVM_Disabled}{GROUPNAME} (Disabled)", new()
-            {
-                { "GROUPNAME", GroupName }
-            }).ToString();
+        public string GroupNameDisplay { get => _groupNameDisplay; set => SetField(ref _groupNameDisplay, value, nameof(GroupNameDisplay)); }
         [DataSourceProperty]
         public MBBindingList<SettingsPropertyVM> SettingProperties { get; } = new();
         [DataSourceProperty]
@@ -98,10 +91,8 @@ namespace MCM.UI.GUI.ViewModels
             get => _isExpanded;
             set
             {
-                if (_isExpanded != value)
+                if (SetField(ref _isExpanded, value, nameof(IsExpanded)))
                 {
-                    _isExpanded = value;
-                    OnPropertyChanged(nameof(IsExpanded));
                     OnPropertyChanged(nameof(IsGroupVisible));
                     foreach (var subGroup in SettingPropertyGroups)
                     {
@@ -132,12 +123,31 @@ namespace MCM.UI.GUI.ViewModels
         public override void RefreshValues()
         {
             base.RefreshValues();
+
+            GroupName = SettingPropertyGroupDefinition.GroupName;
+            HintText = GroupToggleSettingProperty is not null && !string.IsNullOrWhiteSpace(GroupToggleSettingProperty.HintText)
+                ? GroupToggleSettingProperty.HintText
+                : string.Empty;
+            GroupNameDisplay = GroupToggle
+                ? new TextObject(GroupName).ToString()
+                : new TextObject("{=SettingsPropertyGroupVM_Disabled}{GROUPNAME} (Disabled)", new()
+                {
+                    { "GROUPNAME", new TextObject(GroupName).ToString() }
+                }).ToString();
+
             foreach (var setting in SettingProperties)
                 setting.RefreshValues();
             foreach (var setting in SettingPropertyGroups)
                 setting.RefreshValues();
 
-            OnPropertyChanged(nameof(GroupNameDisplay));
+            SettingProperties.Sort(KeyComparer<SettingsPropertyVM>
+                .OrderBy(x => x.SettingPropertyDefinition.Order)
+                .ThenBy(x => new TextObject(x.SettingPropertyDefinition.DisplayName).ToString(), new AlphanumComparatorFast()));
+
+            SettingPropertyGroups.Sort(KeyComparer<SettingsPropertyGroupVM>
+                .OrderByDescending(x => x.SettingPropertyGroupDefinition.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)
+                .ThenByDescending(x => x.SettingPropertyGroupDefinition.Order)
+                .ThenByDescending(x => new TextObject(x.SettingPropertyGroupDefinition.GroupName).ToString(), new AlphanumComparatorFast()));
         }
 
         private void Add(ISettingsPropertyDefinition definition)
@@ -165,20 +175,6 @@ namespace MCM.UI.GUI.ViewModels
             OnPropertyChanged(nameof(IsGroupVisible));
         }
 
-        public void OnResetStart()
-        {
-            foreach (var setting in SettingProperties)
-                setting.OnResetStart();
-            foreach (var setting in SettingPropertyGroups)
-                setting.OnResetStart();
-        }
-        public void OnResetEnd()
-        {
-            foreach (var setting in SettingProperties)
-                setting.OnResetEnd();
-            foreach (var setting in SettingPropertyGroups)
-                setting.OnResetEnd();
-        }
         public void OnHover() => MainView.HintText = HintText;
         public void OnHoverEnd() => MainView.HintText = string.Empty;
         public void OnGroupClick() => IsExpanded = !IsExpanded;

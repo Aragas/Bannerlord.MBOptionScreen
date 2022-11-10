@@ -1,5 +1,6 @@
 ﻿using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
+using MCM.Common;
 
 namespace MCMv5.Tests
 {
@@ -24,8 +25,18 @@ namespace MCMv5.Tests
         [SettingPropertyInteger("Option 4", 0, 100, Order = 0, RequireRestart = false, HintText = "Option 1")]
         [SettingPropertyGroup("{=Tgafds}Level1/Level2")]
         public int Test_Option4 { get; set; } = 0;
+
         [SettingPropertyInteger("Option 5", 0, 100, Order = 0, RequireRestart = false, HintText = "Option 1")]
         [SettingPropertyGroup("{=Tgafds}Level1/Level2")]
         public int Test_Option5 { get; set; } = 0;
+
+        [SettingPropertyDropdown("Option 6", Order = 0, RequireRestart = false, HintText = "Option 1")]
+        [SettingPropertyGroup("{=Tgafds}Level1/Level2")]
+        public Dropdown<string> PropertyDropdownSelectedIndex0 { get; set; } = new(new[]
+        {
+            "{=TgabbF}Value 1",
+            "{=TgabbG}Value 2",
+            "{=TgabbD}Value 3",
+        }, 0);
     }
 }

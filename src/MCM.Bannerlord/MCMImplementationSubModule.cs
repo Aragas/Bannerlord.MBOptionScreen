@@ -80,6 +80,7 @@ namespace MCM.Internal
             base.OnSubModuleLoad();
 
             PerformMigration001();
+            PerformMigration002();
 
             if (!ServiceRegistrationWasCalled)
                 OnServiceRegistration();
@@ -178,9 +179,68 @@ namespace MCM.Internal
                         catch (Exception) { }
                     }
 
-                    if (Directory.GetFiles(oldPath) is {Length: 0} && Directory.GetDirectories(oldPath) is {Length: 0})
+                    if (Directory.GetFiles(oldPath) is { Length: 0 } && Directory.GetDirectories(oldPath) is { Length: 0 })
                         Directory.Delete(oldPath, true);
-                    if (Directory.GetFiles(oldConfigPath) is {Length: 0} && Directory.GetDirectories(oldConfigPath) is {Length: 0})
+                    if (Directory.GetFiles(oldConfigPath) is { Length: 0 } && Directory.GetDirectories(oldConfigPath) is { Length: 0 })
+                        Directory.Delete(oldConfigPath, true);
+                }
+            }
+            catch (Exception) { }
+        }
+
+        private static void PerformMigration002()
+        {
+            static void MoveDirectory(string source, string target)
+            {
+                var sourcePath = source.TrimEnd('\\', ' ');
+                var targetPath = target.TrimEnd('\\', ' ');
+                foreach (var folder in Directory.EnumerateFiles(sourcePath, "*", SearchOption.AllDirectories).GroupBy(Path.GetDirectoryName))
+                {
+                    var targetFolder = folder.Key.Replace(sourcePath, targetPath);
+                    Directory.CreateDirectory(targetFolder);
+                    foreach (var file in folder)
+                    {
+                        var targetFile = Path.Combine(targetFolder, Path.GetFileName(file));
+                        if (File.Exists(targetFile)) File.Delete(targetFile);
+                        File.Move(file, targetFile);
+                    }
+                }
+                Directory.Delete(source, true);
+            }
+
+            try
+            {
+                var oldConfigPath = Path.GetFullPath("Configs");
+                var oldPath = Path.GetFullPath(Path.Combine(PlatformFileHelperPCExtended.GetDirectoryFullPath(EngineFilePaths.ConfigsPath) ?? string.Empty, "../", "ModSettings"));
+                var newPath = Path.Combine(PlatformFileHelperPCExtended.GetDirectoryFullPath(EngineFilePaths.ConfigsPath) ?? string.Empty, "ModSettings");
+                if (Directory.Exists(oldPath) && Directory.Exists(newPath))
+                {
+                    foreach (var filePath in Directory.GetFiles(oldPath))
+                    {
+                        var fileName = Path.GetFileName(filePath);
+                        var newFilePath = Path.Combine(newPath, fileName);
+                        try
+                        {
+                            File.Copy(filePath, newFilePath, true);
+                            File.Delete(filePath);
+                        }
+                        catch (Exception) { }
+                    }
+
+                    foreach (var directoryPath in Directory.GetDirectories(oldPath))
+                    {
+                        var directoryName = Path.GetFileName(directoryPath);
+                        var newDirectoryPath = Path.Combine(newPath, directoryName);
+                        try
+                        {
+                            MoveDirectory(directoryPath, newDirectoryPath);
+                        }
+                        catch (Exception) { }
+                    }
+
+                    if (Directory.GetFiles(oldPath) is { Length: 0 } && Directory.GetDirectories(oldPath) is { Length: 0 })
+                        Directory.Delete(oldPath, true);
+                    if (Directory.GetFiles(oldConfigPath) is { Length: 0 } && Directory.GetDirectories(oldConfigPath) is { Length: 0 })
                         Directory.Delete(oldConfigPath, true);
                 }
             }

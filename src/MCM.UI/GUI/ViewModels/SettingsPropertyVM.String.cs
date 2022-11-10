@@ -1,4 +1,5 @@
-﻿using MCM.UI.Actions;
+﻿using MCM.Abstractions;
+using MCM.UI.Actions;
 
 using TaleWorlds.Library;
 
@@ -7,7 +8,7 @@ namespace MCM.UI.GUI.ViewModels
     internal sealed partial class SettingsPropertyVM : ViewModel
     {
         [DataSourceProperty]
-        public bool IsString { get; }
+        public bool IsString => SettingType == SettingType.String;
 
         [DataSourceProperty]
         public string StringValue

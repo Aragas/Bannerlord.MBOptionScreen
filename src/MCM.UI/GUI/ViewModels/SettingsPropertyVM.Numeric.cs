@@ -15,9 +15,9 @@ namespace MCM.UI.GUI.ViewModels
         public bool IsFloatVisible { get; private set; }
 
         [DataSourceProperty]
-        public bool IsInt { get; private set; }
+        public bool IsInt => SettingType == SettingType.Int;
         [DataSourceProperty]
-        public bool IsFloat { get; private set; }
+        public bool IsFloat => SettingType == SettingType.Float;
 
         [DataSourceProperty]
         public float FloatValue
@@ -61,11 +61,10 @@ namespace MCM.UI.GUI.ViewModels
         public float MinFloat => (float) SettingPropertyDefinition.MinValue;
 
         [DataSourceProperty]
-        public bool IsNotNumeric { get; private set; }
+        public bool IsNotNumeric => !(IsInt || IsFloat);
 
         [DataSourceProperty]
         public bool NumericValueToggle { get; private set; }
-
 
         [DataSourceProperty]
         public string NumericValue => SettingType switch
@@ -81,37 +80,39 @@ namespace MCM.UI.GUI.ViewModels
 
         public void OnEditBoxHover()
         {
-            if (SettingType == SettingType.Float)
+            switch (SettingType)
             {
-                IsFloatVisible = !IsFloatVisible;
-                NumericValueToggle = !NumericValueToggle;
-                OnPropertyChanged(nameof(IsFloatVisible));
-                OnPropertyChanged(nameof(NumericValueToggle));
-            }
-            if (SettingType == SettingType.Int)
-            {
-                IsIntVisible = !IsIntVisible;
-                NumericValueToggle = !NumericValueToggle;
-                OnPropertyChanged(nameof(IsIntVisible));
-                OnPropertyChanged(nameof(NumericValueToggle));
+                case SettingType.Float:
+                    IsFloatVisible = !IsFloatVisible;
+                    NumericValueToggle = !NumericValueToggle;
+                    OnPropertyChanged(nameof(IsFloatVisible));
+                    OnPropertyChanged(nameof(NumericValueToggle));
+                    break;
+                case SettingType.Int:
+                    IsIntVisible = !IsIntVisible;
+                    NumericValueToggle = !NumericValueToggle;
+                    OnPropertyChanged(nameof(IsIntVisible));
+                    OnPropertyChanged(nameof(NumericValueToggle));
+                    break;
             }
         }
 
         public void OnEditBoxHoverEnd()
         {
-            if (SettingType == SettingType.Float)
+            switch (SettingType)
             {
-                IsFloatVisible = !IsFloatVisible;
-                NumericValueToggle = !NumericValueToggle;
-                OnPropertyChanged(nameof(IsFloatVisible));
-                OnPropertyChanged(nameof(NumericValueToggle));
-            }
-            if (SettingType == SettingType.Int)
-            {
-                IsIntVisible = !IsIntVisible;
-                NumericValueToggle = !NumericValueToggle;
-                OnPropertyChanged(nameof(IsIntVisible));
-                OnPropertyChanged(nameof(NumericValueToggle));
+                case SettingType.Float:
+                    IsFloatVisible = !IsFloatVisible;
+                    NumericValueToggle = !NumericValueToggle;
+                    OnPropertyChanged(nameof(IsFloatVisible));
+                    OnPropertyChanged(nameof(NumericValueToggle));
+                    break;
+                case SettingType.Int:
+                    IsIntVisible = !IsIntVisible;
+                    NumericValueToggle = !NumericValueToggle;
+                    OnPropertyChanged(nameof(IsIntVisible));
+                    OnPropertyChanged(nameof(NumericValueToggle));
+                    break;
             }
         }
     }

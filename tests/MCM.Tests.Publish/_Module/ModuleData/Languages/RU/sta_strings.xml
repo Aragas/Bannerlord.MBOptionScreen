@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+      xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/ModuleLanguage.xsd" >
+  <tags>
+    <tag language="Русский" />
+  </tags>
+  <strings>
+    <string id="Tgabbs" text="Уровень1"/>
+    <string id="Tgafds" text="Уровень1/Уровень2"/>
+    <string id="TgabbF" text="Значение 1"/>
+    <string id="TgabbG" text="Значение 2"/>
+    <string id="TgabbD" text="Значение 3"/>
+  </strings>
+</base>

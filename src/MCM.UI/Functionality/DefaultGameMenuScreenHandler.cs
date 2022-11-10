@@ -35,7 +35,7 @@ namespace MCM.UI.Functionality
 
             var harmony = new Harmony("bannerlord.mcm.mainmenuscreeninjection_v4");
             harmony.Patch(
-                AccessTools2.Method("TaleWorlds.MountAndBlade.ViewModelCollection.InitialMenu.InitialMenuVM:RefreshMenuOptions"),
+                AccessTools2.Method(typeof(InitialMenuVM), "RefreshMenuOptions"),
                 postfix: new HarmonyMethod(AccessTools2.Method(typeof(DefaultGameMenuScreenHandler), nameof(RefreshMenuOptionsPostfix)), 300));
         }
 

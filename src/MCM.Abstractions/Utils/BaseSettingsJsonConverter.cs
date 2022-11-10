@@ -41,7 +41,7 @@ namespace MCM.Implementation
 
                 var id = GetPropertyDefinitionId(definition);
 
-                jo.Add(id, JToken.FromObject(definition.PropertyReference.Value, serializer));
+                jo.Add(id, definition.PropertyReference.Value is null ? null : JToken.FromObject(definition.PropertyReference.Value, serializer));
             }
 
             jo.WriteTo(writer);

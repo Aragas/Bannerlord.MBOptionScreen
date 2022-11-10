@@ -207,16 +207,27 @@ namespace MCM.Abstractions
         public static SettingsPropertyGroupDefinition GetGroupFor(char subGroupDelimiter, ISettingsPropertyDefinition sp, ICollection<SettingsPropertyGroupDefinition> rootCollection)
         {
             SettingsPropertyGroupDefinition? group;
+            var groupName = sp.GroupName;
+            // While this was not intendes, some use "{=}Group1/{=}Group2" instead of "{=}Group1/Group2". Need to keep that support
+            if (MoreThanOnce(groupName, "{="))
+            {
+                var split = groupName.Split(subGroupDelimiter);
+                groupName = string.Join(subGroupDelimiter.ToString(), split.Select(x => LocalizationUtils.Localize(x)));
+            }
+            else
+            {
+                groupName = LocalizationUtils.Localize(groupName);
+            }
             // Check if the intended group is a sub group
-            if (sp.GroupName.Contains(subGroupDelimiter))
+            if (groupName.Contains(subGroupDelimiter))
             {
                 // Intended group is a sub group. Must find it. First get the top group.
-                var topGroupName = GetTopGroupName(subGroupDelimiter, sp.GroupName, out var truncatedGroupName);
-                var topGroup = rootCollection.GetGroup(topGroupName);
+                var topGroupName = GetTopGroupName(subGroupDelimiter, groupName, out var truncatedGroupName);
+                var topGroup = rootCollection.GetGroupFromLocalizedName(topGroupName);
                 if (topGroup is null)
                 {
                     // Order will not be passed to the subgroup
-                    topGroup = new SettingsPropertyGroupDefinition(sp.GroupName, topGroupName);
+                    topGroup = new SettingsPropertyGroupDefinition(sp.GroupName).SetSubGroupDelimiter(subGroupDelimiter);
                     rootCollection.Add(topGroup);
                 }
                 // Find the sub group
@@ -225,10 +236,10 @@ namespace MCM.Abstractions
             else
             {
                 // Group is not a subgroup, can find it in the main list of groups.
-                group = rootCollection.GetGroup(sp.GroupName);
+                group = rootCollection.GetGroupFromLocalizedName(groupName);
                 if (group is null)
                 {
-                    group = new SettingsPropertyGroupDefinition(sp.GroupName, order: sp.GroupOrder);
+                    group = new SettingsPropertyGroupDefinition(sp.GroupName, order: sp.GroupOrder).SetSubGroupDelimiter(subGroupDelimiter);
                     rootCollection.Add(group);
                 }
             }
@@ -246,7 +257,7 @@ namespace MCM.Abstractions
                     if (topGroup is null)
                     {
                         // Order will not be passed to the subgroup
-                        topGroup = new SettingsPropertyGroupDefinition(sp.GroupName, topGroupName);
+                        topGroup = new SettingsPropertyGroupDefinition(sp.GroupName).SetSubGroupDelimiter(subGroupDelimiter);
                         sgp.Add(topGroup);
                     }
 
@@ -259,7 +270,7 @@ namespace MCM.Abstractions
                     var group = sgp.GetGroup(groupName);
                     if (group is null)
                     {
-                        group = new SettingsPropertyGroupDefinition(sp.GroupName, groupName, sp.GroupOrder);
+                        group = new SettingsPropertyGroupDefinition(sp.GroupName, sp.GroupOrder).SetSubGroupDelimiter(subGroupDelimiter);
                         sgp.Add(group);
                     }
 
@@ -275,6 +286,9 @@ namespace MCM.Abstractions
             truncatedGroupName = groupName.Remove(0, index + 1);
             return topGroupName;
         }
+
+        private static bool MoreThanOnce(string full, string part) =>
+            full.IndexOf(part, StringComparison.Ordinal) is var first and not -1 && first != full.LastIndexOf(part, StringComparison.Ordinal);
 
         public static IEnumerable<IPropertyDefinitionBase> GetPropertyDefinitionWrappers(object property) => GetPropertyDefinitionWrappers(new[] { property });
 

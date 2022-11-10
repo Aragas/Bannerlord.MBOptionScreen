@@ -7,17 +7,18 @@ namespace MCM.UI
     internal sealed record PresetKey
     {
         public string Id { get; init; }
-        public string Name { get; init; }
+        private readonly string _name;
+        public string Name => new TextObject(_name).ToString();
 
         public PresetKey(ISettingsPreset preset)
         {
             Id = preset.Id;
-            Name = new TextObject(preset.Name).ToString();
+            _name = preset.Name;
         }
         public PresetKey(string id, string name)
         {
             Id = id;
-            Name = new TextObject(name).ToString();
+            _name = name;
         }
 
         /// <inheritdoc />
