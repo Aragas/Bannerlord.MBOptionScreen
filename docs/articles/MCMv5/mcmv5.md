@@ -34,7 +34,7 @@ By including MCMv5 you will be able to save/load settings programmatically, with
     <SubModule>
       <Name value="MCMv5 Basic Implementation" />
       <DLLName value="MCMv5.dll" />
-      <SubModuleClassType value="MCM.Implementation.MCMImplementationSubModule" />
+      <SubModuleClassType value="MCM.Internal.MCMImplementationSubModule" />
       <Tags />
     </SubModule>
   </SubModules>
