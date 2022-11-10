@@ -1,4 +1,8 @@
-﻿using MCM.Abstractions;
+﻿using Bannerlord.ModuleManager;
+
+using ComparerExtensions;
+
+using MCM.Abstractions;
 using MCM.Abstractions.Base;
 using MCM.UI.Actions;
 using MCM.UI.Dropdown;
@@ -16,6 +20,7 @@ namespace MCM.UI.GUI.ViewModels
 {
     internal sealed class SettingsVM : ViewModel
     {
+        private string _displayName;
         private bool _isSelected;
         private Action<SettingsVM> _executeSelect = default!;
         private MBBindingList<SettingsPropertyGroupVM> _settingPropertyGroups = default!;
@@ -32,30 +37,11 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public int UIVersion => SettingsInstance.UIVersion;
         [DataSourceProperty]
-        public string DisplayName => SettingsInstance.DisplayName;
+        public string DisplayName { get => _displayName; private set => SetField(ref _displayName, value, nameof(DisplayName)); }
         [DataSourceProperty]
-        public bool IsSelected
-        {
-            get => _isSelected;
-            set
-            {
-                _isSelected = value;
-                OnPropertyChanged(nameof(IsSelected));
-            }
-        }
+        public bool IsSelected { get => _isSelected; set => SetField(ref _isSelected, value, nameof(IsSelected)); }
         [DataSourceProperty]
-        public MBBindingList<SettingsPropertyGroupVM> SettingPropertyGroups
-        {
-            get => _settingPropertyGroups;
-            set
-            {
-                if (_settingPropertyGroups != value)
-                {
-                    _settingPropertyGroups = value;
-                    OnPropertyChanged(nameof(SettingPropertyGroups));
-                }
-            }
-        }
+        public MBBindingList<SettingsPropertyGroupVM> SettingPropertyGroups { get => _settingPropertyGroups; set => SetField(ref _settingPropertyGroups, value, nameof(SettingPropertyGroups)); }
 
         public SettingsVM(SettingsDefinition definition, ModOptionsVM mainView)
         {
@@ -66,8 +52,7 @@ namespace MCM.UI.GUI.ViewModels
             // {
             _cachedPresets = SettingsInstance.GetBuiltInPresets().Concat(SettingsInstance.GetExternalPresets()).ToDictionary(preset => new PresetKey(preset), preset => preset.LoadPreset());
 
-            var customPresetText = new TextObject("{=SettingsVM_Custom}Custom").ToString();
-            var presets = new List<PresetKey> { new("custom", customPresetText) }.Concat(_cachedPresets.Keys);
+            var presets = new List<PresetKey> { new("custom", "{=SettingsVM_Custom}Custom") }.Concat(_cachedPresets.Keys);
             PresetsSelector = new MCMSelectorVM<DropdownSelectorItemVM<PresetKey>>(presets, -1, null);
             PresetsSelector.ItemList[0].CanBeSelected = false;
 
@@ -118,12 +103,15 @@ namespace MCM.UI.GUI.ViewModels
         {
             base.RefreshValues();
 
+            DisplayName = SettingsInstance.DisplayName;
+
             foreach (var group in SettingPropertyGroups)
                 group.RefreshValues();
-            OnPropertyChanged(nameof(UIVersion));
-            OnPropertyChanged(nameof(IsSelected));
-            OnPropertyChanged(nameof(DisplayName));
-            OnPropertyChanged(nameof(SettingPropertyGroups));
+
+            SettingPropertyGroups.Sort(KeyComparer<SettingsPropertyGroupVM>
+                .OrderByDescending(x => x.SettingPropertyGroupDefinition.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)
+                .ThenByDescending(x => x.SettingPropertyGroupDefinition.Order)
+                .ThenByDescending(x => new TextObject(x.SettingPropertyGroupDefinition.GroupName).ToString(), new AlphanumComparatorFast()));
         }
 
         public void AddSelectCommand(Action<SettingsVM> command) => _executeSelect = command;

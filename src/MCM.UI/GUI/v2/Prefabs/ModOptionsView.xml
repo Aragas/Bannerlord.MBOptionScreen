@@ -107,7 +107,7 @@
                         <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="300" SuggestedHeight="42" HorizontalAlignment="Left"
                                 VerticalAlignment="Center"  MarginLeft="20" MarginRight="40" IsVisible="@IsPresetsSelectorVisible">
                           <Children>
-                            <Standard.DropdownWithHorizontalControl HorizontalAlignment="Center" Parameter.SelectorDataSource="{PresetsSelector}"
+                            <Standard.DropdownWithHorizontalControl HorizontalAlignment="Center" Parameter.SelectorDataSource="{PresetsSelectorCopy}"
                                                                     Parameter.ShowNextAndPrevious="false" />
                           </Children>
                         </Widget>

@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 5.1.0
+Game Versions: v1.0.0,v1.0.1
+* Made the Mod Options dynamic, changing the language will change the localization correctly
+* Fixed ModSettings path
+* Might fix Linux infinite loading issue
+---------------------------------------------------------------------------------------------------
 Version: 5.0.4
 Game Versions: v1.0.0
 * Another potential CTD fix

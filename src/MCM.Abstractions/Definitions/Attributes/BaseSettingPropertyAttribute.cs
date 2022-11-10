@@ -9,8 +9,6 @@ namespace MCM.Abstractions.Attributes
     [SuppressMessage("Design", "RCS1203:Use AttributeUsageAttribute.", Justification = "Implemented in the derived attributes.")]
     public abstract class BaseSettingPropertyAttribute : Attribute, IPropertyDefinitionBase
     {
-        private string _hintText = string.Empty;
-
         /// <inheritdoc/>
         public string DisplayName { get; }
         /// <inheritdoc/>
@@ -18,11 +16,11 @@ namespace MCM.Abstractions.Attributes
         /// <inheritdoc/>
         public bool RequireRestart { get; set; }
         /// <inheritdoc/>
-        public string HintText { get => _hintText; set => _hintText = LocalizationUtils.Localize(value); }
+        public string HintText { get; set; }
 
         protected BaseSettingPropertyAttribute(string displayName, int order = -1, bool requireRestart = true, string hintText = "")
         {
-            DisplayName = LocalizationUtils.Localize(displayName);
+            DisplayName = displayName;
             Order = order;
             RequireRestart = requireRestart;
             HintText = hintText;

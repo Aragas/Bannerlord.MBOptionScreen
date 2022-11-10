@@ -22,12 +22,15 @@ namespace MCM.Abstractions.Wrapper
             var propInfo = @object.GetType().GetProperty(nameof(Order));
             return propInfo?.GetValue(@object) as int?;
         }
-
-        public SettingsPropertyGroupDefinitionWrapper(object @object) : base(
-            GetGroupName(@object) ?? "ERROR",
-            GetGroupNameOverride(@object) ?? string.Empty,
-            GetGroupOrder(@object) ?? -1)
+        private static char? GetSubGroupDelimiter(object @object)
         {
+            var propInfo = @object.GetType().GetProperty(nameof(SubGroupDelimiter));
+            return propInfo?.GetValue(@object) as char?;
+        }
+
+        public SettingsPropertyGroupDefinitionWrapper(object @object) : base(GetGroupName(@object) ?? "ERROR", GetGroupOrder(@object) ?? -1)
+        {
+            SetSubGroupDelimiter(GetSubGroupDelimiter(@object) ?? '/');
             subGroups.AddRange(GetSubGroups(@object).SortDefault());
             settingProperties.AddRange(GetSettingProperties(@object).SortDefault());
         }

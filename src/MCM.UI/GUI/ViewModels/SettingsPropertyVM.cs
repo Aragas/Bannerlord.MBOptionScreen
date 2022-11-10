@@ -3,15 +3,20 @@ using MCM.Common;
 using MCM.UI.Actions;
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 
 using TaleWorlds.Library;
+using TaleWorlds.Localization;
 
 namespace MCM.UI.GUI.ViewModels
 {
     internal sealed partial class SettingsPropertyVM : ViewModel
     {
+        private string _name = string.Empty;
+
         public ModOptionsVM MainView => SettingsVM.MainView;
         public SettingsVM SettingsVM { get; }
         public SettingsPropertyGroupVM Group { get; set; } = default!;
@@ -21,9 +26,7 @@ namespace MCM.UI.GUI.ViewModels
         public ISettingsPropertyDefinition SettingPropertyDefinition { get; }
         public IRef PropertyReference => SettingPropertyDefinition.PropertyReference;
         public SettingType SettingType => SettingPropertyDefinition.SettingType;
-        public string HintText => SettingPropertyDefinition.HintText.Length > 0
-            ? $"{Name}: {SettingPropertyDefinition.HintText}"
-            : string.Empty;
+        public string HintText => SettingPropertyDefinition.HintText.Length > 0 ? $"{Name}: {new TextObject(SettingPropertyDefinition.HintText)}" : string.Empty;
         public string ValueFormat => SettingPropertyDefinition.ValueFormat;
         public IFormatProvider? ValueFormatProvider { get; }
 
@@ -31,8 +34,7 @@ namespace MCM.UI.GUI.ViewModels
                                        Name.IndexOf(MainView.SearchText, StringComparison.InvariantCultureIgnoreCase) >= 0;
 
         [DataSourceProperty]
-        public string Name => SettingPropertyDefinition.DisplayName;
-
+        public string Name { get => _name; private set => SetField(ref _name, value, nameof(Name)); }
         [DataSourceProperty]
         public bool IsEnabled => Group.GroupToggle;
 
@@ -63,18 +65,7 @@ namespace MCM.UI.GUI.ViewModels
                 ? Activator.CreateInstance(SettingPropertyDefinition.CustomFormatter) as IFormatProvider
                 : null;
 
-            // Moved to constructor
-            IsInt = SettingType == SettingType.Int;
-            IsFloat = SettingType == SettingType.Float;
-            IsBool = SettingType == SettingType.Bool;
-            IsString = SettingType == SettingType.String;
-            IsDropdownDefault = SettingType == SettingType.Dropdown && SettingsUtils.IsForTextDropdown(PropertyReference.Value);
-            IsDropdownCheckbox = SettingType == SettingType.Dropdown && SettingsUtils.IsForCheckboxDropdown(PropertyReference.Value);
-            IsDropdown = IsDropdownDefault || IsDropdownCheckbox;
-            IsButton = SettingType == SettingType.Button;
-            IsNotNumeric = !(IsInt || IsFloat);
             NumericValueToggle = IsInt || IsFloat;
-            // Moved to constructor
 
             PropertyReference.PropertyChanged += PropertyReference_OnPropertyChanged;
 
@@ -87,12 +78,12 @@ namespace MCM.UI.GUI.ViewModels
             RefreshValues();
 
             if (MCMUISubModule.ResetValueToDefault is { } key)
-                key.OnReleasedEvent += ResetValueToDefaultOnReleasedEvent;
+                key.IsDownAndReleasedEvent += ResetValueToDefaultOnReleasedEvent;
         }
         public override void OnFinalize()
         {
             if (MCMUISubModule.ResetValueToDefault is { } key)
-                key.OnReleasedEvent -= ResetValueToDefaultOnReleasedEvent;
+                key.IsDownAndReleasedEvent -= ResetValueToDefaultOnReleasedEvent;
 
             PropertyReference.PropertyChanged -= PropertyReference_OnPropertyChanged;
 
@@ -108,7 +99,6 @@ namespace MCM.UI.GUI.ViewModels
         {
             RefreshValues();
             SettingsVM.RecalculateIndex();
-            //SettingsVM.RefreshValues();
         }
 
         private void ResetValueToDefaultOnReleasedEvent()
@@ -116,6 +106,30 @@ namespace MCM.UI.GUI.ViewModels
             if (IsSelected)
             {
                 SettingsVM.ResetSettingsValue(SettingPropertyDefinition.Id);
+
+                switch (SettingType)
+                {
+                    case SettingType.Bool:
+                        OnPropertyChanged(nameof(BoolValue));
+                        break;
+                    case SettingType.Int:
+                        OnPropertyChanged(nameof(IntValue));
+                        OnPropertyChanged(nameof(NumericValue));
+                        break;
+                    case SettingType.Float:
+                        OnPropertyChanged(nameof(FloatValue));
+                        OnPropertyChanged(nameof(NumericValue));
+                        break;
+                    case SettingType.String:
+                        OnPropertyChanged(nameof(StringValue));
+                        break;
+                    case SettingType.Dropdown:
+                        DropdownValue.Refresh((PropertyReference.Value as IEnumerable<object> ?? Enumerable.Empty<object>()).Select(x => new TextObject(x.ToString())),
+                            new SelectedIndexWrapper(PropertyReference.Value).SelectedIndex, null);
+                        break;
+                    case SettingType.Button:
+                        break;
+                }
             }
         }
 
@@ -123,52 +137,11 @@ namespace MCM.UI.GUI.ViewModels
         {
             base.RefreshValues();
 
-            switch (SettingType)
-            {
-                case SettingType.Bool:
-                    OnPropertyChanged(nameof(BoolValue));
-                    break;
-                case SettingType.Int:
-                    OnPropertyChanged(nameof(IntValue));
-                    break;
-                case SettingType.Float:
-                    OnPropertyChanged(nameof(FloatValue));
-                    break;
-                case SettingType.String:
-                    OnPropertyChanged(nameof(StringValue));
-                    break;
-                case SettingType.Dropdown:
-                    // Nested ViewModel, don't need to trigger change
-                    break;
-                case SettingType.Button:
-                    break;
-            }
-            OnPropertyChanged(nameof(NumericValue));
+            Name = new TextObject(SettingPropertyDefinition.DisplayName).ToString();
+            ButtonContent = new TextObject(SettingPropertyDefinition.Content).ToString();
+            DropdownValue.RefreshValues();
         }
 
-
-        public void OnResetStart()
-        {
-            PropertyReference.PropertyChanged -= PropertyReference_OnPropertyChanged;
-
-            if (IsDropdown)
-            {
-                DropdownValue.PropertyChanged -= DropdownValue_PropertyChanged;
-                DropdownValue.PropertyChangedWithValue -= DropdownValue_PropertyChangedWithValue;
-            }
-        }
-        public void OnResetEnd()
-        {
-            PropertyReference.PropertyChanged -= PropertyReference_OnPropertyChanged;
-
-            if (IsDropdown)
-            {
-                DropdownValue.PropertyChanged -= DropdownValue_PropertyChanged;
-                DropdownValue.PropertyChangedWithValue -= DropdownValue_PropertyChangedWithValue;
-            }
-
-            RefreshValues();
-        }
 
         [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
         [SuppressMessage("Redundancy", "RCS1213:Remove unused member declaration.", Justification = "Reflection is used.")]

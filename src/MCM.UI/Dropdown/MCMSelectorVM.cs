@@ -20,9 +20,8 @@ namespace MCM.UI.Dropdown
 
         static MCMSelectorVM()
         {
-            var methodInfo = AccessTools2.Property(typeof(TSelectorItemVM), "CanBeSelected")?.GetMethod;
-            _canBeSelectedDelegate = methodInfo is not null
-                ? AccessTools2.GetDelegate<CanBeSelectedDelegate>(methodInfo)!
+            _canBeSelectedDelegate = AccessTools2.GetPropertyGetterDelegate<CanBeSelectedDelegate>(typeof(TSelectorItemVM), "CanBeSelected") is { } del
+                ? del
                 : _ => false;
         }
 

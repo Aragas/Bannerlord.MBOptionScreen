@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 using TaleWorlds.Engine.GauntletUI;
+using TaleWorlds.MountAndBlade.GauntletUI;
 using TaleWorlds.TwoDimension;
 
 namespace MCM.UI.Patches
@@ -16,12 +17,10 @@ namespace MCM.UI.Patches
         public static void Patch(Harmony harmony)
         {
             harmony.Patch(
-                AccessTools2.Method("TaleWorlds.MountAndBlade.GauntletUI.OptionsGauntletScreen:OnInitialize") ??
                 AccessTools2.Method("TaleWorlds.MountAndBlade.GauntletUI.GauntletOptionsScreen:OnInitialize"),
                 postfix: new HarmonyMethod(typeof(OptionsGauntletScreenPatch), nameof(OnInitializePostfix)));
 
             harmony.Patch(
-                AccessTools2.Method("TaleWorlds.MountAndBlade.GauntletUI.OptionsGauntletScreen:OnFinalize") ??
                 AccessTools2.Method("TaleWorlds.MountAndBlade.GauntletUI.GauntletOptionsScreen:OnFinalize"),
                 postfix: new HarmonyMethod(typeof(OptionsGauntletScreenPatch), nameof(OnFinalizePostfix)));
         }

@@ -18,12 +18,10 @@ namespace MCM.UI.Patches
         public static void Patch(Harmony harmony)
         {
             harmony.Patch(
-                AccessTools2.Constructor("TaleWorlds.MountAndBlade.GauntletUI.MissionGauntletOptionsUIHandler") ??
                 AccessTools2.Constructor("TaleWorlds.MountAndBlade.GauntletUI.Mission.MissionGauntletOptionsUIHandler"),
                 postfix: new HarmonyMethod(typeof(MissionGauntletOptionsUIHandlerPatch), nameof(OnInitializePostfix)));
 
             harmony.Patch(
-                AccessTools2.Method("TaleWorlds.MountAndBlade.GauntletUI.MissionGauntletOptionsUIHandler:OnMissionScreenFinalize") ??
                 AccessTools2.Method("TaleWorlds.MountAndBlade.GauntletUI.Mission.MissionGauntletOptionsUIHandler:OnMissionScreenFinalize"),
                 postfix: new HarmonyMethod(typeof(MissionGauntletOptionsUIHandlerPatch), nameof(OnFinalizePostfix)));
         }

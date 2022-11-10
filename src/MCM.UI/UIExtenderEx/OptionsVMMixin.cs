@@ -7,6 +7,7 @@ using HarmonyLib.BUTR.Extensions;
 using MCM.UI.GUI.ViewModels;
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
@@ -23,43 +24,34 @@ namespace MCM.UI.UIExtenderEx
         private delegate void ExecuteCancelDelegate(OptionsVM instance);
 
         private static readonly ExecuteDoneDelegate? ExecuteDoneMethod =
-            AccessTools2.GetDelegate<ExecuteDoneDelegate>("TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions.OptionsVM:ExecuteDone");
+            AccessTools2.GetDelegate<ExecuteDoneDelegate>(typeof(OptionsVM), "ExecuteDone");
         private static readonly ExecuteCancelDelegate? ExecuteCancelMethod =
-            AccessTools2.GetDelegate<ExecuteCancelDelegate>("TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions.OptionsVM:ExecuteCancel");
+            AccessTools2.GetDelegate<ExecuteCancelDelegate>(typeof(OptionsVM), "ExecuteCancel");
+
+        private static readonly AccessTools.FieldRef<OptionsVM, List<ViewModel>>? _categories =
+            AccessTools2.FieldRefAccess<OptionsVM, List<ViewModel>>("_categories");
 
         static OptionsVMMixin()
         {
             var harmony = new Harmony("bannerlord.mcm.ui.optionsvm");
 
-            if (AccessTools2.Property("TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions.OptionsVM:VideoOptions")?.GetMethod is { } m1)
-                harmony.Patch(m1, postfix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((OptionsVM x) => OptionsPostfix(x)), 300));
-            if (AccessTools2.Property("TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions.OptionsVM:AudioOptions")?.GetMethod is { } m2)
-                harmony.Patch(m2, postfix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((OptionsVM x) => OptionsPostfix(x)), 300));
-            if (AccessTools2.Property("TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions.OptionsVM:GameKeyOptionGroups")?.GetMethod is { } m3)
-                harmony.Patch(m3, postfix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((OptionsVM x) => OptionsPostfix(x)), 300));
-            if (AccessTools2.Property("TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions.OptionsVM:GamepadOptions")?.GetMethod is { } m4)
-                harmony.Patch(m4, postfix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((OptionsVM x) => OptionsPostfix(x)), 300));
-            if (AccessTools2.Property("TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions.OptionsVM:GameplayOptions")?.GetMethod is { } m5)
-                harmony.Patch(m5, postfix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((OptionsVM x) => OptionsPostfix(x)), 300));
-            if (AccessTools2.Property("TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions.OptionsVM:PerformanceOptions")?.GetMethod is { } m6)
-                harmony.Patch(m6, postfix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((OptionsVM x) => OptionsPostfix(x)), 300));
-
             harmony.CreateReversePatcher(
-                AccessTools2.Method("TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions.OptionsVM:ExecuteCloseOptions"),
+                AccessTools2.Method(typeof(OptionsVM), "ExecuteCloseOptions"),
                 new HarmonyMethod(SymbolExtensions2.GetMethodInfo((OptionsVM x) => OriginalExecuteCloseOptions(x)))).Patch();
 
             harmony.Patch(
-                AccessTools2.Method("TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions.OptionsVM:ExecuteCloseOptions"),
+                AccessTools2.Method(typeof(OptionsVM), "ExecuteCloseOptions"),
                 postfix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((OptionsVM x) => ExecuteCloseOptionsPostfix(x)), 300));
+
+            harmony.Patch(
+                AccessTools2.Method(typeof(OptionsVM), "RefreshValues"),
+                postfix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((OptionsVM x) => RefreshValuesPostfix(x)), 300));
+
+            harmony.Patch(
+                AccessTools2.PropertySetter(typeof(OptionsVM), "CategoryIndex"),
+                postfix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((OptionsVM x) => SetSelectedCategoryPostfix(x)), 300));
         }
 
-        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static void OptionsPostfix(OptionsVM __instance)
-        {
-            __instance.SetPropertyValue(nameof(ModOptionsSelected), false);
-        }
         [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
         [SuppressMessage("ReSharper", "InconsistentNaming")]
         [MethodImpl(MethodImplOptions.NoInlining)]
@@ -68,6 +60,26 @@ namespace MCM.UI.UIExtenderEx
             if (__instance.GetPropertyValue("MCMMixin") is WeakReference<OptionsVMMixin> weakReference && weakReference.TryGetTarget(out var mixin))
             {
                 mixin?.ExecuteCloseOptions();
+            }
+        }
+        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static void RefreshValuesPostfix(OptionsVM __instance)
+        {
+            if (__instance.GetPropertyValue("ModOptions") is ModOptionsVM modOptions)
+            {
+                modOptions.RefreshValues();
+            }
+        }
+        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static void SetSelectedCategoryPostfix(OptionsVM __instance)
+        {
+            if (__instance.GetPropertyValue("MCMMixin") is WeakReference<OptionsVMMixin> weakReference && weakReference.TryGetTarget(out var mixin))
+            {
+                mixin.ModOptionsSelected = __instance.CategoryIndex == 4;
             }
         }
 
@@ -84,15 +96,7 @@ namespace MCM.UI.UIExtenderEx
         public WeakReference<OptionsVMMixin> MCMMixin => new(this);
 
         [DataSourceProperty]
-        public ModOptionsVM ModOptions
-        {
-            [MethodImpl(MethodImplOptions.NoInlining)]
-            get
-            {
-                ModOptionsSelected = true;
-                return _modOptions;
-            }
-        }
+        public ModOptionsVM ModOptions => _modOptions;
 
         [DataSourceProperty]
         public int DescriptionWidth
@@ -130,6 +134,8 @@ namespace MCM.UI.UIExtenderEx
         public OptionsVMMixin(OptionsVM vm) : base(vm)
         {
             vm.PropertyChanged += OptionsVM_PropertyChanged;
+            var list = _categories?.Invoke(vm) ?? new List<ViewModel>();
+            list.Insert(5, _modOptions);
         }
 
         private void OptionsVM_PropertyChanged(object? sender, PropertyChangedEventArgs e)
