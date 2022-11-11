@@ -24,7 +24,7 @@ namespace MCM.UI.GUI.ViewModels
 
         public SettingsPropertyGroupDefinition SettingPropertyGroupDefinition { get; }
 
-        public string GroupName { get => _groupName; private set => SetField(ref _groupName, value,nameof(GroupName)); }
+        public string GroupName { get => _groupName; private set => SetField(ref _groupName, value, nameof(GroupName)); }
         public SettingsPropertyGroupVM? ParentGroup { get; }
         public SettingsPropertyVM? GroupToggleSettingProperty { get; private set; }
         public string HintText { get => _hintText; private set => SetField(ref _hintText, value, nameof(HintText)); }
