@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 5.2.0
+Game Versions: v1.0.0,v1.0.1
+* UI fixes. Dropdowns are handled correct now in a lot of usage cases.
+* Huge thanks to bm001 for reporting those issues!
+---------------------------------------------------------------------------------------------------
 Version: 5.1.1
 Game Versions: v1.0.0,v1.0.1
 * Updated ButterLib

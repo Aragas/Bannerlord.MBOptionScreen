@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 
-using TaleWorlds.Library;
-
 namespace MCM.UI.Dropdown
 {
     public class MCMSelectorVM<TSelectorItemVM, TSelectorItemVMValueType> : MCMSelectorVM<TSelectorItemVM>
-        where TSelectorItemVM : ViewModel //DropdownSelectorItemVM<TSelectorItemVMValueType>
+        where TSelectorItemVM : MCMSelectorItemVM<TSelectorItemVMValueType>
         where TSelectorItemVMValueType : class
     {
-        public MCMSelectorVM(Action<MCMSelectorVM<TSelectorItemVM>>? onChange) : base(onChange) { }
-
-        public MCMSelectorVM(IEnumerable<TSelectorItemVMValueType> list, int selectedIndex, Action<MCMSelectorVM<TSelectorItemVM>>? onChange) : base(onChange)
+        public MCMSelectorVM(IEnumerable<TSelectorItemVMValueType> list, int selectedIndex)
         {
-            Refresh(list, selectedIndex, onChange);
+            Refresh(list, selectedIndex);
         }
 
-        public void Refresh(IEnumerable<TSelectorItemVMValueType> list, int selectedIndex, Action<MCMSelectorVM<TSelectorItemVM>>? onChange)
+        public void Refresh(IEnumerable<TSelectorItemVMValueType> list, int selectedIndex)
         {
             ItemList.Clear();
 
@@ -29,8 +25,6 @@ namespace MCM.UI.Dropdown
             }
 
             HasSingleItem = ItemList.Count <= 1;
-
-            _onChange = onChange;
 
             SelectedIndex = selectedIndex;
         }

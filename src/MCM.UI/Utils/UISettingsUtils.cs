@@ -1,16 +1,35 @@
-﻿using MCM.Abstractions;
+﻿using Bannerlord.ModuleManager;
+
+using ComparerExtensions;
+
+using MCM.Abstractions;
 using MCM.Abstractions.Base;
+using MCM.Common;
 using MCM.UI.Actions;
+using MCM.UI.GUI.ViewModels;
 
 using Microsoft.Extensions.Logging;
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
+
+using TaleWorlds.Localization;
 
 namespace MCM.UI.Utils
 {
     internal static class UISettingsUtils
     {
+        public static IComparer<SettingsPropertyVM> SettingsPropertyVMComparer = KeyComparer<SettingsPropertyVM>
+            .OrderBy(x => x.SettingPropertyDefinition.Order)
+            .ThenBy(x => new TextObject(x.SettingPropertyDefinition.DisplayName).ToString(), new AlphanumComparatorFast());
+
+        public static IComparer<SettingsPropertyGroupVM> SettingsPropertyGroupVMComparer = KeyComparer<SettingsPropertyGroupVM>
+            .OrderByDescending(x => x.SettingPropertyGroupDefinition.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)
+            .ThenBy(x => x.SettingPropertyGroupDefinition.Order)
+            .ThenBy(x => new TextObject(x.SettingPropertyGroupDefinition.GroupName).ToString(), new AlphanumComparatorFast());
+
         /// <summary>
         /// Mimics the same method in SettingsUtils, but it registers every action in URS
         /// </summary>
@@ -75,5 +94,12 @@ namespace MCM.UI.Utils
                     break;
             }
         }
+
+        public static IEnumerable<object> GetDropdownValues(IRef @ref) => @ref.Value switch
+        {
+            IEnumerable<object> enumerableObj => enumerableObj,
+            IEnumerable enumerable => enumerable.Cast<object>(),
+            _ => Enumerable.Empty<object>()
+        };
     }
 }

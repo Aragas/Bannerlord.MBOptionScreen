@@ -37,7 +37,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="MCMv4.Custom.ScreenTests" />
     <InternalsVisibleTo Include="MCM.Tests" />
   </ItemGroup>
 

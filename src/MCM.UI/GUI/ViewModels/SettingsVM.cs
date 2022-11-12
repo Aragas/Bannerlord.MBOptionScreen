@@ -1,11 +1,8 @@
-﻿using Bannerlord.ModuleManager;
-
-using ComparerExtensions;
-
-using MCM.Abstractions;
+﻿using MCM.Abstractions;
 using MCM.Abstractions.Base;
 using MCM.UI.Actions;
 using MCM.UI.Dropdown;
+using MCM.UI.Extensions;
 using MCM.UI.Utils;
 
 using System;
@@ -14,7 +11,6 @@ using System.ComponentModel;
 using System.Linq;
 
 using TaleWorlds.Library;
-using TaleWorlds.Localization;
 
 namespace MCM.UI.GUI.ViewModels
 {
@@ -23,7 +19,6 @@ namespace MCM.UI.GUI.ViewModels
         private string _displayName;
         private bool _isSelected;
         private Action<SettingsVM> _executeSelect = default!;
-        private MBBindingList<SettingsPropertyGroupVM> _settingPropertyGroups = default!;
         private readonly IDictionary<PresetKey, BaseSettings>? _cachedPresets;
 
         public ModOptionsVM MainView { get; }
@@ -32,7 +27,7 @@ namespace MCM.UI.GUI.ViewModels
         public SettingsDefinition SettingsDefinition { get; }
         public BaseSettings SettingsInstance => BaseSettingsProvider.Instance!.GetSettings(SettingsDefinition.SettingsId)!;
 
-        public MCMSelectorVM<DropdownSelectorItemVM<PresetKey>>? PresetsSelector { get; }
+        public MCMSelectorVM<MCMSelectorItemVM<PresetKey>>? PresetsSelector { get; }
 
         [DataSourceProperty]
         public int UIVersion => SettingsInstance.UIVersion;
@@ -41,7 +36,7 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public bool IsSelected { get => _isSelected; set => SetField(ref _isSelected, value, nameof(IsSelected)); }
         [DataSourceProperty]
-        public MBBindingList<SettingsPropertyGroupVM> SettingPropertyGroups { get => _settingPropertyGroups; set => SetField(ref _settingPropertyGroups, value, nameof(SettingPropertyGroups)); }
+        public MBBindingList<SettingsPropertyGroupVM> SettingPropertyGroups { get; } = new();
 
         public SettingsVM(SettingsDefinition definition, ModOptionsVM mainView)
         {
@@ -53,7 +48,7 @@ namespace MCM.UI.GUI.ViewModels
             _cachedPresets = SettingsInstance.GetBuiltInPresets().Concat(SettingsInstance.GetExternalPresets()).ToDictionary(preset => new PresetKey(preset), preset => preset.LoadPreset());
 
             var presets = new List<PresetKey> { new("custom", "{=SettingsVM_Custom}Custom") }.Concat(_cachedPresets.Keys);
-            PresetsSelector = new MCMSelectorVM<DropdownSelectorItemVM<PresetKey>>(presets, -1, null);
+            PresetsSelector = new MCMSelectorVM<MCMSelectorItemVM<PresetKey>>(presets, -1, null);
             PresetsSelector.ItemList[0].CanBeSelected = false;
 
             RecalculateIndex();
@@ -63,9 +58,7 @@ namespace MCM.UI.GUI.ViewModels
             if (SettingsInstance is INotifyPropertyChanged notifyPropertyChanged)
                 notifyPropertyChanged.PropertyChanged += Settings_PropertyChanged;
 
-            SettingPropertyGroups = new MBBindingList<SettingsPropertyGroupVM>();
-            foreach (var settingPropertyGroup in SettingsInstance.GetSettingPropertyGroups().Select(d => new SettingsPropertyGroupVM(d, this)))
-                SettingPropertyGroups.Add(settingPropertyGroup);
+            SettingPropertyGroups.AddRange(SettingsInstance.GetSettingPropertyGroups().Select(x => new SettingsPropertyGroupVM(x, this)));
 
             RefreshValues();
         }
@@ -105,13 +98,9 @@ namespace MCM.UI.GUI.ViewModels
 
             DisplayName = SettingsInstance.DisplayName;
 
+            SettingPropertyGroups.Sort(UISettingsUtils.SettingsPropertyGroupVMComparer);
             foreach (var group in SettingPropertyGroups)
                 group.RefreshValues();
-
-            SettingPropertyGroups.Sort(KeyComparer<SettingsPropertyGroupVM>
-                .OrderByDescending(x => x.SettingPropertyGroupDefinition.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)
-                .ThenByDescending(x => x.SettingPropertyGroupDefinition.Order)
-                .ThenByDescending(x => new TextObject(x.SettingPropertyGroupDefinition.GroupName).ToString(), new AlphanumComparatorFast()));
         }
 
         public void AddSelectCommand(Action<SettingsVM> command) => _executeSelect = command;
@@ -129,8 +118,6 @@ namespace MCM.UI.GUI.ViewModels
 
             if (_cachedPresets.TryGetValue(new PresetKey(presetId, string.Empty), out var preset))
                 UISettingsUtils.OverrideValues(URS, SettingsInstance, preset);
-
-            RecalculateIndex();
         }
         public void ChangePresetValue(string presetId, string valueId)
         {

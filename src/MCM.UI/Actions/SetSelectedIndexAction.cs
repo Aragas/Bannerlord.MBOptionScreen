@@ -4,7 +4,6 @@ namespace MCM.UI.Actions
 {
     internal sealed class SetSelectedIndexAction : IAction
     {
-        private IRef SelectedIndexContext { get; }
         public IRef Context { get; }
         public object? Value { get; }
         public object? Original { get; }
@@ -12,22 +11,11 @@ namespace MCM.UI.Actions
         public SetSelectedIndexAction(IRef context, object value)
         {
             Context = context;
-
-            SelectedIndexContext = new ProxyRef<int>(
-                () => Context.Value is not null ? new SelectedIndexWrapper(Context.Value).SelectedIndex : 0,
-                o =>
-                {
-                    if (Context.Value is not null)
-                    {
-                        var wrapper = new SelectedIndexWrapper(Context.Value);
-                        wrapper.SelectedIndex = o;
-                    }
-                });
             Value = new SelectedIndexWrapper(value).SelectedIndex;
-            Original = SelectedIndexContext.Value;
+            Original = new SelectedIndexWrapper(context.Value).SelectedIndex;
         }
 
-        public void DoAction() => SelectedIndexContext.Value = Value;
-        public void UndoAction() => SelectedIndexContext.Value = Original;
+        public void DoAction() => new SelectedIndexWrapper(Context.Value) { SelectedIndex = (int?) Value ?? -1 };
+        public void UndoAction() => new SelectedIndexWrapper(Context.Value) { SelectedIndex = (int?) Original ?? -1 };
     }
 }

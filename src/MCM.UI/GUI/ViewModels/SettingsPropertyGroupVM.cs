@@ -1,14 +1,15 @@
-﻿using Bannerlord.ModuleManager;
-
-using ComparerExtensions;
-
-using MCM.Abstractions;
+﻿using MCM.Abstractions;
+using MCM.UI.Extensions;
+using MCM.UI.Utils;
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
+
+using Debug = System.Diagnostics.Debug;
 
 namespace MCM.UI.GUI.ViewModels
 {
@@ -112,10 +113,9 @@ namespace MCM.UI.GUI.ViewModels
             SettingsVM = settingsVM;
             SettingPropertyGroupDefinition = definition;
             ParentGroup = parentGroup;
-            foreach (var settingPropertyDefinition in SettingPropertyGroupDefinition.SettingProperties)
-                Add(settingPropertyDefinition);
-            foreach (var settingPropertyDefinition in SettingPropertyGroupDefinition.SubGroups.Reverse())
-                SettingPropertyGroups.Add(new SettingsPropertyGroupVM(settingPropertyDefinition, SettingsVM, this));
+
+            AddRange(SettingPropertyGroupDefinition.SettingProperties);
+            SettingPropertyGroups.AddRange(SettingPropertyGroupDefinition.SubGroups.Select(x => new SettingsPropertyGroupVM(x, SettingsVM, this)));
 
             RefreshValues();
         }
@@ -135,34 +135,30 @@ namespace MCM.UI.GUI.ViewModels
                     { "GROUPNAME", new TextObject(GroupName).ToString() }
                 }).ToString();
 
+            SettingProperties.Sort(UISettingsUtils.SettingsPropertyVMComparer);
+            SettingPropertyGroups.Sort(UISettingsUtils.SettingsPropertyGroupVMComparer);
             foreach (var setting in SettingProperties)
                 setting.RefreshValues();
             foreach (var setting in SettingPropertyGroups)
                 setting.RefreshValues();
-
-            SettingProperties.Sort(KeyComparer<SettingsPropertyVM>
-                .OrderBy(x => x.SettingPropertyDefinition.Order)
-                .ThenBy(x => new TextObject(x.SettingPropertyDefinition.DisplayName).ToString(), new AlphanumComparatorFast()));
-
-            SettingPropertyGroups.Sort(KeyComparer<SettingsPropertyGroupVM>
-                .OrderByDescending(x => x.SettingPropertyGroupDefinition.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)
-                .ThenByDescending(x => x.SettingPropertyGroupDefinition.Order)
-                .ThenByDescending(x => new TextObject(x.SettingPropertyGroupDefinition.GroupName).ToString(), new AlphanumComparatorFast()));
         }
 
-        private void Add(ISettingsPropertyDefinition definition)
+        private void AddRange(IEnumerable<ISettingsPropertyDefinition> definitions)
         {
-            var sp = new SettingsPropertyVM(definition, SettingsVM);
-            SettingProperties.Add(sp);
-            sp.Group = this;
-
-            if (sp.SettingPropertyDefinition.IsToggle)
+            foreach (var definition in definitions)
             {
-                if (HasGroupToggle)
-                    throw new Exception($"Tried to add a group toggle to Setting Property Group {GroupName} but it already has a group toggle: {GroupToggleSettingProperty?.Name}. A Setting Property Group can only have one group toggle.");
+                var sp = new SettingsPropertyVM(definition, SettingsVM);
+                SettingProperties.Add(sp);
+                sp.Group = this;
 
-                // Attribute = sp.SettingPropertyDefinition;
-                GroupToggleSettingProperty = sp;
+                if (sp.SettingPropertyDefinition.IsToggle)
+                {
+                    if (HasGroupToggle)
+                        Debug.Fail($"Tried to add a group toggle to Setting Property Group {GroupName} but it already has a group toggle: {GroupToggleSettingProperty?.Name}. A Setting Property Group can only have one group toggle.");
+
+                    // Attribute = sp.SettingPropertyDefinition;
+                    GroupToggleSettingProperty = sp;
+                }
             }
         }
 
