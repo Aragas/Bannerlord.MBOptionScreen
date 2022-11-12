@@ -131,8 +131,7 @@
                     </Widget>
 
                     <!-- Setting Hint Information Section -->
-                    <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="100" VerticalAlignment="Bottom"
-                               LayoutImp.LayoutMethod="VerticalBottomToTop" MarginTop="1">
+                    <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="100" VerticalAlignment="Bottom" LayoutImp.LayoutMethod="VerticalBottomToTop" MarginTop="1">
                       <Children>
 
                         <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="MCMv3.Divider.Yellow" MarginLeft="15" MarginRight="15" MarginBottom="2"/>

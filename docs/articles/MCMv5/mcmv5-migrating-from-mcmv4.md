@@ -11,3 +11,5 @@
 * Preset system was changed:
   * `GetAvailablePresets` was renamed to `GetBuiltInPresets`
   * The signature changed. Instead of a dictionary with a lambda - constructor inside a class `MemorySettingsPreset` is used with a similar signature. Check MCMv5 docs for the new usage.
+
+* Implementation SubModule was renamed from `MCM.Implementation.MCMImplementationSubModule` to `MCM.Internal.MCMImplementationSubModule`

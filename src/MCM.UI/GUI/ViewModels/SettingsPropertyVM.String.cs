@@ -13,7 +13,7 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public string StringValue
         {
-            get => IsString ? PropertyReference.Value is string val ? val : "ERROR" : string.Empty;
+            get => IsString ? PropertyReference.Value is null ? string.Empty : PropertyReference.Value is string val ? val : "ERROR" : string.Empty;
             set
             {
                 if (IsString && StringValue != value)

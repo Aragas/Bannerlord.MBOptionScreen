@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -35,7 +36,6 @@ namespace MCM.UI.GUI.ViewModels
         private string _selectedDisplayName = string.Empty;
         private string _hintText = string.Empty;
         private SettingsVM? _selectedMod;
-        private MBBindingList<SettingsVM> _modSettingsList = new();
         private string _searchText = string.Empty;
 
         [DataSourceProperty]
@@ -47,40 +47,41 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public string ModsText { get => _modsText; set => SetField(ref _modsText, value, nameof(ModsText)); }
         [DataSourceProperty]
-        public MBBindingList<SettingsVM> ModSettingsList { get => _modSettingsList; set => SetField(ref _modSettingsList, value, nameof(ModSettingsList)); }
+        public MBBindingList<SettingsVM> ModSettingsList { get; } = new();
         [DataSourceProperty]
         public SettingsVM? SelectedMod
         {
             get => _selectedMod;
             set
             {
-                if (_selectedMod != value)
+                if (_selectedMod?.PresetsSelector is { } oldModPresetsSelector)
                 {
-                    _selectedMod?.PresetsSelector?.SetOnChangeAction(null);
-                    _selectedMod = value;
+                    oldModPresetsSelector.PropertyChanged -= OnModPresetsSelectorChange;
+                }
 
-                    OnPropertyChanged(nameof(SelectedMod));
+                if (SetField(ref _selectedMod, value, nameof(SelectedMod)))
+                {
                     OnPropertyChanged(nameof(SelectedDisplayName));
                     OnPropertyChanged(nameof(SomethingSelected));
 
-                    if (_selectedMod?.PresetsSelector is not null)
+                    DoPresetsSelectorCopyWithoutEvents(() =>
                     {
-                        PresetsSelectorCopy.SetOnChangeAction(null);
-                        OnPropertyChanged(nameof(PresetsSelectorCopy));
-                        PresetsSelectorCopy.ItemList = _selectedMod.PresetsSelector.ItemList;
-                        PresetsSelectorCopy.SelectedIndex = _selectedMod.PresetsSelector.SelectedIndex;
-                        PresetsSelectorCopy.HasSingleItem = _selectedMod.PresetsSelector.HasSingleItem;
-                        _selectedMod.PresetsSelector.SetOnChangeAction(OnModPresetsSelectorChange);
-                        PresetsSelectorCopy.SetOnChangeAction(OnPresetsSelectorChange);
-
-                        OnPropertyChanged(nameof(IsPresetsSelectorVisible));
-                    }
+                        if (SelectedMod?.PresetsSelector is { } modPresetsSelector)
+                        {
+                            modPresetsSelector.PropertyChanged += OnModPresetsSelectorChange;
+                            PresetsSelectorCopy.Refresh(SelectedMod.PresetsSelector.ItemList.Select(x => x.OriginalItem), SelectedMod.PresetsSelector.SelectedIndex, null);
+                        }
+                        else
+                        {
+                            PresetsSelectorCopy.Refresh(Enumerable.Empty<PresetKey>(), -1, null);
+                        }
+                    });
+                    OnPropertyChanged(nameof(IsPresetsSelectorVisible));
                 }
             }
         }
         [DataSourceProperty]
         public string SelectedDisplayName => SelectedMod is null ? new TextObject("{=ModOptionsVM_NotSpecified}Mod Name not Specified.").ToString() : SelectedMod.DisplayName;
-
         [DataSourceProperty]
         public bool SomethingSelected => SelectedMod is not null;
         [DataSourceProperty]
@@ -111,10 +112,9 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
         [DataSourceProperty]
-        public MCMSelectorVM<DropdownSelectorItemVM<PresetKey>> PresetsSelectorCopy { get; } = new(Enumerable.Empty<PresetKey>(), -1, null);
+        public MCMSelectorVM<MCMSelectorItemVM<PresetKey>> PresetsSelectorCopy { get; } = new(Enumerable.Empty<PresetKey>(), -1, null);
         [DataSourceProperty]
         public bool IsPresetsSelectorVisible => SelectedMod is not null;
-
         /// <summary>
         /// We have a strange bug and I'm not sure if this is the lack of my skills
         /// Selecting via mouse in Gameplay section the language triggers preset change
@@ -135,7 +135,6 @@ namespace MCM.UI.GUI.ViewModels
 
         private void InitializeModSettings()
         {
-            ModSettingsList = new MBBindingList<SettingsVM>();
             // Execute code in a non UI-Thread to avoid blokcking
             _ = Task.Factory.StartNew(syncContext => // Build the options in a separate context if possible
             {
@@ -208,18 +207,28 @@ namespace MCM.UI.GUI.ViewModels
             CancelButtonText = new TextObject("{=3CpNUnVl}Cancel").ToString();
             ModsText = new TextObject("{=ModOptionsPageView_Mods}Mods").ToString();
 
+            PresetsSelectorCopy.RefreshValues();
+
             foreach (var viewModel in ModSettingsList)
                 viewModel.RefreshValues();
         }
 
-        private void OnPresetsSelectorChange(MCMSelectorVM<DropdownSelectorItemVM<PresetKey>> selector)
+        private void OnPresetsSelectorChange(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
-            if (IsDisabled) return;
+            if (sender is not MCMSelectorVM<MCMSelectorItemVM<PresetKey>> selector) return;
+            if (propertyChangedEventArgs.PropertyName != "SelectedIndex") return;
+
+            if (IsDisabled)
+            {
+                // GaultletUI is resetting SelectorVM's Index after RefreshLayout, restore the index manually
+                if (SelectedMod?.PresetsSelector is not null && selector.SelectedIndex == -1)
+                    DoPresetsSelectorCopyWithoutEvents(() => PresetsSelectorCopy.SelectedIndex = SelectedMod.PresetsSelector.SelectedIndex);
+                return;
+            }
 
             if (selector.SelectedItem is null) return;
 
-            var presetKey = selector.SelectedItem.OriginalItem;
-            //var presetKey = selector.SelectedItem?.OriginalItem ?? new PresetKey("ERROR", "ERROR");
+            var presetKey = selector.ItemList[selector.SelectedIndex].OriginalItem;
             InformationManager.ShowInquiry(new InquiryData(
                 new TextObject("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new()
                 {
@@ -241,16 +250,15 @@ namespace MCM.UI.GUI.ViewModels
                 },
                 () =>
                 {
-                    PresetsSelectorCopy.SetOnChangeAction(null);
-                    PresetsSelectorCopy.SelectedIndex = SelectedMod?.PresetsSelector?.SelectedIndex ?? -1;
-                    PresetsSelectorCopy.SetOnChangeAction(OnPresetsSelectorChange);
+                    DoPresetsSelectorCopyWithoutEvents(() => PresetsSelectorCopy.SelectedIndex = SelectedMod?.PresetsSelector?.SelectedIndex ?? -1);
                 }));
         }
-        private void OnModPresetsSelectorChange(MCMSelectorVM<DropdownSelectorItemVM<PresetKey>> selector)
+        private void OnModPresetsSelectorChange(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
         {
-            PresetsSelectorCopy.SetOnChangeAction(null);
-            PresetsSelectorCopy.SelectedIndex = selector.SelectedIndex;
-            PresetsSelectorCopy.SetOnChangeAction(OnPresetsSelectorChange);
+            if (sender is not MCMSelectorVM<MCMSelectorItemVM<PresetKey>> selector) return;
+            if (propertyChangedEventArgs.PropertyName != "SelectedIndex") return;
+
+            DoPresetsSelectorCopyWithoutEvents(() => PresetsSelectorCopy.SelectedIndex = selector.SelectedIndex);
         }
 
         public void ExecuteClose()
@@ -355,6 +363,13 @@ namespace MCM.UI.GUI.ViewModels
                 modSettings.OnFinalize();
 
             base.OnFinalize();
+        }
+
+        private void DoPresetsSelectorCopyWithoutEvents(Action action)
+        {
+            PresetsSelectorCopy.PropertyChanged -= OnPresetsSelectorChange;
+            action();
+            PresetsSelectorCopy.PropertyChanged += OnPresetsSelectorChange;
         }
     }
 }

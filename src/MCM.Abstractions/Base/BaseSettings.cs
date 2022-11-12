@@ -4,6 +4,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 
@@ -41,6 +42,13 @@ namespace MCM.Abstractions.Base
         public virtual string DiscoveryType => "none";
         public virtual int UIVersion => 1;
         public virtual char SubGroupDelimiter => '/';
+
+        internal List<SettingsPropertyGroupDefinition> SettingPropertyGroups { get; }
+
+        public BaseSettings()
+        {
+            SettingPropertyGroups = this.CreateSettingPropertyGroups().ToList();
+        }
 
         public virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 

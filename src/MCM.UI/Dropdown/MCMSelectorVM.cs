@@ -8,44 +8,25 @@ using TaleWorlds.Library;
 
 namespace MCM.UI.Dropdown
 {
-    /// <summary>
-    /// TODO:
-    /// </summary>
-    /// <typeparam name="TSelectorItemVM"><see cref="ViewModel"/> that accepts the objects passed by .ctor/Refresh</typeparam>
     public class MCMSelectorVM<TSelectorItemVM> : ViewModel where TSelectorItemVM : ViewModel
     {
         private delegate bool CanBeSelectedDelegate(TSelectorItemVM instance);
+        private static readonly CanBeSelectedDelegate _canBeSelectedDelegate =
+            AccessTools2.GetPropertyGetterDelegate<CanBeSelectedDelegate>(typeof(TSelectorItemVM), "CanBeSelected") ?? (_ => false);
 
-        private static readonly CanBeSelectedDelegate _canBeSelectedDelegate;
+        private delegate void SetIsSelectedDelegate(object instance, bool value);
+        private static readonly SetIsSelectedDelegate _setIsSelectedDelegate =
+            AccessTools2.GetPropertySetterDelegate<SetIsSelectedDelegate>(typeof(TSelectorItemVM), "IsSelected") ?? ((_, _) => { });
 
-        static MCMSelectorVM()
-        {
-            _canBeSelectedDelegate = AccessTools2.GetPropertyGetterDelegate<CanBeSelectedDelegate>(typeof(TSelectorItemVM), "CanBeSelected") is { } del
-                ? del
-                : _ => false;
-        }
 
-        public static MCMSelectorVM<TSelectorItemVM> Empty => new(null);
+        public static MCMSelectorVM<TSelectorItemVM> Empty => new();
 
-        protected Action<MCMSelectorVM<TSelectorItemVM>>? _onChange;
-        private MBBindingList<TSelectorItemVM> _itemList = new();
         protected int _selectedIndex = -1;
         private TSelectorItemVM? _selectedItem;
         private bool _hasSingleItem;
 
         [DataSourceProperty]
-        public MBBindingList<TSelectorItemVM> ItemList
-        {
-            get => _itemList;
-            set
-            {
-                if (value != _itemList)
-                {
-                    _itemList = value;
-                    OnPropertyChangedWithValue(value, nameof(ItemList));
-                }
-            }
-        }
+        public MBBindingList<TSelectorItemVM> ItemList { get; } = new();
 
         [DataSourceProperty]
         public int SelectedIndex
@@ -53,48 +34,27 @@ namespace MCM.UI.Dropdown
             get => _selectedIndex;
             set
             {
-                if (value != _selectedIndex)
+                if (SetField(ref _selectedIndex, value, nameof(SelectedIndex)))
                 {
-                    _selectedIndex = value;
-                    OnPropertyChangedWithValue(value, nameof(SelectedIndex));
+                    if (SelectedItem != null)
+                        _setIsSelectedDelegate(SelectedItem, false);
+
                     SelectedItem = GetCurrentItem();
-                    _onChange?.Invoke(this);
+                    if (SelectedItem != null)
+                        _setIsSelectedDelegate(SelectedItem, true);
                 }
             }
         }
 
         [DataSourceProperty]
-        public TSelectorItemVM? SelectedItem
-        {
-            get => _selectedItem;
-            set
-            {
-                if (value != _selectedItem)
-                {
-                    _selectedItem = value;
-                    OnPropertyChangedWithValue(value, nameof(SelectedItem));
-                }
-            }
-        }
+        public TSelectorItemVM? SelectedItem { get => _selectedItem; set => SetField(ref _selectedItem, value, nameof(SelectedItem)); }
 
         [DataSourceProperty]
-        public bool HasSingleItem
-        {
-            get => _hasSingleItem;
-            set
-            {
-                if (value != _hasSingleItem)
-                {
-                    _hasSingleItem = value;
-                    OnPropertyChangedWithValue(value, nameof(HasSingleItem));
-                }
-            }
-        }
+        public bool HasSingleItem { get => _hasSingleItem; set => SetField(ref _hasSingleItem, value, nameof(HasSingleItem)); }
 
-        public MCMSelectorVM(Action<MCMSelectorVM<TSelectorItemVM>>? onChange)
+        public MCMSelectorVM()
         {
             HasSingleItem = true;
-            _onChange = onChange;
         }
         public MCMSelectorVM(IEnumerable<object> list, int selectedIndex, Action<MCMSelectorVM<TSelectorItemVM>>? onChange)
         {
@@ -107,7 +67,7 @@ namespace MCM.UI.Dropdown
         {
             base.RefreshValues();
 
-            _itemList.ApplyActionOnAllItems(x => x.RefreshValues());
+            ItemList.ApplyActionOnAllItems(x => x.RefreshValues());
         }
 
         public void Refresh(IEnumerable<object> list, int selectedIndex, Action<MCMSelectorVM<TSelectorItemVM>>? onChange)
@@ -126,21 +86,17 @@ namespace MCM.UI.Dropdown
 
             HasSingleItem = ItemList.Count <= 1;
 
-            _onChange = onChange;
-
             SelectedIndex = selectedIndex;
         }
 
         public TSelectorItemVM? GetCurrentItem()
         {
-            if (_itemList.Count > 0 && SelectedIndex >= 0 && SelectedIndex < _itemList.Count)
+            if (ItemList.Count > 0 && SelectedIndex >= 0 && SelectedIndex < ItemList.Count)
             {
-                return _itemList[SelectedIndex];
+                return ItemList[SelectedIndex];
             }
             return null;
         }
-
-        public void SetOnChangeAction(Action<MCMSelectorVM<TSelectorItemVM>>? onChange) => _onChange = onChange;
 
         public void AddItem(TSelectorItemVM item)
         {

@@ -5,6 +5,7 @@ using MCM.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Xml;
@@ -14,23 +15,19 @@ namespace MCM.Abstractions.Base.Global
 {
     public sealed class ExternalGlobalSettings : FluentGlobalSettings
     {
-        private static SettingsPropertyDefinition FromXml(IPropertyGroupDefinition group, PropertyBaseXmlModel xmlModel, char subGroupDelimiter)
+        private static SettingsPropertyDefinition FromXml(IPropertyGroupDefinition group, PropertyBaseXmlModel xmlModel, char subGroupDelimiter) => xmlModel switch
         {
-            return xmlModel switch
-            {
-                PropertyBoolXmlModel model =>
-                    new SettingsPropertyDefinition(SettingsUtils.GetPropertyDefinitionWrappers(model), group, new StorageRef<bool>(model.Value), subGroupDelimiter),
-                PropertyDropdownXmlModel model =>
-                    new SettingsPropertyDefinition(SettingsUtils.GetPropertyDefinitionWrappers(model), group, new StorageRef<Dropdown<string>>(new Dropdown<string>(model.Values, model.SelectedIndex)), subGroupDelimiter),
-                PropertyFloatingIntegerXmlModel model =>
-                    new SettingsPropertyDefinition(SettingsUtils.GetPropertyDefinitionWrappers(model), group, new StorageRef<float>((float) model.Value), subGroupDelimiter),
-                PropertyIntegerXmlModel model =>
-                    new SettingsPropertyDefinition(SettingsUtils.GetPropertyDefinitionWrappers(model), group, new StorageRef<int>((int) model.Value), subGroupDelimiter),
-                PropertyTextXmlModel model =>
-                    new SettingsPropertyDefinition(SettingsUtils.GetPropertyDefinitionWrappers(model), group, new StorageRef<string>(model.Value), subGroupDelimiter),
-                _ => throw new Exception()
-            };
-        }
+            PropertyBoolXmlModel model =>
+                new SettingsPropertyDefinition(SettingsUtils.GetPropertyDefinitionWrappers(model), group, new StorageRef<bool>(model.Value), subGroupDelimiter),
+            PropertyDropdownXmlModel model =>
+                new SettingsPropertyDefinition(SettingsUtils.GetPropertyDefinitionWrappers(model), group, new StorageRef<Dropdown<string>>(new Dropdown<string>(model.Values, model.SelectedIndex)), subGroupDelimiter),
+            PropertyFloatingIntegerXmlModel model =>
+                new SettingsPropertyDefinition(SettingsUtils.GetPropertyDefinitionWrappers(model), group, new StorageRef<float>((float) model.Value), subGroupDelimiter),
+            PropertyIntegerXmlModel model =>
+                new SettingsPropertyDefinition(SettingsUtils.GetPropertyDefinitionWrappers(model), group, new StorageRef<int>((int) model.Value), subGroupDelimiter),
+            PropertyTextXmlModel model =>
+                new SettingsPropertyDefinition(SettingsUtils.GetPropertyDefinitionWrappers(model), group, new StorageRef<string>(model.Value), subGroupDelimiter),
+        };
 
         public static ExternalGlobalSettings? CreateFromXmlFile(string filePath, PropertyChangedEventHandler? propertyChanged = null)
         {

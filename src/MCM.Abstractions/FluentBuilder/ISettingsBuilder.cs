@@ -69,6 +69,8 @@ namespace MCM.Abstractions.FluentBuilder
         /// <returns>The settings builder.</returns>
         ISettingsBuilder CreatePreset(string id, string name, Action<ISettingsPresetBuilder> builder);
 
+        ISettingsBuilder WithoutDefaultPreset();
+
         /// <summary>
         /// Returns a Global setting instance.
         /// Use Register and Unregister for MCM to use it.

@@ -1,4 +1,6 @@
-﻿using MCM.Abstractions.Attributes;
+﻿using BUTR.DependencyInjection.Logger;
+
+using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
 using MCM.Common;
 
@@ -43,11 +45,9 @@ namespace MCMv5.Tests
         [SettingPropertyInteger("Property Int With Hint", 0, 100, RequireRestart = false, HintText = "Hint Text")]
         [SettingPropertyGroup("Int")]
         public int PropertyIntWithHint { get; set; }
-
         [SettingPropertyInteger("Property Int With Format", 0, 100, "0 Denars", RequireRestart = false)]
         [SettingPropertyGroup("Int")]
         public int PropertyIntWithFormat { get; set; }
-
         [SettingPropertyInteger("Property Int With Custom Formatter", 0, 100, "0 Denars", RequireRestart = false, CustomFormatter = typeof(TestIntFormatter))]
         [SettingPropertyGroup("Int")]
         public int PropertyIntWithCustomFormatter { get; set; }
@@ -131,6 +131,14 @@ namespace MCMv5.Tests
             "{=NoPeRandoM}Test1",
             "{=BaseSettings_Default}ERROR",
             "Test3",
+        }, 0);
+        [SettingPropertyDropdown("Property Dropdown With Enum", RequireRestart = false)]
+        [SettingPropertyGroup("Dropdown")]
+        public Dropdown<LogLevel> PropertyDropdownWithEnum { get; set; } = new(new[]
+        {
+            LogLevel.None,
+            LogLevel.Warning,
+            LogLevel.Critical,
         }, 0);
 
 

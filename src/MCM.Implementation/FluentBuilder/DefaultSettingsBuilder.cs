@@ -60,13 +60,13 @@ namespace MCM.Implementation.FluentBuilder
         /// <inheritdoc/>
         public override ISettingsBuilder CreatePreset(string id, string name, Action<ISettingsPresetBuilder> builder)
         {
-            if (!Presets.ContainsKey(name))
-                Presets[name] = new DefaultSettingsPresetBuilder(id, name);
-            builder.Invoke(Presets[name]);
+            if (!Presets.ContainsKey(id))
+                Presets[id] = new DefaultSettingsPresetBuilder(id, name);
+            builder.Invoke(Presets[id]);
             return this;
         }
 
-        public ISettingsBuilder WithoutDefaultPreset()
+        public override ISettingsBuilder WithoutDefaultPreset()
         {
             Presets.Remove(BaseSettings.DefaultPresetId);
             return this;

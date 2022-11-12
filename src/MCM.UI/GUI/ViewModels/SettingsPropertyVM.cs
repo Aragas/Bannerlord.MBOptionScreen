@@ -1,9 +1,9 @@
 ﻿using MCM.Abstractions;
 using MCM.Common;
 using MCM.UI.Actions;
+using MCM.UI.Utils;
 
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -71,6 +71,8 @@ namespace MCM.UI.GUI.ViewModels
 
             if (IsDropdown)
             {
+                if (PropertyReference.Value is INotifyPropertyChanged notifyPropertyChanged)
+                    notifyPropertyChanged.PropertyChanged += PropertyReference_OnPropertyChanged;
                 DropdownValue.PropertyChanged += DropdownValue_PropertyChanged;
                 DropdownValue.PropertyChangedWithValue += DropdownValue_PropertyChangedWithValue;
             }
@@ -89,6 +91,8 @@ namespace MCM.UI.GUI.ViewModels
 
             if (IsDropdown)
             {
+                if (PropertyReference.Value is INotifyPropertyChanged notifyPropertyChanged)
+                    notifyPropertyChanged.PropertyChanged -= PropertyReference_OnPropertyChanged;
                 DropdownValue.PropertyChanged -= DropdownValue_PropertyChanged;
                 DropdownValue.PropertyChangedWithValue -= DropdownValue_PropertyChangedWithValue;
             }
@@ -97,7 +101,29 @@ namespace MCM.UI.GUI.ViewModels
         }
         private void PropertyReference_OnPropertyChanged(object? obj, PropertyChangedEventArgs args)
         {
-            RefreshValues();
+            switch (SettingType)
+            {
+                case SettingType.Bool:
+                    OnPropertyChanged(nameof(BoolValue));
+                    break;
+                case SettingType.Int:
+                    OnPropertyChanged(nameof(IntValue));
+                    OnPropertyChanged(nameof(NumericValue));
+                    break;
+                case SettingType.Float:
+                    OnPropertyChanged(nameof(FloatValue));
+                    OnPropertyChanged(nameof(NumericValue));
+                    break;
+                case SettingType.String:
+                    OnPropertyChanged(nameof(StringValue));
+                    break;
+                case SettingType.Dropdown:
+                    DropdownValue.SelectedIndex = new SelectedIndexWrapper(PropertyReference.Value).SelectedIndex;
+                    break;
+                case SettingType.Button:
+                    ButtonContent = new TextObject(SettingPropertyDefinition.Content).ToString();
+                    break;
+            }
             SettingsVM.RecalculateIndex();
         }
 
@@ -124,8 +150,7 @@ namespace MCM.UI.GUI.ViewModels
                         OnPropertyChanged(nameof(StringValue));
                         break;
                     case SettingType.Dropdown:
-                        DropdownValue.Refresh((PropertyReference.Value as IEnumerable<object> ?? Enumerable.Empty<object>()).Select(x => new TextObject(x.ToString())),
-                            new SelectedIndexWrapper(PropertyReference.Value).SelectedIndex, null);
+                        DropdownValue.SelectedIndex = new SelectedIndexWrapper(PropertyReference.Value).SelectedIndex;
                         break;
                     case SettingType.Button:
                         break;

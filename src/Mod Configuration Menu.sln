@@ -30,9 +30,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{01264F42-8EC3-4920-AF18-FB316F5BFB9A}"
 	ProjectSection(SolutionItems) = preProject
 		..\.github\workflows\docfx.yml = ..\.github\workflows\docfx.yml
+		..\.github\workflows\dotnet-format-daily.yml = ..\.github\workflows\dotnet-format-daily.yml
 		..\.github\workflows\test-and-publish.yml = ..\.github\workflows\test-and-publish.yml
 		..\.github\workflows\verify-unex-data.yml = ..\.github\workflows\verify-unex-data.yml
-		..\.github\workflows\dotnet-format-daily.yml = ..\.github\workflows\dotnet-format-daily.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{560DE987-D9C8-431C-A197-08C925905C24}"
@@ -95,26 +95,28 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{A6C9B194
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCM.Tests.Publish", "..\tests\MCM.Tests.Publish\MCM.Tests.Publish.csproj", "{54612487-1339-4D3D-892B-0B4D0007E33A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCM.Abstractions", "MCM.Abstractions\MCM.Abstractions.csproj", "{46BB9EFE-E887-4AC8-9D0F-8A5BE286EE89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCM.Abstractions", "MCM.Abstractions\MCM.Abstractions.csproj", "{46BB9EFE-E887-4AC8-9D0F-8A5BE286EE89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCM.Implementation", "MCM.Implementation\MCM.Implementation.csproj", "{68C4862D-1F01-46D0-BD6A-4BF556620AB3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCM.Implementation", "MCM.Implementation\MCM.Implementation.csproj", "{68C4862D-1F01-46D0-BD6A-4BF556620AB3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCM.Common", "MCM.Common\MCM.Common.csproj", "{F53BB833-77C5-4AE3-815B-F66E6593134C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCM.Common", "MCM.Common\MCM.Common.csproj", "{F53BB833-77C5-4AE3-815B-F66E6593134C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{C6865BFB-F02B-4217-AF48-0B1019ED4DB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCM.Bannerlord", "MCM.Bannerlord\MCM.Bannerlord.csproj", "{A92EF614-2BEC-4FE9-B057-ECC482D05EE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCM.Bannerlord", "MCM.Bannerlord\MCM.Bannerlord.csproj", "{A92EF614-2BEC-4FE9-B057-ECC482D05EE4}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MCMv5", "MCMv5", "{19C69FE7-5DA2-48AC-BF35-EA1581F0A255}"
 	ProjectSection(SolutionItems) = preProject
-		..\docs\articles\MCMv5\mcmv5.md = ..\docs\articles\MCMv5\mcmv5.md
-		..\docs\articles\MCMv5\mcmv5-migrating-from-mcmv4.md = ..\docs\articles\MCMv5\mcmv5-migrating-from-mcmv4.md
-		..\docs\articles\MCMv5\toc.yml = ..\docs\articles\MCMv5\toc.yml
-		..\docs\articles\MCMv5\mcmv5-persistent-presets.md = ..\docs\articles\MCMv5\mcmv5-persistent-presets.md
 		..\docs\articles\MCMv5\mcmv5-attributes.md = ..\docs\articles\MCMv5\mcmv5-attributes.md
 		..\docs\articles\MCMv5\mcmv5-fluent-builder.md = ..\docs\articles\MCMv5\mcmv5-fluent-builder.md
+		..\docs\articles\MCMv5\mcmv5-migrating-from-mcmv4.md = ..\docs\articles\MCMv5\mcmv5-migrating-from-mcmv4.md
+		..\docs\articles\MCMv5\mcmv5-persistent-presets.md = ..\docs\articles\MCMv5\mcmv5-persistent-presets.md
 		..\docs\articles\MCMv5\mcmv5-soft-dependency.md = ..\docs\articles\MCMv5\mcmv5-soft-dependency.md
+		..\docs\articles\MCMv5\mcmv5.md = ..\docs\articles\MCMv5\mcmv5.md
+		..\docs\articles\MCMv5\toc.yml = ..\docs\articles\MCMv5\toc.yml
 	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCM.Source", "MCM.Source\MCM.Source.csproj", "{4D950B9D-1963-440B-9498-8D49496097DA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -246,6 +248,18 @@ Global
 		{A92EF614-2BEC-4FE9-B057-ECC482D05EE4}.Stable_Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A92EF614-2BEC-4FE9-B057-ECC482D05EE4}.Stable_Release|Any CPU.ActiveCfg = Debug|Any CPU
 		{A92EF614-2BEC-4FE9-B057-ECC482D05EE4}.Stable_Release|Any CPU.Build.0 = Debug|Any CPU
+		{4D950B9D-1963-440B-9498-8D49496097DA}.Beta_Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D950B9D-1963-440B-9498-8D49496097DA}.Beta_Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D950B9D-1963-440B-9498-8D49496097DA}.Beta_Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D950B9D-1963-440B-9498-8D49496097DA}.Beta_Release|Any CPU.Build.0 = Debug|Any CPU
+		{4D950B9D-1963-440B-9498-8D49496097DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D950B9D-1963-440B-9498-8D49496097DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D950B9D-1963-440B-9498-8D49496097DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D950B9D-1963-440B-9498-8D49496097DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D950B9D-1963-440B-9498-8D49496097DA}.Stable_Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D950B9D-1963-440B-9498-8D49496097DA}.Stable_Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D950B9D-1963-440B-9498-8D49496097DA}.Stable_Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D950B9D-1963-440B-9498-8D49496097DA}.Stable_Release|Any CPU.Build.0 = Debug|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -269,12 +283,13 @@ Global
 		{C52EE8B7-2808-4FAA-BEF5-2B01878BFBFE} = {1B89A013-6801-4B98-9063-4D2E048A0896}
 		{A6C9B194-089A-400D-B548-F6122319EE71} = {6DA59EA7-D40B-4C02-B0CC-64875B4064CD}
 		{54612487-1339-4D3D-892B-0B4D0007E33A} = {8CE0FC50-A411-4502-8737-6DF24C2D69AD}
-		{C6865BFB-F02B-4217-AF48-0B1019ED4DB6} = {013467E6-5CC6-4899-B549-EC5441CB3AB6}
 		{46BB9EFE-E887-4AC8-9D0F-8A5BE286EE89} = {C6865BFB-F02B-4217-AF48-0B1019ED4DB6}
-		{F53BB833-77C5-4AE3-815B-F66E6593134C} = {C6865BFB-F02B-4217-AF48-0B1019ED4DB6}
 		{68C4862D-1F01-46D0-BD6A-4BF556620AB3} = {C6865BFB-F02B-4217-AF48-0B1019ED4DB6}
+		{F53BB833-77C5-4AE3-815B-F66E6593134C} = {C6865BFB-F02B-4217-AF48-0B1019ED4DB6}
+		{C6865BFB-F02B-4217-AF48-0B1019ED4DB6} = {013467E6-5CC6-4899-B549-EC5441CB3AB6}
 		{A92EF614-2BEC-4FE9-B057-ECC482D05EE4} = {C6865BFB-F02B-4217-AF48-0B1019ED4DB6}
 		{19C69FE7-5DA2-48AC-BF35-EA1581F0A255} = {560DE987-D9C8-431C-A197-08C925905C24}
+		{4D950B9D-1963-440B-9498-8D49496097DA} = {013467E6-5CC6-4899-B549-EC5441CB3AB6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FF6EB7D0-C9CB-4A8B-AE72-0511907E6821}

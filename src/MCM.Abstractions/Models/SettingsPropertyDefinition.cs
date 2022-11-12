@@ -4,7 +4,6 @@ using MCM.Common;
 
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MCM.Abstractions
 {
@@ -149,11 +148,8 @@ namespace MCM.Abstractions
         public SettingsPropertyDefinition Clone(bool keepRefs = true)
         {
             var localPropValue = PropertyReference.Value;
-            return new SettingsPropertyDefinition(
-                SettingsUtils.GetPropertyDefinitionWrappers(this),
-                new PropertyGroupDefinitionWrapper(this),
-                keepRefs ? PropertyReference : new StorageRef(localPropValue),
-                SubGroupDelimiter);
+            var value = keepRefs ? PropertyReference : new StorageRef(localPropValue is ICloneable cloneable ? cloneable.Clone() : localPropValue);
+            return new SettingsPropertyDefinition(SettingsUtils.GetPropertyDefinitionWrappers(this), new PropertyGroupDefinitionWrapper(this), value, SubGroupDelimiter);
         }
     }
 }

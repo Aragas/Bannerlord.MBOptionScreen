@@ -19,10 +19,7 @@ namespace MCM.Abstractions
         {
             if (settings is IFluentSettings fluentSettings)
                 return fluentSettings.SettingPropertyGroups;
-
-            var discoverers = GenericServiceProvider.GetService<IEnumerable<ISettingsPropertyDiscoverer>>() ?? Enumerable.Empty<ISettingsPropertyDiscoverer>();
-            var discoverer = discoverers.FirstOrDefault(x => x.DiscoveryTypes.Any(y => y == settings.DiscoveryType));
-            return SettingsUtils.GetSettingsPropertyGroups(settings.SubGroupDelimiter, discoverer?.GetProperties(settings) ?? Enumerable.Empty<ISettingsPropertyDefinition>());
+            return settings.SettingPropertyGroups;
         }
 
         public static IEnumerable<ISettingsPropertyDefinition> GetAllSettingPropertyDefinitions(this BaseSettings settings) =>
@@ -32,5 +29,12 @@ namespace MCM.Abstractions
 
         public static IEnumerable<ISettingsPreset> GetExternalPresets(this BaseSettings settings) =>
             GenericServiceProvider.GetService<BaseSettingsProvider>()?.GetPresets(settings.Id) ?? Enumerable.Empty<ISettingsPreset>();
+
+        internal static IEnumerable<SettingsPropertyGroupDefinition> CreateSettingPropertyGroups(this BaseSettings baseSettings)
+        {
+            var discoverers = GenericServiceProvider.GetService<IEnumerable<ISettingsPropertyDiscoverer>>() ?? Enumerable.Empty<ISettingsPropertyDiscoverer>();
+            var discoverer = discoverers.FirstOrDefault(x => x.DiscoveryTypes.Any(y => y == baseSettings.DiscoveryType));
+            return SettingsUtils.GetSettingsPropertyGroups(baseSettings.SubGroupDelimiter, discoverer?.GetProperties(baseSettings) ?? Enumerable.Empty<ISettingsPropertyDefinition>());
+        }
     }
 }
