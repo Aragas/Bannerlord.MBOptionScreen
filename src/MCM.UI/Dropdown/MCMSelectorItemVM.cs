@@ -1,11 +1,11 @@
 ﻿namespace MCM.UI.Dropdown
 {
-    public sealed class MCMSelectorItemVM : MCMSelectorItemVM<string>
+    internal sealed class MCMSelectorItemVM : MCMSelectorItemVM<string>
     {
         public MCMSelectorItemVM(string value) : base(value) { }
     }
 
-    public class MCMSelectorItemVM<T> : MCMSelectorItemVMBase where T : class
+    internal class MCMSelectorItemVM<T> : MCMSelectorItemVMBase where T : class
     {
         public T OriginalItem { get; }
 

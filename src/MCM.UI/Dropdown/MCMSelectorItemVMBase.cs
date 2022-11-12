@@ -3,7 +3,7 @@ using TaleWorlds.Library;
 
 namespace MCM.UI.Dropdown
 {
-    public abstract class MCMSelectorItemVMBase : ViewModel
+    internal abstract class MCMSelectorItemVMBase : ViewModel
     {
         protected string? _stringItem;
         protected bool _canBeSelected = true;

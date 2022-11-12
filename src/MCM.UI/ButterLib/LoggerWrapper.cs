@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging.Internal;
 
 namespace MCM.UI.ButterLib
 {
-    public class LoggerWrapper : IBUTRLogger
+    internal class LoggerWrapper : IBUTRLogger
     {
         private readonly ILogger _logger;
 
@@ -20,7 +20,7 @@ namespace MCM.UI.ButterLib
         }
     }
 
-    public class LoggerWrapper<T> : IBUTRLogger<T>
+    internal class LoggerWrapper<T> : IBUTRLogger<T>
     {
         private readonly ILogger<T> _logger;
 

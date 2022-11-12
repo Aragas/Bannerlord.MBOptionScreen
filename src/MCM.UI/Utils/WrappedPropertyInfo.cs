@@ -9,7 +9,7 @@ using System.Reflection;
 namespace MCM.UI.Utils
 {
     // https://github.com/BUTR/Bannerlord.UIExtenderEx/blob/rewrite/Bannerlord.UIExtenderEx/ViewModels/WrappedPropertyInfo.cs
-    public sealed class WrappedPropertyInfo : PropertyInfo
+    internal sealed class WrappedPropertyInfo : PropertyInfo
     {
         private readonly object _instance;
         private readonly PropertyInfo _propertyInfoImplementation;

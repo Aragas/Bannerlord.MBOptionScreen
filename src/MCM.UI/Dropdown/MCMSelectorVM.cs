@@ -8,7 +8,7 @@ using TaleWorlds.Library;
 
 namespace MCM.UI.Dropdown
 {
-    public class MCMSelectorVM<TSelectorItemVM> : ViewModel where TSelectorItemVM : ViewModel
+    internal class MCMSelectorVM<TSelectorItemVM> : ViewModel where TSelectorItemVM : ViewModel
     {
         private delegate bool CanBeSelectedDelegate(TSelectorItemVM instance);
         private static readonly CanBeSelectedDelegate _canBeSelectedDelegate =

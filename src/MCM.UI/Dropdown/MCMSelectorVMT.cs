@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MCM.UI.Dropdown
 {
-    public class MCMSelectorVM<TSelectorItemVM, TSelectorItemVMValueType> : MCMSelectorVM<TSelectorItemVM>
+    internal class MCMSelectorVM<TSelectorItemVM, TSelectorItemVMValueType> : MCMSelectorVM<TSelectorItemVM>
         where TSelectorItemVM : MCMSelectorItemVM<TSelectorItemVMValueType>
         where TSelectorItemVMValueType : class
     {

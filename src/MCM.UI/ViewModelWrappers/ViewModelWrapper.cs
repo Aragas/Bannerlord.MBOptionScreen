@@ -15,7 +15,7 @@ using WrappedPropertyInfo = MCM.UI.Utils.WrappedPropertyInfo;
 
 namespace MCM.UI.ViewModelWrappers
 {
-    public class ViewModelWrapper : ViewModel
+    internal class ViewModelWrapper : ViewModel
     {
         private delegate Dictionary<string, PropertyInfo> GetPropertiesDelegate(object instance);
         private delegate Dictionary<string, MethodInfo> GetMethodsDelegate(object instance);
