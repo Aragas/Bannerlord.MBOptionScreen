@@ -25,7 +25,7 @@ namespace MCM.UI.ButterLib
         {
             RootFolder = Path.Combine(PlatformFileHelperPCExtended.GetDirectoryFullPath(EngineFilePaths.ConfigsPath), "ModSettings");
 
-            var minLogLevelValues = new string[]
+            var minLogLevelProp = new StorageRef<Dropdown<string>>(new Dropdown<string>(new[]
             {
                 $"{{=2Tp85Cpa}}{LogLevel.Trace}",
                 $"{{=Es0LPYu1}}{LogLevel.Debug}",
@@ -34,8 +34,7 @@ namespace MCM.UI.ButterLib
                 $"{{=7tpjjYSV}}{LogLevel.Error}",
                 $"{{=CarGIPlL}}{LogLevel.Critical}",
                 $"{{=T3FtC5hh}}{LogLevel.None}"
-            };
-            var minLogLevelProp = new StorageRef<Dropdown<string>>(new Dropdown<string>(minLogLevelValues, 2));
+            }, 2));
             var displayName = new TextObject("{=ButterLibSettings_Name}ButterLib {VERSION}", new()
             {
                 { "VERSION", typeof(ButterLibSubModule).Assembly.GetName().Version?.ToString(3) ?? "ERROR" }
@@ -45,8 +44,6 @@ namespace MCM.UI.ButterLib
                     builder.AddDropdown("MinLogLevel", "{=ButterLibSettings_Name_LogLevel}Log Level", 0, minLogLevelProp, dBuilder =>
                         dBuilder.SetOrder(1).SetRequireRestart(true).SetHintText("{=ButterLibSettings_Name_LogLevelDesc}Level of logs to write.")))
                 .AddButterLibSubSystems()
-                .CreatePreset(BaseSettings.DefaultPresetId, BaseSettings.DefaultPresetName, pBuilder =>
-                    pBuilder.SetPropertyValue("MinLogLevel", new Dropdown<string>(minLogLevelValues, 2)))
                 .BuildAsGlobal();
             RegisterSettings(settings);
         }
