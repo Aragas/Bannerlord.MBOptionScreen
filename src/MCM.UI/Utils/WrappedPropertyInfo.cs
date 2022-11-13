@@ -9,7 +9,7 @@ using System.Reflection;
 namespace MCM.UI.Utils
 {
     // https://github.com/BUTR/Bannerlord.UIExtenderEx/blob/rewrite/Bannerlord.UIExtenderEx/ViewModels/WrappedPropertyInfo.cs
-    public sealed class WrappedPropertyInfo : PropertyInfo
+    internal sealed class WrappedPropertyInfo : PropertyInfo
     {
         private readonly object _instance;
         private readonly PropertyInfo _propertyInfoImplementation;
@@ -68,13 +68,13 @@ namespace MCM.UI.Utils
             _onSet?.Invoke();
         }
 
-        public override void SetValue(object? obj, object? value, BindingFlags invokeAttr, Binder? binder, object?[]? index, CultureInfo? culture)
+        public override void SetValue(object? obj, object? value, BindingFlags invokeAttr, Binder? binder, object?[]? index, CultureInfo culture)
         {
             _propertyInfoImplementation.SetValue(_instance, value, invokeAttr, binder, index, culture);
             _onSet?.Invoke();
         }
 
-        public override string? ToString() => _propertyInfoImplementation.ToString();
+        public override string ToString() => _propertyInfoImplementation.ToString();
         public override bool Equals(object? obj) => obj switch
         {
             WrappedPropertyInfo proxy => _propertyInfoImplementation.Equals(proxy._propertyInfoImplementation),

@@ -52,6 +52,7 @@ namespace MCM.UI
 @"{=fGt6Gthg5y}This version of MCM is intended for v1.0.0 and higher! You are running {GAMEVERSION}!";
 
 
+        private static readonly Type SandBoxType = AccessTools2.TypeByName("SandBox.SandBoxSubModule");
         private static readonly UIExtender Extender = new("MCM.UI");
         internal static ILogger<MCMUISubModule> Logger = NullLogger<MCMUISubModule>.Instance;
         internal static ResetValueToDefault? ResetValueToDefault;
@@ -119,9 +120,8 @@ namespace MCM.UI
             OptionsVMPatch.Patch(optionsSwitchHarmony);
 
             var calledDelayedOnce = false;
-            var type = AccessTools2.TypeByName("SandBox.SandBoxSubModule");
-            DelayedSubModuleManager.Register(type);
-            DelayedSubModuleManager.Subscribe(type, this, nameof(OnSubModuleLoad), SubscriptionType.AfterMethod, (_, _) =>
+            DelayedSubModuleManager.Register(SandBoxType);
+            DelayedSubModuleManager.Subscribe(SandBoxType, this, nameof(OnSubModuleLoad), SubscriptionType.AfterMethod, (_, _) =>
             {
                 if (calledDelayedOnce) return;
                 calledDelayedOnce = true;
@@ -145,9 +145,8 @@ namespace MCM.UI
                 }
 
                 var calledDelayedOnce = false;
-                var type = AccessTools2.TypeByName("SandBox.SandBoxSubModule");
-                DelayedSubModuleManager.Register(type);
-                DelayedSubModuleManager.Subscribe(type, this, nameof(OnBeforeInitialModuleScreenSetAsRoot), SubscriptionType.AfterMethod, (_, _) =>
+                DelayedSubModuleManager.Register(SandBoxType);
+                DelayedSubModuleManager.Subscribe(SandBoxType, this, nameof(OnBeforeInitialModuleScreenSetAsRoot), SubscriptionType.AfterMethod, (_, _) =>
                 {
                     if (calledDelayedOnce) return;
                     calledDelayedOnce = true;
@@ -172,9 +171,8 @@ namespace MCM.UI
             base.OnSubModuleUnloaded();
 
             var calledDelayedOnce = false;
-            var type = AccessTools2.TypeByName("SandBox.SandBoxSubModule");
-            DelayedSubModuleManager.Register(type);
-            DelayedSubModuleManager.Subscribe(type, this, nameof(OnSubModuleUnloaded), SubscriptionType.AfterMethod, (_, _) =>
+            DelayedSubModuleManager.Register(SandBoxType);
+            DelayedSubModuleManager.Subscribe(SandBoxType, this, nameof(OnSubModuleUnloaded), SubscriptionType.AfterMethod, (_, _) =>
             {
                 if (calledDelayedOnce) return;
                 calledDelayedOnce = true;

@@ -208,26 +208,16 @@ namespace MCM.Abstractions
         {
             SettingsPropertyGroupDefinition? group;
             var groupName = sp.GroupName;
-            // While this was not intendes, some use "{=}Group1/{=}Group2" instead of "{=}Group1/Group2". Need to keep that support
-            if (MoreThanOnce(groupName, "{="))
-            {
-                var split = groupName.Split(subGroupDelimiter);
-                groupName = string.Join(subGroupDelimiter.ToString(), split.Select(x => LocalizationUtils.Localize(x)));
-            }
-            else
-            {
-                groupName = LocalizationUtils.Localize(groupName);
-            }
             // Check if the intended group is a sub group
             if (groupName.Contains(subGroupDelimiter))
             {
                 // Intended group is a sub group. Must find it. First get the top group.
                 var topGroupName = GetTopGroupName(subGroupDelimiter, groupName, out var truncatedGroupName);
-                var topGroup = rootCollection.GetGroupFromLocalizedName(topGroupName);
+                var topGroup = rootCollection.GetGroupFromName(topGroupName);
                 if (topGroup is null)
                 {
                     // Order will not be passed to the subgroup
-                    topGroup = new SettingsPropertyGroupDefinition(sp.GroupName).SetSubGroupDelimiter(subGroupDelimiter);
+                    topGroup = new SettingsPropertyGroupDefinition(topGroupName).SetSubGroupDelimiter(subGroupDelimiter);
                     rootCollection.Add(topGroup);
                 }
                 // Find the sub group
@@ -236,10 +226,10 @@ namespace MCM.Abstractions
             else
             {
                 // Group is not a subgroup, can find it in the main list of groups.
-                group = rootCollection.GetGroupFromLocalizedName(groupName);
+                group = rootCollection.GetGroupFromName(groupName);
                 if (group is null)
                 {
-                    group = new SettingsPropertyGroupDefinition(sp.GroupName, order: sp.GroupOrder).SetSubGroupDelimiter(subGroupDelimiter);
+                    group = new SettingsPropertyGroupDefinition(groupName, order: sp.GroupOrder).SetSubGroupDelimiter(subGroupDelimiter);
                     rootCollection.Add(group);
                 }
             }
@@ -253,11 +243,11 @@ namespace MCM.Abstractions
                 {
                     // Need to go deeper
                     var topGroupName = GetTopGroupName(subGroupDelimiter, groupName, out var truncatedGroupName);
-                    var topGroup = sgp.GetGroupFor(topGroupName);
+                    var topGroup = sgp.GetGroup(topGroupName);
                     if (topGroup is null)
                     {
                         // Order will not be passed to the subgroup
-                        topGroup = new SettingsPropertyGroupDefinition(sp.GroupName).SetSubGroupDelimiter(subGroupDelimiter);
+                        topGroup = new SettingsPropertyGroupDefinition(topGroupName).SetSubGroupDelimiter(subGroupDelimiter);
                         sgp.Add(topGroup);
                     }
 
@@ -270,7 +260,7 @@ namespace MCM.Abstractions
                     var group = sgp.GetGroup(groupName);
                     if (group is null)
                     {
-                        group = new SettingsPropertyGroupDefinition(sp.GroupName, sp.GroupOrder).SetSubGroupDelimiter(subGroupDelimiter);
+                        group = new SettingsPropertyGroupDefinition(groupName, sp.GroupOrder).SetSubGroupDelimiter(subGroupDelimiter);
                         sgp.Add(group);
                     }
 

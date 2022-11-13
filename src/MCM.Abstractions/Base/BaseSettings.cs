@@ -43,13 +43,6 @@ namespace MCM.Abstractions.Base
         public virtual int UIVersion => 1;
         public virtual char SubGroupDelimiter => '/';
 
-        internal List<SettingsPropertyGroupDefinition> SettingPropertyGroups { get; }
-
-        public BaseSettings()
-        {
-            SettingPropertyGroups = this.CreateSettingPropertyGroups().ToList();
-        }
-
         public virtual void OnPropertyChanged([CallerMemberName] string? propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         public virtual BaseSettings CreateNew()

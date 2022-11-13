@@ -5,7 +5,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
 using TaleWorlds.Engine.GauntletUI;
-using TaleWorlds.MountAndBlade.GauntletUI;
 using TaleWorlds.TwoDimension;
 
 namespace MCM.UI.Patches

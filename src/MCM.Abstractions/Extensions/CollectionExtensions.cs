@@ -18,7 +18,7 @@ namespace MCM.Abstractions
             .OrderBy(x => x.Order)
             .ThenBy(x => LocalizationUtils.Localize(x.DisplayName), new AlphanumComparatorFast());
 
-        public static SettingsPropertyGroupDefinition? GetGroupFromLocalizedName(this IEnumerable<SettingsPropertyGroupDefinition> groupsList, string groupName) =>
-            groupsList.FirstOrDefault(x => LocalizationUtils.Localize(x.GroupName) == groupName);
+        public static SettingsPropertyGroupDefinition? GetGroupFromName(this IEnumerable<SettingsPropertyGroupDefinition> groupsList, string groupName) =>
+            groupsList.FirstOrDefault(x => x.GroupNameRaw == groupName);
     }
 }

@@ -8,6 +8,7 @@ using MCM.Abstractions;
 using MCM.UI.Dropdown;
 using MCM.UI.Extensions;
 using MCM.UI.Patches;
+using MCM.UI.Utils;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
@@ -361,6 +362,8 @@ namespace MCM.UI.GUI.ViewModels
         {
             foreach (var modSettings in ModSettingsList)
                 modSettings.OnFinalize();
+
+            SettingPropertyDefinitionCache.Clear();
 
             base.OnFinalize();
         }

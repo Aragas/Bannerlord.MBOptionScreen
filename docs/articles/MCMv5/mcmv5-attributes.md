@@ -77,7 +77,7 @@ To understand how to format the strings take a look at [this](https://docs.micro
 ```csharp
 [SettingPropertyDropdown("Setting Name", Order = 4, RequireRestart = false, HintText = "Setting explanation.")]
 [SettingPropertyGroup("Main Group Name/Nested Group Name/Second Nested Group Name")]
-public DropdownDefault<string> SettingVariableName { get; set; } = new DropdownDefault<string>(new string[]
+public Dropdown<string> SettingVariableName { get; set; } = new Dropdown<string>(new string[]
 {
     "Test1",
     "Test2",
@@ -88,7 +88,7 @@ It can also use custom classes. Don't forget to override .ToString()!
 ```csharp
 [SettingPropertyDropdown("Setting Name", Order = 5, RequireRestart = false, HintText = "Setting explanation.")]
 [SettingPropertyGroup("Main Group Name/Nested Group Name/Second Nested Group Name")]
-public DropdownDefault <CustomObject> SettingVariableName { get; set; } = new DropdownDefault <CustomObject>(new CustomObject[]
+public Dropdown<CustomObject> SettingVariableName { get; set; } = new Dropdown<CustomObject>(new CustomObject[]
 {
     new CustomObject("Test1"),
     new CustomObject("Test2"),

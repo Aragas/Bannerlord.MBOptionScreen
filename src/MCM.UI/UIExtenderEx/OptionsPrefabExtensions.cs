@@ -7,7 +7,7 @@ using System.Xml;
 namespace MCM.UI.UIExtenderEx
 {
     [PrefabExtension("Options", "descendant::ListPanel[@Id='TabToggleList']/Children/OptionsTabToggle[5]")]
-    public sealed class OptionsPrefabExtension1 : PrefabExtensionInsertPatch
+    internal sealed class OptionsPrefabExtension1 : PrefabExtensionInsertPatch
     {
         public override InsertType Type => InsertType.Prepend;
 
@@ -39,7 +39,7 @@ namespace MCM.UI.UIExtenderEx
     }
 
     [PrefabExtension("Options", "descendant::Widget[@Id='DescriptionsRightPanel']")]
-    public sealed class OptionsPrefabExtension3 : PrefabExtensionSetAttributePatch
+    internal sealed class OptionsPrefabExtension3 : PrefabExtensionSetAttributePatch
     {
         public override List<Attribute> Attributes => new()
         {

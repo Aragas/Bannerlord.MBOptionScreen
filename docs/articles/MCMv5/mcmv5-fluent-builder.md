@@ -23,5 +23,11 @@ Any property is set by a ``Set%PropertyName%`` method.
 ``BuildAsGlobal`` returns a Global setting instance. Use ``Register`` and ``Unregister`` for MCM to use it.  
 ``BuildAsPerCharacter`` returns a PerCharacter setting  instance. Use ``Register`` and ``Unregister`` for MCM to use it. The registered settings will be cleared before and after player joins the campaign, so do the register thing when the campaign was already joined in.   
 
+## Notes
+You can access the default Preset by using
+```csharp
+builder.CreatePreset(BaseSettings.DefaultPresetId, BaseSettings.DefaultPresetName, pBuilder => { });
+```
+
 ## Example
 * [TrainingTweak](https://github.com/Aragas/TrainingTweak/blob/fba9bb60cdbd5ff61418f4cea30c625b01cd71de/TroopTraining/Settings.cs) - mimics the standard MCM Global Settings flow.

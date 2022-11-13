@@ -4,7 +4,7 @@ using System.Xml;
 
 namespace MCM.UI.Functionality.Injectors
 {
-    internal abstract class ResourceInjector
+    public abstract class ResourceInjector
     {
         protected static XmlDocument Load(string embedPath)
         {

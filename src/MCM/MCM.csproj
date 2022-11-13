@@ -6,6 +6,7 @@
     <AssemblyName>MCMv5</AssemblyName>
     <Configurations>Debug;Release</Configurations>
     <DefineConstants>$(DefineConstants);BUTRDEPENDENCYINJECTION_PUBLIC;</DefineConstants>
+    <LangVersion>latest</LangVersion>
     <!--Some code analyzers don't support common.props parsing-->
     <TargetFrameworks Condition=" '$(TargetFrameworks)' == '' ">net472</TargetFrameworks>
   </PropertyGroup>
