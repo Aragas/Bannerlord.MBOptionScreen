@@ -19,7 +19,7 @@ namespace MCM.Abstractions
         {
             if (settings is IFluentSettings fluentSettings)
                 return fluentSettings.SettingPropertyGroups;
-            return settings.SettingPropertyGroups;
+            return settings.CreateSettingPropertyGroups();
         }
 
         public static IEnumerable<ISettingsPropertyDefinition> GetAllSettingPropertyDefinitions(this BaseSettings settings) =>

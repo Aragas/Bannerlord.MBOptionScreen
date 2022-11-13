@@ -21,12 +21,12 @@ namespace MCM.UI.Utils
 {
     internal static class UISettingsUtils
     {
-        public static IComparer<SettingsPropertyVM> SettingsPropertyVMComparer = KeyComparer<SettingsPropertyVM>
+        public static readonly IComparer<SettingsPropertyVM> SettingsPropertyVMComparer = KeyComparer<SettingsPropertyVM>
             .OrderBy(x => x.SettingPropertyDefinition.Order)
             .ThenBy(x => new TextObject(x.SettingPropertyDefinition.DisplayName).ToString(), new AlphanumComparatorFast());
 
-        public static IComparer<SettingsPropertyGroupVM> SettingsPropertyGroupVMComparer = KeyComparer<SettingsPropertyGroupVM>
-            .OrderByDescending(x => x.SettingPropertyGroupDefinition.GroupName == SettingsPropertyGroupDefinition.DefaultGroupName)
+        public static readonly IComparer<SettingsPropertyGroupVM> SettingsPropertyGroupVMComparer = KeyComparer<SettingsPropertyGroupVM>
+            .OrderByDescending(x => x.SettingPropertyGroupDefinition.GroupNameRaw == SettingsPropertyGroupDefinition.DefaultGroupName)
             .ThenBy(x => x.SettingPropertyGroupDefinition.Order)
             .ThenBy(x => new TextObject(x.SettingPropertyGroupDefinition.GroupName).ToString(), new AlphanumComparatorFast());
 
@@ -38,9 +38,9 @@ namespace MCM.UI.Utils
         /// <param name="new"></param>
         public static void OverrideValues(UndoRedoStack urs, BaseSettings current, BaseSettings @new)
         {
-            var currentDict = current.GetUnsortedSettingPropertyGroups().ToDictionary(x => x.GroupName, x => x);
+            var currentDict = SettingPropertyDefinitionCache.GetSettingPropertyGroups(current).ToDictionary(x => x.GroupName, x => x);
 
-            foreach (var nspg in @new.GetAllSettingPropertyGroupDefinitions())
+            foreach (var nspg in SettingPropertyDefinitionCache.GetAllSettingPropertyGroupDefinitions(@new))
             {
                 if (currentDict.TryGetValue(nspg.GroupName, out var spg))
                     OverrideValues(urs, spg, nspg);

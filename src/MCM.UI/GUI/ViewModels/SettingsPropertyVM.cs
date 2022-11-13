@@ -1,4 +1,5 @@
 ﻿using MCM.Abstractions;
+using MCM.Abstractions.Base;
 using MCM.Common;
 using MCM.UI.Actions;
 
@@ -65,15 +66,19 @@ namespace MCM.UI.GUI.ViewModels
 
             NumericValueToggle = IsInt || IsFloat;
 
-            PropertyReference.PropertyChanged += PropertyReference_OnPropertyChanged;
+            PropertyReference.PropertyChanged += OnPropertyChanged;
 
             if (IsDropdown)
             {
                 if (PropertyReference.Value is INotifyPropertyChanged notifyPropertyChanged)
-                    notifyPropertyChanged.PropertyChanged += PropertyReference_OnPropertyChanged;
+                    notifyPropertyChanged.PropertyChanged += OnPropertyChanged;
                 DropdownValue.PropertyChanged += DropdownValue_PropertyChanged;
                 DropdownValue.PropertyChangedWithValue += DropdownValue_PropertyChangedWithValue;
             }
+
+            // Can easily backfire as I do not hold the reference
+            if (SettingsVM.SettingsInstance is INotifyPropertyChanged notifyPropertyChanged2)
+                notifyPropertyChanged2.PropertyChanged += OnPropertyChanged;
 
             RefreshValues();
 
@@ -85,20 +90,27 @@ namespace MCM.UI.GUI.ViewModels
             if (MCMUISubModule.ResetValueToDefault is { } key)
                 key.IsDownAndReleasedEvent -= ResetValueToDefaultOnReleasedEvent;
 
-            PropertyReference.PropertyChanged -= PropertyReference_OnPropertyChanged;
+            PropertyReference.PropertyChanged -= OnPropertyChanged;
 
             if (IsDropdown)
             {
                 if (PropertyReference.Value is INotifyPropertyChanged notifyPropertyChanged)
-                    notifyPropertyChanged.PropertyChanged -= PropertyReference_OnPropertyChanged;
+                    notifyPropertyChanged.PropertyChanged -= OnPropertyChanged;
                 DropdownValue.PropertyChanged -= DropdownValue_PropertyChanged;
                 DropdownValue.PropertyChangedWithValue -= DropdownValue_PropertyChangedWithValue;
             }
 
+            // Can easily backfire as I do not hold the reference
+            if (SettingsVM.SettingsInstance is INotifyPropertyChanged notifyPropertyChanged2)
+                notifyPropertyChanged2.PropertyChanged -= OnPropertyChanged;
+
             base.OnFinalize();
         }
-        private void PropertyReference_OnPropertyChanged(object? obj, PropertyChangedEventArgs args)
+        private void OnPropertyChanged(object? obj, PropertyChangedEventArgs args)
         {
+            if (args.PropertyName == BaseSettings.SaveTriggered)
+                return;
+
             switch (SettingType)
             {
                 case SettingType.Bool:

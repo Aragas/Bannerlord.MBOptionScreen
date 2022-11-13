@@ -30,12 +30,13 @@ namespace MCM.Abstractions
 
         protected char SubGroupDelimiter { get; set; }
         public SettingsPropertyGroupDefinition? Parent { get; set; }
+        public string GroupNameRaw => _groupNameRaw;
         public string GroupName => DisplayGroupNameRaw;
         public string DisplayGroupNameRaw
         {
             get
             {
-                if (Parent is null) return _groupNameRaw;
+                if (Parent is null) return LocalizationUtils.Localize(_groupNameRaw);
 
                 var localizedParentGroup = LocalizationUtils.Localize(Parent._groupNameRaw);
                 var localizedGroupName = LocalizationUtils.Localize(_groupNameRaw);
@@ -81,8 +82,9 @@ namespace MCM.Abstractions
             subGroups.Add(settingProp.SetParent(this));
         }
 
-        public SettingsPropertyGroupDefinition? GetGroup(string groupName) => subGroups.Find(x => x.GroupName == groupName);
-        public SettingsPropertyGroupDefinition? GetGroupFor(string groupName) => subGroups.GetGroupFromLocalizedName(groupName);
+        public SettingsPropertyGroupDefinition? GetGroup(string groupName) => subGroups.GetGroupFromName(groupName);
+        [Obsolete($"Use {nameof(GetGroup)}", true)]
+        public SettingsPropertyGroupDefinition? GetGroupFor(string groupName) => subGroups.GetGroupFromName(groupName);
 
         /// <inheritdoc/>
         public override string ToString() => GroupName;

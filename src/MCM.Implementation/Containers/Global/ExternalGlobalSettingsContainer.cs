@@ -15,7 +15,8 @@ namespace MCM.Implementation.Global
         private Dictionary<string, ExternalGlobalSettings> LoadedSettings { get; } = new();
 
         /// <inheritdoc/>
-        public IEnumerable<SettingsDefinition> SettingsDefinitions => LoadedSettings.Keys.Select(id => new SettingsDefinition(id));
+        public IEnumerable<SettingsDefinition> SettingsDefinitions =>
+            LoadedSettings.Values.Select(s => new SettingsDefinition(s.Id, s.DisplayName, s.GetSettingPropertyGroups()));
 
         public ExternalGlobalSettingsContainer(IBUTRLogger<ExternalGlobalSettingsContainer> logger)
         {

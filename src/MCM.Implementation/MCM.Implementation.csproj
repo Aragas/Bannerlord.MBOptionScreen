@@ -1,5 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\MCM.Abstractions\MCM.Abstractions.csproj" />
     <ProjectReference Include="..\MCM.Common\MCM.Common.csproj" />

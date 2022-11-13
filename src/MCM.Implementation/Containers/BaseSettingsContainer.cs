@@ -24,7 +24,8 @@ namespace MCM.Implementation
         protected virtual Dictionary<string, TSettings> LoadedSettings { get; } = new();
 
         /// <inheritdoc/>
-        public virtual IEnumerable<SettingsDefinition> SettingsDefinitions => LoadedSettings.Keys.Select(id => new SettingsDefinition(id));
+        public virtual IEnumerable<SettingsDefinition> SettingsDefinitions =>
+            LoadedSettings.Values.Select(s => new SettingsDefinition(s.Id, s.DisplayName, s.GetSettingPropertyGroups()));
 
         protected virtual void RegisterSettings(TSettings? settings)
         {

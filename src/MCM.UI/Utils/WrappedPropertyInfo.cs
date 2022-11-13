@@ -68,13 +68,13 @@ namespace MCM.UI.Utils
             _onSet?.Invoke();
         }
 
-        public override void SetValue(object? obj, object? value, BindingFlags invokeAttr, Binder? binder, object?[]? index, CultureInfo? culture)
+        public override void SetValue(object? obj, object? value, BindingFlags invokeAttr, Binder? binder, object?[]? index, CultureInfo culture)
         {
             _propertyInfoImplementation.SetValue(_instance, value, invokeAttr, binder, index, culture);
             _onSet?.Invoke();
         }
 
-        public override string? ToString() => _propertyInfoImplementation.ToString();
+        public override string ToString() => _propertyInfoImplementation.ToString();
         public override bool Equals(object? obj) => obj switch
         {
             WrappedPropertyInfo proxy => _propertyInfoImplementation.Equals(proxy._propertyInfoImplementation),

@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);BUTRDEPENDENCYINJECTION_PUBLIC;</DefineConstants>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   
   <ItemGroup>

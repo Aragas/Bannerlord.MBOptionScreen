@@ -16,9 +16,9 @@ namespace MCM.UI.GUI.ViewModels
     internal sealed class SettingsPropertyGroupVM : ViewModel
     {
         private bool _isExpanded = true;
-        private string _groupName;
-        private string _hintText;
-        private string _groupNameDisplay;
+        private string _groupName = string.Empty;
+        private string _hintText = string.Empty;
+        private string _groupNameDisplay = string.Empty;
 
         private ModOptionsVM MainView => SettingsVM.MainView;
         private SettingsVM SettingsVM { get; }

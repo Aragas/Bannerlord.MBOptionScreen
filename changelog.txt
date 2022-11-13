@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 5.3.0
+Game Versions: v1.0.0,v1.0.1
+* UI performance improvements.
+* UI was not seeing external changes, fixed
+* Groups now handle missing groups in-between!
+---------------------------------------------------------------------------------------------------
 Version: 5.2.0
 Game Versions: v1.0.0,v1.0.1
 * UI fixes. Dropdowns are handled correct now in a lot of usage cases.
