@@ -3,7 +3,7 @@ MCMv5 consists of two libraries:
 * **MCMv5** - Core. Includes v1/v2 Attribute API and a Fluent Builder API that allows to define settings at runtime. Includes a basic implementation of all abstract interfaces.
 * **MCMv5.UI** - GauntletUI implementations.
 
-MCMv5 drops MCMv5 and ModLib compatibility layers. MCMv5 is dropped due to game's Release and ModLib is not backported as there are no mods that use it's API instead of MCM.
+MCMv5 drops MCMv5 and ModLib compatibility layers. MCMv4 is dropped due to game's Release and ModLib is not backported as there are no mods that use it's API instead of MCM.
 
 ## Installation
 ### Players
@@ -53,6 +53,7 @@ By depending on the standalone module the experience is basically the same as wi
 ## Types of settings
 Mod Option libraries provides two types of settings:
 * **_Global_** - options that are shared across different games/saves
+* **_PerCampaign_**  - options that are stored near the Global options. The options will be shared across the same campaign on different save files.
 * **_PerSave_**  - options that are stored in the save file itself. When MCM is removed, the save file will still be playable. Basically, they do not brick the saves. Be aware that saving even once without MCM will wipe all settings from the save file permanently.
 
 ## Included Settings Formats and implementing your own
@@ -171,7 +172,7 @@ MCMv5 has several implementations:
 >
 ### Attribute API
 ```csharp
-internal sealed class MCMUISettings : AttributeGlobalSettings<MCMUISettings> // AttributePerSaveSettings<MCMUISettings>
+internal sealed class MCMUISettings : AttributeGlobalSettings<MCMUISettings> // AttributePerSaveSettings<MCMUISettings> AttributePerCampaignSettings<MCMUISettings>
 {
     private bool _useStandardOptionScreen = false;
 
@@ -228,6 +229,12 @@ var globalSettings = builder.BuildAsGlobal();
 globalSettings.Register();
 globalSettings.Unregister();
 
+// Register only when a campaign was already loaded!
+var perCampaignSettings = builder.BuildAsPerCampaign();
+perCampaignSettings.Register();
+perCampaignSettings.Unregister();
+
+// Register only when a campaign was already loaded!
 var perSaveSettings = builder.BuildAsPerSave();
 perSaveSettings.Register();
 perSaveSettings.Unregister();

@@ -21,7 +21,8 @@ Any property is set by a ``Set%PropertyName%`` method.
 ``SetPropertyValue`` sets an existing property value.  
  
 ``BuildAsGlobal`` returns a Global setting instance. Use ``Register`` and ``Unregister`` for MCM to use it.  
-``BuildAsPerCharacter`` returns a PerCharacter setting  instance. Use ``Register`` and ``Unregister`` for MCM to use it. The registered settings will be cleared before and after player joins the campaign, so do the register thing when the campaign was already joined in.   
+``BuildAsPerCampaign`` returns a PerCampaign setting  instance. Use ``Register`` and ``Unregister`` for MCM to use it. The registered settings will be cleared before and after player joins the campaign, so do the register thing when the campaign was already joined in.   
+``BuildAsPerSave`` returns a PerSave setting  instance. Use ``Register`` and ``Unregister`` for MCM to use it. The registered settings will be cleared before and after player joins the campaign, so do the register thing when the campaign was already joined in.   
 
 ## Notes
 You can access the default Preset by using
