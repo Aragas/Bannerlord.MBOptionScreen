@@ -148,7 +148,7 @@ namespace MCM.UI.GUI.ViewModels
                             _logger.LogWarning("SynchronizationContext.Current is the UI SynchronizationContext");
                         }
 
-                        var settingsVM = BaseSettingsProvider.Instance!.SettingsDefinitions
+                        var settingsVM = BaseSettingsProvider.Instance?.SettingsDefinitions
                             .Parallel()
                             .Select(s =>
                             {
@@ -167,7 +167,7 @@ namespace MCM.UI.GUI.ViewModels
                             })
                             .Where(vm => vm is not null);
 
-                        foreach (var viewModel in settingsVM)
+                        foreach (var viewModel in settingsVM ?? Enumerable.Empty<SettingsVM>())
                         {
                             uiContext.Send(state =>
                             {
@@ -244,10 +244,13 @@ namespace MCM.UI.GUI.ViewModels
                 new TextObject("{=8OkPHu4f}No").ToString(),
                 () =>
                 {
-                    SelectedMod!.ChangePreset(presetKey.Id);
-                    var selectedMod = SelectedMod;
-                    ExecuteSelect(null);
-                    ExecuteSelect(selectedMod);
+                    if (SelectedMod is not null)
+                    {
+                        SelectedMod.ChangePreset(presetKey.Id);
+                        var selectedMod = SelectedMod;
+                        ExecuteSelect(null);
+                        ExecuteSelect(selectedMod);
+                    }
                 },
                 () =>
                 {
