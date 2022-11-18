@@ -32,3 +32,4 @@ builder.CreatePreset(BaseSettings.DefaultPresetId, BaseSettings.DefaultPresetNam
 
 ## Example
 * [TrainingTweak](https://github.com/Aragas/TrainingTweak/blob/fba9bb60cdbd5ff61418f4cea30c625b01cd71de/TroopTraining/Settings.cs) - mimics the standard MCM Global Settings flow.
+* [ButterEquipped](https://github.com/jzebedee/ButterEquipped/blob/94e7de3a2000a6c611a8a84d43da01685f226abd/src/ButterEquipped/Settings/EquipSettings.cs) - uses ome of the latest C# features and is structured.

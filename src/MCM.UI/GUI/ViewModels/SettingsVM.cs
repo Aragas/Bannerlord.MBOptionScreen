@@ -24,12 +24,10 @@ namespace MCM.UI.GUI.ViewModels
         public UndoRedoStack URS { get; } = new();
 
         public SettingsDefinition SettingsDefinition { get; }
-        public BaseSettings SettingsInstance => BaseSettingsProvider.Instance!.GetSettings(SettingsDefinition.SettingsId)!;
+        public BaseSettings? SettingsInstance => BaseSettingsProvider.Instance?.GetSettings(SettingsDefinition.SettingsId);
 
         public MCMSelectorVM<MCMSelectorItemVM<PresetKey>>? PresetsSelector { get; }
 
-        [DataSourceProperty]
-        public int UIVersion => SettingsInstance.UIVersion;
         [DataSourceProperty]
         public string DisplayName { get => _displayName; private set => SetField(ref _displayName, value, nameof(DisplayName)); }
         [DataSourceProperty]
@@ -42,7 +40,7 @@ namespace MCM.UI.GUI.ViewModels
             SettingsDefinition = definition;
             MainView = mainView;
 
-            foreach (var preset in SettingsInstance.GetBuiltInPresets().Concat(SettingsInstance.GetExternalPresets()))
+            foreach (var preset in SettingsInstance?.GetBuiltInPresets().Concat(SettingsInstance.GetExternalPresets()) ?? Enumerable.Empty<ISettingsPreset>())
                 _cachedPresets.Add(new PresetKey(preset), preset.LoadPreset());
 
             var presets = new List<PresetKey> { new("custom", "{=SettingsVM_Custom}Custom") }.Concat(_cachedPresets.Keys);
@@ -51,22 +49,21 @@ namespace MCM.UI.GUI.ViewModels
 
             RecalculateIndex();
 
-            SettingPropertyGroups.AddRange(SettingPropertyDefinitionCache.GetSettingPropertyGroups(SettingsInstance).Select(x => new SettingsPropertyGroupVM(x, this)));
+            if (SettingsInstance is not null)
+                SettingPropertyGroups.AddRange(SettingPropertyDefinitionCache.GetSettingPropertyGroups(SettingsInstance).Select(x => new SettingsPropertyGroupVM(x, this)));
 
             RefreshValues();
         }
 
         public void RecalculateIndex()
         {
-            if (PresetsSelector is null)
+            if (SettingsInstance is null || PresetsSelector is null)
                 return;
-
-            var settings = SettingsInstance;
 
             var index = 1;
             foreach (var preset in _cachedPresets.Values)
             {
-                if (SettingPropertyDefinitionCache.Equals(settings, preset))
+                if (SettingPropertyDefinitionCache.Equals(SettingsInstance, preset))
                 {
                     PresetsSelector.SelectedIndex = index;
                     return;
@@ -82,7 +79,7 @@ namespace MCM.UI.GUI.ViewModels
         {
             base.RefreshValues();
 
-            DisplayName = SettingsInstance.DisplayName;
+            DisplayName = SettingsInstance?.DisplayName ?? "ERROR";
 
             SettingPropertyGroups.Sort(UISettingsUtils.SettingsPropertyGroupVMComparer);
             foreach (var group in SettingPropertyGroups)
@@ -99,12 +96,12 @@ namespace MCM.UI.GUI.ViewModels
 
         public void ChangePreset(string presetId)
         {
-            if (_cachedPresets.TryGetValue(new PresetKey(presetId, string.Empty), out var preset))
+            if (SettingsInstance is not null && _cachedPresets.TryGetValue(new PresetKey(presetId, string.Empty), out var preset))
                 UISettingsUtils.OverrideValues(URS, SettingsInstance, preset);
         }
         public void ChangePresetValue(string presetId, string valueId)
         {
-            if (_cachedPresets.TryGetValue(new PresetKey(presetId, string.Empty), out var preset))
+            if (SettingsInstance is not null && _cachedPresets.TryGetValue(new PresetKey(presetId, string.Empty), out var preset))
             {
                 var current = SettingPropertyDefinitionCache.GetAllSettingPropertyDefinitions(SettingsInstance).FirstOrDefault(spd => spd.Id == valueId);
                 var @new = SettingPropertyDefinitionCache.GetAllSettingPropertyDefinitions(preset).FirstOrDefault(spd => spd.Id == valueId);
@@ -121,7 +118,8 @@ namespace MCM.UI.GUI.ViewModels
         }
         public void SaveSettings()
         {
-            BaseSettingsProvider.Instance!.SaveSettings(SettingsInstance);
+            if (SettingsInstance is not null)
+                BaseSettingsProvider.Instance?.SaveSettings(SettingsInstance);
         }
         public void ResetSettingsValue(string valueId)
         {

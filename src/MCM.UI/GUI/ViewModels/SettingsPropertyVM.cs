@@ -18,7 +18,7 @@ namespace MCM.UI.GUI.ViewModels
 
         public ModOptionsVM MainView => SettingsVM.MainView;
         public SettingsVM SettingsVM { get; }
-        public SettingsPropertyGroupVM Group { get; set; } = default!;
+        public SettingsPropertyGroupVM? Group { get; set; }
 
         public UndoRedoStack URS => SettingsVM.URS;
 
@@ -35,7 +35,7 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public string Name { get => _name; private set => SetField(ref _name, value, nameof(Name)); }
         [DataSourceProperty]
-        public bool IsEnabled => Group.GroupToggle;
+        public bool IsEnabled => Group?.GroupToggle ?? false;
 
         [DataSourceProperty]
         public bool IsSettingVisible
@@ -44,9 +44,9 @@ namespace MCM.UI.GUI.ViewModels
             {
                 if (SettingPropertyDefinition.IsToggle)
                     return false;
-                if (!Group.GroupToggle)
+                if (Group?.GroupToggle == false)
                     return false;
-                if (!Group.IsExpanded)
+                if (Group?.IsExpanded == false)
                     return false;
                 if (!SatisfiesSearch)
                     return false;
