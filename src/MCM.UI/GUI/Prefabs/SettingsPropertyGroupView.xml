@@ -18,10 +18,10 @@
                         IsVisible="@HasGroupToggle" UpdateChildrenStates="true">
                   <Children>
                     <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40"
-                                  Brush="SPOptions.Checkbox.Empty.Button" ButtonType="Toggle" IsSelected="@GroupToggle"
+                                  Brush="MCM.Input.Bool.Empty" ButtonType="Toggle" IsSelected="@GroupToggle"
                                   ToggleIndicator="ToggleIndicator" UpdateChildrenStates="true">
                       <Children>
-                        <ImageWidget Id="ToggleIndicator" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="SPOptions.Checkbox.Full.Button" />
+                        <ImageWidget Id="ToggleIndicator" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="MCM.Input.Bool.Full" />
                       </Children>
                     </ButtonWidget>
                   </Children>
@@ -34,10 +34,10 @@
                   <Children>
 
                     <RichTextWidget Text="@GroupNameDisplay" HeightSizePolicy="CoverChildren" WidthSizePolicy="CoverChildren" HorizontalAlignment="Left"
-                                    VerticalAlignment="Center" Brush="MCMv3.Group.Text" IsEnabled="@GroupToggle"/>
+                                    VerticalAlignment="Center" Brush="MCM.Group.Text" IsEnabled="@GroupToggle"/>
 
                     <ImageWidget HeightSizePolicy="Fixed" WidthSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" HorizontalAlignment="Right"
-                                 Brush="MCMv3.ExpandIndicator" VerticalAlignment="Center" IsVisible="@GroupToggle"/>
+                                 Brush="MCM.ExpandIndicator" VerticalAlignment="Center" IsVisible="@GroupToggle"/>
 
                   </Children>
                 </ButtonWidget>
@@ -57,7 +57,7 @@
         <ListPanel DataSource="{SettingProperties}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" MarginLeft="10" MarginRight="10"
                    LayoutImp.LayoutMethod="VerticalBottomToTop" HorizontalAlignment="Left" MarginTop="10">
           <ItemTemplate>
-            <SettingsPropertyView_v2 />
+            <SettingsPropertyView />
           </ItemTemplate>
         </ListPanel>
 
@@ -65,7 +65,7 @@
         <ListPanel DataSource="{SettingPropertyGroups}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" MarginLeft="25" MarginRight="25"
                    LayoutImp.LayoutMethod="VerticalBottomToTop" HorizontalAlignment="Left">
           <ItemTemplate>
-            <SettingsPropertyGroupView_v2 />
+            <SettingsPropertyGroupView />
           </ItemTemplate>
         </ListPanel>
 

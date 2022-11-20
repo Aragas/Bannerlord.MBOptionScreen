@@ -1,8 +1,8 @@
 <Prefab>
   <Constants>
 
-    <Constant Name="CancelButton.Width" BrushLayer="Default" BrushName="MCMv3.Cancel.Button" BrushValueType="Width" />
-    <Constant Name="CancelButton.Height" BrushLayer="Default" BrushName="MCMv3.Cancel.Button" BrushValueType="Height" />
+    <Constant Name="CancelButton.Width" BrushLayer="Default" BrushName="MCM.Cancel.Button" BrushValueType="Width" />
+    <Constant Name="CancelButton.Height" BrushLayer="Default" BrushName="MCM.Cancel.Button" BrushValueType="Height" />
 
   </Constants>
   <Window>
@@ -22,7 +22,7 @@
 
                 <!-- Title -->
                 <TextWidget Text="@ModsText" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Top" MarginRight="22" MarginTop="5"
-                            Brush="MCMv3.Title.Text" ClipContents="false" />
+                            Brush="MCM.Title.Text" ClipContents="false" />
 
                 <!-- Mods Listing Section Inner Panel-->
                 <Widget Id="InnerPanel" HeightSizePolicy="Fixed" WidthSizePolicy="Fixed" HorizontalAlignment="Left" VerticalAlignment="Center" SuggestedWidth="508" SuggestedHeight="635" PositionXOffset="27" PositionYOffset="25">
@@ -44,7 +44,7 @@
 
                             <ListPanel Id="ModList" DataSource="{ModSettingsList}" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" LayoutImp.LayoutMethod="VerticalTopToBottom">
                               <ItemTemplate>
-                                <SettingsItemView_v2 DoNotUseCustomScaleAndChildren="true" />
+                                <SettingsItemView DoNotUseCustomScaleAndChildren="true" />
                               </ItemTemplate>
                             </ListPanel>
 
@@ -66,22 +66,22 @@
 
                     <!-- Cancel button -->
                     <ButtonWidget Id="CancelButton" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
-                                  SuggestedWidth="!CancelButton.Width" SuggestedHeight="!CancelButton.Height" Brush="MCMv3.Cancel.Button"
+                                  SuggestedWidth="!CancelButton.Width" SuggestedHeight="!CancelButton.Height" Brush="MCM.Cancel.Button"
                                   Command.Click="ExecuteCancel">
                       <Children>
 
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="@CancelButtonText" />
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="MCM.Button.Text" Text="@CancelButtonText" />
 
                       </Children>
                     </ButtonWidget>
 
                     <!--Done Button-->
                     <ButtonWidget Id="DoneButton" DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed"
-                                  SuggestedWidth="!CancelButton.Width" SuggestedHeight="!CancelButton.Height" Brush="MCMv3.Done.Button"
+                                  SuggestedWidth="!CancelButton.Width" SuggestedHeight="!CancelButton.Height" Brush="MCM.Done.Button"
                                   Command.Click="ExecuteDone">
                       <Children>
 
-                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="Popup.Button.Text" Text="@DoneButtonText" />
+                        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="MCM.Button.Text" Text="@DoneButtonText" />
                       </Children>
                     </ButtonWidget>
 
@@ -113,22 +113,22 @@
                         </Widget>
 
                         <!-- Title -->
-                        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="80" Brush="MCMv3.Title.Text"
+                        <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="80" Brush="MCM.Title.Text"
                                         Text="@SelectedDisplayName" HorizontalAlignment="Center" VerticalAlignment="Top"/>
 
                         <!-- Search box -->
                         <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="350" SuggestedHeight="40" VerticalAlignment="Center" HorizontalAlignment="Right" MarginLeft="40" MarginRight="20"
-                                     DoNotAcceptEvents="true" Sprite="SaveLoad\load_tuple_selected" Brush="SPOptions.Dropdown.Center">
+                                     DoNotAcceptEvents="true" Brush="MCM.Input.String">
                           <Children>
-                            <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center" Brush="MCMv3.Text" RealText="@SearchText" IsObfuscationEnabled="false" />
-                            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="25" SuggestedHeight="24" HorizontalAlignment="Right" VerticalAlignment="Center" MarginRight="10" Sprite="Encyclopedia\icon_search" IsDisabled="true" />
+                            <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center" Brush="MCM.Text" RealText="@SearchText" IsObfuscationEnabled="false" />
+                            <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="25" SuggestedHeight="24" HorizontalAlignment="Right" VerticalAlignment="Center" MarginRight="10" Sprite="mcm_icon_search" IsDisabled="true" />
                           </Children>
                         </BrushWidget>
 
                       </Children>
                     </ListPanel>
                     <!-- Separator -->
-                    <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="MCMv3.Divider.Yellow" MarginLeft="15" MarginRight="15"/>
+                    <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="MCM.Divider.Yellow" MarginLeft="15" MarginRight="15"/>
 
                     <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="30" MarginLeft="30">
                       <Children>
@@ -143,7 +143,7 @@
                                 <Widget Id="SettingsInnerPanel" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren">
                                   <Children>
 
-                                    <SettingsView_v2 DataSource="{SelectedMod}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" />
+                                    <SettingsView DataSource="{SelectedMod}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" />
 
                                   </Children>
                                 </Widget>
@@ -165,10 +165,10 @@
                                LayoutImp.LayoutMethod="VerticalBottomToTop" MarginTop="1">
                       <Children>
 
-                        <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="MCMv3.Divider.Yellow" MarginLeft="15" MarginRight="15" MarginBottom="2"/>
+                        <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="MCM.Divider.Yellow" MarginLeft="15" MarginRight="15" MarginBottom="2"/>
 
                         <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Text="@HintText" IsVisible="@IsHintVisible"
-                                    HorizontalAlignment="Left" VerticalAlignment="Center" MarginLeft="20" MarginRight="10" Brush="MCMv3.Hint.Text"/>
+                                    HorizontalAlignment="Left" VerticalAlignment="Center" MarginLeft="20" MarginRight="10" Brush="MCM.Hint.Text"/>
 
                       </Children>
                     </ListPanel>

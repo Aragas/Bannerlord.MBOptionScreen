@@ -1,0 +1,18 @@
+﻿<Prefab>
+  <Window>
+    <SliderWidget SuggestedWidth="338" SuggestedHeight="42" VerticalAlignment="Center" HorizontalAlignment="Center"
+                  Filler="Filler" Handle="SliderHandle" MaxValueInt="@MaxInt" MinValueInt="@MinInt" ValueInt="@IntValue"
+                  IsEnabled="@IsEnabled" IsVisible="@IsInt" IsDiscrete="false" DoNotUpdateHandleSize="true">
+      <Children>
+        <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="362" SuggestedHeight="38" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="MCM.Slider.Canvas" IsEnabled="false" />
+        <BrushWidget Id="Filler" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="345" SuggestedHeight="35" VerticalAlignment="Center" Brush="MCM.Slider.Filler" ClipContents="true" >
+          <Children>
+            <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="345" SuggestedHeight="35" HorizontalAlignment="Left" VerticalAlignment="Center" Brush="MCM.Slider.Filler"/>
+          </Children>
+        </BrushWidget>
+        <BrushWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="400" SuggestedHeight="65" HorizontalAlignment="Center" VerticalAlignment="Center" Brush="MCM.Slider.Frame" IsEnabled="false" />
+        <BrushWidget Id="SliderHandle" DoNotAcceptEvents="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="14" SuggestedHeight="38" HorizontalAlignment="Left" VerticalAlignment="Center" Brush="MCM.Slider.Handle" />
+      </Children>
+    </SliderWidget>
+  </Window>
+</Prefab>

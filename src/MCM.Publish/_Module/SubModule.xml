@@ -13,6 +13,14 @@
     <DependedModule Id="Bannerlord.ButterLib" DependentVersion="v$butterlibversion$" />
     <DependedModule Id="Bannerlord.UIExtenderEx" DependentVersion="v$uiextenderexversion$" />
   </DependedModules>
+  <!-- They are all treated as optional by Vanilla -->
+  <ModulesToLoadAfterThis>
+    <Module Id="Native" />
+    <Module Id="SandBoxCore" />
+    <Module Id="Sandbox" />
+    <Module Id="StoryMode" />
+    <Module Id="CustomBattle" />
+  </ModulesToLoadAfterThis>
   <!-- Community Metadata -->
   <DependedModuleMetadatas>
     <DependedModuleMetadata id="Bannerlord.Harmony" order="LoadBeforeThis" version="v$harmonyversion$" />
@@ -20,8 +28,8 @@
     <DependedModuleMetadata id="Bannerlord.UIExtenderEx" order="LoadBeforeThis" version="v$uiextenderexversion$" />
 
     <DependedModuleMetadata id="Native" order="LoadAfterThis" version="v$gameversion$.*" />
-    <DependedModuleMetadata id="SandBoxCore" order="LoadAfterThis" version="v$gameversion$.*" />
-    <DependedModuleMetadata id="Sandbox" order="LoadAfterThis" version="v$gameversion$.*" />
+    <DependedModuleMetadata id="SandBoxCore" order="LoadAfterThis" version="v$gameversion$.*" optional="true" />
+    <DependedModuleMetadata id="Sandbox" order="LoadAfterThis" version="v$gameversion$.*" optional="true" />
     <DependedModuleMetadata id="StoryMode" order="LoadAfterThis" version="v$gameversion$.*" optional="true" />
     <DependedModuleMetadata id="CustomBattle" order="LoadAfterThis" version="v$gameversion$.*" optional="true" />
 

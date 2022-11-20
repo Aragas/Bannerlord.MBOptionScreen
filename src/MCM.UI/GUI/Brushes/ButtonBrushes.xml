@@ -1,0 +1,9 @@
+﻿<Brushes>
+
+  <Brush Name="MCM.Cancel.Button" BaseBrush="Popup.Cancel.Button"/>
+
+  <Brush Name="MCM.Done.Button" BaseBrush="Popup.Done.Button"/>
+
+  <Brush Name="MCM.Button.Text" BaseBrush="Popup.Button.Text"/>
+
+</Brushes>

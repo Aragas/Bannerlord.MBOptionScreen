@@ -1,6 +1,5 @@
 ﻿using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.ButterLib.Common.Extensions;
-using Bannerlord.ButterLib.DelayedSubModule;
 using Bannerlord.ButterLib.HotKeys;
 using Bannerlord.UIExtenderEx;
 
@@ -10,7 +9,6 @@ using BUTR.DependencyInjection.Extensions;
 using BUTR.DependencyInjection.Logger;
 
 using HarmonyLib;
-using HarmonyLib.BUTR.Extensions;
 
 using MCM.Abstractions;
 using MCM.Abstractions.Base;
@@ -52,7 +50,6 @@ namespace MCM.UI
 @"{=fGt6Gthg5y}This version of MCM is intended for v1.0.0 and higher! You are running {GAMEVERSION}!";
 
 
-        private static readonly Type SandBoxType = AccessTools2.TypeByName("SandBox.SandBoxSubModule");
         private static readonly UIExtender Extender = new("MCM.UI");
         internal static ILogger<MCMUISubModule> Logger = NullLogger<MCMUISubModule>.Instance;
         internal static ResetValueToDefault? ResetValueToDefault;
@@ -118,17 +115,6 @@ namespace MCM.UI
 
             var optionsSwitchHarmony = new Harmony("bannerlord.mcm.ui.optionsswitchpatch");
             OptionsVMPatch.Patch(optionsSwitchHarmony);
-
-            var calledDelayedOnce = false;
-            DelayedSubModuleManager.Register(SandBoxType);
-            DelayedSubModuleManager.Subscribe(SandBoxType, this, nameof(OnSubModuleLoad), SubscriptionType.AfterMethod, (_, _) =>
-            {
-                if (calledDelayedOnce) return;
-                calledDelayedOnce = true;
-
-                Extender.Register(typeof(MCMUISubModule).Assembly);
-                Extender.Enable();
-            });
         }
 
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
@@ -144,25 +130,20 @@ namespace MCM.UI
                     Logger = this.GetServiceProvider().GetRequiredService<ILogger<MCMUISubModule>>();
                 }
 
-                var calledDelayedOnce = false;
-                DelayedSubModuleManager.Register(SandBoxType);
-                DelayedSubModuleManager.Subscribe(SandBoxType, this, nameof(OnBeforeInitialModuleScreenSetAsRoot), SubscriptionType.AfterMethod, (_, _) =>
-                {
-                    if (calledDelayedOnce) return;
-                    calledDelayedOnce = true;
-
-                    var resourceInjector = GenericServiceProvider.GetService<ResourceInjector>();
-                    resourceInjector?.Inject();
-
-                    UpdateOptionScreen(MCMUISettings.Instance!);
-                    MCMUISettings.Instance!.PropertyChanged += MCMSettings_PropertyChanged;
-                });
+                Extender.Register(typeof(MCMUISubModule).Assembly);
+                Extender.Enable();
 
                 if (HotKeyManager.Create("MCM.UI") is { } hkm)
                 {
                     ResetValueToDefault = hkm.Add<ResetValueToDefault>();
                     hkm.Build();
                 }
+
+                var resourceInjector = GenericServiceProvider.GetService<ResourceInjector>();
+                resourceInjector?.Inject();
+
+                UpdateOptionScreen(MCMUISettings.Instance!);
+                MCMUISettings.Instance!.PropertyChanged += MCMSettings_PropertyChanged;
             }
         }
 
@@ -170,16 +151,8 @@ namespace MCM.UI
         {
             base.OnSubModuleUnloaded();
 
-            var calledDelayedOnce = false;
-            DelayedSubModuleManager.Register(SandBoxType);
-            DelayedSubModuleManager.Subscribe(SandBoxType, this, nameof(OnSubModuleUnloaded), SubscriptionType.AfterMethod, (_, _) =>
-            {
-                if (calledDelayedOnce) return;
-                calledDelayedOnce = true;
-
-                if (MCMUISettings.Instance is { } instance)
-                    instance.PropertyChanged -= MCMSettings_PropertyChanged;
-            });
+            if (MCMUISettings.Instance is { } instance)
+                instance.PropertyChanged -= MCMSettings_PropertyChanged;
         }
 
         private static void MCMSettings_PropertyChanged(object? sender, PropertyChangedEventArgs e)

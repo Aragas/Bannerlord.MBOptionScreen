@@ -21,8 +21,7 @@ namespace MCM.UI.GUI.GauntletUI
         private GauntletLayer? _gauntletLayer;
         private IGauntletMovie? _gauntletMovie;
         private ModOptionsVM _dataSource = default!;
-        private SpriteCategory? _spriteCategoryEncyclopedia;
-        private SpriteCategory? _spriteCategorySaveLoad;
+        private SpriteCategory? _spriteCategoryMCM;
 
         public ModOptionsGauntletScreen(ILogger<ModOptionsGauntletScreen> logger)
         {
@@ -35,10 +34,8 @@ namespace MCM.UI.GUI.GauntletUI
             var spriteData = UIResourceManager.SpriteData;
             var resourceContext = UIResourceManager.ResourceContext;
             var uiresourceDepot = UIResourceManager.UIResourceDepot;
-            _spriteCategoryEncyclopedia = spriteData.SpriteCategories.TryGetValue("ui_encyclopedia", out var spriteCategoryEncyclopediaVal) ? spriteCategoryEncyclopediaVal : null;
-            _spriteCategorySaveLoad = spriteData.SpriteCategories.TryGetValue("ui_saveload", out var spriteCategorySaveLoadVal) ? spriteCategorySaveLoadVal : null;
-            _spriteCategoryEncyclopedia?.Load(resourceContext, uiresourceDepot);
-            _spriteCategorySaveLoad?.Load(resourceContext, uiresourceDepot);
+            _spriteCategoryMCM = spriteData.SpriteCategories.TryGetValue("ui_mcm", out var spriteCategoryMCMVal) ? spriteCategoryMCMVal : null;
+            _spriteCategoryMCM?.Load(resourceContext, uiresourceDepot);
             _dataSource = new ModOptionsVM();
             _gauntletLayer = new GauntletLayer(4000, "GauntletLayer");
             _gauntletMovie = _gauntletLayer.LoadMovie("ModOptionsView_MCM", _dataSource);
@@ -63,8 +60,8 @@ namespace MCM.UI.GUI.GauntletUI
         protected override void OnFinalize()
         {
             base.OnFinalize();
-            // TODO: There was a report that the encyclopedia UI is bugged
-            //_spriteCategoryEncyclopedia.Unload();
+            if (_spriteCategoryMCM is not null)
+                _spriteCategoryMCM.Unload();
             if (_gauntletLayer is not null)
                 RemoveLayer(_gauntletLayer);
             if (_gauntletLayer is not null && _gauntletMovie is not null)
