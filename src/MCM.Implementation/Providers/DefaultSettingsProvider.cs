@@ -17,11 +17,12 @@ namespace MCM.Implementation
     {
         private readonly IBUTRLogger _logger;
         private readonly List<ISettingsContainer> _settingsContainers;
+        private readonly List<IExternalSettingsProvider> _externalSettingsProviders;
 
         public override IEnumerable<SettingsDefinition> SettingsDefinitions => _settingsContainers.OfType<ISettingsContainerHasSettingsDefinitions>()
-            .SelectMany(sp => sp.SettingsDefinitions);
+            .SelectMany(sp => sp.SettingsDefinitions).Concat(_externalSettingsProviders.SelectMany(x => x.SettingsDefinitions));
 
-        public DefaultSettingsProvider(IBUTRLogger<DefaultSettingsProvider> logger)
+        public DefaultSettingsProvider(IBUTRLogger<DefaultSettingsProvider> logger, IEnumerable<IExternalSettingsProvider> externalSettingsProviders)
         {
             _logger = logger;
 
@@ -49,6 +50,8 @@ namespace MCM.Implementation
                 .Concat(globalSettingsContainers)
                 .Concat(perSaveSettingsContainers)
                 .ToList();
+
+            _externalSettingsProviders = externalSettingsProviders.ToList();
         }
 
         public override BaseSettings? GetSettings(string id)
@@ -56,6 +59,14 @@ namespace MCM.Implementation
             foreach (var settingsContainer in _settingsContainers)
             {
                 if (settingsContainer.GetSettings(id) is { } settings)
+                {
+                    _logger.LogTrace($"GetSettings {id} returned {settings.GetType()}");
+                    return settings;
+                }
+            }
+            foreach (var settingsProvider in _externalSettingsProviders)
+            {
+                if (settingsProvider.GetSettings(id) is { } settings)
                 {
                     _logger.LogTrace($"GetSettings {id} returned {settings.GetType()}");
                     return settings;
@@ -71,6 +82,8 @@ namespace MCM.Implementation
         {
             foreach (var settingsContainer in _settingsContainers)
                 settingsContainer.SaveSettings(settings);
+            foreach (var settingsProvider in _externalSettingsProviders)
+                settingsProvider.SaveSettings(settings);
             settings.OnPropertyChanged(BaseSettings.SaveTriggered);
         }
 
@@ -78,12 +91,16 @@ namespace MCM.Implementation
         {
             foreach (var settingsContainer in _settingsContainers.OfType<ISettingsContainerCanReset>())
                 settingsContainer.ResetSettings(settings);
+            foreach (var settingsProvider in _externalSettingsProviders)
+                settingsProvider.ResetSettings(settings);
         }
 
         public override void OverrideSettings(BaseSettings settings)
         {
             foreach (var settingsContainer in _settingsContainers.OfType<ISettingsContainerCanOverride>())
                 settingsContainer.OverrideSettings(settings);
+            foreach (var settingsProvider in _externalSettingsProviders)
+                settingsProvider.OverrideSettings(settings);
         }
 
         public override IEnumerable<ISettingsPreset> GetPresets(string id)
@@ -91,6 +108,13 @@ namespace MCM.Implementation
             foreach (var settingsContainer in _settingsContainers.OfType<ISettingsContainerPresets>())
             {
                 foreach (var preset in settingsContainer.GetPresets(id))
+                {
+                    yield return preset;
+                }
+            }
+            foreach (var settingsProvider in _externalSettingsProviders)
+            {
+                foreach (var preset in settingsProvider.GetPresets(id))
                 {
                     yield return preset;
                 }

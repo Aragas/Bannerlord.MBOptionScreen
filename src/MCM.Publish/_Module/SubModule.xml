@@ -50,6 +50,13 @@
       <SubModuleClassType value="MCM.Internal.MCMImplementationSubModule" />
       <Tags />
     </SubModule>
+    <!--MCMv5 Wrapper Support SubModule -->
+    <SubModule>
+      <Name value="MCMv5 Wrapper Support" />
+      <DLLName value="MCM.UI.Adapter.MCMv5.dll" />
+      <SubModuleClassType value="MCM.UI.Adapter.MCMv5.SubModule" />
+      <Tags />
+    </SubModule>
     <!--UI SubModule -->
     <SubModule>
       <Name value="MCMv5 UI" />

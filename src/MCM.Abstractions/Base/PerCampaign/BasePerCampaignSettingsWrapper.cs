@@ -2,11 +2,13 @@
 
 using MCM.Common;
 
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace MCM.Abstractions.Base.PerCampaign
 {
+    [Obsolete("Will be removed from future API", true)]
     public abstract class BasePerCampaignSettingsWrapper : PerCampaignSettings, IWrapper
     {
         private delegate string GetIdDelegate();

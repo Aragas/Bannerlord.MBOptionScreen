@@ -6,13 +6,11 @@
 
   <ItemGroup>
     <PackageReference Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)" PrivateAssets="all" />
-    <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" IncludeAssets="compile" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" PrivateAssets="all" />
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="MCM.Bannerlord" />
-    <InternalsVisibleTo Include="MCM.Abstractions" />
-    <InternalsVisibleTo Include="MCM.Implementation" />
+    <ProjectReference Include="..\MCM\MCM.csproj" />
   </ItemGroup>
-  
+
 </Project>

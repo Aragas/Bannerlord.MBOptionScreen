@@ -1,11 +1,13 @@
 ﻿using MCM.Abstractions.FluentBuilder;
 using MCM.Common;
 
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace MCM.Abstractions.Base.Global
 {
+    [Obsolete("Will be removed from future API", true)]
     public abstract class BaseFluentGlobalSettingsWrapper : FluentGlobalSettings, IWrapper
     {
         /// <inheritdoc/>

@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace MCM.Abstractions.Base
 {
     /// <summary>
-    /// Tnterface that declares that the settings a fluent dynamic settings
+    /// Interface that declares that the settings a fluent dynamic settings
     /// </summary>
+    [Obsolete("Will be internal in the future")]
     public interface IFluentSettings
     {
         List<SettingsPropertyGroupDefinition> SettingPropertyGroups { get; }
