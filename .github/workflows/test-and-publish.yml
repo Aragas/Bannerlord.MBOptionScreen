@@ -59,7 +59,8 @@ jobs:
           dotnet test "tests/MCM.Tests/MCM.Tests.csproj" --configuration Beta_Debug -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord-beta";
           dotnet test "tests/MCM.Tests/MCM.Tests.csproj" --configuration Beta_Release -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord-beta";
       env:
-        GAME_VERSION: ${{secrets.SYNCED_GAME_STABLE_VERSION}}
+        STABLE_VERSION: ${{secrets.SYNCED_GAME_STABLE_VERSION}}
+        BETA_VERSION: ${{secrets.SYNCED_GAME_BETA_VERSION}}
       shell: pwsh
 
     - name: Test Coverage
