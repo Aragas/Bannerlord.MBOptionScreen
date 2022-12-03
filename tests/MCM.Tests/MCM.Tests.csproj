@@ -17,23 +17,18 @@
     <PackageReference Include="Bannerlord.ButterLib" Version="$(ButterLibVersion)" />
     <PackageReference Include="Bannerlord.UIExtenderEx" Version="$(UIExtenderExVersion)" />
     <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
   </ItemGroup>
 
   <ItemGroup Condition="!Exists($(GameFolder))">
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
-    <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup Condition="Exists($(GameFolder))">
-    <Reference Include="$(GameFolder)\bin\Win64_Shipping_Client\Newtonsoft.Json.dll">
-      <HintPath>%(Identity)</HintPath>
-    </Reference>
-    <Reference Include="$(GameFolder)\bin\Win64_Shipping_Client\System.Numerics.Vectors.dll">
-      <HintPath>%(Identity)</HintPath>
-    </Reference>
     <Reference Include="$(GameFolder)\bin\Win64_Shipping_Client\TaleWorlds.*.dll" Exclude="$(GameFolder)\bin\Win64_Shipping_Client\TaleWorlds.Native.dll">
       <HintPath>%(Identity)</HintPath>
+      <Private>true</Private>
     </Reference>
   </ItemGroup>
 
