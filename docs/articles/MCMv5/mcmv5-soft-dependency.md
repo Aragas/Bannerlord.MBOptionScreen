@@ -1,5 +1,6 @@
 MCMv5 has no issues with it being used as a soft dependency.  
 Mod Developers are required to include the ``MCMv5.dll`` library inside their /bin folder.  
+If you are familiar with ILRepack or similar tools, you can pack MCMv5.dll inside yor main .dll to avoid some issues like shared MCMv5.dll loading.  
 It can Load/Save settings without the Standalone module. The Standalone module is used to provide the UI implementation of MCMv5. You don't need it if the settings are changed only programmatically.  
 
 #### Example of usage:
@@ -66,4 +67,24 @@ public class CustomSettings : AttributeGlobalSettings<CustomSettings>, ICustomSe
         }
     }
 }
+```
+
+Do not forget to add this to your SubModule.xml so MCM can load it's code and do appropriate bootstrapping!
+```xml
+  ...
+  <SubModules>
+    <SubModule>
+      <Name value="MCMv5" />
+      <DLLName value="MCMv5.dll" />
+      <SubModuleClassType value="MCM.MCMSubModule" />
+      <Tags />
+    </SubModule>
+    <SubModule>
+      <Name value="MCMv5 Basic Implementation" />
+      <DLLName value="MCMv5.dll" />
+      <SubModuleClassType value="MCM.Internal.MCMImplementationSubModule" />
+      <Tags />
+    </SubModule>
+  </SubModules>
+  ...
 ```

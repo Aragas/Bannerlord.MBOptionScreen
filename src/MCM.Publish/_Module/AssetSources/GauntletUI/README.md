@@ -1,0 +1,1 @@
+﻿The .png file `ui_mcm_1.png` is derived from TaleWorlds sources and belong to TaleWorlds and is not part of the MIT license!

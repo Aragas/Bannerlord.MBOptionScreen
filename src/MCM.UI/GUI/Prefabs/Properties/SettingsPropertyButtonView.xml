@@ -1,0 +1,11 @@
+﻿<Prefab>
+  <Window>
+    <ButtonWidget SuggestedWidth="251" SuggestedHeight="64" VerticalAlignment="Center" HorizontalAlignment="Center"
+                  IsEnabled="@IsEnabled" IsVisible="@IsButton" DoNotPassEventsToChildren="true" Brush="MCM.Cancel.Button" Command.Click="OnValueClick">
+      <Children>
+        <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center"
+                    IsEnabled="@IsEnabled" IsVisible="@IsButton" Text="@ButtonContent" Brush="MCM.Button.Text" />
+      </Children>
+    </ButtonWidget>
+  </Window>
+</Prefab>

@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<SpriteData>
+  <SpriteCategories>
+    <SpriteCategory>
+      <Name>ui_mcm</Name>
+      <SpriteSheetCount>1</SpriteSheetCount>
+      <SpriteSheetSize ID="1" Width="2048" Height="128" />
+    </SpriteCategory>
+  </SpriteCategories>
+  <SpriteParts>
+    <SpritePart>
+      <SheetID>1</SheetID>
+      <Name>mcm_entry</Name>
+      <Width>569</Width>
+      <Height>95</Height>
+      <SheetX>4</SheetX>
+      <SheetY>4</SheetY>
+      <CategoryName>ui_mcm</CategoryName>
+    </SpritePart>
+    <SpritePart>
+      <SheetID>1</SheetID>
+      <Name>mcm_entry_selected</Name>
+      <Width>569</Width>
+      <Height>95</Height>
+      <SheetX>581</SheetX>
+      <SheetY>4</SheetY>
+      <CategoryName>ui_mcm</CategoryName>
+    </SpritePart>
+    <SpritePart>
+      <SheetID>1</SheetID>
+      <Name>mcm_icon_search</Name>
+      <Width>25</Width>
+      <Height>24</Height>
+      <SheetX>1158</SheetX>
+      <SheetY>4</SheetY>
+      <CategoryName>ui_mcm</CategoryName>
+    </SpritePart>
+  </SpriteParts>
+  <Sprites>
+    <GenericSprite>
+      <Name>mcm_entry</Name>
+      <SpritePartName>mcm_entry</SpritePartName>
+    </GenericSprite>
+    <GenericSprite>
+      <Name>mcm_entry_selected</Name>
+      <SpritePartName>mcm_entry_selected</SpritePartName>
+    </GenericSprite>
+    <GenericSprite>
+      <Name>mcm_icon_search</Name>
+      <SpritePartName>mcm_icon_search</SpritePartName>
+    </GenericSprite>
+  </Sprites>
+</SpriteData>

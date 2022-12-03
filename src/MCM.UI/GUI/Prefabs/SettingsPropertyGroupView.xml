@@ -1,0 +1,76 @@
+﻿<Prefab>
+  <Window>
+
+    <ListPanel HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" LayoutImp.LayoutMethod="VerticalBottomToTop" VerticalAlignment="Top"
+               HorizontalAlignment="Left" UpdateChildrenStates="true" IsVisible="@IsGroupVisible">
+      <Children>
+
+        <!-- Group display section -->
+        <Widget HeightSizePolicy="Fixed" SuggestedHeight="42" WidthSizePolicy="StretchToParent" VerticalAlignment="Top"  MarginTop="20">
+          <Children>
+
+            <ListPanel HeightSizePolicy="StretchToParent" WidthSizePolicy="StretchToParent" VerticalAlignment="Top" HorizontalAlignment="Left"
+                       LayoutImp.LayoutMethod="HorizontalLeftToRight">
+              <Children>
+
+                <!-- Enable toggle -->
+                <Widget WidthSizePolicy="CoverChildren" HeightSizePolicy="CoverChildren" VerticalAlignment="Center" HorizontalAlignment="Left"
+                        IsVisible="@HasGroupToggle" UpdateChildrenStates="true">
+                  <Children>
+                    <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40"
+                                  Brush="MCM.Input.Bool.Empty" ButtonType="Toggle" IsSelected="@GroupToggle"
+                                  ToggleIndicator="ToggleIndicator" UpdateChildrenStates="true">
+                      <Children>
+                        <ImageWidget Id="ToggleIndicator" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="MCM.Input.Bool.Full" />
+                      </Children>
+                    </ButtonWidget>
+                  </Children>
+                </Widget>
+
+                <!-- Group Name and Expander arrow -->
+                <ButtonWidget UpdateChildrenStates="true" HeightSizePolicy="StretchToParent" WidthSizePolicy="StretchToParent" HorizontalAlignment="Left"
+                              MarginLeft="10" MarginRight="10" Command.Click="OnGroupClick" DoNotPassEventsToChildren="true" IsSelected="@IsExpanded"
+                              IsEnabled="@GroupToggle">
+                  <Children>
+
+                    <RichTextWidget Text="@GroupNameDisplay" HeightSizePolicy="CoverChildren" WidthSizePolicy="CoverChildren" HorizontalAlignment="Left"
+                                    VerticalAlignment="Center" Brush="MCM.Group.Text" IsEnabled="@GroupToggle"/>
+
+                    <ImageWidget HeightSizePolicy="Fixed" WidthSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" HorizontalAlignment="Right"
+                                 Brush="MCM.ExpandIndicator" VerticalAlignment="Center" IsVisible="@GroupToggle"/>
+
+                  </Children>
+                </ButtonWidget>
+
+              </Children>
+            </ListPanel>
+
+            <HintWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Command.HoverBegin="OnHover" Command.HoverEnd="OnHoverEnd"/>
+
+          </Children>
+        </Widget>
+
+        <!-- Divider -->
+        <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2" VerticalAlignment="Top" Sprite="GradientDivider_9" AlphaFactor="0.4" MarginTop="4"/>
+
+        <!-- SettingProperties List -->
+        <ListPanel DataSource="{SettingProperties}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" MarginLeft="10" MarginRight="10"
+                   LayoutImp.LayoutMethod="VerticalBottomToTop" HorizontalAlignment="Left" MarginTop="10">
+          <ItemTemplate>
+            <SettingsPropertyView />
+          </ItemTemplate>
+        </ListPanel>
+
+        <!-- Subgroups List -->
+        <ListPanel DataSource="{SettingPropertyGroups}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" MarginLeft="25" MarginRight="25"
+                   LayoutImp.LayoutMethod="VerticalBottomToTop" HorizontalAlignment="Left">
+          <ItemTemplate>
+            <SettingsPropertyGroupView />
+          </ItemTemplate>
+        </ListPanel>
+
+      </Children>
+    </ListPanel>
+
+  </Window>
+</Prefab>

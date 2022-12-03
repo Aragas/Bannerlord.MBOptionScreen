@@ -61,6 +61,7 @@ namespace MCM.Internal
                 services.AddSettingsFormat<XmlSettingsFormat>();
 
                 services.AddSettingsPropertyDiscoverer<IAttributeSettingsPropertyDiscoverer, AttributeSettingsPropertyDiscoverer>();
+                services.AddSettingsPropertyDiscoverer<IFluentSettingsPropertyDiscoverer, FluentSettingsPropertyDiscoverer>();
 
                 services.AddSettingsBuilderFactory<DefaultSettingsBuilderFactory>();
 

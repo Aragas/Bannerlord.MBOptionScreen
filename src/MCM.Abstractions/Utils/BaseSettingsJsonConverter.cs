@@ -12,8 +12,6 @@ namespace MCM.Implementation
 {
     public sealed class BaseSettingsJsonConverter : JsonConverter
     {
-        private static string GetPropertyDefinitionId(ISettingsPropertyDefinition definition) => definition.Id;
-
         private readonly IBUTRLogger _logger;
         private readonly Action<string, object?> _addSerializationProperty;
         private readonly Action _clearSerializationProperties;
@@ -39,9 +37,7 @@ namespace MCM.Implementation
                 if (definition.SettingType == SettingType.Button)
                     continue;
 
-                var id = GetPropertyDefinitionId(definition);
-
-                jo.Add(id, definition.PropertyReference.Value is null ? null : JToken.FromObject(definition.PropertyReference.Value, serializer));
+                jo.Add(definition.Id, definition.PropertyReference.Value is null ? null : JToken.FromObject(definition.PropertyReference.Value, serializer));
             }
 
             jo.WriteTo(writer);
@@ -62,9 +58,7 @@ namespace MCM.Implementation
                     if (definition.SettingType == SettingType.Button)
                         continue;
 
-                    var id = GetPropertyDefinitionId(definition);
-
-                    if (jo.TryGetValue(id, out var value))
+                    if (jo.TryGetValue(definition.Id, out var value))
                     {
                         _addSerializationProperty(value.CreateReader().Path, definition.PropertyReference.Value);
                         definition.PropertyReference.Value = value.ToObject(definition.PropertyReference.Type, serializer);

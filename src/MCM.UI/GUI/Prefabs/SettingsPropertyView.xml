@@ -1,0 +1,61 @@
+﻿<Prefab>
+  <Window>
+    <Widget HeightSizePolicy="Fixed" SuggestedHeight="60" WidthSizePolicy="StretchToParent" VerticalAlignment="Top" HorizontalAlignment="Left"
+                 IsVisible="@IsSettingVisible" IsEnabled="@IsEnabled" UpdateChildrenStates="true">
+      <Children>
+
+        <ListPanel HeightSizePolicy="StretchToParent" WidthSizePolicy="StretchToParent" VerticalAlignment="Top" HorizontalAlignment="Left" LayoutImp.LayoutMethod="HorizontalLeftToRight">
+          <Children>
+
+            <!-- Property Name Section -->
+            <Widget HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Left" SuggestedWidth="450">
+              <Children>
+                <RichTextWidget HeightSizePolicy="StretchToParent" WidthSizePolicy="CoverChildren" HorizontalAlignment="Right" IsEnabled="@IsEnabled"
+                                Brush="MCM.Text" Text="@Name">
+                  <Children>
+                    <HintWidget HeightSizePolicy="StretchToParent" WidthSizePolicy="CoverChildren" HorizontalAlignment="Right" IsEnabled="@IsEnabled"
+                                Command.HoverBegin="OnHover" Command.HoverEnd="OnHoverEnd"/>
+                  </Children>
+                </RichTextWidget>
+              </Children>
+            </Widget>
+
+            <!-- Controls Section-->
+            <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="Fixed" VerticalAlignment="Center" HorizontalAlignment="Center" MarginLeft="50" SuggestedWidth="350">
+              <Children>
+
+                <!-- Boolean switch widget -->
+                <SettingsPropertyBoolView />
+
+                <!-- Float Slider -->
+                <SettingsPropertyFloatView />
+
+                <!-- Int Slider -->
+                <SettingsPropertyIntView />
+
+                <!-- String TextBox -->
+                <SettingsPropertyStringView />
+
+                <!-- Dropdown List -->
+                <SettingsPropertyDropdownView />
+
+                <!-- Checkbox Dropdown List -->
+                <SettingsPropertyCheckboxDropdownView />
+
+                <!-- Button -->
+                <SettingsPropertyButtonView />
+
+              </Children>
+            </Widget>
+
+            <!-- Value text/button -->
+            <!-- Show the formatted values of Int/Float -->
+            <SettingsPropertyDisplayValueView />
+
+          </Children>
+        </ListPanel>
+
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

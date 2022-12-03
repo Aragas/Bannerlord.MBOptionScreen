@@ -1,0 +1,11 @@
+﻿<Prefab>
+  <Window>
+    <BrushWidget SuggestedWidth="362" SuggestedHeight="42" VerticalAlignment="Center" HorizontalAlignment="Center"
+                 IsEnabled="@IsEnabled" IsVisible="@IsString" Brush="MCM.Input.String">
+      <Children>
+        <EditableTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center"
+                            IsEnabled="@IsEnabled" IsVisible="@IsString" RealText="@StringValue" IsObfuscationEnabled="false" Brush="MCM.Text" />
+      </Children>
+    </BrushWidget>
+  </Window>
+</Prefab>

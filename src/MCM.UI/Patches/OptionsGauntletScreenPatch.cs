@@ -11,7 +11,7 @@ namespace MCM.UI.Patches
 {
     internal static class OptionsGauntletScreenPatch
     {
-        private static readonly ConditionalWeakTable<object, SpriteCategory?> _spriteCategorySaveLoads = new();
+        private static readonly ConditionalWeakTable<object, SpriteCategory?> _spriteCategoriesMCM = new();
 
         public static void Patch(Harmony harmony)
         {
@@ -30,11 +30,11 @@ namespace MCM.UI.Patches
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void OnInitializePostfix(object __instance)
         {
-            var spriteCategorySaveLoad = UIResourceManager.SpriteData.SpriteCategories.TryGetValue("ui_saveload", out var spriteCategorySaveLoadVal)
-                ? spriteCategorySaveLoadVal
+            var spriteCategoryMCM = UIResourceManager.SpriteData.SpriteCategories.TryGetValue("ui_mcm", out var spriteCategoryMCMVal)
+                ? spriteCategoryMCMVal
                 : null;
-            spriteCategorySaveLoad?.Load(UIResourceManager.ResourceContext, UIResourceManager.UIResourceDepot);
-            _spriteCategorySaveLoads.Add(__instance, spriteCategorySaveLoad);
+            spriteCategoryMCM?.Load(UIResourceManager.ResourceContext, UIResourceManager.UIResourceDepot);
+            _spriteCategoriesMCM.Add(__instance, spriteCategoryMCM);
         }
 
         [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
@@ -43,7 +43,7 @@ namespace MCM.UI.Patches
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void OnFinalizePostfix(object __instance)
         {
-            _spriteCategorySaveLoads.Remove(__instance);
+            _spriteCategoriesMCM.Remove(__instance);
         }
     }
 }

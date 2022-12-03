@@ -12,7 +12,7 @@
   <ItemGroup>
     <PackageReference Include="nunit" Version="3.13.3" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.0" />
-    <PackageReference Include="NUnit3TestAdapter" Version="4.3.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.3.1" />
 
     <PackageReference Include="Bannerlord.ButterLib" Version="$(ButterLibVersion)" />
     <PackageReference Include="Bannerlord.UIExtenderEx" Version="$(UIExtenderExVersion)" />
@@ -22,10 +22,10 @@
   </ItemGroup>
 
   <ItemGroup Condition="!Exists($(GameFolder))">
-    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*" PrivateAssets="All" />
-    <PackageReference Include="Bannerlord.ReferenceAssemblies.Native" Version="$(GameVersion).*" PrivateAssets="All" />
-    <PackageReference Include="Bannerlord.ReferenceAssemblies.StoryMode" Version="$(GameVersion).*" PrivateAssets="All" />
-    <PackageReference Include="Bannerlord.ReferenceAssemblies.SandBox" Version="$(GameVersion).*" PrivateAssets="All" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" PrivateAssets="All" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Native" Version="$(GameVersion).*-*" PrivateAssets="All" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.StoryMode" Version="$(GameVersion).*-*" PrivateAssets="All" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.SandBox" Version="$(GameVersion).*-*" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup Condition="Exists($(GameFolder))">

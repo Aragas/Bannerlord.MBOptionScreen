@@ -1,0 +1,1 @@
+﻿The .png files `mcm_entry.png`, `mcm_entry_selected.png` and `mcm_icon_search.png` belong to TaleWorlds and are not part of the MIT license!

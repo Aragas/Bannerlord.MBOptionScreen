@@ -1,0 +1,20 @@
+﻿<Brushes>
+
+  <Brush Name="MCM.Divider.White" >
+    <Layers>
+      <BrushLayer Name="Default" Sprite="GradientDivider_9" AlphaFactor="0.4" />
+    </Layers>
+    <Styles>
+      <Style Name="Default">
+        <BrushLayer Name="Default" />
+      </Style>
+    </Styles>
+  </Brush>
+
+  <Brush Name="MCM.Divider.Yellow" BaseBrush="MCM.Divider.White">
+    <Layers>
+      <BrushLayer Name="Default" Color="#FFEBC1FF"/>
+    </Layers>
+  </Brush>
+
+</Brushes>

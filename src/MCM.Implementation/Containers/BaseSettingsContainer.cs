@@ -38,6 +38,7 @@ namespace MCM.Implementation
             var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == settings.FormatType));
             settingsFormat?.Load(settings, directoryPath, settings.Id);
+            settings.OnPropertyChanged(BaseSettings.LoadingComplete);
         }
 
         /// <inheritdoc/>
@@ -53,6 +54,7 @@ namespace MCM.Implementation
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == settings.FormatType));
             settingsFormat?.Save(settings, directoryPath, settings.Id);
 
+            settings.OnPropertyChanged(BaseSettings.SaveTriggered);
             return true;
         }
 

@@ -1,0 +1,41 @@
+﻿<Prefab>
+  <Window>
+    <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="CoverChildren" >
+      <Children>
+
+        <RichTextWidget HeightSizePolicy="StretchToParent" WidthSizePolicy="Fixed" SuggestedWidth="150" MarginLeft="50" VerticalAlignment="Center" HorizontalAlignment="Right"
+                        Brush="MCM.Input.TextBox.Text" Command.HoverBegin="OnEditBoxHover"
+                        Text="@NumericValue"
+                        IsEnabled="@NumericValueToggle" IsVisible="@NumericValueToggle" ClipContents="false" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+          <Children>
+            <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="MCM.Input.TextBox.Input" ClipContents="false"/>
+          </Children>
+        </RichTextWidget>
+
+        <FloatInputTextWidget HeightSizePolicy="StretchToParent" WidthSizePolicy="Fixed" SuggestedWidth="150" MarginLeft="50" VerticalAlignment="Center" HorizontalAlignment="Right"
+                              Brush="MCM.Input.TextBox.Text" Command.HoverEnd="OnEditBoxHoverEnd"
+                              FloatText="@FloatValue" MaxFloat="@MaxFloat" MinFloat="@MinFloat" EnableClamp="true"
+                              IsEnabled="@IsEnabled" IsVisible="@IsFloatVisible" ClipContents="false" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+          <Children>
+            <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="MCM.Input.TextBox.Input" ClipContents="false"/>
+          </Children>
+        </FloatInputTextWidget>
+
+        <IntegerInputTextWidget HeightSizePolicy="StretchToParent" WidthSizePolicy="Fixed" SuggestedWidth="150" MarginLeft="50" VerticalAlignment="Center" HorizontalAlignment="Right"
+                                Brush="MCM.Input.TextBox.Text" Command.HoverEnd="OnEditBoxHoverEnd"
+                                IntText="@IntValue" MaxInt="@MaxInt" MinInt="@MinInt" EnableClamp="true"
+                                IsEnabled="@IsEnabled" IsVisible="@IsIntVisible" ClipContents="false" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
+          <Children>
+            <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="MCM.Input.TextBox.Input" ClipContents="false"/>
+          </Children>
+        </IntegerInputTextWidget>
+
+        <!-- To keep items aligned for now -->
+        <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="Fixed" SuggestedWidth="150" MarginLeft="50" VerticalAlignment="Center" HorizontalAlignment="Right"
+                IsEnabled="false" IsVisible="@IsNotNumeric" ClipContents="false">
+        </Widget>
+
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

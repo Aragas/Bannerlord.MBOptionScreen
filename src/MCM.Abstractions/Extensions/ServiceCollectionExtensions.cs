@@ -93,6 +93,14 @@ namespace MCM.Abstractions
             return services;
         }
 
+        public static IGenericServiceContainer AddExternalSettingsProvider<TImplementation>(this IGenericServiceContainer services)
+            where TImplementation : class, IExternalSettingsProvider
+        {
+            services.RegisterSingleton<TImplementation>();
+            services.RegisterSingleton<IExternalSettingsProvider>(sp => sp.GetService<TImplementation>());
+            return services;
+        }
+
         public static IGenericServiceContainer AddSettingsBuilderFactory<TImplementation>(this IGenericServiceContainer services)
             where TImplementation : class, ISettingsBuilderFactory
         {

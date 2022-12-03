@@ -31,7 +31,7 @@ namespace MCM.UI.UIExtenderEx
 
         public OptionsPrefabExtension2()
         {
-            _xmlDocument.LoadXml("<ModOptionsPageView_v2 Id=\"ModOptionsPage\" DataSource=\"{ModOptions}\" />");
+            _xmlDocument.LoadXml("<ModOptionsPageView Id=\"ModOptionsPage\" DataSource=\"{ModOptions}\" />");
         }
 
         [PrefabExtensionXmlDocument]

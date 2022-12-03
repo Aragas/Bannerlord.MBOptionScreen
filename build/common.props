@@ -3,15 +3,15 @@
 
   <PropertyGroup>
     <GameVersion>1.0.0</GameVersion>
-    <Version>5.3.2</Version>
+    <Version>5.4.0</Version>
     <HarmonyVersion>2.2.2</HarmonyVersion>
-    <ButterLibVersion>2.5.1</ButterLibVersion>
+    <ButterLibVersion>2.6.0</ButterLibVersion>
     <UIExtenderExVersion>2.3.1</UIExtenderExVersion>
-    <BuildResourcesVersion>1.0.1.80</BuildResourcesVersion>
-    <BUTRSharedVersion>3.0.0.121</BUTRSharedVersion>
-    <BUTRDependencyInjectionVersion>2.0.0.38</BUTRDependencyInjectionVersion>
+    <BuildResourcesVersion>1.0.1.85</BuildResourcesVersion>
+    <BUTRSharedVersion>3.0.0.124</BUTRSharedVersion>
+    <BUTRDependencyInjectionVersion>2.0.0.43</BUTRDependencyInjectionVersion>
     <BUTRModuleManagerVersion>4.0.150</BUTRModuleManagerVersion>
-    <HarmonyExtensionsVersion>3.1.0.67</HarmonyExtensionsVersion>
+    <HarmonyExtensionsVersion>3.1.0.68</HarmonyExtensionsVersion>
     <HarmonyAnalyzerVersion>1.0.1.44</HarmonyAnalyzerVersion>
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>

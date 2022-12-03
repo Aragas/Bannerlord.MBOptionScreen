@@ -1,0 +1,11 @@
+﻿<Prefab>
+  <Window>
+    <ButtonWidget HeightSizePolicy="Fixed" WidthSizePolicy="StretchToParent" SuggestedHeight="75" HorizontalAlignment="Center" Command.Click="ExecuteSelect"
+                  Brush="MCM.Setting.Item" IsSelected="@IsSelected" UpdateChildrenStates="true" DoNotPassEventsToChildren="true" ClipContents="true" >
+      <Children>
+        <TextWidget Text="@DisplayName" HeightSizePolicy="CoverChildren" WidthSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Center"
+                    Brush="MCM.Item.Name" MarginLeft="10" DoNotAcceptEvents="true" ClipContents="true" />
+      </Children>
+    </ButtonWidget>
+  </Window>
+</Prefab>

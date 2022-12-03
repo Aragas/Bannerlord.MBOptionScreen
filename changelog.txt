@@ -1,4 +1,12 @@
 ---------------------------------------------------------------------------------------------------
+Version: 5.4.0
+Game Versions: v1.0.0,v1.0.1,v1.0.2
+* Refactored a bit the UI
+* Removed Sandbox as an indirect UI dependency
+* MCM UI now only depends on Native
+* Added support for ILRepacked MCMv5.dll, fixed some soft dep issues
+* Added LOADING_COMPLETE event
+---------------------------------------------------------------------------------------------------
 Version: 5.3.2
 Game Versions: v1.0.0,v1.0.1,v1.0.2
 * Some possible null reference fixes in the UI

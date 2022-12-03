@@ -20,7 +20,10 @@ namespace MCM
     {
         private static IBUTRLogger<MCMSubModule> Logger = new DefaultBUTRLogger<MCMSubModule>();
 
-        private static ServiceContainer LightInjectServiceContainer = new();
+        private static readonly ServiceContainer LightInjectServiceContainer = new(options =>
+        {
+            options.EnableCurrentScope = false;
+        });
 
         public static MCMSubModule? Instance { get; private set; }
 
@@ -73,8 +76,8 @@ namespace MCM
             {
                 OnBeforeInitialModuleScreenSetAsRootWasCalled = true;
 
-                GenericServiceProvider.ServiceProvider = ServiceCollectionExtensions.ServiceContainer.Build();
-                Logger = GenericServiceProvider.ServiceProvider.GetService<IBUTRLogger<MCMSubModule>>() ?? Logger;
+                GenericServiceProvider.GlobalServiceProvider = ServiceCollectionExtensions.ServiceContainer.Build();
+                Logger = GenericServiceProvider.GetService<IBUTRLogger<MCMSubModule>>() ?? Logger;
             }
         }
 
@@ -110,6 +113,21 @@ namespace MCM
             base.OnMissionBehaviorInitialize(mission);
 
             mission.AddMissionBehavior(new SettingsProviderMissionBehavior(GenericServiceProvider.GetService<BaseSettingsProvider>()));
+        }
+
+        protected override void OnGameStart(Game game, IGameStarter gameStarterObject)
+        {
+            base.OnGameStart(game, gameStarterObject);
+
+            GenericServiceProvider.GameScopeServiceProvider = GenericServiceProvider.CreateScope();
+        }
+
+        public override void OnGameEnd(Game game)
+        {
+            base.OnGameEnd(game);
+
+            GenericServiceProvider.GameScopeServiceProvider?.Dispose();
+            GenericServiceProvider.GameScopeServiceProvider = null;
         }
     }
 }

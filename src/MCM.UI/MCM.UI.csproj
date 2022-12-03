@@ -11,21 +11,27 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="GUI\v2\Brushes\ButtonBrushes.xml" />
-    <EmbeddedResource Include="GUI\v2\Brushes\DividerBrushes.xml" />
-    <EmbeddedResource Include="GUI\v2\Brushes\ExpandIndicator.xml" />
-    <EmbeddedResource Include="GUI\v2\Brushes\SettingsBrush.xml" />
-    <EmbeddedResource Include="GUI\v2\Brushes\ResetButtonBrush.xml" />
-    <EmbeddedResource Include="GUI\v2\Brushes\SettingsValueDisplayBrush.xml" />
-    <EmbeddedResource Include="GUI\v2\Brushes\CompatibilityBrushes.xml" />
-    <EmbeddedResource Include="GUI\v2\Brushes\TextBrushes.xml" />
-    <EmbeddedResource Include="GUI\v2\Prefabs\ModOptionsPageView.xml" />
-    <EmbeddedResource Include="GUI\v2\Prefabs\ModOptionsView.xml" />
-    <EmbeddedResource Include="GUI\v2\Prefabs\SettingsItemView.xml" />
-    <EmbeddedResource Include="GUI\v2\Prefabs\SettingsPropertyGroupView.xml" />
-    <EmbeddedResource Include="GUI\v2\Prefabs\SettingsPropertyView.xml" />
-    <EmbeddedResource Include="GUI\v2\Prefabs\SettingsView.xml" />
-    <EmbeddedResource Include="GUI\v2\Prefabs\DropdownWithHorizontalControl.Checkbox.xml" />
+    <EmbeddedResource Include="GUI\Brushes\ButtonBrushes.xml" />
+    <EmbeddedResource Include="GUI\Brushes\CompatibilityBrushes.xml" />
+    <EmbeddedResource Include="GUI\Brushes\DividerBrushes.xml" />
+    <EmbeddedResource Include="GUI\Brushes\ExpandIndicator.xml" />
+    <EmbeddedResource Include="GUI\Brushes\SettingsBrush.xml" />
+    <EmbeddedResource Include="GUI\Brushes\TextBrushes.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\DropdownWithHorizontalControl.Checkbox.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\ModOptionsPageView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\ModOptionsView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\Properties\SettingsPropertyBoolView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\Properties\SettingsPropertyButtonView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\Properties\SettingsPropertyCheckboxDropdownView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\Properties\SettingsPropertyDropdownView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\Properties\SettingsPropertyFloatView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\Properties\SettingsPropertyIntView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\Properties\SettingsPropertyStringView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\SettingsItemView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\SettingsPropertyDisplayValueView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\SettingsPropertyGroupView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\SettingsPropertyView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\SettingsView.xml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -43,7 +49,7 @@
     <PackageReference Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="Bannerlord.ModuleManager.Source" Version="$(BUTRModuleManagerVersion)" />
     <PackageReference Include="Bannerlord.ButterLib" Version="$(ButterLibVersion)" IncludeAssets="compile" />
-    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*" PrivateAssets="all" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" PrivateAssets="all" />
     <PackageReference Include="Bannerlord.UIExtenderEx" Version="$(UIExtenderExVersion)" IncludeAssets="compile" />
     <PackageReference Include="BUTR.DependencyInjection.ButterLib" Version="$(BUTRDependencyInjectionVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />

@@ -1,0 +1,15 @@
+﻿<Brushes>
+  <Brush Name="MCM.ExpandIndicator" GlobalAlphaFactor="0.6">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="StdAssets\expanded" />
+    </Layers>
+    <Styles>
+      <Style Name="Default">
+        <BrushLayer Name="Default" Sprite="StdAssets\collapsed" />
+      </Style>
+      <Style Name="Selected">
+        <BrushLayer Name="Default" Sprite="StdAssets\expanded" />
+      </Style>
+    </Styles>
+  </Brush>
+</Brushes>

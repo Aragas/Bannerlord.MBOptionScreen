@@ -1,0 +1,9 @@
+﻿<Prefab>
+  <Window>
+    <Widget SuggestedWidth="362" SuggestedHeight="42" VerticalAlignment="Center" HorizontalAlignment="Center" IsEnabled="@IsEnabled" IsVisible="@IsDropdownDefault">
+      <Children>
+        <Standard.DropdownWithHorizontalControl VerticalAlignment="Center" HorizontalAlignment="Center" Parameter.SelectorDataSource="{DropdownValue}" />
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>

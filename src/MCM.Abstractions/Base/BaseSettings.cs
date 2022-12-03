@@ -19,6 +19,7 @@ namespace MCM.Abstractions.Base
         private static readonly ConcurrentDictionary<Type, SettingsCtor> _cachedConstructors = new();
 
         public const string SaveTriggered = "SAVE_TRIGGERED";
+        public const string LoadingComplete = "LOADING_COMPLETE";
         public const string DefaultPresetId = "default";
         public const string DefaultPresetName = "{=BaseSettings_Default}Default";
 

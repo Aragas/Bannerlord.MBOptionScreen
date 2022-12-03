@@ -19,23 +19,17 @@ namespace MCM.Implementation
 
         public IEnumerable<ISettingsPropertyDefinition> GetProperties(BaseSettings settings)
         {
-            var obj = settings switch
+            foreach (var propertyDefinition in GetPropertiesInternal(settings))
             {
-                IWrapper wrapper => wrapper.Object,
-                _ => settings
-            };
-
-            foreach (var propertyDefinition in GetPropertiesInternal(obj))
-            {
-                SettingsUtils.CheckIsValid(propertyDefinition, obj);
+                SettingsUtils.CheckIsValid(propertyDefinition, settings);
                 yield return propertyDefinition;
             }
         }
 
-        private static IEnumerable<ISettingsPropertyDefinition> GetPropertiesInternal(object @object)
+        private static IEnumerable<ISettingsPropertyDefinition> GetPropertiesInternal(BaseSettings settings)
         {
-            var type = @object.GetType();
-            var subGroupDelimiter = AccessTools2.Property(type, "SubGroupDelimiter")?.GetValue(@object) as char? ?? '/';
+            var type = settings.GetType();
+            var subGroupDelimiter = AccessTools2.Property(type, "SubGroupDelimiter")?.GetValue(settings) as char? ?? '/';
             foreach (var property in type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))
             {
                 if (property.Name == nameof(BaseSettings.Id))
@@ -63,7 +57,7 @@ namespace MCM.Implementation
                 {
                     yield return new SettingsPropertyDefinition(propertyDefinitions,
                         groupDefinition,
-                        new PropertyRef(property, @object),
+                        new PropertyRef(property, settings),
                         subGroupDelimiter);
                 }
             }

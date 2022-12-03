@@ -1,6 +1,4 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
-
-using HarmonyLib;
+﻿using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
 using System.Diagnostics.CodeAnalysis;
@@ -13,7 +11,7 @@ namespace MCM.UI.Patches
 {
     internal static class MissionGauntletOptionsUIHandlerPatch
     {
-        private static readonly ConditionalWeakTable<object, SpriteCategory?> _spriteCategorySaveLoads = new();
+        private static readonly ConditionalWeakTable<object, SpriteCategory?> _spriteCategoriesMCM = new();
 
         public static void Patch(Harmony harmony)
         {
@@ -32,17 +30,11 @@ namespace MCM.UI.Patches
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void OnInitializePostfix(object __instance)
         {
-            if (ApplicationVersionHelper.GameVersion() is { } gameVersion)
-            {
-                if ((gameVersion.Major >= 1 && gameVersion.Minor >= 6 && gameVersion.Revision >= 1) || (gameVersion.Major >= 1 && gameVersion.Minor >= 7))
-                {
-                    var spriteCategorySaveLoad = UIResourceManager.SpriteData.SpriteCategories.TryGetValue("ui_saveload", out var spriteCategorySaveLoadVal)
-                            ? spriteCategorySaveLoadVal
-                            : null;
-                    spriteCategorySaveLoad?.Load(UIResourceManager.ResourceContext, UIResourceManager.UIResourceDepot);
-                    _spriteCategorySaveLoads.Add(__instance, spriteCategorySaveLoad);
-                }
-            }
+            var spriteCategoryMCM = UIResourceManager.SpriteData.SpriteCategories.TryGetValue("ui_mcm", out var spriteCategoryMCMVal)
+                ? spriteCategoryMCMVal
+                : null;
+            spriteCategoryMCM?.Load(UIResourceManager.ResourceContext, UIResourceManager.UIResourceDepot);
+            _spriteCategoriesMCM.Add(__instance, spriteCategoryMCM);
         }
 
         [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
@@ -51,17 +43,11 @@ namespace MCM.UI.Patches
         [MethodImpl(MethodImplOptions.NoInlining)]
         private static void OnFinalizePostfix(object __instance)
         {
-            if (ApplicationVersionHelper.GameVersion() is { } gameVersion)
-            {
-                if ((gameVersion.Major >= 1 && gameVersion.Minor >= 6 && gameVersion.Revision >= 1) || (gameVersion.Major >= 1 && gameVersion.Minor >= 7))
-                {
-                    var spriteCategorySaveLoad = UIResourceManager.SpriteData.SpriteCategories.TryGetValue("ui_saveload", out var spriteCategorySaveLoadVal)
-                        ? spriteCategorySaveLoadVal
-                        : null;
-                    spriteCategorySaveLoad?.Unload();
-                    _spriteCategorySaveLoads.Remove(__instance);
-                }
-            }
+            var spriteCategorySaveLoad = UIResourceManager.SpriteData.SpriteCategories.TryGetValue("ui_saveload", out var spriteCategorySaveLoadVal)
+                ? spriteCategorySaveLoadVal
+                : null;
+            spriteCategorySaveLoad?.Unload();
+            _spriteCategoriesMCM.Remove(__instance);
         }
     }
 }

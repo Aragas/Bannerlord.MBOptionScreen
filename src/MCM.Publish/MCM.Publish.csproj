@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\MCM.UI\MCM.UI.csproj" />
     <ProjectReference Include="..\MCM\MCM.csproj" />
+    <ProjectReference Include="..\MCM.UI.Adapter.MCMv5\MCM.UI.Adapter.MCMv5.csproj" />
   </ItemGroup>
 
 </Project>

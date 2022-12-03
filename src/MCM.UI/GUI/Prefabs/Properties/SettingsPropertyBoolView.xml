@@ -1,0 +1,16 @@
+﻿<Prefab>
+  <Window>
+    <Widget WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="362" VerticalAlignment="Center" HorizontalAlignment="Center"
+            IsVisible="@IsBool" UpdateChildrenStates="true" IsEnabled="@IsEnabled">
+      <Children>
+        <ButtonWidget DoNotPassEventsToChildren="true" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" VerticalAlignment="Center" HorizontalAlignment="Center"
+                      Brush="MCM.Input.Bool.Empty" ButtonType="Toggle" IsSelected="@BoolValue" ToggleIndicator="ToggleIndicator" UpdateChildrenStates="true" IsEnabled="@IsEnabled">
+          <Children>
+            <ImageWidget Id="ToggleIndicator" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Center"
+                         IsEnabled="@IsEnabled" Brush="MCM.Input.Bool.Full"/>
+          </Children>
+        </ButtonWidget>
+      </Children>
+    </Widget>
+  </Window>
+</Prefab>
