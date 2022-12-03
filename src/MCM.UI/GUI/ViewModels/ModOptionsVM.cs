@@ -227,7 +227,8 @@ namespace MCM.UI.GUI.ViewModels
                 return;
             }
 
-            if (selector.SelectedItem is null) return;
+            if (selector.SelectedItem is null || selector.SelectedIndex == -1) return;
+            if (selector.ItemList.Count < selector.SelectedIndex) return;
 
             var presetKey = selector.ItemList[selector.SelectedIndex].OriginalItem;
             InformationManager.ShowInquiry(new InquiryData(

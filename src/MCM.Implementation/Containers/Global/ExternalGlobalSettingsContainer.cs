@@ -39,6 +39,7 @@ namespace MCM.Implementation.Global
             settingsFormat?.Save(settings, directoryPath, settings.Id);
             */
 
+            settings.OnPropertyChanged(BaseSettings.SaveTriggered);
             return true;
         }
 
@@ -86,6 +87,7 @@ namespace MCM.Implementation.Global
                 return;
 
             LoadedSettings.Add(externalGlobalSettings.Id, externalGlobalSettings);
+            settings.OnPropertyChanged(BaseSettings.LoadingComplete);
         }
 
         /// <inheritdoc />

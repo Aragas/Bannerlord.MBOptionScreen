@@ -84,7 +84,6 @@ namespace MCM.Implementation
                 settingsContainer.SaveSettings(settings);
             foreach (var settingsProvider in _externalSettingsProviders)
                 settingsProvider.SaveSettings(settings);
-            settings.OnPropertyChanged(BaseSettings.SaveTriggered);
         }
 
         public override void ResetSettings(BaseSettings settings)

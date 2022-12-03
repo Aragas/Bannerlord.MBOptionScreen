@@ -44,6 +44,7 @@ namespace MCM.Implementation.PerSave
             LoadedSettings.Add(perSaveSettings.Id, perSaveSettings);
 
             behavior.LoadSettings(perSaveSettings);
+            perSaveSettings.OnPropertyChanged(BaseSettings.LoadingComplete);
         }
 
         /// <inheritdoc/>
@@ -56,7 +57,10 @@ namespace MCM.Implementation.PerSave
             if (settings is not PerSaveSettings saveSettings || !LoadedSettings.ContainsKey(saveSettings.Id))
                 return false;
 
-            return behavior.SaveSettings(saveSettings);
+            behavior.SaveSettings(saveSettings);
+
+            settings.OnPropertyChanged(BaseSettings.SaveTriggered);
+            return true;
         }
 
         /// <inheritdoc/>

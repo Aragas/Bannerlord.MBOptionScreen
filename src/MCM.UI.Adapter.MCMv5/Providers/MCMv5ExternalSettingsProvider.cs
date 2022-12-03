@@ -56,7 +56,6 @@ namespace MCM.UI.Adapter.MCMv5.Providers
         {
             foreach (var settingsProvider in _settingsProviderWrappers)
                 settingsProvider.SaveSettings(settings);
-            settings.OnPropertyChanged(BaseSettings.SaveTriggered);
         }
 
         public void ResetSettings(BaseSettings settings)
