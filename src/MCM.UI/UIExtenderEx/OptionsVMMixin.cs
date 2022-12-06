@@ -54,7 +54,6 @@ namespace MCM.UI.UIExtenderEx
 
         [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
         [SuppressMessage("ReSharper", "InconsistentNaming")]
-        [MethodImpl(MethodImplOptions.NoInlining)]
         private static void ExecuteCloseOptionsPostfix(OptionsVM __instance)
         {
             if (__instance.GetPropertyValue("MCMMixin") is WeakReference<OptionsVMMixin> weakReference && weakReference.TryGetTarget(out var mixin))
@@ -64,7 +63,6 @@ namespace MCM.UI.UIExtenderEx
         }
         [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
         [SuppressMessage("ReSharper", "InconsistentNaming")]
-        [MethodImpl(MethodImplOptions.NoInlining)]
         private static void RefreshValuesPostfix(OptionsVM __instance)
         {
             if (__instance.GetPropertyValue("ModOptions") is ModOptionsVM modOptions)
@@ -74,7 +72,6 @@ namespace MCM.UI.UIExtenderEx
         }
         [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
         [SuppressMessage("ReSharper", "InconsistentNaming")]
-        [MethodImpl(MethodImplOptions.NoInlining)]
         private static void SetSelectedCategoryPostfix(OptionsVM __instance)
         {
             if (__instance.GetPropertyValue("MCMMixin") is WeakReference<OptionsVMMixin> weakReference && weakReference.TryGetTarget(out var mixin))
@@ -85,7 +82,6 @@ namespace MCM.UI.UIExtenderEx
 
         [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
         [SuppressMessage("ReSharper", "UnusedParameter.Local")]
-        [MethodImpl(MethodImplOptions.NoInlining)]
         private static void OriginalExecuteCloseOptions(OptionsVM instance) => throw new NotImplementedException("It's a stub");
 
         private readonly ModOptionsVM _modOptions = new();
@@ -101,30 +97,17 @@ namespace MCM.UI.UIExtenderEx
         [DataSourceProperty]
         public int DescriptionWidth
         {
-            [MethodImpl(MethodImplOptions.NoInlining)]
             get => _descriptionWidth;
-            [MethodImpl(MethodImplOptions.NoInlining)]
-            private set
-            {
-                if (_descriptionWidth == value)
-                    return;
-
-                _descriptionWidth = value;
-                ViewModel?.OnPropertyChanged(nameof(DescriptionWidth));
-            }
+            private set => SetField(ref _descriptionWidth, value, nameof(DescriptionWidth));
         }
 
         [DataSourceProperty]
         public bool ModOptionsSelected
         {
-            [MethodImpl(MethodImplOptions.NoInlining)]
             get => _modOptionsSelected;
-            [MethodImpl(MethodImplOptions.NoInlining)]
             set
             {
-                if (_modOptionsSelected == value)
-                    return;
-
+                if (!SetField(ref _modOptionsSelected, value, nameof(ModOptionsSelected))) return;
                 _modOptions.IsDisabled = !value;
                 _modOptionsSelected = value;
                 DescriptionWidth = ModOptionsSelected ? 0 : 650;
@@ -152,7 +135,6 @@ namespace MCM.UI.UIExtenderEx
         }
 
         [DataSourceMethod]
-        [MethodImpl(MethodImplOptions.NoInlining)]
         public void ExecuteCloseOptions()
         {
             ModOptions.ExecuteCancelInternal(false);
@@ -170,7 +152,6 @@ namespace MCM.UI.UIExtenderEx
         }
 
         [DataSourceMethod]
-        [MethodImpl(MethodImplOptions.NoInlining)]
         public void ExecuteDone()
         {
             ModOptions.ExecuteDoneInternal(false, () =>
@@ -181,7 +162,6 @@ namespace MCM.UI.UIExtenderEx
         }
 
         [DataSourceMethod]
-        [MethodImpl(MethodImplOptions.NoInlining)]
         public void ExecuteCancel()
         {
             ModOptions.ExecuteCancelInternal(false, () =>

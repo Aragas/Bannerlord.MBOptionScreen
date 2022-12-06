@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 5.4.1
+Game Versions: v1.0.0,v1.0.1,v1.0.2
+* Fixed LOADING_COMPLETE recursion. Now accessing settings Instance will give a null instead
+* Fixed and cleaned up localization
+---------------------------------------------------------------------------------------------------
 Version: 5.4.0
 Game Versions: v1.0.0,v1.0.1,v1.0.2
 * Refactored a bit the UI
