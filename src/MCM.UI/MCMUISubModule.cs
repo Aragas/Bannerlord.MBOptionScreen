@@ -25,7 +25,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
 using System;
-using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
@@ -141,29 +140,10 @@ namespace MCM.UI
 
                 var resourceInjector = GenericServiceProvider.GetService<ResourceInjector>();
                 resourceInjector?.Inject();
-
-                UpdateOptionScreen(MCMUISettings.Instance!);
-                MCMUISettings.Instance!.PropertyChanged += MCMSettings_PropertyChanged;
             }
         }
 
-        protected override void OnSubModuleUnloaded()
-        {
-            base.OnSubModuleUnloaded();
-
-            if (MCMUISettings.Instance is { } instance)
-                instance.PropertyChanged -= MCMSettings_PropertyChanged;
-        }
-
-        private static void MCMSettings_PropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-            if (sender is MCMUISettings settings && e.PropertyName == BaseSettings.SaveTriggered)
-            {
-                UpdateOptionScreen(settings);
-            }
-        }
-
-        private static void UpdateOptionScreen(MCMUISettings settings)
+        internal static void UpdateOptionScreen(MCMUISettings settings)
         {
             if (settings.UseStandardOptionScreen)
             {
