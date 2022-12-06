@@ -11,33 +11,30 @@
     <string id="MCMImplementationSettings_Name" text="MCM Реал. {VERSION}"/>
     <!-- UI -->
     <string id="dzeWx4xSfR" text="Предупреждение от MCM!" />
-    <string id="FE6ya1gzZR" text="{REQUIRED_MODULE} не найден!" />
+    <string id="FE6ya1gzZR" text="Модуль {DEPENDENT_MODULE} не найден!" />
     <string id="EvI6KPAqTT" text="Найден несовместимый модуль {DENIED_MODULE}!" />
-    <string id="5G9zffrgMh" text="{MODULE} загружен до {DEPENDENT_MODULE}!{NL}{MODULE} должен загружаться после этого модуля!" />
-    <string id="UZ8zfvudMs" text="{MODULE} загружен после {DEPENDENT_MODULE}!{NL}{MODULE} должен загружаться до этого модуля!" />
-    <string id="FcR4BXnhx8" text="{MODULE} has mutually exclusive mod order directives specified for the {REQUIRED_MODULE}!" />
+    <string id="5G9zffrgMh" text="Модуль {MODULE} загружен перед {DEPENDENT_MODULE}.{NL}Модуль {MODULE} должен быть загружен после него!" />
+    <string id="UZ8zfvudMs" text="Модуль {MODULE} загружен после {DEPENDENT_MODULE}.{NL}Модуль {MODULE} должен быть загружен перед ним!" />
+    <string id="FcR4BXnhx8" text="Модуль {MODULE} имеет взаимоисключающую зависимость с модулем {REQUIRED_MODULE}!" />
     <string id="eXs6FLm5DP" text="Рекомендуется прервать игру. Вы хотите выйти?" />
     <string id="fGt6Gthg5y" text="Эта версия MCM предназначена для версии v1.0.0 и выше! Запущена версия {GAMEVERSION}!" />
 
-    <string id="EditValueVM_TitleText" text="Настройки модов"/>
-    <string id="EditValueVM_TitleText" text="Изменение &quot;{PROPERTYNAME}&quot;"/>
-    <string id="EditValueVM_DescriptionText_Numeric" text="Изменение значения &quot;{PROPERTYNAME}&quot;&#10;Минимальное значение {MINVALUE} и максимальное {MAXVALUE}."/>
-    <string id="EditValueVM_DescriptionText_Text" text="Изменение значения &quot;{PROPERTYNAME}&quot;."/>
+    <string id="MCMUISettings_Name" text="MCM Интерфейс {VERSION}"/>
     <string id="ModOptionsVM_NotSpecified" text="Мод не выбран"/>
     <string id="ModOptionsVM_Name" text="Настройки модов"/>
     <string id="ModOptionsVM_ChangeToPreset" text="Сменить на шаблон '{PRESET}'"/>
     <string id="ModOptionsVM_Discard" text="Вы уверены что хотите отменить все несохраненные изменения для {NAME} и использовать шаблон '{ITEM}'?"/>
     <string id="ModOptionsVM_RestartTitle" text="Необходим перезапуск игры!"/>
-    <string id="ModOptionsVM_RestartDesc" text="Необходимо перезапустить игру для применения новых настроек! Выполнить закрытие игры?"/>
+    <string id="ModOptionsVM_RestartDesc" text="Для применения настроек необходимо перезапустить игру! Выйти из игры?"/>
     <string id="SettingsPropertyGroupVM_Disabled" text="{GROUPNAME} (Отключено)"/>
     <string id="SettingsVM_Custom" text="Измененный"/>
     <string id="ModOptionsPageView_Mods" text="Моды"/>
     <string id="MainMenu_ModOptions" text="Настройки модов"/>
     <string id="EscapeMenu_ModOptions" text="Настройки модов"/>
     <string id="MCMUISettings_Name" text="МНМ UI Реал. {VERSION}"/>
-    <string id="MCMUISettings_Name_General" text="Общее"/>
+    <string id="MCMUISettings_Name_General" text="Основные настройки"/>
     <string id="MCMUISettings_Name_HideMainMenuEntry" text="Скрыть в главном меню"/>
-    <string id="MCMUISettings_Name_HideMainMenuEntryDesc" text="Скрыть в главном меню менб настроек MCM."/>
+    <string id="MCMUISettings_Name_HideMainMenuEntryDesc" text="Скрывает меню настройки модов из главного меню."/>
     <string id="ButterLibSettings_Name" text="ButterLib {VERSION}"/>
     <string id="ButterLibSettings_Name_Logging" text="Логирование"/>
     <string id="ButterLibSettings_Name_LogLevel" text="Уровень Логирования"/>
