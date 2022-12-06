@@ -48,22 +48,23 @@ jobs:
         stable-directory: 'bannerlord-stable'
         beta-directory: 'bannerlord-beta'
 
-    - name: Test MCM
+    - name: Build MCM Test
       run: >-
           $stable_version=$env:STABLE_VERSION;
           $stable_version=$stable_version.substring(1);
           $beta_version=$env:BETA_VERSION;
           $beta_version=$beta_version.substring(1);
-          dotnet test "tests/MCM.Tests/MCM.Tests.csproj" --configuration Stable_Debug -p:GameVersion=$stable_version -p:GameFolder="$PWD/bannerlord-stable";
-          dotnet test "tests/MCM.Tests/MCM.Tests.csproj" --configuration Stable_Release -p:GameVersion=$stable_version -p:GameFolder="$PWD/bannerlord-stable";
-          dotnet test "tests/MCM.Tests/MCM.Tests.csproj" --configuration Beta_Debug -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord-beta";
-          dotnet test "tests/MCM.Tests/MCM.Tests.csproj" --configuration Beta_Release -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord-beta";
+
+          dotnet build "tests/MCM.Tests/MCM.Tests.csproj" --configuration Stable_Debug -p:GameVersion=$stable_version -p:GameFolder="$PWD/bannerlord-stable";
+          dotnet build "tests/MCM.Tests/MCM.Tests.csproj" --configuration Stable_Release -p:GameVersion=$stable_version -p:GameFolder="$PWD/bannerlord-stable";
+          dotnet build "tests/MCM.Tests/MCM.Tests.csproj" --configuration Beta_Debug -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord-beta";
+          dotnet build "tests/MCM.Tests/MCM.Tests.csproj" --configuration Beta_Release -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord-beta";
       env:
         STABLE_VERSION: ${{secrets.SYNCED_GAME_STABLE_VERSION}}
         BETA_VERSION: ${{secrets.SYNCED_GAME_BETA_VERSION}}
       shell: pwsh
 
-    - name: Test Coverage
+    - name: Test MCM with Coverage
       run: >-
           opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test tests/MCM.Tests/MCM.Tests.csproj --configuration Stable_Debug --no-build" -filter:"${{env.TEST_FILTERS}}" -excludebyattribute:"*.ExcludeFromCodeCoverage*" -output:coverage_mcm_stable_debug.xml -mergebyhash;
           opencover/OpenCover.Console.exe -register -target:"dotnet.exe" -targetargs:"test tests/MCM.Tests/MCM.Tests.csproj --configuration Stable_Release --no-build" -filter:"${{env.TEST_FILTERS}}" -excludebyattribute:"*.ExcludeFromCodeCoverage*" -output:coverage_mcm_stable_release.xml -mergebyhash;
