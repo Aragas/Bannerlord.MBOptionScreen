@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------------------------------
+Version: 5.4.5
+Game Versions: v1.0.0,v1.0.1,v1.0.2
+* v1.0.2 stealth update fix. We ship Newtonsoft.Json 13 for backwards compatibility
+---------------------------------------------------------------------------------------------------
 Version: 5.4.4
 Game Versions: v1.0.0,v1.0.1,v1.0.2
 * Fixed comparison if the translated group name yields the same value
