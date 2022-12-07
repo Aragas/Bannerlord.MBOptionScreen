@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------------------------------
+Version: 5.4.4
+Game Versions: v1.0.0,v1.0.1,v1.0.2
+* Fixed comparison if the translated group name yields the same value
+---------------------------------------------------------------------------------------------------
 Version: 5.4.3
 Game Versions: v1.0.0,v1.0.1,v1.0.2
 * Fixed settings load
