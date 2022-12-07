@@ -78,7 +78,7 @@ namespace MCM
 
                 GenericServiceProvider.GlobalServiceProvider = ServiceCollectionExtensions.ServiceContainer.Build();
                 Logger = GenericServiceProvider.GetService<IBUTRLogger<MCMSubModule>>() ?? Logger;
-                _ = BaseSettingsProvider.Instance; // Force loading
+                BaseSettingsProvider.Instance = GenericServiceProvider.GetService<BaseSettingsProvider>();; // Force loading
             }
         }
 

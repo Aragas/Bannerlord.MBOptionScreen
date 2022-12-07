@@ -12,7 +12,7 @@ namespace MCM.Abstractions
     /// </summary>
     public abstract class BaseSettingsProvider
     {
-        public static BaseSettingsProvider? Instance { get; } = GenericServiceProvider.GetService<BaseSettingsProvider>();
+        public static BaseSettingsProvider? Instance { get; internal set; }
 
         public abstract IEnumerable<SettingsDefinition> SettingsDefinitions { get; }
         public abstract BaseSettings? GetSettings(string id);
