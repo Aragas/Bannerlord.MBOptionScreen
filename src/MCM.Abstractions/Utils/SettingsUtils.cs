@@ -108,32 +108,32 @@ namespace MCM.Abstractions
 
         public static void OverrideValues(BaseSettings current, BaseSettings @new)
         {
-            var currentDict = current.GetUnsortedSettingPropertyGroups().ToDictionary(x => x.GroupName, x => x);
+            var currentDict = current.GetUnsortedSettingPropertyGroups().ToDictionary(x => x.GroupNameRaw, x => x);
 
             foreach (var nspg in @new.GetUnsortedSettingPropertyGroups())
             {
-                if (currentDict.TryGetValue(nspg.GroupName, out var spg))
+                if (currentDict.TryGetValue(nspg.GroupNameRaw, out var spg))
                     OverrideValues(spg, nspg);
                 else
                 {
                     var logger = GenericServiceProvider.GetService<IBUTRLogger<SettingsUtils>>();
-                    logger?.LogWarning($"{@new.Id}::{nspg.GroupName} was not found on, {current.Id}");
+                    logger?.LogWarning($"{@new.Id}::{nspg.GroupNameRaw} was not found on, {current.Id}");
                 }
             }
         }
         public static void OverrideValues(SettingsPropertyGroupDefinition current, SettingsPropertyGroupDefinition @new)
         {
-            var currentSubGroups = current.SubGroups.ToDictionary(x => x.GroupName, x => x);
+            var currentSubGroups = current.SubGroups.ToDictionary(x => x.GroupNameRaw, x => x);
             var currentSettingProperties = current.SettingProperties.ToDictionary(x => x.DisplayName, x => x);
 
             foreach (var nspg in @new.SubGroups)
             {
-                if (currentSubGroups.TryGetValue(nspg.GroupName, out var spg))
+                if (currentSubGroups.TryGetValue(nspg.GroupNameRaw, out var spg))
                     OverrideValues(spg, nspg);
                 else
                 {
                     var logger = GenericServiceProvider.GetService<IBUTRLogger<SettingsUtils>>();
-                    logger?.LogWarning($"{@new.GroupName}::{nspg.GroupName} was not found on, {current.GroupName}");
+                    logger?.LogWarning($"{@new.GroupName}::{nspg.GroupNameRaw} was not found on, {current.GroupNameRaw}");
                 }
             }
             foreach (var nsp in @new.SettingProperties)
@@ -143,7 +143,7 @@ namespace MCM.Abstractions
                 else
                 {
                     var logger = GenericServiceProvider.GetService<IBUTRLogger<SettingsUtils>>();
-                    logger?.LogWarning($"{@new.GroupName}::{nsp.DisplayName} was not found on, {current.GroupName}");
+                    logger?.LogWarning($"{@new.GroupNameRaw}::{nsp.DisplayName} was not found on, {current.GroupNameRaw}");
                 }
             }
         }
