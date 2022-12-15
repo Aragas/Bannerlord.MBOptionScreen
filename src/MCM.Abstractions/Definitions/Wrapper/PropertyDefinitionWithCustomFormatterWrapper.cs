@@ -14,7 +14,7 @@ namespace MCM.Abstractions.Wrapper
         {
             var type = @object.GetType();
 
-            CustomFormatter = AccessTools2.Property(type, nameof(CustomFormatter))?.GetValue(@object) as Type;
+            CustomFormatter = AccessTools2.Property(type, nameof(CustomFormatter), false)?.GetValue(@object) as Type;
         }
     }
 }

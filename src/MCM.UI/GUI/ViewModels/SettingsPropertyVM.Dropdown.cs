@@ -4,6 +4,7 @@ using MCM.UI.Actions;
 using MCM.UI.Dropdown;
 using MCM.UI.Utils;
 
+using System.Collections.Generic.Enumerable;
 using System.ComponentModel;
 using System.Linq;
 
@@ -24,8 +25,9 @@ namespace MCM.UI.GUI.ViewModels
         public bool IsDropdownCheckbox => SettingType == SettingType.Dropdown && SettingsUtils.IsForCheckboxDropdown(PropertyReference.Value);
 
         [DataSourceProperty]
-        public MCMSelectorVM<MCMSelectorItemVM<TextObject>, TextObject> DropdownValue => _selectorVMWrapper ??= new MCMSelectorVM<MCMSelectorItemVM<TextObject>, TextObject>(
-            UISettingsUtils.GetDropdownValues(PropertyReference).Select(x => new TextObject(x.ToString())), new SelectedIndexWrapper(PropertyReference.Value).SelectedIndex);
+        public MCMSelectorVM<MCMSelectorItemVM<TextObject>, TextObject> DropdownValue =>_selectorVMWrapper ??= IsDropdown
+            ? new MCMSelectorVM<MCMSelectorItemVM<TextObject>, TextObject>(UISettingsUtils.GetDropdownValues(PropertyReference).Select(x => new TextObject(x.ToString())), new SelectedIndexWrapper(PropertyReference.Value).SelectedIndex)
+            : new MCMSelectorVM<MCMSelectorItemVM<TextObject>, TextObject>(Enumerable.Empty<TextObject>(), -1);
 
         private void DropdownValue_PropertyChanged(object? obj, PropertyChangedEventArgs args)
         {
