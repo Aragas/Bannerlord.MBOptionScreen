@@ -31,6 +31,7 @@
 
   <ItemGroup>
     <PackageFile Include="../../resources/MCM-128-w-2.png" PackagePath="MCM-128-w-2.png" />
+
     <PackageFile Include="..\MCM.Abstractions\**\*.cs" Exclude="..\MCM.Abstractions\obj\**\*;..\MCM.Abstractions\bin\**\*"
                  PackagePath="contentFiles\cs\$(TargetFramework)\$(ProjectName)\%(RelativeDir)%(Filename).cs.pp" />
     <PackageFile Include="..\MCM.Common\**\*.cs" Exclude="..\MCM.Common\obj\**\*;..\MCM.Common\bin\**\*"

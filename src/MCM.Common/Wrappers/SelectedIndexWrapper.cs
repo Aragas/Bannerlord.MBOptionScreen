@@ -38,10 +38,10 @@ namespace MCM.Common
             var type = @object?.GetType();
 
             _getSelectedIndex = type is not null
-                ? _getSelectedIndexCache.GetOrAdd(type, static t => AccessTools2.GetPropertyGetterDelegate<GetSelectedIndexDelegate>(t, "SelectedIndex"))
+                ? _getSelectedIndexCache.GetOrAdd(type, static t => AccessTools2.GetPropertyGetterDelegate<GetSelectedIndexDelegate>(t, "SelectedIndex", logErrorInTrace: false))
                 : null;
             _setSelectedIndex = type is not null
-                ? _setSelectedIndexCache.GetOrAdd(type, static t => AccessTools2.GetPropertySetterDelegate<SetSelectedIndexDelegate>(t, "SelectedIndex"))
+                ? _setSelectedIndexCache.GetOrAdd(type, static t => AccessTools2.GetPropertySetterDelegate<SetSelectedIndexDelegate>(t, "SelectedIndex", logErrorInTrace: false))
                 : null;
         }
     }

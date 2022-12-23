@@ -1,4 +1,5 @@
 ﻿using MCM.Abstractions.FluentBuilder;
+using MCM.Abstractions.Utils;
 using MCM.Abstractions.Xml;
 using MCM.Common;
 
@@ -7,8 +8,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Xml;
-using System.Xml.Serialization;
 
 namespace MCM.Abstractions.Base.PerSave
 {
@@ -24,9 +23,7 @@ namespace MCM.Abstractions.Base.PerSave
     {
         public static ExternalPerSaveSettings? CreateFromXmlStream(Stream xmlStream, Func<IPropertyDefinitionBase, IRef> assignRefDelegate, PropertyChangedEventHandler? propertyChanged = null)
         {
-            using var reader = XmlReader.Create(xmlStream, new XmlReaderSettings { IgnoreComments = true, IgnoreWhitespace = true });
-            var serializer = new XmlSerializer(typeof(SettingsXmlModel));
-            if (!serializer.CanDeserialize(reader) || serializer.Deserialize(reader) is not SettingsXmlModel settingsXmlModel)
+            if (SerializationUtils.DeserializeXml<SettingsXmlModel>(xmlStream) is not { } settingsXmlModel)
                 return null;
 
             var subGroupDelimiter = settingsXmlModel.SubGroupDelimiter[0];

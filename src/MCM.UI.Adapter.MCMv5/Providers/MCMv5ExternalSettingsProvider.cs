@@ -41,10 +41,7 @@ namespace MCM.UI.Adapter.MCMv5.Providers
             foreach (var settingsProvider in _settingsProviderWrappers)
             {
                 if (settingsProvider.GetSettings(id) is { } settings)
-                {
-                    _logger.LogTrace($"GetSettings {id} returned {settings.GetType()}");
                     return settings;
-                }
             }
             _logger.LogWarning($"GetSettings {id} returned null");
             return null;

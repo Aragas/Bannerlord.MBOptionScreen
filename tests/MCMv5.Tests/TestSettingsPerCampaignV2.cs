@@ -1,13 +1,19 @@
-﻿using MCM.Abstractions.Attributes;
+﻿using BUTR.DependencyInjection.Logger;
+
+using MCM.Abstractions.Attributes;
 using MCM.Abstractions.Attributes.v2;
 using MCM.Common;
 
+using System;
+
+using TaleWorlds.Library;
+
 namespace MCMv5.Tests
 {
-    internal sealed class TestPerSaveSettingsV2 : BaseTestPerSaveSettingsBase<TestPerSaveSettingsV2>
+    internal sealed class TestSettingsPerCampaignV2 : BaseTestPerCampaignSettingsBase<TestSettingsPerCampaignV2>
     {
-        public override string Id => "Testing_PerSave_v2_v5";
-        public override string DisplayName => "MCMv5 Testing PerSave";
+        public override string Id => "TestingPerCampaign_v2_v5";
+        public override string DisplayName => "MCMv5 Testing PerCampaign v2 API";
 
 
         [SettingPropertyBool("Property Bool Default False", RequireRestart = false)]
@@ -39,6 +45,12 @@ namespace MCMv5.Tests
         [SettingPropertyInteger("Property Int With Hint", 0, 100, RequireRestart = false, HintText = "Hint Text")]
         [SettingPropertyGroup("Int")]
         public int PropertyIntWithHint { get; set; }
+        [SettingPropertyInteger("Property Int With Format", 0, 100, "0 Denars", RequireRestart = false)]
+        [SettingPropertyGroup("Int")]
+        public int PropertyIntWithFormat { get; set; }
+        [SettingPropertyInteger("Property Int With Custom Formatter", 0, 100, "0 Denars", RequireRestart = false, CustomFormatter = typeof(TestIntFormatter))]
+        [SettingPropertyGroup("Int")]
+        public int PropertyIntWithCustomFormatter { get; set; }
 
 
         [SettingPropertyFloatingInteger("Property Float Default 0f", 0f, 100f, RequireRestart = false)]
@@ -74,7 +86,7 @@ namespace MCMv5.Tests
 
         [SettingPropertyDropdown("Property Dropdown SelectedIndex 0", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown")]
-        public Dropdown<string> PropertyDropdownSelectedIndex0 { get; } = new(new string[]
+        public Dropdown<string> PropertyDropdownSelectedIndex0 { get; set; } = new(new[]
         {
             "Test1",
             "Test2",
@@ -82,7 +94,7 @@ namespace MCMv5.Tests
         }, 0);
         [SettingPropertyDropdown("Property Dropdown SelectedIndex 1", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown")]
-        public Dropdown<string> PropertyDropdownSelectedIndex1 { get; } = new(new string[]
+        public Dropdown<string> PropertyDropdownSelectedIndex1 { get; set; } = new(new[]
         {
             "Test1",
             "Test2",
@@ -90,7 +102,7 @@ namespace MCMv5.Tests
         }, 1);
         [SettingPropertyDropdown("Property Dropdown SelectedIndex 2", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown")]
-        public Dropdown<string> PropertyDropdownSelectedIndex2 { get; } = new(new string[]
+        public Dropdown<string> PropertyDropdownSelectedIndex2 { get; set; } = new(new[]
         {
             "Test1",
             "Test2",
@@ -98,7 +110,7 @@ namespace MCMv5.Tests
         }, 2);
         [SettingPropertyDropdown("Property Dropdown Require Restart")]
         [SettingPropertyGroup("Dropdown")]
-        public Dropdown<string> PropertyDropdownRequireRestart { get; } = new(new string[]
+        public Dropdown<string> PropertyDropdownRequireRestart { get; set; } = new(new[]
         {
             "Test1",
             "Test2",
@@ -106,59 +118,98 @@ namespace MCMv5.Tests
         }, 0);
         [SettingPropertyDropdown("Property Dropdown With Hint", RequireRestart = false, HintText = "Hint Text")]
         [SettingPropertyGroup("Dropdown")]
-        public Dropdown<string> PropertyDropdownWithHint { get; } = new(new string[]
+        public Dropdown<string> PropertyDropdownWithHint { get; set; } = new(new[]
         {
             "Test1",
             "Test2",
             "Test3",
         }, 0);
+        [SettingPropertyDropdown("Property Dropdown With Localization", RequireRestart = false)]
+        [SettingPropertyGroup("Dropdown")]
+        public Dropdown<string> PropertyDropdownWithLocalization { get; set; } = new(new[]
+        {
+            "{=NoPeRandoM}Test1",
+            "{=BaseSettings_Default}ERROR",
+            "Test3",
+        }, 0);
+        [SettingPropertyDropdown("Property Dropdown With Enum", RequireRestart = false)]
+        [SettingPropertyGroup("Dropdown")]
+        public Dropdown<LogLevel> PropertyDropdownWithEnum { get; set; } = new(new[]
+        {
+            LogLevel.None,
+            LogLevel.Warning,
+            LogLevel.Critical,
+        }, 0);
 
 
         [SettingPropertyDropdown("Property Dropdown Custom SelectedIndex 0", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown Custom")]
-        public Dropdown<CustomObject> PropertyDropdownCustomSelectedIndex0 { get; } = new(new CustomObject[]
+        public Dropdown<CustomObject> PropertyDropdownCustomSelectedIndex0 { get; set; } = new(new[]
         {
-            new("Test1"),
-            new("Test2"),
-            new("Test3"),
+            new CustomObject("Test1"),
+            new CustomObject("Test2"),
+            new CustomObject("Test3"),
         }, 0);
         [SettingPropertyDropdown("Property Dropdown Custom SelectedIndex 1", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown Custom")]
-        public Dropdown<CustomObject> PropertyDropdownCustomSelectedIndex1 { get; } = new(new CustomObject[]
+        public Dropdown<CustomObject> PropertyDropdownCustomSelectedIndex1 { get; set; } = new(new[]
         {
-            new("Test1"),
-            new("Test2"),
-            new("Test3"),
+            new CustomObject("Test1"),
+            new CustomObject("Test2"),
+            new CustomObject("Test3"),
         }, 1);
         [SettingPropertyDropdown("Property Dropdown Custom SelectedIndex 2", RequireRestart = false)]
         [SettingPropertyGroup("Dropdown Custom")]
-        public Dropdown<CustomObject> PropertyDropdownCustomSelectedIndex2 { get; } = new(new CustomObject[]
+        public Dropdown<CustomObject> PropertyDropdownCustomSelectedIndex2 { get; set; } = new(new[]
         {
-            new("Test1"),
-            new("Test2"),
-            new("Test3"),
+            new CustomObject("Test1"),
+            new CustomObject("Test2"),
+            new CustomObject("Test3"),
         }, 2);
         [SettingPropertyDropdown("Property Dropdown Custom Require Restart")]
         [SettingPropertyGroup("Dropdown Custom")]
-        public Dropdown<CustomObject> PropertyDropdownCustomRequireRestart { get; } = new(new CustomObject[]
+        public Dropdown<CustomObject> PropertyDropdownCustomRequireRestart { get; set; } = new(new[]
         {
-            new("Test1"),
-            new("Test2"),
-            new("Test3"),
+            new CustomObject("Test1"),
+            new CustomObject("Test2"),
+            new CustomObject("Test3"),
         }, 0);
         [SettingPropertyDropdown("Property Dropdown Custom With Hint", RequireRestart = false, HintText = "Hint Text")]
         [SettingPropertyGroup("Dropdown Custom")]
-        public Dropdown<CustomObject> PropertyDropdownCustomWithHint { get; } = new(new CustomObject[]
+        public Dropdown<CustomObject> PropertyDropdownCustomWithHint { get; set; } = new(new[]
         {
-            new("Test1"),
-            new("Test2"),
-            new("Test3"),
+            new CustomObject("Test1"),
+            new CustomObject("Test2"),
+            new CustomObject("Test3"),
         }, 0);
         public class CustomObject
         {
             private readonly string _value;
             public CustomObject(string value) => _value = value;
             public override string ToString() => _value;
+        }
+
+        [SettingPropertyButton("Property Button Default Empty", Content = "Default Empty", RequireRestart = false)]
+        [SettingPropertyGroup("Button")]
+        public Action PropertyButtonDefaultEmpty { get; set; } = () => { InformationManager.DisplayMessage(new InformationMessage("Default Empty", Color.White)); };
+        [SettingPropertyButton("Property Button Default Text", Content = "Default Text", RequireRestart = false)]
+        [SettingPropertyGroup("Button")]
+        public Action PropertyButtonDefaultText { get; set; } = () => { InformationManager.DisplayMessage(new InformationMessage("Default Text", Color.White)); };
+        [SettingPropertyButton("Property Button Require Restart", Content = "Require Restart")]
+        [SettingPropertyGroup("Button")]
+        public Action PropertyButtonRequireRestart { get; set; } = () => { InformationManager.DisplayMessage(new InformationMessage("Require Restart", Color.White)); };
+        [SettingPropertyButton("Property Button With Hint", Content = "With Hint: Hint Text", RequireRestart = false, HintText = "Hint Text")]
+        [SettingPropertyGroup("Button")]
+        public Action PropertyButtonWithHint { get; set; } = () => { InformationManager.DisplayMessage(new InformationMessage("With Hint: Hint Text", Color.White)); };
+
+        public class TestIntFormatter : IFormatProvider, ICustomFormatter
+        {
+            public object? GetFormat(Type? formatType) => formatType == typeof(ICustomFormatter) ? this : null;
+
+            public string Format(string? format, object? arg, IFormatProvider? formatProvider)
+            {
+                return (-1).ToString();
+            }
         }
     }
 }

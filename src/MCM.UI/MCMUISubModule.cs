@@ -105,9 +105,6 @@ namespace MCM.UI
             Logger = serviceProvider.GetRequiredService<ILogger<MCMUISubModule>>();
             Logger.LogTrace("OnSubModuleLoad: Logging started...");
 
-            var viewmodelwrapperHarmony = new Harmony("bannerlord.mcm.ui.viewmodelpatch");
-            ViewModelPatch.Patch(viewmodelwrapperHarmony);
-
             var optionsGauntletScreenHarmony = new Harmony("bannerlord.mcm.ui.optionsgauntletscreenpatch");
             OptionsGauntletScreenPatch.Patch(optionsGauntletScreenHarmony);
             MissionGauntletOptionsUIHandlerPatch.Patch(optionsGauntletScreenHarmony);

@@ -1,4 +1,5 @@
 ﻿using MCM.Abstractions.FluentBuilder;
+using MCM.Abstractions.Utils;
 using MCM.Abstractions.Xml;
 using MCM.Common;
 
@@ -6,8 +7,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
-using System.Xml;
-using System.Xml.Serialization;
 
 namespace MCM.Abstractions.Base.Global
 {
@@ -38,9 +37,7 @@ namespace MCM.Abstractions.Base.Global
         public static ExternalGlobalSettings? CreateFromXmlFile(string filePath, PropertyChangedEventHandler? propertyChanged = null)
         {
             using var xmlStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-            using var reader = XmlReader.Create(xmlStream, new XmlReaderSettings { IgnoreComments = true, IgnoreWhitespace = true });
-            var serializer = new XmlSerializer(typeof(SettingsXmlModel));
-            if (!serializer.CanDeserialize(reader) || serializer.Deserialize(reader) is not SettingsXmlModel settingsXmlModel)
+            if (SerializationUtils.DeserializeXml<SettingsXmlModel>(xmlStream) is not { } settingsXmlModel)
                 return null;
 
             var subGroupDelimiter = settingsXmlModel.SubGroupDelimiter[0];

@@ -49,11 +49,13 @@ namespace MCM.Implementation.PerCampaign
             if (GenericServiceProvider.GetService<ICampaignIdProvider>() is not { } campaignIdProvider || campaignIdProvider.GetCurrentCampaignId() is not { } id)
                 return;
 
+            LoadedSettings.Add(perCampaignSettings.Id, perCampaignSettings);
+
             var directoryPath = Path.Combine(RootFolder, id, perCampaignSettings.FolderName, perCampaignSettings.SubFolder);
             var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == perCampaignSettings.FormatType));
             settingsFormat?.Load(perCampaignSettings, directoryPath, perCampaignSettings.Id);
-            perCampaignSettings.OnPropertyChanged(BaseSettings.LoadingComplete);
+                perCampaignSettings.OnPropertyChanged(BaseSettings.LoadingComplete);
         }
 
         /// <inheritdoc/>
