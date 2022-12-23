@@ -6,7 +6,12 @@ namespace MCM.Common
     /// <summary>
     /// An interface that provides access to some value for MCM to get/set.
     /// </summary>
-    public interface IRef : INotifyPropertyChanged
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface IRef : INotifyPropertyChanged
     {
         /// <summary>
         /// Underlying type of the value

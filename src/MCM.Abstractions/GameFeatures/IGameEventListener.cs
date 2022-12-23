@@ -2,7 +2,12 @@
 
 namespace MCM.Abstractions.GameFeatures
 {
-    public interface IGameEventListener
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface IGameEventListener
     {
         public event Action OnGameStarted;
         public event Action OnGameEnded;

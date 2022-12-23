@@ -1,4 +1,9 @@
 ﻿namespace MCM.Abstractions
 {
-    public interface IPropertyDefinitionText : IPropertyDefinitionBase { }
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface IPropertyDefinitionText : IPropertyDefinitionBase { }
 }

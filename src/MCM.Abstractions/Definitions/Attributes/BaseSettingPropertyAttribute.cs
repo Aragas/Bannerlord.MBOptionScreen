@@ -7,7 +7,15 @@ using System.Diagnostics.CodeAnalysis;
 namespace MCM.Abstractions.Attributes
 {
     [SuppressMessage("Design", "RCS1203:Use AttributeUsageAttribute.", Justification = "Implemented in the derived attributes.")]
-    public abstract class BaseSettingPropertyAttribute : Attribute, IPropertyDefinitionBase
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    abstract class BaseSettingPropertyAttribute : Attribute, IPropertyDefinitionBase
     {
         /// <inheritdoc/>
         public string DisplayName { get; }

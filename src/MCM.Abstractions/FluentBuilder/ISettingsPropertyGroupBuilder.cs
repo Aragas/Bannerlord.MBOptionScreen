@@ -9,7 +9,12 @@ namespace MCM.Abstractions.FluentBuilder
     /// <summary>
     /// An interface that defines the necessary members for implementing a settings property group builder.
     /// </summary>
-    public interface ISettingsPropertyGroupBuilder
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface ISettingsPropertyGroupBuilder
     {
         /// <summary>
         /// The actual properties stored in the builder.

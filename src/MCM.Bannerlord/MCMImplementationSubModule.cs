@@ -29,6 +29,9 @@ using Path = System.IO.Path;
 
 namespace MCM.Internal
 {
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
     internal sealed class MCMImplementationSubModule : MBSubModuleBase, IGameEventListener
     {
         private static string PathPrefix => System.IO.Path.Combine(GenericServiceProvider.GetService<IPathProvider>()?.GetGamePath(), "Modules");

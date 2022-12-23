@@ -8,7 +8,15 @@ using TaleWorlds.CampaignSystem;
 
 namespace MCM
 {
-    public class SettingsProviderCampaignBehavior : CampaignBehaviorBase
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    class SettingsProviderCampaignBehavior : CampaignBehaviorBase
     {
         private readonly BaseSettingsProvider? _baseSettingsProvider;
         private readonly ConcurrentDictionary<Type, string> _cache = new();

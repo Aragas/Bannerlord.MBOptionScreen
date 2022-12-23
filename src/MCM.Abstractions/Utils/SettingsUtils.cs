@@ -13,7 +13,15 @@ using System.Linq;
 
 namespace MCM.Abstractions
 {
-    public class SettingsUtils
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    class SettingsUtils
     {
         public static void CheckIsValid(ISettingsPropertyDefinition prop, object settings)
         {

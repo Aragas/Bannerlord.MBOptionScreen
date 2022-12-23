@@ -1,4 +1,9 @@
 ﻿namespace MCM.Abstractions.PerCampaign
 {
-    public interface IPerCampaignSettingsContainer : ISettingsContainer, ISettingsContainerHasSettingsDefinitions, ISettingsContainerCanOverride, ISettingsContainerCanReset { }
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface IPerCampaignSettingsContainer : ISettingsContainer, ISettingsContainerHasSettingsDefinitions, ISettingsContainerCanOverride, ISettingsContainerCanReset { }
 }

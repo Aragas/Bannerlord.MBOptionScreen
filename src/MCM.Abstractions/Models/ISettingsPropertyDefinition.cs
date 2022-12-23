@@ -2,7 +2,12 @@
 
 namespace MCM.Abstractions
 {
-    public interface ISettingsPropertyDefinition :
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface ISettingsPropertyDefinition :
         IPropertyDefinitionBase,
         IPropertyDefinitionBool,
         IPropertyDefinitionDropdown,

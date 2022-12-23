@@ -1,6 +1,11 @@
 ﻿namespace MCM.Abstractions
 {
-    public interface IPropertyDefinitionWithId
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface IPropertyDefinitionWithId
     {
         string Id { get; }
     }

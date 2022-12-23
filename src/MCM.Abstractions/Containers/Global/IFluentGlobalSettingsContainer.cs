@@ -2,7 +2,12 @@
 
 namespace MCM.Abstractions.Global
 {
-    public interface IFluentGlobalSettingsContainer : IGlobalSettingsContainer
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface IFluentGlobalSettingsContainer : IGlobalSettingsContainer
     {
         void Register(FluentGlobalSettings settings);
         void Unregister(FluentGlobalSettings settings);

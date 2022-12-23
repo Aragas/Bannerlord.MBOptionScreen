@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <DefineConstants>$(DefineConstants);BUTRDEPENDENCYINJECTION_PUBLIC;</DefineConstants>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
@@ -9,7 +10,7 @@
     <PackageReference Include="Bannerlord.ModuleManager.Source" Version="$(BUTRModuleManagerVersion)" PrivateAssets="all" />
     <PackageReference Include="BUTR.DependencyInjection" Version="$(BUTRDependencyInjectionVersion)" PrivateAssets="all" />
     <PackageReference Include="BUTR.DependencyInjection.LightInject" Version="$(BUTRDependencyInjectionVersion)" PrivateAssets="all" />
-    <PackageReference Include="LightInject.Source" Version="6.6.1" PrivateAssets="all" />
+    <PackageReference Include="LightInject.Source" Version="$(LightInjectVersion)" PrivateAssets="all" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" PrivateAssets="all" IncludeAssets="compile" />
   </ItemGroup>
 

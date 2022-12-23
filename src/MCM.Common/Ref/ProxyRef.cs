@@ -7,7 +7,15 @@ namespace MCM.Common
     /// <summary>
     /// A broader wrapper. Uses functions for getting/setting the value
     /// </summary>
-    public class ProxyRef<T> : IRef, IEquatable<ProxyRef<T>>
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    class ProxyRef<T> : IRef, IEquatable<ProxyRef<T>>
     {
         /// <inheritdoc/>
         public event PropertyChangedEventHandler? PropertyChanged;

@@ -1,6 +1,11 @@
 ﻿namespace MCM.Abstractions
 {
-    public interface IPropertyDefinitionWithMinMax
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface IPropertyDefinitionWithMinMax
     {
         /// <summary>
         /// The minimum value the setting can be set to. Used by the slider control.

@@ -1,4 +1,9 @@
 ﻿namespace MCM.Abstractions.Properties
 {
-    public interface IFluentSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer { }
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface IFluentSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer { }
 }

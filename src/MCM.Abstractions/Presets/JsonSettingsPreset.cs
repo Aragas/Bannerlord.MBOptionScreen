@@ -15,7 +15,15 @@ namespace MCM.Implementation
     /// <summary>
     /// A persistent preset that can be created at runtime
     /// </summary>
-    public sealed class JsonSettingsPreset : ISettingsPreset
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    sealed class JsonSettingsPreset : ISettingsPreset
     {
         private class PresetContainerDefinition
         {

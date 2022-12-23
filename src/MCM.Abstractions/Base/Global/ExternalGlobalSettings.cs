@@ -11,7 +11,15 @@ using System.Xml.Serialization;
 
 namespace MCM.Abstractions.Base.Global
 {
-    public sealed class ExternalGlobalSettings : FluentGlobalSettings
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    sealed class ExternalGlobalSettings : FluentGlobalSettings
     {
         private static SettingsPropertyDefinition FromXml(IPropertyGroupDefinition group, PropertyBaseXmlModel xmlModel, char subGroupDelimiter) => xmlModel switch
         {

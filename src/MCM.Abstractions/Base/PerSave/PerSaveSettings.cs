@@ -3,7 +3,15 @@ using System.Collections.Concurrent;
 
 namespace MCM.Abstractions.Base.PerSave
 {
-    public abstract class PerSaveSettings<T> : PerSaveSettings where T : PerSaveSettings, new()
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    abstract class PerSaveSettings<T> : PerSaveSettings where T : PerSaveSettings, new()
     {
         /// <summary>
         /// A modder flriendly way to get settings from any place
@@ -19,7 +27,15 @@ namespace MCM.Abstractions.Base.PerSave
         }
     }
 
-    public abstract class PerSaveSettings : BaseSettings
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    abstract class PerSaveSettings : BaseSettings
     {
         protected static readonly ConcurrentDictionary<Type, string> Cache = new();
 

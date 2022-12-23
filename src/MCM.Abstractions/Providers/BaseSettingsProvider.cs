@@ -10,7 +10,15 @@ namespace MCM.Abstractions
     /// The interface that is responsible for providing and manipulating settings
     /// for the end user - modder
     /// </summary>
-    public abstract class BaseSettingsProvider
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    abstract class BaseSettingsProvider
     {
         public static BaseSettingsProvider? Instance { get; internal set; }
 

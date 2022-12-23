@@ -17,6 +17,9 @@ using System.Linq;
 
 namespace MCM.Implementation.PerCampaign
 {
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
     internal sealed class PerCampaignSettingsContainer : BaseSettingsContainer<PerCampaignSettings>, IPerCampaignSettingsContainer
     {
         private readonly IBUTRLogger _logger;

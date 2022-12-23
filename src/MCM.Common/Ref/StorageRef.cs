@@ -4,7 +4,15 @@ using System.Runtime.CompilerServices;
 
 namespace MCM.Common
 {
-    public sealed class StorageRef : IRef
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    sealed class StorageRef : IRef
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 

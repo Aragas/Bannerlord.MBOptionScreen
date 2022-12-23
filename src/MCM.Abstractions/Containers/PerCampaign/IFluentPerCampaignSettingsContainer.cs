@@ -2,7 +2,12 @@
 
 namespace MCM.Abstractions.PerCampaign
 {
-    public interface IFluentPerCampaignSettingsContainer : IPerCampaignSettingsContainer
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface IFluentPerCampaignSettingsContainer : IPerCampaignSettingsContainer
     {
         void Register(FluentPerCampaignSettings settings);
         void Unregister(FluentPerCampaignSettings settings);

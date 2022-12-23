@@ -1,6 +1,11 @@
 ﻿namespace MCM.Abstractions.FluentBuilder.Models
 {
-    public interface ISettingsPropertyFloatingIntegerBuilder : ISettingsPropertyBuilder<ISettingsPropertyFloatingIntegerBuilder>
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface ISettingsPropertyFloatingIntegerBuilder : ISettingsPropertyBuilder<ISettingsPropertyFloatingIntegerBuilder>
     {
         ISettingsPropertyBuilder AddValueFormat(string value);
     }

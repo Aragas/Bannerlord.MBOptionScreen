@@ -2,7 +2,12 @@
 
 namespace MCM.Abstractions.PerSave
 {
-    public interface IFluentPerSaveSettingsContainer : IPerSaveSettingsContainer
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface IFluentPerSaveSettingsContainer : IPerSaveSettingsContainer
     {
         void Register(FluentPerSaveSettings settings);
         void Unregister(FluentPerSaveSettings settings);

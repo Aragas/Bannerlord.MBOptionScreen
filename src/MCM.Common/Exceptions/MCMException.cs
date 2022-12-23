@@ -4,7 +4,15 @@ using System.Runtime.Serialization;
 namespace MCM.Common
 {
     [Serializable]
-    public class MCMException : Exception
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    class MCMException : Exception
     {
         public MCMException() { }
         public MCMException(string message) : base(message) { }

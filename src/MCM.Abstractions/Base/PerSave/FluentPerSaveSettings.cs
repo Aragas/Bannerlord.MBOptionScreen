@@ -9,7 +9,15 @@ using System.Linq;
 
 namespace MCM.Abstractions.Base.PerSave
 {
-    public class FluentPerSaveSettings : PerSaveSettings, IFluentSettings
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    class FluentPerSaveSettings : PerSaveSettings, IFluentSettings
     {
         /// <inheritdoc/>
         public sealed override string Id { get; }

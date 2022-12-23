@@ -1,6 +1,11 @@
 ﻿namespace MCM.Common
 {
-    public interface IWrapper
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface IWrapper
     {
         object Object { get; }
     }

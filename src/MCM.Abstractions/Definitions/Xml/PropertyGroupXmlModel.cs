@@ -6,7 +6,15 @@ namespace MCM.Abstractions.Xml
 {
     [Serializable]
     [XmlType("PropertyGroups")]
-    public class PropertyGroupXmlModel : IPropertyGroupDefinition
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    class PropertyGroupXmlModel : IPropertyGroupDefinition
     {
         [XmlAttribute("DisplayName")]
         public string GroupName { get; set; } = default!;

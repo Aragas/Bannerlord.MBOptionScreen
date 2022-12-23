@@ -11,7 +11,12 @@ namespace MCM.Abstractions.FluentBuilder
     /// <summary>
     /// An interface that defines the necessary members for implementing a settings builder.
     /// </summary>
-    public interface ISettingsBuilder
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface ISettingsBuilder
     {
         /// <summary>
         /// See <see cref="BaseSettings.FolderName"/>.

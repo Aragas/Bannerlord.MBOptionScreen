@@ -5,7 +5,12 @@ namespace MCM.Abstractions
     /// <summary>
     /// Interface that declares that the <see cref="ISettingsContainer"/> can reset its settings
     /// </summary>
-    public interface ISettingsContainerCanReset
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface ISettingsContainerCanReset
     {
         bool ResetSettings(BaseSettings settings);
     }

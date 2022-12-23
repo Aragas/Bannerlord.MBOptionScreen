@@ -8,7 +8,12 @@ namespace MCM.Abstractions.FluentBuilder
     /// <summary>
     /// An interface that defines the necessary members for implementing a settings property builder.
     /// </summary>
-    public interface ISettingsPropertyBuilder
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface ISettingsPropertyBuilder
     {
         /// <summary>
         /// See <see cref="IPropertyDefinitionBase.DisplayName"/>
@@ -29,7 +34,12 @@ namespace MCM.Abstractions.FluentBuilder
     /// <summary>
     /// An interface that defines the necessary members for implementing a settings property builder.
     /// </summary>
-    public interface ISettingsPropertyBuilder<out TSettingsPropertyBuilder> : ISettingsPropertyBuilder
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface ISettingsPropertyBuilder<out TSettingsPropertyBuilder> : ISettingsPropertyBuilder
         where TSettingsPropertyBuilder : ISettingsPropertyBuilder
     {
         /// <inheritdoc cref="IPropertyDefinitionBase.Order"/>

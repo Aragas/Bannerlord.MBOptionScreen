@@ -1,6 +1,11 @@
 ﻿namespace MCM.Abstractions
 {
-    public interface IPropertyDefinitionBase
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface IPropertyDefinitionBase
     {
         /// <summary>
         /// The display name of the setting in the settings menu.

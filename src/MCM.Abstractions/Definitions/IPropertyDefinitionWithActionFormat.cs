@@ -2,7 +2,12 @@
 
 namespace MCM.Abstractions
 {
-    public interface IPropertyDefinitionWithActionFormat
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface IPropertyDefinitionWithActionFormat
     {
         Func<object, string>? ValueFormatFunc { get; }
     }

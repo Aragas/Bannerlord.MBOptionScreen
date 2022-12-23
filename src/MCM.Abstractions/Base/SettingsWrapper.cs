@@ -10,7 +10,15 @@ using System.Runtime.CompilerServices;
 
 namespace MCM.Abstractions.Base.Global
 {
-    public abstract class SettingsWrapper : BaseSettings, IWrapper
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    abstract class SettingsWrapper : BaseSettings, IWrapper
     {
         private delegate string GetIdDelegate();
         private delegate string GetFolderNameDelegate();

@@ -7,7 +7,15 @@ namespace MCM.Abstractions.Attributes.v1
     /// Tells the Settings system that this property should be used for the settings menu.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public sealed class SettingPropertyAttribute : BaseSettingPropertyAttribute, IPropertyDefinitionWithMinMax
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    sealed class SettingPropertyAttribute : BaseSettingPropertyAttribute, IPropertyDefinitionWithMinMax
     {
         /// <inheritdoc/>
         public decimal MinValue { get; }

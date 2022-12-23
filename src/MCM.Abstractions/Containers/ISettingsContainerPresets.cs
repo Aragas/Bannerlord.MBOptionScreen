@@ -2,7 +2,12 @@
 
 namespace MCM.Abstractions
 {
-    public interface ISettingsContainerPresets
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface ISettingsContainerPresets
     {
         IEnumerable<ISettingsPreset> GetPresets(string settingsId);
         bool SavePresets(ISettingsPreset preset);

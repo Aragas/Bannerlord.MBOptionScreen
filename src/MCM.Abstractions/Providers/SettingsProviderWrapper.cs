@@ -11,7 +11,15 @@ using System.Linq;
 
 namespace MCM.Abstractions
 {
-    public abstract class SettingsProviderWrapper : BaseSettingsProvider, IWrapper
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    abstract class SettingsProviderWrapper : BaseSettingsProvider, IWrapper
     {
         private delegate IEnumerable GetSettingsDefinitionsDelegate();
         private delegate object? GetSettingsDelegate(string id);

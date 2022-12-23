@@ -2,10 +2,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
 
     <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
-
-    <PackageId>MCMv5.Tests</PackageId>
 
     <RootNamespace>MCMv5.Tests</RootNamespace>
   </PropertyGroup>

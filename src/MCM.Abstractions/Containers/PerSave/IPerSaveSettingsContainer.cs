@@ -1,6 +1,11 @@
 ﻿namespace MCM.Abstractions.PerSave
 {
-    public interface IPerSaveSettingsContainer : ISettingsContainer, ISettingsContainerHasSettingsDefinitions, ISettingsContainerCanOverride, ISettingsContainerCanReset
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface IPerSaveSettingsContainer : ISettingsContainer, ISettingsContainerHasSettingsDefinitions, ISettingsContainerCanOverride, ISettingsContainerCanReset
     {
         void LoadSettings();
     }
