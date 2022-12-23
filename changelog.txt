@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------------------------------
+Version: 5.5.1
+Game Versions: v1.0.0,v1.0.1,v1.0.2
+* MCM Source Package NuGet fix
+---------------------------------------------------------------------------------------------------
 Version: 5.5.0
 Game Versions: v1.0.0,v1.0.1,v1.0.2
 * Added MCM Source Package NuGet for easier integration

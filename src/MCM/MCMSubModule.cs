@@ -6,13 +6,18 @@ using BUTR.DependencyInjection.Logger;
 using MCM.Abstractions;
 using MCM.Abstractions.Properties;
 using MCM.Internal.Extensions;
-using MCM.LightInject;
 
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
 
 using ServiceCollectionExtensions = BUTR.DependencyInjection.Extensions.ServiceCollectionExtensions;
+
+#if BANNERLORDMCM_NOT_SOURCE
+using MCM.LightInject;
+#else
+using $rootnamespace$.LightInject;
+#endif
 
 namespace MCM
 {
