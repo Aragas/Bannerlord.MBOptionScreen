@@ -1,4 +1,6 @@
-﻿using MCM.Abstractions;
+﻿using Bannerlord.ButterLib.Common.Helpers;
+
+using MCM.Abstractions;
 using MCM.Common;
 using MCM.UI.Actions;
 
@@ -9,6 +11,17 @@ namespace MCM.UI.GUI.ViewModels
 {
     internal sealed partial class SettingsPropertyVM : ViewModel
     {
+        private static TextObject SetNumeric(TextObject textObject, int value)
+        {
+            LocalizationHelper.SetNumericVariable(textObject, "NUMERIC", value);
+            return textObject;
+        }
+        private static TextObject SetNumeric(TextObject textObject, float value)
+        {
+            LocalizationHelper.SetNumericVariable(textObject, "NUMERIC", value);
+            return textObject;
+        }
+
         [DataSourceProperty]
         public bool IsIntVisible { get; private set; }
         [DataSourceProperty]
@@ -71,10 +84,10 @@ namespace MCM.UI.GUI.ViewModels
         {
             SettingType.Int when PropertyReference.Value is int val => string.IsNullOrWhiteSpace(ValueFormat)
                 ? string.Format(ValueFormatProvider, "{0}", val.ToString("0"))
-                : string.Format(ValueFormatProvider, "{0}", val.ToString(new TextObject(ValueFormat).ToString())),
+                : string.Format(ValueFormatProvider, "{0}", val.ToString(SetNumeric(new TextObject(ValueFormat), val).ToString())),
             SettingType.Float when PropertyReference.Value is float val => string.IsNullOrWhiteSpace(ValueFormat)
                 ? string.Format(ValueFormatProvider, "{0}", val.ToString("0.00"))
-                : string.Format(ValueFormatProvider, "{0}", val.ToString(new TextObject(ValueFormat).ToString())),
+                : string.Format(ValueFormatProvider, "{0}", val.ToString(SetNumeric(new TextObject(ValueFormat), val).ToString())),
             _ => string.Empty
         };
 
