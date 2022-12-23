@@ -53,7 +53,7 @@ namespace MCM.UI.Adapter.MCMv5.Properties
 
                 var attributes = property.GetCustomAttributes().ToList();
 
-                object? groupAttrObj = attributes.SingleOrDefault(a => a.GetType().FullName == "MCM.Abstractions.IPropertyGroupDefinition");
+                object? groupAttrObj = attributes.SingleOrDefault(a => ReflectionUtils.ImplementsEquivalentInterface(a.GetType(), "MCM.Abstractions.IPropertyGroupDefinition"));
                 var groupDefinition = groupAttrObj is not null
                     ? new PropertyGroupDefinitionWrapper(groupAttrObj)
                     : SettingPropertyGroupAttribute.Default;
@@ -73,47 +73,47 @@ namespace MCM.UI.Adapter.MCMv5.Properties
         {
             object? propAttr;
 
-            propAttr = properties.SingleOrDefault(a => a.GetType().FullName == "MCM.Abstractions.IPropertyDefinitionBool");
+            propAttr = properties.SingleOrDefault(a => ReflectionUtils.ImplementsEquivalentInterface(a.GetType(), "MCM.Abstractions.IPropertyDefinitionBool"));
             if (propAttr is not null)
                 yield return new PropertyDefinitionBoolWrapper(propAttr);
 
-            propAttr = properties.SingleOrDefault(a => a.GetType().FullName == "MCM.Abstractions.IPropertyDefinitionDropdown");
+            propAttr = properties.SingleOrDefault(a => ReflectionUtils.ImplementsEquivalentInterface(a.GetType(), "MCM.Abstractions.IPropertyDefinitionDropdown"));
             if (propAttr is not null)
                 yield return new PropertyDefinitionDropdownWrapper(propAttr);
 
-            propAttr = properties.SingleOrDefault(a => a.GetType().FullName == "MCM.Abstractions.IPropertyDefinitionGroupToggle");
+            propAttr = properties.SingleOrDefault(a => ReflectionUtils.ImplementsEquivalentInterface(a.GetType(), "MCM.Abstractions.IPropertyDefinitionGroupToggle"));
             if (propAttr is not null)
                 yield return new PropertyDefinitionGroupToggleWrapper(propAttr);
 
-            propAttr = properties.SingleOrDefault(a => a.GetType().FullName == "MCM.Abstractions.IPropertyDefinitionText");
+            propAttr = properties.SingleOrDefault(a => ReflectionUtils.ImplementsEquivalentInterface(a.GetType(), "MCM.Abstractions.IPropertyDefinitionText"));
             if (propAttr is not null)
                 yield return new PropertyDefinitionTextWrapper(propAttr);
 
-            propAttr = properties.SingleOrDefault(a => a.GetType().FullName == "MCM.Abstractions.IPropertyDefinitionWithActionFormat");
+            propAttr = properties.SingleOrDefault(a => ReflectionUtils.ImplementsEquivalentInterface(a.GetType(), "MCM.Abstractions.IPropertyDefinitionWithActionFormat"));
             if (propAttr is not null)
                 yield return new PropertyDefinitionWithActionFormatWrapper(propAttr);
 
-            propAttr = properties.SingleOrDefault(a => a.GetType().FullName == "MCM.Abstractions.IPropertyDefinitionWithCustomFormatter");
+            propAttr = properties.SingleOrDefault(a => ReflectionUtils.ImplementsEquivalentInterface(a.GetType(), "MCM.Abstractions.IPropertyDefinitionWithCustomFormatter"));
             if (propAttr is not null)
                 yield return new PropertyDefinitionWithCustomFormatterWrapper(propAttr);
 
-            propAttr = properties.SingleOrDefault(a => a.GetType().FullName == "MCM.Abstractions.IPropertyDefinitionWithEditableMinMax");
+            propAttr = properties.SingleOrDefault(a => ReflectionUtils.ImplementsEquivalentInterface(a.GetType(), "MCM.Abstractions.IPropertyDefinitionWithEditableMinMax"));
             if (propAttr is not null)
                 yield return new PropertyDefinitionWithEditableMinMaxWrapper(propAttr);
 
-            propAttr = properties.SingleOrDefault(a => a.GetType().FullName == "MCM.Abstractions.IPropertyDefinitionWithFormat");
+            propAttr = properties.SingleOrDefault(a => ReflectionUtils.ImplementsEquivalentInterface(a.GetType(), "MCM.Abstractions.IPropertyDefinitionWithFormat"));
             if (propAttr is not null)
                 yield return new PropertyDefinitionWithFormatWrapper(propAttr);
 
-            propAttr = properties.SingleOrDefault(a => a.GetType().FullName == "MCM.Abstractions.IPropertyDefinitionWithId");
+            propAttr = properties.SingleOrDefault(a => ReflectionUtils.ImplementsEquivalentInterface(a.GetType(), "MCM.Abstractions.IPropertyDefinitionWithId"));
             if (propAttr is not null)
                 yield return new PropertyDefinitionWithIdWrapper(propAttr);
 
-            propAttr = properties.SingleOrDefault(a => a.GetType().FullName == "MCM.Abstractions.IPropertyDefinitionWithMinMax");
+            propAttr = properties.SingleOrDefault(a => ReflectionUtils.ImplementsEquivalentInterface(a.GetType(), "MCM.Abstractions.IPropertyDefinitionWithMinMax"));
             if (propAttr is not null)
                 yield return new PropertyDefinitionWithMinMaxWrapper(propAttr);
 
-            propAttr = properties.SingleOrDefault(a => a.GetType().FullName == "MCM.Abstractions.IPropertyDefinitionButton");
+            propAttr = properties.SingleOrDefault(a => ReflectionUtils.ImplementsEquivalentInterface(a.GetType(), "MCM.Abstractions.IPropertyDefinitionButton"));
             if (propAttr is not null)
                 yield return new PropertyDefinitionButtonWrapper(propAttr);
         }

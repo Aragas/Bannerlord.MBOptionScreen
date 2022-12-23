@@ -14,7 +14,7 @@
   <!--NuGet Package-->
   <PropertyGroup>
     <PackageId>Bannerlord.MCM</PackageId>
-    <PackageDescription>A library for easy Setting integration. Contains the abstraction library, requires the Standalone dependency to work!</PackageDescription>
+    <PackageDescription>A library for easy Setting integration. Is a self sufficient library, requires the Standalone module to show the settings in the UI!</PackageDescription>
     <Title>Mod Configuration Menu</Title>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <PackageReference Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-    <PackageReference Include="Bannerlord.ModuleManager.Source" Version="$(BUTRModuleManagerVersion)" />
+    <PackageReference Include="Bannerlord.ModuleManager.Source" Version="$(BUTRModuleManagerVersion)" PrivateAssets="all" />
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" PrivateAssets="all" />
     <PackageReference Include="BUTR.DependencyInjection" Version="$(BUTRDependencyInjectionVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="BUTR.DependencyInjection.LightInject" Version="$(BUTRDependencyInjectionVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />

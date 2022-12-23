@@ -40,6 +40,9 @@ namespace MCM.Implementation.PerCampaign
             if (perCampaignSettings is null)
                 return;
 
+            if (GenericServiceProvider.GameScopeServiceProvider is null)
+                return;
+
             if (GenericServiceProvider.GetService<ICampaignIdProvider>() is not { } campaignIdProvider || campaignIdProvider.GetCurrentCampaignId() is not { } id)
                 return;
 
@@ -54,6 +57,9 @@ namespace MCM.Implementation.PerCampaign
         public override bool SaveSettings(BaseSettings settings)
         {
             if (settings is not PerCampaignSettings campaignSettings)
+                return false;
+
+            if (GenericServiceProvider.GameScopeServiceProvider is null)
                 return false;
 
             if (GenericServiceProvider.GetService<ICampaignIdProvider>() is not { } campaignIdProvider || campaignIdProvider.GetCurrentCampaignId() is not { } id)

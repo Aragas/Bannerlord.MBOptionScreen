@@ -31,6 +31,9 @@ namespace MCM.Implementation.PerSave
         /// <inheritdoc/>
         protected override void RegisterSettings(PerSaveSettings? perSaveSettings)
         {
+            if (GenericServiceProvider.GameScopeServiceProvider is null)
+                return;
+
             var behavior = GenericServiceProvider.GetService<IPerSaveSettingsProvider>();
             if (behavior is null)
                 return;
@@ -41,12 +44,15 @@ namespace MCM.Implementation.PerSave
             LoadedSettings.Add(perSaveSettings.Id, perSaveSettings);
 
             behavior.LoadSettings(perSaveSettings);
-            perSaveSettings.OnPropertyChanged(BaseSettings.LoadingComplete);
+                perSaveSettings.OnPropertyChanged(BaseSettings.LoadingComplete);
         }
 
         /// <inheritdoc/>
         public override bool SaveSettings(BaseSettings settings)
         {
+            if (GenericServiceProvider.GameScopeServiceProvider is null)
+                return false;
+
             var behavior = GenericServiceProvider.GetService<IPerSaveSettingsProvider>();
             if (behavior is null)
                 return false;
