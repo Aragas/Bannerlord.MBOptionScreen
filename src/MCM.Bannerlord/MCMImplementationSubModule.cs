@@ -100,20 +100,21 @@ namespace MCM.Internal
         {
             base.OnBeforeInitialModuleScreenSetAsRoot();
 
+            /*
             var logger = GenericServiceProvider.GetService<IBUTRLogger<MCMImplementationSubModule>>() ?? new DefaultBUTRLogger<MCMImplementationSubModule>();
-            foreach (var moduleDirectory in Utilities.GetModulesNames().Select(x => new DirectoryInfo(System.IO.Path.Combine(PathPrefix, x, "Settings"))))
+            if (ModuleInfoHelper.GetModuleByType(typeof(MCMImplementationSubModule)) is { } module)
             {
-                if (!moduleDirectory.Exists) continue;
-
-                foreach (var file in moduleDirectory.GetFiles("*.xml", SearchOption.TopDirectoryOnly))
+                foreach (var file in Directory.GetFiles(module.Path, "*.xml", SearchOption.TopDirectoryOnly))
                 {
-                    var externalGlobalSettings = ExternalGlobalSettings.CreateFromXmlFile(file.FullName);
+                    var externalGlobalSettings = ExternalGlobalSettings.CreateFromXmlFile(file);
                     if (externalGlobalSettings is null) continue;
 
                     logger.LogTrace($"Registering settings {externalGlobalSettings.GetType()}.");
                     externalGlobalSettings.Register();
                 }
             }
+            */
+
         }
 
         protected override void OnGameStart(Game game, IGameStarter gameStarterObject)

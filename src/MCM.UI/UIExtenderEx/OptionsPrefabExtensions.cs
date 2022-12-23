@@ -18,7 +18,7 @@ namespace MCM.UI.UIExtenderEx
             _xmlDocument.LoadXml("<OptionsTabToggle DataSource=\"{ModOptions}\" PositionYOffset=\"2\" Parameter.ButtonBrush=\"Header.Tab.Center\" Parameter.TabName=\"ModOptionsPage\" />");
         }
 
-        [PrefabExtensionXmlNode()]
+        [PrefabExtensionXmlNode]
         public XmlNode GetPrefabExtension() => _xmlDocument;
     }
 

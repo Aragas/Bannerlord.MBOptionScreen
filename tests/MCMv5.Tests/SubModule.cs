@@ -3,6 +3,7 @@ using MCM.Common;
 
 using System;
 
+using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
 
 namespace MCMv5.Tests
@@ -13,6 +14,11 @@ namespace MCMv5.Tests
         private int _intValue;
         private float _floatValue;
         private string _stringValue = string.Empty;
+
+        private bool _boolValue2;
+        private int _intValue2;
+        private float _floatValue2;
+        private string _stringValue2 = string.Empty;
 
         /// <summary>
         /// End initialization
@@ -50,6 +56,39 @@ namespace MCMv5.Tests
             //var perSaveSettings = builder.BuildAsPerSave();
             //perSaveSettings.Register();
             //perSaveSettings.Unregister();
+        }
+
+        /// <inheritdoc />
+        public override void OnAfterGameInitializationFinished(Game game, object starterObject)
+        {
+            var builder = BaseSettingsBuilder.Create("Testing_PerSave_v5", "MCMv5 Testing Fluent PerSave Settings")!
+                .SetFormat("xml")
+                .SetFolderName(string.Empty)
+                .SetSubFolder(string.Empty)
+                .CreateGroup("Testing 1", groupBuilder => groupBuilder
+                    .AddBool("prop_1", "Check Box", new ProxyRef<bool>(() => _boolValue2, o => _boolValue2 = o), boolBuilder => boolBuilder
+                        .SetHintText("Test")
+                        .SetRequireRestart(false)))
+                .CreateGroup("Testing 2", groupBuilder => groupBuilder
+                    .AddInteger("prop_2", "Integer", 0, 10, new ProxyRef<int>(() => _intValue2, o => _intValue2 = o), integerBuilder => integerBuilder
+                        .SetHintText("Testing"))
+                    .AddFloatingInteger("prop_3", "Floating Integer", 0, 10, new ProxyRef<float>(() => _floatValue2, o => _floatValue2 = o), floatingBuilder => floatingBuilder
+                        .SetRequireRestart(true)
+                        .SetHintText("Test")))
+                .CreateGroup("Testing 3", groupBuilder => groupBuilder
+                    .AddText("prop_4", "Test", new ProxyRef<string>(() => _stringValue2, o => _stringValue2 = o), null))
+                .CreateGroup("Testing 4", groupBuilder => groupBuilder
+                    .AddButton("prop_5", "Test2", new StorageRef((Action) (() => { })), "Test", null))
+                .CreatePreset("test_v1", "Test", presetBuilder => presetBuilder
+                    .SetPropertyValue("prop_1", true)
+                    .SetPropertyValue("prop_2", 2)
+                    .SetPropertyValue("prop_3", 1.5F)
+                    .SetPropertyValue("prop_4", "HueHueHue"));
+
+            var globalSettings = builder.BuildAsPerSave();
+            globalSettings.Register();
+
+            base.OnAfterGameInitializationFinished(game, starterObject);
         }
     }
 }

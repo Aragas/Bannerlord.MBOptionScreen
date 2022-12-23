@@ -25,7 +25,7 @@ namespace MCM.Implementation
         public override IEnumerable<SettingsDefinition> SettingsDefinitions => _settingsContainers.OfType<ISettingsContainerHasSettingsDefinitions>()
             .SelectMany(sp => sp.SettingsDefinitions).Concat(_externalSettingsProviders.SelectMany(x => x.SettingsDefinitions));
 
-        public DefaultSettingsProvider(IBUTRLogger<DefaultSettingsProvider> logger, IEnumerable<IExternalSettingsProvider> externalSettingsProviders)
+        public DefaultSettingsProvider(IBUTRLogger<DefaultSettingsProvider> logger)
         {
             _logger = logger;
 
@@ -35,23 +35,30 @@ namespace MCM.Implementation
                                              Enumerable.Empty<IPerSaveSettingsContainer>()).ToList();
             var perCampaignSettingsContainers = (GenericServiceProvider.GetService<IEnumerable<IPerCampaignSettingsContainer>>() ??
                                              Enumerable.Empty<IPerCampaignSettingsContainer>()).ToList();
+            var externalSettingsProviders = (GenericServiceProvider.GetService<IEnumerable<IExternalSettingsProvider>>() ??
+                                             Enumerable.Empty<IExternalSettingsProvider>()).ToList();
 
             foreach (var globalSettingsContainer in globalSettingsContainers)
             {
-                logger.LogInformation($"Found Global container {globalSettingsContainer.GetType()}.");
+                logger.LogInformation($"Found Global container {globalSettingsContainer.GetType()} ({globalSettingsContainer.SettingsDefinitions.Count()})");
             }
             foreach (var perSaveSettingsContainer in perSaveSettingsContainers)
             {
-                logger.LogInformation($"Found PerSave container {perSaveSettingsContainer.GetType()}.");
+                logger.LogInformation($"Found PerSave container {perSaveSettingsContainer.GetType()} ({perSaveSettingsContainer.SettingsDefinitions.Count()})");
             }
             foreach (var perCampaignSettingsContainer in perCampaignSettingsContainers)
             {
-                logger.LogInformation($"Found Campaign container {perCampaignSettingsContainer.GetType()}.");
+                logger.LogInformation($"Found Campaign container {perCampaignSettingsContainer.GetType()} ({perCampaignSettingsContainer.SettingsDefinitions.Count()})");
+            }
+            foreach (var externalSettingsProvider in externalSettingsProviders)
+            {
+                logger.LogInformation($"Found external provider {externalSettingsProvider.GetType()} ({externalSettingsProvider.SettingsDefinitions.Count()})");
             }
 
             _settingsContainers = Enumerable.Empty<ISettingsContainer>()
                 .Concat(globalSettingsContainers)
                 .Concat(perSaveSettingsContainers)
+                .Concat(perCampaignSettingsContainers)
                 .ToList();
 
             _externalSettingsProviders = externalSettingsProviders.ToList();
@@ -63,7 +70,6 @@ namespace MCM.Implementation
             {
                 if (settingsContainer.GetSettings(id) is { } settings)
                 {
-                    _logger.LogTrace($"GetSettings {id} returned {settings.GetType()}");
                     return settings;
                 }
             }
@@ -71,7 +77,6 @@ namespace MCM.Implementation
             {
                 if (settingsProvider.GetSettings(id) is { } settings)
                 {
-                    _logger.LogTrace($"GetSettings {id} returned {settings.GetType()}");
                     return settings;
                 }
             }

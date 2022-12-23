@@ -167,15 +167,15 @@ namespace MCM.Abstractions
         public static bool IsForGenericDropdown(Type type)
         {
             var implementsList = type.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(IList<>));
-            var hasSelectedIndex = AccessTools2.Property(type, "SelectedIndex") is not null;
+            var hasSelectedIndex = AccessTools2.Property(type, "SelectedIndex", logErrorInTrace: false) is not null;
             return implementsList && hasSelectedIndex;
         }
 
         public static bool IsForTextDropdown(Type type) =>
-            IsForGenericDropdown(type) && type.IsGenericType && AccessTools2.Property(type.GenericTypeArguments[0], "IsSelected") is null;
+            IsForGenericDropdown(type) && type.IsGenericType && AccessTools2.Property(type.GenericTypeArguments[0], "IsSelected", logErrorInTrace: false) is null;
 
         public static bool IsForCheckboxDropdown(Type type) =>
-            IsForGenericDropdown(type) && type.IsGenericType && AccessTools2.Property(type.GenericTypeArguments[0], "IsSelected") is not null;
+            IsForGenericDropdown(type) && type.IsGenericType && AccessTools2.Property(type.GenericTypeArguments[0], "IsSelected", logErrorInTrace: false) is not null;
 
         public static bool IsForTextDropdown(object? obj) => obj is not null && IsForTextDropdown(obj.GetType());
         public static bool IsForCheckboxDropdown(object? obj) => obj is not null && IsForCheckboxDropdown(obj.GetType());
