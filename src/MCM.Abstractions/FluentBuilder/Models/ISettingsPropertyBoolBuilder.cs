@@ -1,4 +1,9 @@
 ﻿namespace MCM.Abstractions.FluentBuilder.Models
 {
-    public interface ISettingsPropertyBoolBuilder : ISettingsPropertyBuilder<ISettingsPropertyBoolBuilder> { }
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface ISettingsPropertyBoolBuilder : ISettingsPropertyBuilder<ISettingsPropertyBoolBuilder> { }
 }

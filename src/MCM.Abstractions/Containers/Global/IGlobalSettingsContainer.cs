@@ -1,6 +1,11 @@
 ﻿namespace MCM.Abstractions.Global
 {
-    public interface IGlobalSettingsContainer :
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface IGlobalSettingsContainer :
         ISettingsContainer,
         ISettingsContainerHasSettingsDefinitions,
         ISettingsContainerCanOverride,

@@ -1,4 +1,9 @@
 ﻿namespace MCM.Abstractions.FluentBuilder.Models
 {
-    public interface ISettingsPropertyDropdownBuilder : ISettingsPropertyBuilder<ISettingsPropertyDropdownBuilder> { }
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface ISettingsPropertyDropdownBuilder : ISettingsPropertyBuilder<ISettingsPropertyDropdownBuilder> { }
 }

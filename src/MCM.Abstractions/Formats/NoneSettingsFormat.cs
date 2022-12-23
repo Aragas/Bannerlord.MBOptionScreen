@@ -4,7 +4,15 @@ using System.Collections.Generic;
 
 namespace MCM.Abstractions
 {
-    public sealed class NoneSettingsFormat : ISettingsFormat
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    sealed class NoneSettingsFormat : ISettingsFormat
     {
         /// <inheritdoc/>
         public IEnumerable<string> FormatTypes { get; } = new[] { "none" };

@@ -13,6 +13,9 @@ using System.Linq;
 
 namespace MCM.Implementation
 {
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
     internal sealed class DefaultSettingsProvider : BaseSettingsProvider
     {
         private readonly IBUTRLogger _logger;

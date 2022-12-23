@@ -2,7 +2,12 @@
 
 namespace MCM.Abstractions.GameFeatures
 {
-    public interface IPerSaveSettingsProvider
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface IPerSaveSettingsProvider
     {
         bool SaveSettings(PerSaveSettings perSaveSettings);
         void LoadSettings(PerSaveSettings perSaveSettings);

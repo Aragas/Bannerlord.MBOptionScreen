@@ -4,7 +4,15 @@ using System.Collections.Generic;
 
 namespace MCM.Implementation
 {
-    public sealed class JsonSettingsFormat : BaseJsonSettingsFormat
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    sealed class JsonSettingsFormat : BaseJsonSettingsFormat
     {
         public override IEnumerable<string> FormatTypes => new[] { "json", "json2" };
 

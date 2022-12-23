@@ -2,7 +2,12 @@
 
 namespace MCM.Abstractions
 {
-    public interface ISettingsPreset
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface ISettingsPreset
     {
         string SettingsId { get; }
         string Id { get; }

@@ -9,7 +9,15 @@ namespace MCM.Common
     /// Wrapper around any type that implements <see cref="IRef"/>.
     /// We don't use casting because it might not be safe.
     /// </summary>
-    public class RefWrapper : IRef, IWrapper
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    class RefWrapper : IRef, IWrapper
     {
         private delegate Type GetTypeDelegate();
         private delegate object GetValueDelegate();

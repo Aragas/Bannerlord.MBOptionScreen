@@ -2,6 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
     <Authors>Aragas</Authors>
     <ModuleId>Bannerlord.MBOptionScreen.Tests</ModuleId>
     <ModuleName>Mod Configuration Menu v4 Tests</ModuleName>

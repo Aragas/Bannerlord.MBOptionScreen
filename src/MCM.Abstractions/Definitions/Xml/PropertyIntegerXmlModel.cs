@@ -5,7 +5,15 @@ namespace MCM.Abstractions.Xml
 {
     [Serializable]
     [XmlType("PropertyInteger")]
-    public class PropertyIntegerXmlModel : PropertyBaseXmlModel, IPropertyDefinitionWithMinMax
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    class PropertyIntegerXmlModel : PropertyBaseXmlModel, IPropertyDefinitionWithMinMax
     {
         [XmlAttribute("MinValue")]
         public decimal MinValue { get; set; }

@@ -4,7 +4,12 @@ using System.Collections.Generic;
 
 namespace MCM.Abstractions
 {
-    public interface ISettingsFormat
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface ISettingsFormat
     {
         IEnumerable<string> FormatTypes { get; }
 

@@ -5,7 +5,15 @@ using System.Collections.Concurrent;
 
 namespace MCM.Common
 {
-    public readonly ref struct SelectedIndexWrapper
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    readonly ref struct SelectedIndexWrapper
     {
         private static readonly ConcurrentDictionary<Type, GetSelectedIndexDelegate?> _getSelectedIndexCache = new();
         private static readonly ConcurrentDictionary<Type, SetSelectedIndexDelegate?> _setSelectedIndexCache = new();

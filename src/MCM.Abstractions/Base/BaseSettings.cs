@@ -12,7 +12,15 @@ namespace MCM.Abstractions.Base
     /// <summary>
     /// Base model for MCM settings
     /// </summary>
-    public abstract class BaseSettings : INotifyPropertyChanged
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    abstract class BaseSettings : INotifyPropertyChanged
     {
         private delegate BaseSettings SettingsCtor();
         private static readonly ConcurrentDictionary<Type, SettingsCtor> _cachedConstructors = new();

@@ -10,7 +10,15 @@ using System;
 
 namespace MCM.Implementation
 {
-    public sealed class DropdownJsonConverter : JsonConverter
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    sealed class DropdownJsonConverter : JsonConverter
     {
         private readonly IBUTRLogger _logger;
         private readonly Func<string, object?> _getSerializationProperty;

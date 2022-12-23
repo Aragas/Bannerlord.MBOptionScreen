@@ -2,7 +2,12 @@
 
 namespace MCM.Abstractions
 {
-    public enum SettingType
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    enum SettingType
     {
         [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
         [SuppressMessage("ReSharper", "InconsistentNaming")]

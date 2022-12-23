@@ -5,7 +5,15 @@ using System.Collections.Generic;
 
 namespace MCM.Common
 {
-    public static class LocalizationUtils
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    static class LocalizationUtils
     {
         private readonly ref struct TextObjectWrapper
         {

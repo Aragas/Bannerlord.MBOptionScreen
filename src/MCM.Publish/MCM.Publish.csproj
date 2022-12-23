@@ -2,11 +2,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
     <Authors>Aragas</Authors>
     <ModuleId>Bannerlord.MBOptionScreen</ModuleId>
     <ModuleName>Mod Configuration Menu v5</ModuleName>
     <PostBuildCopyToModulesRegex>^(?!MCM.Publish).*\.dll|^(?!MCM.Publish).*\.pdb</PostBuildCopyToModulesRegex>
     <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
+    <DefineConstants>$(DefineConstants);BANNERLORDMCM_PUBLIC;</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

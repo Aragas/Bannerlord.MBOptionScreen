@@ -1,6 +1,11 @@
 ﻿namespace MCM.Abstractions
 {
-    public interface IPropertyDefinitionDropdown : IPropertyDefinitionBase
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface IPropertyDefinitionDropdown : IPropertyDefinitionBase
     {
         int SelectedIndex { get; }
     }

@@ -143,6 +143,17 @@ jobs:
       NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
 
 ###########################
+#        NUGET/GPR        #
+###########################
+  publish-on-nuget-source:
+    needs: ["build-module"]
+    uses: BUTR/workflows/.github/workflows/release-nuget.yml@master
+    with:
+      project_path: src/MCM.Source/MCM.Source.csproj
+    secrets:
+      NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+
+###########################
 #        NEXUSMODS        #
 ###########################
   publish-on-nexusmods:

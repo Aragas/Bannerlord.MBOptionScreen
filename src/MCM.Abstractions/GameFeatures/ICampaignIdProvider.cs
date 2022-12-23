@@ -1,6 +1,11 @@
 ﻿namespace MCM.Abstractions.GameFeatures
 {
-    public interface ICampaignIdProvider
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface ICampaignIdProvider
     {
         public string? GetCurrentCampaignId();
     }

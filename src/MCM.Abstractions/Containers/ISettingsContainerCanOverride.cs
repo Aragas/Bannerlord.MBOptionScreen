@@ -5,7 +5,12 @@ namespace MCM.Abstractions
     /// <summary>
     /// Interface that declares that the <see cref="ISettingsContainer"/> can override its settings
     /// </summary>
-    public interface ISettingsContainerCanOverride
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface ISettingsContainerCanOverride
     {
         bool OverrideSettings(BaseSettings settings);
     }

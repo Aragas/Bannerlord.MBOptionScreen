@@ -6,7 +6,15 @@ namespace MCM.Abstractions.Xml
 {
     [Serializable]
     [XmlRoot("Settings")]
-    public class SettingsXmlModel
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    class SettingsXmlModel
     {
         [XmlAttribute("Id")]
         public string Id { get; set; } = default!;

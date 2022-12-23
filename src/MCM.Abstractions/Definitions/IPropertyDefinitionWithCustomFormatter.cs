@@ -2,7 +2,12 @@
 
 namespace MCM.Abstractions
 {
-    public interface IPropertyDefinitionWithCustomFormatter
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface IPropertyDefinitionWithCustomFormatter
     {
         Type? CustomFormatter { get; }
     }

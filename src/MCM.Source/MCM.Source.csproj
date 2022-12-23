@@ -1,0 +1,69 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <Authors>Aragas, mipen</Authors>
+    <AssemblyName>MCMv5</AssemblyName>
+    <Configurations>Debug;Release</Configurations>
+    <LangVersion>latest</LangVersion>
+    <RootNamespace>MCM</RootNamespace>
+  </PropertyGroup>
+
+  <!--NuGet Package-->
+  <PropertyGroup>
+    <PackageId>Bannerlord.MCM.Source</PackageId>
+    <PackageDescription>A library for easy Setting integration. Is a self sufficient library, requires the Standalone module to show the settings in the UI!</PackageDescription>
+    <Title>Mod Configuration Menu Source</Title>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>MCM-128-w-2.png</PackageIcon>
+    <DevelopmentDependency>true</DevelopmentDependency>
+    <BuildProjectReferences>false</BuildProjectReferences>
+    <BuildOnPack>false</BuildOnPack>
+    <PackOnBuild>false</PackOnBuild>
+    <PackBuildOutput>false</PackBuildOutput>
+    <PackCompile>true</PackCompile>
+    <PackEmbeddedResource>true</PackEmbeddedResource>
+    <EnablePackCleanup>false</EnablePackCleanup>
+    <EnablePackInference>false</EnablePackInference>
+    <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)' == ''">obj</BaseIntermediateOutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageFile Include="../../resources/MCM-128-w-2.png" PackagePath="MCM-128-w-2.png" />
+    <PackageFile Include="..\MCM.Abstractions\**\*.cs" Exclude="..\MCM.Abstractions\obj\**\*;..\MCM.Abstractions\bin\**\*"
+                 PackagePath="content\cs\$(TargetFramework)\$(ProjectName)\%(RelativeDir)%(Filename).cs.pp" />
+    <PackageFile Include="..\MCM.Common\**\*.cs" Exclude="..\MCM.Common\obj\**\*;..\MCM.Common\bin\**\*"
+                 PackagePath="content\cs\$(TargetFramework)\$(ProjectName)\%(RelativeDir)%(Filename).cs.pp" />
+    <PackageFile Include="..\MCM.Bannerlord\**\*.cs" Exclude="..\MCM.Bannerlord\obj\**\*;..\MCM.Bannerlord\bin\**\*"
+                 PackagePath="content\cs\$(TargetFramework)\$(ProjectName)\%(RelativeDir)%(Filename).cs.pp" />
+    <PackageFile Include="..\MCM.Implementation\**\*.cs" Exclude="..\MCM.Implementation\obj\**\*;..\MCM.Implementation\bin\**\*"
+                 PackagePath="content\cs\$(TargetFramework)\$(ProjectName)\%(RelativeDir)%(Filename).cs.pp" />
+    <PackageFile Include="..\MCM\**\*.cs" Exclude="..\MCM\obj\**\*;..\MCM\bin\**\*"
+                 PackagePath="content\cs\$(TargetFramework)\$(ProjectName)\%(RelativeDir)%(Filename).cs.pp" />
+
+    <PackageFile Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)" PackFolder="Dependency"/>
+    <PackageFile Include="Bannerlord.ModuleManager.Source" Version="$(BUTRModuleManagerVersion)" PackFolder="Dependency"/>
+    <PackageFile Include="BUTR.DependencyInjection" Version="$(BUTRDependencyInjectionVersion)" PackFolder="Dependency"/>
+    <PackageFile Include="BUTR.DependencyInjection.LightInject" Version="$(BUTRDependencyInjectionVersion)" PackFolder="Dependency"/>
+    <PackageFile Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)" PackFolder="Dependency"/>
+    <PackageFile Include="LightInject.Source" Version="$(LightInjectVersion)" PackFolder="Dependency"/>
+  </ItemGroup>
+  <!--NuGet Package-->
+
+  <ItemGroup>
+    <PackageReference Include="NuGetizer" Version="0.9.1" />
+
+    <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" IncludeAssets="compile" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" PrivateAssets="all" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" PrivateAssets="all" IncludeAssets="compile" />
+
+    <PackageReference Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+    <PackageReference Include="Bannerlord.ModuleManager.Source" Version="$(BUTRModuleManagerVersion)" PrivateAssets="all" />
+    <PackageReference Include="BUTR.DependencyInjection" Version="$(BUTRDependencyInjectionVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+    <PackageReference Include="BUTR.DependencyInjection.LightInject" Version="$(BUTRDependencyInjectionVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+    <PackageReference Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+    <PackageReference Include="LightInject.Source" Version="$(LightInjectVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+  </ItemGroup>
+
+</Project>

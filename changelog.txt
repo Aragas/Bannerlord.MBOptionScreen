@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------------------------------
+Version: 5.5.0
+Game Versions: v1.0.0,v1.0.1,v1.0.2
+* Added MCM Source Package NuGet for easier integration
+---------------------------------------------------------------------------------------------------
 Version: 5.4.6
 Game Versions: v1.0.0,v1.0.1,v1.0.2
 * Fixed scope issue with integrated MCM

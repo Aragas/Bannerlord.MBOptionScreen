@@ -9,7 +9,12 @@ namespace MCM.Abstractions
     /// Most likely will be used to ease backwards compatibility ports of older MCM API's so we'll be able to reuse more code.
     /// This is a higher level alternative to using <see cref="ISettingsContainer"/>.
     /// </summary>
-    public interface IExternalSettingsProvider
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface IExternalSettingsProvider
     {
         IEnumerable<SettingsDefinition> SettingsDefinitions { get; }
         BaseSettings? GetSettings(string id);

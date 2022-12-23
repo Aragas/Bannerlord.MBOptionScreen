@@ -5,7 +5,12 @@ namespace MCM.Abstractions
     /// <summary>
     /// Interface that declares that the <see cref="ISettingsContainer"/> provides <see cref="SettingsDefinition"/>
     /// </summary>
-    public interface ISettingsContainerHasSettingsDefinitions
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface ISettingsContainerHasSettingsDefinitions
     {
         IEnumerable<SettingsDefinition> SettingsDefinitions { get; }
     }

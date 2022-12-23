@@ -12,6 +12,9 @@ using TaleWorlds.CampaignSystem;
 
 namespace MCM.Internal.GameFeatures
 {
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
     internal sealed class PerSaveCampaignBehavior : CampaignBehaviorBase, IPerSaveSettingsProvider
     {
         private Dictionary<string, string>? _settings = new();

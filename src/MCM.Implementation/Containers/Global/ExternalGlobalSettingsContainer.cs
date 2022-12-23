@@ -10,6 +10,9 @@ using System.Linq;
 
 namespace MCM.Implementation.Global
 {
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
     internal sealed class ExternalGlobalSettingsContainer : IFluentGlobalSettingsContainer
     {
         private Dictionary<string, ExternalGlobalSettings> LoadedSettings { get; } = new();

@@ -5,7 +5,12 @@ using System.Linq;
 
 namespace MCM.Abstractions.Properties
 {
-    public sealed class NoneSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    sealed class NoneSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
     {
         public IEnumerable<string> DiscoveryTypes { get; } = new[] { "none" };
 

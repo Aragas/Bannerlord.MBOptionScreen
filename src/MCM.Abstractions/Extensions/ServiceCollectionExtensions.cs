@@ -8,7 +8,15 @@ using MCM.Abstractions.Properties;
 
 namespace MCM.Abstractions
 {
-    public static class ServiceCollectionExtensions
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    static class ServiceCollectionExtensions
     {
         public static IGenericServiceContainer AddSettingsProvider<TService, TImplementation>(this IGenericServiceContainer services)
             where TService : BaseSettingsProvider

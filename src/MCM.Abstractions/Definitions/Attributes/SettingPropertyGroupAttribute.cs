@@ -7,7 +7,15 @@ namespace MCM.Abstractions.Attributes
     /// Tells the settings menu that this setting property should be in a group. All settings will automatically be grouped together if they have a SettingPropertyGroupAttribute with the same GroupName.
     /// </summary>
     [AttributeUsage(AttributeTargets.Property)]
-    public sealed class SettingPropertyGroupAttribute : Attribute, IPropertyGroupDefinition
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    sealed class SettingPropertyGroupAttribute : Attribute, IPropertyGroupDefinition
     {
         /// <summary>
         /// The default group used for settings that don't have a group explicitly set.

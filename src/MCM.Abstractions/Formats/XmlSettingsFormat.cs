@@ -11,7 +11,15 @@ using System.Xml;
 
 namespace MCM.Implementation
 {
-    public sealed class XmlSettingsFormat : BaseJsonSettingsFormat
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    sealed class XmlSettingsFormat : BaseJsonSettingsFormat
     {
         public override IEnumerable<string> FormatTypes => new[] { "xml" };
 

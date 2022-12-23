@@ -2,7 +2,12 @@
 
 namespace MCM.Abstractions.FluentBuilder
 {
-    public interface ISettingsPresetBuilder
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    interface ISettingsPresetBuilder
     {
         ISettingsPresetBuilder SetPropertyValue(string propertyName, object? value);
 

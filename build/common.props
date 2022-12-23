@@ -3,20 +3,20 @@
 
   <PropertyGroup>
     <GameVersion>1.0.0</GameVersion>
-    <Version>5.4.6</Version>
+    <Version>5.5.0</Version>
     <HarmonyVersion>2.2.2</HarmonyVersion>
     <ButterLibVersion>2.6.1</ButterLibVersion>
     <UIExtenderExVersion>2.4.0</UIExtenderExVersion>
-    <BuildResourcesVersion>1.0.1.86</BuildResourcesVersion>
+    <BuildResourcesVersion>1.0.1.87</BuildResourcesVersion>
     <BUTRSharedVersion>3.0.0.126</BUTRSharedVersion>
     <BUTRDependencyInjectionVersion>2.0.0.43</BUTRDependencyInjectionVersion>
     <BUTRModuleManagerVersion>5.0.163</BUTRModuleManagerVersion>
     <HarmonyExtensionsVersion>3.2.0.72</HarmonyExtensionsVersion>
     <HarmonyAnalyzerVersion>1.0.1.44</HarmonyAnalyzerVersion>
+    <LightInjectVersion>6.6.1</LightInjectVersion>
     <LangVersion>9.0</LangVersion>
     <Nullable>enable</Nullable>
     <PlatformTarget>x64</PlatformTarget>
-    <TargetFramework>net472</TargetFramework>
     <!--Bannerlord's Root Folder. Leave empty if you want it to be tried to be autoresolved.-->
     <GameFolder Condition="$(Configuration) == 'Stable_Debug' OR $(Configuration) == 'Stable_Release'">$(BANNERLORD_STABLE_DIR)</GameFolder>
     <GameFolder Condition="$(Configuration) == 'Beta_Debug' OR $(Configuration) == 'Beta_Release'">$(BANNERLORD_BETA_DIR)</GameFolder>

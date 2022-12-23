@@ -8,7 +8,15 @@ namespace MCM.Common
     /// <summary>
     /// Wraps a class property for MCM to get/set its value
     /// </summary>
-    public class PropertyRef : IRef, IEquatable<PropertyRef>
+#if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
+    [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
+#endif
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    class PropertyRef : IRef, IEquatable<PropertyRef>
     {
         /// <inheritdoc/>
         public event PropertyChangedEventHandler? PropertyChanged;
