@@ -29,7 +29,7 @@ namespace MCM
 #else
     public
 # endif
-    sealed class MCMSubModule : MBSubModuleBase
+    class MCMSubModule : MBSubModuleBase
     {
         private static IBUTRLogger<MCMSubModule> Logger = new DefaultBUTRLogger<MCMSubModule>();
 
