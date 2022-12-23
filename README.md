@@ -1,6 +1,6 @@
 <p align="center">
   <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen" alt="Lines Of Code">
-    <img src="https://tokei.rs/b1/github/Aragas/Bannerlord.MBOptionScreen?category=code" />
+    <img src="https://aschey.tech/tokei/github/Aragas/Bannerlord.MBOptionScreen?category=code" />
   </a>
   <a href="https://www.codefactor.io/repository/github/aragas/bannerlord.mboptionscreen">
     <img src="https://www.codefactor.io/repository/github/aragas/bannerlord.mboptionscreen/badge" alt="CodeFactor" />
@@ -13,10 +13,10 @@
   </a>
   </br>
   <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen/actions/workflows/test-and-publish.yml?query=branch%3Adev+event%3Apush">
-    <img alt="GitHub Workflow Status (event)" src="https://img.shields.io/github/workflow/status/Aragas/Bannerlord.MBOptionScreen/Test%20and%20Publish?branch=dev&event=push&label=Latest%20Commit">
+    <img alt="GitHub Workflow Status (event)" src="https://img.shields.io/github/actions/workflow/status/Aragas/Bannerlord.MBOptionScreen/test-and-publish.yml?branch=dev&event=push&label=Latest%20Commit">
   </a>
   <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen/actions/workflows/test-and-publish.yml?query=branch%3Adev+event%3Arepository_dispatch">
-    <img alt="GitHub Workflow Status (event)" src="https://img.shields.io/github/workflow/status/Aragas/Bannerlord.MBOptionScreen/Test%20and%20Publish?ranch=dev&event=repository_dispatch&label=Latest%20Game%20Release">
+    <img alt="GitHub Workflow Status (event)" src="https://img.shields.io/github/actions/workflow/status/Aragas/Bannerlord.MBOptionScreen/test-and-publish.yml?branch=dev&event=repository_dispatch&label=Latest%20Game%20Release">
   </a>
   <a href="https://codecov.io/gh/Aragas/Bannerlord.MBOptionScreen">
     <img src="https://codecov.io/gh/Aragas/Bannerlord.MBOptionScreen/branch/dev/graph/badge.svg" />
