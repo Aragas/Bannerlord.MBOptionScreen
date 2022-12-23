@@ -15,9 +15,9 @@ namespace MCM.Abstractions
     {
         private delegate IEnumerable GetSettingsDefinitionsDelegate();
         private delegate object? GetSettingsDelegate(string id);
-        private delegate bool SaveSettingsDelegate(object settings);
-        private delegate bool OverrideSettingsDelegate(object settings);
-        private delegate bool ResetSettingsDelegate(object settings);
+        private delegate void SaveSettingsDelegate(object settings);
+        private delegate void OverrideSettingsDelegate(object settings);
+        private delegate void ResetSettingsDelegate(object settings);
 
         private readonly GetSettingsDefinitionsDelegate? _methodGetSettingsDefinitions;
         private readonly GetSettingsDelegate? _methodGetSettingsDelegate;

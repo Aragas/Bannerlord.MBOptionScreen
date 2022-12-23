@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 5.4.6
+Game Versions: v1.0.0,v1.0.1,v1.0.2
+* Fixed scope issue with integrated MCM
+* Fixed attribute discovery with integrated MCM
+---------------------------------------------------------------------------------------------------
 Version: 5.4.5
 Game Versions: v1.0.0,v1.0.1,v1.0.2
 * v1.0.2 stealth update fix. We ship Newtonsoft.Json 13 for backwards compatibility
