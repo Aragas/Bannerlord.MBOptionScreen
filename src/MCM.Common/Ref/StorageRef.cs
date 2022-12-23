@@ -42,7 +42,12 @@ namespace MCM.Common
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
-    public sealed class StorageRef<T> : IRef
+#if !BANNERLORDMCM_PUBLIC
+    internal
+#else
+    public
+# endif
+    sealed class StorageRef<T> : IRef
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
