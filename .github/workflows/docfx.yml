@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: DocFX Setup
-      uses: butr/actions-docfx-setup@v3.0
+      uses: butr/actions-docfx-setup@v3
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
 
