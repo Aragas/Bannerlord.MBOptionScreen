@@ -91,7 +91,7 @@ namespace MCM.Abstractions
         }
 
         public SettingsPropertyGroupDefinition? GetGroup(string groupName) => subGroups.GetGroupFromName(groupName);
-        [Obsolete($"Use {nameof(GetGroup)}", true)]
+        [Obsolete("Use GetGroup", true)]
         public SettingsPropertyGroupDefinition? GetGroupFor(string groupName) => subGroups.GetGroupFromName(groupName);
 
         /// <inheritdoc/>
