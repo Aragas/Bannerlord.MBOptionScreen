@@ -38,7 +38,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: Tests Setup
-      uses: butr/actions-tests-setup@v1.5.4
+      uses: butr/actions-tests-setup@v1
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
         steam-login: ${{secrets.STEAM_LOGIN}}
@@ -101,7 +101,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Setup
-      uses: butr/actions-common-setup@v2.0
+      uses: butr/actions-common-setup@v2
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
 
