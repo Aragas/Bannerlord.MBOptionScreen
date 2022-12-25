@@ -17,8 +17,8 @@ namespace MCM.Implementation.PerSave
         public FluentPerSaveSettingsContainer(IGameEventListener gameEventListener)
         {
             _gameEventListener = gameEventListener;
-            _gameEventListener.OnGameStarted += OnGameStarted;
-            _gameEventListener.OnGameEnded += OnGameEnded;
+            _gameEventListener.GameStarted += GameStarted;
+            _gameEventListener.GameEnded += GameEnded;
         }
 
         /// <inheritdoc/>
@@ -75,7 +75,7 @@ namespace MCM.Implementation.PerSave
         /// <inheritdoc/>
         public void LoadSettings() { }
 
-        public void OnGameStarted() => LoadedSettings.Clear();
-        public void OnGameEnded() => LoadedSettings.Clear();
+        public void GameStarted() => LoadedSettings.Clear();
+        public void GameEnded() => LoadedSettings.Clear();
     }
 }

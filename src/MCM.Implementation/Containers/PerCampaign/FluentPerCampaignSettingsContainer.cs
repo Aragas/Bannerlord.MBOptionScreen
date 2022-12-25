@@ -22,8 +22,8 @@ namespace MCM.Implementation.PerCampaign
         public FluentPerCampaignSettingsContainer(IGameEventListener gameEventListener)
         {
             _gameEventListener = gameEventListener;
-            _gameEventListener.OnGameStarted += OnGameStarted;
-            _gameEventListener.OnGameEnded += OnGameEnded;
+            _gameEventListener.GameStarted += GameStarted;
+            _gameEventListener.GameEnded += GameEnded;
         }
 
         /// <inheritdoc/>
@@ -78,7 +78,7 @@ namespace MCM.Implementation.PerCampaign
                 LoadedSettings.Remove(settings.Id);
         }
 
-        private void OnGameStarted() => LoadedSettings.Clear();
-        private void OnGameEnded() => LoadedSettings.Clear();
+        private void GameStarted() => LoadedSettings.Clear();
+        private void GameEnded() => LoadedSettings.Clear();
     }
 }

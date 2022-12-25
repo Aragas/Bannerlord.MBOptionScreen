@@ -50,7 +50,7 @@ namespace MCM.Tests
             //    prefix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((IEnumerable<ModuleInfoExtended> x) => MockedGetLoadedModules(ref x))));
             _harmony.Patch(SymbolExtensions2.GetMethodInfo(() => Utilities.GetModulesNames()),
                 prefix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((string[] x) => MockedGetModulesNames(ref x))));
-            _harmony.Patch(SymbolExtensions2.GetPropertyGetter(() => Common.PlatformFileHelper),
+            _harmony.Patch(SymbolExtensions2.GetPropertyGetter(() => TaleWorlds.Library.Common.PlatformFileHelper),
                 prefix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((IPlatformFileHelper x) => MockedPlatformFileHelper(ref x))));
 
             var butterLib = new MBSubModuleBaseWrapper(new ButterLibSubModule());

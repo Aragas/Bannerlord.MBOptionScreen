@@ -32,8 +32,9 @@ namespace MCM.Implementation.PerCampaign
         {
             _logger = logger;
             _gameEventListener = gameEventListener;
-            _gameEventListener.OnGameStarted += OnGameStarted;
-            _gameEventListener.OnGameEnded += OnGameEnded;
+            _gameEventListener.GameStarted += GameStarted;
+            _gameEventListener.GameLoaded += GameLoaded;
+            _gameEventListener.GameEnded += GameEnded;
             RootFolder = Path.Combine(base.RootFolder, "PerCampaign");
         }
 
@@ -79,10 +80,13 @@ namespace MCM.Implementation.PerCampaign
             return true;
         }
 
-        private void OnGameStarted()
+        private void GameStarted()
         {
             LoadedSettings.Clear();
+        }
 
+        private void GameLoaded()
+        {
             LoadSettings();
         }
 
@@ -122,7 +126,7 @@ namespace MCM.Implementation.PerCampaign
                 RegisterSettings(setting);
         }
 
-        private void OnGameEnded()
+        private void GameEnded()
         {
             LoadedSettings.Clear();
         }

@@ -28,8 +28,8 @@ namespace MCM.UI.Adapter.MCMv5.Providers
         public void Initialize()
         {
             var foreignBaseSettingsProviders = AccessTools2.AllTypes()
-                .Where(t => t.Assembly != typeof(BaseSettings).Assembly)
-                .Where(t => t.FullName == "MCM.Abstractions.BaseSettingsProvider")
+                .Where(x => x.Assembly != typeof(BaseSettings).Assembly)
+                .Where(x => !x.IsSubclassOf(typeof(BaseSettingsProvider)) && ReflectionUtils.ImplementsOrImplementsEquivalent(x, "MCM.Abstractions.BaseSettingsProvider"))
                 .Select(x => AccessTools2.DeclaredProperty(x, "Instance") is { GetMethod.IsStatic: true } prop ? prop.GetValue(null) : null)
                 .OfType<object>();
 
