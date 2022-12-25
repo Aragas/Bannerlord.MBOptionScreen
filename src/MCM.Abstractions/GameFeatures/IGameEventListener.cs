@@ -9,7 +9,8 @@ namespace MCM.Abstractions.GameFeatures
 # endif
     interface IGameEventListener
     {
-        public event Action OnGameStarted;
-        public event Action OnGameEnded;
+        public event Action GameStarted;
+        public event Action GameLoaded;
+        public event Action GameEnded;
     }
 }

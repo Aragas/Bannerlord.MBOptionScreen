@@ -1,4 +1,9 @@
 ---------------------------------------------------------------------------------------------------
+Version: 5.5.4
+Game Versions: v1.0.0,v1.0.1,v1.0.2
+* Fixed Per Campaign settings not being loaded on new game
+* Better external options detection
+---------------------------------------------------------------------------------------------------
 Version: 5.5.3
 Game Versions: v1.0.0,v1.0.1,v1.0.2
 * Fixed Per Campaign settings not being shown

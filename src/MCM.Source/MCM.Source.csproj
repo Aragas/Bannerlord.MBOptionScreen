@@ -43,14 +43,14 @@
     <PackageFile Include="..\MCM\**\*.cs" Exclude="..\MCM\obj\**\*;..\MCM\bin\**\*"
                  PackagePath="contentFiles\cs\$(TargetFramework)\$(ProjectName)\%(RelativeDir)%(Filename).cs.pp" />
 
-    <PackageFile Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)" PackFolder="Dependency"/>
-    <PackageFile Include="Bannerlord.ModuleManager.Source" Version="$(BUTRModuleManagerVersion)" PackFolder="Dependency"/>
-    <PackageFile Include="BUTR.DependencyInjection" Version="$(BUTRDependencyInjectionVersion)" PackFolder="Dependency"/>
-    <PackageFile Include="BUTR.DependencyInjection.LightInject" Version="$(BUTRDependencyInjectionVersion)" PackFolder="Dependency"/>
-    <PackageFile Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)" PackFolder="Dependency"/>
-    <PackageFile Include="LightInject.Source" Version="$(LightInjectVersion)" PackFolder="Dependency"/>
-    <PackageFile Include="IsExternalInit" Version="1.0.3" PackFolder="Dependency"/>
-    <PackageFile Include="Nullable" Version="1.3.1" PackFolder="Dependency"/>
+    <PackageFile Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)" PackFolder="Dependency" Visible="false" />
+    <PackageFile Include="Bannerlord.ModuleManager.Source" Version="$(BUTRModuleManagerVersion)" PackFolder="Dependency" Visible="false" />
+    <PackageFile Include="BUTR.DependencyInjection" Version="$(BUTRDependencyInjectionVersion)" PackFolder="Dependency" Visible="false" />
+    <PackageFile Include="BUTR.DependencyInjection.LightInject" Version="$(BUTRDependencyInjectionVersion)" PackFolder="Dependency" Visible="false" />
+    <PackageFile Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)" PackFolder="Dependency" Visible="false" />
+    <PackageFile Include="LightInject.Source" Version="$(LightInjectVersion)" PackFolder="Dependency" Visible="false" />
+    <PackageFile Include="IsExternalInit" Version="1.0.3" PackFolder="Dependency" Visible="false" />
+    <PackageFile Include="Nullable" Version="1.3.1" PackFolder="Dependency" Visible="false" />
   </ItemGroup>
   <!--NuGet Package-->
 

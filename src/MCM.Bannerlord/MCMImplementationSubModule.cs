@@ -42,10 +42,13 @@ namespace MCM.Internal
         private static string PathPrefix => System.IO.Path.Combine(GenericServiceProvider.GetService<IPathProvider>()?.GetGamePath(), "Modules");
 
         /// <inheritdoc />
-        public event Action? OnGameStarted;
+        public event Action? GameStarted;
 
         /// <inheritdoc />
-        public event Action? OnGameEnded;
+        public event Action? GameLoaded;
+
+        /// <inheritdoc />
+        public event Action? GameEnded;
 
         private bool ServiceRegistrationWasCalled { get; set; }
 
@@ -123,19 +126,42 @@ namespace MCM.Internal
 
             if (game.GameType is Campaign)
             {
-                OnGameStarted?.Invoke();
+                GameStarted?.Invoke();
 
                 var gameStarter = (CampaignGameStarter) gameStarterObject;
                 gameStarter.AddBehavior(GenericServiceProvider.GetService<PerSaveCampaignBehavior>());
             }
         }
+
+        /// <inheritdoc />
+        public override void OnNewGameCreated(Game game, object initializerObject)
+        {
+            base.OnNewGameCreated(game, initializerObject);
+
+            if (game.GameType is Campaign)
+            {
+                GameLoaded?.Invoke();
+            }
+        }
+
+        /// <inheritdoc />
+        public override void OnGameLoaded(Game game, object initializerObject)
+        {
+            base.OnGameLoaded(game, initializerObject);
+
+            if (game.GameType is Campaign)
+            {
+                GameLoaded?.Invoke();
+            }
+        }
+
         public override void OnGameEnd(Game game)
         {
             base.OnGameEnd(game);
 
             if (game.GameType is Campaign)
             {
-                OnGameEnded?.Invoke();
+                GameEnded?.Invoke();
             }
         }
 

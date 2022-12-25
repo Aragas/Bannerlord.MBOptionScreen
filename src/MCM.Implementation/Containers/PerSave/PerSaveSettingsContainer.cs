@@ -27,8 +27,8 @@ namespace MCM.Implementation.PerSave
         {
             _logger = logger;
             _gameEventListener = gameEventListener;
-            _gameEventListener.OnGameStarted += OnGameStarted;
-            _gameEventListener.OnGameEnded += OnGameEnded;
+            _gameEventListener.GameStarted += GameStarted;
+            _gameEventListener.GameEnded += GameEnded;
         }
 
         /// <inheritdoc/>
@@ -69,7 +69,7 @@ namespace MCM.Implementation.PerSave
             return true;
         }
 
-        private void OnGameStarted()
+        private void GameStarted()
         {
             LoadedSettings.Clear();
         }
@@ -110,7 +110,7 @@ namespace MCM.Implementation.PerSave
                 RegisterSettings(setting);
         }
 
-        private void OnGameEnded()
+        private void GameEnded()
         {
             LoadedSettings.Clear();
         }

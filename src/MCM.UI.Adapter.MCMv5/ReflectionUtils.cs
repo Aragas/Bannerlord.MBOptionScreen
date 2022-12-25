@@ -7,11 +7,14 @@ namespace MCM.UI.Adapter.MCMv5
     {
         public static bool ImplementsOrImplementsEquivalent(Type type, string? fullBaseTypeName, bool includeBase = true)
         {
+            if (fullBaseTypeName is null)
+                return false;
+
             var typeToCheck = includeBase ? type : type.BaseType;
 
             while (typeToCheck is { })
             {
-                if (string.Equals(typeToCheck.FullName, fullBaseTypeName, StringComparison.Ordinal))
+                if (typeToCheck.FullName?.EndsWith(fullBaseTypeName, StringComparison.Ordinal) == true)
                     return true;
 
                 typeToCheck = typeToCheck.BaseType;
@@ -21,11 +24,14 @@ namespace MCM.UI.Adapter.MCMv5
         }
         public static bool ImplementsEquivalentInterface(Type type, string? fullBaseTypeName)
         {
+            if (fullBaseTypeName is null)
+                return false;
+
             var typeToCheck = type;
 
             while (typeToCheck is { })
             {
-                if (type.GetInterfaces().Any(x => string.Equals(x.FullName, fullBaseTypeName, StringComparison.Ordinal)))
+                if (type.GetInterfaces().Any(x => x.FullName?.EndsWith(fullBaseTypeName, StringComparison.Ordinal) == true))
                     return true;
 
                 typeToCheck = typeToCheck.BaseType;
