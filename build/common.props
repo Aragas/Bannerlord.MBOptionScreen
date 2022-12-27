@@ -10,7 +10,7 @@
     <BuildResourcesVersion>1.0.1.87</BuildResourcesVersion>
     <BUTRSharedVersion>3.0.0.126</BUTRSharedVersion>
     <BUTRDependencyInjectionVersion>2.0.0.43</BUTRDependencyInjectionVersion>
-    <BUTRModuleManagerVersion>5.0.163</BUTRModuleManagerVersion>
+    <BUTRModuleManagerVersion>5.0.164</BUTRModuleManagerVersion>
     <HarmonyExtensionsVersion>3.2.0.72</HarmonyExtensionsVersion>
     <HarmonyAnalyzerVersion>1.0.1.44</HarmonyAnalyzerVersion>
     <LightInjectVersion>6.6.1</LightInjectVersion>
