@@ -4,4 +4,4 @@ files:
     content_segmentation: 0
     translatable_elements:
       - '/base/tags/tag[@language],/base/strings/string[@text]'
-      - '/LanguageData[@id],/LanguageData[@name],/LanguageData[@subtitle_extension],/LanguageData[@supported_iso]'
+      - '/LanguageData[@id],/LanguageData[@name],/LanguageData[@subtitle_extension],/LanguageData[@supported_iso],/LanguageData/LanguageFile[@xml_path]'
