@@ -1,41 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/ModuleLanguage.xsd">
   <tags>
-    <tag language="English"/>
+    <tag language="Русский"/>
   </tags>
   <strings>
-    <string id="MCMSettings_Name" text="Mod Configuration Menu {VERSION}"/>
-    <string id="BaseSettings_Default" text="Default"/>
-    <string id="SettingsPropertyGroupDefinition_Misc" text="Misc"/>
+    <string id="MCMSettings_Name" text="Меню настроек модов {VERSION}"/>
+    <string id="BaseSettings_Default" text="По умолчанию"/>
+    <string id="SettingsPropertyGroupDefinition_Misc" text="Другое"/>
     <!-- UI -->
-    <string id="dzeWx4xSfR" text="Warning from MCM!"/>
-    <string id="FE6ya1gzZR" text="{REQUIRED_MODULE} module was not found!"/>
-    <string id="EvI6KPAqTT" text="Incompatible module {DENIED_MODULE} was found!"/>
-    <string id="5G9zffrgMh" text="{MODULE} is loaded before the {DEPENDENT_MODULE}!{NL}Make sure {MODULE} is loaded after it!"/>
-    <string id="UZ8zfvudMs" text="{MODULE} is loaded after the {DEPENDENT_MODULE}!{NL}Make sure {MODULE} is loaded before it!"/>
-    <string id="FcR4BXnhx8" text="{MODULE} has mutually exclusive mod order directives specified for the {REQUIRED_MODULE}!"/>
-    <string id="eXs6FLm5DP" text="It's strongly recommended to terminate the game now. Do you wish to terminate it?"/>
-    <string id="fGt6Gthg5y" text="This version of MCM is intended for v1.0.0 and higher! You are running {GAMEVERSION}!"/>
+    <string id="dzeWx4xSfR" text="MCM Реал. {VERSION}"/>
+    <string id="FE6ya1gzZR" text="Предупреждение от MCM!"/>
+    <string id="EvI6KPAqTT" text="Модуль {DEPENDENT_MODULE} не найден!"/>
+    <string id="5G9zffrgMh" text="Найден несовместимый модуль {DENIED_MODULE}!"/>
+    <string id="UZ8zfvudMs" text="Модуль {MODULE} загружен перед {DEPENDENT_MODULE}.{NL}Модуль {MODULE} должен быть загружен после него!"/>
+    <string id="FcR4BXnhx8" text="Модуль {MODULE} загружен после {DEPENDENT_MODULE}.{NL}Модуль {MODULE} должен быть загружен перед ним!"/>
+    <string id="eXs6FLm5DP" text="Модуль {MODULE} имеет взаимоисключающую зависимость с модулем {REQUIRED_MODULE}!"/>
+    <string id="fGt6Gthg5y" text="Рекомендуется прервать игру. Вы хотите выйти?"/>
 
-    <string id="MCMUISettings_Name" text="MCM UI {VERSION}"/>
-    <string id="ModOptionsVM_NotSpecified" text="Mod Name not Specified"/>
-    <string id="ModOptionsVM_Name" text="Mod Options"/>
-    <string id="ModOptionsVM_ChangeToPreset" text="Change to preset '{PRESET}'"/>
-    <string id="ModOptionsVM_Discard" text="Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?"/>
-    <string id="ModOptionsVM_RestartTitle" text="Game Needs to Restart"/>
-    <string id="ModOptionsVM_RestartDesc" text="The game needs to be restarted to apply mod settings changes. Do you want to close the game now?"/>
-    <string id="SettingsPropertyGroupVM_Disabled" text="{GROUPNAME} (Disabled)"/>
-    <string id="SettingsVM_Custom" text="Custom"/>
-    <string id="ModOptionsPageView_Mods" text="Mods"/>
-    <string id="MainMenu_ModOptions" text="Mod Options"/>
-    <string id="EscapeMenu_ModOptions" text="Mod Options"/>
-    <string id="MCMUISettings_Name" text="MCM UI Impl. {VERSION}"/>
-    <string id="MCMUISettings_Name_General" text="General"/>
-    <string id="MCMUISettings_Name_HideMainMenuEntry" text="Hide Main Menu Entry"/>
-    <string id="MCMUISettings_Name_HideMainMenuEntryDesc" text="Hides MCM's Main Menu 'Mod Options' Menu Entry."/>
-    <string id="ButterLibSettings_Name" text="ButterLib {VERSION}"/>
-    <string id="ButterLibSettings_Name_Logging" text="Logging"/>
-    <string id="ButterLibSettings_Name_LogLevel" text="Log Level"/>
-    <string id="ButterLibSettings_Name_LogLevelDesc" text="Level of logs to write."/>
+    <string id="MCMUISettings_Name" text="Эта версия MCM предназначена для версии v1.0.0 и выше! Запущена версия {GAMEVERSION}!"/>
+    <string id="ModOptionsVM_NotSpecified" text="MCM Интерфейс {VERSION}"/>
+    <string id="ModOptionsVM_Name" text="Мод не выбран"/>
+    <string id="ModOptionsVM_ChangeToPreset" text="Настройки модов"/>
+    <string id="ModOptionsVM_Discard" text="Сменить на шаблон '{PRESET}'"/>
+    <string id="ModOptionsVM_RestartTitle" text="Вы уверены что хотите отменить все несохраненные изменения для {NAME} и использовать шаблон '{ITEM}'?"/>
+    <string id="ModOptionsVM_RestartDesc" text="Необходим перезапуск игры!"/>
+    <string id="SettingsPropertyGroupVM_Disabled" text="Для применения настроек необходимо перезапустить игру! Выйти из игры?"/>
+    <string id="SettingsVM_Custom" text="{GROUPNAME} (Отключено)"/>
+    <string id="ModOptionsPageView_Mods" text="Измененный"/>
+    <string id="MainMenu_ModOptions" text="Моды"/>
+    <string id="EscapeMenu_ModOptions" text="Настройки модов"/>
+    <string id="MCMUISettings_Name" text="Настройки модов"/>
+    <string id="MCMUISettings_Name_General" text="МНМ UI Реал. {VERSION}"/>
+    <string id="MCMUISettings_Name_HideMainMenuEntry" text="Основные настройки"/>
+    <string id="MCMUISettings_Name_HideMainMenuEntryDesc" text="Скрыть в главном меню"/>
+    <string id="ButterLibSettings_Name" text="Скрывает меню настройки модов из главного меню."/>
+    <string id="ButterLibSettings_Name_Logging" text="ButterLib {VERSION}"/>
+    <string id="ButterLibSettings_Name_LogLevel" text="Логирование"/>
+    <string id="ButterLibSettings_Name_LogLevelDesc" text="Уровень Логирования"/>
   </strings>
 </base>
