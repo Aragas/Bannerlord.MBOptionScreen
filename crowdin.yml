@@ -5,4 +5,4 @@ files:
     translation: /src/MCM.Publish/_Module/ModuleData/Languages/%two_letters_code%/%original_file_name%
     content_segmentation: 0
     translatable_elements:
-      - '/tags/tag[@language],/LanguageData/strings/string[@text]'
+      - '/base/tags/tag[@language],/base/strings/string[@text]'
