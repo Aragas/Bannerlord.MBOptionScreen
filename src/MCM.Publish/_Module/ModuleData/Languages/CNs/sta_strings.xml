@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/ModuleLanguage.xsd">
+  <tags>
+    <tag language="简体中文"/>
+  </tags>
+  <strings>
+    <string id="MCMSettings_Name" text="Mod设置菜单（MCM） {VERSION}"/>
+    <string id="BaseSettings_Default" text="默认"/>
+    <string id="SettingsPropertyGroupDefinition_Misc" text="其他"/>
+    <!-- UI -->
+    <string id="dzeWx4xSfR" text="来自 MCM 的警告！"/>
+    <string id="FE6ya1gzZR" text="缺失必要模组：{REQUIRED_MODULE}"/>
+    <string id="EvI6KPAqTT" text="发现不兼容模组：{DENIED_MODULE}"/>
+    <string id="5G9zffrgMh" text="{MODULE} 在 {DEPENDENT_MODULE} 模组之前加载！{NL}确保 {MODULE} 在他们之后加载！"/>
+    <string id="UZ8zfvudMs" text="{MODULE} 在 {DEPENDENT_MODULE} 模组之后加载！{NL} 确保 {MODULE} 在他们之前加载！"/>
+    <string id="FcR4BXnhx8" text="{MODULE} 为 {REQUIRED_MODULE} 指定了互斥的MOD加载顺序！"/>
+    <string id="eXs6FLm5DP" text="目前强烈建议终止游戏。你要终止吗？"/>
+    <string id="fGt6Gthg5y" text="本版本 MCM 适配本体1.0.0版本或更高！你正在运行 {GAMEVERSION} 版本！"/>
+
+    <string id="MCMUISettings_Name" text="MCM UI {VERSION}"/>
+    <string id="ModOptionsVM_NotSpecified" text="Mod名称未指定"/>
+    <string id="ModOptionsVM_Name" text="Mod 选项"/>
+    <string id="ModOptionsVM_ChangeToPreset" text="更改为预设 '{PRESET}'"/>
+    <string id="ModOptionsVM_Discard" text="您确定要舍弃目前的设定吗？{NAME} 改为 '{ITEM}'？"/>
+    <string id="ModOptionsVM_RestartTitle" text="游戏需要重新启动"/>
+    <string id="ModOptionsVM_RestartDesc" text="需要重新启动游戏以应用Mod设置更改。你想现在关闭游戏吗？"/>
+    <string id="SettingsPropertyGroupVM_Disabled" text="{GROUPNAME} （禁用）"/>
+    <string id="SettingsVM_Custom" text="自定义"/>
+    <string id="ModOptionsPageView_Mods" text="Mods"/>
+    <string id="MainMenu_ModOptions" text="Mod 选项"/>
+    <string id="EscapeMenu_ModOptions" text="Mod 选项"/>
+    <string id="MCMUISettings_Name" text="MCM UI 集成。 {VERSION}"/>
+    <string id="MCMUISettings_Name_General" text="通用"/>
+    <string id="MCMUISettings_Name_HideMainMenuEntry" text="隐藏窗口"/>
+    <string id="MCMUISettings_Name_HideMainMenuEntryDesc" text="隐藏主菜单中“Mod 选项”这一窗口。"/>
+    <string id="ButterLibSettings_Name" text="ButterLib {VERSION}"/>
+    <string id="ButterLibSettings_Name_Logging" text="日志记录中"/>
+    <string id="ButterLibSettings_Name_LogLevel" text="日志等级"/>
+    <string id="ButterLibSettings_Name_LogLevelDesc" text="要写入的日志级别。"/>
+  </strings>
+</base>
