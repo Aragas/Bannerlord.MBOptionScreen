@@ -8,34 +8,34 @@
     <string id="BaseSettings_Default" text="По умолчанию"/>
     <string id="SettingsPropertyGroupDefinition_Misc" text="Другое"/>
     <!-- UI -->
-    <string id="dzeWx4xSfR" text="MCM Реал. {VERSION}"/>
-    <string id="FE6ya1gzZR" text="Предупреждение от MCM!"/>
-    <string id="EvI6KPAqTT" text="Модуль {DEPENDENT_MODULE} не найден!"/>
-    <string id="5G9zffrgMh" text="Найден несовместимый модуль {DENIED_MODULE}!"/>
-    <string id="UZ8zfvudMs" text="Модуль {MODULE} загружен перед {DEPENDENT_MODULE}.{NL}Модуль {MODULE} должен быть загружен после него!"/>
-    <string id="FcR4BXnhx8" text="Модуль {MODULE} загружен после {DEPENDENT_MODULE}.{NL}Модуль {MODULE} должен быть загружен перед ним!"/>
-    <string id="eXs6FLm5DP" text="Модуль {MODULE} имеет взаимоисключающую зависимость с модулем {REQUIRED_MODULE}!"/>
-    <string id="fGt6Gthg5y" text="Рекомендуется прервать игру. Вы хотите выйти?"/>
+    <string id="dzeWx4xSfR" text="Предупреждение от МНМ!"/>
+    <string id="FE6ya1gzZR" text="{REQUIRED_MODULE} не найден!"/>
+    <string id="EvI6KPAqTT" text="Обнаружен несовместимый модуль {DENIED_MODULE}!"/>
+    <string id="5G9zffrgMh" text="{MODULE} загружен до {DEPENDENT_MODULE}!{NL}{MODULE} должен загружаться после этого модуля!"/>
+    <string id="UZ8zfvudMs" text="{MODULE} загружен после {DEPENDENT_MODULE}!{NL}{MODULE} должен загружаться до этого модуля!"/>
+    <string id="FcR4BXnhx8" text="В {MODULE} заданы взаимоисключающие указания относительно {REQUIRED_MODULE}!"/>
+    <string id="eXs6FLm5DP" text="Рекомендуется прервать игру. Вы хотите выйти?"/>
+    <string id="fGt6Gthg5y" text="Эта версия МНМ предназначена для v1.0.0 и выше! У вас версия игры {GAMEVERSION}!"/>
 
-    <string id="MCMUISettings_Name" text="Эта версия MCM предназначена для версии v1.0.0 и выше! Запущена версия {GAMEVERSION}!"/>
-    <string id="ModOptionsVM_NotSpecified" text="MCM Интерфейс {VERSION}"/>
-    <string id="ModOptionsVM_Name" text="Мод не выбран"/>
-    <string id="ModOptionsVM_ChangeToPreset" text="Настройки модов"/>
-    <string id="ModOptionsVM_Discard" text="Сменить на шаблон '{PRESET}'"/>
-    <string id="ModOptionsVM_RestartTitle" text="Вы уверены что хотите отменить все несохраненные изменения для {NAME} и использовать шаблон '{ITEM}'?"/>
-    <string id="ModOptionsVM_RestartDesc" text="Необходим перезапуск игры!"/>
-    <string id="SettingsPropertyGroupVM_Disabled" text="Для применения настроек необходимо перезапустить игру! Выйти из игры?"/>
-    <string id="SettingsVM_Custom" text="{GROUPNAME} (Отключено)"/>
-    <string id="ModOptionsPageView_Mods" text="Измененный"/>
-    <string id="MainMenu_ModOptions" text="Моды"/>
+    <string id="MCMUISettings_Name" text="МНМ Интерфейс {VERSION}"/>
+    <string id="ModOptionsVM_NotSpecified" text="Мод не выбран"/>
+    <string id="ModOptionsVM_Name" text="Настройки модов"/>
+    <string id="ModOptionsVM_ChangeToPreset" text="Сменить на шаблон '{PRESET}'"/>
+    <string id="ModOptionsVM_Discard" text="Вы уверены что хотите отменить все несохраненные изменения для {NAME} и использовать шаблон '{ITEM}'?"/>
+    <string id="ModOptionsVM_RestartTitle" text="Необходим перезапуск игры!"/>
+    <string id="ModOptionsVM_RestartDesc" text="Для применения настроек необходимо перезапустить игру! Выйти из игры?"/>
+    <string id="SettingsPropertyGroupVM_Disabled" text="{GROUPNAME} (Отключено)"/>
+    <string id="SettingsVM_Custom" text="Измененный"/>
+    <string id="ModOptionsPageView_Mods" text="Моды"/>
+    <string id="MainMenu_ModOptions" text="Настройки модов"/>
     <string id="EscapeMenu_ModOptions" text="Настройки модов"/>
-    <string id="MCMUISettings_Name" text="Настройки модов"/>
-    <string id="MCMUISettings_Name_General" text="МНМ UI Реал. {VERSION}"/>
-    <string id="MCMUISettings_Name_HideMainMenuEntry" text="Основные настройки"/>
-    <string id="MCMUISettings_Name_HideMainMenuEntryDesc" text="Скрыть в главном меню"/>
-    <string id="ButterLibSettings_Name" text="Скрывает меню настройки модов из главного меню."/>
-    <string id="ButterLibSettings_Name_Logging" text="ButterLib {VERSION}"/>
-    <string id="ButterLibSettings_Name_LogLevel" text="Логирование"/>
-    <string id="ButterLibSettings_Name_LogLevelDesc" text="Уровень Логирования"/>
+    <string id="MCMUISettings_Name" text="МНМ Интерфейс {VERSION}"/>
+    <string id="MCMUISettings_Name_General" text="Основные настройки"/>
+    <string id="MCMUISettings_Name_HideMainMenuEntry" text="Скрыть в главном меню"/>
+    <string id="MCMUISettings_Name_HideMainMenuEntryDesc" text="Скрывает меню настройки модов из главного меню."/>
+    <string id="ButterLibSettings_Name" text="ButterLib {VERSION}"/>
+    <string id="ButterLibSettings_Name_Logging" text="Логирование"/>
+    <string id="ButterLibSettings_Name_LogLevel" text="Уровень Логирования"/>
+    <string id="ButterLibSettings_Name_LogLevelDesc" text="Какой уровень логов записывать в файл логов."/>
   </strings>
 </base>
