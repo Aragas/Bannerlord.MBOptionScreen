@@ -10,9 +10,9 @@
     <!-- UI -->
     <string id="dzeWx4xSfR" text="来自 MCM 的警告！"/>
     <string id="FE6ya1gzZR" text="缺失必要模组：{REQUIRED_MODULE}"/>
-    <string id="EvI6KPAqTT" text="发现不兼容模组：{DENIED_MODULE}"/>
+    <string id="EvI6KPAqTT" text="发现冲突模组：{DENIED_MODULE}"/>
     <string id="5G9zffrgMh" text="{MODULE} 在 {DEPENDENT_MODULE} 模组之前加载！{NL}确保 {MODULE} 在他们之后加载！"/>
-    <string id="UZ8zfvudMs" text="{MODULE} 在 {DEPENDENT_MODULE} 模组之后加载！{NL} 确保 {MODULE} 在他们之前加载！"/>
+    <string id="UZ8zfvudMs" text="{MODULE} 在 {DEPENDENT_MODULE} 模组之后加载！{NL}确保 {MODULE} 在他们之前加载！"/>
     <string id="FcR4BXnhx8" text="{MODULE} 为 {REQUIRED_MODULE} 指定了互斥的MOD加载顺序！"/>
     <string id="eXs6FLm5DP" text="目前强烈建议终止游戏。你要终止吗？"/>
     <string id="fGt6Gthg5y" text="本版本 MCM 适配本体1.0.0版本或更高！你正在运行 {GAMEVERSION} 版本！"/>
