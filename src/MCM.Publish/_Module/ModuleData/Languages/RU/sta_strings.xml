@@ -1,25 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<base xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
-      xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/ModuleLanguage.xsd" >
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/ModuleLanguage.xsd">
   <tags>
-    <tag language="Русский" />
+    <tag language="Русский"/>
   </tags>
   <strings>
     <string id="MCMSettings_Name" text="Меню настроек модов {VERSION}"/>
     <string id="BaseSettings_Default" text="По умолчанию"/>
     <string id="SettingsPropertyGroupDefinition_Misc" text="Другое"/>
-    <string id="MCMImplementationSettings_Name" text="MCM Реал. {VERSION}"/>
     <!-- UI -->
-    <string id="dzeWx4xSfR" text="Предупреждение от MCM!" />
-    <string id="FE6ya1gzZR" text="Модуль {DEPENDENT_MODULE} не найден!" />
-    <string id="EvI6KPAqTT" text="Найден несовместимый модуль {DENIED_MODULE}!" />
-    <string id="5G9zffrgMh" text="Модуль {MODULE} загружен перед {DEPENDENT_MODULE}.{NL}Модуль {MODULE} должен быть загружен после него!" />
-    <string id="UZ8zfvudMs" text="Модуль {MODULE} загружен после {DEPENDENT_MODULE}.{NL}Модуль {MODULE} должен быть загружен перед ним!" />
-    <string id="FcR4BXnhx8" text="Модуль {MODULE} имеет взаимоисключающую зависимость с модулем {REQUIRED_MODULE}!" />
-    <string id="eXs6FLm5DP" text="Рекомендуется прервать игру. Вы хотите выйти?" />
-    <string id="fGt6Gthg5y" text="Эта версия MCM предназначена для версии v1.0.0 и выше! Запущена версия {GAMEVERSION}!" />
+    <string id="dzeWx4xSfR" text="Предупреждение от МНМ!"/>
+    <string id="FE6ya1gzZR" text="{REQUIRED_MODULE} не найден!"/>
+    <string id="EvI6KPAqTT" text="Обнаружен несовместимый модуль {DENIED_MODULE}!"/>
+    <string id="5G9zffrgMh" text="{MODULE} загружен до {DEPENDENT_MODULE}!{NL}{MODULE} должен загружаться после этого модуля!"/>
+    <string id="UZ8zfvudMs" text="{MODULE} загружен после {DEPENDENT_MODULE}!{NL}{MODULE} должен загружаться до этого модуля!"/>
+    <string id="FcR4BXnhx8" text="В {MODULE} заданы взаимоисключающие указания относительно {REQUIRED_MODULE}!"/>
+    <string id="eXs6FLm5DP" text="Рекомендуется прервать игру. Вы хотите выйти?"/>
+    <string id="fGt6Gthg5y" text="Эта версия МНМ предназначена для v1.0.0 и выше! У вас версия игры {GAMEVERSION}!"/>
 
-    <string id="MCMUISettings_Name" text="MCM Интерфейс {VERSION}"/>
+    <string id="MCMUISettings_Name" text="МНМ Интерфейс {VERSION}"/>
     <string id="ModOptionsVM_NotSpecified" text="Мод не выбран"/>
     <string id="ModOptionsVM_Name" text="Настройки модов"/>
     <string id="ModOptionsVM_ChangeToPreset" text="Сменить на шаблон '{PRESET}'"/>
@@ -31,7 +29,7 @@
     <string id="ModOptionsPageView_Mods" text="Моды"/>
     <string id="MainMenu_ModOptions" text="Настройки модов"/>
     <string id="EscapeMenu_ModOptions" text="Настройки модов"/>
-    <string id="MCMUISettings_Name" text="МНМ UI Реал. {VERSION}"/>
+    <string id="MCMUISettings_Name" text="МНМ Интерфейс {VERSION}"/>
     <string id="MCMUISettings_Name_General" text="Основные настройки"/>
     <string id="MCMUISettings_Name_HideMainMenuEntry" text="Скрыть в главном меню"/>
     <string id="MCMUISettings_Name_HideMainMenuEntryDesc" text="Скрывает меню настройки модов из главного меню."/>

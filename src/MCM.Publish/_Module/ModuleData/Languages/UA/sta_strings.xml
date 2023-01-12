@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/ModuleLanguage.xsd">
+  <tags>
+    <tag language="Українська"/>
+  </tags>
+  <strings>
+    <string id="MCMSettings_Name" text="Меню настроек модов {VERSION}"/>
+    <string id="BaseSettings_Default" text="Стандартно"/>
+    <string id="SettingsPropertyGroupDefinition_Misc" text="Інше"/>
+    <!-- UI -->
+    <string id="dzeWx4xSfR" text="MCM {VERSION}"/>
+    <string id="FE6ya1gzZR" text="Попередження від MCM!"/>
+    <string id="EvI6KPAqTT" text="{REQUIRED_MODULE} не знайдено!"/>
+    <string id="5G9zffrgMh" text="Знайдено несумісний модуль {DENIED_MODULE}!"/>
+    <string id="UZ8zfvudMs" text="{MODULE} завантажено до {DEPENDENT_MODULE}! {NL}{MODULE} має завантажуватися після цього модуля!"/>
+    <string id="FcR4BXnhx8" text="{MODULE} завантажений після {DEPENDENT_MODULE}! {NL}{MODULE} повинен завантажуватися до цього модуля!"/>
+    <string id="eXs6FLm5DP" text="{MODULE} has mutually exclusive mod order directives specified for the {REQUIRED_MODULE}!"/>
+    <string id="fGt6Gthg5y" text="Рекомендується перервати гру. Ви хочете вийти?"/>
+
+    <string id="MCMUISettings_Name" text="Ця версія MCM призначена для версії v1.0.0 і вище! Запущено версію {GAMEVERSION}!"/>
+    <string id="ModOptionsVM_NotSpecified" text="Налаштування модів"/>
+    <string id="ModOptionsVM_Name" text="Зміна &quot;{PROPERTYNAME}&quot;"/>
+    <string id="ModOptionsVM_ChangeToPreset" text="Змінення значення &quot;{PROPERTYNAME}&quot;&#10;Мінімальне значення {MINVALUE} і максимальне {MAXVALUE}."/>
+    <string id="ModOptionsVM_Discard" text="Зміна значення &quot;{PROPERTYNAME}&quot;."/>
+    <string id="ModOptionsVM_RestartTitle" text="Мод не вибрано"/>
+    <string id="ModOptionsVM_RestartDesc" text="Налаштування модів"/>
+    <string id="SettingsPropertyGroupVM_Disabled" text="Змінити на шаблон '{PRESET}'"/>
+    <string id="SettingsVM_Custom" text="Ви впевнені що хочете скасувати всі незбережені зміни для {NAME} і використовувати шаблон '{ITEM}'?"/>
+    <string id="ModOptionsPageView_Mods" text="Необхідний перезапуск гри!"/>
+    <string id="MainMenu_ModOptions" text="Необхідно перезапустити гру для застосування нових налаштувань! Виконати закриття гри?"/>
+    <string id="EscapeMenu_ModOptions" text="{GROUPNAME} (Відключено)"/>
+    <string id="MCMUISettings_Name" text="Кастом"/>
+    <string id="MCMUISettings_Name_General" text="Моди"/>
+    <string id="MCMUISettings_Name_HideMainMenuEntry" text="Налаштування модів"/>
+    <string id="MCMUISettings_Name_HideMainMenuEntryDesc" text="Налаштування модів"/>
+    <string id="ButterLibSettings_Name" text="МНМ UI {VERSION}"/>
+    <string id="ButterLibSettings_Name_Logging" text="Стандартні"/>
+    <string id="ButterLibSettings_Name_LogLevel" text="Приховати в головному меню"/>
+    <string id="ButterLibSettings_Name_LogLevelDesc" text="Приховати в головному меню MCM."/>
+  </strings>
+</base>
