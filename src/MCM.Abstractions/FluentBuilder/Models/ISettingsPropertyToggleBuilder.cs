@@ -5,5 +5,6 @@
 #else
     public
 # endif
-    interface ISettingsPropertyGroupToggleBuilder : ISettingsPropertyBuilder<ISettingsPropertyGroupToggleBuilder> { }
+    interface ISettingsPropertyGroupToggleBuilder : ISettingsPropertyBuilder<ISettingsPropertyGroupToggleBuilder>
+    { }
 }

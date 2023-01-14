@@ -47,7 +47,7 @@ namespace MCM.Implementation.PerSave
             LoadedSettings.Add(perSaveSettings.Id, perSaveSettings);
 
             behavior.LoadSettings(perSaveSettings);
-                perSaveSettings.OnPropertyChanged(BaseSettings.LoadingComplete);
+            perSaveSettings.OnPropertyChanged(BaseSettings.LoadingComplete);
         }
 
         /// <inheritdoc/>

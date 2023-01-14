@@ -8,5 +8,6 @@
 #else
     public
 # endif
-    interface IAttributeSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer { }
+    interface IAttributeSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
+    { }
 }

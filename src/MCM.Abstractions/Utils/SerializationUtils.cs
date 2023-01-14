@@ -14,7 +14,7 @@ namespace MCM.Abstractions.Utils
             var xml = reader.ReadToEnd();
             var doc = new XmlDocument();
             doc.LoadXml(xml);
-            return JsonConvert.SerializeXmlNode(doc) is { }json ? JsonConvert.DeserializeObject<T>(json) : default;
+            return JsonConvert.SerializeXmlNode(doc) is { } json ? JsonConvert.DeserializeObject<T>(json) : default;
         }
     }
 }

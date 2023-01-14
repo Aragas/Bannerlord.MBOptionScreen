@@ -5,5 +5,6 @@
 #else
     public
 # endif
-    interface ISettingsPropertyBoolBuilder : ISettingsPropertyBuilder<ISettingsPropertyBoolBuilder> { }
+    interface ISettingsPropertyBoolBuilder : ISettingsPropertyBuilder<ISettingsPropertyBoolBuilder>
+    { }
 }
