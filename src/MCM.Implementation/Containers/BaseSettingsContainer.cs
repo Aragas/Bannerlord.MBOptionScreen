@@ -46,7 +46,7 @@ namespace MCM.Implementation
             var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == settings.FormatType));
             settingsFormat?.Load(settings, directoryPath, settings.Id);
-                settings.OnPropertyChanged(BaseSettings.LoadingComplete);
+            settings.OnPropertyChanged(BaseSettings.LoadingComplete);
         }
 
         /// <inheritdoc/>

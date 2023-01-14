@@ -5,5 +5,6 @@
 #else
     public
 # endif
-    interface IPropertyDefinitionBool : IPropertyDefinitionBase { }
+    interface IPropertyDefinitionBool : IPropertyDefinitionBase
+    { }
 }

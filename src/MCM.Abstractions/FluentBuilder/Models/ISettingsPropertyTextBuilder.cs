@@ -5,5 +5,6 @@
 #else
     public
 # endif
-    interface ISettingsPropertyTextBuilder : ISettingsPropertyBuilder<ISettingsPropertyTextBuilder> { }
+    interface ISettingsPropertyTextBuilder : ISettingsPropertyBuilder<ISettingsPropertyTextBuilder>
+    { }
 }
