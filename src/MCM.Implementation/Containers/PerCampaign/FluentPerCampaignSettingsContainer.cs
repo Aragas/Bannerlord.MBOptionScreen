@@ -44,7 +44,7 @@ namespace MCM.Implementation.PerCampaign
             var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == perCampaignSettings.FormatType));
             settingsFormat?.Load(perCampaignSettings, directoryPath, perCampaignSettings.Id);
-                perCampaignSettings.OnPropertyChanged(BaseSettings.LoadingComplete);
+            perCampaignSettings.OnPropertyChanged(BaseSettings.LoadingComplete);
         }
 
         /// <inheritdoc/>

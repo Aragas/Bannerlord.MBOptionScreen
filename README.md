@@ -11,6 +11,9 @@
   <a href="https://mcm.bannerlord.aragas.org/">
     <img src="https://img.shields.io/badge/Documentation-%F0%9F%94%8D-blue?style=flat" />
   </a>
+  <a title="Crowdin" target="_blank" href="https://crowdin.com/project/mod-configuration-menu">
+    <img src="https://badges.crowdin.net/mod-configuration-menu/localized.svg">
+  </a>
   </br>
   <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen/actions/workflows/test-and-publish.yml?query=branch%3Adev+event%3Apush">
     <img alt="GitHub Workflow Status (event)" src="https://img.shields.io/github/actions/workflow/status/Aragas/Bannerlord.MBOptionScreen/test-and-publish.yml?branch=dev&event=push&label=Latest%20Commit">

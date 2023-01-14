@@ -5,5 +5,6 @@
 #else
     public
 # endif
-    interface ISettingsPropertyDropdownBuilder : ISettingsPropertyBuilder<ISettingsPropertyDropdownBuilder> { }
+    interface ISettingsPropertyDropdownBuilder : ISettingsPropertyBuilder<ISettingsPropertyDropdownBuilder>
+    { }
 }

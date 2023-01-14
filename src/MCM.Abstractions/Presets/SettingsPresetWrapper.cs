@@ -1,4 +1,4 @@
-using HarmonyLib.BUTR.Extensions;
+﻿using HarmonyLib.BUTR.Extensions;
 
 using MCM.Abstractions.Base;
 using MCM.Common;

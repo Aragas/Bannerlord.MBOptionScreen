@@ -231,7 +231,7 @@ namespace MCM.UI.GUI.ViewModels
             if (selector.ItemList.Count < selector.SelectedIndex) return;
 
             var presetKey = selector.ItemList[selector.SelectedIndex].OriginalItem;
-            InformationManager.ShowInquiry(new InquiryData(
+            InformationManager.ShowInquiry(InquiryDataUtils.Create(
                 new TextObject("{=ModOptionsVM_ChangeToPreset}Change to preset '{PRESET}'", new()
                 {
                     { "PRESET", presetKey.Name }
@@ -316,7 +316,7 @@ namespace MCM.UI.GUI.ViewModels
             var requireRestart = changedModSettings.Any(x => x.RestartRequired());
             if (requireRestart)
             {
-                InformationManager.ShowInquiry(new InquiryData(new TextObject("{=ModOptionsVM_RestartTitle}Game Needs to Restart").ToString(),
+                InformationManager.ShowInquiry(InquiryDataUtils.Create(new TextObject("{=ModOptionsVM_RestartTitle}Game Needs to Restart").ToString(),
                     new TextObject("{=ModOptionsVM_RestartDesc}The game needs to be restarted to apply mod settings changes. Do you want to close the game now?").ToString(),
                     true, true, new TextObject("{=aeouhelq}Yes").ToString(), new TextObject("{=3CpNUnVl}Cancel").ToString(),
                     () =>

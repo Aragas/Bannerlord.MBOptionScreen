@@ -5,5 +5,6 @@
 #else
     public
 # endif
-    interface IFluentSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer { }
+    interface IFluentSettingsPropertyDiscoverer : ISettingsPropertyDiscoverer
+    { }
 }

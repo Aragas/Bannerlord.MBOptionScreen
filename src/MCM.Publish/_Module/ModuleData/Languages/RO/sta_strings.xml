@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/ModuleLanguage.xsd">
+  <tags>
+    <tag language="Română"/>
+  </tags>
+  <strings>
+    <string id="MCMSettings_Name" text="Mod Configuration Menu {VERSION}"/>
+    <string id="BaseSettings_Default" text="Mod Implicit"/>
+    <string id="SettingsPropertyGroupDefinition_Misc" text="Diverse"/>
+    <!-- UI -->
+    <string id="dzeWx4xSfR" text="Avertizare de la MCM!"/>
+    <string id="FE6ya1gzZR" text="Modulul {REQUIRED_MODULE} nu a fost gasit!"/>
+    <string id="EvI6KPAqTT" text="Modulul {DENIED_MODULE} a fost gasit incompatibil!"/>
+    <string id="5G9zffrgMh" text="{MODULE} este încărcat înainte de {DEPENDENT_MODULE}!{NL}Asigură-te că {MODULE} este încărcat după el!"/>
+    <string id="UZ8zfvudMs" text="{MODULE} este încărcat înainte de {DEPENDENT_MODULE}!{NL}Asigură-te că {MODULE} este încărcat după el!"/>
+    <string id="FcR4BXnhx8" text="{MODULE} are directive de ordine automată reciproc exclusive specificate pentru {REQUIRED_MODULE}!"/>
+    <string id="eXs6FLm5DP" text="Este recomandat să închizi jocul acum. Vrei să-l închizi?"/>
+    <string id="fGt6Gthg5y" text="Această versiune de MCM este destinată pentru v1.0.0 sau mai mult! Ai această {GAMEVERSION} de aplicație!"/>
+
+    <string id="MCMUISettings_Name" text="MCM UI {VERSION}"/>
+    <string id="ModOptionsVM_NotSpecified" text="Numele modului nu este specificat"/>
+    <string id="ModOptionsVM_Name" text="Opțiuni mod"/>
+    <string id="ModOptionsVM_ChangeToPreset" text="Modifică la presetarea '{PRESET}'"/>
+    <string id="ModOptionsVM_Discard" text="Sunteţi sigur că doriţi să renunţaţi la setările curente pentru {NAME} la '{ITEM}'?"/>
+    <string id="ModOptionsVM_RestartTitle" text="Jocul trebuie repornit"/>
+    <string id="ModOptionsVM_RestartDesc" text="Trebuie repornit jocul pentru a aplica setările de mod. Doriți să închideți jocul acum?"/>
+    <string id="SettingsPropertyGroupVM_Disabled" text="{GROUPNAME} (Dezactivat)"/>
+    <string id="SettingsVM_Custom" text="Personalizat"/>
+    <string id="ModOptionsPageView_Mods" text="Moduri"/>
+    <string id="MainMenu_ModOptions" text="Opțiuni mod"/>
+    <string id="EscapeMenu_ModOptions" text="Opțiuni mod"/>
+    <string id="MCMUISettings_Name" text="MCM UI {VERSION}"/>
+    <string id="MCMUISettings_Name_General" text="General"/>
+    <string id="MCMUISettings_Name_HideMainMenuEntry" text="Ascunde intrarea în meniul principal"/>
+    <string id="MCMUISettings_Name_HideMainMenuEntryDesc" text="Ascunde intrarea din meniul „Opțiuni mod” din meniul principal al MCM."/>
+    <string id="ButterLibSettings_Name" text="ButterLib {VERSION}"/>
+    <string id="ButterLibSettings_Name_Logging" text="Înregistrare"/>
+    <string id="ButterLibSettings_Name_LogLevel" text="Nivel de înregistrare"/>
+    <string id="ButterLibSettings_Name_LogLevelDesc" text="Nivelul înregistrare de scris."/>
+  </strings>
+</base>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/ModuleLanguage.xsd">
+  <tags>
+    <tag language="Беларуская"/>
+  </tags>
+  <strings>
+    <string id="MCMSettings_Name" text="Меню Наладваньня Модаў {VERSION} (MCM)"/>
+    <string id="BaseSettings_Default" text="Па змаўчаньні"/>
+    <string id="SettingsPropertyGroupDefinition_Misc" text="Рознае"/>
+    <!-- UI -->
+    <string id="dzeWx4xSfR" text="Папярэджаньне ад MCM!"/>
+    <string id="FE6ya1gzZR" text="Модуль {REQUIRED_MODULE} ня знойдзены!"/>
+    <string id="EvI6KPAqTT" text="Несумяшчальны модуль {DENIED_MODULE} быў знойдзены!"/>
+    <string id="5G9zffrgMh" text="{MODULE} загружаны перад {DEPENDENT_MODULE}!{NL}Пераканайцеся, што {MODULE} будзе загружаны пасьля яго!"/>
+    <string id="UZ8zfvudMs" text="{MODULE} загружаны пасьля {DEPENDENT_MODULE}!{NL}Пераканайцеся, што {MODULE} будзе загружаны перад ім!"/>
+    <string id="FcR4BXnhx8" text="{MODULE} мае ўзаемавынятковыя ўказаньні загрузкі модаў, вызначаныя для {REQUIRED_MODULE}!"/>
+    <string id="eXs6FLm5DP" text="Настойліва рэкамендуецца завяршыць гульню цяпер. Вы жадаеце завяршыць яе?"/>
+    <string id="fGt6Gthg5y" text="Гэтая версія MCM прызначана прынамсі для v1.0.0! Вы выкарыстоўваеце {GAMEVERSION}!"/>
+
+    <string id="MCMUISettings_Name" text="MCM КІ {VERSION}"/>
+    <string id="ModOptionsVM_NotSpecified" text="Мод Ня Мае Назвы"/>
+    <string id="ModOptionsVM_Name" text="Налады Модаў"/>
+    <string id="ModOptionsVM_ChangeToPreset" text="Зьмяніць на перадусталёўку '{PRESET}'"/>
+    <string id="ModOptionsVM_Discard" text="Вы ўпэўнены, што жадаеце скасаваць цяперашнія налады для {NAME} да '{ITEM}'?"/>
+    <string id="ModOptionsVM_RestartTitle" text="Гульню Трэба Перазапусьціць"/>
+    <string id="ModOptionsVM_RestartDesc" text="Трэба перазапусьціць гульню, каб ужыць зьмены наладаў модаў. Жадаеце закрыць гульню зараз?"/>
+    <string id="SettingsPropertyGroupVM_Disabled" text="{GROUPNAME} (Адключана)"/>
+    <string id="SettingsVM_Custom" text="Уласныя"/>
+    <string id="ModOptionsPageView_Mods" text="Моды"/>
+    <string id="MainMenu_ModOptions" text="Налады Модаў"/>
+    <string id="EscapeMenu_ModOptions" text="Налады Модаў"/>
+    <string id="MCMUISettings_Name" text="MCM КІ {VERSION}"/>
+    <string id="MCMUISettings_Name_General" text="Агульныя"/>
+    <string id="MCMUISettings_Name_HideMainMenuEntry" text="Схаваць Радок у Галоўным Меню"/>
+    <string id="MCMUISettings_Name_HideMainMenuEntryDesc" text="Хавае радок MCM Галоўнае Меню ў 'Налады Модаў'."/>
+    <string id="ButterLibSettings_Name" text="ButterLib {VERSION}"/>
+    <string id="ButterLibSettings_Name_Logging" text="Запіс у Журнал"/>
+    <string id="ButterLibSettings_Name_LogLevel" text="Узровень Журналяваньня"/>
+    <string id="ButterLibSettings_Name_LogLevelDesc" text="Узровень запісу ў журнал."/>
+  </strings>
+</base>
