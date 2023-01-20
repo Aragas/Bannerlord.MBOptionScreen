@@ -23,8 +23,11 @@ namespace MCM.Abstractions
 # endif
     class SettingsUtils
     {
-        public static void CheckIsValid(ISettingsPropertyDefinition prop, object settings)
+        public static void CheckIsValid(ISettingsPropertyDefinition prop, object? settings)
         {
+            if (settings is null)
+                throw new Exception($"Settings is null.");
+
             // TODO:
             if (prop.PropertyReference is PropertyRef propertyRef)
             {
@@ -49,7 +52,7 @@ namespace MCM.Abstractions
 
         public static void ResetSettings(BaseSettings settings)
         {
-            if (settings is IWrapper wrapper && Activator.CreateInstance(wrapper.Object.GetType()) is { } copy && Activator.CreateInstance(wrapper.GetType(), copy) is BaseSettings copyWrapped)
+            if (settings is IWrapper wrapper && Activator.CreateInstance(wrapper.Object?.GetType()) is { } copy && Activator.CreateInstance(wrapper.GetType(), copy) is BaseSettings copyWrapped)
                 OverrideSettings(settings, copyWrapped);
             else if (Activator.CreateInstance(settings.GetType()) is BaseSettings copySettings)
                 OverrideSettings(settings, copySettings);
@@ -284,9 +287,6 @@ namespace MCM.Abstractions
             truncatedGroupName = groupName.Remove(0, index + 1);
             return topGroupName;
         }
-
-        private static bool MoreThanOnce(string full, string part) =>
-            full.IndexOf(part, StringComparison.Ordinal) is var first and not -1 && first != full.LastIndexOf(part, StringComparison.Ordinal);
 
         public static IEnumerable<IPropertyDefinitionBase> GetPropertyDefinitionWrappers(object property) => GetPropertyDefinitionWrappers(new[] { property });
 

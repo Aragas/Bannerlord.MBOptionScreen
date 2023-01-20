@@ -27,12 +27,12 @@ namespace MCM.Implementation
     {
         private class PresetContainerDefinition
         {
-            public string Id { get; set; }
-            public string Name { get; set; }
+            public string Id { get; set; } = string.Empty;
+            public string Name { get; set; } = string.Empty;
         }
         private sealed class PresetContainer : PresetContainerDefinition
         {
-            public BaseSettings Settings { get; set; }
+            public BaseSettings? Settings { get; set; }
         }
 
         public static JsonSettingsPreset? FromFile(BaseSettings settings, string filePath) => FromFile(settings.Id, filePath, settings.CreateNew);
@@ -74,7 +74,7 @@ namespace MCM.Implementation
             _filePath = filePath;
             _getNewSettings = getNewSettings;
 
-            var logger = GenericServiceProvider.GetService<IBUTRLogger<JsonSettingsPreset>>();
+            var logger = GenericServiceProvider.GetService<IBUTRLogger<JsonSettingsPreset>>() ?? new DefaultBUTRLogger<JsonSettingsPreset>();
             _jsonSerializerSettings = new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,

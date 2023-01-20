@@ -19,6 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "root", "root", "{6DA59EA7-D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{013467E6-5CC6-4899-B549-EC5441CB3AB6}"
 	ProjectSection(SolutionItems) = preProject
+		MCM.Source.props = MCM.Source.props
 		nuget.config = nuget.config
 	EndProjectSection
 EndProject
@@ -118,7 +119,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MCMv5", "MCMv5", "{19C69FE7
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCM.Source", "MCM.Source\MCM.Source.csproj", "{4D950B9D-1963-440B-9498-8D49496097DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MCM.UI.Adapter.MCMv5", "MCM.UI.Adapter.MCMv5\MCM.UI.Adapter.MCMv5.csproj", "{8E8BE413-2F01-49D3-8D8C-1E5C90C16105}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MCM.UI.Adapter.MCMv5", "MCM.UI.Adapter.MCMv5\MCM.UI.Adapter.MCMv5.csproj", "{8E8BE413-2F01-49D3-8D8C-1E5C90C16105}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

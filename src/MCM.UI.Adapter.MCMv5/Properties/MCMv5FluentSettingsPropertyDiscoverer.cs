@@ -26,7 +26,7 @@ namespace MCM.UI.Adapter.MCMv5.Properties
         {
             var obj = settings switch
             {
-                IWrapper wrapper => wrapper.Object,
+                IWrapper { Object: { } obj2 } => obj2,
                 _ => settings
             };
 

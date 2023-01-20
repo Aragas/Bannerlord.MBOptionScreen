@@ -56,9 +56,9 @@ namespace MCM.UI.Dropdown
         {
             HasSingleItem = true;
         }
-        public MCMSelectorVM(IEnumerable<object> list, int selectedIndex, Action<MCMSelectorVM<TSelectorItemVM>>? onChange)
+        public MCMSelectorVM(IEnumerable<object> list, int selectedIndex)
         {
-            Refresh(list, selectedIndex, onChange);
+            Refresh(list, selectedIndex);
         }
 
 
@@ -70,7 +70,7 @@ namespace MCM.UI.Dropdown
             ItemList.ApplyActionOnAllItems(x => x.RefreshValues());
         }
 
-        public void Refresh(IEnumerable<object> list, int selectedIndex, Action<MCMSelectorVM<TSelectorItemVM>>? onChange)
+        public void Refresh(IEnumerable<object> list, int selectedIndex)
         {
             ItemList.Clear();
 

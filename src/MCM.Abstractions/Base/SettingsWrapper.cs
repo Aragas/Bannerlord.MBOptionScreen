@@ -66,10 +66,12 @@ namespace MCM.Abstractions.Base.Global
         }
 
         /// <inheritdoc/>
-        public object Object { get; }
+        public object? Object { get; }
 
-        protected SettingsWrapper(object @object)
+        protected SettingsWrapper(object? @object)
         {
+            if (@object is null) return;
+
             Object = @object;
             var type = @object.GetType();
 
@@ -86,8 +88,8 @@ namespace MCM.Abstractions.Base.Global
             _methodCopyAsNewDelegate = AccessTools2.GetDelegate<CopyAsNewDelegate>(@object, type, nameof(CopyAsNew));
         }
 
-        protected abstract BaseSettings Create(object @object);
-        protected abstract ISettingsPreset CreatePreset(object @object);
+        protected abstract BaseSettings Create(object? @object);
+        protected abstract ISettingsPreset CreatePreset(object? @object);
 
         /// <inheritdoc/>
         public override void OnPropertyChanged([CallerMemberName] string? propertyName = null) =>

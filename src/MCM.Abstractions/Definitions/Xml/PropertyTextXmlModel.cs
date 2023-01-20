@@ -16,6 +16,6 @@ namespace MCM.Abstractions.Xml
     class PropertyTextXmlModel : PropertyBaseXmlModel, IPropertyDefinitionText
     {
         [XmlElement("Value")]
-        public string Value { get; set; }
+        public string Value { get; set; } = string.Empty;
     }
 }

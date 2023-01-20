@@ -31,7 +31,7 @@ namespace MCM.Implementation
 
         public override bool CanConvert(Type objectType) => SettingsUtils.IsForGenericDropdown(objectType);
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
             var token = JToken.FromObject(new SelectedIndexWrapper(value).SelectedIndex);
             token.WriteTo(writer);

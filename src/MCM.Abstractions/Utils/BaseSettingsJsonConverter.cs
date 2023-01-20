@@ -33,7 +33,7 @@ namespace MCM.Implementation
 
         public override bool CanConvert(Type objectType) => objectType.IsSubclassOf(typeof(BaseSettings));
 
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
             if (value is not BaseSettings settings)
                 return;

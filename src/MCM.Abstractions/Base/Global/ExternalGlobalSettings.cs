@@ -57,15 +57,15 @@ namespace MCM.Abstractions.Base.Global
                 subGroupDelimiter,
                 propertyChanged,
                 propGroups,
-                new List<ISettingsPresetBuilder>())
-            {
-                FilePath = filePath
-            };
+                new List<ISettingsPresetBuilder>(), filePath);
         }
 
         public string FilePath { get; init; }
 
-        private ExternalGlobalSettings(string id, string displayName, string folderName, string subFolder, string format, int uiVersion, char subGroupDelimiter, PropertyChangedEventHandler? onPropertyChanged, IEnumerable<SettingsPropertyGroupDefinition> settingPropertyGroups, IEnumerable<ISettingsPresetBuilder> presets)
-            : base(id, displayName, folderName, subFolder, format, uiVersion, subGroupDelimiter, onPropertyChanged, settingPropertyGroups, presets) { }
+        private ExternalGlobalSettings(string id, string displayName, string folderName, string subFolder, string format, int uiVersion, char subGroupDelimiter, PropertyChangedEventHandler? onPropertyChanged, IEnumerable<SettingsPropertyGroupDefinition> settingPropertyGroups, IEnumerable<ISettingsPresetBuilder> presets, string filePath)
+            : base(id, displayName, folderName, subFolder, format, uiVersion, subGroupDelimiter, onPropertyChanged, settingPropertyGroups, presets)
+        {
+            FilePath = filePath;
+        }
     }
 }

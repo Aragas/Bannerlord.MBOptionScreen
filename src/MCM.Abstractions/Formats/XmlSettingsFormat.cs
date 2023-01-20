@@ -30,12 +30,12 @@ namespace MCM.Implementation
             var path = Path.Combine(directoryPath, $"{filename}.xml");
 
             var content = SaveJson(settings);
-            var xmlDocument = JsonConvert.DeserializeXmlNode(content, settings is IWrapper wrapper1 ? wrapper1.Object.GetType().Name : settings.GetType().Name);
+            var xmlDocument = JsonConvert.DeserializeXmlNode(content, settings is IWrapper { Object: { } obj } ? obj.GetType().Name : settings.GetType().Name);
 
             var file = new FileInfo(path);
             file.Directory?.Create();
             var writer = file.CreateText();
-            xmlDocument.Save(writer);
+            xmlDocument?.Save(writer);
             writer.Dispose();
 
             return true;
