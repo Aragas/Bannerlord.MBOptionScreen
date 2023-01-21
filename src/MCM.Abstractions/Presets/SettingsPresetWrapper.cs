@@ -42,7 +42,7 @@ namespace MCM.Abstractions
         protected SettingsPresetWrapper(object? @object)
         {
             if (@object is null) return;
-            
+
             Object = @object;
             var type = @object.GetType();
 
