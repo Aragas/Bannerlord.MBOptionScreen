@@ -5,14 +5,13 @@ using BUTR.DependencyInjection.Logger;
 using MCM.Abstractions;
 using MCM.Abstractions.Properties;
 using MCM.Internal.Extensions;
+using MCM.LightInject;
 
 using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
 
 using ServiceCollectionExtensions = BUTR.DependencyInjection.Extensions.ServiceCollectionExtensions;
-
-using MCM.LightInject;
 
 namespace MCM
 {

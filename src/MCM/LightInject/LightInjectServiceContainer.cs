@@ -53,7 +53,7 @@ namespace MCM.LightInject
             _serviceContainer.RegisterSingleton(serviceType, _ => factory());
             return this;
         }
-        
+
 
         /// <inheritdoc />
         public IGenericServiceContainer RegisterScoped<TService>() where TService : class
@@ -96,7 +96,7 @@ namespace MCM.LightInject
             _serviceContainer.RegisterScoped(serviceType, _ => factory());
             return this;
         }
-        
+
 
         /// <inheritdoc />
         public IGenericServiceContainer RegisterTransient<TService>() where TService : class
@@ -104,7 +104,7 @@ namespace MCM.LightInject
             _serviceContainer.RegisterTransient<TService>();
             return this;
         }
-      
+
         /// <inheritdoc />
         public IGenericServiceContainer RegisterTransient<TService>(Func<IGenericServiceFactory, TService> factory) where TService : class
         {
@@ -118,7 +118,7 @@ namespace MCM.LightInject
             _serviceContainer.RegisterTransient<TService, TImplementation>();
             return this;
         }
-        
+
         /// <inheritdoc />
         public IGenericServiceContainer RegisterTransient<TService, TImplementation>(Func<IGenericServiceFactory, TImplementation> factory) where TService : class where TImplementation : class, TService
         {
@@ -132,7 +132,7 @@ namespace MCM.LightInject
             _serviceContainer.RegisterTransient(serviceType, implementationType);
             return this;
         }
-        
+
         /// <inheritdoc />
         public IGenericServiceContainer RegisterTransient(Type serviceType, Func<object> factory)
         {
