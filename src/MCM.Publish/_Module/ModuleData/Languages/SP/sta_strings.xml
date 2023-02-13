@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/ModuleLanguage.xsd">
+  <tags>
+    <tag language="Español"/>
+  </tags>
+  <strings>
+    <string id="MCMSettings_Name" text="Mod Configuration Menu {VERSION}"/>
+    <string id="BaseSettings_Default" text="Por defecto"/>
+    <string id="SettingsPropertyGroupDefinition_Misc" text="Miscalínea"/>
+    <!-- UI -->
+    <string id="dzeWx4xSfR" text="¡Advertencia de MCM!"/>
+    <string id="FE6ya1gzZR" text="¡{REQUIRED_MODULE} módulo no fue encontrado!"/>
+    <string id="EvI6KPAqTT" text="¡Módulo incompatible {DENIED_MODULE} fue encontrado!"/>
+    <string id="5G9zffrgMh" text="¡{MODULE} está cargado antes de {DEPENDENT_MODULE}!{NL}¡Asegúrate de que {MODULE} está cargado después!"/>
+    <string id="UZ8zfvudMs" text="¡{MODULE} está cargado después de {DEPENDENT_MODULE}!{NL}¡Asegúrate de que {MODULE} está cargado antes!"/>
+    <string id="FcR4BXnhx8" text="¡{MODULE} tiene directivas de orden de mod mutuamente excluyentes especificadas para {REQUIRED_MODULE}!"/>
+    <string id="eXs6FLm5DP" text="Se recomienda encarecidamente terminar el juego ahora. ¿Quieres terminarlo?"/>
+    <string id="fGt6Gthg5y" text="¡Esta versión de MCM está destinada para v1.0.0 y superiores! ¡Estás ejecutando {GAMEVERSION}!"/>
+
+    <string id="MCMUISettings_Name" text="MCM UI {VERSION}"/>
+    <string id="ModOptionsVM_NotSpecified" text="Nombre del mod no especificado"/>
+    <string id="ModOptionsVM_Name" text="Opciones del mod"/>
+    <string id="ModOptionsVM_ChangeToPreset" text="Cambiar a preestablecido '{PRESET}'"/>
+    <string id="ModOptionsVM_Discard" text="¿Estás seguro de que quieres descartar los actuales ajustes de {NAME} a '{ITEM}'?"/>
+    <string id="ModOptionsVM_RestartTitle" text="El juego necesita reiniciarse"/>
+    <string id="ModOptionsVM_RestartDesc" text="El juego necesita reiniciarse para aplicar los cambios de los ajustes de los mods. ¿Quieres cerrar el juego ahora?"/>
+    <string id="SettingsPropertyGroupVM_Disabled" text="{GROUPNAME} (Deshabilitado)"/>
+    <string id="SettingsVM_Custom" text="Personalizado"/>
+    <string id="ModOptionsPageView_Mods" text="Mods"/>
+    <string id="MainMenu_ModOptions" text="Opciones del mod"/>
+    <string id="EscapeMenu_ModOptions" text="Opciones del mod"/>
+    <string id="MCMUISettings_Name" text="MCM UI Impl. {VERSION}"/>
+    <string id="MCMUISettings_Name_General" text="General"/>
+    <string id="MCMUISettings_Name_HideMainMenuEntry" text="Ocultar entrada del menú principal"/>
+    <string id="MCMUISettings_Name_HideMainMenuEntryDesc" text="Oculta la entrada del menú principal de MCM 'Opciones del mod'."/>
+    <string id="ButterLibSettings_Name" text="ButterLib {VERSION}"/>
+    <string id="ButterLibSettings_Name_Logging" text="Registro"/>
+    <string id="ButterLibSettings_Name_LogLevel" text="Nivel de registro"/>
+    <string id="ButterLibSettings_Name_LogLevelDesc" text="Nivel de registros a escribir."/>
+  </strings>
+</base>
