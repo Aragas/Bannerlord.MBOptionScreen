@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
-    <DefineConstants>$(DefineConstants);</DefineConstants>
+    <DefineConstants>$(DefineConstants);HARMONYEXTENSIONS_HARMONYX</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>

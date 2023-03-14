@@ -6,7 +6,7 @@
     <Authors>Aragas, mipen</Authors>
     <AssemblyName>MCMv5</AssemblyName>
     <Configurations>Debug;Release</Configurations>
-    <DefineConstants>$(DefineConstants);BUTRDEPENDENCYINJECTION_PUBLIC;BANNERLORDMCM_PUBLIC;BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE;BANNERLORDMCM_NOT_SOURCE;</DefineConstants>
+    <DefineConstants>$(DefineConstants);BUTRDEPENDENCYINJECTION_PUBLIC;BANNERLORDMCM_PUBLIC;BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE;BANNERLORDMCM_NOT_SOURCE;HARMONYEXTENSIONS_HARMONYX</DefineConstants>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 

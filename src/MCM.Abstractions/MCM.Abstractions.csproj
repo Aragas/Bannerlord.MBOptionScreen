@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <DefineConstants>$(DefineConstants);BUTRDEPENDENCYINJECTION_PUBLIC;</DefineConstants>
+    <DefineConstants>$(DefineConstants);BUTRDEPENDENCYINJECTION_PUBLIC</DefineConstants>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   

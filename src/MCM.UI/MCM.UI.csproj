@@ -7,6 +7,7 @@
     <AssemblyName>MCMv5.UI</AssemblyName>
     <RootNamespace>MCM.UI</RootNamespace>
     <Configurations>Debug;Release</Configurations>
+    <DefineConstants>$(DefineConstants);HARMONYEXTENSIONS_HARMONYX</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
