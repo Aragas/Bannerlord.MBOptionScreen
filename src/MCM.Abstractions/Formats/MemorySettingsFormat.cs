@@ -1,7 +1,7 @@
 ﻿using MCM.Abstractions.Base;
+using MCM.Abstractions.GameFeatures;
 
 using System.Collections.Generic;
-using System.IO;
 
 namespace MCM.Abstractions
 {
@@ -21,17 +21,17 @@ namespace MCM.Abstractions
         public IEnumerable<string> FormatTypes { get; } = new[] { "memory" };
 
         /// <inheritdoc/>
-        public BaseSettings Load(BaseSettings settings, string directoryPath, string filename)
+        public BaseSettings Load(BaseSettings settings, GameDirectory directory, string filename)
         {
-            if (_settings.TryGetValue(Path.Combine(directoryPath, filename), out var sett) || !ReferenceEquals(settings, sett))
+            if (_settings.TryGetValue(directory.Path + filename, out var sett) || !ReferenceEquals(settings, sett))
                 SettingsUtils.OverrideSettings(settings, sett!);
             return settings;
         }
 
         /// <inheritdoc/>
-        public bool Save(BaseSettings settings, string directoryPath, string filename)
+        public bool Save(BaseSettings settings, GameDirectory directory, string filename)
         {
-            _settings[Path.Combine(directoryPath, filename)] = settings;
+            _settings[directory.Path + filename] = settings;
             return true;
         }
     }

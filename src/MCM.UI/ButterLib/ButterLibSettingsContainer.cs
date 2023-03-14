@@ -1,8 +1,11 @@
 ﻿using Bannerlord.BUTR.Shared.Helpers;
 using Bannerlord.ButterLib;
 
+using BUTR.DependencyInjection;
+
 using MCM.Abstractions.Base;
 using MCM.Abstractions.FluentBuilder;
+using MCM.Abstractions.GameFeatures;
 using MCM.Abstractions.Global;
 using MCM.Common;
 using MCM.Implementation;
@@ -19,12 +22,8 @@ namespace MCM.UI.ButterLib
 {
     internal sealed class ButterLibSettingsContainer : BaseSettingsContainer<BaseSettings>, IGlobalSettingsContainer
     {
-        protected override string RootFolder { get; }
-
         public ButterLibSettingsContainer(ILogger<ButterLibSettingsContainer> logger)
         {
-            RootFolder = Path.Combine(PlatformFileHelperPCExtended.GetDirectoryFullPath(EngineFilePaths.ConfigsPath), "ModSettings");
-
             var minLogLevelProp = new StorageRef<Dropdown<string>>(new Dropdown<string>(new[]
             {
                 $"{{=2Tp85Cpa}}{LogLevel.Trace}",

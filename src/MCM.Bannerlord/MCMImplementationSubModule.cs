@@ -1,6 +1,4 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
-
-using BUTR.DependencyInjection;
+﻿using BUTR.DependencyInjection;
 using BUTR.DependencyInjection.Extensions;
 
 using MCM.Abstractions;
@@ -77,7 +75,7 @@ namespace MCM.Internal
 
                 services.AddSingleton<IGameEventListener, MCMImplementationSubModule>(sp => this);
                 services.AddSingleton<ICampaignIdProvider, CampaignIdProvider>();
-                services.AddSingleton<IPathProvider, PathProvider>();
+                services.AddSingleton<IFileSystemProvider, FileSystemProvider>();
                 services.AddScoped<PerSaveCampaignBehavior>();
                 services.AddTransient<IPerSaveSettingsProvider, PerSaveCampaignBehavior>(sp => sp.GetService<PerSaveCampaignBehavior>());
             }

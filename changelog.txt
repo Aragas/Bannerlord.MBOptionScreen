@@ -1,4 +1,16 @@
 ---------------------------------------------------------------------------------------------------
+Version: 5.6.0
+Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0
+* Increasing minor version due small breaking API changes to fix the Xbox version
+* Since this is not used often, we believe that it's better than releasing MCMv6
+* Breaking API change for File System related interfaces like:
+  * IPathProvider was removed and replaced with IFileSystemProvider
+  * ISettingsFormat.Save
+  * ISettingsFormat.Load
+  * BaseSettingsContainer<TSettings>.RootFolder
+* Mods that used those interfaces need to recompile against v5.6.0 ASAP or the game will crash
+* If you haven't used directly the interfaces, you won't have any issues with v5.6.0.
+---------------------------------------------------------------------------------------------------
 Version: 5.5.5
 Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0
 * Adapted UI to v1.1.0

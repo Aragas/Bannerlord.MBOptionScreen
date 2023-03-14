@@ -1,7 +1,8 @@
-﻿using MCM.Abstractions.Base.Global;
-using MCM.Abstractions.Global;
+﻿using BUTR.DependencyInjection;
 
-using System.IO;
+using MCM.Abstractions.Base.Global;
+using MCM.Abstractions.GameFeatures;
+using MCM.Abstractions.Global;
 
 namespace MCM.Implementation.Global
 {
@@ -11,11 +12,12 @@ namespace MCM.Implementation.Global
     internal abstract class BaseGlobalSettingsContainer : BaseSettingsContainer<GlobalSettings>, IGlobalSettingsContainer
     {
         /// <inheritdoc/>
-        protected override string RootFolder { get; }
+        protected override GameDirectory RootFolder { get; }
 
         protected BaseGlobalSettingsContainer()
         {
-            RootFolder = Path.Combine(base.RootFolder, "Global");
+            var fileSystemProvider = GenericServiceProvider.GetService<IFileSystemProvider>();
+            RootFolder = fileSystemProvider?.GetDirectory(base.RootFolder, "Global") ?? base.RootFolder;
         }
     }
 }

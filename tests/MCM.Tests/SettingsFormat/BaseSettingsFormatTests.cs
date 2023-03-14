@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 
 using v5::MCM.Abstractions;
 using v5::MCM.Abstractions.Base.Global;
+using v5::MCM.Abstractions.GameFeatures;
 
 namespace MCM.Tests.SettingsFormat
 {
@@ -26,7 +27,7 @@ namespace MCM.Tests.SettingsFormat
 
         protected ISettingsFormat Format { get; set; } = default!;
         protected FluentGlobalSettings Settings { get; set; } = default!;
-        protected string DirectoryPath { get; set; } = default!;
+        protected GameDirectory Directory { get; set; } = default!;
         protected string Filename { get; set; } = default!;
 
         [SetUp]
