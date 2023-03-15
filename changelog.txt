@@ -1,6 +1,6 @@
 ---------------------------------------------------------------------------------------------------
 Version: 5.6.0
-Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0
+Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1
 * Increasing minor version due small breaking API changes to fix the Xbox version
 * Since this is not used often, we believe that it's better than releasing MCMv6
 * Breaking API change for File System related interfaces like:
