@@ -34,7 +34,6 @@ namespace MCM.UI.GUI.ViewModels
         private string _doneButtonText = string.Empty;
         private string _cancelButtonText = string.Empty;
         private string _modsText = string.Empty;
-        private string _selectedDisplayName = string.Empty;
         private string _hintText = string.Empty;
         private SettingsVM? _selectedMod;
         private string _searchText = string.Empty;
@@ -70,11 +69,11 @@ namespace MCM.UI.GUI.ViewModels
                         if (SelectedMod?.PresetsSelector is { } modPresetsSelector)
                         {
                             modPresetsSelector.PropertyChanged += OnModPresetsSelectorChange;
-                            PresetsSelectorCopy.Refresh(SelectedMod.PresetsSelector.ItemList.Select(x => x.OriginalItem), SelectedMod.PresetsSelector.SelectedIndex, null);
+                            PresetsSelectorCopy.Refresh(SelectedMod.PresetsSelector.ItemList.Select(x => x.OriginalItem), SelectedMod.PresetsSelector.SelectedIndex);
                         }
                         else
                         {
-                            PresetsSelectorCopy.Refresh(Enumerable.Empty<PresetKey>(), -1, null);
+                            PresetsSelectorCopy.Refresh(Enumerable.Empty<PresetKey>(), -1);
                         }
                     });
                     OnPropertyChanged(nameof(IsPresetsSelectorVisible));
@@ -113,7 +112,7 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
         [DataSourceProperty]
-        public MCMSelectorVM<MCMSelectorItemVM<PresetKey>> PresetsSelectorCopy { get; } = new(Enumerable.Empty<PresetKey>(), -1, null);
+        public MCMSelectorVM<MCMSelectorItemVM<PresetKey>> PresetsSelectorCopy { get; } = new(Enumerable.Empty<PresetKey>(), -1);
         [DataSourceProperty]
         public bool IsPresetsSelectorVisible => SelectedMod is not null;
         /// <summary>

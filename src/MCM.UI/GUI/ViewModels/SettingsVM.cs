@@ -44,7 +44,7 @@ namespace MCM.UI.GUI.ViewModels
                 _cachedPresets.Add(new PresetKey(preset), preset.LoadPreset());
 
             var presets = new List<PresetKey> { new("custom", "{=SettingsVM_Custom}Custom") }.Concat(_cachedPresets.Keys);
-            PresetsSelector = new MCMSelectorVM<MCMSelectorItemVM<PresetKey>>(presets, -1, null);
+            PresetsSelector = new MCMSelectorVM<MCMSelectorItemVM<PresetKey>>(presets, -1);
             PresetsSelector.ItemList[0].CanBeSelected = false;
 
             RecalculateIndex();

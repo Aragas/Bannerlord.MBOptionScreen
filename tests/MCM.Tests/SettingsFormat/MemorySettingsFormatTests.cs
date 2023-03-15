@@ -2,11 +2,9 @@
 
 using NUnit.Framework;
 
-using System;
-using System.IO;
-
 using v5::MCM.Abstractions;
 using v5::MCM.Abstractions.FluentBuilder;
+using v5::MCM.Abstractions.GameFeatures;
 using v5::MCM.Common;
 
 namespace MCM.Tests.SettingsFormat
@@ -36,7 +34,7 @@ namespace MCM.Tests.SettingsFormat
                     .AddText("prop_4", "Test", new ProxyRef<string>(() => _stringValue, o => _stringValue = o), null))
                 .BuildAsGlobal();
 
-            DirectoryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Settings.FolderName, Settings.SubFolder);
+            Directory = new GameDirectory(PlatformDirectoryType.Temporary, string.Empty);
             Filename = Settings.Id;
         }
 
@@ -48,8 +46,8 @@ namespace MCM.Tests.SettingsFormat
             Assert.AreEqual(0F, _floatValue);
             Assert.AreEqual(string.Empty, _stringValue);
 
-            Format.Save(Settings, DirectoryPath, Filename);
-            Format.Load(Settings, DirectoryPath, Filename);
+            Format.Save(Settings, Directory, Filename);
+            Format.Load(Settings, Directory, Filename);
 
             Assert.AreEqual(false, _boolValue);
             Assert.AreEqual(0, _intValue);
@@ -62,8 +60,8 @@ namespace MCM.Tests.SettingsFormat
             _floatValue = 5.3453F;
             _stringValue = "Test";
 
-            Format.Save(Settings, DirectoryPath, Filename);
-            Format.Load(Settings, DirectoryPath, Filename);
+            Format.Save(Settings, Directory, Filename);
+            Format.Load(Settings, Directory, Filename);
 
             Assert.AreEqual(true, _boolValue);
             Assert.AreEqual(5, _intValue);
@@ -79,8 +77,8 @@ namespace MCM.Tests.SettingsFormat
             _floatValue = 5.3453F;
             _stringValue = "Test";
 
-            Format.Save(Settings, DirectoryPath, Filename);
-            Format.Load(Settings, DirectoryPath, Filename);
+            Format.Save(Settings, Directory, Filename);
+            Format.Load(Settings, Directory, Filename);
         }
     }
 }

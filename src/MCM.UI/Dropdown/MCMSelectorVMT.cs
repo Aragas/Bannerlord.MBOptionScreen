@@ -8,8 +8,6 @@ namespace MCM.UI.Dropdown
         where TSelectorItemVM : MCMSelectorItemVM<TSelectorItemVMValueType>
         where TSelectorItemVMValueType : class
     {
-        public static readonly MCMSelectorVM<TSelectorItemVM, TSelectorItemVMValueType> Empty = new(Enumerable.Empty<TSelectorItemVMValueType>(), -1);
-
         public MCMSelectorVM(IEnumerable<TSelectorItemVMValueType> list, int selectedIndex)
         {
             Refresh(list, selectedIndex);

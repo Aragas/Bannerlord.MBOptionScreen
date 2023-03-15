@@ -14,7 +14,7 @@ namespace MCM.UI.GUI.ViewModels
 {
     internal sealed partial class SettingsPropertyVM : ViewModel
     {
-        private MCMSelectorVM<MCMSelectorItemVM<TextObject>, TextObject>? _selectorVMWrapper;
+        private MCMSelectorVM<MCMSelectorItemVM<TextObject>>? _selectorVMWrapper;
 
         [DataSourceProperty]
         public bool IsDropdown => IsDropdownDefault || IsDropdownCheckbox;
@@ -24,9 +24,9 @@ namespace MCM.UI.GUI.ViewModels
         public bool IsDropdownCheckbox => SettingType == SettingType.Dropdown && SettingsUtils.IsForCheckboxDropdown(PropertyReference.Value);
 
         [DataSourceProperty]
-        public MCMSelectorVM<MCMSelectorItemVM<TextObject>, TextObject> DropdownValue => _selectorVMWrapper ??= IsDropdown
+        public MCMSelectorVM<MCMSelectorItemVM<TextObject>> DropdownValue => _selectorVMWrapper ??= IsDropdown
             ? new MCMSelectorVM<MCMSelectorItemVM<TextObject>, TextObject>(UISettingsUtils.GetDropdownValues(PropertyReference).Select(x => new TextObject(x.ToString())), new SelectedIndexWrapper(PropertyReference.Value).SelectedIndex)
-            : MCMSelectorVM<MCMSelectorItemVM<TextObject>, TextObject>.Empty;
+            : MCMSelectorVM<MCMSelectorItemVM<TextObject>>.Empty;
 
         private void DropdownValue_PropertyChanged(object? obj, PropertyChangedEventArgs args)
         {

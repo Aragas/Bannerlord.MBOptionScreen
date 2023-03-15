@@ -16,9 +16,9 @@ namespace MCM.UI.Adapter.MCMv5.Base
     {
         public override string DiscoveryType => "mcm_v5_fluent";
 
-        public MCMv5FluentSettingsWrapper(object @object) : base(@object) { }
+        public MCMv5FluentSettingsWrapper(object? @object) : base(@object) { }
 
-        protected override BaseSettings Create(object @object) => new MCMv5FluentSettingsWrapper(@object);
-        protected override ISettingsPreset CreatePreset(object @object) => new MCMv5FluentSettingsPresetWrapper(@object);
+        protected override BaseSettings Create(object? @object) => new MCMv5FluentSettingsWrapper(@object);
+        protected override ISettingsPreset CreatePreset(object? @object) => new MCMv5FluentSettingsPresetWrapper(@object);
     }
 }

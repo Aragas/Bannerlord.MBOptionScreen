@@ -27,9 +27,7 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
-using System.Windows.Forms;
 
-using TaleWorlds.Library;
 using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.ScreenSystem;
@@ -44,8 +42,6 @@ namespace MCM.UI
 @"{=eXs6FLm5DP}It's strongly recommended to terminate the game now. Do you wish to terminate it?";
         private const string SWarningTitle =
 @"{=dzeWx4xSfR}Warning from MCM!";
-        private const string SMessageWrongGameVersion =
-@"{=fGt6Gthg5y}This version of MCM is intended for v1.0.0 and higher! You are running {GAMEVERSION}!";
 
 
         private static readonly UIExtender Extender = new("MCM.UI");
@@ -60,7 +56,6 @@ namespace MCM.UI
         {
             MCMSubModule.Instance?.OverrideServiceContainer(new ButterLibServiceContainer());
 
-            ValidateGameVersion();
             ValidateLoadOrder();
         }
 
@@ -155,25 +150,6 @@ namespace MCM.UI
             }
         }
 
-        private static void ValidateGameVersion()
-        {
-            var e172 = ApplicationVersionHelper.TryParse("e1.7.2", out var e172Var) ? e172Var : ApplicationVersion.Empty;
-            if (ApplicationVersionHelper.GameVersion() is { } gameVersion && gameVersion < e172)
-            {
-                var sb = new StringBuilder();
-                sb.AppendLine(new TextObject(SMessageWrongGameVersion, new() { { "GAMEVERSION", ApplicationVersionHelper.ToString(gameVersion) } }).ToString());
-                sb.AppendLine();
-                sb.AppendLine(new TextObject(SMessageContinue).ToString());
-                switch (MessageBox.Show(sb.ToString(),
-                            new TextObject(SWarningTitle).ToString(), MessageBoxButtons.YesNo,
-                            MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, (MessageBoxOptions) 0x40000))
-                {
-                    case DialogResult.Yes:
-                        Environment.Exit(1);
-                        break;
-                }
-            }
-        }
         private static void ValidateLoadOrder()
         {
             var loadedModules = ModuleInfoHelper.GetLoadedModules().ToList();
@@ -185,7 +161,7 @@ namespace MCM.UI
                 sb.AppendLine(report);
                 sb.AppendLine();
                 sb.AppendLine(new TextObject(SMessageContinue).ToString());
-                switch (MessageBox.Show(sb.ToString(),
+                switch (MessageBoxWrapper.Show(sb.ToString(),
                             new TextObject(SWarningTitle).ToString(), MessageBoxButtons.YesNo,
                             MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, (MessageBoxOptions) 0x40000))
                 {

@@ -20,7 +20,7 @@ namespace MCM.Common
         public static Dropdown<T> Empty => new(Enumerable.Empty<T>(), 0);
 
         private int _selectedIndex;
-        private T _selectedValue;
+        private T? _selectedValue;
 
         public event PropertyChangedEventHandler? PropertyChanged;
 

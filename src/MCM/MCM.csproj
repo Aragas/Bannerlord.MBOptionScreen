@@ -2,11 +2,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net472</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Aragas, mipen</Authors>
     <AssemblyName>MCMv5</AssemblyName>
     <Configurations>Debug;Release</Configurations>
-    <DefineConstants>$(DefineConstants);BUTRDEPENDENCYINJECTION_PUBLIC;BANNERLORDMCM_PUBLIC;BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE;BANNERLORDMCM_NOT_SOURCE;</DefineConstants>
+    <DefineConstants>$(DefineConstants);BUTRDEPENDENCYINJECTION_PUBLIC;BANNERLORDMCM_PUBLIC;BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE;BANNERLORDMCM_NOT_SOURCE;HARMONYEXTENSIONS_HARMONYX</DefineConstants>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
@@ -25,16 +25,15 @@
   <!--NuGet Package-->
 
   <ItemGroup>
-    <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" IncludeAssets="compile" />
+    <PackageReference Include="HarmonyX" Version="$(HarmonyVersion)" IncludeAssets="compile" />
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" PrivateAssets="all" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" PrivateAssets="all" IncludeAssets="compile" />
 
     <PackageReference Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="Bannerlord.ModuleManager.Source" Version="$(BUTRModuleManagerVersion)" PrivateAssets="all" />
     <PackageReference Include="BUTR.DependencyInjection" Version="$(BUTRDependencyInjectionVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-    <PackageReference Include="BUTR.DependencyInjection.LightInject" Version="$(BUTRDependencyInjectionVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
-    <PackageReference Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="LightInject.Source" Version="$(LightInjectVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+    <PackageReference Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
   </ItemGroup>
 
   <ItemGroup>
@@ -48,4 +47,4 @@
     <Compile Include="..\MCM.Implementation\**\*.cs" Exclude="..\MCM.Implementation\obj\**\*;..\MCM.Implementation\bin\**\*" LinkBase="Implementation" />
   </ItemGroup>
 
-</Project>
+</Project> 

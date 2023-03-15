@@ -49,9 +49,9 @@ namespace MCM.UI.Adapter.MCMv5.Providers
 
         protected override bool IsSettings(BaseSettings settings, [NotNullWhen(true)] out object? wrapped)
         {
-            if (settings is (MCMv5AttributeSettingsWrapper or MCMv5FluentSettingsWrapper) and IWrapper wrapper)
+            if (settings is (MCMv5AttributeSettingsWrapper or MCMv5FluentSettingsWrapper) and IWrapper { Object: { } obj })
             {
-                wrapped = wrapper.Object;
+                wrapped = obj;
                 return true;
             }
 
@@ -62,10 +62,10 @@ namespace MCM.UI.Adapter.MCMv5.Providers
         public override IEnumerable<ISettingsPreset> GetPresets(string settingsId)
         {
             var settings = GetSettings(settingsId);
-            if (settings is not MCMv5AttributeSettingsWrapper or MCMv5FluentSettingsWrapper || settings is not IWrapper wrapper || _methodGetPresetsDelegate is null)
+            if (settings is not MCMv5AttributeSettingsWrapper or MCMv5FluentSettingsWrapper || settings is not IWrapper { Object: { } obj } || _methodGetPresetsDelegate is null)
                 return Enumerable.Empty<ISettingsPreset>();
 
-            var type = wrapper.Object.GetType();
+            var type = obj.GetType();
             var presets = _methodGetPresetsDelegate.Invoke(settingsId).OfType<object>();
 
             if (ReflectionUtils.ImplementsOrImplementsEquivalent(type, "MCM.Abstractions.Base.Global.FluentGlobalSettings"))

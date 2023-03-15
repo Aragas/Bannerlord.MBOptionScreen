@@ -32,8 +32,10 @@ namespace MCM.UI.Adapter.MCMv5.Properties
             }
         }
 
-        private static IEnumerable<ISettingsPropertyDefinition> GetPropertiesInternal(object @object)
+        private static IEnumerable<ISettingsPropertyDefinition> GetPropertiesInternal(object? @object)
         {
+            if (@object is null) yield break;
+
             var type = @object.GetType();
             var subGroupDelimiter = AccessTools2.Property(type, "SubGroupDelimiter")?.GetValue(@object) as char? ?? '/';
             foreach (var property in type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance))

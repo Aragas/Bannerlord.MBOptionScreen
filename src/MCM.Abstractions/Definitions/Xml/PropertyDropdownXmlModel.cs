@@ -19,6 +19,6 @@ namespace MCM.Abstractions.Xml
         public int SelectedIndex { get; set; }
 
         [XmlArray("Values")]
-        public string[] Values { get; set; }
+        public string[] Values { get; set; } = Array.Empty<string>();
     }
 }

@@ -1,7 +1,9 @@
-﻿using BUTR.DependencyInjection.Logger;
+﻿using BUTR.DependencyInjection;
+using BUTR.DependencyInjection.Logger;
 
 using MCM.Abstractions;
 using MCM.Abstractions.Base;
+using MCM.Abstractions.GameFeatures;
 
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -9,8 +11,8 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace MCM.Implementation
 {
@@ -81,45 +83,38 @@ namespace MCM.Implementation
             return true;
         }
 
-        public virtual bool Save(BaseSettings settings, string directoryPath, string filename)
+        public virtual bool Save(BaseSettings settings, GameDirectory directory, string filename)
         {
-            var path = Path.Combine(directoryPath, $"{filename}.json");
-
+            if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider) return false;
+            if (fileSystemProvider.GetOrCreateFile(directory, $"{filename}.json") is not { } file) return false;
+            
             var content = SaveJson(settings);
 
             try
             {
-                var file = new FileInfo(path);
-                file.Directory?.Create();
-                using var writer = file.CreateText();
-                writer.Write(content);
+                return fileSystemProvider.WriteData(file, Encoding.UTF8.GetBytes(content));
             }
             catch (Exception)
             {
                 return false;
             }
-
-            return true;
         }
-        public virtual BaseSettings Load(BaseSettings settings, string directoryPath, string filename)
+        public virtual BaseSettings Load(BaseSettings settings, GameDirectory directory, string filename)
         {
-            var path = Path.Combine(directoryPath, $"{filename}.json");
-            var file = new FileInfo(path);
-            if (file.Exists)
+            if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider) return settings;
+            if (fileSystemProvider.GetFile(directory, $"{filename}.json") is not { } file) return settings;
+            if (fileSystemProvider.ReadData(file) is not { } data) 
             {
-                try
-                {
-                    using var reader = file.OpenText();
-                    var content = reader.ReadToEnd();
-                    if (!TryLoadFromJson(ref settings, content))
-                        Save(settings, directoryPath, filename);
-                }
-                catch (Exception) { }
+                Save(settings, directory, filename);
+                return settings;
             }
-            else
+
+            try
             {
-                Save(settings, directoryPath, filename);
+                if (!TryLoadFromJson(ref settings, Encoding.UTF8.GetString(data)))
+                    Save(settings, directory, filename);
             }
+            catch (Exception) { }
 
             return settings;
         }

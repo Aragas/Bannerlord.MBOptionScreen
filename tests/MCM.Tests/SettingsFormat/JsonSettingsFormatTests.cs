@@ -8,6 +8,7 @@ using System.IO;
 using v5::BUTR.DependencyInjection.Logger;
 
 using v5::MCM.Abstractions.FluentBuilder;
+using v5::MCM.Abstractions.GameFeatures;
 using v5::MCM.Common;
 using v5::MCM.Implementation;
 
@@ -15,12 +16,14 @@ namespace MCM.Tests.SettingsFormat
 {
     public class JsonSettingsFormatTests : BaseSettingsFormatTests
     {
-        private static string Expected { get; } = @"{
-  ""prop_4"": ""Test"",
-  ""prop_3"": 5.3453,
-  ""prop_2"": 5,
-  ""prop_1"": true
-}";
+        private static string Expected { get; } = """
+{
+  "prop_1": true,
+  "prop_2": 5,
+  "prop_3": 5.3453,
+  "prop_4": "Test"
+}
+""";
 
         [OneTimeSetUp]
         public void OneTimeSetUp1()
@@ -45,7 +48,7 @@ namespace MCM.Tests.SettingsFormat
                     .AddText("prop_4", "Test", new ProxyRef<string>(() => _stringValue, o => _stringValue = o), null))
                 .BuildAsGlobal();
 
-            DirectoryPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Settings.FolderName, Settings.SubFolder);
+            Directory = new GameDirectory(PlatformDirectoryType.Temporary, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, Settings.FolderName, Settings.SubFolder));
             Filename = Settings.Id;
         }
 
@@ -57,8 +60,8 @@ namespace MCM.Tests.SettingsFormat
             Assert.AreEqual(0F, _floatValue);
             Assert.AreEqual(string.Empty, _stringValue);
 
-            Format.Save(Settings, DirectoryPath, Filename);
-            Format.Load(Settings, DirectoryPath, Filename);
+            Format.Save(Settings, Directory, Filename);
+            Format.Load(Settings, Directory, Filename);
 
             Assert.AreEqual(false, _boolValue);
             Assert.AreEqual(0, _intValue);
@@ -71,15 +74,16 @@ namespace MCM.Tests.SettingsFormat
             _floatValue = 5.3453F;
             _stringValue = "Test";
 
-            Format.Save(Settings, DirectoryPath, Filename);
-            Format.Load(Settings, DirectoryPath, Filename);
+            Format.Save(Settings, Directory, Filename);
+            Format.Load(Settings, Directory, Filename);
 
             Assert.AreEqual(true, _boolValue);
             Assert.AreEqual(5, _intValue);
             Assert.AreEqual(5.3453F, _floatValue);
             Assert.AreEqual("Test", _stringValue);
 
-            Assert.AreEqual(Expected, File.ReadAllText(Path.Combine(DirectoryPath, $"{Filename}.json")));
+            var actual = File.ReadAllText(Path.Combine(Directory.Path, $"{Filename}.json"));
+            Assert.AreEqual(Expected, actual);
         }
 
         [Test]
@@ -90,10 +94,10 @@ namespace MCM.Tests.SettingsFormat
             _floatValue = 5.3453F;
             _stringValue = "Test";
 
-            Format.Save(Settings, DirectoryPath, Filename);
-            Format.Load(Settings, DirectoryPath, Filename);
+            Format.Save(Settings, Directory, Filename);
+            Format.Load(Settings, Directory, Filename);
 
-            Assert.AreEqual(Expected, File.ReadAllText(Path.Combine(DirectoryPath, $"{Filename}.json")));
+            Assert.AreEqual(Expected, File.ReadAllText(Path.Combine(Directory.Path, $"{Filename}.json")));
         }
 
         [Test]
@@ -104,17 +108,17 @@ namespace MCM.Tests.SettingsFormat
             _floatValue = 5.3453F;
             _stringValue = "Test";
 
-            Format.Save(Settings, DirectoryPath, Filename);
+            Format.Save(Settings, Directory, Filename);
 
-            Assert.AreEqual(Expected, File.ReadAllText(Path.Combine(DirectoryPath, $"{Filename}.json")));
+            Assert.AreEqual(Expected, File.ReadAllText(Path.Combine(Directory.Path, $"{Filename}.json")));
         }
 
         [Test]
         public void Load_Test()
         {
-            File.WriteAllText(Path.Combine(DirectoryPath, $"{Filename}.json"), Expected);
+            File.WriteAllText(Path.Combine(Directory.Path, $"{Filename}.json"), Expected);
 
-            Format.Load(Settings, DirectoryPath, Filename);
+            Format.Load(Settings, Directory, Filename);
 
             Assert.AreEqual(true, _boolValue);
             Assert.AreEqual(5, _intValue);
@@ -125,7 +129,7 @@ namespace MCM.Tests.SettingsFormat
         [SetUp]
         public void SetUp()
         {
-            var path = Path.Combine(DirectoryPath, $"{Filename}.json");
+            var path = Path.Combine(Directory.Path, $"{Filename}.json");
             if (File.Exists(path))
                 File.Delete(path);
         }
@@ -133,7 +137,7 @@ namespace MCM.Tests.SettingsFormat
         [TearDown]
         public void TearDown1()
         {
-            var path = Path.Combine(DirectoryPath, $"{Filename}.json");
+            var path = Path.Combine(Directory.Path, $"{Filename}.json");
             if (File.Exists(path))
                 File.Delete(path);
         }

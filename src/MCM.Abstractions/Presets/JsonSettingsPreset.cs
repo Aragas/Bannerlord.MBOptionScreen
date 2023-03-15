@@ -3,12 +3,13 @@ using BUTR.DependencyInjection.Logger;
 
 using MCM.Abstractions;
 using MCM.Abstractions.Base;
+using MCM.Abstractions.GameFeatures;
 
 using Newtonsoft.Json;
 
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Text;
 
 namespace MCM.Implementation
 {
@@ -27,27 +28,26 @@ namespace MCM.Implementation
     {
         private class PresetContainerDefinition
         {
-            public string Id { get; set; }
-            public string Name { get; set; }
+            public string Id { get; set; } = string.Empty;
+            public string Name { get; set; } = string.Empty;
         }
         private sealed class PresetContainer : PresetContainerDefinition
         {
-            public BaseSettings Settings { get; set; }
+            public BaseSettings? Settings { get; set; }
         }
 
-        public static JsonSettingsPreset? FromFile(BaseSettings settings, string filePath) => FromFile(settings.Id, filePath, settings.CreateNew);
-        public static JsonSettingsPreset? FromFile(string settingsId, string filePath, Func<BaseSettings> getNewSettings)
+        public static JsonSettingsPreset? FromFile(BaseSettings settings, GameFile file) => FromFile(settings.Id, file, settings.CreateNew);
+        public static JsonSettingsPreset? FromFile(string settingsId, GameFile file, Func<BaseSettings> getNewSettings)
         {
-            var file = new FileInfo(filePath);
-            if (!file.Exists) return null;
-            var reader = file.OpenText();
-            var content = reader.ReadToEnd();
-            reader.Dispose();
+            if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider) return null;
+            if (fileSystemProvider.ReadData(file) is not { } data) return null;
+            
+            var content = Encoding.UTF8.GetString(data);
 
             var container = JsonConvert.DeserializeObject<PresetContainerDefinition?>(content);
             if (container is null) return null;
 
-            return new JsonSettingsPreset(settingsId, container.Id, container.Name, filePath, getNewSettings);
+            return new JsonSettingsPreset(settingsId, container.Id, container.Name, file, getNewSettings);
         }
 
         /// <inheritdoc />
@@ -59,22 +59,22 @@ namespace MCM.Implementation
         /// <inheritdoc />
         public string Name { get; }
 
-        private readonly string _filePath;
+        private readonly GameFile _file;
         private readonly Func<BaseSettings> _getNewSettings;
         private readonly JsonSerializerSettings _jsonSerializerSettings;
         private readonly object _lock = new();
         private readonly Dictionary<string, object?> _existingObjects = new();
 
-        public JsonSettingsPreset(BaseSettings settings, string id, string name, string filePath) : this(settings.Id, id, name, filePath, settings.CreateNew) { }
-        public JsonSettingsPreset(string settingsId, string id, string name, string filePath, Func<BaseSettings> getNewSettings)
+        public JsonSettingsPreset(BaseSettings settings, string id, string name, GameFile file) : this(settings.Id, id, name, file, settings.CreateNew) { }
+        public JsonSettingsPreset(string settingsId, string id, string name, GameFile file, Func<BaseSettings> getNewSettings)
         {
             SettingsId = settingsId;
             Id = id;
             Name = name;
-            _filePath = filePath;
+            _file = file;
             _getNewSettings = getNewSettings;
 
-            var logger = GenericServiceProvider.GetService<IBUTRLogger<JsonSettingsPreset>>();
+            var logger = GenericServiceProvider.GetService<IBUTRLogger<JsonSettingsPreset>>() ?? new DefaultBUTRLogger<JsonSettingsPreset>();
             _jsonSerializerSettings = new JsonSerializerSettings
             {
                 Formatting = Formatting.Indented,
@@ -91,41 +91,33 @@ namespace MCM.Implementation
         {
             var presetBase = _getNewSettings();
 
-            var file = new FileInfo(_filePath);
-            if (file.Exists)
-            {
-                var reader = file.OpenText();
-                var content = reader.ReadToEnd();
-                reader.Dispose();
-
-                lock (_lock)
-                {
-                    var container = new PresetContainer { Id = Id, Name = Name, Settings = presetBase };
-                    JsonConvert.PopulateObject(content, container, _jsonSerializerSettings);
-                }
-
-                return presetBase;
-            }
-            else
+            if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider) return presetBase;
+            if (fileSystemProvider.ReadData(_file) is not { } data)
             {
                 SavePreset(presetBase);
-
                 return presetBase;
             }
+
+            var content = Encoding.UTF8.GetString(data);
+
+            lock (_lock)
+            {
+                var container = new PresetContainer { Id = Id, Name = Name, Settings = presetBase };
+                JsonConvert.PopulateObject(content, container, _jsonSerializerSettings);
+            }
+
+            return presetBase;
         }
 
         /// <inheritdoc />
         public bool SavePreset(BaseSettings settings)
         {
+            if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider) return false;
+            
             var container = new PresetContainer { Id = Id, Name = Name, Settings = settings };
             var content = JsonConvert.SerializeObject(container, _jsonSerializerSettings);
 
-            var file = new FileInfo(_filePath);
-            file.Directory?.Create();
-            var writer = file.CreateText();
-            writer.Write(content);
-            writer.Dispose();
-
+            fileSystemProvider.WriteData(_file, Encoding.UTF8.GetBytes(content));
             return true;
         }
 

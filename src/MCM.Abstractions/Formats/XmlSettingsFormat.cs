@@ -1,12 +1,14 @@
-﻿using BUTR.DependencyInjection.Logger;
+﻿using BUTR.DependencyInjection;
+using BUTR.DependencyInjection.Logger;
 
 using MCM.Abstractions.Base;
+using MCM.Abstractions.GameFeatures;
 using MCM.Common;
 
 using Newtonsoft.Json;
 
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Xml;
 
 namespace MCM.Implementation
@@ -25,51 +27,57 @@ namespace MCM.Implementation
 
         public XmlSettingsFormat(IBUTRLogger<XmlSettingsFormat> logger) : base(logger) { }
 
-        public override bool Save(BaseSettings settings, string directoryPath, string filename)
+        public override bool Save(BaseSettings settings, GameDirectory directory, string filename)
         {
-            var path = Path.Combine(directoryPath, $"{filename}.xml");
+            if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider) return false;
+            if (fileSystemProvider.GetOrCreateFile(directory, $"{filename}.xml") is not { } file) return false;
 
             var content = SaveJson(settings);
-            var xmlDocument = JsonConvert.DeserializeXmlNode(content, settings is IWrapper wrapper1 ? wrapper1.Object.GetType().Name : settings.GetType().Name);
+            var xmlDocument = JsonConvert.DeserializeXmlNode(content, settings is IWrapper { Object: { } obj } ? obj.GetType().Name : settings.GetType().Name);
+            if (xmlDocument is null) return false;
 
-            var file = new FileInfo(path);
-            file.Directory?.Create();
-            var writer = file.CreateText();
+            using var ms = new System.IO.MemoryStream();
+            using var writer = new System.IO.StreamWriter(ms);
             xmlDocument.Save(writer);
-            writer.Dispose();
-
-            return true;
+            
+            try
+            {
+                return fileSystemProvider.WriteData(file, ms.ToArray());
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
-        public override BaseSettings Load(BaseSettings settings, string directoryPath, string filename)
+        public override BaseSettings Load(BaseSettings settings, GameDirectory directory, string filename)
         {
-            var path = Path.Combine(directoryPath, $"{filename}.xml");
-            var file = new FileInfo(path);
-            if (file.Exists)
+            if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider) return settings;
+            if (fileSystemProvider.GetFile(directory, $"{filename}.xml") is not { } file) return settings;
+            if (fileSystemProvider.ReadData(file) is not { } data) 
             {
-                var xmlDocument = new XmlDocument();
-                var reader = file.OpenText();
-                xmlDocument.Load(reader);
-                reader.Dispose();
-
-                var root = xmlDocument[settings.GetType().Name];
-                if (root is null)
-                {
-                    Save(settings, directoryPath, filename);
-                    return settings;
-                }
-
-                var content = JsonConvert.SerializeXmlNode(root, Newtonsoft.Json.Formatting.None, true);
-
-                if (!TryLoadFromJson(ref settings, content))
-                    Save(settings, directoryPath, filename);
+                Save(settings, directory, filename);
+                return settings;
             }
-            else
+            
+            var xmlDocument = new XmlDocument();
+            using var ms = new System.IO.MemoryStream(data);
+            xmlDocument.Load(ms);
+
+            var root = xmlDocument[settings.GetType().Name];
+            if (root is null)
             {
-                Save(settings, directoryPath, filename);
+                Save(settings, directory, filename);
+                return settings;
             }
 
+            var content = JsonConvert.SerializeXmlNode(root, Newtonsoft.Json.Formatting.None, true);
+
+            if (!TryLoadFromJson(ref settings, content))
+                Save(settings, directory, filename);
+                
             return settings;
+
         }
     }
 }

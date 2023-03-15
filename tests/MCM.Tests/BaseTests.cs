@@ -1,71 +1,60 @@
 ﻿extern alias UI;
 extern alias v5;
 
-using Bannerlord.ButterLib;
-using Bannerlord.ButterLib.SubModuleWrappers2;
-
-using HarmonyLib;
+using NSubstitute;
 
 using NUnit.Framework;
 
-using System;
-using System.Runtime.CompilerServices;
+using System.IO;
 
-using TaleWorlds.Engine;
-using TaleWorlds.Library;
+using v5::BUTR.DependencyInjection;
 
-using v5::MCM;
-using v5::MCM.Internal;
-
-using SymbolExtensions2 = v5::HarmonyLib.BUTR.Extensions.SymbolExtensions2;
+using v5::MCM.Abstractions.FluentBuilder;
+using v5::MCM.Abstractions.GameFeatures;
+using v5::MCM.Abstractions.Properties;
+using v5::MCM.Implementation;
+using v5::MCM.Implementation.FluentBuilder;
+using v5::MCM.LightInject;
 
 namespace MCM.Tests
 {
     public class BaseTests
     {
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static bool MockedGetModulesNames(ref string[] __result)
-        {
-            __result = Array.Empty<string>();
-            return false;
-        }
-
-        [MethodImpl(MethodImplOptions.NoInlining)]
-        private static bool MockedPlatformFileHelper(ref IPlatformFileHelper __result)
-        {
-            __result = new PlatformFileHelperPC("");
-            return false;
-        }
-
-        private readonly Harmony _harmony = new(nameof(BaseTests));
-
         [OneTimeSetUp]
         public void OneTimeSetUp()
         {
-            //_harmony.Patch(AccessTools2.Method(typeof(ButterLibSubModule).Assembly.GetType("Bannerlord.BUTR.Shared.Helpers.FSIOHelper"), "GetConfigPath"),
-            //    prefix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((string x) => MockedGetConfigsPath(ref x))));
-            //_harmony.Patch(SymbolExtensions2.GetMethodInfo(() => FSIOHelper.GetConfigPath()),
-            //    prefix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((string x) => MockedGetConfigsPath(ref x))));
-            //_harmony.Patch(SymbolExtensions2.GetMethodInfo(() => ModuleInfoHelper.GetLoadedModules()),
-            //    prefix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((IEnumerable<ModuleInfoExtended> x) => MockedGetLoadedModules(ref x))));
-            _harmony.Patch(SymbolExtensions2.GetMethodInfo(() => Utilities.GetModulesNames()),
-                prefix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((string[] x) => MockedGetModulesNames(ref x))));
-            _harmony.Patch(SymbolExtensions2.GetPropertyGetter(() => TaleWorlds.Library.Common.PlatformFileHelper),
-                prefix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((IPlatformFileHelper x) => MockedPlatformFileHelper(ref x))));
-
-            var butterLib = new MBSubModuleBaseWrapper(new ButterLibSubModule());
-            butterLib.OnSubModuleLoad();
-            var mcm = new MBSubModuleBaseWrapper(new MCMSubModule());
-            mcm.OnSubModuleLoad();
-            new MBSubModuleBaseWrapper(new MCMImplementationSubModule()).OnSubModuleLoad();
-            butterLib.OnBeforeInitialModuleScreenSetAsRoot();
-            mcm.OnBeforeInitialModuleScreenSetAsRoot();
-        }
-
-        [OneTimeTearDown]
-        public void TearDown()
-        {
-            _harmony.UnpatchAll(_harmony.Id);
+            var fileSystemProvider = Substitute.For<IFileSystemProvider>();
+            fileSystemProvider.GetOrCreateFile(Arg.Any<GameDirectory>(), Arg.Any<string>()).Returns(x =>
+            {
+                var directory = x.ArgAt<GameDirectory>(0);
+                var fileName = x.ArgAt<string>(1);
+                using var _ = File.Create(Path.Combine(directory.Path, fileName));
+                return new GameFile(directory, fileName);
+            });
+            fileSystemProvider.GetFile(Arg.Any<GameDirectory>(), Arg.Any<string>()).Returns(x =>
+            {
+                var directory = x.ArgAt<GameDirectory>(0);
+                var fileName = x.ArgAt<string>(1);
+                return new GameFile(directory, fileName);
+            });
+            fileSystemProvider.ReadData(Arg.Any<GameFile>()).Returns(x =>
+            {
+                var file = x.ArgAt<GameFile>(0);
+                return File.ReadAllBytes(Path.Combine(file.Owner.Path, file.Name));
+            });
+            fileSystemProvider.WhenForAnyArgs(x => x.WriteData(Arg.Any<GameFile>(), Arg.Any<byte[]>())).Do(x =>
+            {
+                var file = x.ArgAt<GameFile>(0);
+                var data = x.ArgAt<byte[]>(1);
+                File.WriteAllBytes(Path.Combine(file.Owner.Path, file.Name), data);
+            });
+            
+            var services = new ServiceContainer();
+            services.Register<IFileSystemProvider>(_ => fileSystemProvider);
+            services.Register<ISettingsBuilderFactory, DefaultSettingsBuilderFactory>();
+            services.Register<ISettingsPropertyDiscoverer, AttributeSettingsPropertyDiscoverer>();
+            services.Register<ISettingsPropertyDiscoverer, FluentSettingsPropertyDiscoverer>();
+            GenericServiceProvider.GlobalServiceProvider = new LightInjectGenericServiceProvider(services);
         }
     }
 }

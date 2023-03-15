@@ -7,6 +7,6 @@
 # endif
     interface IWrapper
     {
-        object Object { get; }
+        object? Object { get; }
     }
 }

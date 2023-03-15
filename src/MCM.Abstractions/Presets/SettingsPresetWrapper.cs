@@ -37,10 +37,12 @@ namespace MCM.Abstractions
         public string Name => _methodGetNameDelegate?.Invoke() ?? "ERROR";
 
         /// <inheritdoc />
-        public object Object { get; }
+        public object? Object { get; }
 
-        protected SettingsPresetWrapper(object @object)
+        protected SettingsPresetWrapper(object? @object)
         {
+            if (@object is null) return;
+
             Object = @object;
             var type = @object.GetType();
 
@@ -51,12 +53,12 @@ namespace MCM.Abstractions
             _methodSavePresetDelegate = AccessTools2.GetDelegate<SavePresetDelegate>(@object, type, nameof(SavePreset));
         }
 
-        protected abstract TSetting Create(object @object);
+        protected abstract TSetting Create(object? @object);
 
         /// <inheritdoc />
         public BaseSettings LoadPreset() => Create(_methodLoadPresetDelegate?.Invoke());
 
         /// <inheritdoc />
-        public bool SavePreset(BaseSettings settings) => settings is TSetting wrapper && (_methodSavePresetDelegate?.Invoke(wrapper.Object) ?? false);
+        public bool SavePreset(BaseSettings settings) => settings is TSetting { Object: { } obj } && (_methodSavePresetDelegate?.Invoke(obj) ?? false);
     }
 }

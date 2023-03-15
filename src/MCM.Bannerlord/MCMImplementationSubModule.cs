@@ -1,11 +1,7 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
-
-using BUTR.DependencyInjection;
+﻿using BUTR.DependencyInjection;
 using BUTR.DependencyInjection.Extensions;
-using BUTR.DependencyInjection.Logger;
 
 using MCM.Abstractions;
-using MCM.Abstractions.Base.Global;
 using MCM.Abstractions.GameFeatures;
 using MCM.Abstractions.Properties;
 using MCM.Implementation;
@@ -39,8 +35,6 @@ namespace MCM.Internal
 # endif
     class MCMImplementationSubModule : MBSubModuleBase, IGameEventListener
     {
-        private static string PathPrefix => System.IO.Path.Combine(GenericServiceProvider.GetService<IPathProvider>()?.GetGamePath(), "Modules");
-
         /// <inheritdoc />
         public event Action? GameStarted;
 
@@ -81,7 +75,7 @@ namespace MCM.Internal
 
                 services.AddSingleton<IGameEventListener, MCMImplementationSubModule>(sp => this);
                 services.AddSingleton<ICampaignIdProvider, CampaignIdProvider>();
-                services.AddSingleton<IPathProvider, PathProvider>();
+                services.AddSingleton<IFileSystemProvider, FileSystemProvider>();
                 services.AddScoped<PerSaveCampaignBehavior>();
                 services.AddTransient<IPerSaveSettingsProvider, PerSaveCampaignBehavior>(sp => sp.GetService<PerSaveCampaignBehavior>());
             }

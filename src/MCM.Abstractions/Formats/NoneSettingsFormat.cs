@@ -1,4 +1,5 @@
 ﻿using MCM.Abstractions.Base;
+using MCM.Abstractions.GameFeatures;
 
 using System.Collections.Generic;
 
@@ -18,9 +19,9 @@ namespace MCM.Abstractions
         public IEnumerable<string> FormatTypes { get; } = new[] { "none" };
 
         /// <inheritdoc/>
-        public BaseSettings Load(BaseSettings settings, string directoryPath, string filename) => settings;
+        public BaseSettings Load(BaseSettings settings, GameDirectory directory, string filename) => settings;
 
         /// <inheritdoc/>
-        public bool Save(BaseSettings settings, string directoryPath, string filename) => true;
+        public bool Save(BaseSettings settings, GameDirectory directory, string filename) => true;
     }
 }
