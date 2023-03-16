@@ -191,7 +191,7 @@ namespace MCM.UI.ButterLib
         IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 
-    
+
     internal class LoggerWrapper : IBUTRLogger
     {
         private readonly ILogger _logger;
