@@ -41,7 +41,7 @@ namespace MCM.Implementation
         {
             if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider) return null;
             if (fileSystemProvider.ReadData(file) is not { } data) return null;
-            
+
             var content = Encoding.UTF8.GetString(data);
 
             var container = JsonConvert.DeserializeObject<PresetContainerDefinition?>(content);
@@ -113,7 +113,7 @@ namespace MCM.Implementation
         public bool SavePreset(BaseSettings settings)
         {
             if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider) return false;
-            
+
             var container = new PresetContainer { Id = Id, Name = Name, Settings = settings };
             var content = JsonConvert.SerializeObject(container, _jsonSerializerSettings);
 

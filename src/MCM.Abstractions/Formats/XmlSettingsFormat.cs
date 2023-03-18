@@ -39,7 +39,7 @@ namespace MCM.Implementation
             using var ms = new System.IO.MemoryStream();
             using var writer = new System.IO.StreamWriter(ms);
             xmlDocument.Save(writer);
-            
+
             try
             {
                 return fileSystemProvider.WriteData(file, ms.ToArray());
@@ -54,12 +54,12 @@ namespace MCM.Implementation
         {
             if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider) return settings;
             if (fileSystemProvider.GetFile(directory, $"{filename}.xml") is not { } file) return settings;
-            if (fileSystemProvider.ReadData(file) is not { } data) 
+            if (fileSystemProvider.ReadData(file) is not { } data)
             {
                 Save(settings, directory, filename);
                 return settings;
             }
-            
+
             var xmlDocument = new XmlDocument();
             using var ms = new System.IO.MemoryStream(data);
             xmlDocument.Load(ms);
@@ -75,7 +75,7 @@ namespace MCM.Implementation
 
             if (!TryLoadFromJson(ref settings, content))
                 Save(settings, directory, filename);
-                
+
             return settings;
 
         }

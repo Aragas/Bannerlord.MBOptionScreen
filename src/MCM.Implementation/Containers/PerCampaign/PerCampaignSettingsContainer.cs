@@ -34,7 +34,7 @@ namespace MCM.Implementation.PerCampaign
             _gameEventListener.GameStarted += GameStarted;
             _gameEventListener.GameLoaded += GameLoaded;
             _gameEventListener.GameEnded += GameEnded;
-            
+
             var fileSystemProvider = GenericServiceProvider.GetService<IFileSystemProvider>();
             RootFolder = fileSystemProvider!.GetDirectory(base.RootFolder, "PerCampaign")!;
         }
@@ -53,13 +53,13 @@ namespace MCM.Implementation.PerCampaign
 
             if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider)
                 return;
-            
+
             LoadedSettings.Add(perCampaignSettings.Id, perCampaignSettings);
 
             var idDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, id);
             var idWithFolderDirectory = fileSystemProvider.GetOrCreateDirectory(idDirectory, perCampaignSettings.FolderName);
             var directory = fileSystemProvider.GetOrCreateDirectory(idWithFolderDirectory, perCampaignSettings.SubFolder);
-            
+
             var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == perCampaignSettings.FormatType));
             settingsFormat?.Load(perCampaignSettings, directory, perCampaignSettings.Id);
@@ -80,7 +80,7 @@ namespace MCM.Implementation.PerCampaign
 
             if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider)
                 return false;
-            
+
             var idDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, id);
             var idWithFolderDirectory = fileSystemProvider.GetOrCreateDirectory(idDirectory, perCampaignSettings.FolderName);
             var directory = fileSystemProvider.GetOrCreateDirectory(idWithFolderDirectory, perCampaignSettings.SubFolder);
