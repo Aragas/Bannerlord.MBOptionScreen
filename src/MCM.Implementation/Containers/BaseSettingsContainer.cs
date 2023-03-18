@@ -40,7 +40,7 @@ namespace MCM.Implementation
 
             if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider)
                 return;
-            
+
             LoadedSettings.Add(settings.Id, settings);
 
             var idDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, settings.Id);
@@ -60,14 +60,14 @@ namespace MCM.Implementation
         {
             if (settings is not TSettings || !LoadedSettings.ContainsKey(settings.Id))
                 return false;
-            
+
             if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider)
                 return false;
 
             var idDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, settings.Id);
             var idWithFolderDirectory = fileSystemProvider.GetOrCreateDirectory(idDirectory, settings.FolderName);
             var directory = fileSystemProvider.GetOrCreateDirectory(idWithFolderDirectory, settings.SubFolder);
-            
+
             var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == settings.FormatType));
             settingsFormat?.Save(settings, directory, settings.Id);
@@ -108,7 +108,7 @@ namespace MCM.Implementation
             var idWithFolderDirectory = fileSystemProvider.GetOrCreateDirectory(idDirectory, settings.FolderName);
             var idWithFolderWithSubFolderDirectory = fileSystemProvider.GetOrCreateDirectory(idWithFolderDirectory, settings.SubFolder);
             var directory = fileSystemProvider.GetOrCreateDirectory(idWithFolderWithSubFolderDirectory, "Presets");
-            
+
             foreach (var filePath in fileSystemProvider.GetFiles(directory, "*.json"))
             {
                 if (JsonSettingsPreset.FromFile(settings, filePath) is { } preset)

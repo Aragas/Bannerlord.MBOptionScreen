@@ -87,7 +87,7 @@ namespace MCM.Implementation
         {
             if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider) return false;
             if (fileSystemProvider.GetOrCreateFile(directory, $"{filename}.json") is not { } file) return false;
-            
+
             var content = SaveJson(settings);
 
             try
@@ -103,7 +103,7 @@ namespace MCM.Implementation
         {
             if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider) return settings;
             if (fileSystemProvider.GetFile(directory, $"{filename}.json") is not { } file) return settings;
-            if (fileSystemProvider.ReadData(file) is not { } data) 
+            if (fileSystemProvider.ReadData(file) is not { } data)
             {
                 Save(settings, directory, filename);
                 return settings;

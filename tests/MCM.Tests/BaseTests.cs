@@ -48,7 +48,7 @@ namespace MCM.Tests
                 var data = x.ArgAt<byte[]>(1);
                 File.WriteAllBytes(Path.Combine(file.Owner.Path, file.Name), data);
             });
-            
+
             var services = new ServiceContainer();
             services.Register<IFileSystemProvider>(_ => fileSystemProvider);
             services.Register<ISettingsBuilderFactory, DefaultSettingsBuilderFactory>();

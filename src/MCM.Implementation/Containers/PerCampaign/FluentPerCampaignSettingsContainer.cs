@@ -36,7 +36,7 @@ namespace MCM.Implementation.PerCampaign
 
             if (GenericServiceProvider.GetService<ICampaignIdProvider>() is not { } campaignIdProvider || campaignIdProvider.GetCurrentCampaignId() is not { } id)
                 return;
-            
+
             if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider)
                 return;
 
@@ -45,7 +45,7 @@ namespace MCM.Implementation.PerCampaign
             var idDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, id);
             var idWithFolderDirectory = fileSystemProvider.GetOrCreateDirectory(idDirectory, perCampaignSettings.FolderName);
             var directory = fileSystemProvider.GetOrCreateDirectory(idWithFolderDirectory, perCampaignSettings.SubFolder);
-            
+
             var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == perCampaignSettings.FormatType));
             settingsFormat?.Load(perCampaignSettings, directory, perCampaignSettings.Id);
@@ -66,11 +66,11 @@ namespace MCM.Implementation.PerCampaign
 
             if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider)
                 return false;
-            
+
             var idDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, id);
             var idWithFolderDirectory = fileSystemProvider.GetOrCreateDirectory(idDirectory, perCampaignSettings.FolderName);
             var directory = fileSystemProvider.GetOrCreateDirectory(idWithFolderDirectory, perCampaignSettings.SubFolder);
-            
+
             var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == perCampaignSettings.FormatType));
             settingsFormat?.Save(perCampaignSettings, directory, perCampaignSettings.Id);
