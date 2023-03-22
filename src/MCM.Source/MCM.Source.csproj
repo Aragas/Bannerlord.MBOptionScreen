@@ -56,7 +56,7 @@
   <!--NuGet Package-->
 
   <ItemGroup>
-    <PackageReference Include="NuGetizer" Version="0.9.1" />
+    <PackageReference Include="NuGetizer" Version="1.0.0" />
 
     <PackageReference Include="HarmonyX" Version="$(HarmonyVersion)" IncludeAssets="compile" />
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" PrivateAssets="all" />
