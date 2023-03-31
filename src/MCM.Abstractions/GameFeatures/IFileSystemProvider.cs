@@ -11,14 +11,14 @@
         Application,
         Temporary,
     }
-    
+
 #if !BANNERLORDMCM_PUBLIC
     internal
 #else
     public
 # endif
         record GameDirectory(PlatformDirectoryType Type, string Path);
-    
+
 #if !BANNERLORDMCM_PUBLIC
     internal
 #else
