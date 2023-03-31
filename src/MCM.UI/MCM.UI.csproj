@@ -7,7 +7,7 @@
     <AssemblyName>MCMv5.UI</AssemblyName>
     <RootNamespace>MCM.UI</RootNamespace>
     <Configurations>Debug;Release</Configurations>
-    <DefineConstants>$(DefineConstants);HARMONYEXTENSIONS_HARMONYX</DefineConstants>
+    <DefineConstants>$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
@@ -40,7 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="HarmonyX" Version="$(HarmonyVersion)" IncludeAssets="compile" />
+    <PackageReference Include="Bannerlord.Lib.Harmony" Version="$(HarmonyVersion)-beta3" IncludeAssets="compile" />
     <PackageReference Include="Bannerlord.BUTR.Shared" Version="$(BUTRSharedVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="Bannerlord.ModuleManager.Source" Version="$(BUTRModuleManagerVersion)" />
     <PackageReference Include="Bannerlord.ButterLib" Version="$(ButterLibVersion)" IncludeAssets="compile" />

@@ -5,7 +5,7 @@
     <TargetFramework>net472</TargetFramework>
 
     <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
-    <DefineConstants>$(DefineConstants);HARMONYEXTENSIONS_HARMONYX</DefineConstants>
+    <DefineConstants>$(DefineConstants)</DefineConstants>
 
     <RootNamespace>MCMv5.Tests</RootNamespace>
   </PropertyGroup>
