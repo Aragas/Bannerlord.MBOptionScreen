@@ -40,9 +40,9 @@ namespace MCM.Implementation.PerCampaign
         }
 
         /// <inheritdoc/>
-        protected override void RegisterSettings(PerCampaignSettings? perCampaignSettings)
+        protected override void RegisterSettings(PerCampaignSettings? settings)
         {
-            if (perCampaignSettings is null)
+            if (settings is null)
                 return;
 
             if (GenericServiceProvider.GameScopeServiceProvider is null)
@@ -54,16 +54,15 @@ namespace MCM.Implementation.PerCampaign
             if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider)
                 return;
 
-            LoadedSettings.Add(perCampaignSettings.Id, perCampaignSettings);
+            LoadedSettings.Add(settings.Id, settings);
 
-            var idDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, id);
-            var idWithFolderDirectory = fileSystemProvider.GetOrCreateDirectory(idDirectory, perCampaignSettings.FolderName);
-            var directory = fileSystemProvider.GetOrCreateDirectory(idWithFolderDirectory, perCampaignSettings.SubFolder);
+            var folderDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, settings.FolderName);
+            var directory = string.IsNullOrEmpty(settings.SubFolder) ? folderDirectory : fileSystemProvider.GetOrCreateDirectory(folderDirectory, settings.SubFolder);
 
             var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
-            var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == perCampaignSettings.FormatType));
-            settingsFormat?.Load(perCampaignSettings, directory, perCampaignSettings.Id);
-            perCampaignSettings.OnPropertyChanged(BaseSettings.LoadingComplete);
+            var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == settings.FormatType));
+            settingsFormat?.Load(settings, directory, settings.Id);
+            settings.OnPropertyChanged(BaseSettings.LoadingComplete);
         }
 
         /// <inheritdoc/>
@@ -81,9 +80,8 @@ namespace MCM.Implementation.PerCampaign
             if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider)
                 return false;
 
-            var idDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, id);
-            var idWithFolderDirectory = fileSystemProvider.GetOrCreateDirectory(idDirectory, perCampaignSettings.FolderName);
-            var directory = fileSystemProvider.GetOrCreateDirectory(idWithFolderDirectory, perCampaignSettings.SubFolder);
+            var folderDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, settings.FolderName);
+            var directory = string.IsNullOrEmpty(settings.SubFolder) ? folderDirectory : fileSystemProvider.GetOrCreateDirectory(folderDirectory, settings.SubFolder);
 
             var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == perCampaignSettings.FormatType));
