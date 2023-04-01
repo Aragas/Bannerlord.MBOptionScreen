@@ -26,7 +26,7 @@ namespace MCM.Implementation
         where TSettings : BaseSettings
     {
         protected virtual GameDirectory RootFolder { get; } =
-            GenericServiceProvider.GetService<IFileSystemProvider>()?.GetModSettingsDirectory() ?? new GameDirectory(PlatformDirectoryType.User, "Mod Settings");
+            GenericServiceProvider.GetService<IFileSystemProvider>()?.GetModSettingsDirectory() ?? new GameDirectory(PlatformDirectoryType.User, "Configs\\ModSettings\\");
         protected virtual Dictionary<string, TSettings> LoadedSettings { get; } = new();
 
         /// <inheritdoc/>
@@ -43,9 +43,8 @@ namespace MCM.Implementation
 
             LoadedSettings.Add(settings.Id, settings);
 
-            var idDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, settings.Id);
-            var idWithFolderDirectory = fileSystemProvider.GetOrCreateDirectory(idDirectory, settings.FolderName);
-            var directory = fileSystemProvider.GetOrCreateDirectory(idWithFolderDirectory, settings.SubFolder);
+            var folderDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, settings.FolderName);
+            var directory = string.IsNullOrEmpty(settings.SubFolder) ? folderDirectory : fileSystemProvider.GetOrCreateDirectory(folderDirectory, settings.SubFolder);
 
             var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == settings.FormatType));
@@ -64,9 +63,8 @@ namespace MCM.Implementation
             if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider)
                 return false;
 
-            var idDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, settings.Id);
-            var idWithFolderDirectory = fileSystemProvider.GetOrCreateDirectory(idDirectory, settings.FolderName);
-            var directory = fileSystemProvider.GetOrCreateDirectory(idWithFolderDirectory, settings.SubFolder);
+            var folderDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, settings.FolderName);
+            var directory = string.IsNullOrEmpty(settings.SubFolder) ? folderDirectory : fileSystemProvider.GetOrCreateDirectory(folderDirectory, settings.SubFolder);
 
             var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == settings.FormatType));
@@ -104,10 +102,9 @@ namespace MCM.Implementation
             if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider)
                 yield break;
 
-            var idDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, settings.Id);
-            var idWithFolderDirectory = fileSystemProvider.GetOrCreateDirectory(idDirectory, settings.FolderName);
-            var idWithFolderWithSubFolderDirectory = fileSystemProvider.GetOrCreateDirectory(idWithFolderDirectory, settings.SubFolder);
-            var directory = fileSystemProvider.GetOrCreateDirectory(idWithFolderWithSubFolderDirectory, "Presets");
+            var folderDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, settings.FolderName);
+            var folderWithSubFolderDirectory = string.IsNullOrEmpty(settings.SubFolder) ? folderDirectory : fileSystemProvider.GetOrCreateDirectory(folderDirectory, settings.SubFolder);
+            var directory = fileSystemProvider.GetOrCreateDirectory(folderWithSubFolderDirectory, "Presets");
 
             foreach (var filePath in fileSystemProvider.GetFiles(directory, "*.json"))
             {

@@ -1,10 +1,9 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
-
-using MCM.Abstractions.GameFeatures;
+﻿using MCM.Abstractions.GameFeatures;
 
 using System;
 using System.Linq;
 
+using TaleWorlds.Engine;
 using TaleWorlds.Library;
 
 using TWPlatformDirectoryPath = TaleWorlds.Library.PlatformDirectoryPath;
@@ -17,22 +16,29 @@ namespace MCM.Internal.GameFeatures
 #endif
     internal sealed class FileSystemProvider : IFileSystemProvider
     {
+        private static string EnsureDirectoryEndsInSeparator(string directory) => directory.EndsWith("\\") ? directory : directory + "\\";
+
         private IPlatformFileHelper PlatformFileHelper => TaleWorlds.Library.Common.PlatformFileHelper;
 
+        private static GameDirectory GetConfigsDirectory()
+        {
+            var directory = new TWPlatformDirectoryPath(PlatformFileType.User, EnsureDirectoryEndsInSeparator(EngineFilePaths.ConfigsDirectoryName));
+            return new GameDirectory((PlatformDirectoryType) directory.Type, directory.Path);
+        }
+        
         public GameDirectory GetModSettingsDirectory()
         {
-            var directory = new TWPlatformDirectoryPath(PlatformFileType.User, "Mod Settings");
-            return new GameDirectory((PlatformDirectoryType) directory.Type, directory.Path);
+            return GetOrCreateDirectory(GetConfigsDirectory(), EnsureDirectoryEndsInSeparator("ModSettings"));
         }
 
         public GameDirectory? GetDirectory(GameDirectory directory, string name)
         {
-            return directory with { Path = directory.Path + name };
+            return directory with { Path = directory.Path + EnsureDirectoryEndsInSeparator(name) };
         }
 
         public GameDirectory GetOrCreateDirectory(GameDirectory directory, string name)
         {
-            return directory with { Path = directory.Path + name };
+            return directory with { Path = directory.Path + EnsureDirectoryEndsInSeparator(name) };
         }
 
         public GameFile[] GetFiles(GameDirectory directory, string searchPattern)
