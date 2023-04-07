@@ -25,7 +25,7 @@
   <!--NuGet Package-->
 
   <ItemGroup>
-    <PackageReference Include="Bannerlord.Lib.Harmony" Version="$(HarmonyVersion)-beta3" IncludeAssets="compile" />
+    <PackageReference Include="Bannerlord.Lib.Harmony" Version="$(HarmonyVersion)" IncludeAssets="compile" />
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" PrivateAssets="all" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" PrivateAssets="all" IncludeAssets="compile" />
 
