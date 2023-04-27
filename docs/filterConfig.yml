@@ -1,3 +1,4 @@
+### YamlMime:ManagedReference
 apiRules:
 - exclude:
     uidRegex: ^HarmonyLib\.BUTR\.Extensions$
