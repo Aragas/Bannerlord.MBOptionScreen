@@ -37,6 +37,8 @@ jobs:
     - name: Run DocFX
       run: >-
         Copy-Item "README.md" -Destination "docs/index.md";
+        New-Item -Type dir "docs/images";
+        Copy-Item "resources/MCM-48.svg" -Destination "docs/images/MCM-48.svg";
         docfx metadata docs/docfx.json;
         docfx build docs/docfx.json;
       shell: pwsh
