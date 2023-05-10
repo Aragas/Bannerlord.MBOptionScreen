@@ -3,7 +3,9 @@
     <Widget SuggestedWidth="362" SuggestedHeight="42" VerticalAlignment="Center" HorizontalAlignment="Center"
             IsEnabled="@IsEnabled" IsVisible="@IsDropdownCheckbox">
       <Children>
+        <!--
         <DropdownWithHorizontalControlCheckboxView_v2 VerticalAlignment="Center" HorizontalAlignment="Center" Parameter.SelectorDataSource="{DropdownValue}" />
+        -->
       </Children>
     </Widget>
   </Window>
