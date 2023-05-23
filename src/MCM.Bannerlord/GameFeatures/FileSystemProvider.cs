@@ -25,7 +25,7 @@ namespace MCM.Internal.GameFeatures
             var directory = new TWPlatformDirectoryPath(PlatformFileType.User, EnsureDirectoryEndsInSeparator(EngineFilePaths.ConfigsDirectoryName));
             return new GameDirectory((PlatformDirectoryType) directory.Type, directory.Path);
         }
-        
+
         public GameDirectory GetModSettingsDirectory()
         {
             return GetOrCreateDirectory(GetConfigsDirectory(), EnsureDirectoryEndsInSeparator("ModSettings"));
