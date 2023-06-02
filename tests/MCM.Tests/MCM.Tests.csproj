@@ -1,4 +1,4 @@
-﻿<!--EXTERNAL_PROPERTIES: GameFolder;ButterLibVersion;HarmonyVersion;UIExtenderExVersion;GameVersion-->
+<!--EXTERNAL_PROPERTIES: GameFolder;ButterLibVersion;HarmonyVersion;UIExtenderExVersion;GameVersion-->
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
@@ -14,7 +14,7 @@
   <ItemGroup>
     <PackageReference Include="NSubstitute" Version="5.0.0" />
     <PackageReference Include="nunit" Version="3.13.3" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.3.1" />
 
     <PackageReference Include="Bannerlord.ButterLib" Version="$(ButterLibVersion)" />
