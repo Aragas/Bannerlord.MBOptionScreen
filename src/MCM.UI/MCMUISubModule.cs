@@ -7,6 +7,7 @@ using BUTR.DependencyInjection;
 using BUTR.DependencyInjection.ButterLib;
 using BUTR.DependencyInjection.Extensions;
 using BUTR.DependencyInjection.Logger;
+using BUTR.MessageBoxPInvoke.Helpers;
 
 using HarmonyLib;
 
@@ -161,11 +162,11 @@ namespace MCM.UI
                 sb.AppendLine(report);
                 sb.AppendLine();
                 sb.AppendLine(new TextObject(SMessageContinue).ToString());
-                switch (MessageBoxWrapper.Show(sb.ToString(),
+                switch (MessageBoxDialog.Show(sb.ToString(),
                             new TextObject(SWarningTitle).ToString(), MessageBoxButtons.YesNo,
-                            MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, (MessageBoxOptions) 0x40000))
+                            MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, (MessageBoxModal) 0x40000))
                 {
-                    case DialogResult.Yes:
+                    case MessageBoxResult.Yes:
                         Environment.Exit(1);
                         break;
                 }

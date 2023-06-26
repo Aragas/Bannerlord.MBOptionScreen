@@ -5,6 +5,8 @@ using BUTR.DependencyInjection.Logger;
 using HarmonyLib;
 using HarmonyLib.BUTR.Extensions;
 
+using MCM.UI.Utils;
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -51,7 +53,7 @@ namespace MCM.UI.Functionality
             {
                 var (index, screenFactory, text) = value;
 
-                var initialState = new InitialStateOption(key,
+                var initialState = InitialStateOptionUtils.Create(key,
                     text,
                     9000,
                     () =>
@@ -72,7 +74,7 @@ namespace MCM.UI.Functionality
 
             if (_instance.TryGetTarget(out var instance) && InitialStateOption is not null)
             {
-                var initialState = new InitialStateOption(internalName,
+                var initialState = InitialStateOptionUtils.Create(internalName,
                     text,
                     index,
                     () =>

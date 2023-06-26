@@ -40,7 +40,9 @@
                 <SettingsPropertyDropdownView />
 
                 <!-- Checkbox Dropdown List -->
+                <!--
                 <SettingsPropertyCheckboxDropdownView />
+                -->
 
                 <!-- Button -->
                 <SettingsPropertyButtonView />

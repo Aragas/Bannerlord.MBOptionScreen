@@ -24,7 +24,7 @@ namespace MCM.UI.Functionality.Injectors
 
             WidgetFactoryManager.CreateAndRegister("SettingsPropertyBoolView", Load("MCM.UI.GUI.Prefabs.Properties.SettingsPropertyBoolView.xml"));
             WidgetFactoryManager.CreateAndRegister("SettingsPropertyButtonView", Load("MCM.UI.GUI.Prefabs.Properties.SettingsPropertyButtonView.xml"));
-            WidgetFactoryManager.CreateAndRegister("SettingsPropertyCheckboxDropdownView", Load("MCM.UI.GUI.Prefabs.Properties.SettingsPropertyCheckboxDropdownView.xml"));
+            //WidgetFactoryManager.CreateAndRegister("SettingsPropertyCheckboxDropdownView", Load("MCM.UI.GUI.Prefabs.Properties.SettingsPropertyCheckboxDropdownView.xml"));
             WidgetFactoryManager.CreateAndRegister("SettingsPropertyDropdownView", Load("MCM.UI.GUI.Prefabs.Properties.SettingsPropertyDropdownView.xml"));
             WidgetFactoryManager.CreateAndRegister("SettingsPropertyFloatView", Load("MCM.UI.GUI.Prefabs.Properties.SettingsPropertyFloatView.xml"));
             WidgetFactoryManager.CreateAndRegister("SettingsPropertyIntView", Load("MCM.UI.GUI.Prefabs.Properties.SettingsPropertyIntView.xml"));

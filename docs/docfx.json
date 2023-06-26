@@ -23,47 +23,30 @@
     ],
     "content": [
       {
-        "files": [
-          "api/**.yml",
-          "api/index.md"
-        ]
-      },
-      {
-        "files": [
-          "articles/**.md",
-          "articles/**/toc.yml",
-          "toc.yml",
-          "*.md"
-        ]
+        "files": [ "**/**.{md,yml}" ],
+        "exclude": [ "_site/**", "obj/**" ]
       }
     ],
     "resource": [
       {
-        "files": [
-          "langwordMapping.yml",
-          "images/**",
-          "CNAME"
-        ]
-      },
-      {
-        "src": "../",
-        "files": [ "resources/**" ]
+        "files": [ "**/images/**", "codesnippet/**", "CNAME" ],
+        "exclude": [ "_site/**", "obj/**" ]
       }
     ],
-    "overwrite": [ ],
     "dest": "_site",
     "globalMetadata": {
       "_enableSearch": "true",
+      "_appLogoPath": "images/MCM-48.svg",
+      "_appName": "MCM",
       "_appTitle": "MCM Documentation",
-      "_appFooter": "© 2020 Aragas",
+      "_appFooter": "© 2020-2023 Aragas"
     },
-    "globalMetadataFiles": [],
-    "fileMetadataFiles": [],
     "template": [
       "default",
-      "_template/dark-theme"
+      "modern"
     ],
-    "postProcessors": ["ExtractSearchIndex"],
-    "markdownEngineName": "markdig"
+    "postProcessors": [
+      "ExtractSearchIndex"
+    ]
   }
 }
