@@ -102,11 +102,10 @@ namespace MCM.Implementation
             if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider)
                 yield break;
 
-            var folderDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, settings.FolderName);
-            var folderWithSubFolderDirectory = string.IsNullOrEmpty(settings.SubFolder) ? folderDirectory : fileSystemProvider.GetOrCreateDirectory(folderDirectory, settings.SubFolder);
-            var directory = fileSystemProvider.GetOrCreateDirectory(folderWithSubFolderDirectory, "Presets");
+            var presetsDirectory = fileSystemProvider.GetOrCreateDirectory(fileSystemProvider.GetModSettingsDirectory(), "Presets");
+            var settingsDirectory = fileSystemProvider.GetOrCreateDirectory(presetsDirectory, settingsId);
 
-            foreach (var filePath in fileSystemProvider.GetFiles(directory, "*.json"))
+            foreach (var filePath in fileSystemProvider.GetFiles(settingsDirectory, "*.json"))
             {
                 if (JsonSettingsPreset.FromFile(settings, filePath) is { } preset)
                     yield return preset;

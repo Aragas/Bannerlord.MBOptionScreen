@@ -76,14 +76,49 @@ namespace MCM.Implementation.FluentBuilder
         }
 
         /// <inheritdoc/>
-        public override FluentGlobalSettings BuildAsGlobal() => new(
-            Id, DisplayName, FolderName, SubFolder, Format, UIVersion, SubGroupDelimiter, OnPropertyChanged, GetSettingPropertyGroups(), Presets.Values);
+        public override FluentGlobalSettings BuildAsGlobal()
+        {
+            // Capture the default state
+            if (Presets.TryGetValue(BaseSettings.DefaultPresetId, out var preset))
+            {
+                foreach (var property in GetSettingProperties())
+                    preset.SetPropertyValue(property.Id, property.PropertyReference.Value);
+            }
+
+            return new FluentGlobalSettings(
+                Id, DisplayName, FolderName, SubFolder, Format, UIVersion, SubGroupDelimiter, OnPropertyChanged,
+                GetSettingPropertyGroups(), Presets.Values);
+        }
+
         /// <inheritdoc/>
-        public override FluentPerSaveSettings BuildAsPerSave() => new(
-            Id, DisplayName, FolderName, SubFolder, UIVersion, SubGroupDelimiter, OnPropertyChanged, GetSettingPropertyGroups(), Presets.Values);
+        public override FluentPerSaveSettings BuildAsPerSave()
+        {
+            // Capture the default state
+            if (Presets.TryGetValue(BaseSettings.DefaultPresetId, out var preset))
+            {
+                foreach (var property in GetSettingProperties())
+                    preset.SetPropertyValue(property.Id, property.PropertyReference.Value);
+            }
+
+            return new FluentPerSaveSettings(
+                Id, DisplayName, FolderName, SubFolder, UIVersion, SubGroupDelimiter, OnPropertyChanged,
+                GetSettingPropertyGroups(), Presets.Values);
+        }
+
         /// <inheritdoc/>
-        public override FluentPerCampaignSettings BuildAsPerCampaign() => new(
-            Id, DisplayName, FolderName, SubFolder, UIVersion, SubGroupDelimiter, OnPropertyChanged, GetSettingPropertyGroups(), Presets.Values);
+        public override FluentPerCampaignSettings BuildAsPerCampaign()
+        {
+            // Capture the default state
+            if (Presets.TryGetValue(BaseSettings.DefaultPresetId, out var preset))
+            {
+                foreach (var property in GetSettingProperties())
+                    preset.SetPropertyValue(property.Id, property.PropertyReference.Value);
+            }
+
+            return new FluentPerCampaignSettings(
+                Id, DisplayName, FolderName, SubFolder, UIVersion, SubGroupDelimiter, OnPropertyChanged,
+                GetSettingPropertyGroups(), Presets.Values);
+        }
 
         private IEnumerable<SettingsPropertyGroupDefinition> GetSettingPropertyGroups() =>
             SettingsUtils.GetSettingsPropertyGroups(SubGroupDelimiter, GetSettingProperties());

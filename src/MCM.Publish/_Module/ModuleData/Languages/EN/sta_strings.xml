@@ -38,5 +38,10 @@
     <string id="ButterLibSettings_Name_Logging" text="Logging"/>
     <string id="ButterLibSettings_Name_LogLevel" text="Log Level"/>
     <string id="ButterLibSettings_Name_LogLevelDesc" text="Level of logs to write."/>
+
+    <string id="ModOptionsVM_SaveAsPreset" text="Save As Preset"/>
+    <string id="ModOptionsVM_SaveAsPresetDesc" text="Choose the name of the preset"/>
+    <string id="ModOptionsVM_OverridePreset" text="Preset Already Exists"/>
+    <string id="ModOptionsVM_OverridePresetDesc" text="Preset already exists! Do you want to override it?"/>
   </strings>
 </base>
