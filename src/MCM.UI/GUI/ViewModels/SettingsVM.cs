@@ -26,7 +26,7 @@ namespace MCM.UI.GUI.ViewModels
         public SettingsDefinition SettingsDefinition { get; }
         public BaseSettings? SettingsInstance => BaseSettingsProvider.Instance?.GetSettings(SettingsDefinition.SettingsId);
 
-        public MCMSelectorVM<MCMSelectorItemVM<PresetKey>>? PresetsSelector { get; }
+        public MCMSelectorVM<MCMSelectorItemVM<PresetKey>> PresetsSelector { get; } = new(Enumerable.Empty<MCMSelectorItemVM<PresetKey>>(), -1);
 
         [DataSourceProperty]
         public string DisplayName { get => _displayName; private set => SetField(ref _displayName, value, nameof(DisplayName)); }
@@ -40,14 +40,7 @@ namespace MCM.UI.GUI.ViewModels
             SettingsDefinition = definition;
             MainView = mainView;
 
-            foreach (var preset in SettingsInstance?.GetBuiltInPresets().Concat(SettingsInstance.GetExternalPresets()) ?? Enumerable.Empty<ISettingsPreset>())
-                _cachedPresets.Add(new PresetKey(preset), preset.LoadPreset());
-
-            var presets = new List<PresetKey> { new("custom", "{=SettingsVM_Custom}Custom") }.Concat(_cachedPresets.Keys);
-            PresetsSelector = new MCMSelectorVM<MCMSelectorItemVM<PresetKey>>(presets, -1);
-            PresetsSelector.ItemList[0].CanBeSelected = false;
-
-            RecalculateIndex();
+            ReloadPresetList();
 
             if (SettingsInstance is not null)
                 SettingPropertyGroups.AddRange(SettingPropertyDefinitionCache.GetSettingPropertyGroups(SettingsInstance).Select(x => new SettingsPropertyGroupVM(x, this)));
@@ -55,9 +48,22 @@ namespace MCM.UI.GUI.ViewModels
             RefreshValues();
         }
 
-        public void RecalculateIndex()
+        public void ReloadPresetList()
         {
-            if (SettingsInstance is null || PresetsSelector is null)
+            _cachedPresets.Clear();
+            foreach (var preset in SettingsInstance?.GetBuiltInPresets().Concat(SettingsInstance.GetExternalPresets()) ?? Enumerable.Empty<ISettingsPreset>())
+                _cachedPresets.Add(new PresetKey(preset), preset.LoadPreset());
+
+            var presets = new List<PresetKey> { new("custom", "{=SettingsVM_Custom}Custom") }.Concat(_cachedPresets.Keys);
+            PresetsSelector.Refresh(presets, -1);
+            PresetsSelector.ItemList[0].CanBeSelected = false;
+
+            RecalculatePresetIndex();
+        }
+
+        public void RecalculatePresetIndex()
+        {
+            if (SettingsInstance is null)
                 return;
 
             var index = 1;
@@ -110,7 +116,7 @@ namespace MCM.UI.GUI.ViewModels
                     UISettingsUtils.OverrideValues(URS, current, @new);
             }
 
-            RecalculateIndex();
+            RecalculatePresetIndex();
         }
         public void ResetSettings()
         {

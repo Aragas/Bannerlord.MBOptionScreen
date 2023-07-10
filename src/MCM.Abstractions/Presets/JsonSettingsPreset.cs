@@ -28,11 +28,15 @@ namespace MCM.Implementation
     {
         private class PresetContainerDefinition
         {
+            [JsonProperty(Order = 1)]
             public string Id { get; set; } = string.Empty;
+
+            [JsonProperty(Order = 2)]
             public string Name { get; set; } = string.Empty;
         }
         private sealed class PresetContainer : PresetContainerDefinition
         {
+            [JsonProperty(Order = 3)]
             public BaseSettings? Settings { get; set; }
         }
 

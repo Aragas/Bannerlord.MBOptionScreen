@@ -29,11 +29,14 @@ namespace MCM.Implementation.FluentBuilder
         /// <inheritdoc />
         public ISettingsPreset Build(BaseSettings settings) => new MemorySettingsPreset(settings.Id, Id, Name, () =>
         {
-            var props = settings.GetAllSettingPropertyDefinitions().ToList();
-            foreach (var kv in PropertyValues)
+            var settingsProperties = settings.GetAllSettingPropertyDefinitions().ToList();
+            foreach (var overridePropertyKeyValue in PropertyValues)
             {
-                if (props.Find(x => x.Id == kv.Key) is { } property)
-                    property.PropertyReference.Value = kv.Value;
+                var overridePropertyId = overridePropertyKeyValue.Key;
+                var overridePropertyValue = overridePropertyKeyValue.Value;
+
+                if (settingsProperties.Find(x => x.Id == overridePropertyId) is { } property)
+                    property.PropertyReference.Value = overridePropertyValue;
             }
             return settings;
         });

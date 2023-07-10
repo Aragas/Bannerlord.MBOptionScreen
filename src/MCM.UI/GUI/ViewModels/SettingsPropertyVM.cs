@@ -134,7 +134,7 @@ namespace MCM.UI.GUI.ViewModels
                     ButtonContent = new TextObject(SettingPropertyDefinition.Content).ToString();
                     break;
             }
-            SettingsVM.RecalculateIndex();
+            SettingsVM.RecalculatePresetIndex();
         }
 
         private void ResetValueToDefaultOnReleasedEvent()

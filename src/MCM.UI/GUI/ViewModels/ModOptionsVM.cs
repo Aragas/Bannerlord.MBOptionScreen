@@ -5,6 +5,8 @@ using BUTR.DependencyInjection;
 using ComparerExtensions;
 
 using MCM.Abstractions;
+using MCM.Abstractions.GameFeatures;
+using MCM.Implementation;
 using MCM.UI.Dropdown;
 using MCM.UI.Extensions;
 using MCM.UI.Patches;
@@ -14,8 +16,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -122,6 +126,10 @@ namespace MCM.UI.GUI.ViewModels
         /// </summary>
         [DataSourceProperty]
         public bool IsDisabled { get; set; }
+        [DataSourceProperty]
+        public string SaveAsPreset => new TextObject("{=ModOptionsVM_SaveAsPreset}Save As Preset").ToString();
+        [DataSourceProperty]
+        public bool CanSaveAsPreset => PresetsSelectorCopy?.SelectedItem?.OriginalItem?.Id == "custom";
 
         public ModOptionsVM()
         {
@@ -315,9 +323,12 @@ namespace MCM.UI.GUI.ViewModels
             var requireRestart = changedModSettings.Any(x => x.RestartRequired());
             if (requireRestart)
             {
-                InformationManager.ShowInquiry(InquiryDataUtils.Create(new TextObject("{=ModOptionsVM_RestartTitle}Game Needs to Restart").ToString(),
-                    new TextObject("{=ModOptionsVM_RestartDesc}The game needs to be restarted to apply mod settings changes. Do you want to close the game now?").ToString(),
-                    true, true, new TextObject("{=aeouhelq}Yes").ToString(), new TextObject("{=3CpNUnVl}Cancel").ToString(),
+                InformationManager.ShowInquiry(InquiryDataUtils.CreateTranslatable(
+                    "{=ModOptionsVM_RestartTitle}Game Needs to Restart",
+                    "{=ModOptionsVM_RestartDesc}The game needs to be restarted to apply mod settings changes. Do you want to close the game now?",
+                    true, true,
+                    "{=aeouhelq}Yes",
+                    "{=3CpNUnVl}Cancel",
                     () =>
                     {
                         foreach (var changedModSetting in changedModSettings)
@@ -361,6 +372,66 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
 
+        public void ExecuteSaveAsPreset()
+        {
+            if (SelectedMod?.SettingsInstance is not { } settings) return;
+            var settingsSnapshot = settings.CopyAsNew();
+
+            var fileSystem = GenericServiceProvider.GetService<IFileSystemProvider>();
+            if (fileSystem is null) return;
+
+            InformationManager.ShowTextInquiry(InquiryDataUtils.CreateTextTranslatable(
+                "{=ModOptionsVM_SaveAsPreset}Save As Preset",
+                "{=ModOptionsVM_SaveAsPresetDesc}Choose the name of the preset",
+                true, true,
+                "{=5Unqsx3N}Confirm",
+                "{=3CpNUnVl}Cancel",
+                input =>
+                {
+                    var hasSet = new HashSet<char>(System.IO.Path.GetInvalidFileNameChars());
+                    var sb = new StringBuilder();
+                    foreach (var c in input) sb.Append(hasSet.Contains(c) ? '_' : c);
+                    var id = sb.ToString();
+
+                    var presetsDirectory = fileSystem.GetOrCreateDirectory(fileSystem.GetModSettingsDirectory(), "Presets");
+                    var settingsDirectory = fileSystem.GetOrCreateDirectory(presetsDirectory, settingsSnapshot.Id);
+
+                    var filename = $"{id}.json";
+
+                    void SavePreset()
+                    {
+                        var presetFile = fileSystem.GetOrCreateFile(settingsDirectory, filename);
+
+                        var preset = new JsonSettingsPreset(settingsSnapshot.Id, id, input, presetFile, () => null!);
+                        preset.SavePreset(settingsSnapshot);
+
+                        SelectedMod.ReloadPresetList();
+                        DoPresetsSelectorCopyWithoutEvents(() =>
+                        {
+                            PresetsSelectorCopy.Refresh(SelectedMod.PresetsSelector.ItemList.Select(x => x.OriginalItem), SelectedMod.PresetsSelector.SelectedIndex);
+                        });
+                    }
+
+                    if (fileSystem.GetFile(settingsDirectory, filename) is not null)
+                    {
+                        // Override file?
+                        InformationManager.ShowInquiry(InquiryDataUtils.CreateTranslatable(
+                            "{=ModOptionsVM_OverridePreset}Preset Already Exists",
+                            "{=ModOptionsVM_OverridePresetDesc}Preset already exists! Do you want to override it?",
+                            true, true,
+                            "{=aeouhelq}Yes",
+                            "{=3CpNUnVl}Cancel",
+                            () =>
+                            {
+                                SavePreset();
+                            }, () => { }));
+                        return;
+                    }
+
+                    SavePreset();
+                }, () => { }));
+        }
+
         public override void OnFinalize()
         {
             foreach (var modSettings in ModSettingsList)
@@ -376,6 +447,7 @@ namespace MCM.UI.GUI.ViewModels
             PresetsSelectorCopy.PropertyChanged -= OnPresetsSelectorChange;
             action();
             PresetsSelectorCopy.PropertyChanged += OnPresetsSelectorChange;
+            OnPropertyChanged(nameof(CanSaveAsPreset));
         }
     }
 }
