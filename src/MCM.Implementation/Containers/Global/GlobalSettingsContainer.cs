@@ -32,7 +32,25 @@ namespace MCM.Implementation.Global
                             .Where(t => typeof(GlobalSettings).IsAssignableFrom(t))
                             .Where(t => !typeof(EmptyGlobalSettings).IsAssignableFrom(t))
                             .Where(t => !typeof(IWrapper).IsAssignableFrom(t))
-                            .Select(t => Activator.CreateInstance(t) as GlobalSettings)
+                            .Select(t =>
+                            {
+                                try
+                                {
+                                    return Activator.CreateInstance(t) as GlobalSettings;
+                                }
+                                catch (Exception e)
+                                {
+                                    try
+                                    {
+                                        logger.LogError(e, $"Failed to initialize type {t}");
+                                    }
+                                    catch (Exception)
+                                    {
+                                        logger.LogError(e, "Failed to initialize and log type!");
+                                    }
+                                    return null;
+                                }
+                            })
                             .OfType<GlobalSettings>()
                             .ToList();
                     }
