@@ -89,7 +89,25 @@ namespace MCM.Implementation.PerSave
                             .Where(t => typeof(PerSaveSettings).IsAssignableFrom(t))
                             .Where(t => !typeof(EmptyPerSaveSettings).IsAssignableFrom(t))
                             .Where(t => !typeof(IWrapper).IsAssignableFrom(t))
-                            .Select(t => Activator.CreateInstance(t) as PerSaveSettings)
+                            .Select(t =>
+                            {
+                                try
+                                {
+                                    return Activator.CreateInstance(t) as PerSaveSettings;
+                                }
+                                catch (Exception e)
+                                {
+                                    try
+                                    {
+                                        _logger.LogError(e, $"Failed to initialize type {t}");
+                                    }
+                                    catch (Exception)
+                                    {
+                                        _logger.LogError(e, "Failed to initialize and log type!");
+                                    }
+                                    return null;
+                                }
+                            })
                             .OfType<PerSaveSettings>()
                             .ToList();
                     }

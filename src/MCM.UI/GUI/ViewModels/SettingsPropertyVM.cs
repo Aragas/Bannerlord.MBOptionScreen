@@ -58,11 +58,24 @@ namespace MCM.UI.GUI.ViewModels
 
         public SettingsPropertyVM(ISettingsPropertyDefinition definition, SettingsVM settingsVM)
         {
+            static IFormatProvider? TryCreateCustomFormatter(Type? customFormatter)
+            {
+                if (customFormatter is null) return null;
+
+                try
+                {
+                    return Activator.CreateInstance(customFormatter) as IFormatProvider;
+                }
+                catch (Exception)
+                {
+                    return null;
+                }
+            }
+
+
             SettingsVM = settingsVM;
             SettingPropertyDefinition = definition;
-            ValueFormatProvider = SettingPropertyDefinition.CustomFormatter is not null
-                ? Activator.CreateInstance(SettingPropertyDefinition.CustomFormatter) as IFormatProvider
-                : null;
+            ValueFormatProvider = TryCreateCustomFormatter(SettingPropertyDefinition.CustomFormatter);
 
             NumericValueToggle = IsInt || IsFloat;
 

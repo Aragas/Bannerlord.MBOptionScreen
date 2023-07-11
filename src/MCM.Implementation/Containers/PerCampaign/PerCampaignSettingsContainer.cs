@@ -116,7 +116,25 @@ namespace MCM.Implementation.PerCampaign
                             .Where(t => typeof(PerCampaignSettings).IsAssignableFrom(t))
                             .Where(t => !typeof(EmptyPerCampaignSettings).IsAssignableFrom(t))
                             .Where(t => !typeof(IWrapper).IsAssignableFrom(t))
-                            .Select(t => Activator.CreateInstance(t) as PerCampaignSettings)
+                            .Select(t =>
+                            {
+                                try
+                                {
+                                    return Activator.CreateInstance(t) as PerCampaignSettings;
+                                }
+                                catch (Exception e)
+                                {
+                                    try
+                                    {
+                                        _logger.LogError(e, $"Failed to initialize type {t}");
+                                    }
+                                    catch (Exception)
+                                    {
+                                        _logger.LogError(e, "Failed to initialize and log type!");
+                                    }
+                                    return null;
+                                }
+                            })
                             .OfType<PerCampaignSettings>()
                             .ToList();
                     }
