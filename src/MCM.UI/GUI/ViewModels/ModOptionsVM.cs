@@ -18,11 +18,13 @@ using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+using TaleWorlds.Core;
 using TaleWorlds.Engine;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
@@ -372,64 +374,226 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
 
-        public void ExecuteSaveAsPreset()
+        private void RefreshPresetList()
         {
+            if (SelectedMod is null) return;
+
+            SelectedMod.ReloadPresetList();
+            DoPresetsSelectorCopyWithoutEvents(() =>
+            {
+                PresetsSelectorCopy.Refresh(SelectedMod.PresetsSelector.ItemList.Select(x => x.OriginalItem), SelectedMod.PresetsSelector.SelectedIndex);
+            });
+        }
+
+        private void OverridePreset(Action onOverride)
+        {
+            InformationManager.ShowInquiry(InquiryDataUtils.CreateTranslatable(
+                "{=ModOptionsVM_OverridePreset}Preset Already Exists",
+                "{=ModOptionsVM_OverridePresetDesc}Preset already exists! Do you want to override it?",
+                true, true,
+                "{=aeouhelq}Yes",
+                "{=3CpNUnVl}Cancel",
+                onOverride, () => { }));
+        }
+
+        public void ExecuteManagePresets()
+        {
+            const string savePreset = "save_preset";
+            const string importPreset = "import_preset";
+            const string exportPreset = "export_preset";
+            const string deletePreset = "delete_preset";
+
             if (SelectedMod?.SettingsInstance is not { } settings) return;
-            var settingsSnapshot = settings.CopyAsNew();
 
             var fileSystem = GenericServiceProvider.GetService<IFileSystemProvider>();
             if (fileSystem is null) return;
 
-            InformationManager.ShowTextInquiry(InquiryDataUtils.CreateTextTranslatable(
-                "{=ModOptionsVM_SaveAsPreset}Save As Preset",
-                "{=ModOptionsVM_SaveAsPresetDesc}Choose the name of the preset",
-                true, true,
-                "{=5Unqsx3N}Confirm",
-                "{=3CpNUnVl}Cancel",
-                input =>
-                {
-                    var hasSet = new HashSet<char>(System.IO.Path.GetInvalidFileNameChars());
-                    var sb = new StringBuilder();
-                    foreach (var c in input) sb.Append(hasSet.Contains(c) ? '_' : c);
-                    var id = sb.ToString();
+            if (PresetsSelectorCopy.SelectedItem?.OriginalItem is null) return;
 
-                    var presetsDirectory = fileSystem.GetOrCreateDirectory(fileSystem.GetModSettingsDirectory(), "Presets");
-                    var settingsDirectory = fileSystem.GetOrCreateDirectory(presetsDirectory, settingsSnapshot.Id);
+            void SaveAsPreset(GameDirectory settingsDirectory)
+            {
+                var settingsSnapshot = settings.CopyAsNew();
 
-                    var filename = $"{id}.json";
-
-                    void SavePreset()
+                InformationManager.ShowTextInquiry(InquiryDataUtils.CreateTextTranslatable(
+                    "{=ModOptionsVM_SaveAsPreset}Save As Preset",
+                    "{=ModOptionsVM_SaveAsPresetDesc}Choose the name of the preset",
+                    true, true,
+                    "{=5Unqsx3N}Confirm",
+                    "{=3CpNUnVl}Cancel",
+                    input =>
                     {
-                        var presetFile = fileSystem.GetOrCreateFile(settingsDirectory, filename);
+                        var hasSet = new HashSet<char>(System.IO.Path.GetInvalidFileNameChars());
+                        var sb = new StringBuilder();
+                        foreach (var c in input) sb.Append(hasSet.Contains(c) ? '_' : c);
+                        var id = sb.ToString();
 
-                        var preset = new JsonSettingsPreset(settingsSnapshot.Id, id, input, presetFile, () => null!);
-                        preset.SavePreset(settingsSnapshot);
+                        var filename = $"{id}.json";
 
-                        SelectedMod.ReloadPresetList();
-                        DoPresetsSelectorCopyWithoutEvents(() =>
+                        void SavePreset()
                         {
-                            PresetsSelectorCopy.Refresh(SelectedMod.PresetsSelector.ItemList.Select(x => x.OriginalItem), SelectedMod.PresetsSelector.SelectedIndex);
-                        });
+                            var presetFile = fileSystem.GetOrCreateFile(settingsDirectory, filename);
+
+                            var preset = new JsonSettingsPreset(settingsSnapshot.Id, id, input, presetFile, () => null!);
+                            preset.SavePreset(settingsSnapshot);
+
+                            RefreshPresetList();
+                        }
+
+                        if (fileSystem.GetFile(settingsDirectory, filename) is not null)
+                        {
+                            // Override file?
+                            OverridePreset(SavePreset);
+                            return;
+                        }
+
+                        SavePreset();
+                    }, () => { }));
+            }
+
+            void ImportNewPreset(GameDirectory settingsDirectory)
+            {
+                var dialog = new OpenFileDialog
+                {
+                    Title = "Import Preset",
+                    Filter = "MCM Preset (.json)|*.json",
+                    CheckFileExists = true,
+                    CheckPathExists = true,
+                    ReadOnlyChecked = true,
+                    Multiselect = false,
+                    ValidateNames = true,
+                };
+                if (dialog.ShowDialog())
+                {
+                    var content = File.ReadAllText(dialog.FileName);
+                    var presetId = JsonSettingsPreset.GetPresetId(content);
+
+                    void CopyFile()
+                    {
+                        var presetFile = fileSystem.GetOrCreateFile(settingsDirectory, $"{presetId}.json");
+                        var path = fileSystem.GetSystemPath(presetFile);
+                        if (path is null) return;
+                        try
+                        {
+                            File.Copy(dialog.FileName, path, true);
+                        }
+                        catch (Exception) { /* ignore */ }
                     }
 
+                    var filename = $"{presetId}.json";
                     if (fileSystem.GetFile(settingsDirectory, filename) is not null)
                     {
-                        // Override file?
-                        InformationManager.ShowInquiry(InquiryDataUtils.CreateTranslatable(
-                            "{=ModOptionsVM_OverridePreset}Preset Already Exists",
-                            "{=ModOptionsVM_OverridePresetDesc}Preset already exists! Do you want to override it?",
-                            true, true,
-                            "{=aeouhelq}Yes",
-                            "{=3CpNUnVl}Cancel",
-                            () =>
-                            {
-                                SavePreset();
-                            }, () => { }));
+                        OverridePreset(CopyFile);
                         return;
                     }
 
-                    SavePreset();
-                }, () => { }));
+                    CopyFile();
+                }
+
+                RefreshPresetList();
+            }
+
+            void ExportPreset(GameFile presetFile)
+            {
+                var path = fileSystem.GetSystemPath(presetFile);
+                if (path is null) return;
+
+                var dialog = new SaveFileDialog
+                {
+                    Title = "Export Preset",
+                    Filter = "MCM Preset (.json)|*.json",
+                    FileName = System.IO.Path.GetFileName(path),
+
+                    ValidateNames = true,
+
+                    OverwritePrompt = true,
+                };
+                if (dialog.ShowDialog())
+                {
+                    try
+                    {
+                        File.Copy(path, dialog.FileName, true);
+                    }
+                    catch (Exception) { /* ignore */ }
+                }
+            }
+
+            void DeletePreset(GameFile presetFile)
+            {
+                fileSystem.WriteData(presetFile, null);
+
+                RefreshPresetList();
+            }
+
+            void OnActionSelected(List<InquiryElement> selected)
+            {
+                var selectedPresetKey = PresetsSelectorCopy.SelectedItem?.OriginalItem;
+                if (selectedPresetKey is null) return;
+
+                var presetsDirectory = fileSystem.GetOrCreateDirectory(fileSystem.GetModSettingsDirectory(), "Presets");
+                var settingsDirectory = fileSystem.GetOrCreateDirectory(presetsDirectory, settings.Id);
+
+                var filename = $"{selectedPresetKey.Id}.json";
+
+                switch (selected[0].Identifier)
+                {
+                    case savePreset:
+                    {
+                        SaveAsPreset(settingsDirectory);
+                        break;
+                    }
+                    case importPreset:
+                    {
+                        ImportNewPreset(settingsDirectory);
+                        break;
+                    }
+                    case exportPreset:
+                    {
+                        var presetFile = fileSystem.GetFile(settingsDirectory, filename);
+                        if (presetFile is null) return;
+                        ExportPreset(presetFile);
+                        break;
+                    }
+
+                    case deletePreset:
+                    {
+                        var presetFile = fileSystem.GetFile(settingsDirectory, filename);
+                        if (presetFile is null) return;
+                        DeletePreset(presetFile);
+                        break;
+                    }
+                }
+            }
+
+            var inquiries = new List<InquiryElement>
+            {
+                new(importPreset, new TextObject("{=ModOptionsVM_ManagePresetsImport}Import a new Preset").ToString(), null)
+            };
+
+            if (PresetsSelectorCopy.SelectedItem.OriginalItem.Id == "custom")
+            {
+                inquiries.Add(new(savePreset, new TextObject("{=ModOptionsVM_SaveAsPreset}Save As Preset").ToString(), null));
+            }
+
+            if (PresetsSelectorCopy.SelectedItem.OriginalItem.Id is not "custom" and not "default")
+            {
+                inquiries.Add(new(exportPreset, new TextObject("{=ModOptionsVM_ManagePresetsExport}Export Preset '{PRESETNAME}'", new Dictionary<string, object>()
+                {
+                    { "PRESETNAME", PresetsSelectorCopy.SelectedItem.OriginalItem.Name }
+                }).ToString(), null));
+                inquiries.Add(new(deletePreset, new TextObject("{=ModOptionsVM_ManagePresetsDelete}Delete Preset '{PRESETNAME}'", new Dictionary<string, object>()
+                {
+                    { "PRESETNAME", PresetsSelectorCopy.SelectedItem.OriginalItem.Name }
+                }).ToString(), null));
+            }
+
+            MBInformationManager.ShowMultiSelectionInquiry(InquiryDataUtils.CreateMultiTranslatable(
+                "{=ModOptionsVM_ManagePresets}Manage Presets", "",
+                inquiries,
+                true,
+                1, 1,
+                "{=5Unqsx3N}Confirm",
+                "{=3CpNUnVl}Cancel",
+                OnActionSelected, _ => { }));
         }
 
         public override void OnFinalize()

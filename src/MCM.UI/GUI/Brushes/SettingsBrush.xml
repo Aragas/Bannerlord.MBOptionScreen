@@ -1,4 +1,10 @@
 ﻿<Brushes>
+  <Brush Name="MCM.Settings" GlobalAlphaFactor="1">
+    <Layers>
+      <BrushLayer Name="Default" Sprite="StdAssets\plus_button" />
+    </Layers>
+  </Brush>
+
   <Brush Name="MCM.Setting.Item">
     <Layers>
       <BrushLayer Name="Default" Sprite="mcm_entry" Color="#FFEBC1FF" />

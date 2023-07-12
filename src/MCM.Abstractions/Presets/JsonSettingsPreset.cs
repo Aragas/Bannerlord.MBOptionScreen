@@ -40,6 +40,14 @@ namespace MCM.Implementation
             public BaseSettings? Settings { get; set; }
         }
 
+        public static string? GetPresetId(string content)
+        {
+            var container = JsonConvert.DeserializeObject<PresetContainerDefinition?>(content);
+            if (container is null) return null;
+
+            return container.Id;
+        }
+
         public static JsonSettingsPreset? FromFile(BaseSettings settings, GameFile file) => FromFile(settings.Id, file, settings.CreateNew);
         public static JsonSettingsPreset? FromFile(string settingsId, GameFile file, Func<BaseSettings> getNewSettings)
         {
