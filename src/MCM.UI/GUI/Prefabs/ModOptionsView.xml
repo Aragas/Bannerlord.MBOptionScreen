@@ -112,6 +112,11 @@
                           </Children>
                         </Widget>
 
+                        <!-- Manage Presets -->
+                        <ButtonWidget Id="ExtendButtonWidget" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" MarginLeft="10" MarginRight="30"
+                                      HorizontalAlignment="Right" VerticalAlignment="Center" Brush="MCM.Settings" Command.Click="ExecuteManagePresets" >
+                        </ButtonWidget>
+
                         <!-- Title -->
                         <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="80" Brush="MCM.Title.Text"
                                         Text="@SelectedDisplayName" HorizontalAlignment="Center" VerticalAlignment="Top"/>
@@ -124,24 +129,6 @@
                             <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="25" SuggestedHeight="24" HorizontalAlignment="Right" VerticalAlignment="Center" MarginRight="10" Sprite="mcm_icon_search" IsDisabled="true" />
                           </Children>
                         </BrushWidget>
-
-                      </Children>
-                    </ListPanel>
-
-                    <!-- Preset Section -->
-                    <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="80" LayoutImp.LayoutMethod="HorizontalLeftToRight"
-                               HorizontalAlignment="Center" VerticalAlignment="Top" MarginBottom="-20" MarginTop="-30" >
-                      <Children>
-
-                        <!-- Save As Preset -->
-                        <ButtonWidget SuggestedWidth="200" SuggestedHeight="64" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                      MarginLeft="10" DoNotPassEventsToChildren="true" Brush="MCM.Cancel.Button" Command.Click="ExecuteSaveAsPreset"
-                                      IsVisible="@CanSaveAsPreset" >
-                          <Children>
-                            <TextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" VerticalAlignment="Center" HorizontalAlignment="Center"
-                                        Text="@SaveAsPreset" Brush="MCM.Button.Text" />
-                          </Children>
-                        </ButtonWidget>
 
                       </Children>
                     </ListPanel>

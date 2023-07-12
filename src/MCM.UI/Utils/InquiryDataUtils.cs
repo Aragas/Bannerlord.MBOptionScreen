@@ -1,8 +1,10 @@
 ﻿using HarmonyLib.BUTR.Extensions;
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
+using TaleWorlds.Core;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
 
@@ -21,11 +23,24 @@ namespace MCM.UI.Utils
         private static readonly V2Delegate? V2 =
             AccessTools2.GetConstructorDelegate<V2Delegate>(typeof(InquiryData), typeof(V2Delegate).GetMethod("Invoke").GetParameters().Select(x => x.ParameterType).ToArray());
 
+
         private delegate TextInquiryData V1TextDelegate(string titleText, string text, bool isAffirmativeOptionShown, bool isNegativeOptionShown, string affirmativeText, string negativeText,
             Action<string> affirmativeAction, Action negativeAction, bool shouldInputBeObfuscated = false, Func<string, Tuple<bool, string>>? textCondition = null, string soundEventPath = "",
             string defaultInputText = "");
         private static readonly V1TextDelegate? V1Text =
             AccessTools2.GetConstructorDelegate<V1TextDelegate>(typeof(TextInquiryData), typeof(V1TextDelegate).GetMethod("Invoke").GetParameters().Select(x => x.ParameterType).ToArray());
+
+
+        private delegate MultiSelectionInquiryData V1MultiDelegate(string titleText, string descriptionText, List<InquiryElement> inquiryElements, bool isExitShown, int maxSelectableOptionCount,
+            string affirmativeText, string negativeText, Action<List<InquiryElement>> affirmativeAction, Action<List<InquiryElement>> negativeAction, string soundEventPath = "");
+        private static readonly V1MultiDelegate? V1Multi =
+            AccessTools2.GetConstructorDelegate<V1MultiDelegate>(typeof(MultiSelectionInquiryData), typeof(V1MultiDelegate).GetMethod("Invoke").GetParameters().Select(x => x.ParameterType).ToArray());
+
+        private delegate MultiSelectionInquiryData V2MultiDelegate(string titleText, string descriptionText, List<InquiryElement> inquiryElements, bool isExitShown, int minSelectableOptionCount, int maxSelectableOptionCount,
+            string affirmativeText, string negativeText, Action<List<InquiryElement>> affirmativeAction, Action<List<InquiryElement>> negativeAction, string soundEventPath = "");
+        private static readonly V2MultiDelegate? V2Multi =
+            AccessTools2.GetConstructorDelegate<V2MultiDelegate>(typeof(MultiSelectionInquiryData), typeof(V2MultiDelegate).GetMethod("Invoke").GetParameters().Select(x => x.ParameterType).ToArray());
+
 
         public static InquiryData? Create(string titleText, string text, bool isAffirmativeOptionShown, bool isNegativeOptionShown, string affirmativeText, string negativeText, Action affirmativeAction, Action negativeAction)
         {
@@ -53,5 +68,19 @@ namespace MCM.UI.Utils
         public static TextInquiryData? CreateTextTranslatable(string titleText, string text, bool isAffirmativeOptionShown, bool isNegativeOptionShown, string affirmativeText, string negativeText, Action<string> affirmativeAction, Action negativeAction) =>
             CreateText(new TextObject(titleText).ToString(), new TextObject(text).ToString(), isAffirmativeOptionShown, isNegativeOptionShown, new TextObject(affirmativeText).ToString(), new TextObject(negativeText).ToString(), affirmativeAction, negativeAction);
 
+
+        public static MultiSelectionInquiryData? CreateMulti(string titleText, string descriptionText, List<InquiryElement> inquiryElements, bool isExitShown, int minSelectableOptionCount, int maxSelectableOptionCount, string affirmativeText, string negativeText, Action<List<InquiryElement>> affirmativeAction, Action<List<InquiryElement>> negativeAction)
+        {
+            if (V1Multi is not null)
+                return V1Multi(titleText, descriptionText, inquiryElements, isExitShown, maxSelectableOptionCount, affirmativeText, negativeText, affirmativeAction, negativeAction);
+
+            if (V2Multi is not null)
+                return V2Multi(titleText, descriptionText, inquiryElements, isExitShown, minSelectableOptionCount, maxSelectableOptionCount, affirmativeText, negativeText, affirmativeAction, negativeAction);
+
+            return null;
+        }
+
+        public static MultiSelectionInquiryData? CreateMultiTranslatable(string titleText, string descriptionText, List<InquiryElement> inquiryElements, bool isExitShown, int minSelectableOptionCount, int maxSelectableOptionCount, string affirmativeText, string negativeText, Action<List<InquiryElement>> affirmativeAction, Action<List<InquiryElement>> negativeAction) =>
+            CreateMulti(new TextObject(titleText).ToString(), new TextObject(descriptionText).ToString(), inquiryElements, isExitShown, minSelectableOptionCount, maxSelectableOptionCount, new TextObject(affirmativeText).ToString(), new TextObject(negativeText).ToString(), affirmativeAction, negativeAction);
     }
 }
