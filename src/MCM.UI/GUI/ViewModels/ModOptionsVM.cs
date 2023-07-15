@@ -293,8 +293,6 @@ namespace MCM.UI.GUI.ViewModels
 
         public bool ExecuteCancelInternal(bool popScreen, Action? onClose = null)
         {
-            if (IsDisabled) return false;
-
             OnFinalize();
             if (popScreen) ScreenManager.PopScreen();
             else onClose?.Invoke();
@@ -309,8 +307,6 @@ namespace MCM.UI.GUI.ViewModels
         public void ExecuteDone() => ExecuteDoneInternal(true);
         public void ExecuteDoneInternal(bool popScreen, Action? onClose = null)
         {
-            if (IsDisabled) return;
-
             if (!ModSettingsList.Any(x => x.URS.ChangesMade))
             {
                 OnFinalize();
