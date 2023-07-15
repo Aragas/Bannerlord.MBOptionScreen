@@ -430,7 +430,13 @@ namespace MCM.UI.GUI.ViewModels
                             var presetFile = fileSystem.GetOrCreateFile(settingsDirectory, filename);
 
                             var preset = new JsonSettingsPreset(settingsSnapshot.Id, id, input, presetFile, () => null!);
-                            preset.SavePreset(settingsSnapshot);
+                            if (!preset.SavePreset(settingsSnapshot))
+                            {
+                                InformationManager.DisplayMessage(new InformationMessage(new TextObject("{=ModOptionsVM_SaveAsPresetError}Failed to save preset '{PRESETNAME}'!", new()
+                                {
+                                    { "PRESETNAME", input }
+                                }).ToString(), Color.White));
+                            }
 
                             RefreshPresetList();
                         }
@@ -572,11 +578,11 @@ namespace MCM.UI.GUI.ViewModels
 
             if (PresetsSelectorCopy.SelectedItem.OriginalItem.Id is not "custom" and not "default")
             {
-                inquiries.Add(new(exportPreset, new TextObject("{=ModOptionsVM_ManagePresetsExport}Export Preset '{PRESETNAME}'", new Dictionary<string, object>()
+                inquiries.Add(new(exportPreset, new TextObject("{=ModOptionsVM_ManagePresetsExport}Export Preset '{PRESETNAME}'", new()
                 {
                     { "PRESETNAME", PresetsSelectorCopy.SelectedItem.OriginalItem.Name }
                 }).ToString(), null));
-                inquiries.Add(new(deletePreset, new TextObject("{=ModOptionsVM_ManagePresetsDelete}Delete Preset '{PRESETNAME}'", new Dictionary<string, object>()
+                inquiries.Add(new(deletePreset, new TextObject("{=ModOptionsVM_ManagePresetsDelete}Delete Preset '{PRESETNAME}'", new()
                 {
                     { "PRESETNAME", PresetsSelectorCopy.SelectedItem.OriginalItem.Name }
                 }).ToString(), null));
