@@ -46,13 +46,13 @@ namespace MCM.Implementation
             {
                 var container = JsonConvert.DeserializeObject<PresetContainerDefinition?>(content);
                 if (container is null) return null;
+
+                return container.Id;
             }
             catch (Exception)
             {
                 return null;
             }
-
-            return container.Id;
         }
 
         public static JsonSettingsPreset? FromFile(BaseSettings settings, GameFile file) => FromFile(settings.Id, file, settings.CreateNew);
