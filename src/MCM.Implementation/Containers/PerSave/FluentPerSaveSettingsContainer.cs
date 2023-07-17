@@ -1,9 +1,13 @@
 ﻿using BUTR.DependencyInjection;
 
+using MCM.Abstractions;
 using MCM.Abstractions.Base;
 using MCM.Abstractions.Base.PerSave;
 using MCM.Abstractions.GameFeatures;
 using MCM.Abstractions.PerSave;
+
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MCM.Implementation.PerSave
 {
@@ -77,5 +81,8 @@ namespace MCM.Implementation.PerSave
 
         public void GameStarted() => LoadedSettings.Clear();
         public void GameEnded() => LoadedSettings.Clear();
+
+        /// <inheritdoc />
+        public IEnumerable<UnavailableSetting> GetUnavailableSettings() => Enumerable.Empty<UnavailableSetting>();
     }
 }

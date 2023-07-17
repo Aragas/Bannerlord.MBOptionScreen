@@ -10,7 +10,8 @@
         ISettingsContainerHasSettingsDefinitions,
         ISettingsContainerCanOverride,
         ISettingsContainerCanReset,
-        ISettingsContainerPresets
+        ISettingsContainerPresets,
+        ISettingsContainerHasSettingsPack
     {
 
     }

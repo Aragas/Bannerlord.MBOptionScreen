@@ -5,6 +5,7 @@ using BUTR.DependencyInjection;
 using ComparerExtensions;
 
 using MCM.Abstractions;
+using MCM.Abstractions.Base;
 using MCM.Abstractions.GameFeatures;
 using MCM.Implementation;
 using MCM.UI.Dropdown;
@@ -19,10 +20,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 using TaleWorlds.Core;
 using TaleWorlds.Engine;
@@ -88,7 +91,7 @@ namespace MCM.UI.GUI.ViewModels
         public bool IsDisabled { get; set; }
 
         [DataSourceProperty]
-        public string NameText { get => _titleLabel; set => SetField(ref _titleLabel, value, nameof(NameText)); }
+        public string Name { get => _titleLabel; set => SetField(ref _titleLabel, value, nameof(Name)); }
         [DataSourceProperty]
         public string DoneButtonText { get => _doneButtonText; set => SetField(ref _doneButtonText, value, nameof(DoneButtonText)); }
         [DataSourceProperty]
@@ -198,10 +201,9 @@ namespace MCM.UI.GUI.ViewModels
                             }, viewModel);
                         }
 
-                        foreach (var unavailableSetting in BaseSettingsProvider.Instance?.GetUnavailableSettings() ?? Enumerable.Empty<UnavailableSetting>())
-                        {
-                            ModSettingsList.Add(new SettingsEntryVM(unavailableSetting, ExecuteSelect));
-                        }
+                        // TODO: We are not able to show Fluent PerSave/Campaign settings this way. For now, don't use it
+                        //foreach (var unavailableSetting in BaseSettingsProvider.Instance?.GetUnavailableSettings() ?? Enumerable.Empty<UnavailableSetting>())
+                        //    ModSettingsList.Add(new SettingsEntryVM(unavailableSetting, ExecuteSelect));
 
                         // Yea, I imported a whole library that converts LINQ style order to IComparer
                         // because I wasn't able to recreate the logic via IComparer. TODO: Fix that
@@ -226,7 +228,7 @@ namespace MCM.UI.GUI.ViewModels
         {
             base.RefreshValues();
 
-            NameText = new TextObject("{=ModOptionsVM_Name}Mod Options").ToString();
+            Name = new TextObject("{=ModOptionsVM_Name}Mod Options").ToString();
             DoneButtonText = new TextObject("{=WiNRdfsm}Done").ToString();
             CancelButtonText = new TextObject("{=3CpNUnVl}Cancel").ToString();
             ModsText = new TextObject("{=ModOptionsPageView_Mods}Mods").ToString();
@@ -482,7 +484,7 @@ namespace MCM.UI.GUI.ViewModels
                     Multiselect = false,
                     ValidateNames = true,
                 };
-                if (dialog.ShowDialog())
+                if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     var content = File.ReadAllText(dialog.FileName);
                     var presetId = JsonSettingsPreset.GetPresetId(content);
@@ -527,7 +529,7 @@ namespace MCM.UI.GUI.ViewModels
 
                     OverwritePrompt = true,
                 };
-                if (dialog.ShowDialog())
+                if (dialog.ShowDialog() == DialogResult.OK)
                 {
                     try
                     {
@@ -573,7 +575,6 @@ namespace MCM.UI.GUI.ViewModels
                         ExportPreset(presetFile);
                         break;
                     }
-
                     case deletePreset:
                     {
                         var presetFile = fileSystem.GetFile(settingsDirectory, filename);
@@ -609,6 +610,104 @@ namespace MCM.UI.GUI.ViewModels
             MBInformationManager.ShowMultiSelectionInquiry(InquiryDataUtils.CreateMultiTranslatable(
                 "{=ModOptionsVM_ManagePresets}Manage Presets", "",
                 inquiries,
+                true,
+                1, 1,
+                "{=5Unqsx3N}Confirm",
+                "{=3CpNUnVl}Cancel",
+                OnActionSelected, _ => { }));
+        }
+
+        public void ExecuteManageSettingsPack()
+        {
+            const string importPack = "import_pack";
+            const string exportPack = "export_pack";
+
+            void ImportPack()
+            {
+                var dialog = new OpenFileDialog
+                {
+                    Title = "Import Settings Pack",
+                    Filter = "MCM Settings Pack (.zip)|*.zip",
+                    CheckFileExists = true,
+                    CheckPathExists = true,
+                    ReadOnlyChecked = true,
+                    Multiselect = false,
+                    ValidateNames = true,
+                };
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    if (string.IsNullOrEmpty(dialog.FileName) || !File.Exists(dialog.FileName))
+                        return;
+
+                    using var file = File.OpenRead(dialog.FileName);
+                    using var archive = new ZipArchive(file, ZipArchiveMode.Read);
+                    var snapshots = new List<SettingSnapshot>();
+                    foreach (var entry in archive.Entries)
+                    {
+                        using var stream = entry.Open();
+                        using var reader = new StreamReader(stream);
+                        snapshots.Add(new SettingSnapshot(entry.FullName, reader.ReadToEnd()));
+                    }
+
+                    foreach (var settings in BaseSettingsProvider.Instance?.LoadAvailableSnapshots(snapshots) ?? Enumerable.Empty<BaseSettings>())
+                    {
+                        if (ModSettingsList.FirstOrDefault(x => x.Id == settings.Id) is not { SettingsVM: { SettingsInstance: { } current } viewModel }) continue;
+                        UISettingsUtils.OverrideValues(viewModel.URS, current, settings);
+                    }
+                }
+            }
+
+            void ExportPack()
+            {
+                var dialog = new SaveFileDialog
+                {
+                    Title = "Export Settings Pack",
+                    Filter = "MCM Settings Pack (.zip)|*.zip",
+                    FileName = "MySettingsPack.zip",
+
+                    ValidateNames = true,
+
+                    OverwritePrompt = true,
+                };
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    var snapshots = BaseSettingsProvider.Instance?.SaveAvailableSnapshots() ?? Enumerable.Empty<SettingSnapshot>();
+                    using var file = File.Create(dialog.FileName);
+                    using var archive = new ZipArchive(file, ZipArchiveMode.Create);
+                    foreach (var snapshot in snapshots)
+                    {
+                        var entry = archive.CreateEntry(snapshot.Path, CompressionLevel.Optimal);
+                        using var stream = entry.Open();
+                        using var writer = new StreamWriter(stream);
+                        writer.Write(snapshot.JsonContent);
+                    }
+                }
+            }
+
+            void OnActionSelected(List<InquiryElement> selected)
+            {
+                switch (selected[0].Identifier)
+                {
+                    case importPack:
+                    {
+                        ImportPack();
+                        break;
+                    }
+                    case exportPack:
+                    {
+                        ExportPack();
+                        break;
+                    }
+                }
+            }
+
+            MBInformationManager.ShowMultiSelectionInquiry(InquiryDataUtils.CreateMultiTranslatable(
+                "{=ModOptionsVM_ManagePacks}Manage Settings Packs", "",
+                new List<InquiryElement>
+                {
+                    new(importPack, new TextObject("{=ModOptionsVM_ManagePackImport}Import a Settings Pack").ToString(), null),
+                    new(exportPack, new TextObject("{=ModOptionsVM_ManagePackExport}Export Settings Pack").ToString(), null),
+                },
                 true,
                 1, 1,
                 "{=5Unqsx3N}Confirm",

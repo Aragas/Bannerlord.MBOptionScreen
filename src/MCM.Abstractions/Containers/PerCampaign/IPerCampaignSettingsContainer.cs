@@ -5,6 +5,13 @@
 #else
     public
 # endif
-    interface IPerCampaignSettingsContainer : ISettingsContainer, ISettingsContainerHasSettingsDefinitions, ISettingsContainerCanOverride, ISettingsContainerCanReset
+    interface IPerCampaignSettingsContainer :
+        ISettingsContainer,
+        ISettingsContainerHasSettingsDefinitions,
+        ISettingsContainerCanOverride,
+        ISettingsContainerCanReset,
+        ISettingsContainerPresets,
+        ISettingsContainerHasUnavailable,
+        ISettingsContainerHasSettingsPack
     { }
 }
