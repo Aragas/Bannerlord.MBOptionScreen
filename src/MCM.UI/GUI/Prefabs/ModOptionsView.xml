@@ -149,7 +149,17 @@
                                 <Widget Id="SettingsInnerPanel" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren">
                                   <Children>
 
-                                    <SettingsView DataSource="{SelectedMod}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" />
+                                    <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="StretchToParent" IsVisible="@IsSettingVisible">
+                                      <Children>
+                                        <SettingsView DataSource="{SelectedMod}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" />
+                                      </Children>
+                                    </Widget>
+                                    <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="StretchToParent" IsVisible="@IsSettingUnavailableVisible">
+                                      <Children>
+                                        <TextWidget Text="@UnavailableText" HeightSizePolicy="CoverChildren" WidthSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                    Brush="MCM.Item.Name" MarginLeft="10" DoNotAcceptEvents="true" ClipContents="true" />
+                                      </Children>
+                                    </Widget>
 
                                   </Children>
                                 </Widget>
@@ -189,7 +199,7 @@
         </ListPanel>
 
         <!-- Top Banner -->
-        <Standard.TopPanel Parameter.Title="@Name"/>
+        <Standard.TopPanel Parameter.Title="@NameText"/>
 
       </Children>
     </Widget>

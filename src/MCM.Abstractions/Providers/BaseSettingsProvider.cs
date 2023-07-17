@@ -26,5 +26,6 @@ namespace MCM.Abstractions
         public abstract void ResetSettings(BaseSettings settings);
         public abstract void OverrideSettings(BaseSettings settings);
         public abstract IEnumerable<ISettingsPreset> GetPresets(string id);
+        public abstract IEnumerable<UnavailableSetting> GetUnavailableSettings();
     }
 }

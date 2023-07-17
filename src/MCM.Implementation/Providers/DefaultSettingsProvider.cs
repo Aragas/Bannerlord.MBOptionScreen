@@ -127,5 +127,14 @@ namespace MCM.Implementation
                 }
             }
         }
+
+        public override IEnumerable<UnavailableSetting> GetUnavailableSettings()
+        {
+            foreach (var settingsContainer in _settingsContainers.OfType<ISettingsContainerHasUnavailable>())
+            {
+                foreach (var unavailableSetting in settingsContainer.GetUnavailableSettings())
+                    yield return unavailableSetting;
+            }
+        }
     }
 }

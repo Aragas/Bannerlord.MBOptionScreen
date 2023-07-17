@@ -5,7 +5,6 @@ using MCM.UI.Dropdown;
 using MCM.UI.Extensions;
 using MCM.UI.Utils;
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -17,7 +16,6 @@ namespace MCM.UI.GUI.ViewModels
     {
         private string _displayName = string.Empty;
         private bool _isSelected = false;
-        private Action<SettingsVM> _executeSelect = _ => { };
         private readonly Dictionary<PresetKey, BaseSettings> _cachedPresets = new();
 
         public ModOptionsVM MainView { get; }
@@ -91,10 +89,6 @@ namespace MCM.UI.GUI.ViewModels
             foreach (var group in SettingPropertyGroups)
                 group.RefreshValues();
         }
-
-        public void AddSelectCommand(Action<SettingsVM> command) => _executeSelect = command;
-
-        public void ExecuteSelect() => _executeSelect.Invoke(this);
 
         public bool RestartRequired() => SettingPropertyGroups
             .SelectMany(x => SettingsUtils.GetAllSettingPropertyDefinitions(x.SettingPropertyGroupDefinition))

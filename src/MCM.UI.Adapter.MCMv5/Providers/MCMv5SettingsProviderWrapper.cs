@@ -85,5 +85,7 @@ namespace MCM.UI.Adapter.MCMv5.Providers
 
             return Enumerable.Empty<ISettingsPreset>();
         }
+
+        public override IEnumerable<UnavailableSetting> GetUnavailableSettings() => Enumerable.Empty<UnavailableSetting>();
     }
 }
