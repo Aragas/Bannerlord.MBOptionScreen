@@ -43,5 +43,6 @@
         bool WriteData(GameFile file, byte[]? data);
         byte[]? ReadData(GameFile file);
         string? GetSystemPath(GameFile file);
+        string? GetSystemPath(GameDirectory directory);
     }
 }

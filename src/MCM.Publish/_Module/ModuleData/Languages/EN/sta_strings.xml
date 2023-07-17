@@ -48,5 +48,9 @@
     <string id="ModOptionsVM_ManagePresetsExport" text="Export Preset '{PRESETNAME}'"/>
     <string id="ModOptionsVM_ManagePresetsDelete" text="Delete Preset '{PRESETNAME}'"/>
     <string id="ModOptionsVM_SaveAsPresetError" text="Failed to save preset '{PRESETNAME}'!"/>
+    <string id="ModOptionsVM_Unavailable" text="Settings are available within a Game Session!"/>
+    <string id="ModOptionsVM_ManagePacks" text="Manage Settings Packs"/>
+    <string id="ModOptionsVM_ManagePackImport" text="Import a Settings Pack"/>
+    <string id="ModOptionsVM_ManagePackExport" text="Export Settings Pack"/>
   </strings>
 </base>

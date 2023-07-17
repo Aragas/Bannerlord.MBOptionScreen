@@ -1,4 +1,5 @@
 ﻿using MCM.Abstractions.GameFeatures;
+using MCM.Internal.Extensions;
 
 using System;
 using System.Linq;
@@ -84,6 +85,12 @@ namespace MCM.Internal.GameFeatures
         {
             var baseFile = new TWPlatformFilePath(new TWPlatformDirectoryPath((PlatformFileType) file.Owner.Type, file.Owner.Path), file.Name);
             return PlatformFileHelper.GetFileFullPath(baseFile);
+        }
+
+        public string? GetSystemPath(GameDirectory directory)
+        {
+            var baseDirectory = new TWPlatformDirectoryPath((PlatformFileType) directory.Type, directory.Path);
+            return PlatformFileHelperPCExtended.GetDirectoryFullPath(baseDirectory);
         }
     }
 }

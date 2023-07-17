@@ -89,5 +89,7 @@ namespace MCM.Implementation.PerCampaign
 
         private void GameStarted() => LoadedSettings.Clear();
         private void GameEnded() => LoadedSettings.Clear();
+
+        public IEnumerable<UnavailableSetting> GetUnavailableSettings() => Enumerable.Empty<UnavailableSetting>();
     }
 }

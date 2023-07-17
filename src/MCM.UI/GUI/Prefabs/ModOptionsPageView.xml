@@ -18,9 +18,16 @@
                          Brush="MCM.CharacterCreation.Panel" DoNotUseCustomScaleAndChildren="true" >
               <Children>
 
-                <!-- Title -->
-                <TextWidget Text="@ModsText" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Top" MarginRight="22" MarginTop="5"
-                            Brush="MCM.Title.Text" ClipContents="false" />
+                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" LayoutImp.LayoutMethod="HorizontalLeftToRight">
+                  <Children>
+                    <!-- Title -->
+                    <TextWidget Text="@ModsText" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Top" MarginRight="22" MarginTop="5"
+                                Brush="MCM.Title.Text" ClipContents="false" />
+                    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" MarginLeft="10" MarginRight="30"
+                                  HorizontalAlignment="Right" VerticalAlignment="Center" Brush="MCM.Settings" Command.Click="ExecuteManageSettingsPack" >
+                    </ButtonWidget>
+                  </Children>
+                </ListPanel>
 
                 <!-- Mods Listing Section Inner Panel-->
                 <Widget Id="InnerPanel" HeightSizePolicy="Fixed" WidthSizePolicy="Fixed" HorizontalAlignment="Left" VerticalAlignment="Center" SuggestedWidth="508" SuggestedHeight="635" PositionXOffset="27" PositionYOffset="25">
@@ -83,7 +90,7 @@
                         </Widget>
 
                         <!-- Manage Presets -->
-                        <ButtonWidget Id="ExtendButtonWidget" WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" MarginLeft="10" MarginRight="30"
+                        <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" MarginLeft="10" MarginRight="30"
                                       HorizontalAlignment="Right" VerticalAlignment="Center" Brush="MCM.Settings" Command.Click="ExecuteManagePresets" >
                         </ButtonWidget>
 
@@ -119,7 +126,17 @@
                                 <Widget Id="SettingsInnerPanel" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren">
                                   <Children>
 
-                                    <SettingsView DataSource="{SelectedMod}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" />
+                                    <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="StretchToParent" IsVisible="@IsSettingVisible">
+                                      <Children>
+                                        <SettingsView DataSource="{SelectedMod}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" />
+                                      </Children>
+                                    </Widget>
+                                    <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="StretchToParent" IsVisible="@IsSettingUnavailableVisible">
+                                      <Children>
+                                        <TextWidget Text="@UnavailableText" HeightSizePolicy="CoverChildren" WidthSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                                    Brush="MCM.Item.Name" MarginLeft="10" DoNotAcceptEvents="true" ClipContents="true" />
+                                      </Children>
+                                    </Widget>
 
                                   </Children>
                                 </Widget>
