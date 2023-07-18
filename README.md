@@ -92,6 +92,6 @@ Requires `Bannerlord.Harmony`, `Bannerlord.UIExtenderEx`, `Bannerlord.ButterLib`
 Add this to your `.csproj`. Please not that `IncludeAssets="compile"` is very important!
 ```xml
   <ItemGroup>
-    <PackageReference Include="Bannerlord.MCM" Version="4.3.16" IncludeAssets="compile" />
+    <PackageReference Include="Bannerlord.MCM" Version="5.9.1" IncludeAssets="compile" />
   </ItemGroup>
 ```
