@@ -113,7 +113,7 @@
                     <!-- Separator -->
                     <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="MCM.Divider.Yellow" MarginLeft="15" MarginRight="15"/>
 
-                    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="30" MarginLeft="30">
+                    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="30" MarginLeft="30" IsVisible="@IsSettingVisible">
                       <Children>
 
                         <ScrollablePanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipRect="SettingsClipRect" MarginRight="20"
@@ -126,17 +126,7 @@
                                 <Widget Id="SettingsInnerPanel" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren">
                                   <Children>
 
-                                    <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="StretchToParent" IsVisible="@IsSettingVisible">
-                                      <Children>
-                                        <SettingsView DataSource="{SelectedMod}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" />
-                                      </Children>
-                                    </Widget>
-                                    <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="StretchToParent" IsVisible="@IsSettingUnavailableVisible">
-                                      <Children>
-                                        <TextWidget Text="@UnavailableText" HeightSizePolicy="CoverChildren" WidthSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Center"
-                                                    Brush="MCM.Item.Name" MarginLeft="10" DoNotAcceptEvents="true" ClipContents="true" />
-                                      </Children>
-                                    </Widget>
+                                    <SettingsView DataSource="{SelectedMod}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" />
 
                                   </Children>
                                 </Widget>
@@ -150,6 +140,13 @@
                         <Standard.VerticalScrollbar Id="SettingsScrollBar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                                                     MarginTop="2"/>
 
+                      </Children>
+                    </Widget>
+
+                    <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="StretchToParent" MarginRight="30" MarginLeft="30" IsVisible="@IsSettingUnavailableVisible">
+                      <Children>
+                        <TextWidget Text="@UnavailableText" HeightSizePolicy="CoverChildren" WidthSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    Brush="MCM.Item.Name" MarginLeft="10" DoNotAcceptEvents="true" ClipContents="true" />
                       </Children>
                     </Widget>
 
