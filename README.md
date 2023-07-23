@@ -6,7 +6,7 @@
   <a converter_ignore href="https://codeclimate.com/github/Aragas/Bannerlord.MBOptionScreen/maintainability"><img alt="Code Climate maintainability" src="https://img.shields.io/codeclimate/maintainability-percentage/Aragas/Bannerlord.MBOptionScreen"></a>
   <a converter_ignore href="https://mcm.bannerlord.aragas.org/"><img src="https://img.shields.io/badge/Documentation-%F0%9F%94%8D-blue?style=flat" /></a>
   <a title="Crowdin" target="_blank" href="https://crowdin.com/project/mod-configuration-menu"><img src="https://badges.crowdin.net/mod-configuration-menu/localized.svg"></a>
-  <br converter_ignore>
+  <br>
   <a converter_ignore href="https://github.com/Aragas/Bannerlord.MBOptionScreen/actions/workflows/test-and-publish.yml?query=branch%3Adev+event%3Apush"><img alt="GitHub Workflow Status (event)" src="https://img.shields.io/github/actions/workflow/status/Aragas/Bannerlord.MBOptionScreen/test-and-publish.yml?branch=dev&event=push&label=Latest%20Commit"></a>
   <a converter_ignore href="https://github.com/Aragas/Bannerlord.MBOptionScreen/actions/workflows/test-and-publish.yml?query=branch%3Adev+event%3Arepository_dispatch"><img alt="GitHub Workflow Status (event)" src="https://img.shields.io/github/actions/workflow/status/Aragas/Bannerlord.MBOptionScreen/test-and-publish.yml?branch=dev&event=repository_dispatch&label=Latest%20Game%20Release"></a>
   <a converter_ignore href="https://codecov.io/gh/Aragas/Bannerlord.MBOptionScreen"><img src="https://codecov.io/gh/Aragas/Bannerlord.MBOptionScreen/branch/dev/graph/badge.svg" /></a>
@@ -31,8 +31,8 @@ AKA MBOptionScreen Standalone.
 Previously, a fork of [ModLib](https://github.com/mipen/ModLib) that was de-forked.  
 Sources available at [GitHub﻿](https://github.com/Aragas/Bannerlord.MBOptionScreen)!  
 Credits to [Drogean﻿](https://www.nexusmods.com/users/79933) for the MCM Logos!  
-
-MCM is a Mod Options screen library designed to let modders use its API for defining the options.
+  
+MCM is a Mod Options screen library designed to let modders use its API for defining the options.  
   
 MCM supports three setting types - Global, PerCampaign and PerSave. Global are shared across characters and saves, PerCampaign are persistent within a single campaign, PerSave are stored within the save file!
 
@@ -43,7 +43,7 @@ It provides 5 types of options:
 * Textbox
 * Dropdown  
 * Button  
-
+  
 The settings can be defined at compile time by using the Attribute API and at runtime by using the Fluent Builder.  
 
 MCM uses the following 3 framework level libraries:
