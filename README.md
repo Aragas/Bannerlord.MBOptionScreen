@@ -71,14 +71,16 @@ Add this to your `.csproj`. Please not that `IncludeAssets="compile"` is very im
 1. Find the Modules folder in your Bannerlord installation location. For Steam users, this is usually here: `﻿C:\Program Files (x86)\Steam\steamapps\common\Mount & Blade II Bannerlord\Modules`
 2. Download the latest version of this mod and drop the folder inside Modules from the archive into your game's `Modules` folder.
 3. Start the Mount & Blade II: Bannerlord launcher and select all Mod Configuration Menu mods to be loaded.
-<details>
-  <summary>Your Modules folder structure should look something like this:</summary>
-  <img src="https://cdn.discordapp.com/attachments/753640646253740073/858635739528429568/unknown.png">
-</details>
-<details>
-  <summary>Your mod order in the launcher should look something like this:</summary>
-  <img src="https://cdn.discordapp.com/attachments/753640646253740073/858636433450729492/unknown.png">
-</details>
+<p>
+  <details>
+    <summary>Your Modules folder structure should look something like this:</summary>
+    <img src="https://cdn.discordapp.com/attachments/753640646253740073/858635739528429568/unknown.png">
+  </details>
+  <details>
+    <summary>Your mod order in the launcher should look something like this:</summary>
+    <img src="https://cdn.discordapp.com/attachments/753640646253740073/858636433450729492/unknown.png">
+  </details>
+</p>
 
 ### Unblocking DLL's
 You may need to right click on every *.dll files, click Properties, and click Unblock if you extracted the zip file with Windows Explorer or other programs that try to secure extracted files.
