@@ -31,9 +31,9 @@ AKA MBOptionScreen Standalone.
 Previously, a fork of [ModLib](https://github.com/mipen/ModLib) that was de-forked.  
 Sources available at [GitHub﻿](https://github.com/Aragas/Bannerlord.MBOptionScreen)!  
 Credits to [Drogean﻿](https://www.nexusmods.com/users/79933) for the MCM Logos!  
-  
+
 MCM is a Mod Options screen library designed to let modders use its API for defining the options.  
-  
+
 MCM supports three setting types - Global, PerCampaign and PerSave. Global are shared across characters and saves, PerCampaign are persistent within a single campaign, PerSave are stored within the save file!
 
 It provides 5 types of options:
