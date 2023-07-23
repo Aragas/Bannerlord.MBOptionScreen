@@ -81,7 +81,7 @@ Add this to your `.csproj`. Please not that `IncludeAssets="compile"` is very im
 </details>
 
 ### Unblocking DLL's
-You may need to right click on every Bannerlord.MBOptionScreen.*\bin\Win64_Shipping_Client\*.dll files, click Properties, and click Unblock if you extracted the zip file with Windows Explorer or other programs that try to secure extracted files.
+You may need to right click on every *.dll files, click Properties, and click Unblock if you extracted the zip file with Windows Explorer or other programs that try to secure extracted files.
 ### Harmony installation issues:
 Check Harmony's ﻿Troubleshooting for more info on how to fix it.
 ### Crashes on v1.0.0-v1.0.3 with Vortex used
