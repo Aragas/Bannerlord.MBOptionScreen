@@ -38,5 +38,19 @@
     <string id="ButterLibSettings_Name_Logging" text="Logging"/>
     <string id="ButterLibSettings_Name_LogLevel" text="Log Level"/>
     <string id="ButterLibSettings_Name_LogLevelDesc" text="Level of logs to write."/>
+
+    <string id="ModOptionsVM_SaveAsPreset" text="Save As Preset"/>
+    <string id="ModOptionsVM_SaveAsPresetDesc" text="Choose the name of the preset"/>
+    <string id="ModOptionsVM_OverridePreset" text="Preset Already Exists"/>
+    <string id="ModOptionsVM_OverridePresetDesc" text="Preset already exists! Do you want to override it?"/>
+    <string id="ModOptionsVM_ManagePresets" text="Manage Presets"/>
+    <string id="ModOptionsVM_ManagePresetsImport" text="Import a new Preset"/>
+    <string id="ModOptionsVM_ManagePresetsExport" text="Export Preset '{PRESETNAME}'"/>
+    <string id="ModOptionsVM_ManagePresetsDelete" text="Delete Preset '{PRESETNAME}'"/>
+    <string id="ModOptionsVM_SaveAsPresetError" text="Failed to save preset '{PRESETNAME}'!"/>
+    <string id="ModOptionsVM_Unavailable" text="Settings are available within a Game Session!"/>
+    <string id="ModOptionsVM_ManagePacks" text="Manage Settings Packs"/>
+    <string id="ModOptionsVM_ManagePackImport" text="Import a Settings Pack"/>
+    <string id="ModOptionsVM_ManagePackExport" text="Export Settings Pack"/>
   </strings>
 </base>
