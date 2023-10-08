@@ -37,5 +37,19 @@
     <string id="ButterLibSettings_Name_Logging" text="Registro"/>
     <string id="ButterLibSettings_Name_LogLevel" text="Nivel de registro"/>
     <string id="ButterLibSettings_Name_LogLevelDesc" text="Nivel de registros a escribir."/>
+
+    <string id="ModOptionsVM_SaveAsPreset" text="Guardar como preajuste"/>
+    <string id="ModOptionsVM_SaveAsPresetDesc" text="Elegir el nombre del preajuste"/>
+    <string id="ModOptionsVM_OverridePreset" text="El preajuste ya existe"/>
+    <string id="ModOptionsVM_OverridePresetDesc" text="¡El preajuste ya existe! ¿Quieres sustituirlo?"/>
+    <string id="ModOptionsVM_ManagePresets" text="Administrar preajustes"/>
+    <string id="ModOptionsVM_ManagePresetsImport" text="Importar un nuevo preajuste"/>
+    <string id="ModOptionsVM_ManagePresetsExport" text="Exportar preajuste '{PRESETNAME}'"/>
+    <string id="ModOptionsVM_ManagePresetsDelete" text="Eliminar preajuste '{PRESETNAME}'"/>
+    <string id="ModOptionsVM_SaveAsPresetError" text="¡Error al guardar el preajuste '{PRESETNAME}'!"/>
+    <string id="ModOptionsVM_Unavailable" text="¡Los ajustes están disponibles en una Sesión de juego!"/>
+    <string id="ModOptionsVM_ManagePacks" text="Administrar paquetes de ajustes"/>
+    <string id="ModOptionsVM_ManagePackImport" text="Importar un paquete de ajustes"/>
+    <string id="ModOptionsVM_ManagePackExport" text="Exportar un paquete de ajustes"/>
   </strings>
 </base>
