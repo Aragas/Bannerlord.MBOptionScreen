@@ -43,13 +43,13 @@
     <string id="ModOptionsVM_OverridePreset" text="预设已经存在"/>
     <string id="ModOptionsVM_OverridePresetDesc" text="预设已经存在！你要覆盖它吗？"/>
     <string id="ModOptionsVM_ManagePresets" text="管理预设"/>
-    <string id="ModOptionsVM_ManagePresetsImport" text="导入新的预设"/>
+    <string id="ModOptionsVM_ManagePresetsImport" text="导入预设"/>
     <string id="ModOptionsVM_ManagePresetsExport" text="导出预设 “{PRESETNAME}”"/>
     <string id="ModOptionsVM_ManagePresetsDelete" text="删除预设 “{PRESETNAME}”"/>
-    <string id="ModOptionsVM_SaveAsPresetError" text="保存预设失败 “{PRESETNAME}”！"/>
+    <string id="ModOptionsVM_SaveAsPresetError" text="无法保存预设 “{PRESETNAME}”！"/>
     <string id="ModOptionsVM_Unavailable" text="设置可在游戏会话中使用！"/>
-    <string id="ModOptionsVM_ManagePacks" text="管理选项设置"/>
-    <string id="ModOptionsVM_ManagePackImport" text="导入选项设置"/>
-    <string id="ModOptionsVM_ManagePackExport" text="导出选项设置"/>
+    <string id="ModOptionsVM_ManagePacks" text="管理设置组"/>
+    <string id="ModOptionsVM_ManagePackImport" text="导入设置组"/>
+    <string id="ModOptionsVM_ManagePackExport" text="导出设置组"/>
   </strings>
 </base>
