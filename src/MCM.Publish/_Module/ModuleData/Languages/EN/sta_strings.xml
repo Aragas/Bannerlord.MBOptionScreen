@@ -38,5 +38,8 @@
     <string id="ButterLibSettings_Name_Logging" text="Logging"/>
     <string id="ButterLibSettings_Name_LogLevel" text="Log Level"/>
     <string id="ButterLibSettings_Name_LogLevelDesc" text="Level of logs to write."/>
+
+    <string id="HOV8WIcBrb" text="Reset Mod Options Value to Default"/>
+    <string id="2d99VmOZZH" text="Resets a value in Mod Options menu to its default value when hovered."/>
   </strings>
 </base>
