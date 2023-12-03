@@ -5,7 +5,14 @@
 #else
     public
 # endif
-    interface IPerSaveSettingsContainer : ISettingsContainer, ISettingsContainerHasSettingsDefinitions, ISettingsContainerCanOverride, ISettingsContainerCanReset
+    interface IPerSaveSettingsContainer :
+        ISettingsContainer,
+        ISettingsContainerHasSettingsDefinitions,
+        ISettingsContainerCanOverride,
+        ISettingsContainerCanReset,
+        ISettingsContainerPresets,
+        ISettingsContainerHasUnavailable,
+        ISettingsContainerHasSettingsPack
     {
         void LoadSettings();
     }

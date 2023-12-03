@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<base xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/ModuleLanguage.xsd">
+  <tags>
+    <tag language="日本語"/>
+  </tags>
+  <strings>
+    <string id="MCMSettings_Name" text="Mod Configuration Menu {VERSION}"/>
+    <string id="BaseSettings_Default" text="デフォルト"/>
+    <string id="SettingsPropertyGroupDefinition_Misc" text="その他"/>
+    <!-- UI -->
+    <string id="dzeWx4xSfR" text="MCM からの警告!"/>
+    <string id="FE6ya1gzZR" text="モジュール {REQUIRED_MODULE} が見つかりません!"/>
+    <string id="EvI6KPAqTT" text="互換性のないモジュール {DENIED_MODULE} が検出されました!"/>
+    <string id="5G9zffrgMh" text="{MODULE} が {DEPENDENT_MODULE} より前に読み込まれています!{NL}{MODULE} が後に読み込まれるように確認してください!"/>
+    <string id="UZ8zfvudMs" text="{MODULE} が {DEPENDENT_MODULE} より後に読み込まれています!{NL}{MODULE} が先に読み込まれるように確認してください!"/>
+    <string id="FcR4BXnhx8" text="{MODULE} は {REQUIRED_MODULE} に対して互いに矛盾するロード順が指定されています!"/>
+    <string id="eXs6FLm5DP" text="すぐにゲームを終了することを強く推奨します。今すぐ終了しますか?"/>
+    <string id="fGt6Gthg5y" text="このバージョンの MCM は本体のバージョン v1.0.0 以降の想定しています! 現在起動しているバージョンは {GAMEVERSION} です!"/>
+
+    <string id="MCMUISettings_Name" text="MCM UI {VERSION}"/>
+    <string id="ModOptionsVM_NotSpecified" text="Mod 名が指定されていません"/>
+    <string id="ModOptionsVM_Name" text="Mod オプション"/>
+    <string id="ModOptionsVM_ChangeToPreset" text="プリセットを '{PRESET}' へ変更"/>
+    <string id="ModOptionsVM_Discard" text="本当に {NAME} の現在の設定から '{ITEM}' の設定を破棄しますか?"/>
+    <string id="ModOptionsVM_RestartTitle" text="ゲームの再起動が必要です"/>
+    <string id="ModOptionsVM_RestartDesc" text="Mod の設定変更を適用するにはゲームの再起動が必要です。今すぐゲームを終了しますか?"/>
+    <string id="SettingsPropertyGroupVM_Disabled" text="{GROUPNAME} (無効)"/>
+    <string id="SettingsVM_Custom" text="カスタム"/>
+    <string id="ModOptionsPageView_Mods" text="Mod"/>
+    <string id="MainMenu_ModOptions" text="Mod オプション"/>
+    <string id="EscapeMenu_ModOptions" text="Mod オプション"/>
+    <string id="MCMUISettings_Name" text="MCM UI Impl. {VERSION}"/>
+    <string id="MCMUISettings_Name_General" text="全般"/>
+    <string id="MCMUISettings_Name_HideMainMenuEntry" text="メインメニューの項目を隠す"/>
+    <string id="MCMUISettings_Name_HideMainMenuEntryDesc" text="メインメニューからMCM の「Mod オプション」の項目を隠します。"/>
+    <string id="ButterLibSettings_Name" text="ButterLib {VERSION}"/>
+    <string id="ButterLibSettings_Name_Logging" text="ロギング"/>
+    <string id="ButterLibSettings_Name_LogLevel" text="ログレベル"/>
+    <string id="ButterLibSettings_Name_LogLevelDesc" text="出力するログのレベルです"/>
+
+    <string id="ModOptionsVM_SaveAsPreset" text="プリセットとして保存"/>
+    <string id="ModOptionsVM_SaveAsPresetDesc" text="プリセット名の選択"/>
+    <string id="ModOptionsVM_OverridePreset" text="プリセットが既に存在します"/>
+    <string id="ModOptionsVM_OverridePresetDesc" text="プリセットが既に存在します。上書きしますか?"/>
+    <string id="ModOptionsVM_ManagePresets" text="プリセットの管理"/>
+    <string id="ModOptionsVM_ManagePresetsImport" text="新しいプリセットのインポート"/>
+    <string id="ModOptionsVM_ManagePresetsExport" text="プリセット「{PRESETNAME} 」をエクスポート"/>
+    <string id="ModOptionsVM_ManagePresetsDelete" text="プリセット「{PRESETNAME} 」を削除"/>
+    <string id="ModOptionsVM_SaveAsPresetError" text="プリセット「{PRESETNAME}」の保存に失敗しました!"/>
+    <string id="ModOptionsVM_Unavailable" text="設定はゲームセッション内で利用可能です!"/>
+    <string id="ModOptionsVM_ManagePacks" text="設定パックを管理"/>
+    <string id="ModOptionsVM_ManagePackImport" text="設定パックのインポート"/>
+    <string id="ModOptionsVM_ManagePackExport" text="設定パックのエクスポート"/>
+  </strings>
+</base>

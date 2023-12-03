@@ -1,4 +1,40 @@
 ---------------------------------------------------------------------------------------------------
+Version: 5.9.2
+Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4,v1.1.5,v1.1.6,v1.2.5
+* Updated Chinese Simplified localization
+---------------------------------------------------------------------------------------------------
+Version: 5.9.1
+Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4,v1.1.5,v1.2.0,v1.2.1
+* Scrolling regression fix
+---------------------------------------------------------------------------------------------------
+Version: 5.9.0
+Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4,v1.1.5,v1.2.0,v1.2.1
+* Added the ability to save Settings Packs
+---------------------------------------------------------------------------------------------------
+Version: 5.8.4
+Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4,v1.1.5,v1.2.0,v1.2.1
+* Fixed potential Preset import error
+* Added a message if preset saving fails
+---------------------------------------------------------------------------------------------------
+Version: 5.8.3
+Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4,v1.1.5,v1.2.0,v1.2.1
+* Fixed Close/Done buttons not working in the Options screen
+---------------------------------------------------------------------------------------------------
+Version: 5.8.2
+Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4,v1.1.5,v1.2.0,v1.2.1
+* Added Preset Import/Export/Deleting
+---------------------------------------------------------------------------------------------------
+Version: 5.8.1
+Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4,v1.1.5,v1.2.0,v1.2.1
+* Fixed missing Preset saving
+* Fixed unintentional crashes
+---------------------------------------------------------------------------------------------------
+Version: 5.8.0
+Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4,v1.1.5,v1.2.0
+* Added the ability to save custom Presets
+* Fluent Settings now capture correctly the 'Default' preset state when building the settings
+* Added Japanese support by Gedevan-Aleksizde
+---------------------------------------------------------------------------------------------------
 Version: 5.7.2
 Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4,v1.1.5,v1.2.0
 * Adapted UI to v1.2.0

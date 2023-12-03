@@ -28,12 +28,31 @@ namespace MCM.Implementation
     {
         private class PresetContainerDefinition
         {
+            [JsonProperty(Order = 1)]
             public string Id { get; set; } = string.Empty;
+
+            [JsonProperty(Order = 2)]
             public string Name { get; set; } = string.Empty;
         }
         private sealed class PresetContainer : PresetContainerDefinition
         {
+            [JsonProperty(Order = 3)]
             public BaseSettings? Settings { get; set; }
+        }
+
+        public static string? GetPresetId(string content)
+        {
+            try
+            {
+                var container = JsonConvert.DeserializeObject<PresetContainerDefinition?>(content);
+                if (container is null) return null;
+
+                return container.Id;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public static JsonSettingsPreset? FromFile(BaseSettings settings, GameFile file) => FromFile(settings.Id, file, settings.CreateNew);
@@ -102,8 +121,12 @@ namespace MCM.Implementation
 
             lock (_lock)
             {
-                var container = new PresetContainer { Id = Id, Name = Name, Settings = presetBase };
-                JsonConvert.PopulateObject(content, container, _jsonSerializerSettings);
+                try
+                {
+                    var container = new PresetContainer { Id = Id, Name = Name, Settings = presetBase };
+                    JsonConvert.PopulateObject(content, container, _jsonSerializerSettings);
+                }
+                catch (Exception) { /* ignore */ }
             }
 
             return presetBase;
@@ -114,11 +137,18 @@ namespace MCM.Implementation
         {
             if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider) return false;
 
-            var container = new PresetContainer { Id = Id, Name = Name, Settings = settings };
-            var content = JsonConvert.SerializeObject(container, _jsonSerializerSettings);
+            try
+            {
+                var container = new PresetContainer { Id = Id, Name = Name, Settings = settings };
+                var content = JsonConvert.SerializeObject(container, _jsonSerializerSettings);
 
-            fileSystemProvider.WriteData(_file, Encoding.UTF8.GetBytes(content));
-            return true;
+                fileSystemProvider.WriteData(_file, Encoding.UTF8.GetBytes(content));
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         private object? GetSerializationProperty(string path)

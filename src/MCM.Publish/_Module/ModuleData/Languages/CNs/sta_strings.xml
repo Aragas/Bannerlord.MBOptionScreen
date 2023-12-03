@@ -37,5 +37,19 @@
     <string id="ButterLibSettings_Name_Logging" text="日志记录中"/>
     <string id="ButterLibSettings_Name_LogLevel" text="日志等级"/>
     <string id="ButterLibSettings_Name_LogLevelDesc" text="要写入的日志级别。"/>
+
+    <string id="ModOptionsVM_SaveAsPreset" text="保存预设"/>
+    <string id="ModOptionsVM_SaveAsPresetDesc" text="选择预设名字"/>
+    <string id="ModOptionsVM_OverridePreset" text="预设已经存在"/>
+    <string id="ModOptionsVM_OverridePresetDesc" text="预设已经存在！你要覆盖它吗？"/>
+    <string id="ModOptionsVM_ManagePresets" text="管理预设"/>
+    <string id="ModOptionsVM_ManagePresetsImport" text="导入预设"/>
+    <string id="ModOptionsVM_ManagePresetsExport" text="导出预设 “{PRESETNAME}”"/>
+    <string id="ModOptionsVM_ManagePresetsDelete" text="删除预设 “{PRESETNAME}”"/>
+    <string id="ModOptionsVM_SaveAsPresetError" text="无法保存预设 “{PRESETNAME}”！"/>
+    <string id="ModOptionsVM_Unavailable" text="设置可在游戏会话中使用！"/>
+    <string id="ModOptionsVM_ManagePacks" text="管理设置组"/>
+    <string id="ModOptionsVM_ManagePackImport" text="导入设置组"/>
+    <string id="ModOptionsVM_ManagePackExport" text="导出设置组"/>
   </strings>
 </base>

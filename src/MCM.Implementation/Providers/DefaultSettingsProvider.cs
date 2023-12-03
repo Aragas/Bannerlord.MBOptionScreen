@@ -127,5 +127,36 @@ namespace MCM.Implementation
                 }
             }
         }
+
+        public override IEnumerable<UnavailableSetting> GetUnavailableSettings()
+        {
+            foreach (var settingsContainer in _settingsContainers.OfType<ISettingsContainerHasUnavailable>())
+            {
+                foreach (var unavailableSetting in settingsContainer.GetUnavailableSettings())
+                    yield return unavailableSetting;
+            }
+        }
+
+        /// <inheritdoc />
+        public override IEnumerable<SettingSnapshot> SaveAvailableSnapshots()
+        {
+            foreach (var settingsContainer in _settingsContainers.OfType<ISettingsContainerHasSettingsPack>())
+            {
+                foreach (var snapshot in settingsContainer.SaveAvailableSnapshots())
+                    yield return snapshot;
+            }
+        }
+
+        /// <inheritdoc />
+        public override IEnumerable<BaseSettings> LoadAvailableSnapshots(IEnumerable<SettingSnapshot> snapshots)
+        {
+            foreach (var settingsContainer in _settingsContainers.OfType<ISettingsContainerHasSettingsPack>())
+            {
+                foreach (var settings in settingsContainer.LoadAvailableSnapshots(snapshots))
+                {
+                    yield return settings;
+                }
+            }
+        }
     }
 }

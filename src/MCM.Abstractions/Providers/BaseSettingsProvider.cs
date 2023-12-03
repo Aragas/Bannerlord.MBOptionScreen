@@ -1,6 +1,4 @@
-﻿using BUTR.DependencyInjection;
-
-using MCM.Abstractions.Base;
+﻿using MCM.Abstractions.Base;
 
 using System.Collections.Generic;
 
@@ -28,5 +26,8 @@ namespace MCM.Abstractions
         public abstract void ResetSettings(BaseSettings settings);
         public abstract void OverrideSettings(BaseSettings settings);
         public abstract IEnumerable<ISettingsPreset> GetPresets(string id);
+        public abstract IEnumerable<UnavailableSetting> GetUnavailableSettings();
+        public abstract IEnumerable<SettingSnapshot> SaveAvailableSnapshots();
+        public abstract IEnumerable<BaseSettings> LoadAvailableSnapshots(IEnumerable<SettingSnapshot> snapshots);
     }
 }

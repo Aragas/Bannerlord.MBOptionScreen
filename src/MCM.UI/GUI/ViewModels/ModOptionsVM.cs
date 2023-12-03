@@ -5,6 +5,9 @@ using BUTR.DependencyInjection;
 using ComparerExtensions;
 
 using MCM.Abstractions;
+using MCM.Abstractions.Base;
+using MCM.Abstractions.GameFeatures;
+using MCM.Implementation;
 using MCM.UI.Dropdown;
 using MCM.UI.Extensions;
 using MCM.UI.Patches;
@@ -14,11 +17,17 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
+using System.IO.Compression;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
+using TaleWorlds.Core;
 using TaleWorlds.Engine;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
@@ -35,41 +44,34 @@ namespace MCM.UI.GUI.ViewModels
         private string _cancelButtonText = string.Empty;
         private string _modsText = string.Empty;
         private string _hintText = string.Empty;
-        private SettingsVM? _selectedMod;
+        private string _modNameNotSpecifiedText = string.Empty;
+        private string _unavailableText = string.Empty;
+        private SettingsEntryVM? _selectedEntry;
         private string _searchText = string.Empty;
 
-        [DataSourceProperty]
-        public string Name { get => _titleLabel; set => SetField(ref _titleLabel, value, nameof(Name)); }
-        [DataSourceProperty]
-        public string DoneButtonText { get => _doneButtonText; set => SetField(ref _doneButtonText, value, nameof(DoneButtonText)); }
-        [DataSourceProperty]
-        public string CancelButtonText { get => _cancelButtonText; set => SetField(ref _cancelButtonText, value, nameof(CancelButtonText)); }
-        [DataSourceProperty]
-        public string ModsText { get => _modsText; set => SetField(ref _modsText, value, nameof(ModsText)); }
-        [DataSourceProperty]
-        public MBBindingList<SettingsVM> ModSettingsList { get; } = new();
-        [DataSourceProperty]
-        public SettingsVM? SelectedMod
+        private SettingsEntryVM? SelectedEntry
         {
-            get => _selectedMod;
+            get => _selectedEntry;
             set
             {
-                if (_selectedMod?.PresetsSelector is { } oldModPresetsSelector)
+                if (_selectedEntry?.SettingsVM?.PresetsSelector is { } oldModPresetsSelector)
                 {
                     oldModPresetsSelector.PropertyChanged -= OnModPresetsSelectorChange;
                 }
 
-                if (SetField(ref _selectedMod, value, nameof(SelectedMod)))
+                if (SetField(ref _selectedEntry, value, nameof(SelectedMod)))
                 {
+                    OnPropertyChanged(nameof(IsSettingVisible));
+                    OnPropertyChanged(nameof(IsSettingUnavailableVisible));
                     OnPropertyChanged(nameof(SelectedDisplayName));
                     OnPropertyChanged(nameof(SomethingSelected));
 
                     DoPresetsSelectorCopyWithoutEvents(() =>
                     {
-                        if (SelectedMod?.PresetsSelector is { } modPresetsSelector)
+                        if (SelectedEntry?.SettingsVM?.PresetsSelector is { } modPresetsSelector)
                         {
                             modPresetsSelector.PropertyChanged += OnModPresetsSelectorChange;
-                            PresetsSelectorCopy.Refresh(SelectedMod.PresetsSelector.ItemList.Select(x => x.OriginalItem), SelectedMod.PresetsSelector.SelectedIndex);
+                            PresetsSelectorCopy.Refresh(SelectedEntry.SettingsVM.PresetsSelector.ItemList.Select(x => x.OriginalItem), SelectedEntry.SettingsVM.PresetsSelector.SelectedIndex);
                         }
                         else
                         {
@@ -80,10 +82,30 @@ namespace MCM.UI.GUI.ViewModels
                 }
             }
         }
+
+        /// <summary>
+        /// We have a strange bug and I'm not sure if this is the lack of my skills
+        /// Selecting via mouse in Gameplay section the language triggers preset change
+        /// Somehow ~palpatine returned~ the game triggers input change on my non visible VM
+        /// </summary>
+        public bool IsDisabled { get; set; }
+
         [DataSourceProperty]
-        public string SelectedDisplayName => SelectedMod is null ? new TextObject("{=ModOptionsVM_NotSpecified}Mod Name not Specified.").ToString() : SelectedMod.DisplayName;
+        public string Name { get => _titleLabel; set => SetField(ref _titleLabel, value, nameof(Name)); }
         [DataSourceProperty]
-        public bool SomethingSelected => SelectedMod is not null;
+        public string DoneButtonText { get => _doneButtonText; set => SetField(ref _doneButtonText, value, nameof(DoneButtonText)); }
+        [DataSourceProperty]
+        public string CancelButtonText { get => _cancelButtonText; set => SetField(ref _cancelButtonText, value, nameof(CancelButtonText)); }
+        [DataSourceProperty]
+        public string ModsText { get => _modsText; set => SetField(ref _modsText, value, nameof(ModsText)); }
+        [DataSourceProperty]
+        public MBBindingList<SettingsEntryVM> ModSettingsList { get; } = new();
+        [DataSourceProperty]
+        public SettingsVM? SelectedMod => SelectedEntry?.SettingsVM;
+        [DataSourceProperty]
+        public string SelectedDisplayName => SelectedEntry is null ? ModNameNotSpecifiedText : SelectedEntry.DisplayName;
+        [DataSourceProperty]
+        public bool SomethingSelected => SelectedEntry is not null;
         [DataSourceProperty]
         public string HintText
         {
@@ -104,9 +126,9 @@ namespace MCM.UI.GUI.ViewModels
             get => _searchText;
             set
             {
-                if (SetField(ref _searchText, value, nameof(SearchText)) && SelectedMod?.SettingPropertyGroups.Count > 0)
+                if (SetField(ref _searchText, value, nameof(SearchText)) && SelectedEntry?.SettingsVM?.SettingPropertyGroups.Count > 0)
                 {
-                    foreach (var group in SelectedMod.SettingPropertyGroups)
+                    foreach (var group in SelectedEntry.SettingsVM.SettingPropertyGroups)
                         group.NotifySearchChanged();
                 }
             }
@@ -114,14 +136,15 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public MCMSelectorVM<MCMSelectorItemVM<PresetKey>> PresetsSelectorCopy { get; } = new(Enumerable.Empty<PresetKey>(), -1);
         [DataSourceProperty]
-        public bool IsPresetsSelectorVisible => SelectedMod is not null;
-        /// <summary>
-        /// We have a strange bug and I'm not sure if this is the lack of my skills
-        /// Selecting via mouse in Gameplay section the language triggers preset change
-        /// Somehow ~palpatine returned~ the game triggers input change on my non visible VM
-        /// </summary>
+        public bool IsPresetsSelectorVisible => SelectedEntry is not null;
         [DataSourceProperty]
-        public bool IsDisabled { get; set; }
+        public bool IsSettingVisible => SelectedEntry?.SettingsVM is not null;
+        [DataSourceProperty]
+        public bool IsSettingUnavailableVisible => SelectedEntry?.SettingsVM is null;
+        [DataSourceProperty]
+        public string ModNameNotSpecifiedText { get => _modNameNotSpecifiedText; set => SetField(ref _modNameNotSpecifiedText, value, nameof(ModNameNotSpecifiedText)); }
+        [DataSourceProperty]
+        public string UnavailableText { get => _unavailableText; set => SetField(ref _unavailableText, value, nameof(UnavailableText)); }
 
         public ModOptionsVM()
         {
@@ -172,19 +195,22 @@ namespace MCM.UI.GUI.ViewModels
                             {
                                 if (state is SettingsVM vm)
                                 {
-                                    vm.AddSelectCommand(ExecuteSelect);
-                                    ModSettingsList.Add(vm);
+                                    ModSettingsList.Add(new SettingsEntryVM(vm, ExecuteSelect));
                                     vm.RefreshValues();
                                 }
                             }, viewModel);
                         }
 
+                        // TODO: We are not able to show Fluent PerSave/Campaign settings this way. For now, don't use it
+                        //foreach (var unavailableSetting in BaseSettingsProvider.Instance?.GetUnavailableSettings() ?? Enumerable.Empty<UnavailableSetting>())
+                        //    ModSettingsList.Add(new SettingsEntryVM(unavailableSetting, ExecuteSelect));
+
                         // Yea, I imported a whole library that converts LINQ style order to IComparer
                         // because I wasn't able to recreate the logic via IComparer. TODO: Fix that
-                        ModSettingsList.Sort(KeyComparer<SettingsVM>
-                            .OrderByDescending(x => x.SettingsDefinition.SettingsId.StartsWith("MCM") ||
-                                                    x.SettingsDefinition.SettingsId.StartsWith("Testing") ||
-                                                    x.SettingsDefinition.SettingsId.StartsWith("ModLib"))
+                        ModSettingsList.Sort(KeyComparer<SettingsEntryVM>
+                            .OrderByDescending(x => x.Id.StartsWith("MCM") ||
+                                                    x.Id.StartsWith("Testing") ||
+                                                    x.Id.StartsWith("ModLib"))
                             .ThenByDescending(x => x.DisplayName, new AlphanumComparatorFast()));
                     }
                 }
@@ -206,6 +232,8 @@ namespace MCM.UI.GUI.ViewModels
             DoneButtonText = new TextObject("{=WiNRdfsm}Done").ToString();
             CancelButtonText = new TextObject("{=3CpNUnVl}Cancel").ToString();
             ModsText = new TextObject("{=ModOptionsPageView_Mods}Mods").ToString();
+            ModNameNotSpecifiedText = new TextObject("{=ModOptionsVM_NotSpecified}Mod Name not Specified.").ToString();
+            UnavailableText = new TextObject("{=ModOptionsVM_Unavailable}Settings are available within a Game Session!").ToString();
 
             PresetsSelectorCopy.RefreshValues();
 
@@ -221,8 +249,8 @@ namespace MCM.UI.GUI.ViewModels
             if (IsDisabled)
             {
                 // GaultletUI is resetting SelectorVM's Index after RefreshLayout, restore the index manually
-                if (SelectedMod?.PresetsSelector is not null && selector.SelectedIndex == -1)
-                    DoPresetsSelectorCopyWithoutEvents(() => PresetsSelectorCopy.SelectedIndex = SelectedMod.PresetsSelector.SelectedIndex);
+                if (SelectedEntry?.SettingsVM?.PresetsSelector is not null && selector.SelectedIndex == -1)
+                    DoPresetsSelectorCopyWithoutEvents(() => PresetsSelectorCopy.SelectedIndex = SelectedEntry.SettingsVM.PresetsSelector.SelectedIndex);
                 return;
             }
 
@@ -237,24 +265,24 @@ namespace MCM.UI.GUI.ViewModels
                 }).ToString(),
                 new TextObject("{=ModOptionsVM_Discard}Are you sure you wish to discard the current settings for {NAME} to '{ITEM}'?", new()
                 {
-                    { "NAME", SelectedMod?.DisplayName },
+                    { "NAME", SelectedEntry?.DisplayName },
                     { "ITEM", presetKey.Name }
                 }).ToString(),
                 true, true, new TextObject("{=aeouhelq}Yes").ToString(),
                 new TextObject("{=8OkPHu4f}No").ToString(),
                 () =>
                 {
-                    if (SelectedMod is not null)
+                    if (SelectedEntry is not null)
                     {
-                        SelectedMod.ChangePreset(presetKey.Id);
-                        var selectedMod = SelectedMod;
+                        SelectedEntry.SettingsVM?.ChangePreset(presetKey.Id);
+                        var selectedMod = SelectedEntry;
                         ExecuteSelect(null);
                         ExecuteSelect(selectedMod);
                     }
                 },
                 () =>
                 {
-                    DoPresetsSelectorCopyWithoutEvents(() => PresetsSelectorCopy.SelectedIndex = SelectedMod?.PresetsSelector?.SelectedIndex ?? -1);
+                    DoPresetsSelectorCopyWithoutEvents(() => PresetsSelectorCopy.SelectedIndex = SelectedEntry?.SettingsVM?.PresetsSelector.SelectedIndex ?? -1);
                 }));
         }
         private void OnModPresetsSelectorChange(object sender, PropertyChangedEventArgs propertyChangedEventArgs)
@@ -269,7 +297,7 @@ namespace MCM.UI.GUI.ViewModels
         {
             if (IsDisabled) return;
 
-            foreach (var viewModel in ModSettingsList)
+            foreach (var viewModel in ModSettingsList.Select(x => x.SettingsVM).OfType<SettingsVM>())
             {
                 viewModel.URS.UndoAll();
                 viewModel.URS.ClearStack();
@@ -283,12 +311,10 @@ namespace MCM.UI.GUI.ViewModels
 
         public bool ExecuteCancelInternal(bool popScreen, Action? onClose = null)
         {
-            if (IsDisabled) return false;
-
             OnFinalize();
             if (popScreen) ScreenManager.PopScreen();
             else onClose?.Invoke();
-            foreach (var viewModel in ModSettingsList)
+            foreach (var viewModel in ModSettingsList.Select(x => x.SettingsVM).OfType<SettingsVM>())
             {
                 viewModel.URS.UndoAll();
                 viewModel.URS.ClearStack();
@@ -299,9 +325,9 @@ namespace MCM.UI.GUI.ViewModels
         public void ExecuteDone() => ExecuteDoneInternal(true);
         public void ExecuteDoneInternal(bool popScreen, Action? onClose = null)
         {
-            if (IsDisabled) return;
+            var settingsVMs = ModSettingsList.Select(x => x.SettingsVM).OfType<SettingsVM>().ToList();
 
-            if (!ModSettingsList.Any(x => x.URS.ChangesMade))
+            if (!settingsVMs.Any(x => x.URS.ChangesMade))
             {
                 OnFinalize();
                 if (popScreen) ScreenManager.PopScreen();
@@ -310,14 +336,17 @@ namespace MCM.UI.GUI.ViewModels
             }
 
             // Save the changes to file.
-            var changedModSettings = ModSettingsList.Where(x => x.URS.ChangesMade).ToList();
+            var changedModSettings = settingsVMs.Where(x => x.URS.ChangesMade).ToList();
 
             var requireRestart = changedModSettings.Any(x => x.RestartRequired());
             if (requireRestart)
             {
-                InformationManager.ShowInquiry(InquiryDataUtils.Create(new TextObject("{=ModOptionsVM_RestartTitle}Game Needs to Restart").ToString(),
-                    new TextObject("{=ModOptionsVM_RestartDesc}The game needs to be restarted to apply mod settings changes. Do you want to close the game now?").ToString(),
-                    true, true, new TextObject("{=aeouhelq}Yes").ToString(), new TextObject("{=3CpNUnVl}Cancel").ToString(),
+                InformationManager.ShowInquiry(InquiryDataUtils.CreateTranslatable(
+                    "{=ModOptionsVM_RestartTitle}Game Needs to Restart",
+                    "{=ModOptionsVM_RestartDesc}The game needs to be restarted to apply mod settings changes. Do you want to close the game now?",
+                    true, true,
+                    "{=aeouhelq}Yes",
+                    "{=3CpNUnVl}Cancel",
                     () =>
                     {
                         foreach (var changedModSetting in changedModSettings)
@@ -345,20 +374,345 @@ namespace MCM.UI.GUI.ViewModels
             }
         }
 
-        public void ExecuteSelect(SettingsVM? viewModel)
+        public void ExecuteSelect(SettingsEntryVM? viewModel)
         {
             if (IsDisabled) return;
 
-            if (SelectedMod != viewModel)
+            if (SelectedEntry != viewModel)
             {
-                if (SelectedMod is not null)
-                    SelectedMod.IsSelected = false;
+                if (SelectedEntry is not null)
+                    SelectedEntry.IsSelected = false;
 
-                SelectedMod = viewModel;
+                SelectedEntry = viewModel;
 
-                if (SelectedMod is not null)
-                    SelectedMod.IsSelected = true;
+                if (SelectedEntry is not null)
+                    SelectedEntry.IsSelected = true;
             }
+        }
+
+        private void RefreshPresetList()
+        {
+            if (SelectedEntry?.SettingsVM is null) return;
+
+            SelectedEntry.SettingsVM.ReloadPresetList();
+            DoPresetsSelectorCopyWithoutEvents(() =>
+            {
+                PresetsSelectorCopy.Refresh(SelectedEntry.SettingsVM.PresetsSelector.ItemList.Select(x => x.OriginalItem), SelectedEntry.SettingsVM.PresetsSelector.SelectedIndex);
+            });
+        }
+
+        private void OverridePreset(Action onOverride)
+        {
+            InformationManager.ShowInquiry(InquiryDataUtils.CreateTranslatable(
+                "{=ModOptionsVM_OverridePreset}Preset Already Exists",
+                "{=ModOptionsVM_OverridePresetDesc}Preset already exists! Do you want to override it?",
+                true, true,
+                "{=aeouhelq}Yes",
+                "{=3CpNUnVl}Cancel",
+                onOverride, () => { }));
+        }
+
+        public void ExecuteManagePresets()
+        {
+            const string savePreset = "save_preset";
+            const string importPreset = "import_preset";
+            const string exportPreset = "export_preset";
+            const string deletePreset = "delete_preset";
+
+            if (SelectedEntry?.SettingsVM?.SettingsInstance is not { } settings) return;
+
+            var fileSystem = GenericServiceProvider.GetService<IFileSystemProvider>();
+            if (fileSystem is null) return;
+
+            if (PresetsSelectorCopy.SelectedItem?.OriginalItem is null) return;
+
+            void SaveAsPreset(GameDirectory settingsDirectory)
+            {
+                var settingsSnapshot = settings.CopyAsNew();
+
+                InformationManager.ShowTextInquiry(InquiryDataUtils.CreateTextTranslatable(
+                    "{=ModOptionsVM_SaveAsPreset}Save As Preset",
+                    "{=ModOptionsVM_SaveAsPresetDesc}Choose the name of the preset",
+                    true, true,
+                    "{=5Unqsx3N}Confirm",
+                    "{=3CpNUnVl}Cancel",
+                    input =>
+                    {
+                        var hasSet = new HashSet<char>(System.IO.Path.GetInvalidFileNameChars());
+                        var sb = new StringBuilder();
+                        foreach (var c in input) sb.Append(hasSet.Contains(c) ? '_' : c);
+                        var id = sb.ToString();
+
+                        var filename = $"{id}.json";
+
+                        void SavePreset()
+                        {
+                            var presetFile = fileSystem.GetOrCreateFile(settingsDirectory, filename);
+
+                            var preset = new JsonSettingsPreset(settingsSnapshot.Id, id, input, presetFile, () => null!);
+                            if (!preset.SavePreset(settingsSnapshot))
+                            {
+                                InformationManager.DisplayMessage(new InformationMessage(new TextObject("{=ModOptionsVM_SaveAsPresetError}Failed to save preset '{PRESETNAME}'!", new()
+                                {
+                                    { "PRESETNAME", input }
+                                }).ToString(), Color.White));
+                            }
+
+                            RefreshPresetList();
+                        }
+
+                        if (fileSystem.GetFile(settingsDirectory, filename) is not null)
+                        {
+                            // Override file?
+                            OverridePreset(SavePreset);
+                            return;
+                        }
+
+                        SavePreset();
+                    }, () => { }));
+            }
+
+            void ImportNewPreset(GameDirectory settingsDirectory)
+            {
+                var dialog = new OpenFileDialog
+                {
+                    Title = "Import Preset",
+                    Filter = "MCM Preset (.json)|*.json",
+                    CheckFileExists = true,
+                    CheckPathExists = true,
+                    ReadOnlyChecked = true,
+                    Multiselect = false,
+                    ValidateNames = true,
+                };
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    var content = File.ReadAllText(dialog.FileName);
+                    var presetId = JsonSettingsPreset.GetPresetId(content);
+
+                    void CopyFile()
+                    {
+                        var presetFile = fileSystem.GetOrCreateFile(settingsDirectory, $"{presetId}.json");
+                        var path = fileSystem.GetSystemPath(presetFile);
+                        if (path is null) return;
+                        try
+                        {
+                            File.Copy(dialog.FileName, path, true);
+                        }
+                        catch (Exception) { /* ignore */ }
+                    }
+
+                    var filename = $"{presetId}.json";
+                    if (fileSystem.GetFile(settingsDirectory, filename) is not null)
+                    {
+                        OverridePreset(CopyFile);
+                        return;
+                    }
+
+                    CopyFile();
+                }
+
+                RefreshPresetList();
+            }
+
+            void ExportPreset(GameFile presetFile)
+            {
+                var path = fileSystem.GetSystemPath(presetFile);
+                if (path is null) return;
+
+                var dialog = new SaveFileDialog
+                {
+                    Title = "Export Preset",
+                    Filter = "MCM Preset (.json)|*.json",
+                    FileName = System.IO.Path.GetFileName(path),
+
+                    ValidateNames = true,
+
+                    OverwritePrompt = true,
+                };
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        File.Copy(path, dialog.FileName, true);
+                    }
+                    catch (Exception) { /* ignore */ }
+                }
+            }
+
+            void DeletePreset(GameFile presetFile)
+            {
+                fileSystem.WriteData(presetFile, null);
+
+                RefreshPresetList();
+            }
+
+            void OnActionSelected(List<InquiryElement> selected)
+            {
+                var selectedPresetKey = PresetsSelectorCopy.SelectedItem?.OriginalItem;
+                if (selectedPresetKey is null) return;
+
+                var presetsDirectory = fileSystem.GetOrCreateDirectory(fileSystem.GetModSettingsDirectory(), "Presets");
+                var settingsDirectory = fileSystem.GetOrCreateDirectory(presetsDirectory, settings.Id);
+
+                var filename = $"{selectedPresetKey.Id}.json";
+
+                switch (selected[0].Identifier)
+                {
+                    case savePreset:
+                    {
+                        SaveAsPreset(settingsDirectory);
+                        break;
+                    }
+                    case importPreset:
+                    {
+                        ImportNewPreset(settingsDirectory);
+                        break;
+                    }
+                    case exportPreset:
+                    {
+                        var presetFile = fileSystem.GetFile(settingsDirectory, filename);
+                        if (presetFile is null) return;
+                        ExportPreset(presetFile);
+                        break;
+                    }
+                    case deletePreset:
+                    {
+                        var presetFile = fileSystem.GetFile(settingsDirectory, filename);
+                        if (presetFile is null) return;
+                        DeletePreset(presetFile);
+                        break;
+                    }
+                }
+            }
+
+            var inquiries = new List<InquiryElement>
+            {
+                new(importPreset, new TextObject("{=ModOptionsVM_ManagePresetsImport}Import a new Preset").ToString(), null)
+            };
+
+            if (PresetsSelectorCopy.SelectedItem.OriginalItem.Id == "custom")
+            {
+                inquiries.Add(new(savePreset, new TextObject("{=ModOptionsVM_SaveAsPreset}Save As Preset").ToString(), null));
+            }
+
+            if (PresetsSelectorCopy.SelectedItem.OriginalItem.Id is not "custom" and not "default")
+            {
+                inquiries.Add(new(exportPreset, new TextObject("{=ModOptionsVM_ManagePresetsExport}Export Preset '{PRESETNAME}'", new()
+                {
+                    { "PRESETNAME", PresetsSelectorCopy.SelectedItem.OriginalItem.Name }
+                }).ToString(), null));
+                inquiries.Add(new(deletePreset, new TextObject("{=ModOptionsVM_ManagePresetsDelete}Delete Preset '{PRESETNAME}'", new()
+                {
+                    { "PRESETNAME", PresetsSelectorCopy.SelectedItem.OriginalItem.Name }
+                }).ToString(), null));
+            }
+
+            MBInformationManager.ShowMultiSelectionInquiry(InquiryDataUtils.CreateMultiTranslatable(
+                "{=ModOptionsVM_ManagePresets}Manage Presets", "",
+                inquiries,
+                true,
+                1, 1,
+                "{=5Unqsx3N}Confirm",
+                "{=3CpNUnVl}Cancel",
+                OnActionSelected, _ => { }));
+        }
+
+        public void ExecuteManageSettingsPack()
+        {
+            const string importPack = "import_pack";
+            const string exportPack = "export_pack";
+
+            void ImportPack()
+            {
+                var dialog = new OpenFileDialog
+                {
+                    Title = "Import Settings Pack",
+                    Filter = "MCM Settings Pack (.zip)|*.zip",
+                    CheckFileExists = true,
+                    CheckPathExists = true,
+                    ReadOnlyChecked = true,
+                    Multiselect = false,
+                    ValidateNames = true,
+                };
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    if (string.IsNullOrEmpty(dialog.FileName) || !File.Exists(dialog.FileName))
+                        return;
+
+                    using var file = File.OpenRead(dialog.FileName);
+                    using var archive = new ZipArchive(file, ZipArchiveMode.Read);
+                    var snapshots = new List<SettingSnapshot>();
+                    foreach (var entry in archive.Entries)
+                    {
+                        using var stream = entry.Open();
+                        using var reader = new StreamReader(stream);
+                        snapshots.Add(new SettingSnapshot(entry.FullName, reader.ReadToEnd()));
+                    }
+
+                    foreach (var settings in BaseSettingsProvider.Instance?.LoadAvailableSnapshots(snapshots) ?? Enumerable.Empty<BaseSettings>())
+                    {
+                        if (ModSettingsList.FirstOrDefault(x => x.Id == settings.Id) is not { SettingsVM: { SettingsInstance: { } current } viewModel }) continue;
+                        UISettingsUtils.OverrideValues(viewModel.URS, current, settings);
+                    }
+                }
+            }
+
+            void ExportPack()
+            {
+                var dialog = new SaveFileDialog
+                {
+                    Title = "Export Settings Pack",
+                    Filter = "MCM Settings Pack (.zip)|*.zip",
+                    FileName = "MySettingsPack.zip",
+
+                    ValidateNames = true,
+
+                    OverwritePrompt = true,
+                };
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    var snapshots = BaseSettingsProvider.Instance?.SaveAvailableSnapshots() ?? Enumerable.Empty<SettingSnapshot>();
+                    using var file = File.Create(dialog.FileName);
+                    using var archive = new ZipArchive(file, ZipArchiveMode.Create);
+                    foreach (var snapshot in snapshots)
+                    {
+                        var entry = archive.CreateEntry(snapshot.Path, CompressionLevel.Optimal);
+                        using var stream = entry.Open();
+                        using var writer = new StreamWriter(stream);
+                        writer.Write(snapshot.JsonContent);
+                    }
+                }
+            }
+
+            void OnActionSelected(List<InquiryElement> selected)
+            {
+                switch (selected[0].Identifier)
+                {
+                    case importPack:
+                    {
+                        ImportPack();
+                        break;
+                    }
+                    case exportPack:
+                    {
+                        ExportPack();
+                        break;
+                    }
+                }
+            }
+
+            MBInformationManager.ShowMultiSelectionInquiry(InquiryDataUtils.CreateMultiTranslatable(
+                "{=ModOptionsVM_ManagePacks}Manage Settings Packs", "",
+                new List<InquiryElement>
+                {
+                    new(importPack, new TextObject("{=ModOptionsVM_ManagePackImport}Import a Settings Pack").ToString(), null),
+                    new(exportPack, new TextObject("{=ModOptionsVM_ManagePackExport}Export Settings Pack").ToString(), null),
+                },
+                true,
+                1, 1,
+                "{=5Unqsx3N}Confirm",
+                "{=3CpNUnVl}Cancel",
+                OnActionSelected, _ => { }));
         }
 
         public override void OnFinalize()

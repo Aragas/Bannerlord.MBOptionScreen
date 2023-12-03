@@ -20,9 +20,16 @@
                          Brush="MCM.CharacterCreation.Panel" DoNotUseCustomScaleAndChildren="true">
               <Children>
 
-                <!-- Title -->
-                <TextWidget Text="@ModsText" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Top" MarginRight="22" MarginTop="5"
-                            Brush="MCM.Title.Text" ClipContents="false" />
+                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" LayoutImp.LayoutMethod="HorizontalLeftToRight">
+                  <Children>
+                    <!-- Title -->
+                    <TextWidget Text="@ModsText" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" HorizontalAlignment="Center" VerticalAlignment="Top" MarginRight="22" MarginTop="5"
+                                Brush="MCM.Title.Text" ClipContents="false" />
+                    <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" MarginLeft="10" MarginRight="30"
+                                  HorizontalAlignment="Right" VerticalAlignment="Center" Brush="MCM.Settings" Command.Click="ExecuteManageSettingsPack" >
+                    </ButtonWidget>
+                  </Children>
+                </ListPanel>
 
                 <!-- Mods Listing Section Inner Panel-->
                 <Widget Id="InnerPanel" HeightSizePolicy="Fixed" WidthSizePolicy="Fixed" HorizontalAlignment="Left" VerticalAlignment="Center" SuggestedWidth="508" SuggestedHeight="635" PositionXOffset="27" PositionYOffset="25">
@@ -105,12 +112,17 @@
                       <Children>
                         <!-- Dropdown Presets -->
                         <Widget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="300" SuggestedHeight="42" HorizontalAlignment="Left"
-                                VerticalAlignment="Center"  MarginLeft="20" MarginRight="40" IsVisible="@IsPresetsSelectorVisible">
+                                VerticalAlignment="Center" MarginLeft="20" IsVisible="@IsPresetsSelectorVisible">
                           <Children>
                             <Standard.DropdownWithHorizontalControl HorizontalAlignment="Center" Parameter.SelectorDataSource="{PresetsSelectorCopy}"
                                                                     Parameter.ShowNextAndPrevious="false" />
                           </Children>
                         </Widget>
+
+                        <!-- Manage Presets -->
+                        <ButtonWidget WidthSizePolicy="Fixed" HeightSizePolicy="Fixed" SuggestedWidth="40" SuggestedHeight="40" MarginLeft="10" MarginRight="30"
+                                      HorizontalAlignment="Right" VerticalAlignment="Center" Brush="MCM.Settings" Command.Click="ExecuteManagePresets" >
+                        </ButtonWidget>
 
                         <!-- Title -->
                         <RichTextWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="80" Brush="MCM.Title.Text"
@@ -127,10 +139,11 @@
 
                       </Children>
                     </ListPanel>
+
                     <!-- Separator -->
                     <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="MCM.Divider.Yellow" MarginLeft="15" MarginRight="15"/>
 
-                    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="30" MarginLeft="30">
+                    <Widget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" MarginRight="30" MarginLeft="30" IsVisible="@IsSettingVisible">
                       <Children>
 
                         <ScrollablePanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" ClipRect="SettingsClipRect" MarginRight="20"
@@ -157,6 +170,13 @@
                         <Standard.VerticalScrollbar Id="SettingsScrollBar" HeightSizePolicy="StretchToParent" HorizontalAlignment="Right" VerticalAlignment="Bottom"
                                                     MarginTop="2"/>
 
+                      </Children>
+                    </Widget>
+
+                    <Widget HeightSizePolicy="StretchToParent" WidthSizePolicy="StretchToParent" MarginRight="30" MarginLeft="30" IsVisible="@IsSettingUnavailableVisible">
+                      <Children>
+                        <TextWidget Text="@UnavailableText" HeightSizePolicy="CoverChildren" WidthSizePolicy="CoverChildren" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                    Brush="MCM.Item.Name" MarginLeft="10" DoNotAcceptEvents="true" ClipContents="true" />
                       </Children>
                     </Widget>
 

@@ -85,5 +85,11 @@ namespace MCM.UI.Adapter.MCMv5.Providers
 
             return Enumerable.Empty<ISettingsPreset>();
         }
+
+        public override IEnumerable<UnavailableSetting> GetUnavailableSettings() => Enumerable.Empty<UnavailableSetting>();
+
+        public override IEnumerable<SettingSnapshot> SaveAvailableSnapshots() => Enumerable.Empty<SettingSnapshot>();
+
+        public override IEnumerable<BaseSettings> LoadAvailableSnapshots(IEnumerable<SettingSnapshot> snapshots) => Enumerable.Empty<BaseSettings>();
     }
 }

@@ -40,7 +40,9 @@
         GameFile[] GetFiles(GameDirectory directory, string searchPattern);
         GameFile? GetFile(GameDirectory directory, string fileName);
         GameFile GetOrCreateFile(GameDirectory directory, string fileName);
-        bool WriteData(GameFile file, byte[] data);
+        bool WriteData(GameFile file, byte[]? data);
         byte[]? ReadData(GameFile file);
+        string? GetSystemPath(GameFile file);
+        string? GetSystemPath(GameDirectory directory);
     }
 }

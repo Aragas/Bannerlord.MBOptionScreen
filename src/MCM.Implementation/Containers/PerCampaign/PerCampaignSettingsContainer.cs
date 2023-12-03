@@ -24,6 +24,8 @@ namespace MCM.Implementation.PerCampaign
         private readonly IBUTRLogger _logger;
         private readonly IGameEventListener _gameEventListener;
 
+        private bool _hasGameStarted;
+
         /// <inheritdoc/>
         protected override GameDirectory RootFolder { get; }
 
@@ -93,6 +95,7 @@ namespace MCM.Implementation.PerCampaign
 
         private void GameStarted()
         {
+            _hasGameStarted = true;
             LoadedSettings.Clear();
         }
 
@@ -101,44 +104,67 @@ namespace MCM.Implementation.PerCampaign
             LoadSettings();
         }
 
-        private void LoadSettings()
+        private IEnumerable<PerCampaignSettings> GetPerCampaignSettings()
         {
-            IEnumerable<PerCampaignSettings> GetPerCampaignSettings()
+            foreach (var assembly in AccessTools2.AllAssemblies().Where(a => !a.IsDynamic))
             {
-                foreach (var assembly in AccessTools2.AllAssemblies().Where(a => !a.IsDynamic))
+                IEnumerable<PerCampaignSettings> settings;
+                try
                 {
-                    IEnumerable<PerCampaignSettings> settings;
-                    try
-                    {
-                        settings = AccessTools2.GetTypesFromAssemblyIfValid(assembly)
-                            .Where(t => t.IsClass && !t.IsAbstract)
-                            .Where(t => t.GetConstructor(Type.EmptyTypes) is not null)
-                            .Where(t => typeof(PerCampaignSettings).IsAssignableFrom(t))
-                            .Where(t => !typeof(EmptyPerCampaignSettings).IsAssignableFrom(t))
-                            .Where(t => !typeof(IWrapper).IsAssignableFrom(t))
-                            .Select(t => Activator.CreateInstance(t) as PerCampaignSettings)
-                            .OfType<PerCampaignSettings>()
-                            .ToList();
-                    }
-                    catch (TypeLoadException ex)
-                    {
-                        settings = Array.Empty<PerCampaignSettings>();
-                        _logger.LogError(ex, $"Error while handling assembly {assembly}!");
-                    }
+                    settings = AccessTools2.GetTypesFromAssemblyIfValid(assembly)
+                        .Where(t => t.IsClass && !t.IsAbstract)
+                        .Where(t => t.GetConstructor(Type.EmptyTypes) is not null)
+                        .Where(t => typeof(PerCampaignSettings).IsAssignableFrom(t))
+                        .Where(t => !typeof(EmptyPerCampaignSettings).IsAssignableFrom(t))
+                        .Where(t => !typeof(IWrapper).IsAssignableFrom(t))
+                        .Select(t =>
+                        {
+                            try
+                            {
+                                return Activator.CreateInstance(t) as PerCampaignSettings;
+                            }
+                            catch (Exception e)
+                            {
+                                try
+                                {
+                                    _logger.LogError(e, $"Failed to initialize type {t}");
+                                }
+                                catch (Exception)
+                                {
+                                    _logger.LogError(e, "Failed to initialize and log type!");
+                                }
+                                return null;
+                            }
+                        })
+                        .OfType<PerCampaignSettings>()
+                        .ToList();
+                }
+                catch (TypeLoadException ex)
+                {
+                    settings = Array.Empty<PerCampaignSettings>();
+                    _logger.LogError(ex, $"Error while handling assembly {assembly}!");
+                }
 
-                    foreach (var setting in settings)
-                    {
-                        yield return setting;
-                    }
+                foreach (var setting in settings)
+                {
+                    yield return setting;
                 }
             }
+        }
 
+        private void LoadSettings()
+        {
             foreach (var setting in GetPerCampaignSettings())
                 RegisterSettings(setting);
         }
 
+        public IEnumerable<UnavailableSetting> GetUnavailableSettings() => !_hasGameStarted
+            ? GetPerCampaignSettings().Select(setting => new UnavailableSetting(setting.Id, setting.DisplayName, UnavailableSettingType.PerCampaign))
+            : Enumerable.Empty<UnavailableSetting>();
+
         private void GameEnded()
         {
+            _hasGameStarted = false;
             LoadedSettings.Clear();
         }
     }

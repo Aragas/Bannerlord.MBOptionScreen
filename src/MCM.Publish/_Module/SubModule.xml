@@ -27,11 +27,11 @@
     <DependedModuleMetadata id="Bannerlord.ButterLib" order="LoadBeforeThis" version="v$butterlibversion$" />
     <DependedModuleMetadata id="Bannerlord.UIExtenderEx" order="LoadBeforeThis" version="v$uiextenderexversion$" />
 
-    <DependedModuleMetadata id="Native" order="LoadAfterThis" version="v$gameversion$.*" />
-    <DependedModuleMetadata id="SandBoxCore" order="LoadAfterThis" version="v$gameversion$.*" optional="true" />
-    <DependedModuleMetadata id="Sandbox" order="LoadAfterThis" version="v$gameversion$.*" optional="true" />
-    <DependedModuleMetadata id="StoryMode" order="LoadAfterThis" version="v$gameversion$.*" optional="true" />
-    <DependedModuleMetadata id="CustomBattle" order="LoadAfterThis" version="v$gameversion$.*" optional="true" />
+    <DependedModuleMetadata id="Native" order="LoadAfterThis" version="$gameversion$.*" />
+    <DependedModuleMetadata id="SandBoxCore" order="LoadAfterThis" version="$gameversion$.*" optional="true" />
+    <DependedModuleMetadata id="Sandbox" order="LoadAfterThis" version="$gameversion$.*" optional="true" />
+    <DependedModuleMetadata id="StoryMode" order="LoadAfterThis" version="$gameversion$.*" optional="true" />
+    <DependedModuleMetadata id="CustomBattle" order="LoadAfterThis" version="$gameversion$.*" optional="true" />
 
     </DependedModuleMetadatas>
   <!-- Community Metadata -->

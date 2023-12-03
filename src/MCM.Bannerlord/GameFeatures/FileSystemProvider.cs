@@ -1,4 +1,5 @@
 ﻿using MCM.Abstractions.GameFeatures;
+using MCM.Internal.Extensions;
 
 using System;
 using System.Linq;
@@ -64,9 +65,13 @@ namespace MCM.Internal.GameFeatures
             return new GameFile(directory, fileName);
         }
 
-        public bool WriteData(GameFile file, byte[] data)
+        public bool WriteData(GameFile file, byte[]? data)
         {
             var baseFile = new TWPlatformFilePath(new TWPlatformDirectoryPath((PlatformFileType) file.Owner.Type, file.Owner.Path), file.Name);
+
+            if (data is null)
+                return PlatformFileHelper.DeleteFile(baseFile);
+
             return PlatformFileHelper.SaveFile(baseFile, data) == SaveResult.Success;
         }
 
@@ -74,6 +79,18 @@ namespace MCM.Internal.GameFeatures
         {
             var baseFile = new TWPlatformFilePath(new TWPlatformDirectoryPath((PlatformFileType) file.Owner.Type, file.Owner.Path), file.Name);
             return !PlatformFileHelper.FileExists(baseFile) ? null : PlatformFileHelper.GetFileContent(baseFile);
+        }
+
+        public string? GetSystemPath(GameFile file)
+        {
+            var baseFile = new TWPlatformFilePath(new TWPlatformDirectoryPath((PlatformFileType) file.Owner.Type, file.Owner.Path), file.Name);
+            return PlatformFileHelper.GetFileFullPath(baseFile);
+        }
+
+        public string? GetSystemPath(GameDirectory directory)
+        {
+            var baseDirectory = new TWPlatformDirectoryPath((PlatformFileType) directory.Type, directory.Path);
+            return PlatformFileHelperPCExtended.GetDirectoryFullPath(baseDirectory);
         }
     }
 }
