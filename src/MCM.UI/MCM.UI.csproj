@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net472;net6</TargetFrameworks>
     <Authors>Aragas, mipen</Authors>
     <AssemblyName>MCMv5.UI</AssemblyName>
     <RootNamespace>MCM.UI</RootNamespace>
@@ -46,7 +46,7 @@
     <PackageReference Include="System.IO.Compression" Version="4.0.0" />
     <Reference Include="System.Windows.Forms" PrivateAssets="all" />
   </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework) == 'netcoreapp3.1'">
+  <ItemGroup Condition="$(TargetFramework) == 'net6'">
     <FrameworkReference Include="Microsoft.WindowsDesktop.App" PrivateAssets="all" />
   </ItemGroup>
   <!--Windows Forms-->

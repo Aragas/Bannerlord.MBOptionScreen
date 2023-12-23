@@ -8,6 +8,7 @@
   <ModuleCategory value="Singleplayer" />
   <ModuleType value="Community" />
   <Url value="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" />
+  <UpdateInfo value="NexusMods:612" />
   <DependedModules>
     <DependedModule Id="Bannerlord.Harmony" DependentVersion="v$harmonyversion$" />
     <DependedModule Id="Bannerlord.ButterLib" DependentVersion="v$butterlibversion$" />
@@ -41,6 +42,7 @@
       <Name value="MCMv5" />
       <DLLName value="MCMv5.dll" />
       <SubModuleClassType value="MCM.MCMSubModule" />
+      <Assemblies/>
       <Tags />
     </SubModule>
     <!--Builtin SubModule -->
@@ -48,6 +50,7 @@
       <Name value="MCMv5 Basic Implementation" />
       <DLLName value="MCMv5.dll" />
       <SubModuleClassType value="MCM.Internal.MCMImplementationSubModule" />
+      <Assemblies/>
       <Tags />
     </SubModule>
     <!--MCMv5 Wrapper Support SubModule -->
@@ -55,6 +58,7 @@
       <Name value="MCMv5 Wrapper Support" />
       <DLLName value="MCM.UI.Adapter.MCMv5.dll" />
       <SubModuleClassType value="MCM.UI.Adapter.MCMv5.SubModule" />
+      <Assemblies/>
       <Tags />
     </SubModule>
     <!--UI SubModule -->
@@ -62,6 +66,7 @@
       <Name value="MCMv5 UI" />
       <DLLName value="MCMv5.UI.dll" />
       <SubModuleClassType value="MCM.UI.MCMUISubModule" />
+      <Assemblies/>
       <Tags />
     </SubModule>
   </SubModules>
