@@ -73,7 +73,7 @@ jobs:
       shell: pwsh
 
     - name: ReportGenerator
-      uses: danielpalme/ReportGenerator-GitHub-Action@4.6.1
+      uses: danielpalme/ReportGenerator-GitHub-Action@5.2.0
       with:
         reports: 'coverage_mcm_stable_debug.xml;coverage_mcm_stable_release.xml;coverage_mcm_beta_debug.xml;coverage_mcm_beta_release.xml'
         targetdir: 'coveragereport'
@@ -82,13 +82,13 @@ jobs:
         tag: '${{ github.run_number }}_${{ github.run_id }}' # Optional tag or build version.
 
     - name: Upload ReportGenerator to GitHub
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v4
       with:
         name: coverage-report
         path: coveragereport
 
     - name: Upload ReportGenerator to CodeCov
-      uses: codecov/codecov-action@v1
+      uses: codecov/codecov-action@v3
       with:
         token: ${{secrets.CODECOV_TOKEN}}
         file: coveragereport/Cobertura.xml
@@ -126,7 +126,7 @@ jobs:
 
     - name: Upload Bannerlord folder
       if: ${{ github.ref == 'refs/heads/master' }}
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v4
       with:
         name: bannerlord
         path: ./bannerlord/
