@@ -52,7 +52,7 @@
     <string id="ModOptionsVM_ManagePacks" text="Manage Settings Packs"/>
     <string id="ModOptionsVM_ManagePackImport" text="Import a Settings Pack"/>
     <string id="ModOptionsVM_ManagePackExport" text="Export Settings Pack"/>
-    
+
     <string id="HOV8WIcBrb" text="Reset Mod Options Value to Default"/>
     <string id="2d99VmOZZH" text="Resets a value in Mod Options menu to its default value when hovered."/>
   </strings>

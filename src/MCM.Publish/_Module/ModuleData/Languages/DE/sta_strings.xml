@@ -37,5 +37,19 @@
     <string id="ButterLibSettings_Name_Logging" text="Protokollierung"/>
     <string id="ButterLibSettings_Name_LogLevel" text="Protokoll Stufe"/>
     <string id="ButterLibSettings_Name_LogLevelDesc" text="Umfang der zu schreibenden Protokolle."/>
+
+    <string id="ModOptionsVM_SaveAsPreset" text="Als Vorlage speichern"/>
+    <string id="ModOptionsVM_SaveAsPresetDesc" text="Wählen Sie den Namen der Vorlage"/>
+    <string id="ModOptionsVM_OverridePreset" text="Vorlage existiert bereits"/>
+    <string id="ModOptionsVM_OverridePresetDesc" text="Vorlage existiert bereits! Möchten Sie diese überschreiben?"/>
+    <string id="ModOptionsVM_ManagePresets" text="Vorlagen verwalten"/>
+    <string id="ModOptionsVM_ManagePresetsImport" text="Neue Vorlage importieren"/>
+    <string id="ModOptionsVM_ManagePresetsExport" text="Vorlage '{PRESETNAME}' exportieren"/>
+    <string id="ModOptionsVM_ManagePresetsDelete" text="Vorlage '{PRESETNAME}' löschen"/>
+    <string id="ModOptionsVM_SaveAsPresetError" text="Speichern der Vorlage '{PRESETNAME}' fehlgeschlagen!"/>
+    <string id="ModOptionsVM_Unavailable" text="Einstellungen sind innerhalb einer Spielsitzung verfügbar!"/>
+    <string id="ModOptionsVM_ManagePacks" text="Einstellungspakete verwalten"/>
+    <string id="ModOptionsVM_ManagePackImport" text="Einstellungspaket importieren"/>
+    <string id="ModOptionsVM_ManagePackExport" text="Einstellungspaket exportieren"/>
   </strings>
 </base>
