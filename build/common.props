@@ -3,14 +3,15 @@
 
   <PropertyGroup>
     <GameVersion>1.0.0</GameVersion>
-    <Version>5.9.1</Version>
+    <GameVersionWithPrefix>v$(GameVersion)</GameVersionWithPrefix>
+    <Version>5.9.2</Version>
     <HarmonyVersion>2.2.2</HarmonyVersion>
-    <ButterLibVersion>2.8.11</ButterLibVersion>
-    <UIExtenderExVersion>2.8.0</UIExtenderExVersion>
-    <BuildResourcesVersion>1.1.0.102</BuildResourcesVersion>
-    <BUTRSharedVersion>3.0.0.137</BUTRSharedVersion>
+    <ButterLibVersion>2.8.15</ButterLibVersion>
+    <UIExtenderExVersion>2.8.1</UIExtenderExVersion>
+    <BuildResourcesVersion>1.1.0.104</BuildResourcesVersion>
+    <BUTRSharedVersion>3.0.0.138</BUTRSharedVersion>
     <BUTRDependencyInjectionVersion>2.0.0.52</BUTRDependencyInjectionVersion>
-    <BUTRModuleManagerVersion>5.0.209</BUTRModuleManagerVersion>
+    <BUTRModuleManagerVersion>5.0.221</BUTRModuleManagerVersion>
     <HarmonyExtensionsVersion>3.2.0.77</HarmonyExtensionsVersion>
     <HarmonyAnalyzerVersion>1.0.1.50</HarmonyAnalyzerVersion>
     <LightInjectVersion>6.6.4</LightInjectVersion>
@@ -58,7 +59,7 @@
   </PropertyGroup>
   <!--SorceLink-->
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All"/>
   </ItemGroup>
   <!--CI Builds-->
   <ItemGroup Condition="$(TargetFramework) == 'net472' AND $(OS) != 'Windows_NT'">

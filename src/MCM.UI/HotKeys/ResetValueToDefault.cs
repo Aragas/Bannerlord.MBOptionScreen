@@ -15,8 +15,8 @@ namespace MCM.UI.HotKeys
 
         public ResetValueToDefault() : base(nameof(ResetValueToDefault))
         {
-            DisplayName = "{=}Reset Mod Options Value to Default";
-            Description = "{=}Resets a value in Mod Options menu to its default value when hovered.";
+            DisplayName = "{=HOV8WIcBrb}Reset Mod Options Value to Default";
+            Description = "{=2d99VmOZZH}Resets a value in Mod Options menu to its default value when hovered.";
             DefaultKey = InputKey.R;
             Category = HotKeyManager.Categories[HotKeyCategory.MenuShortcut];
         }

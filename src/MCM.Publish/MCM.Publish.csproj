@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net472;netcoreapp3.1</TargetFrameworks>
+    <TargetFrameworks>net472;net6</TargetFrameworks>
     <Authors>Aragas</Authors>
     <ModuleId>Bannerlord.MBOptionScreen</ModuleId>
     <ModuleName>Mod Configuration Menu v5</ModuleName>
@@ -16,7 +16,7 @@
   <PropertyGroup Condition="$(TargetFramework) == 'net472'">
     <BuildForWindows>true</BuildForWindows>
   </PropertyGroup>
-  <PropertyGroup Condition="$(TargetFramework) == 'netcoreapp3.1'">
+  <PropertyGroup Condition="$(TargetFramework) == 'net6'">
     <BuildForWindowsStore>true</BuildForWindowsStore>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>

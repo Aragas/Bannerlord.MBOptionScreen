@@ -41,6 +41,11 @@ namespace MCM.UI.Utils
         private static readonly V2MultiDelegate? V2Multi =
             AccessTools2.GetConstructorDelegate<V2MultiDelegate>(typeof(MultiSelectionInquiryData), typeof(V2MultiDelegate).GetMethod("Invoke").GetParameters().Select(x => x.ParameterType).ToArray());
 
+        private delegate MultiSelectionInquiryData V3MultiDelegate(string titleText, string descriptionText, List<InquiryElement> inquiryElements, bool isExitShown, int minSelectableOptionCount, int maxSelectableOptionCount,
+            string affirmativeText, string negativeText, Action<List<InquiryElement>> affirmativeAction, Action<List<InquiryElement>> negativeAction, string soundEventPath = "", bool isSeachAvailable = false);
+        private static readonly V3MultiDelegate? V3Multi =
+            AccessTools2.GetConstructorDelegate<V3MultiDelegate>(typeof(MultiSelectionInquiryData), typeof(V3MultiDelegate).GetMethod("Invoke").GetParameters().Select(x => x.ParameterType).ToArray());
+
 
         public static InquiryData? Create(string titleText, string text, bool isAffirmativeOptionShown, bool isNegativeOptionShown, string affirmativeText, string negativeText, Action affirmativeAction, Action negativeAction)
         {
@@ -76,6 +81,9 @@ namespace MCM.UI.Utils
 
             if (V2Multi is not null)
                 return V2Multi(titleText, descriptionText, inquiryElements, isExitShown, minSelectableOptionCount, maxSelectableOptionCount, affirmativeText, negativeText, affirmativeAction, negativeAction);
+
+            if (V3Multi is not null)
+                return V3Multi(titleText, descriptionText, inquiryElements, isExitShown, minSelectableOptionCount, maxSelectableOptionCount, affirmativeText, negativeText, affirmativeAction, negativeAction);
 
             return null;
         }

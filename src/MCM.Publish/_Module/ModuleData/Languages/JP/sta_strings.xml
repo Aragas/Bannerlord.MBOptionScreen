@@ -21,7 +21,7 @@
     <string id="ModOptionsVM_NotSpecified" text="Mod 名が指定されていません"/>
     <string id="ModOptionsVM_Name" text="Mod オプション"/>
     <string id="ModOptionsVM_ChangeToPreset" text="プリセットを '{PRESET}' へ変更"/>
-    <string id="ModOptionsVM_Discard" text="本当に {NAME} の現在の設定から '{ITEM}' を削除しますか?"/>
+    <string id="ModOptionsVM_Discard" text="本当に {NAME} の現在の設定から '{ITEM}' の設定を破棄しますか?"/>
     <string id="ModOptionsVM_RestartTitle" text="ゲームの再起動が必要です"/>
     <string id="ModOptionsVM_RestartDesc" text="Mod の設定変更を適用するにはゲームの再起動が必要です。今すぐゲームを終了しますか?"/>
     <string id="SettingsPropertyGroupVM_Disabled" text="{GROUPNAME} (無効)"/>
@@ -37,5 +37,19 @@
     <string id="ButterLibSettings_Name_Logging" text="ロギング"/>
     <string id="ButterLibSettings_Name_LogLevel" text="ログレベル"/>
     <string id="ButterLibSettings_Name_LogLevelDesc" text="出力するログのレベルです"/>
+
+    <string id="ModOptionsVM_SaveAsPreset" text="プリセットとして保存"/>
+    <string id="ModOptionsVM_SaveAsPresetDesc" text="プリセット名の選択"/>
+    <string id="ModOptionsVM_OverridePreset" text="プリセットが既に存在します"/>
+    <string id="ModOptionsVM_OverridePresetDesc" text="プリセットが既に存在します。上書きしますか?"/>
+    <string id="ModOptionsVM_ManagePresets" text="プリセットの管理"/>
+    <string id="ModOptionsVM_ManagePresetsImport" text="新しいプリセットのインポート"/>
+    <string id="ModOptionsVM_ManagePresetsExport" text="プリセット「{PRESETNAME} 」をエクスポート"/>
+    <string id="ModOptionsVM_ManagePresetsDelete" text="プリセット「{PRESETNAME} 」を削除"/>
+    <string id="ModOptionsVM_SaveAsPresetError" text="プリセット「{PRESETNAME}」の保存に失敗しました!"/>
+    <string id="ModOptionsVM_Unavailable" text="設定はゲームセッション内で利用可能です!"/>
+    <string id="ModOptionsVM_ManagePacks" text="設定パックを管理"/>
+    <string id="ModOptionsVM_ManagePackImport" text="設定パックのインポート"/>
+    <string id="ModOptionsVM_ManagePackExport" text="設定パックのエクスポート"/>
   </strings>
 </base>
