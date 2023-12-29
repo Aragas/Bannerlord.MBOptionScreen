@@ -5,12 +5,12 @@ namespace MCM.Abstractions
     /// <summary>
     /// Defines the different types of settings that can be used.
     /// </summary>
-    #if !BANNERLORDMCM_PUBLIC
+#if !BANNERLORDMCM_PUBLIC
         internal
-    #else
-        public
-    # endif
-    enum SettingType
+#else
+    public
+#endif
+enum SettingType
     {
         /// <summary>
         /// A default value indicating no setting type.
