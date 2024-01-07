@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: DocFX Setup
-      uses: butr/actions-docfx-setup@v3
+      uses: butr/actions-docfx-setup@v4
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
 
@@ -39,8 +39,7 @@ jobs:
         Copy-Item "README.md" -Destination "docs/index.md";
         New-Item -Type dir "docs/images";
         Copy-Item "resources/MCM-48.svg" -Destination "docs/images/MCM-48.svg";
-        docfx metadata docs/docfx.json;
-        docfx build docs/docfx.json;
+        docfx docs/docfx.json;
       shell: pwsh
 
     - name: Deploy DocFX

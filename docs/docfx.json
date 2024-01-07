@@ -13,25 +13,17 @@
   ],
   "build": {
     "xref": [
+      "https://learn.microsoft.com/en-us/dotnet/.xrefmap.json",
       "xrefs/Newtonsoft.Json-xrefmap.yml",
       "https://butr.github.io/Bannerlord.ReferenceAssemblies.Documentation/xrefmap.yml",
       "https://butr.github.io/Bannerlord.ButterLib/xrefmap.yml",
       "https://butr.github.io/Bannerlord.UIExtenderEx/xrefmap.yml"
     ],
-    "xrefService": [
-      "https://xref.docs.microsoft.com/query?uid={uid}"
-    ],
     "content": [
-      {
-        "files": [ "**/**.{md,yml}" ],
-        "exclude": [ "_site/**", "obj/**" ]
-      }
+      { "files": [ "**/**.{md,yml}" ], "exclude": [ "_site/**", "obj/**" ] }
     ],
     "resource": [
-      {
-        "files": [ "**/images/**", "codesnippet/**", "CNAME" ],
-        "exclude": [ "_site/**", "obj/**" ]
-      }
+      { "files": [ "**/images/**", "codesnippet/**", "CNAME" ], "exclude": [ "_site/**", "obj/**" ] }
     ],
     "dest": "_site",
     "globalMetadata": {
@@ -39,14 +31,17 @@
       "_appLogoPath": "images/MCM-48.svg",
       "_appName": "MCM",
       "_appTitle": "MCM Documentation",
-      "_appFooter": "© 2020-2023 Aragas"
+      "_appFooter": "© 2020-2024 Aragas"
     },
     "template": [
       "default",
-      "modern"
+      "modern",
+      "_template/last-modified",
+      "_template/my-template"
     ],
     "postProcessors": [
-      "ExtractSearchIndex"
+      "ExtractSearchIndex",
+      "LastModifiedPostProcessor"
     ]
   }
 }
