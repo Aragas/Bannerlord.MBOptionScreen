@@ -43,8 +43,8 @@ jobs:
         github-token: ${{secrets.GITHUB_TOKEN}}
         steam-login: ${{secrets.STEAM_LOGIN}}
         steam-password: ${{secrets.STEAM_PASSWORD}}
-        stable-version: ${{secrets.SYNCED_GAME_STABLE_VERSION}}
-        beta-version: ${{secrets.SYNCED_GAME_BETA_VERSION}}
+        stable-version: ${{vars.GAME_VERSION_STABLE}}
+        beta-version: ${{vars.GAME_VERSION_BETA}}
         stable-directory: 'bannerlord-stable'
         beta-directory: 'bannerlord-beta'
 
@@ -60,8 +60,8 @@ jobs:
           dotnet build "tests/MCM.Tests/MCM.Tests.csproj" --configuration Beta_Debug -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord-beta";
           dotnet build "tests/MCM.Tests/MCM.Tests.csproj" --configuration Beta_Release -p:GameVersion=$beta_version -p:GameFolder="$PWD/bannerlord-beta";
       env:
-        STABLE_VERSION: ${{secrets.SYNCED_GAME_STABLE_VERSION}}
-        BETA_VERSION: ${{secrets.SYNCED_GAME_BETA_VERSION}}
+        STABLE_VERSION: ${{vars.GAME_VERSION_STABLE}}
+        BETA_VERSION: ${{vars.GAME_VERSION_BETA}}
       shell: pwsh
 
     - name: Test MCM with Coverage
