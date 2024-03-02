@@ -6,6 +6,7 @@ using MCM.Abstractions.Base.PerCampaign;
 using MCM.Abstractions.GameFeatures;
 using MCM.Abstractions.PerCampaign;
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,6 +17,9 @@ namespace MCM.Implementation.PerCampaign
 #endif
     internal sealed class FluentPerCampaignSettingsContainer : BaseSettingsContainer<FluentPerCampaignSettings>, IFluentPerCampaignSettingsContainer
     {
+        /// <inheritdoc/>
+        public event Action? InstanceCacheInvalidated;
+        
         private readonly IGameEventListener _gameEventListener;
 
         public FluentPerCampaignSettingsContainer(IGameEventListener gameEventListener)

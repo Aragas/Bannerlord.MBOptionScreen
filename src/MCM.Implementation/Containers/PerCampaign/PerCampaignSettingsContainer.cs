@@ -21,6 +21,9 @@ namespace MCM.Implementation.PerCampaign
 #endif
     internal sealed class PerCampaignSettingsContainer : BaseSettingsContainer<PerCampaignSettings>, IPerCampaignSettingsContainer
     {
+        /// <inheritdoc/>
+        public event Action? InstanceCacheInvalidated;
+        
         private readonly IBUTRLogger _logger;
         private readonly IGameEventListener _gameEventListener;
 
@@ -96,6 +99,7 @@ namespace MCM.Implementation.PerCampaign
         private void GameStarted()
         {
             _hasGameStarted = true;
+            InstanceCacheInvalidated?.Invoke();
             LoadedSettings.Clear();
         }
 
@@ -165,6 +169,7 @@ namespace MCM.Implementation.PerCampaign
         private void GameEnded()
         {
             _hasGameStarted = false;
+            InstanceCacheInvalidated?.Invoke();
             LoadedSettings.Clear();
         }
     }

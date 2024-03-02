@@ -1,11 +1,7 @@
-﻿using Bannerlord.BUTR.Shared.Helpers;
-using Bannerlord.ButterLib;
-
-using BUTR.DependencyInjection;
+﻿using Bannerlord.ButterLib;
 
 using MCM.Abstractions.Base;
 using MCM.Abstractions.FluentBuilder;
-using MCM.Abstractions.GameFeatures;
 using MCM.Abstractions.Global;
 using MCM.Common;
 using MCM.Implementation;
@@ -13,10 +9,7 @@ using MCM.UI.Extensions;
 
 using Microsoft.Extensions.Logging;
 
-using TaleWorlds.Engine;
 using TaleWorlds.Localization;
-
-using Path = System.IO.Path;
 
 namespace MCM.UI.ButterLib
 {

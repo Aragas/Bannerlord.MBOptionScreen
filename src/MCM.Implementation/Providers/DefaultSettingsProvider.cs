@@ -3,6 +3,9 @@ using BUTR.DependencyInjection.Logger;
 
 using MCM.Abstractions;
 using MCM.Abstractions.Base;
+using MCM.Abstractions.Base.Global;
+using MCM.Abstractions.Base.PerCampaign;
+using MCM.Abstractions.Base.PerSave;
 using MCM.Abstractions.Global;
 using MCM.Abstractions.PerCampaign;
 using MCM.Abstractions.PerSave;
@@ -40,18 +43,46 @@ namespace MCM.Implementation
 
             foreach (var globalSettingsContainer in globalSettingsContainers)
             {
+                if (globalSettingsContainer is ISettingsContainerCanInvalidateCache canInvalidateCache)
+                    canInvalidateCache.InstanceCacheInvalidated += GlobalSettings.InvalidateCache;
+                
                 logger.LogInformation($"Found Global container {globalSettingsContainer.GetType()} ({globalSettingsContainer.SettingsDefinitions.Count()})");
             }
             foreach (var perSaveSettingsContainer in perSaveSettingsContainers)
             {
+                if (perSaveSettingsContainer is ISettingsContainerCanInvalidateCache canInvalidateCache)
+                    canInvalidateCache.InstanceCacheInvalidated += PerSaveSettings.InvalidateCache;
+                
                 logger.LogInformation($"Found PerSave container {perSaveSettingsContainer.GetType()} ({perSaveSettingsContainer.SettingsDefinitions.Count()})");
             }
             foreach (var perCampaignSettingsContainer in perCampaignSettingsContainers)
             {
+                if (perCampaignSettingsContainer is ISettingsContainerCanInvalidateCache canInvalidateCache)
+                    canInvalidateCache.InstanceCacheInvalidated += PerCampaignSettings.InvalidateCache;
+                
                 logger.LogInformation($"Found Campaign container {perCampaignSettingsContainer.GetType()} ({perCampaignSettingsContainer.SettingsDefinitions.Count()})");
             }
             foreach (var externalSettingsProvider in externalSettingsProviders)
             {
+                if (externalSettingsProvider is IExternalSettingsProviderCanInvalidateCache canInvalidateCache)
+                {
+                    canInvalidateCache.InstanceCacheInvalidated += (cacheType) =>
+                    {
+                        switch (cacheType)
+                        {
+                            case ExternalSettingsProviderInvalidateCacheType.Global:
+                                GlobalSettings.InvalidateCache();
+                                break;
+                            case ExternalSettingsProviderInvalidateCacheType.PerSave:
+                                PerSaveSettings.InvalidateCache();
+                                break;
+                            case ExternalSettingsProviderInvalidateCacheType.PerCampaign:
+                                PerCampaignSettings.InvalidateCache();
+                                break;
+                        }
+                    };
+                }
+                
                 logger.LogInformation($"Found external provider {externalSettingsProvider.GetType()} ({externalSettingsProvider.SettingsDefinitions.Count()})");
             }
 
@@ -60,7 +91,7 @@ namespace MCM.Implementation
                 .Concat(perSaveSettingsContainers)
                 .Concat(perCampaignSettingsContainers)
                 .ToList();
-
+            
             _externalSettingsProviders = externalSettingsProviders.ToList();
         }
 
