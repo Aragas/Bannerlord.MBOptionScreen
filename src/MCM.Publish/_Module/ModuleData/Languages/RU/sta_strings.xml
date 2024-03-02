@@ -37,5 +37,19 @@
     <string id="ButterLibSettings_Name_Logging" text="Логирование"/>
     <string id="ButterLibSettings_Name_LogLevel" text="Уровень Логирования"/>
     <string id="ButterLibSettings_Name_LogLevelDesc" text="Какой уровень логов записывать в файл логов."/>
+
+    <string id="ModOptionsVM_SaveAsPreset" text="Сохранить как предустановленное значение"/>
+    <string id="ModOptionsVM_SaveAsPresetDesc" text="Выберите название пресета"/>
+    <string id="ModOptionsVM_OverridePreset" text="Пресет уже существует"/>
+    <string id="ModOptionsVM_OverridePresetDesc" text="Пресет уже существует! Хотите заменить его?"/>
+    <string id="ModOptionsVM_ManagePresets" text="Управление пресетами"/>
+    <string id="ModOptionsVM_ManagePresetsImport" text="Импорт нового пресета"/>
+    <string id="ModOptionsVM_ManagePresetsExport" text="Экспортировать пресет '{PRESETNAME}'"/>
+    <string id="ModOptionsVM_ManagePresetsDelete" text="Удалить пресет '{PRESETNAME}'"/>
+    <string id="ModOptionsVM_SaveAsPresetError" text="Не удалось сохранить пресет '{PRESETNAME}'!"/>
+    <string id="ModOptionsVM_Unavailable" text="Настройки доступны во время игровой сессии!"/>
+    <string id="ModOptionsVM_ManagePacks" text="Управление пакетами настроек"/>
+    <string id="ModOptionsVM_ManagePackImport" text="Импорт пакета настроек"/>
+    <string id="ModOptionsVM_ManagePackExport" text="Экспорт пакета настроек"/>
   </strings>
 </base>
