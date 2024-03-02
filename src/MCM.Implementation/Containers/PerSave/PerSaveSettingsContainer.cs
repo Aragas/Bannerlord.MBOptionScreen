@@ -23,7 +23,7 @@ namespace MCM.Implementation.PerSave
     {
         /// <inheritdoc/>
         public event Action? InstanceCacheInvalidated;
-        
+
         private readonly IBUTRLogger _logger;
         private readonly IGameEventListener _gameEventListener;
 

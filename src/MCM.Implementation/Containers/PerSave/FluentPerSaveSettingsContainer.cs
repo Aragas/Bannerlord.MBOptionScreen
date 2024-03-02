@@ -19,7 +19,7 @@ namespace MCM.Implementation.PerSave
     {
         /// <inheritdoc/>
         public event Action? InstanceCacheInvalidated;
-        
+
         private readonly IGameEventListener _gameEventListener;
 
         public FluentPerSaveSettingsContainer(IGameEventListener gameEventListener)

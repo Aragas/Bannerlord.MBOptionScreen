@@ -19,7 +19,7 @@ namespace MCM.Implementation.PerCampaign
     {
         /// <inheritdoc/>
         public event Action? InstanceCacheInvalidated;
-        
+
         private readonly IGameEventListener _gameEventListener;
 
         public FluentPerCampaignSettingsContainer(IGameEventListener gameEventListener)

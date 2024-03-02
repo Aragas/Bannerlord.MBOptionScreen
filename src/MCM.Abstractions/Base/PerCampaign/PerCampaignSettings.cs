@@ -49,7 +49,7 @@ namespace MCM.Abstractions.Base.PerCampaign
             Cache.Clear();
             CacheInstance.Clear();
         }
-        
+
         public sealed override string FormatType { get; } = "json2";
     }
 }

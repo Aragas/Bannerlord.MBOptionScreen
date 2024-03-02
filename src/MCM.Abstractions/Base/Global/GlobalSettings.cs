@@ -45,7 +45,7 @@ namespace MCM.Abstractions.Base.Global
         // We don't need to clear it since the only case when the settings instance can change is when
         // we add a new settings cotainer, which is not possible at runtime
         protected static readonly ConcurrentDictionary<string, BaseSettings?> CacheInstance = new();
-        
+
         internal static void InvalidateCache()
         {
             Cache.Clear();

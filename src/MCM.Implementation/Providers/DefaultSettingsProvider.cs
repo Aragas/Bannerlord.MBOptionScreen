@@ -45,21 +45,21 @@ namespace MCM.Implementation
             {
                 if (globalSettingsContainer is ISettingsContainerCanInvalidateCache canInvalidateCache)
                     canInvalidateCache.InstanceCacheInvalidated += GlobalSettings.InvalidateCache;
-                
+
                 logger.LogInformation($"Found Global container {globalSettingsContainer.GetType()} ({globalSettingsContainer.SettingsDefinitions.Count()})");
             }
             foreach (var perSaveSettingsContainer in perSaveSettingsContainers)
             {
                 if (perSaveSettingsContainer is ISettingsContainerCanInvalidateCache canInvalidateCache)
                     canInvalidateCache.InstanceCacheInvalidated += PerSaveSettings.InvalidateCache;
-                
+
                 logger.LogInformation($"Found PerSave container {perSaveSettingsContainer.GetType()} ({perSaveSettingsContainer.SettingsDefinitions.Count()})");
             }
             foreach (var perCampaignSettingsContainer in perCampaignSettingsContainers)
             {
                 if (perCampaignSettingsContainer is ISettingsContainerCanInvalidateCache canInvalidateCache)
                     canInvalidateCache.InstanceCacheInvalidated += PerCampaignSettings.InvalidateCache;
-                
+
                 logger.LogInformation($"Found Campaign container {perCampaignSettingsContainer.GetType()} ({perCampaignSettingsContainer.SettingsDefinitions.Count()})");
             }
             foreach (var externalSettingsProvider in externalSettingsProviders)
@@ -82,7 +82,7 @@ namespace MCM.Implementation
                         }
                     };
                 }
-                
+
                 logger.LogInformation($"Found external provider {externalSettingsProvider.GetType()} ({externalSettingsProvider.SettingsDefinitions.Count()})");
             }
 
@@ -91,7 +91,7 @@ namespace MCM.Implementation
                 .Concat(perSaveSettingsContainers)
                 .Concat(perCampaignSettingsContainers)
                 .ToList();
-            
+
             _externalSettingsProviders = externalSettingsProviders.ToList();
         }
 
