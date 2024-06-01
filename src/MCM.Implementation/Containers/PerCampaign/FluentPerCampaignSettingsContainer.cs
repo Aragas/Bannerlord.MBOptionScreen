@@ -24,13 +24,13 @@ namespace MCM.Implementation.PerCampaign
 
         /// <inheritdoc/>
         protected override GameDirectory RootFolder { get; }
-        
+
         public FluentPerCampaignSettingsContainer(IGameEventListener gameEventListener)
         {
             _gameEventListener = gameEventListener;
             _gameEventListener.GameStarted += GameStarted;
             _gameEventListener.GameEnded += GameEnded;
-            
+
             var fileSystemProvider = GenericServiceProvider.GetService<IFileSystemProvider>();
             RootFolder = fileSystemProvider!.GetDirectory(base.RootFolder, "PerCampaign")!;
         }
