@@ -61,10 +61,11 @@ namespace MCM.Implementation.PerCampaign
 
             LoadedSettings.Add(settings.Id, settings);
 
-            var folderDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, settings.FolderName);
+            var campaignDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, id);
+            var folderDirectory = fileSystemProvider.GetOrCreateDirectory(campaignDirectory, settings.FolderName);
             var directory = string.IsNullOrEmpty(settings.SubFolder) ? folderDirectory : fileSystemProvider.GetOrCreateDirectory(folderDirectory, settings.SubFolder);
 
-            var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
+            var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? [];
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == settings.FormatType));
             settingsFormat?.Load(settings, directory, settings.Id);
             settings.OnPropertyChanged(BaseSettings.LoadingComplete);
@@ -85,10 +86,11 @@ namespace MCM.Implementation.PerCampaign
             if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider)
                 return false;
 
-            var folderDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, settings.FolderName);
+            var campaignDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, id);
+            var folderDirectory = fileSystemProvider.GetOrCreateDirectory(campaignDirectory, settings.FolderName);
             var directory = string.IsNullOrEmpty(settings.SubFolder) ? folderDirectory : fileSystemProvider.GetOrCreateDirectory(folderDirectory, settings.SubFolder);
 
-            var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
+            var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? [];
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == perCampaignSettings.FormatType));
             settingsFormat?.Save(perCampaignSettings, directory, perCampaignSettings.Id);
 
@@ -164,7 +166,7 @@ namespace MCM.Implementation.PerCampaign
 
         public IEnumerable<UnavailableSetting> GetUnavailableSettings() => !_hasGameStarted
             ? GetPerCampaignSettings().Select(setting => new UnavailableSetting(setting.Id, setting.DisplayName, UnavailableSettingType.PerCampaign))
-            : Enumerable.Empty<UnavailableSetting>();
+            : [];
 
         private void GameEnded()
         {

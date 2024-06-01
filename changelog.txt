@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 5.11.0
+Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4,v1.1.5,v1.1.6,v1.2.x
+* Fixed campaign settings not using the campaign id
+* Fixed redundant folder creation in the root settings folder
+* Fixed Fluent Campaign settings stored in the root settings folder
+---------------------------------------------------------------------------------------------------
 Version: 5.10.0
 Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4,v1.1.5,v1.1.6,v1.2.x
 * Added Settings instance cache and cache invalidation
