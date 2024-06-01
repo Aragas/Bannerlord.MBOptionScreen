@@ -6,6 +6,7 @@ using MCM.Abstractions.Base.PerSave;
 using MCM.Abstractions.GameFeatures;
 using MCM.Abstractions.PerSave;
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,6 +17,9 @@ namespace MCM.Implementation.PerSave
 #endif
     internal sealed class FluentPerSaveSettingsContainer : BaseSettingsContainer<FluentPerSaveSettings>, IFluentPerSaveSettingsContainer
     {
+        /// <inheritdoc/>
+        public event Action? InstanceCacheInvalidated;
+
         private readonly IGameEventListener _gameEventListener;
 
         public FluentPerSaveSettingsContainer(IGameEventListener gameEventListener)

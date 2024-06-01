@@ -25,7 +25,6 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 using TaleWorlds.Core;
 using TaleWorlds.Engine;
@@ -474,7 +473,8 @@ namespace MCM.UI.GUI.ViewModels
 
             void ImportNewPreset(GameDirectory settingsDirectory)
             {
-                var dialog = new OpenFileDialog
+#if NET472 || (NET6_0_OR_GREATER && WINDOWS)
+                var dialog = new System.Windows.Forms.OpenFileDialog
                 {
                     Title = "Import Preset",
                     Filter = "MCM Preset (.json)|*.json",
@@ -484,7 +484,7 @@ namespace MCM.UI.GUI.ViewModels
                     Multiselect = false,
                     ValidateNames = true,
                 };
-                if (dialog.ShowDialog() == DialogResult.OK)
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     var content = File.ReadAllText(dialog.FileName);
                     var presetId = JsonSettingsPreset.GetPresetId(content);
@@ -512,6 +512,7 @@ namespace MCM.UI.GUI.ViewModels
                 }
 
                 RefreshPresetList();
+#endif
             }
 
             void ExportPreset(GameFile presetFile)
@@ -519,7 +520,8 @@ namespace MCM.UI.GUI.ViewModels
                 var path = fileSystem.GetSystemPath(presetFile);
                 if (path is null) return;
 
-                var dialog = new SaveFileDialog
+#if NET472 || (NET6_0_OR_GREATER && WINDOWS)
+                var dialog = new System.Windows.Forms.SaveFileDialog
                 {
                     Title = "Export Preset",
                     Filter = "MCM Preset (.json)|*.json",
@@ -529,7 +531,7 @@ namespace MCM.UI.GUI.ViewModels
 
                     OverwritePrompt = true,
                 };
-                if (dialog.ShowDialog() == DialogResult.OK)
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     try
                     {
@@ -537,6 +539,7 @@ namespace MCM.UI.GUI.ViewModels
                     }
                     catch (Exception) { /* ignore */ }
                 }
+#endif
             }
 
             void DeletePreset(GameFile presetFile)
@@ -624,7 +627,8 @@ namespace MCM.UI.GUI.ViewModels
 
             void ImportPack()
             {
-                var dialog = new OpenFileDialog
+#if NET472 || (NET6_0_OR_GREATER && WINDOWS)
+                var dialog = new System.Windows.Forms.OpenFileDialog
                 {
                     Title = "Import Settings Pack",
                     Filter = "MCM Settings Pack (.zip)|*.zip",
@@ -634,7 +638,7 @@ namespace MCM.UI.GUI.ViewModels
                     Multiselect = false,
                     ValidateNames = true,
                 };
-                if (dialog.ShowDialog() == DialogResult.OK)
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     if (string.IsNullOrEmpty(dialog.FileName) || !File.Exists(dialog.FileName))
                         return;
@@ -655,11 +659,13 @@ namespace MCM.UI.GUI.ViewModels
                         UISettingsUtils.OverrideValues(viewModel.URS, current, settings);
                     }
                 }
+#endif
             }
 
             void ExportPack()
             {
-                var dialog = new SaveFileDialog
+#if NET472 || (NET6_0_OR_GREATER && WINDOWS)
+                var dialog = new System.Windows.Forms.SaveFileDialog
                 {
                     Title = "Export Settings Pack",
                     Filter = "MCM Settings Pack (.zip)|*.zip",
@@ -669,7 +675,7 @@ namespace MCM.UI.GUI.ViewModels
 
                     OverwritePrompt = true,
                 };
-                if (dialog.ShowDialog() == DialogResult.OK)
+                if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     var snapshots = BaseSettingsProvider.Instance?.SaveAvailableSnapshots() ?? Enumerable.Empty<SettingSnapshot>();
                     using var file = File.Create(dialog.FileName);
@@ -682,6 +688,7 @@ namespace MCM.UI.GUI.ViewModels
                         writer.Write(snapshot.JsonContent);
                     }
                 }
+#endif
             }
 
             void OnActionSelected(List<InquiryElement> selected)

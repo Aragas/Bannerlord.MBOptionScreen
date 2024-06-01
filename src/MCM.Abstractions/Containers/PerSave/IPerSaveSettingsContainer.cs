@@ -12,7 +12,8 @@
         ISettingsContainerCanReset,
         ISettingsContainerPresets,
         ISettingsContainerHasUnavailable,
-        ISettingsContainerHasSettingsPack
+        ISettingsContainerHasSettingsPack,
+        ISettingsContainerCanInvalidateCache
     {
         void LoadSettings();
     }

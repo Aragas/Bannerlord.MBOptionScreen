@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net472;net6</TargetFrameworks>
+    <TargetFrameworks>net472;net6-windows</TargetFrameworks>
     <Authors>Aragas, mipen</Authors>
     <AssemblyName>MCMv5.UI</AssemblyName>
     <RootNamespace>MCM.UI</RootNamespace>
@@ -43,12 +43,11 @@
 
   <!--Windows Forms-->
   <ItemGroup Condition="$(TargetFramework) == 'net472'">
-    <PackageReference Include="System.IO.Compression" Version="4.0.0" />
     <Reference Include="System.Windows.Forms" PrivateAssets="all" />
   </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework) == 'net6'">
-    <FrameworkReference Include="Microsoft.WindowsDesktop.App" PrivateAssets="all" />
-  </ItemGroup>
+  <PropertyGroup Condition="$(TargetFramework) == 'net6-windows'">
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
   <!--Windows Forms-->
 
   <ItemGroup>
@@ -62,6 +61,9 @@
     <PackageReference Include="BUTR.DependencyInjection.ButterLib" Version="$(BUTRDependencyInjectionVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
     <PackageReference Include="BUTR.MessageBoxPInvoke" Version="1.0.0.1" />
     <PackageReference Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+  </ItemGroup>
+  <ItemGroup Condition="$(TargetFramework) == 'net472'">
+    <PackageReference Include="System.IO.Compression" Version="4.0.0" />
   </ItemGroup>
 
   <ItemGroup>

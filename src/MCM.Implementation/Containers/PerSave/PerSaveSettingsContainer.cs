@@ -21,6 +21,9 @@ namespace MCM.Implementation.PerSave
 #endif
     internal sealed class PerSaveSettingsContainer : BaseSettingsContainer<PerSaveSettings>, IPerSaveSettingsContainer
     {
+        /// <inheritdoc/>
+        public event Action? InstanceCacheInvalidated;
+
         private readonly IBUTRLogger _logger;
         private readonly IGameEventListener _gameEventListener;
 
@@ -75,6 +78,7 @@ namespace MCM.Implementation.PerSave
         private void GameStarted()
         {
             _hasGameStarted = true;
+            InstanceCacheInvalidated?.Invoke();
             LoadedSettings.Clear();
         }
 
@@ -137,6 +141,7 @@ namespace MCM.Implementation.PerSave
         private void GameEnded()
         {
             _hasGameStarted = false;
+            InstanceCacheInvalidated?.Invoke();
             LoadedSettings.Clear();
         }
     }

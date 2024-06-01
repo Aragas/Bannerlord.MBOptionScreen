@@ -8,6 +8,6 @@
   dropdown: true
   items:
     - name: Official Documentation
-      href: http://docs.modding.bannerlord.com/
+      href: https://moddocs.bannerlord.com/
     - name: Community Documentation
       href: https://docs.bannerlordmodding.com

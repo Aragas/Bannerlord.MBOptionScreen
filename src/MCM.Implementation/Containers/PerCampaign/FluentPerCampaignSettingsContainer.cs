@@ -6,6 +6,7 @@ using MCM.Abstractions.Base.PerCampaign;
 using MCM.Abstractions.GameFeatures;
 using MCM.Abstractions.PerCampaign;
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,13 +17,22 @@ namespace MCM.Implementation.PerCampaign
 #endif
     internal sealed class FluentPerCampaignSettingsContainer : BaseSettingsContainer<FluentPerCampaignSettings>, IFluentPerCampaignSettingsContainer
     {
+        /// <inheritdoc/>
+        public event Action? InstanceCacheInvalidated;
+
         private readonly IGameEventListener _gameEventListener;
 
+        /// <inheritdoc/>
+        protected override GameDirectory RootFolder { get; }
+        
         public FluentPerCampaignSettingsContainer(IGameEventListener gameEventListener)
         {
             _gameEventListener = gameEventListener;
             _gameEventListener.GameStarted += GameStarted;
             _gameEventListener.GameEnded += GameEnded;
+            
+            var fileSystemProvider = GenericServiceProvider.GetService<IFileSystemProvider>();
+            RootFolder = fileSystemProvider!.GetDirectory(base.RootFolder, "PerCampaign")!;
         }
 
         /// <inheritdoc/>
@@ -42,10 +52,11 @@ namespace MCM.Implementation.PerCampaign
 
             LoadedSettings.Add(settings.Id, settings);
 
-            var folderDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, settings.FolderName);
+            var campaignDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, id);
+            var folderDirectory = fileSystemProvider.GetOrCreateDirectory(campaignDirectory, settings.FolderName);
             var directory = string.IsNullOrEmpty(settings.SubFolder) ? folderDirectory : fileSystemProvider.GetOrCreateDirectory(folderDirectory, settings.SubFolder);
 
-            var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
+            var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? [];
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == settings.FormatType));
             settingsFormat?.Load(settings, directory, settings.Id);
             settings.OnPropertyChanged(BaseSettings.LoadingComplete);
@@ -66,10 +77,11 @@ namespace MCM.Implementation.PerCampaign
             if (GenericServiceProvider.GetService<IFileSystemProvider>() is not { } fileSystemProvider)
                 return false;
 
-            var folderDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, settings.FolderName);
+            var campaignDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, id);
+            var folderDirectory = fileSystemProvider.GetOrCreateDirectory(campaignDirectory, settings.FolderName);
             var directory = string.IsNullOrEmpty(settings.SubFolder) ? folderDirectory : fileSystemProvider.GetOrCreateDirectory(folderDirectory, settings.SubFolder);
 
-            var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
+            var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? [];
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == perCampaignSettings.FormatType));
             settingsFormat?.Save(perCampaignSettings, directory, perCampaignSettings.Id);
 
@@ -90,6 +102,6 @@ namespace MCM.Implementation.PerCampaign
         private void GameStarted() => LoadedSettings.Clear();
         private void GameEnded() => LoadedSettings.Clear();
 
-        public IEnumerable<UnavailableSetting> GetUnavailableSettings() => Enumerable.Empty<UnavailableSetting>();
+        public IEnumerable<UnavailableSetting> GetUnavailableSettings() => [];
     }
 }

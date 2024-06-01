@@ -28,7 +28,7 @@ namespace MCM.Implementation
         where TSettings : BaseSettings
     {
         protected virtual GameDirectory RootFolder { get; } =
-            GenericServiceProvider.GetService<IFileSystemProvider>()?.GetModSettingsDirectory() ?? new GameDirectory(PlatformDirectoryType.User, "Configs\\ModSettings\\");
+            GenericServiceProvider.GetService<IFileSystemProvider>()?.GetModSettingsDirectory() ?? new GameDirectory(PlatformDirectoryType.User, @"Configs\ModSettings\");
         protected virtual Dictionary<string, TSettings> LoadedSettings { get; } = new();
 
         /// <inheritdoc/>

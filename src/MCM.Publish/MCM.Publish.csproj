@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net472;net6</TargetFrameworks>
+    <TargetFrameworks>net472;net6-windows</TargetFrameworks>
     <Authors>Aragas</Authors>
     <ModuleId>Bannerlord.MBOptionScreen</ModuleId>
     <ModuleName>Mod Configuration Menu v5</ModuleName>
