@@ -16,7 +16,7 @@
   <PropertyGroup Condition="$(TargetFramework) == 'net472'">
     <BuildForWindows>true</BuildForWindows>
   </PropertyGroup>
-  <PropertyGroup Condition="$(TargetFramework) == 'net6'">
+  <PropertyGroup Condition="$(TargetFramework) == 'net6-windows'">
     <BuildForWindowsStore>true</BuildForWindowsStore>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
