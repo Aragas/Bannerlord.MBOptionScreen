@@ -15,6 +15,20 @@ namespace MCM.Abstractions.Base.PerSave
     {
         /// <summary>
         /// A modder flriendly way to get settings from any place
+        /// </summary>
+        public static T? Instance
+        {
+            get
+            {
+                if (!Cache.ContainsKey(typeof(T)))
+                    Cache.TryAdd(typeof(T), new T().Id);
+                return BaseSettingsProvider.Instance?.GetSettings(Cache[typeof(T)]) as T;
+            }
+        }
+        
+        /*
+        /// <summary>
+        /// A modder flriendly way to get settings from any place
         /// We now cache it. Cache is invalidated on game start/end.
         /// </summary>
         public static T? Instance => (T?) CacheInstance.GetOrAdd(Cache.GetOrAdd(typeof(T), static _ => new T().Id), static id =>
@@ -29,6 +43,7 @@ namespace MCM.Abstractions.Base.PerSave
         {
             return new T().Id;
         })!);
+        */
     }
 
 #if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
