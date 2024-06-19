@@ -53,6 +53,20 @@ namespace MCMv5.Tests
                 "Three",
             }, 2);
             var proxyDropdown = new ProxyRef<Dropdown<string>>(() => proxyDropdownValue, o => proxyDropdownValue = o);
+
+            var changingString = new StorageRef<string>(string.Empty);
+            storageDropdownValue.PropertyChanged += (sender, args) =>
+            {
+                if (args.PropertyName == "SelectedIndex")
+                {
+                    if (sender is Dropdown<string> { SelectedIndex: 0 })
+                        changingString.Value = "Selected Zero";
+                    if (sender is Dropdown<string> { SelectedIndex: 1 })
+                        changingString.Value = "Selected One";
+                    if (sender is Dropdown<string> { SelectedIndex: 2 })
+                        changingString.Value = "Selected Two ";
+                }
+            };
             
             var builder = BaseSettingsBuilder.Create("Testing_Global_v5", "MCMv5 Testing Fluent Settings")!
                 .SetFormat("xml")
@@ -81,6 +95,7 @@ namespace MCMv5.Tests
                     
                     .AddDropdown("prop_8", "Test Proxy Ref", proxyDropdownValue.SelectedIndex, proxyDropdown, null)
                     .AddButton("prop_8_b", "Reset Proxy Ref", new StorageRef((Action) (() => proxyDropdownValue.SelectedIndex = 0)), "Reset Proxy Ref", null)
+                    .AddText("prop_9", "Test", changingString, null)
                 )
                 .CreatePreset("test_v1", "Test", presetBuilder => presetBuilder
                     .SetPropertyValue("prop_1", true)
