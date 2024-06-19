@@ -2,7 +2,7 @@
 using MCM.Common;
 
 using System;
-
+using HarmonyLib.BUTR.Extensions;
 using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
 
@@ -10,6 +10,16 @@ namespace MCMv5.Tests
 {
     public sealed class SubModule : MBSubModuleBase
     {
+        private class DropdownContainer
+        {
+            public Dropdown<string> Dropdown { get; set; } = new Dropdown<string>(new[]
+            {
+                "One",
+                "Two",
+                "Three",
+            }, 2);
+        }
+        
         private bool _boolValue;
         private int _intValue;
         private float _floatValue;
@@ -25,6 +35,25 @@ namespace MCMv5.Tests
         /// </summary>
         protected override void OnBeforeInitialModuleScreenSetAsRoot()
         {
+            var storageDropdownValue = new Dropdown<string>(new[]
+            {
+                "One",
+                "Two",
+                "Three",
+            }, 2);
+            var storageDropdown = new StorageRef<Dropdown<string>>(storageDropdownValue);
+            
+            var propertyDropdownValue = new DropdownContainer();
+            var propertyDropdown = new PropertyRef(SymbolExtensions2.GetPropertyInfo((DropdownContainer x) => x.Dropdown)!, propertyDropdownValue);
+            
+            var proxyDropdownValue = new Dropdown<string>(new[]
+            {
+                "One",
+                "Two",
+                "Three",
+            }, 2);
+            var proxyDropdown = new ProxyRef<Dropdown<string>>(() => proxyDropdownValue, o => proxyDropdownValue = o);
+            
             var builder = BaseSettingsBuilder.Create("Testing_Global_v5", "MCMv5 Testing Fluent Settings")!
                 .SetFormat("xml")
                 .SetFolderName(string.Empty)
@@ -42,7 +71,17 @@ namespace MCMv5.Tests
                 .CreateGroup("Testing 3", groupBuilder => groupBuilder
                     .AddText("prop_4", "Test", new ProxyRef<string>(() => _stringValue, o => _stringValue = o), null))
                 .CreateGroup("Testing 4", groupBuilder => groupBuilder
-                    .AddButton("prop_5", "Test2", new StorageRef((Action) (() => { })), "Test", null))
+                    .AddButton("prop_5", "Test", new StorageRef((Action) (() => { })), "Test", null))
+                .CreateGroup("Testing 5", groupBuilder => groupBuilder
+                    .AddDropdown("prop_6", "Test Storage Ref", storageDropdownValue.SelectedIndex, storageDropdown, null)
+                    .AddButton("prop_6_b", "Reset Storage Ref", new StorageRef((Action) (() => storageDropdownValue.SelectedIndex = 0)), "Reset Storage Ref", null)
+                    
+                    .AddDropdown("prop_7", "Test Property Ref", propertyDropdownValue.Dropdown.SelectedIndex, propertyDropdown, null)
+                    .AddButton("prop_7_b", "Reset Property Ref", new StorageRef((Action) (() => propertyDropdownValue.Dropdown.SelectedIndex = 0)), "Reset Property Ref", null)
+                    
+                    .AddDropdown("prop_8", "Test Proxy Ref", proxyDropdownValue.SelectedIndex, proxyDropdown, null)
+                    .AddButton("prop_8_b", "Reset Proxy Ref", new StorageRef((Action) (() => proxyDropdownValue.SelectedIndex = 0)), "Reset Proxy Ref", null)
+                )
                 .CreatePreset("test_v1", "Test", presetBuilder => presetBuilder
                     .SetPropertyValue("prop_1", true)
                     .SetPropertyValue("prop_2", 2)
