@@ -33,7 +33,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		..\.github\workflows\docfx.yml = ..\.github\workflows\docfx.yml
 		..\.github\workflows\dotnet-format-daily.yml = ..\.github\workflows\dotnet-format-daily.yml
 		..\.github\workflows\test-and-publish.yml = ..\.github\workflows\test-and-publish.yml
-		..\.github\workflows\verify-unex-data.yml = ..\.github\workflows\verify-unex-data.yml
+		..\.github\workflows\refresh-nexusmods-credentials.yml = ..\.github\workflows\refresh-nexusmods-credentials.yml
+		..\.github\workflows\verify-nexusmods-credentials.yml = ..\.github\workflows\verify-nexusmods-credentials.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{560DE987-D9C8-431C-A197-08C925905C24}"
