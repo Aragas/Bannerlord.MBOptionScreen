@@ -17,7 +17,7 @@ namespace MCM.Common
 # endif
     sealed class Dropdown<T> : List<T>, IEqualityComparer<Dropdown<T>>, INotifyPropertyChanged, ICloneable
     {
-        public static Dropdown<T> Empty => new(Enumerable.Empty<T>(), 0);
+        public static Dropdown<T> Empty => new([], 0);
 
         private int _selectedIndex;
         private T? _selectedValue;

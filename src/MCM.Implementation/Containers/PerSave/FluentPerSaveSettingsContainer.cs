@@ -87,6 +87,6 @@ namespace MCM.Implementation.PerSave
         public void GameEnded() => LoadedSettings.Clear();
 
         /// <inheritdoc />
-        public IEnumerable<UnavailableSetting> GetUnavailableSettings() => Enumerable.Empty<UnavailableSetting>();
+        public IEnumerable<UnavailableSetting> GetUnavailableSettings() => [];
     }
 }

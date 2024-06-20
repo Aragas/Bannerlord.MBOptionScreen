@@ -56,7 +56,7 @@ namespace MCM.Implementation.Global
                     }
                     catch (TypeLoadException ex)
                     {
-                        settings = Array.Empty<GlobalSettings>();
+                        settings = [];
                         logger.LogError(ex, $"Error while handling assembly {assembly}!");
                     }
 

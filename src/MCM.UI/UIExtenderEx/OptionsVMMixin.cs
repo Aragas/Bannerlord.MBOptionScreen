@@ -116,7 +116,7 @@ namespace MCM.UI.UIExtenderEx
         public OptionsVMMixin(OptionsVM vm) : base(vm)
         {
             vm.PropertyChanged += OptionsVM_PropertyChanged;
-            var list = _categories?.Invoke(vm) ?? new List<ViewModel>();
+            var list = _categories?.Invoke(vm) ?? [];
             list.Insert(5, _modOptions);
         }
 

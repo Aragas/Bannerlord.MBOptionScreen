@@ -24,14 +24,14 @@ namespace MCM.UI.GUI.ViewModels
         public SettingsDefinition SettingsDefinition { get; }
         public BaseSettings? SettingsInstance => BaseSettingsProvider.Instance?.GetSettings(SettingsDefinition.SettingsId);
 
-        public MCMSelectorVM<MCMSelectorItemVM<PresetKey>> PresetsSelector { get; } = new(Enumerable.Empty<MCMSelectorItemVM<PresetKey>>(), -1);
+        public MCMSelectorVM<MCMSelectorItemVM<PresetKey>> PresetsSelector { get; } = new([], -1);
 
         [DataSourceProperty]
         public string DisplayName { get => _displayName; private set => SetField(ref _displayName, value, nameof(DisplayName)); }
         [DataSourceProperty]
         public bool IsSelected { get => _isSelected; set => SetField(ref _isSelected, value, nameof(IsSelected)); }
         [DataSourceProperty]
-        public MBBindingList<SettingsPropertyGroupVM> SettingPropertyGroups { get; } = new();
+        public MBBindingList<SettingsPropertyGroupVM> SettingPropertyGroups { get; } = [];
 
         public SettingsVM(SettingsDefinition definition, ModOptionsVM mainView)
         {
@@ -49,7 +49,7 @@ namespace MCM.UI.GUI.ViewModels
         public void ReloadPresetList()
         {
             _cachedPresets.Clear();
-            foreach (var preset in SettingsInstance?.GetBuiltInPresets().Concat(SettingsInstance.GetExternalPresets()) ?? Enumerable.Empty<ISettingsPreset>())
+            foreach (var preset in SettingsInstance?.GetBuiltInPresets().Concat(SettingsInstance.GetExternalPresets()) ?? [])
                 _cachedPresets.Add(new PresetKey(preset), preset.LoadPreset());
 
             var presets = new List<PresetKey> { new("custom", "{=SettingsVM_Custom}Custom") }.Concat(_cachedPresets.Keys);

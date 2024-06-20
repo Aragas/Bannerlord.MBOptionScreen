@@ -119,7 +119,7 @@ namespace MCM.Implementation.PerSave
                 }
                 catch (TypeLoadException ex)
                 {
-                    settings = Array.Empty<PerSaveSettings>();
+                    settings = [];
                     _logger.LogError(ex, $"Error while handling assembly {assembly}!");
                 }
 

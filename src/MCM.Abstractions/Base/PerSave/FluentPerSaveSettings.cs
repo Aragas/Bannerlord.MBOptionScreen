@@ -56,7 +56,7 @@ namespace MCM.Abstractions.Base.PerSave
         public void Register()
         {
             // TODO: check
-            var containers = GenericServiceProvider.GetService<IEnumerable<IFluentPerSaveSettingsContainer>>() ?? Enumerable.Empty<IFluentPerSaveSettingsContainer>();
+            var containers = GenericServiceProvider.GetService<IEnumerable<IFluentPerSaveSettingsContainer>>() ?? [];
             foreach (var container in containers)
             {
                 container?.Register(this);
@@ -65,7 +65,7 @@ namespace MCM.Abstractions.Base.PerSave
         public void Unregister()
         {
             // TODO: check
-            var containers = GenericServiceProvider.GetService<IEnumerable<IFluentPerSaveSettingsContainer>>() ?? Enumerable.Empty<IFluentPerSaveSettingsContainer>();
+            var containers = GenericServiceProvider.GetService<IEnumerable<IFluentPerSaveSettingsContainer>>() ?? [];
             foreach (var container in containers)
             {
                 container?.Unregister(this);

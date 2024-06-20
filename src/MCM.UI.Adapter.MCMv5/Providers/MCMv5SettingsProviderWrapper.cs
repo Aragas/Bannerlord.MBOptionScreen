@@ -63,7 +63,7 @@ namespace MCM.UI.Adapter.MCMv5.Providers
         {
             var settings = GetSettings(settingsId);
             if (settings is not MCMv5AttributeSettingsWrapper or MCMv5FluentSettingsWrapper || settings is not IWrapper { Object: { } obj } || _methodGetPresetsDelegate is null)
-                return Enumerable.Empty<ISettingsPreset>();
+                return [];
 
             var type = obj.GetType();
             var presets = _methodGetPresetsDelegate.Invoke(settingsId).OfType<object>();
@@ -83,13 +83,13 @@ namespace MCM.UI.Adapter.MCMv5.Providers
             if (ReflectionUtils.ImplementsOrImplementsEquivalent(type, "MCM.Abstractions.Base.PerSave.PerSaveSettings"))
                 return presets.Select(x => new MCMv5AttributeSettingsPresetWrapper(x));
 
-            return Enumerable.Empty<ISettingsPreset>();
+            return [];
         }
 
-        public override IEnumerable<UnavailableSetting> GetUnavailableSettings() => Enumerable.Empty<UnavailableSetting>();
+        public override IEnumerable<UnavailableSetting> GetUnavailableSettings() => [];
 
-        public override IEnumerable<SettingSnapshot> SaveAvailableSnapshots() => Enumerable.Empty<SettingSnapshot>();
+        public override IEnumerable<SettingSnapshot> SaveAvailableSnapshots() => [];
 
-        public override IEnumerable<BaseSettings> LoadAvailableSnapshots(IEnumerable<SettingSnapshot> snapshots) => Enumerable.Empty<BaseSettings>();
+        public override IEnumerable<BaseSettings> LoadAvailableSnapshots(IEnumerable<SettingSnapshot> snapshots) => [];
     }
 }

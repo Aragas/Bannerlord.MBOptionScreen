@@ -147,7 +147,7 @@ namespace MCM.Implementation.PerCampaign
                 }
                 catch (TypeLoadException ex)
                 {
-                    settings = Array.Empty<PerCampaignSettings>();
+                    settings = [];
                     _logger.LogError(ex, $"Error while handling assembly {assembly}!");
                 }
 

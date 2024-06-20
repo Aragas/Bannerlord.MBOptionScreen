@@ -36,6 +36,6 @@ namespace MCM.Abstractions
             settings.GetSettingPropertyGroups().SelectMany(SettingsUtils.GetAllSettingPropertyGroupDefinitions);
 
         public static IEnumerable<ISettingsPreset> GetExternalPresets(this BaseSettings settings) =>
-            GenericServiceProvider.GetService<BaseSettingsProvider>()?.GetPresets(settings.Id) ?? Enumerable.Empty<ISettingsPreset>();
+            GenericServiceProvider.GetService<BaseSettingsProvider>()?.GetPresets(settings.Id) ?? [];
     }
 }

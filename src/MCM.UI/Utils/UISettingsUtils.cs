@@ -99,7 +99,7 @@ namespace MCM.UI.Utils
         {
             IEnumerable<object> enumerableObj => enumerableObj,
             IEnumerable enumerable => enumerable.Cast<object>(),
-            _ => Enumerable.Empty<object>()
+            _ => []
         };
     }
 }

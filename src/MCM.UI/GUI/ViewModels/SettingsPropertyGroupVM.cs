@@ -43,9 +43,9 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public string GroupNameDisplay { get => _groupNameDisplay; set => SetField(ref _groupNameDisplay, value, nameof(GroupNameDisplay)); }
         [DataSourceProperty]
-        public MBBindingList<SettingsPropertyVM> SettingProperties { get; } = new();
+        public MBBindingList<SettingsPropertyVM> SettingProperties { get; } = [];
         [DataSourceProperty]
-        public MBBindingList<SettingsPropertyGroupVM> SettingPropertyGroups { get; } = new();
+        public MBBindingList<SettingsPropertyGroupVM> SettingPropertyGroups { get; } = [];
         [DataSourceProperty]
         public bool GroupToggle
         {

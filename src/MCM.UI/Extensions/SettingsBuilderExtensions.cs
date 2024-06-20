@@ -87,7 +87,7 @@ namespace MCM.UI.Extensions
                 if (subSystemType.GetInterfaces().Any(x => x.IsGenericType && x.GetGenericTypeDefinition() == typeof(ISubSystemSettings<>)))
                 {
                     var method = AccessTools2.DeclaredMethod(typeof(SettingsBuilderExtensions), "AddForSubSystem")?.MakeGenericMethod(subSystemType);
-                    method?.Invoke(null, new object[] { subSystem, settings });
+                    method?.Invoke(null, [subSystem, settings]);
                 }
             }
             return settings;
