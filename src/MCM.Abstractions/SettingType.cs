@@ -6,7 +6,7 @@ namespace MCM.Abstractions
     /// Defines the different types of settings that can be used.
     /// </summary>
 #if !BANNERLORDMCM_PUBLIC
-        internal
+    internal
 #else
     public
 #endif

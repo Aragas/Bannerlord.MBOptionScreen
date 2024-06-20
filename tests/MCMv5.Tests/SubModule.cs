@@ -1,8 +1,10 @@
-﻿using MCM.Abstractions.FluentBuilder;
+﻿using HarmonyLib.BUTR.Extensions;
+
+using MCM.Abstractions.FluentBuilder;
 using MCM.Common;
 
 using System;
-using HarmonyLib.BUTR.Extensions;
+
 using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
 
@@ -19,7 +21,7 @@ namespace MCMv5.Tests
                 "Three",
             }, 2);
         }
-        
+
         private bool _boolValue;
         private int _intValue;
         private float _floatValue;
@@ -42,10 +44,10 @@ namespace MCMv5.Tests
                 "Three",
             }, 2);
             var storageDropdown = new StorageRef<Dropdown<string>>(storageDropdownValue);
-            
+
             var propertyDropdownValue = new DropdownContainer();
             var propertyDropdown = new PropertyRef(SymbolExtensions2.GetPropertyInfo((DropdownContainer x) => x.Dropdown)!, propertyDropdownValue);
-            
+
             var proxyDropdownValue = new Dropdown<string>(new[]
             {
                 "One",
@@ -67,7 +69,7 @@ namespace MCMv5.Tests
                         changingString.Value = "Selected Two ";
                 }
             };
-            
+
             var builder = BaseSettingsBuilder.Create("Testing_Global_v5", "MCMv5 Testing Fluent Settings")!
                 .SetFormat("xml")
                 .SetFolderName(string.Empty)
@@ -89,10 +91,10 @@ namespace MCMv5.Tests
                 .CreateGroup("Testing 5", groupBuilder => groupBuilder
                     .AddDropdown("prop_6", "Test Storage Ref", storageDropdownValue.SelectedIndex, storageDropdown, null)
                     .AddButton("prop_6_b", "Reset Storage Ref", new StorageRef((Action) (() => storageDropdownValue.SelectedIndex = 0)), "Reset Storage Ref", null)
-                    
+
                     .AddDropdown("prop_7", "Test Property Ref", propertyDropdownValue.Dropdown.SelectedIndex, propertyDropdown, null)
                     .AddButton("prop_7_b", "Reset Property Ref", new StorageRef((Action) (() => propertyDropdownValue.Dropdown.SelectedIndex = 0)), "Reset Property Ref", null)
-                    
+
                     .AddDropdown("prop_8", "Test Proxy Ref", proxyDropdownValue.SelectedIndex, proxyDropdown, null)
                     .AddButton("prop_8_b", "Reset Proxy Ref", new StorageRef((Action) (() => proxyDropdownValue.SelectedIndex = 0)), "Reset Proxy Ref", null)
                     .AddText("prop_9", "Test", changingString, null)

@@ -25,9 +25,9 @@ namespace MCM.Abstractions
 
         public static IEnumerable<SettingsPropertyGroupDefinition> GetUnsortedSettingPropertyGroups(this BaseSettings settings)
         {
-            var discoverers = GenericServiceProvider.GetService<IEnumerable<ISettingsPropertyDiscoverer>>() ?? Enumerable.Empty<ISettingsPropertyDiscoverer>();
+            var discoverers = GenericServiceProvider.GetService<IEnumerable<ISettingsPropertyDiscoverer>>() ?? [];
             var discoverer = discoverers.FirstOrDefault(x => x.DiscoveryTypes.Any(y => y == settings.DiscoveryType));
-            return SettingsUtils.GetSettingsPropertyGroups(settings.SubGroupDelimiter, discoverer?.GetProperties(settings) ?? Enumerable.Empty<ISettingsPropertyDefinition>());
+            return SettingsUtils.GetSettingsPropertyGroups(settings.SubGroupDelimiter, discoverer?.GetProperties(settings) ?? []);
         }
 
         public static IEnumerable<ISettingsPropertyDefinition> GetAllSettingPropertyDefinitions(this BaseSettings settings) =>

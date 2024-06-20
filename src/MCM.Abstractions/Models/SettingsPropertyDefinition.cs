@@ -22,7 +22,7 @@ namespace MCM.Abstractions
         /// <inheritdoc/>
         public IRef PropertyReference { get; }
         /// <inheritdoc/>
-        public SettingType SettingType { get; }
+        public SettingType SettingType { get; } = SettingType.NONE;
         /// <inheritdoc/>
         public string DisplayName { get; } = string.Empty;
         /// <inheritdoc/>

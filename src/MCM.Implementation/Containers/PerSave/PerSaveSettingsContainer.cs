@@ -136,7 +136,7 @@ namespace MCM.Implementation.PerSave
 
         public IEnumerable<UnavailableSetting> GetUnavailableSettings() => !_hasGameStarted
             ? GetPerSaveSettings().Select(setting => new UnavailableSetting(setting.Id, setting.DisplayName, UnavailableSettingType.PerSave))
-            : Enumerable.Empty<UnavailableSetting>();
+            : [];
 
         private void GameEnded()
         {
