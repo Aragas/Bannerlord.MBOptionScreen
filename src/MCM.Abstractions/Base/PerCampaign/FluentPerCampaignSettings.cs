@@ -56,7 +56,7 @@ namespace MCM.Abstractions.Base.PerCampaign
         public void Register()
         {
             // TODO: check
-            var containers = GenericServiceProvider.GetService<IEnumerable<IFluentPerCampaignSettingsContainer>>() ?? Enumerable.Empty<IFluentPerCampaignSettingsContainer>();
+            var containers = GenericServiceProvider.GetService<IEnumerable<IFluentPerCampaignSettingsContainer>>() ?? [];
             foreach (var container in containers)
             {
                 container?.Register(this);
@@ -65,7 +65,7 @@ namespace MCM.Abstractions.Base.PerCampaign
         public void Unregister()
         {
             // TODO: check
-            var containers = GenericServiceProvider.GetService<IEnumerable<IFluentPerCampaignSettingsContainer>>() ?? Enumerable.Empty<IFluentPerCampaignSettingsContainer>();
+            var containers = GenericServiceProvider.GetService<IEnumerable<IFluentPerCampaignSettingsContainer>>() ?? [];
             foreach (var container in containers)
             {
                 container?.Unregister(this);

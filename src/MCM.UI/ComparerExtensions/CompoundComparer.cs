@@ -17,7 +17,7 @@ namespace ComparerExtensions
 
         public CompoundComparer()
         {
-            _comparers = new List<IComparer<T>>();
+            _comparers = [];
         }
 
         public void AppendComparison(IComparer<T> comparer)

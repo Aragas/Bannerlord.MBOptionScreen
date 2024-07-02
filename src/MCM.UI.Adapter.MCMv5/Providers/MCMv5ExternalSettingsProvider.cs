@@ -14,7 +14,7 @@ namespace MCM.UI.Adapter.MCMv5.Providers
     internal sealed class MCMv5ExternalSettingsProvider : IExternalSettingsProvider, IExternalSettingsProviderHasInitialize
     {
         private readonly IBUTRLogger _logger;
-        private readonly List<MCMv5SettingsProviderWrapper> _settingsProviderWrappers = new();
+        private readonly List<MCMv5SettingsProviderWrapper> _settingsProviderWrappers = [];
 
         public IEnumerable<SettingsDefinition> SettingsDefinitions => _settingsProviderWrappers
             .SelectMany(x => x.SettingsDefinitions)

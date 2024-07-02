@@ -32,7 +32,7 @@ namespace MCM.UI.Adapter.MCMv5.Properties
 
             var del = _cache.GetOrAdd(obj.GetType(), static x => AccessTools2.GetPropertyGetterDelegate<GetSettingPropertyGroupsDelegate>(x, "SettingPropertyGroups"));
             var settingPropertyGroups = del?.Invoke(obj)?.Cast<object>()
-                .Select(x => new SettingsPropertyGroupDefinitionWrapper(x)).Cast<SettingsPropertyGroupDefinition>().ToList() ?? new List<SettingsPropertyGroupDefinition>();
+                .Select(x => new SettingsPropertyGroupDefinitionWrapper(x)).Cast<SettingsPropertyGroupDefinition>().ToList() ?? [];
 
             return settingPropertyGroups.SelectMany(SettingsUtils.GetAllSettingPropertyDefinitions);
         }

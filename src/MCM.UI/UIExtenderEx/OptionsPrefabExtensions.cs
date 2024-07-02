@@ -41,9 +41,6 @@ namespace MCM.UI.UIExtenderEx
     [PrefabExtension("Options", "descendant::Widget[@Id='DescriptionsRightPanel']", "Options")]
     internal sealed class OptionsPrefabExtension3 : PrefabExtensionSetAttributePatch
     {
-        public override List<Attribute> Attributes => new()
-        {
-            new Attribute("SuggestedWidth", "@DescriptionWidth")
-        };
+        public override List<Attribute> Attributes => [new Attribute("SuggestedWidth", "@DescriptionWidth")];
     }
 }

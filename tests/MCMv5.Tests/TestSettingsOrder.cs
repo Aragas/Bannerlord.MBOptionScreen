@@ -77,5 +77,41 @@ namespace MCMv5.Tests
         [SettingPropertyBool("E")]
         [SettingPropertyGroup("Group Order/E", GroupOrder = 4)]
         public bool SubGroup_E { get; set; } = true;
+
+
+        [SettingPropertyGroupMetadata]
+        [SettingPropertyGroup("GroupA", GroupOrder = 11)]
+        public object GroupAMetadata { get; set; } = new();
+        [SettingPropertyBool("A")]
+        [SettingPropertyGroup("GroupA/X")]
+        public bool GroupANestedProperty { get; set; } = true;
+
+        [SettingPropertyGroupMetadata]
+        [SettingPropertyGroup("GroupB", GroupOrder = 13)]
+        public object GroupBMetadata { get; set; } = new();
+        [SettingPropertyBool("B")]
+        [SettingPropertyGroup("GroupB/X")]
+        public bool GroupBNestedProperty { get; set; } = true;
+
+        [SettingPropertyGroupMetadata]
+        [SettingPropertyGroup("GroupC", GroupOrder = 12)]
+        public object GroupCMetadata { get; set; } = new();
+        [SettingPropertyBool("C")]
+        [SettingPropertyGroup("GroupC/X")]
+        public bool GroupCNestedProperty { get; set; } = true;
+
+        [SettingPropertyGroupMetadata]
+        [SettingPropertyGroup("GroupD", GroupOrder = 15)]
+        public object GroupDMetadata { get; set; } = new();
+        [SettingPropertyBool("D")]
+        [SettingPropertyGroup("GroupD/X")]
+        public bool GroupDNestedProperty { get; set; } = true;
+
+        [SettingPropertyGroupMetadata]
+        [SettingPropertyGroup("GroupE", GroupOrder = 14)]
+        public object GroupEMetadata { get; set; } = new();
+        [SettingPropertyBool("E")]
+        [SettingPropertyGroup("GroupE/X")]
+        public bool GroupENestedProperty { get; set; } = true;
     }
 }

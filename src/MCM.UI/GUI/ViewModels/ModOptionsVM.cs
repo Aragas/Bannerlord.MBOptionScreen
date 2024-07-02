@@ -74,7 +74,7 @@ namespace MCM.UI.GUI.ViewModels
                         }
                         else
                         {
-                            PresetsSelectorCopy.Refresh(Enumerable.Empty<PresetKey>(), -1);
+                            PresetsSelectorCopy.Refresh([], -1);
                         }
                     });
                     OnPropertyChanged(nameof(IsPresetsSelectorVisible));
@@ -98,7 +98,7 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public string ModsText { get => _modsText; set => SetField(ref _modsText, value, nameof(ModsText)); }
         [DataSourceProperty]
-        public MBBindingList<SettingsEntryVM> ModSettingsList { get; } = new();
+        public MBBindingList<SettingsEntryVM> ModSettingsList { get; } = [];
         [DataSourceProperty]
         public SettingsVM? SelectedMod => SelectedEntry?.SettingsVM;
         [DataSourceProperty]
@@ -188,7 +188,7 @@ namespace MCM.UI.GUI.ViewModels
                             })
                             .Where(vm => vm is not null);
 
-                        foreach (var viewModel in settingsVM ?? Enumerable.Empty<SettingsVM>())
+                        foreach (var viewModel in settingsVM ?? [])
                         {
                             uiContext.Send(state =>
                             {
@@ -201,7 +201,7 @@ namespace MCM.UI.GUI.ViewModels
                         }
 
                         // TODO: We are not able to show Fluent PerSave/Campaign settings this way. For now, don't use it
-                        //foreach (var unavailableSetting in BaseSettingsProvider.Instance?.GetUnavailableSettings() ?? Enumerable.Empty<UnavailableSetting>())
+                        //foreach (var unavailableSetting in BaseSettingsProvider.Instance?.GetUnavailableSettings() ?? [])
                         //    ModSettingsList.Add(new SettingsEntryVM(unavailableSetting, ExecuteSelect));
 
                         // Yea, I imported a whole library that converts LINQ style order to IComparer
@@ -653,7 +653,7 @@ namespace MCM.UI.GUI.ViewModels
                         snapshots.Add(new SettingSnapshot(entry.FullName, reader.ReadToEnd()));
                     }
 
-                    foreach (var settings in BaseSettingsProvider.Instance?.LoadAvailableSnapshots(snapshots) ?? Enumerable.Empty<BaseSettings>())
+                    foreach (var settings in BaseSettingsProvider.Instance?.LoadAvailableSnapshots(snapshots) ?? [])
                     {
                         if (ModSettingsList.FirstOrDefault(x => x.Id == settings.Id) is not { SettingsVM: { SettingsInstance: { } current } viewModel }) continue;
                         UISettingsUtils.OverrideValues(viewModel.URS, current, settings);
@@ -677,7 +677,7 @@ namespace MCM.UI.GUI.ViewModels
                 };
                 if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    var snapshots = BaseSettingsProvider.Instance?.SaveAvailableSnapshots() ?? Enumerable.Empty<SettingSnapshot>();
+                    var snapshots = BaseSettingsProvider.Instance?.SaveAvailableSnapshots() ?? [];
                     using var file = File.Create(dialog.FileName);
                     using var archive = new ZipArchive(file, ZipArchiveMode.Create);
                     foreach (var snapshot in snapshots)
@@ -710,11 +710,10 @@ namespace MCM.UI.GUI.ViewModels
 
             MBInformationManager.ShowMultiSelectionInquiry(InquiryDataUtils.CreateMultiTranslatable(
                 "{=ModOptionsVM_ManagePacks}Manage Settings Packs", "",
-                new List<InquiryElement>
-                {
+                [
                     new(importPack, new TextObject("{=ModOptionsVM_ManagePackImport}Import a Settings Pack").ToString(), null),
-                    new(exportPack, new TextObject("{=ModOptionsVM_ManagePackExport}Export Settings Pack").ToString(), null),
-                },
+                    new(exportPack, new TextObject("{=ModOptionsVM_ManagePackExport}Export Settings Pack").ToString(), null)
+                ],
                 true,
                 1, 1,
                 "{=5Unqsx3N}Confirm",

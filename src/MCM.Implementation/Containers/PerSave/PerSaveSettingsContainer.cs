@@ -119,7 +119,7 @@ namespace MCM.Implementation.PerSave
                 }
                 catch (TypeLoadException ex)
                 {
-                    settings = Array.Empty<PerSaveSettings>();
+                    settings = [];
                     _logger.LogError(ex, $"Error while handling assembly {assembly}!");
                 }
 
@@ -136,7 +136,7 @@ namespace MCM.Implementation.PerSave
 
         public IEnumerable<UnavailableSetting> GetUnavailableSettings() => !_hasGameStarted
             ? GetPerSaveSettings().Select(setting => new UnavailableSetting(setting.Id, setting.DisplayName, UnavailableSettingType.PerSave))
-            : Enumerable.Empty<UnavailableSetting>();
+            : [];
 
         private void GameEnded()
         {

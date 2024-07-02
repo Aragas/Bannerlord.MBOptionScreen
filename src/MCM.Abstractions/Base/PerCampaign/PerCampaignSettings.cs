@@ -25,7 +25,7 @@ namespace MCM.Abstractions.Base.PerCampaign
                 return BaseSettingsProvider.Instance?.GetSettings(Cache[typeof(T)]) as T;
             }
         }
-        
+
         /*
         /// <summary>
         /// A modder flriendly way to get settings from any place

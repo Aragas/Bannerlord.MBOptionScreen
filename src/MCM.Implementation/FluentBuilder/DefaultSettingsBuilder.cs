@@ -5,6 +5,7 @@ using MCM.Abstractions.Base.PerCampaign;
 using MCM.Abstractions.Base.PerSave;
 using MCM.Abstractions.FluentBuilder;
 using MCM.Abstractions.Wrapper;
+using MCM.Common;
 
 using System;
 using System.Collections.Generic;
@@ -127,10 +128,17 @@ namespace MCM.Implementation.FluentBuilder
         {
             foreach (var settingsPropertyGroup in PropertyGroups.Values)
             {
+                var groupDefinition = settingsPropertyGroup.GetPropertyGroupDefinition();
+
+                yield return new SettingsPropertyDefinition([new PropertyDefinitionGroupMetadataWrapper(new { DisplayName = "", Order = 0, RequireRestart = false, HintText = "" })],
+                    new PropertyGroupDefinitionWrapper(groupDefinition),
+                    new StorageRef<object>(new()),
+                    SubGroupDelimiter);
+
                 foreach (var settingsProperty in settingsPropertyGroup.Properties.Values)
                 {
                     yield return new SettingsPropertyDefinition(settingsProperty.GetDefinitions(),
-                        new PropertyGroupDefinitionWrapper(settingsPropertyGroup.GetPropertyGroupDefinition()),
+                        new PropertyGroupDefinitionWrapper(groupDefinition),
                         settingsProperty.PropertyReference,
                         SubGroupDelimiter);
                 }

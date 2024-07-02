@@ -21,7 +21,7 @@ namespace MCM.UI.Adapter.MCMv5
         private static void OnAfterSetInitialModuleScreenAsRootScreen()
         {
             var enumerable = GenericServiceProvider.GetService<IEnumerable<IExternalSettingsProvider>>()?.OfType<IExternalSettingsProviderHasInitialize>() ??
-                             Enumerable.Empty<IExternalSettingsProviderHasInitialize>();
+                             [];
 
             foreach (var hasInitialize in enumerable)
                 hasInitialize.Initialize();

@@ -337,6 +337,10 @@ namespace MCM.Abstractions
             propAttr = properties.SingleOrDefault(a => a is IPropertyDefinitionButton);
             if (propAttr is not null)
                 yield return new PropertyDefinitionButtonWrapper(propAttr);
+
+            propAttr = properties.SingleOrDefault(a => a is IPropertyDefinitionGroupMetadata);
+            if (propAttr is not null)
+                yield return new PropertyDefinitionGroupMetadataWrapper(propAttr);
         }
     }
 }

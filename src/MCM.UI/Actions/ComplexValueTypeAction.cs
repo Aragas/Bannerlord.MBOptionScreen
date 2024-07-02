@@ -15,17 +15,6 @@ namespace MCM.UI.Actions
         /// <summary>
         /// new ProxyRef(() => ValueType, o => ValueType = o)
         /// </summary>
-        [Obsolete("Use the nullable overload instead!", true)]
-        public ComplexValueTypeAction(IRef context, Func<T, T> doFunction, Func<T, T> undoFunction)
-        {
-            Context = context;
-            DoFunction = (obj) => obj;
-            UndoFunction = (obj) => obj;
-        }
-
-        /// <summary>
-        /// new ProxyRef(() => ValueType, o => ValueType = o)
-        /// </summary>
         public ComplexValueTypeAction(IRef context, Func<T?, T?> doFunction, Func<T?, T?> undoFunction)
         {
             Context = context;

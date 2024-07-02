@@ -26,7 +26,7 @@ namespace MCM.UI.Dropdown
         private bool _hasSingleItem;
 
         [DataSourceProperty]
-        public MBBindingList<TSelectorItemVM> ItemList { get; } = new();
+        public MBBindingList<TSelectorItemVM> ItemList { get; } = [];
 
         [DataSourceProperty]
         public int SelectedIndex

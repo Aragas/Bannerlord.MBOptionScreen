@@ -60,7 +60,7 @@ namespace MCM.Internal.GameFeatures
             var file = new TWPlatformFilePath(new TWPlatformDirectoryPath((PlatformFileType) directory.Type, directory.Path), fileName);
             if (!PlatformFileHelper.FileExists(file))
             {
-                PlatformFileHelper.SaveFile(file, Array.Empty<byte>());
+                PlatformFileHelper.SaveFile(file, []);
             }
             return new GameFile(directory, fileName);
         }

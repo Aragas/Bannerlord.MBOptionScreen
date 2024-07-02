@@ -43,9 +43,9 @@ namespace MCM.UI.GUI.ViewModels
         [DataSourceProperty]
         public string GroupNameDisplay { get => _groupNameDisplay; set => SetField(ref _groupNameDisplay, value, nameof(GroupNameDisplay)); }
         [DataSourceProperty]
-        public MBBindingList<SettingsPropertyVM> SettingProperties { get; } = new();
+        public MBBindingList<SettingsPropertyVM> SettingProperties { get; } = [];
         [DataSourceProperty]
-        public MBBindingList<SettingsPropertyGroupVM> SettingPropertyGroups { get; } = new();
+        public MBBindingList<SettingsPropertyGroupVM> SettingPropertyGroups { get; } = [];
         [DataSourceProperty]
         public bool GroupToggle
         {
@@ -114,8 +114,8 @@ namespace MCM.UI.GUI.ViewModels
             SettingPropertyGroupDefinition = definition;
             ParentGroup = parentGroup;
 
-            AddRange(SettingPropertyGroupDefinition.SettingProperties);
-            SettingPropertyGroups.AddRange(SettingPropertyGroupDefinition.SubGroups.Select(x => new SettingsPropertyGroupVM(x, SettingsVM, this)));
+            AddRange(SettingPropertyGroupDefinition.SettingProperties.Where(x => x.SettingType != SettingType.NONE));
+            SettingPropertyGroups.AddRange(SettingPropertyGroupDefinition.SubGroups.Where(x => !x.IsEmpty).Select(x => new SettingsPropertyGroupVM(x, SettingsVM, this)));
 
             RefreshValues();
         }

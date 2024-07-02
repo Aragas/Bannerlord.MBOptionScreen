@@ -10,6 +10,7 @@
     <DefineConstants>$(DefineConstants)</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

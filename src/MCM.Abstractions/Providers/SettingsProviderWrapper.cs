@@ -34,7 +34,7 @@ namespace MCM.Abstractions
         private readonly ResetSettingsDelegate? _methodResetSettingsDelegate;
 
         public override IEnumerable<SettingsDefinition> SettingsDefinitions =>
-            _methodGetSettingsDefinitions?.Invoke().Cast<object>().Select(x => new SettingsDefinitionWrapper(x)) ?? Enumerable.Empty<SettingsDefinition>();
+            _methodGetSettingsDefinitions?.Invoke().Cast<object>().Select(x => new SettingsDefinitionWrapper(x)) ?? [];
 
         /// <inheritdoc />
         public object Object { get; }

@@ -117,6 +117,12 @@ You can order properties via the [``Order``](xref:MCM.Abstractions.Attributes.Ba
 [SettingPropertyText("Setting Name", Order = 6)]
 public string SettingVariableName { get; set; } = "The textbox data is here";
 ```
+If your group is empty (there are no properties that could indicate the group's order), you can use xref:MCM.Abstractions.Attributes.SettingPropertyGroupAttribute to order the group
+```csharp
+[SettingPropertyGroupMetadata]
+[SettingPropertyGroup("EmptyGroup", GroupOrder = 3)]
+public object EmptyGroupMetadata { get; set; } = new();
+```
 
 #### Require Restart
 You can the game to restart when the property changes via the [``RequireRestart``](xref:MCM.Abstractions.Attributes.BaseSettingPropertyAttribute#collapsible-MCM_Abstractions_Attributes_BaseSettingPropertyAttribute_RequireRestart) attribute property

@@ -22,7 +22,7 @@ namespace MCM.Abstractions
 
             var settings = BaseSettingsProvider.Instance?.GetSettings(id);
             DisplayName = settings?.DisplayName ?? "ERROR";
-            SettingPropertyGroups = settings?.GetSettingPropertyGroups() ?? new List<SettingsPropertyGroupDefinition>();
+            SettingPropertyGroups = settings?.GetSettingPropertyGroups() ?? [];
         }
 
         public SettingsDefinition(string id, string displayName, List<SettingsPropertyGroupDefinition> settingsPropertyGroups)
