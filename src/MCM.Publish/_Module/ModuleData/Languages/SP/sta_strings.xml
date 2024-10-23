@@ -6,13 +6,13 @@
   <strings>
     <string id="MCMSettings_Name" text="Mod Configuration Menu {VERSION}"/>
     <string id="BaseSettings_Default" text="Por defecto"/>
-    <string id="SettingsPropertyGroupDefinition_Misc" text="Miscalínea"/>
+    <string id="SettingsPropertyGroupDefinition_Misc" text="Miscelánea"/>
     <!-- UI -->
     <string id="dzeWx4xSfR" text="¡Advertencia de MCM!"/>
     <string id="FE6ya1gzZR" text="¡{REQUIRED_MODULE} módulo no fue encontrado!"/>
     <string id="EvI6KPAqTT" text="¡Módulo incompatible {DENIED_MODULE} fue encontrado!"/>
-    <string id="5G9zffrgMh" text="¡{MODULE} está cargado antes de {DEPENDENT_MODULE}!{NL}¡Asegúrate de que {MODULE} está cargado después!"/>
-    <string id="UZ8zfvudMs" text="¡{MODULE} está cargado después de {DEPENDENT_MODULE}!{NL}¡Asegúrate de que {MODULE} está cargado antes!"/>
+    <string id="5G9zffrgMh" text="¡{MODULE} es cargado antes de {DEPENDENT_MODULE}!{NL}¡Asegúrate de que {MODULE} es cargado después!"/>
+    <string id="UZ8zfvudMs" text="¡{MODULE} es cargado después de {DEPENDENT_MODULE}!{NL}¡Asegúrate de que {MODULE} es cargado antes!"/>
     <string id="FcR4BXnhx8" text="¡{MODULE} tiene directivas de orden de mod mutuamente excluyentes especificadas para {REQUIRED_MODULE}!"/>
     <string id="eXs6FLm5DP" text="Se recomienda encarecidamente terminar el juego ahora. ¿Quieres terminarlo?"/>
     <string id="fGt6Gthg5y" text="¡Esta versión de MCM está destinada para v1.0.0 y superiores! ¡Estás ejecutando {GAMEVERSION}!"/>
@@ -39,7 +39,7 @@
     <string id="ButterLibSettings_Name_LogLevelDesc" text="Nivel de registros a escribir."/>
 
     <string id="ModOptionsVM_SaveAsPreset" text="Guardar como preajuste"/>
-    <string id="ModOptionsVM_SaveAsPresetDesc" text="Elegir el nombre del preajuste"/>
+    <string id="ModOptionsVM_SaveAsPresetDesc" text="Elige el nombre del preajuste"/>
     <string id="ModOptionsVM_OverridePreset" text="El preajuste ya existe"/>
     <string id="ModOptionsVM_OverridePresetDesc" text="¡El preajuste ya existe! ¿Quieres sustituirlo?"/>
     <string id="ModOptionsVM_ManagePresets" text="Administrar preajustes"/>
@@ -50,6 +50,6 @@
     <string id="ModOptionsVM_Unavailable" text="¡Los ajustes están disponibles en una Sesión de juego!"/>
     <string id="ModOptionsVM_ManagePacks" text="Administrar paquetes de ajustes"/>
     <string id="ModOptionsVM_ManagePackImport" text="Importar un paquete de ajustes"/>
-    <string id="ModOptionsVM_ManagePackExport" text="Exportar un paquete de ajustes"/>
+    <string id="ModOptionsVM_ManagePackExport" text="Exportar paquete de ajustes"/>
   </strings>
 </base>
