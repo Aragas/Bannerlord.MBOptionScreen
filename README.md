@@ -14,10 +14,11 @@
   <a href="https://www.nuget.org/packages/Bannerlord.MCM" alt="NuGet Bannerlord.MCM"><img src="https://img.shields.io/nuget/v/Bannerlord.MCM.svg?label=NuGet%20Bannerlord.MCM&colorB=blue" /></a>
   <br>
   <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="NexusMods Mod Configuration Menu"><img src="https://img.shields.io/badge/NexusMods-Mod%20Configuration%20Menu-yellow.svg" /></a>
-  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="NexusMods Mod Configuration Menu"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-version-pzk4e0ejol6j.runkit.sh%3FgameId%3Dmountandblade2bannerlord%26modId%3D612" /></a>
-  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="NexusMods Mod Configuration Menu"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dunique%26gameId%3D3174%26modId%3D612" /></a>
-  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="NexusMods Mod Configuration Menu"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dtotal%26gameId%3D3174%26modId%3D612" /></a>
-  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" alt="NexusMods Mod Configuration Menu"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnexusmods-downloads-ayuqql60xfxb.runkit.sh%2F%3Ftype%3Dviews%26gameId%3D3174%26modId%3D612" /></a>
+
+  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" ><img alt="NexusMods Mod Configuration Menu" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnmstats.butr.link%2Fmod-version%3FgameId%3D3174%26modId%3D612" /></a>
+  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" ><img alt="NexusMods Mod Configuration Menu" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnmstats.butr.link%2Fdownloads%3Ftype%3Dunique%26gameId%3D3174%26modId%3D612" /></a>
+  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" ><img alt="NexusMods Mod Configuration Menu" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnmstats.butr.link%2Fdownloads%3Ftype%3Dtotal%26gameId%3D3174%26modId%3D612" /></a>
+  <a converter_ignore href="https://www.nexusmods.com/mountandblade2bannerlord/mods/612" ><img alt="NexusMods Mod Configuration Menu" src="https://img.shields.io/endpoint?url=https%3A%2F%2Fnmstats.butr.link%2Fdownloads%3Ftype%3Dviews%26gameId%3D3174%26modId%3D612" /></a>
   <br converter_ignore>
   <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2859238197"><img alt="Steam Mod Configuration Menu" src="https://img.shields.io/badge/Steam-Mod%20Configuration%20Menu-blue.svg" /></a>
   <a href="https://steamcommunity.com/sharedfiles/filedetails/?id=2859238197"><img alt="Steam Downloads" src="https://img.shields.io/steam/downloads/2859238197?label=Downloads&color=blue"></a>
