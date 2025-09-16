@@ -160,6 +160,7 @@ jobs:
   publish-on-nexusmods:
     needs: ["build-module"]
     uses: BUTR/workflows/.github/workflows/release-nexusmods.yml@master
+    if: false
     with:
       nexusmods_game_id: mountandblade2bannerlord
       nexusmods_mod_id: 612
@@ -177,6 +178,7 @@ jobs:
   publish-on-steam:
     needs: ["build-module"]
     uses: BUTR/workflows/.github/workflows/release-steam.yml@master
+    if: false
     with:
       workshop_id: 2859238197
       mod_id: Bannerlord.MBOptionScreen
