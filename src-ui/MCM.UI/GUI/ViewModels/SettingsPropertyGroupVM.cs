@@ -114,8 +114,8 @@ internal sealed class SettingsPropertyGroupVM : ViewModel
         SettingPropertyGroupDefinition = definition;
         ParentGroup = parentGroup;
 
-        AddRange(SettingPropertyGroupDefinition.SettingProperties.Where(x => x.SettingType != SettingType.NONE));
-        SettingPropertyGroups.AddRange(SettingPropertyGroupDefinition.SubGroups.Where(x => !x.IsEmpty).Select(x => new SettingsPropertyGroupVM(x, SettingsVM, this)));
+        AddRange(SettingPropertyGroupDefinition.SettingProperties);
+        SettingPropertyGroups.AddRange(SettingPropertyGroupDefinition.SubGroups.Select(x => new SettingsPropertyGroupVM(x, SettingsVM, this)));
 
         RefreshValues();
     }

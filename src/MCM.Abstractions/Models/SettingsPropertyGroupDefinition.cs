@@ -1,7 +1,7 @@
 ﻿using MCM.Common;
 
+using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MCM.Abstractions
 {
@@ -52,13 +52,18 @@ namespace MCM.Abstractions
             }
         }
 
-        public int Order { get; private set; }
+        public int Order { get; }
         public IEnumerable<SettingsPropertyGroupDefinition> SubGroups => subGroups.SortDefault();
         public IEnumerable<ISettingsPropertyDefinition> SettingProperties => settingProperties.SortDefault();
 
-        public bool IsEmpty => !SubGroups.Any() && SettingProperties.All(x => x.SettingType == SettingType.NONE);
-
         public SettingsPropertyGroupDefinition(string groupName, int order = -1)
+        {
+            _groupNameRaw = groupName;
+            Order = order;
+        }
+
+        [Obsolete("Override not needed", true)]
+        public SettingsPropertyGroupDefinition(string groupName, string? _, int order = -1)
         {
             _groupNameRaw = groupName;
             Order = order;
@@ -86,6 +91,8 @@ namespace MCM.Abstractions
         }
 
         public SettingsPropertyGroupDefinition? GetGroup(string groupName) => subGroups.GetGroupFromName(groupName);
+        [Obsolete("Use GetGroup", true)]
+        public SettingsPropertyGroupDefinition? GetGroupFor(string groupName) => subGroups.GetGroupFromName(groupName);
 
         /// <inheritdoc/>
         public override string ToString() => GroupName;

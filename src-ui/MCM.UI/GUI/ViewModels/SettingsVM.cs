@@ -41,7 +41,7 @@ internal sealed class SettingsVM : ViewModel
         ReloadPresetList();
 
         if (SettingsInstance is not null)
-            SettingPropertyGroups.AddRange(SettingPropertyDefinitionCache.GetSettingPropertyGroups(SettingsInstance).Where(x => !x.IsEmpty).Select(x => new SettingsPropertyGroupVM(x, this)));
+            SettingPropertyGroups.AddRange(SettingPropertyDefinitionCache.GetSettingPropertyGroups(SettingsInstance).Select(x => new SettingsPropertyGroupVM(x, this)));
 
         RefreshValues();
     }
