@@ -148,14 +148,6 @@ Global
 		{9C153762-291C-455F-9AD4-9B69BFC6D168}.Stable_Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9C153762-291C-455F-9AD4-9B69BFC6D168}.Stable_Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9C153762-291C-455F-9AD4-9B69BFC6D168}.Stable_Release|Any CPU.Build.0 = Release|Any CPU
-		{4FB8391D-F3E6-4D66-B837-A8CCFE11E25D}.Beta_Debug|Any CPU.ActiveCfg = Beta_Debug|Any CPU
-		{4FB8391D-F3E6-4D66-B837-A8CCFE11E25D}.Beta_Debug|Any CPU.Build.0 = Beta_Debug|Any CPU
-		{4FB8391D-F3E6-4D66-B837-A8CCFE11E25D}.Beta_Release|Any CPU.ActiveCfg = Beta_Release|Any CPU
-		{4FB8391D-F3E6-4D66-B837-A8CCFE11E25D}.Beta_Release|Any CPU.Build.0 = Beta_Release|Any CPU
-		{4FB8391D-F3E6-4D66-B837-A8CCFE11E25D}.Stable_Debug|Any CPU.ActiveCfg = Stable_Debug|Any CPU
-		{4FB8391D-F3E6-4D66-B837-A8CCFE11E25D}.Stable_Debug|Any CPU.Build.0 = Stable_Debug|Any CPU
-		{4FB8391D-F3E6-4D66-B837-A8CCFE11E25D}.Stable_Release|Any CPU.ActiveCfg = Stable_Release|Any CPU
-		{4FB8391D-F3E6-4D66-B837-A8CCFE11E25D}.Stable_Release|Any CPU.Build.0 = Stable_Release|Any CPU
 		{46BB9EFE-E887-4AC8-9D0F-8A5BE286EE89}.Beta_Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{46BB9EFE-E887-4AC8-9D0F-8A5BE286EE89}.Beta_Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46BB9EFE-E887-4AC8-9D0F-8A5BE286EE89}.Stable_Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -220,6 +212,14 @@ Global
 		{C52EE8B7-2808-4FAA-BEF5-2B01878BFBFE}.Stable_Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C52EE8B7-2808-4FAA-BEF5-2B01878BFBFE}.Stable_Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C52EE8B7-2808-4FAA-BEF5-2B01878BFBFE}.Stable_Release|Any CPU.Build.0 = Release|Any CPU
+		{4FB8391D-F3E6-4D66-B837-A8CCFE11E25D}.Beta_Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FB8391D-F3E6-4D66-B837-A8CCFE11E25D}.Beta_Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FB8391D-F3E6-4D66-B837-A8CCFE11E25D}.Beta_Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FB8391D-F3E6-4D66-B837-A8CCFE11E25D}.Beta_Release|Any CPU.Build.0 = Release|Any CPU
+		{4FB8391D-F3E6-4D66-B837-A8CCFE11E25D}.Stable_Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FB8391D-F3E6-4D66-B837-A8CCFE11E25D}.Stable_Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FB8391D-F3E6-4D66-B837-A8CCFE11E25D}.Stable_Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FB8391D-F3E6-4D66-B837-A8CCFE11E25D}.Stable_Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -3,7 +3,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net472;net6</TargetFrameworks>
-    <Configurations>Stable_Debug;Beta_Debug;Stable_Release;Beta_Release</Configurations>
+    <Configurations>Debug;Release</Configurations>
 
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
@@ -37,7 +37,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\MCM.UI\MCM.UI.csproj" Aliases="UI" />
     <ProjectReference Include="..\..\src\MCM\MCM.csproj" Aliases="v5" />
   </ItemGroup>
 

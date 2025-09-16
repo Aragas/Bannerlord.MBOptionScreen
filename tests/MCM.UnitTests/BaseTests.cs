@@ -1,5 +1,4 @@
-﻿extern alias UI;
-extern alias v5;
+﻿extern alias v5;
 
 using NSubstitute;
 

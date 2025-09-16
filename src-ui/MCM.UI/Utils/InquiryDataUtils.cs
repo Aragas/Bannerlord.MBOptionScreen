@@ -54,17 +54,6 @@ namespace MCM.UI.Utils
                 affirmativeAction,
                 negativeAction);
 #endif
-            /*
-            if (V1Multi is not null)
-
-            if (V2Multi is not null)
-                return V2Multi(titleText, descriptionText, inquiryElements, isExitShown, minSelectableOptionCount, maxSelectableOptionCount, affirmativeText, negativeText, affirmativeAction, negativeAction);
-
-            if (V3Multi is not null)
-                return V3Multi(titleText, descriptionText, inquiryElements, isExitShown, minSelectableOptionCount, maxSelectableOptionCount, affirmativeText, negativeText, affirmativeAction, negativeAction);
-
-            return null;
-            */
         }
 
         public static MultiSelectionInquiryData? CreateMultiTranslatable(string titleText, string descriptionText, List<InquiryElement> inquiryElements, bool isExitShown, int minSelectableOptionCount, int maxSelectableOptionCount, string affirmativeText, string negativeText, Action<List<InquiryElement>> affirmativeAction, Action<List<InquiryElement>> negativeAction) =>
