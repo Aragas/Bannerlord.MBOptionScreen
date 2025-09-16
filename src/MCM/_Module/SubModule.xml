@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Module xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/SubModule.xsd" >
+  <Id value="$moduleid$" />
+  <Name value="$modulename$" />
+  <Version value="v$version$" />
+  <DefaultModule value="false" />
+  <ModuleCategory value="Singleplayer"/>
+  <ModuleType value="Community" />
+  <Url value="$moduleurl$" />
+  <UpdateInfo value="NexusMods:612" />
+  <DependedModules>
+    <DependedModule Id="Bannerlord.Harmony" DependentVersion="v$harmonyversion$" />
+  </DependedModules>
+  <!-- They are all treated as optional by Vanilla -->
+  <ModulesToLoadAfterThis>
+    <Module Id="Native" />
+    <Module Id="SandBoxCore" />
+    <Module Id="Sandbox" />
+    <Module Id="StoryMode" />
+    <Module Id="CustomBattle" />
+  </ModulesToLoadAfterThis>
+  <!-- Community Metadata -->
+  <DependedModuleMetadatas>
+    <DependedModuleMetadata id="Bannerlord.Harmony" order="LoadBeforeThis" version="v$harmonyversion$" />
+
+    <DependedModuleMetadata id="Native" order="LoadAfterThis" version="$gameversion$.*" />
+    <DependedModuleMetadata id="SandBoxCore" order="LoadAfterThis" version="$gameversion$.*" optional="true" />
+    <DependedModuleMetadata id="Sandbox" order="LoadAfterThis" version="$gameversion$.*" optional="true" />
+    <DependedModuleMetadata id="StoryMode" order="LoadAfterThis" version="$gameversion$.*" optional="true" />
+    <DependedModuleMetadata id="CustomBattle" order="LoadAfterThis" version="$gameversion$.*" optional="true" />
+
+    </DependedModuleMetadatas>
+  <!-- Community Metadata -->
+  <SubModules>
+    <!--Abstraction -->
+    <SubModule>
+      <Name value="MCMv5" />
+      <DLLName value="MCMv5.dll" />
+      <SubModuleClassType value="MCM.MCMSubModule" />
+      <Assemblies/>
+      <Tags />
+    </SubModule>
+    <!--Builtin SubModule -->
+    <SubModule>
+      <Name value="MCMv5 Basic Implementation" />
+      <DLLName value="MCMv5.dll" />
+      <SubModuleClassType value="MCM.Internal.MCMImplementationSubModule" />
+      <Assemblies/>
+      <Tags />
+    </SubModule>
+  </SubModules>
+</Module>

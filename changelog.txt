@@ -1,7 +1,9 @@
 ---------------------------------------------------------------------------------------------------
-Version: 5.10.2
-Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4,v1.1.5,v1.1.6,v1.2.x
-* Added the ability to set group order of empty groups
+Version: 5.11.0
+Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.0
+* BETA RELEASE
+* Added support for v1.3.0
+* Added UI as a separate module
 ---------------------------------------------------------------------------------------------------
 Version: 5.10.1
 Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4,v1.1.5,v1.1.6,v1.2.x

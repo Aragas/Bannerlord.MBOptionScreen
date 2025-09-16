@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Module xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/SubModule.xsd" >
+  <Id value="$moduleid$" />
+  <Name value="$modulename$" />
+  <Version value="v$version$" />
+  <DefaultModule value="false" />
+  <ModuleCategory value="Singleplayer"/>
+  <ModuleType value="Community" />
+  <Url value="$moduleurl$" />
+  <UpdateInfo value="NexusMods:612" />
+  <DependedModules>
+    <DependedModule Id="Bannerlord.Harmony" DependentVersion="v$harmonyversion$" />
+    <DependedModule Id="Bannerlord.ButterLib" DependentVersion="v$butterlibversion$" />
+    <DependedModule Id="Bannerlord.UIExtenderEx" DependentVersion="v$uiextenderexversion$" />
+    <DependedModule Id="Bannerlord.MBOptionScreen" DependentVersion="v$mcmversion$" />
+  </DependedModules>
+  <!-- They are all treated as optional by Vanilla -->
+  <ModulesToLoadAfterThis>
+    <Module Id="Native" DependentVersion="$gameversion$" />
+    <Module Id="SandBoxCore" DependentVersion="$gameversion$" />
+    <Module Id="Sandbox" DependentVersion="$gameversion$" />
+    <Module Id="StoryMode" DependentVersion="$gameversion$" />
+    <Module Id="CustomBattle" DependentVersion="$gameversion$" />
+  </ModulesToLoadAfterThis>
+  <!-- Community Metadata -->
+  <DependedModuleMetadatas>
+    <DependedModuleMetadata id="Bannerlord.Harmony" order="LoadBeforeThis" version="v$harmonyversion$" />
+    <DependedModuleMetadata id="Bannerlord.ButterLib" order="LoadBeforeThis" version="v$butterlibversion$" />
+    <DependedModuleMetadata id="Bannerlord.UIExtenderEx" order="LoadBeforeThis" version="v$uiextenderexversion$" />
+    <DependedModuleMetadata id="Bannerlord.MBOptionScreen" order="LoadBeforeThis" version="v$mcmversion$" />
+
+    <DependedModuleMetadata id="Native" order="LoadAfterThis" version="$gameversion$.*" />
+    <DependedModuleMetadata id="SandBoxCore" order="LoadAfterThis" version="$gameversion$.*" optional="true" />
+    <DependedModuleMetadata id="Sandbox" order="LoadAfterThis" version="$gameversion$.*" optional="true" />
+    <DependedModuleMetadata id="StoryMode" order="LoadAfterThis" version="$gameversion$.*" optional="true" />
+    <DependedModuleMetadata id="CustomBattle" order="LoadAfterThis" version="$gameversion$.*" optional="true" />
+    </DependedModuleMetadatas>
+  <!-- Community Metadata -->
+  <SubModules>
+    <!-- Bannerlord Module Loader. Do not change the name! -->
+    <SubModule>
+      <Name value="Bannerlord Module Loader" />
+      <DLLName value="Bannerlord.ModuleLoader.$moduleid$.dll" />
+      <SubModuleClassType value="Bannerlord.ModuleLoader.$moduleidflat$" />
+      <Tags>
+        <Tag key="LoaderFilter" value ="$moduleid$.*.dll" />
+        <Tag key="LoaderSubModuleOrder" value ="MCM.UI.MCMUIAdapterSubModule" />
+        <Tag key="LoaderSubModuleOrder" value ="MCM.UI.MCMUISubModule" />
+      </Tags>
+    </SubModule>
+  </SubModules>
+</Module>

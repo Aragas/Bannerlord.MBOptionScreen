@@ -1,0 +1,85 @@
+﻿<!--EXTERNAL_PROPERTIES: Version;GameVersion;ButterLibVersion;HarmonyVersion;UIExtenderExVersion-->
+<Project Sdk="Bannerlord.BUTRModule.Sdk/1.1.0.128">
+
+  <PropertyGroup>
+    <LangVersion>preview</LangVersion>
+    <Authors>Aragas, mipen</Authors>
+    <RootNamespace>MCM.UI</RootNamespace>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <ExtendedBuild>false</ExtendedBuild>
+  </PropertyGroup>
+
+  <!--Module Creation-->
+  <PropertyGroup>
+    <ModuleId>Bannerlord.MBOptionScreen.UI</ModuleId>
+    <ModuleName>Mod Configuration Menu v5 UI</ModuleName>
+    <ModuleUrl>https://www.nexusmods.com/mountandblade2bannerlord/mods/612</ModuleUrl>
+  </PropertyGroup>
+  <!--Module Creation-->
+
+  <!-- Development Variables -->
+  <PropertyGroup>
+    <BUTRModuleLoaderVersion>1.0.1.50</BUTRModuleLoaderVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <DisableReferenceAssemblies>true</DisableReferenceAssemblies>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" />
+    <PackageReference Include="Bannerlord.ReferenceAssemblies.Native" Version="$(GameVersion).*-*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="GUI\Brushes\ButtonBrushes.xml" />
+    <EmbeddedResource Include="GUI\Brushes\CompatibilityBrushes.xml" />
+    <EmbeddedResource Include="GUI\Brushes\DividerBrushes.xml" />
+    <EmbeddedResource Include="GUI\Brushes\ExpandIndicator.xml" />
+    <EmbeddedResource Include="GUI\Brushes\SettingsBrush.xml" />
+    <EmbeddedResource Include="GUI\Brushes\TextBrushes.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\DropdownWithHorizontalControl.Checkbox.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\ModOptionsPageView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\ModOptionsView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\Properties\SettingsPropertyBoolView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\Properties\SettingsPropertyButtonView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\Properties\SettingsPropertyCheckboxDropdownView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\Properties\SettingsPropertyDropdownView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\Properties\SettingsPropertyFloatView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\Properties\SettingsPropertyIntView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\Properties\SettingsPropertyStringView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\SettingsItemView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\SettingsPropertyDisplayValueView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\SettingsPropertyGroupView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\SettingsPropertyView.xml" />
+    <EmbeddedResource Include="GUI\Prefabs\SettingsView.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="MCMv4.Custom.ScreenTests" />
+    <InternalsVisibleTo Include="MCM.Tests" />
+  </ItemGroup>
+
+  <!--Windows Forms-->
+  <ItemGroup Condition="$(TargetFramework) == 'net472'">
+    <Reference Include="System.Windows.Forms" PrivateAssets="all" />
+  </ItemGroup>
+  <PropertyGroup Condition="$(TargetFramework) == 'net6-windows'">
+    <UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+  <!--Windows Forms-->
+  
+  <ItemGroup Condition="$(TargetFramework) == 'net472'">
+    <PackageReference Include="System.IO.Compression" Version="4.0.0" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="BUTR.DependencyInjection.ButterLib" Version="$(BUTRDependencyInjectionVersion)" PrivateAssets="all" IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive" />
+    <PackageReference Include="BUTR.MessageBoxPInvoke" Version="1.0.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\MCM\MCM.csproj" Private="false" />
+    <ProjectReference Include="..\MCM.UI.Adapter.MCMv5\MCM.UI.Adapter.MCMv5.csproj" />
+  </ItemGroup>
+
+</Project>
