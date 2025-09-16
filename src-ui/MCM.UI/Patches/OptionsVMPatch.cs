@@ -6,24 +6,25 @@ using System.Runtime.CompilerServices;
 
 using TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions;
 
-namespace MCM.UI.Patches;
-
-internal static class OptionsVMPatch
+namespace MCM.UI.Patches
 {
-    public static bool BlockSwitch { get; set; }
-
-    public static void Patch(Harmony harmony)
+    internal static class OptionsVMPatch
     {
-        harmony.Patch(
-            AccessTools2.Method(typeof(OptionsVM), "SetSelectedCategory"),
-            prefix: new HarmonyMethod(typeof(OptionsVMPatch), nameof(SetSelectedCategoryPatch)));
-    }
+        public static bool BlockSwitch { get; set; }
 
-    /// <summary>
-    /// Block switching between tabs when searching
-    /// </summary>
-    [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
-    [SuppressMessage("ReSharper", "InconsistentNaming")]
-    [MethodImpl(MethodImplOptions.NoInlining)]
-    private static bool SetSelectedCategoryPatch() => !BlockSwitch;
+        public static void Patch(Harmony harmony)
+        {
+            harmony.Patch(
+                AccessTools2.Method(typeof(OptionsVM), "SetSelectedCategory"),
+                prefix: new HarmonyMethod(typeof(OptionsVMPatch), nameof(SetSelectedCategoryPatch)));
+        }
+
+        /// <summary>
+        /// Block switching between tabs when searching
+        /// </summary>
+        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
+        [SuppressMessage("ReSharper", "InconsistentNaming")]
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static bool SetSelectedCategoryPatch() => !BlockSwitch;
+    }
 }

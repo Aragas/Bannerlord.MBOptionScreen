@@ -1,20 +1,21 @@
 ﻿using MCM.Common;
 
-namespace MCM.UI.Actions;
-
-internal sealed class SetStringAction : IAction
+namespace MCM.UI.Actions
 {
-    public IRef Context { get; }
-    public object? Value { get; }
-    public object? Original { get; }
-
-    public SetStringAction(IRef context, string value)
+    internal sealed class SetStringAction : IAction
     {
-        Context = context;
-        Value = value;
-        Original = Context.Value;
-    }
+        public IRef Context { get; }
+        public object? Value { get; }
+        public object? Original { get; }
 
-    public void DoAction() => Context.Value = Value;
-    public void UndoAction() => Context.Value = Original;
+        public SetStringAction(IRef context, string value)
+        {
+            Context = context;
+            Value = value;
+            Original = Context.Value;
+        }
+
+        public void DoAction() => Context.Value = Value;
+        public void UndoAction() => Context.Value = Original;
+    }
 }

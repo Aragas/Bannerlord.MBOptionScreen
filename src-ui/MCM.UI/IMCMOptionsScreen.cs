@@ -1,3 +1,4 @@
-﻿namespace MCM.UI;
-
-public interface IMCMOptionsScreen { }
+﻿namespace MCM.UI
+{
+    public interface IMCMOptionsScreen { }
+}

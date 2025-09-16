@@ -12,28 +12,29 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MCM.UI.Adapter.MCMv5.Properties;
-
-public sealed class MCMv5FluentSettingsPropertyDiscoverer : IAttributeSettingsPropertyDiscoverer
+namespace MCM.UI.Adapter.MCMv5.Properties
 {
-    private delegate IEnumerable? GetSettingPropertyGroupsDelegate(object instance);
-
-    private static readonly ConcurrentDictionary<Type, GetSettingPropertyGroupsDelegate?> _cache = new();
-
-    public IEnumerable<string> DiscoveryTypes { get; } = new[] { "mcm_v5_fluent" };
-
-    public IEnumerable<ISettingsPropertyDefinition> GetProperties(BaseSettings settings)
+    public sealed class MCMv5FluentSettingsPropertyDiscoverer : IAttributeSettingsPropertyDiscoverer
     {
-        var obj = settings switch
+        private delegate IEnumerable? GetSettingPropertyGroupsDelegate(object instance);
+
+        private static readonly ConcurrentDictionary<Type, GetSettingPropertyGroupsDelegate?> _cache = new();
+
+        public IEnumerable<string> DiscoveryTypes { get; } = new[] { "mcm_v5_fluent" };
+
+        public IEnumerable<ISettingsPropertyDefinition> GetProperties(BaseSettings settings)
         {
-            IWrapper { Object: { } obj2 } => obj2,
-            _ => settings
-        };
+            var obj = settings switch
+            {
+                IWrapper { Object: { } obj2 } => obj2,
+                _ => settings
+            };
 
-        var del = _cache.GetOrAdd(obj.GetType(), static x => AccessTools2.GetPropertyGetterDelegate<GetSettingPropertyGroupsDelegate>(x, "SettingPropertyGroups"));
-        var settingPropertyGroups = del?.Invoke(obj)?.Cast<object>()
-            .Select(x => new SettingsPropertyGroupDefinitionWrapper(x)).Cast<SettingsPropertyGroupDefinition>().ToList() ?? [];
+            var del = _cache.GetOrAdd(obj.GetType(), static x => AccessTools2.GetPropertyGetterDelegate<GetSettingPropertyGroupsDelegate>(x, "SettingPropertyGroups"));
+            var settingPropertyGroups = del?.Invoke(obj)?.Cast<object>()
+                .Select(x => new SettingsPropertyGroupDefinitionWrapper(x)).Cast<SettingsPropertyGroupDefinition>().ToList() ?? [];
 
-        return settingPropertyGroups.SelectMany(SettingsUtils.GetAllSettingPropertyDefinitions);
+            return settingPropertyGroups.SelectMany(SettingsUtils.GetAllSettingPropertyDefinitions);
+        }
     }
 }

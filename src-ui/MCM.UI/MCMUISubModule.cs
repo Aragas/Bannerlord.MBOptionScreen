@@ -33,142 +33,143 @@ using TaleWorlds.Localization;
 using TaleWorlds.MountAndBlade;
 using TaleWorlds.ScreenSystem;
 
-namespace MCM.UI;
-
-[SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
-[SuppressMessage("ReSharper", "UnusedType.Global")]
-public sealed class MCMUISubModule : MBSubModuleBase
+namespace MCM.UI
 {
-    private const string SMessageContinue =
-        @"{=eXs6FLm5DP}It's strongly recommended to terminate the game now. Do you wish to terminate it?";
-    private const string SWarningTitle =
-        @"{=dzeWx4xSfR}Warning from MCM!";
-
-
-    private static readonly UIExtender Extender = new("MCM.UI");
-    internal static ILogger<MCMUISubModule> Logger = NullLogger<MCMUISubModule>.Instance;
-    internal static ResetValueToDefault? ResetValueToDefault;
-
-    private bool DelayedServiceCreation { get; set; }
-    private bool ServiceRegistrationWasCalled { get; set; }
-    private bool OnBeforeInitialModuleScreenSetAsRootWasCalled { get; set; }
-
-    public MCMUISubModule()
+    [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
+    [SuppressMessage("ReSharper", "UnusedType.Global")]
+    public sealed class MCMUISubModule : MBSubModuleBase
     {
-        MCMSubModule.Instance?.OverrideServiceContainer(new ButterLibServiceContainer());
+        private const string SMessageContinue =
+@"{=eXs6FLm5DP}It's strongly recommended to terminate the game now. Do you wish to terminate it?";
+        private const string SWarningTitle =
+@"{=dzeWx4xSfR}Warning from MCM!";
 
-        ValidateLoadOrder();
-    }
 
-    public void OnServiceRegistration()
-    {
-        ServiceRegistrationWasCalled = true;
+        private static readonly UIExtender Extender = new("MCM.UI");
+        internal static ILogger<MCMUISubModule> Logger = NullLogger<MCMUISubModule>.Instance;
+        internal static ResetValueToDefault? ResetValueToDefault;
 
-        if (this.GetServiceContainer() is { } services)
+        private bool DelayedServiceCreation { get; set; }
+        private bool ServiceRegistrationWasCalled { get; set; }
+        private bool OnBeforeInitialModuleScreenSetAsRootWasCalled { get; set; }
+
+        public MCMUISubModule()
         {
-            services.AddSettingsContainer<ButterLibSettingsContainer>();
+            MCMSubModule.Instance?.OverrideServiceContainer(new ButterLibServiceContainer());
 
-            services.AddTransient(typeof(IServiceProvider), () => this.GetTempServiceProvider() ?? this.GetServiceProvider()!);
-            services.AddTransient<IBUTRLogger, LoggerWrapper>();
-            services.AddTransient(typeof(IBUTRLogger<>), typeof(LoggerWrapper<>));
-
-
-            services.AddTransient<IMCMOptionsScreen, ModOptionsGauntletScreen>();
-
-            services.AddSingleton<BaseGameMenuScreenHandler, DefaultGameMenuScreenHandler>();
-            services.AddSingleton<ResourceInjector, DefaultResourceInjector>();
-        }
-    }
-
-    protected override void OnSubModuleLoad()
-    {
-        base.OnSubModuleLoad();
-
-        IServiceProvider serviceProvider;
-
-        if (!ServiceRegistrationWasCalled)
-        {
-            OnServiceRegistration();
-            DelayedServiceCreation = true;
-            serviceProvider = this.GetTempServiceProvider()!;
-        }
-        else
-        {
-            serviceProvider = this.GetServiceProvider()!;
+            ValidateLoadOrder();
         }
 
-        Logger = serviceProvider.GetRequiredService<ILogger<MCMUISubModule>>();
-        Logger.LogTrace("OnSubModuleLoad: Logging started...");
-
-        var optionsGauntletScreenHarmony = new Harmony("bannerlord.mcm.ui.optionsgauntletscreenpatch");
-        OptionsGauntletScreenPatch.Patch(optionsGauntletScreenHarmony);
-        MissionGauntletOptionsUIHandlerPatch.Patch(optionsGauntletScreenHarmony);
-
-        var optionsSwitchHarmony = new Harmony("bannerlord.mcm.ui.optionsswitchpatch");
-        OptionsVMPatch.Patch(optionsSwitchHarmony);
-    }
-
-    protected override void OnBeforeInitialModuleScreenSetAsRoot()
-    {
-        base.OnBeforeInitialModuleScreenSetAsRoot();
-
-        if (!OnBeforeInitialModuleScreenSetAsRootWasCalled)
+        public void OnServiceRegistration()
         {
-            OnBeforeInitialModuleScreenSetAsRootWasCalled = true;
+            ServiceRegistrationWasCalled = true;
 
-            if (DelayedServiceCreation)
+            if (this.GetServiceContainer() is { } services)
             {
-                Logger = this.GetServiceProvider().GetRequiredService<ILogger<MCMUISubModule>>();
+                services.AddSettingsContainer<ButterLibSettingsContainer>();
+
+                services.AddTransient(typeof(IServiceProvider), () => this.GetTempServiceProvider() ?? this.GetServiceProvider()!);
+                services.AddTransient<IBUTRLogger, LoggerWrapper>();
+                services.AddTransient(typeof(IBUTRLogger<>), typeof(LoggerWrapper<>));
+
+
+                services.AddTransient<IMCMOptionsScreen, ModOptionsGauntletScreen>();
+
+                services.AddSingleton<BaseGameMenuScreenHandler, DefaultGameMenuScreenHandler>();
+                services.AddSingleton<ResourceInjector, DefaultResourceInjector>();
+            }
+        }
+
+        protected override void OnSubModuleLoad()
+        {
+            base.OnSubModuleLoad();
+
+            IServiceProvider serviceProvider;
+
+            if (!ServiceRegistrationWasCalled)
+            {
+                OnServiceRegistration();
+                DelayedServiceCreation = true;
+                serviceProvider = this.GetTempServiceProvider()!;
+            }
+            else
+            {
+                serviceProvider = this.GetServiceProvider()!;
             }
 
-            Extender.Register(typeof(MCMUISubModule).Assembly);
-            Extender.Enable();
+            Logger = serviceProvider.GetRequiredService<ILogger<MCMUISubModule>>();
+            Logger.LogTrace("OnSubModuleLoad: Logging started...");
 
-            if (HotKeyManager.Create("MCM.UI") is { } hkm)
+            var optionsGauntletScreenHarmony = new Harmony("bannerlord.mcm.ui.optionsgauntletscreenpatch");
+            OptionsGauntletScreenPatch.Patch(optionsGauntletScreenHarmony);
+            MissionGauntletOptionsUIHandlerPatch.Patch(optionsGauntletScreenHarmony);
+
+            var optionsSwitchHarmony = new Harmony("bannerlord.mcm.ui.optionsswitchpatch");
+            OptionsVMPatch.Patch(optionsSwitchHarmony);
+        }
+
+        protected override void OnBeforeInitialModuleScreenSetAsRoot()
+        {
+            base.OnBeforeInitialModuleScreenSetAsRoot();
+
+            if (!OnBeforeInitialModuleScreenSetAsRootWasCalled)
             {
-                ResetValueToDefault = hkm.Add<ResetValueToDefault>();
-                hkm.Build();
+                OnBeforeInitialModuleScreenSetAsRootWasCalled = true;
+
+                if (DelayedServiceCreation)
+                {
+                    Logger = this.GetServiceProvider().GetRequiredService<ILogger<MCMUISubModule>>();
+                }
+
+                Extender.Register(typeof(MCMUISubModule).Assembly);
+                Extender.Enable();
+
+                if (HotKeyManager.Create("MCM.UI") is { } hkm)
+                {
+                    ResetValueToDefault = hkm.Add<ResetValueToDefault>();
+                    hkm.Build();
+                }
+
+                var resourceInjector = GenericServiceProvider.GetService<ResourceInjector>();
+                resourceInjector?.Inject();
             }
-
-            var resourceInjector = GenericServiceProvider.GetService<ResourceInjector>();
-            resourceInjector?.Inject();
         }
-    }
 
-    internal static void UpdateOptionScreen(MCMUISettings settings)
-    {
-        if (settings.UseStandardOptionScreen)
+        internal static void UpdateOptionScreen(MCMUISettings settings)
         {
-            BaseGameMenuScreenHandler.Instance?.RemoveScreen("MCM_OptionScreen");
-        }
-        else
-        {
-            BaseGameMenuScreenHandler.Instance?.AddScreen(
-                "MCM_OptionScreen",
-                9990,
-                () => GenericServiceProvider.GetService<IMCMOptionsScreen>() as ScreenBase,
-                new TextObject("{=MainMenu_ModOptions}Mod Options"));
-        }
-    }
-
-    private static void ValidateLoadOrder()
-    {
-        var loadedModules = ModuleInfoHelper.GetLoadedModules().ToList();
-        if (loadedModules.Count == 0) return;
-
-        var sb = new StringBuilder();
-        if (!ModuleInfoHelper.ValidateLoadOrder(typeof(MCMUISubModule), out var report))
-        {
-            sb.AppendLine(report);
-            sb.AppendLine();
-            sb.AppendLine(new TextObject(SMessageContinue).ToString());
-            switch (MessageBoxDialog.Show(sb.ToString(),
-                        new TextObject(SWarningTitle).ToString(), MessageBoxButtons.YesNo,
-                        MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, (MessageBoxModal) 0x40000))
+            if (settings.UseStandardOptionScreen)
             {
-                case MessageBoxResult.Yes:
-                    Environment.Exit(1);
-                    break;
+                BaseGameMenuScreenHandler.Instance?.RemoveScreen("MCM_OptionScreen");
+            }
+            else
+            {
+                BaseGameMenuScreenHandler.Instance?.AddScreen(
+                    "MCM_OptionScreen",
+                    9990,
+                    () => GenericServiceProvider.GetService<IMCMOptionsScreen>() as ScreenBase,
+                    new TextObject("{=MainMenu_ModOptions}Mod Options"));
+            }
+        }
+
+        private static void ValidateLoadOrder()
+        {
+            var loadedModules = ModuleInfoHelper.GetLoadedModules().ToList();
+            if (loadedModules.Count == 0) return;
+
+            var sb = new StringBuilder();
+            if (!ModuleInfoHelper.ValidateLoadOrder(typeof(MCMUISubModule), out var report))
+            {
+                sb.AppendLine(report);
+                sb.AppendLine();
+                sb.AppendLine(new TextObject(SMessageContinue).ToString());
+                switch (MessageBoxDialog.Show(sb.ToString(),
+                            new TextObject(SWarningTitle).ToString(), MessageBoxButtons.YesNo,
+                            MessageBoxIcon.Warning, MessageBoxDefaultButton.Button1, (MessageBoxModal) 0x40000))
+                {
+                    case MessageBoxResult.Yes:
+                        Environment.Exit(1);
+                        break;
+                }
             }
         }
     }

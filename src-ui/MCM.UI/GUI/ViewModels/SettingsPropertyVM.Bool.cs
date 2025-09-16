@@ -3,23 +3,24 @@ using MCM.UI.Actions;
 
 using TaleWorlds.Library;
 
-namespace MCM.UI.GUI.ViewModels;
-
-internal sealed partial class SettingsPropertyVM : ViewModel
+namespace MCM.UI.GUI.ViewModels
 {
-    [DataSourceProperty]
-    public bool IsBool => SettingType == SettingType.Bool;
-
-    [DataSourceProperty]
-    public bool BoolValue
+    internal sealed partial class SettingsPropertyVM : ViewModel
     {
-        get => IsBool && PropertyReference.Value is bool val ? val : false;
-        set
+        [DataSourceProperty]
+        public bool IsBool => SettingType == SettingType.Bool;
+
+        [DataSourceProperty]
+        public bool BoolValue
         {
-            if (IsBool && BoolValue != value)
+            get => IsBool && PropertyReference.Value is bool val ? val : false;
+            set
             {
-                URS.Do(new SetValueTypeAction<bool>(PropertyReference, value));
-                OnPropertyChanged(nameof(BoolValue));
+                if (IsBool && BoolValue != value)
+                {
+                    URS.Do(new SetValueTypeAction<bool>(PropertyReference, value));
+                    OnPropertyChanged(nameof(BoolValue));
+                }
             }
         }
     }

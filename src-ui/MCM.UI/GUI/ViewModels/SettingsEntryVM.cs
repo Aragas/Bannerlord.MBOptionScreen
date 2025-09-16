@@ -5,53 +5,54 @@ using System;
 using TaleWorlds.Library;
 using TaleWorlds.Localization;
 
-namespace MCM.UI.GUI.ViewModels;
-
-internal sealed class SettingsEntryVM : ViewModel
+namespace MCM.UI.GUI.ViewModels
 {
-    private readonly Action<SettingsEntryVM> _executeSelect;
-
-    private bool? _isSelected;
-
-    public string Id => UnavailableSetting?.Id ?? SettingsVM?.SettingsDefinition.SettingsId ?? "ERROR";
-
-    [DataSourceProperty]
-    public string DisplayName => UnavailableSetting?.DisplayName ?? SettingsVM?.DisplayName ?? "ERROR";
-
-    [DataSourceProperty]
-    public bool IsSelected
+    internal sealed class SettingsEntryVM : ViewModel
     {
-        get => _isSelected ?? SettingsVM?.IsSelected ?? false;
-        set
+        private readonly Action<SettingsEntryVM> _executeSelect;
+
+        private bool? _isSelected;
+
+        public string Id => UnavailableSetting?.Id ?? SettingsVM?.SettingsDefinition.SettingsId ?? "ERROR";
+
+        [DataSourceProperty]
+        public string DisplayName => UnavailableSetting?.DisplayName ?? SettingsVM?.DisplayName ?? "ERROR";
+
+        [DataSourceProperty]
+        public bool IsSelected
         {
-            if (SettingsVM is not null)
+            get => _isSelected ?? SettingsVM?.IsSelected ?? false;
+            set
             {
-                SettingsVM.IsSelected = value;
-            }
-            else
-            {
-                _isSelected = value;
-            }
+                if (SettingsVM is not null)
+                {
+                    SettingsVM.IsSelected = value;
+                }
+                else
+                {
+                    _isSelected = value;
+                }
 
-            OnPropertyChanged(nameof(IsSelected));
+                OnPropertyChanged(nameof(IsSelected));
+            }
         }
+
+        public SettingsVM? SettingsVM { get; }
+        public UnavailableSetting? UnavailableSetting { get; }
+
+        public SettingsEntryVM(UnavailableSetting unavailableSetting, Action<SettingsEntryVM> command)
+        {
+            UnavailableSetting = unavailableSetting;
+            _isSelected = false;
+            _executeSelect = command;
+        }
+
+        public SettingsEntryVM(SettingsVM settingsVM, Action<SettingsEntryVM> command)
+        {
+            SettingsVM = settingsVM;
+            _executeSelect = command;
+        }
+
+        public void ExecuteSelect() => _executeSelect.Invoke(this);
     }
-
-    public SettingsVM? SettingsVM { get; }
-    public UnavailableSetting? UnavailableSetting { get; }
-
-    public SettingsEntryVM(UnavailableSetting unavailableSetting, Action<SettingsEntryVM> command)
-    {
-        UnavailableSetting = unavailableSetting;
-        _isSelected = false;
-        _executeSelect = command;
-    }
-
-    public SettingsEntryVM(SettingsVM settingsVM, Action<SettingsEntryVM> command)
-    {
-        SettingsVM = settingsVM;
-        _executeSelect = command;
-    }
-
-    public void ExecuteSelect() => _executeSelect.Invoke(this);
 }

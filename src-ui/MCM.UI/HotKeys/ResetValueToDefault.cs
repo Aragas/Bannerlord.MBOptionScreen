@@ -4,20 +4,21 @@ using TaleWorlds.InputSystem;
 
 using HotKeyManager = Bannerlord.ButterLib.HotKeys.HotKeyManager;
 
-namespace MCM.UI.HotKeys;
-
-public class ResetValueToDefault : HotKeyBase
+namespace MCM.UI.HotKeys
 {
-    protected override string DisplayName { get; }
-    protected override string Description { get; }
-    protected override InputKey DefaultKey { get; }
-    protected override string Category { get; }
-
-    public ResetValueToDefault() : base(nameof(ResetValueToDefault))
+    public class ResetValueToDefault : HotKeyBase
     {
-        DisplayName = "{=HOV8WIcBrb}Reset Mod Options Value to Default";
-        Description = "{=2d99VmOZZH}Resets a value in Mod Options menu to its default value when hovered.";
-        DefaultKey = InputKey.R;
-        Category = HotKeyManager.Categories[HotKeyCategory.MenuShortcut];
+        protected override string DisplayName { get; }
+        protected override string Description { get; }
+        protected override InputKey DefaultKey { get; }
+        protected override string Category { get; }
+
+        public ResetValueToDefault() : base(nameof(ResetValueToDefault))
+        {
+            DisplayName = "{=HOV8WIcBrb}Reset Mod Options Value to Default";
+            Description = "{=2d99VmOZZH}Resets a value in Mod Options menu to its default value when hovered.";
+            DefaultKey = InputKey.R;
+            Category = HotKeyManager.Categories[HotKeyCategory.MenuShortcut];
+        }
     }
 }

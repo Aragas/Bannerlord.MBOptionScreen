@@ -1,25 +1,26 @@
-﻿namespace MCM.UI.Dropdown;
-
-internal sealed class MCMSelectorItemVM : MCMSelectorItemVM<string>
+﻿namespace MCM.UI.Dropdown
 {
-    public MCMSelectorItemVM(string value) : base(value) { }
-}
-
-internal class MCMSelectorItemVM<T> : MCMSelectorItemVMBase where T : class
-{
-    public T OriginalItem { get; }
-
-    public MCMSelectorItemVM(T @object)
+    internal sealed class MCMSelectorItemVM : MCMSelectorItemVM<string>
     {
-        OriginalItem = @object;
-        RefreshValues();
+        public MCMSelectorItemVM(string value) : base(value) { }
     }
 
-    public override string? ToString() => StringItem;
-
-    public override void RefreshValues()
+    internal class MCMSelectorItemVM<T> : MCMSelectorItemVMBase where T : class
     {
-        base.RefreshValues();
-        _stringItem = OriginalItem.ToString() ?? "ERROR";
+        public T OriginalItem { get; }
+
+        public MCMSelectorItemVM(T @object)
+        {
+            OriginalItem = @object;
+            RefreshValues();
+        }
+
+        public override string? ToString() => StringItem;
+
+        public override void RefreshValues()
+        {
+            base.RefreshValues();
+            _stringItem = OriginalItem.ToString() ?? "ERROR";
+        }
     }
 }

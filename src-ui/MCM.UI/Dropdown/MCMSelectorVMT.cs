@@ -2,31 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MCM.UI.Dropdown;
-
-internal class MCMSelectorVM<TSelectorItemVM, TSelectorItemVMValueType> : MCMSelectorVM<TSelectorItemVM>
-    where TSelectorItemVM : MCMSelectorItemVM<TSelectorItemVMValueType>
-    where TSelectorItemVMValueType : class
+namespace MCM.UI.Dropdown
 {
-    public MCMSelectorVM(IEnumerable<TSelectorItemVMValueType> list, int selectedIndex)
+    internal class MCMSelectorVM<TSelectorItemVM, TSelectorItemVMValueType> : MCMSelectorVM<TSelectorItemVM>
+        where TSelectorItemVM : MCMSelectorItemVM<TSelectorItemVMValueType>
+        where TSelectorItemVMValueType : class
     {
-        Refresh(list, selectedIndex);
-    }
-
-    public void Refresh(IEnumerable<TSelectorItemVMValueType> list, int selectedIndex)
-    {
-        ItemList.Clear();
-
-        _selectedIndex = -1;
-
-        foreach (var @ref in list)
+        public MCMSelectorVM(IEnumerable<TSelectorItemVMValueType> list, int selectedIndex)
         {
-            if (Activator.CreateInstance(typeof(TSelectorItemVM), @ref) is TSelectorItemVM val)
-                ItemList.Add(val);
+            Refresh(list, selectedIndex);
         }
 
-        HasSingleItem = ItemList.Count <= 1;
+        public void Refresh(IEnumerable<TSelectorItemVMValueType> list, int selectedIndex)
+        {
+            ItemList.Clear();
 
-        SelectedIndex = selectedIndex;
+            _selectedIndex = -1;
+
+            foreach (var @ref in list)
+            {
+                if (Activator.CreateInstance(typeof(TSelectorItemVM), @ref) is TSelectorItemVM val)
+                    ItemList.Add(val);
+            }
+
+            HasSingleItem = ItemList.Count <= 1;
+
+            SelectedIndex = selectedIndex;
+        }
     }
 }
