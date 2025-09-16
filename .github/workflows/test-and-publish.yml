@@ -109,7 +109,8 @@ jobs:
     - name: Build MCM (Release)
       run: >-
         mkdir bannerlord;
-        dotnet build src/MCM.Publish/MCM.Publish.csproj --configuration Stable_Release -p:GameFolder="$PWD/bannerlord";
+        dotnet build src/MCM/MCM.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
+        dotnet build src-ui/MCM.UI/MCM.UI.csproj --configuration Stable_Release -p:GameFolder="$PWD/bannerlord" -p:ExtendedBuild=true;
       shell: pwsh
 
     - name: Install and Run ChangelogParser

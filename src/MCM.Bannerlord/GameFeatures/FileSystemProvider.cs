@@ -2,11 +2,14 @@
 using MCM.Internal.Extensions;
 
 using System;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 
 using TaleWorlds.Engine;
 using TaleWorlds.Library;
 
+using Path = System.IO.Path;
 using TWPlatformDirectoryPath = TaleWorlds.Library.PlatformDirectoryPath;
 using TWPlatformFilePath = TaleWorlds.Library.PlatformFilePath;
 
@@ -18,8 +21,6 @@ namespace MCM.Internal.GameFeatures
     internal sealed class FileSystemProvider : IFileSystemProvider
     {
         private static string EnsureDirectoryEndsInSeparator(string directory) => directory.EndsWith("\\") ? directory : directory + "\\";
-
-        private IPlatformFileHelper PlatformFileHelper => TaleWorlds.Library.Common.PlatformFileHelper;
 
         private static GameDirectory GetConfigsDirectory()
         {
@@ -44,47 +45,87 @@ namespace MCM.Internal.GameFeatures
 
         public GameFile[] GetFiles(GameDirectory directory, string searchPattern)
         {
-            return PlatformFileHelper.GetFiles(new TWPlatformDirectoryPath((PlatformFileType) directory.Type, directory.Path), searchPattern)
-                .Select(x => new GameFile(directory, x.FileName))
-                .ToArray();
+            var path = PlatformFileHelperPCExtended.GetDirectoryFullPath(new TWPlatformDirectoryPath((PlatformFileType) directory.Type, directory.Path));
+
+            try
+            {
+                if (!Directory.Exists(path))
+                    return [];
+                
+                return Directory.EnumerateFiles(path, searchPattern, SearchOption.TopDirectoryOnly)
+                    .Select(x => new GameFile(directory, Path.GetFileName(x)))
+                    .ToArray();
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.ToString());
+                return [];
+            }
         }
 
         public GameFile? GetFile(GameDirectory directory, string fileName)
         {
-            var file = new TWPlatformFilePath(new TWPlatformDirectoryPath((PlatformFileType) directory.Type, directory.Path), fileName);
-            return !PlatformFileHelper.FileExists(file) ? null : new GameFile(directory, fileName);
+            var file = new TWPlatformFilePath(new TWPlatformDirectoryPath((PlatformFileType) directory.Type, directory.Path), fileName).FileFullPath;
+            return File.Exists(file) ? new GameFile(directory, fileName) : null;
         }
 
         public GameFile GetOrCreateFile(GameDirectory directory, string fileName)
         {
-            var file = new TWPlatformFilePath(new TWPlatformDirectoryPath((PlatformFileType) directory.Type, directory.Path), fileName);
-            if (!PlatformFileHelper.FileExists(file))
+            var file = new TWPlatformFilePath(new TWPlatformDirectoryPath((PlatformFileType) directory.Type, directory.Path), fileName).FileFullPath;
+            if (!File.Exists(file))
             {
-                PlatformFileHelper.SaveFile(file, []);
+                File.Create(file);
             }
             return new GameFile(directory, fileName);
         }
 
         public bool WriteData(GameFile file, byte[]? data)
         {
-            var baseFile = new TWPlatformFilePath(new TWPlatformDirectoryPath((PlatformFileType) file.Owner.Type, file.Owner.Path), file.Name);
+            var baseFile = new TWPlatformFilePath(new TWPlatformDirectoryPath((PlatformFileType) file.Owner.Type, file.Owner.Path), file.Name).FileFullPath;
 
-            if (data is null)
-                return PlatformFileHelper.DeleteFile(baseFile);
-
-            return PlatformFileHelper.SaveFile(baseFile, data) == SaveResult.Success;
+            try
+            {
+                if (data is null)
+                {
+                    File.Delete(baseFile);
+                }
+                else
+                {
+                    File.WriteAllBytes(baseFile, data);
+                }
+                return true;
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.ToString());
+                return false;
+            }
         }
 
         public byte[]? ReadData(GameFile file)
         {
-            var baseFile = new TWPlatformFilePath(new TWPlatformDirectoryPath((PlatformFileType) file.Owner.Type, file.Owner.Path), file.Name);
-            return !PlatformFileHelper.FileExists(baseFile) ? null : PlatformFileHelper.GetFileContent(baseFile);
+            var baseFile = new TWPlatformFilePath(new TWPlatformDirectoryPath((PlatformFileType) file.Owner.Type, file.Owner.Path), file.Name).FileFullPath;
+
+            try
+            {
+                if (!File.Exists(baseFile))
+                {
+                    return null;
+                }
+                
+                return File.ReadAllBytes(baseFile);
+            }
+            catch (Exception e)
+            {
+                Trace.TraceError(e.ToString());
+                return null;
+            }
         }
 
         public string? GetSystemPath(GameFile file)
         {
-            var baseFile = new TWPlatformFilePath(new TWPlatformDirectoryPath((PlatformFileType) file.Owner.Type, file.Owner.Path), file.Name);
-            return PlatformFileHelper.GetFileFullPath(baseFile);
+            var baseFile = new TWPlatformFilePath(new TWPlatformDirectoryPath((PlatformFileType) file.Owner.Type, file.Owner.Path), file.Name).FileFullPath;
+            return baseFile;
         }
 
         public string? GetSystemPath(GameDirectory directory)

@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Module xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/BUTR/Bannerlord.XmlSchemas/master/SubModule.xsd" >
+  <Id value="$moduleid$" />
+  <Name value="$modulename$" />
+  <Version value="v$version$" />
+  <DefaultModule value="false" />
+  <ModuleCategory value="Singleplayer" />
+  <ModuleType value="Community" />
+  <DependedModules>
+    <DependedModule Id="Bannerlord.Harmony" />
+    <DependedModule Id="Bannerlord.ButterLib" />
+    <DependedModule Id="Bannerlord.UIExtenderEx" />
+    <DependedModule Id="Bannerlord.MBOptionScreen" />
+    <DependedModule Id="Bannerlord.MBOptionScreen.UI" />
+  </DependedModules>
+  <!-- Prototype -->
+  <DependedModuleMetadatas>
+    <DependedModuleMetadata id="Bannerlord.Harmony" order="LoadBeforeThis" version="v$harmonyversion$" />
+    <DependedModuleMetadata id="Bannerlord.ButterLib" order="LoadBeforeThis" version="v$butterlibversion$" />
+    <DependedModuleMetadata id="Bannerlord.UIExtenderEx" order="LoadBeforeThis" version="v$uiextenderversion$" />
+    <DependedModuleMetadata id="Bannerlord.MBOptionScreen" order="LoadBeforeThis" version="v$version$" />
+    <DependedModuleMetadata id="Bannerlord.MBOptionScreen.UI" order="LoadBeforeThis" version="v$version$" />
+
+    <DependedModuleMetadata id="Native" order="LoadAfterThis" version="v$gameversion$.*" />
+    <DependedModuleMetadata id="SandBoxCore" order="LoadAfterThis" version="v$gameversion$.*" />
+    <DependedModuleMetadata id="Sandbox" order="LoadAfterThis" version="v$gameversion$.*" />
+    <DependedModuleMetadata id="StoryMode" order="LoadAfterThis" version="v$gameversion$.*" optional="true" />
+    <DependedModuleMetadata id="CustomBattle" order="LoadAfterThis" version="v$gameversion$.*" optional="true" />
+  </DependedModuleMetadatas>
+  <!-- Prototype -->
+  <SubModules>
+
+    <SubModule>
+      <Name value="MCMv5 Tests" />
+      <DLLName value="MCMv5.Tests.dll" />
+      <SubModuleClassType value="MCMv5.Tests.SubModule" />
+      <Tags />
+    </SubModule>
+    
+  </SubModules>
+</Module>
