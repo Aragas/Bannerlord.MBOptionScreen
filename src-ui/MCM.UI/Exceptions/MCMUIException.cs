@@ -3,14 +3,13 @@
 using System;
 using System.Runtime.Serialization;
 
-namespace MCM.UI.Exceptions
+namespace MCM.UI.Exceptions;
+
+[Serializable]
+public class MCMUIException : MCMException
 {
-    [Serializable]
-    public class MCMUIException : MCMException
-    {
-        public MCMUIException() { }
-        public MCMUIException(string message) : base(message) { }
-        public MCMUIException(string message, Exception inner) : base(message, inner) { }
-        protected MCMUIException(SerializationInfo info, StreamingContext context) : base(info, context) { }
-    }
+    public MCMUIException() { }
+    public MCMUIException(string message) : base(message) { }
+    public MCMUIException(string message, Exception inner) : base(message, inner) { }
+    protected MCMUIException(SerializationInfo info, StreamingContext context) : base(info, context) { }
 }

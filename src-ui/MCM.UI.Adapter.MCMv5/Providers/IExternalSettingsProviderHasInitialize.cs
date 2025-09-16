@@ -1,7 +1,6 @@
-﻿namespace MCM.UI.Adapter.MCMv5.Providers
+﻿namespace MCM.UI.Adapter.MCMv5.Providers;
+
+public interface IExternalSettingsProviderHasInitialize
 {
-    public interface IExternalSettingsProviderHasInitialize
-    {
-        void Initialize();
-    }
+    void Initialize();
 }

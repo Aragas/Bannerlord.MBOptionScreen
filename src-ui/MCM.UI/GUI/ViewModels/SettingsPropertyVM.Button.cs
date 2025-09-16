@@ -2,16 +2,15 @@
 
 using TaleWorlds.Library;
 
-namespace MCM.UI.GUI.ViewModels
+namespace MCM.UI.GUI.ViewModels;
+
+internal sealed partial class SettingsPropertyVM : ViewModel
 {
-    internal sealed partial class SettingsPropertyVM : ViewModel
-    {
-        private string _buttonContent = string.Empty;
+    private string _buttonContent = string.Empty;
 
-        [DataSourceProperty]
-        public bool IsButton => SettingType == SettingType.Button;
+    [DataSourceProperty]
+    public bool IsButton => SettingType == SettingType.Button;
 
-        [DataSourceProperty]
-        public string ButtonContent { get => _buttonContent; set => SetField(ref _buttonContent, value, nameof(ButtonContent)); }
-    }
+    [DataSourceProperty]
+    public string ButtonContent { get => _buttonContent; set => SetField(ref _buttonContent, value, nameof(ButtonContent)); }
 }

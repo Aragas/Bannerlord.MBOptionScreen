@@ -13,54 +13,53 @@ using System.Linq;
 
 using TaleWorlds.MountAndBlade;
 
-namespace MCM.UI
+namespace MCM.UI;
+
+public sealed class MCMUIAdapterSubModule : MBSubModuleBase
 {
-    public sealed class MCMUIAdapterSubModule : MBSubModuleBase
+    private static void OnAfterSetInitialModuleScreenAsRootScreen()
     {
-        private static void OnAfterSetInitialModuleScreenAsRootScreen()
+        var enumerable = GenericServiceProvider.GetService<IEnumerable<IExternalSettingsProvider>>()?.OfType<IExternalSettingsProviderHasInitialize>() ?? [];
+
+        foreach (var hasInitialize in enumerable)
+            hasInitialize.Initialize();
+    }
+
+    private Harmony Harmony { get; } = new("MCM.UI.Adapter.MCMv5");
+    private bool ServiceRegistrationWasCalled { get; set; }
+
+    public void OnServiceRegistration()
+    {
+        ServiceRegistrationWasCalled = true;
+
+        if (this.GetServiceContainer() is { } services)
         {
-            var enumerable = GenericServiceProvider.GetService<IEnumerable<IExternalSettingsProvider>>()?.OfType<IExternalSettingsProviderHasInitialize>() ?? [];
+            services.AddSettingsPropertyDiscoverer<MCMv5AttributeSettingsPropertyDiscoverer>();
+            services.AddSettingsPropertyDiscoverer<MCMv5FluentSettingsPropertyDiscoverer>();
 
-            foreach (var hasInitialize in enumerable)
-                hasInitialize.Initialize();
+            services.AddExternalSettingsProvider<MCMv5ExternalSettingsProvider>();
         }
+    }
 
-        private Harmony Harmony { get; } = new("MCM.UI.Adapter.MCMv5");
-        private bool ServiceRegistrationWasCalled { get; set; }
+    protected override void OnSubModuleLoad()
+    {
+        base.OnSubModuleLoad();
 
-        public void OnServiceRegistration()
-        {
-            ServiceRegistrationWasCalled = true;
+        if (!ServiceRegistrationWasCalled)
+            OnServiceRegistration();
 
-            if (this.GetServiceContainer() is { } services)
-            {
-                services.AddSettingsPropertyDiscoverer<MCMv5AttributeSettingsPropertyDiscoverer>();
-                services.AddSettingsPropertyDiscoverer<MCMv5FluentSettingsPropertyDiscoverer>();
+        Harmony.Patch(
+            AccessTools2.Method(typeof(Module), "SetInitialModuleScreenAsRootScreen"),
+            postfix: new HarmonyMethod(AccessTools2.Method(typeof(MCMUIAdapterSubModule), nameof(OnAfterSetInitialModuleScreenAsRootScreen))));
+    }
 
-                services.AddExternalSettingsProvider<MCMv5ExternalSettingsProvider>();
-            }
-        }
+    /// <inheritdoc />
+    protected override void OnSubModuleUnloaded()
+    {
+        base.OnSubModuleUnloaded();
 
-        protected override void OnSubModuleLoad()
-        {
-            base.OnSubModuleLoad();
-
-            if (!ServiceRegistrationWasCalled)
-                OnServiceRegistration();
-
-            Harmony.Patch(
-                AccessTools2.Method(typeof(Module), "SetInitialModuleScreenAsRootScreen"),
-                postfix: new HarmonyMethod(AccessTools2.Method(typeof(MCMUIAdapterSubModule), nameof(OnAfterSetInitialModuleScreenAsRootScreen))));
-        }
-
-        /// <inheritdoc />
-        protected override void OnSubModuleUnloaded()
-        {
-            base.OnSubModuleUnloaded();
-
-            Harmony.Unpatch(
-                AccessTools2.Method(typeof(Module), "SetInitialModuleScreenAsRootScreen"),
-                AccessTools2.Method(typeof(MCMUIAdapterSubModule), nameof(OnAfterSetInitialModuleScreenAsRootScreen)));
-        }
+        Harmony.Unpatch(
+            AccessTools2.Method(typeof(Module), "SetInitialModuleScreenAsRootScreen"),
+            AccessTools2.Method(typeof(MCMUIAdapterSubModule), nameof(OnAfterSetInitialModuleScreenAsRootScreen)));
     }
 }

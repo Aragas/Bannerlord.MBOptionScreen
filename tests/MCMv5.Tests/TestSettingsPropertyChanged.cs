@@ -1,54 +1,53 @@
 ﻿using MCM.Abstractions.Attributes.v2;
 
-namespace MCMv5.Tests
+namespace MCMv5.Tests;
+
+internal sealed class TestSettingsPropertyChanged : BaseTestGlobalSettings<TestSettingsOrder>
 {
-    internal sealed class TestSettingsPropertyChanged : BaseTestGlobalSettings<TestSettingsOrder>
+    public override string Id => "Testing_PropertyChanged_v5";
+    public override string DisplayName => "MCMv5 Testing PropertyChanged";
+
+
+    private bool _property1 = true;
+    [SettingPropertyBool("Property 1", RequireRestart = false)]
+    public bool Property1
     {
-        public override string Id => "Testing_PropertyChanged_v5";
-        public override string DisplayName => "MCMv5 Testing PropertyChanged";
-
-
-        private bool _property1 = true;
-        [SettingPropertyBool("Property 1", RequireRestart = false)]
-        public bool Property1
+        get => _property1;
+        set
         {
-            get => _property1;
-            set
+            if (_property1 != value)
             {
-                if (_property1 != value)
-                {
-                    _property1 = value;
-                    OnPropertyChanged(nameof(Property1));
-                }
+                _property1 = value;
+                OnPropertyChanged(nameof(Property1));
             }
         }
+    }
 
-        private bool _property2;
-        [SettingPropertyBool("Property 2", RequireRestart = false)]
-        public bool Property2
+    private bool _property2;
+    [SettingPropertyBool("Property 2", RequireRestart = false)]
+    public bool Property2
+    {
+        get => _property2;
+        set
         {
-            get => _property2;
-            set
+            if (_property2 != value)
             {
-                if (_property2 != value)
-                {
-                    _property2 = value;
-                    OnPropertyChanged(nameof(Property2));
-                }
+                _property2 = value;
+                OnPropertyChanged(nameof(Property2));
             }
         }
+    }
 
-        public TestSettingsPropertyChanged()
-        {
-            PropertyChanged += TestSettingsPropertyChanged_PropertyChanged;
-        }
+    public TestSettingsPropertyChanged()
+    {
+        PropertyChanged += TestSettingsPropertyChanged_PropertyChanged;
+    }
 
-        private void TestSettingsPropertyChanged_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    private void TestSettingsPropertyChanged_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(Property2))
         {
-            if (e.PropertyName == nameof(Property2))
-            {
-                Property1 = !Property2;
-            }
+            Property1 = !Property2;
         }
     }
 }
