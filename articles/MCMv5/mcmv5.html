@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title> | MCM Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=" | MCM Documentation ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/docs/articles/MCMv5/mcmv5.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/MCM-48.svg" alt="MCM">
+            MCM
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<h2 id="overview">Overview</h2>
+<p>MCMv5 consists of two libraries:</p>
+<ul>
+<li><strong>MCMv5</strong> - Core. Includes v1/v2 Attribute API and a Fluent Builder API that allows to define settings at runtime. Includes a basic implementation of all abstract interfaces.</li>
+<li><strong>MCMv5.UI</strong> - GauntletUI implementations.</li>
+</ul>
+<p>MCMv5 drops MCMv5 and ModLib compatibility layers. MCMv4 is dropped due to game's Release and ModLib is not backported as there are no mods that use it's API instead of MCM.</p>
+<h2 id="installation">Installation</h2>
+<h3 id="players">Players</h3>
+<p>Requires <code>Bannerlord.Harmony</code>, <code>Bannerlord.UIExtenderEx</code>, <code>Bannerlord.ButterLib</code>.</p>
+<h3 id="developers">Developers</h3>
+<p>Add this to your <code>.csproj</code>. Please not that <code>IncludeAssets=&quot;compile&quot;</code> is very important!</p>
+<pre><code class="lang-xml">  &lt;ItemGroup&gt;
+    &lt;PackageReference Include=&quot;Bannerlord.MCM&quot; Version=&quot;5.0.0&quot; IncludeAssets=&quot;compile&quot; /&gt;
+  &lt;/ItemGroup&gt;
+</code></pre>
+<h2 id="using-with-your-mods">Using with your mods</h2>
+<p>You have two options as to how to use MCMv5:</p>
+<ul>
+<li>Include MCMv5 into your mod <code>/bin</code> folder by using NuGet packet <strong><a href="https://www.nuget.org/packages/Bannerlord.MCM">Bannerlord.MCM</a></strong>. Also, add a SubModule entry in <code>SubModules.xml</code>.</li>
+<li>Directly depend on the NexusMods Standalone mod and use NuGet packet <strong><a href="https://www.nuget.org/packages/Bannerlord.MCM">Bannerlord.MCM</a></strong>. Don't include anything in your <code>/bin</code> folder from MCM.</li>
+</ul>
+<p>By including MCMv5 you will be able to save/load settings programmatically, without having the UI Options screen when the Standalone module is not installed.</p>
+<pre><code class="lang-xml">  ...
+  &lt;SubModules&gt;
+    &lt;SubModule&gt;
+      &lt;Name value=&quot;MCMv5&quot; /&gt;
+      &lt;DLLName value=&quot;MCMv5.dll&quot; /&gt;
+      &lt;SubModuleClassType value=&quot;MCM.MCMSubModule&quot; /&gt;
+      &lt;Tags /&gt;
+    &lt;/SubModule&gt;
+    &lt;SubModule&gt;
+      &lt;Name value=&quot;MCMv5 Basic Implementation&quot; /&gt;
+      &lt;DLLName value=&quot;MCMv5.dll&quot; /&gt;
+      &lt;SubModuleClassType value=&quot;MCM.Internal.MCMImplementationSubModule&quot; /&gt;
+      &lt;Tags /&gt;
+    &lt;/SubModule&gt;
+  &lt;/SubModules&gt;
+  ...
+</code></pre>
+<p>By depending on the standalone module the experience is basically the same as with ModLib. The Nexus standalone module will ensure that your settings are displayed correctly. You also need to add <code>Bannerlord.MBOptionScreen</code> as a dependency to your SubModules.xml!</p>
+<pre><code class="lang-xml">  ...
+  &lt;DependedModules&gt;
+    &lt;DependedModule Id=&quot;Bannerlord.MBOptionScreen&quot;/&gt;
+  &lt;/DependedModules&gt;
+  ...
+</code></pre>
+<h2 id="types-of-settings">Types of settings</h2>
+<p>Mod Option libraries provides two types of settings:</p>
+<ul>
+<li><strong><em>Global</em></strong> - options that are shared across different games/saves</li>
+<li><strong><em>PerCampaign</em></strong>  - options that are stored near the Global options. The options will be shared across the same campaign on different save files.</li>
+<li><strong><em>PerSave</em></strong>  - options that are stored in the save file itself. When MCM is removed, the save file will still be playable. Basically, they do not brick the saves. Be aware that saving even once without MCM will wipe all settings from the save file permanently.</li>
+</ul>
+<h2 id="included-settings-formats-and-implementing-your-own">Included Settings Formats and implementing your own</h2>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>In MCMv5, the default settings provider is <code>none</code>, this means that your settings won't be saved to disk unless you override <code>Settings.FormatType</code>!</p>
+</div>
+<p><strong>MCMv5</strong> provides <code>json</code> (<code>json</code> and <code>json2</code> internally) and <code>xml</code> file formats.<br>
+You can define your own file formats and take full control of how the settings are saved/loaded by implementing the interface @&quot;MCM.Abstractions.Settings.Formats.ISettingsFormat?text=ISettingsFormat&quot;.</p>
+<pre><code class="lang-csharp">internal class YamlSettingsFormat : ISettingsFormat 
+{
+    ...
+    public IEnumerable&lt;string&gt; FormatTypes { get; } = new [] { &quot;your_prefix_yaml&quot;, &quot;your_prefix_yml&quot; };
+    ...
+}
+</code></pre>
+<p>You also need to register the new interface:</p>
+<pre><code class="lang-csharp">// In your MBSubModuleBase override
+protected override void OnSubModuleLoad()
+{
+    base.OnSubModuleLoad();
+
+    if (this.GetServiceContainer() is not null services)
+    {
+        services.AddSettingsFormat&lt;YamlSettingsFormat&gt;();
+    }
+}
+</code></pre>
+<p>Usage:</p>
+<pre><code class="lang-csharp">public abstract class YamlSettings : GlobalSettings&lt;YamlSettings&gt;
+{
+    public override string FormatType { get; } = &quot;your_prefix_yaml&quot;;
+}
+</code></pre>
+<h2 id="presets">Presets</h2>
+<p>The setting support custom presets!<br>
+<img src="../../resources/presets.png" alt=""></p>
+<h3 id="attribute-api">Attribute API</h3>
+<p>The Attribute API based settings will provide a 'Default' preset that can be used to revert the options to their default values.<br>
+To override the 'Default' preset or add your custom presets, override <code>GetBuiltInPresets()</code>, here's an example.</p>
+<pre><code class="lang-csharp">public virtual IEnumerable&lt;ISettingsPreset&gt; GetBuiltInPresets()
+{
+    foreach (var preset in base.GetAvailablePresets())
+    {
+        yield return preset;
+    }
+
+    yield return new MemorySettingsPreset(Id, &quot;reverse&quot;, &quot;Reverse&quot;, () =&gt; new CustomSettings
+    {
+        Property1 = false,
+        Property2 = true
+    });
+
+    yield return new MemorySettingsPreset(Id, &quot;false&quot;, &quot;False&quot;, () =&gt; new CustomSettings
+    {
+        Property1 = false,
+        Property2 = false
+    });
+
+    yield return new MemorySettingsPreset(Id, &quot;true&quot;, &quot;True&quot;, () =&gt; new CustomSettings
+    {
+        Property1 = true,
+        Property2 = true
+    });
+}
+</code></pre>
+<h3 id="fluent-api">Fluent API</h3>
+<pre><code class="lang-csharp">var builder = BaseSettingsBuilder.Create(&quot;Testing_v1&quot;, &quot;Testing Fluent API Presets&quot;)!
+    ...
+    .CreatePreset(&quot;Test&quot;, presetBuilder =&gt; presetBuilder
+        .SetPropertyValue(&quot;prop_1&quot;, true)
+        .SetPropertyValue(&quot;prop_2&quot;, 2)
+        .SetPropertyValue(&quot;prop_3&quot;, 1.5F)
+        .SetPropertyValue(&quot;prop_4&quot;, &quot;HueHueHue&quot;));
+</code></pre>
+<h2 id="localization">Localization</h2>
+<h3 id="attribute-api-1">Attribute API</h3>
+<p>Both property Name and HintText support game's localization system, this means that you can use such code</p>
+<pre><code class="lang-csharp">[SettingPropertyBool(&quot;{=DvfsSDF}Property Sample&quot;, HintText = &quot;{=DnfhFD}Sample Hint Text.&quot;)]
+[SettingPropertyGroup(&quot;{=JFgbsdg}Group Sample&quot;)]
+</code></pre>
+<p>You also can use the localization system for nested groups!</p>
+<pre><code class="lang-csharp">[SettingPropertyGroup(&quot;{=JFgbsdg}Group Sample\{=GDgsdfj}Nested Group Sample&quot;)]
+</code></pre>
+<h2 id="inotifypropertychanged">INotifyPropertyChanged</h2>
+<p>The settings implement the <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a> interface.</p>
+<p>MCM subscribes to it and will refresh the UI if any value has changed.</p>
+<p>MCM will also trigger PropertyChanged event when the setting are saved by providing <code>BaseSettings.SaveTriggered</code> constant with value <code>SAVE_TRIGGERED</code>.</p>
+<h2 id="iref">IRef</h2>
+<p><strong>IRef</strong> is an interface that acts as a link to the actual values that classes like Fluent Builder uses.<br>
+MCMv5 has several implementations:</p>
+<ul>
+<li>@&quot;MCM.Abstractions.Ref.PropertyRef?text=PropertyRef&quot; - links to an actual property (<code>PropertyRef(PropertyInfo propInfo, object instance)</code>).</li>
+<li>@&quot;MCM.Abstractions.Ref.ProxyRef`1?text=ProxyRef&lt;T&gt;&quot; - links to get/set actions (<code>ProxyRef(Func&lt;T&gt; getter, Action&lt;T&gt;? setter)</code>) that will set/return whatever you want.</li>
+<li>@&quot;MCM.Abstractions.Ref.StorageRef?text=StorageRef&quot; - holds a value within itself.</li>
+</ul>
+<h2 id="defining-settings">Defining Settings</h2>
+<p><img src="../../resources/properties.png" alt=""></p>
+<ul>
+<li>Check <a href="mcmv5-attributes.html">this page</a> for using the Attribute definition</li>
+<li>Check <a href="mcmv5-fluent-builder.html">this page</a> for using the Fluent Builder</li>
+</ul>
+<h2 id="example-of-settings-definition">Example of Settings definition</h2>
+<div class="WARNING">
+<h5>Warning</h5>
+<p>In MCMv5, the default settings provider is <code>none</code>, this means that your settings won't be saved to disk unless you override <code>Settings.FormatType</code>!</p>
+</div>
+<h3 id="attribute-api-2">Attribute API</h3>
+<pre><code class="lang-csharp">internal sealed class MCMUISettings : AttributeGlobalSettings&lt;MCMUISettings&gt; // AttributePerSaveSettings&lt;MCMUISettings&gt; AttributePerCampaignSettings&lt;MCMUISettings&gt;
+{
+    private bool _useStandardOptionScreen = false;
+
+    public override string Id =&gt; &quot;MCMUI_v5&quot;;
+    public override string DisplayName =&gt; $&quot;MCM UI Impl. {typeof(MCMUISettings).Assembly.GetName().Version.ToString(3)}&quot;;
+    public override string FolderName =&gt; &quot;MCM&quot;;
+    public override string FormatType =&gt; &quot;json&quot;;
+
+    [SettingPropertyBool(&quot;Use Standard Option Screen&quot;, Order = 1, RequireRestart = false, HintText = &quot;Use standard Options screen instead of using an external.&quot;)]
+    [SettingPropertyGroup(&quot;General&quot;)]
+    public bool UseStandardOptionScreen
+    {
+        get =&gt; _useStandardOptionScreen;
+        set
+        {
+            if (_useStandardOptionScreen != value)
+            {
+                _useStandardOptionScreen = value;
+                OnPropertyChanged();
+            }
+        }
+    }
+}
+</code></pre>
+<h3 id="fluent-api-1">Fluent API</h3>
+<pre><code class="lang-csharp">bool _boolValue = false;
+int _intValue = 1;
+float _floatValue = 0f;
+string _stringValue = &quot;&quot;;
+var builder = BaseSettingsBuilder.Create(&quot;Testing_Global_v5&quot;, &quot;MCMv5 Testing Fluent Settings&quot;)!
+    .SetFormat(&quot;xml&quot;)
+    .SetFolderName(string.Empty)
+    .SetSubFolder(string.Empty)
+    .CreateGroup(&quot;Testing 1&quot;, groupBuilder =&gt; groupBuilder
+        .AddBool(&quot;prop_1&quot;, &quot;Check Box&quot;, new ProxyRef&lt;bool&gt;(() =&gt; _boolValue, o =&gt; _boolValue = o), boolBuilder =&gt; boolBuilder
+            .SetHintText(&quot;Test&quot;)
+            .SetRequireRestart(false)))
+    .CreateGroup(&quot;Testing 2&quot;, groupBuilder =&gt; groupBuilder
+        .AddInteger(&quot;prop_2&quot;, &quot;Integer&quot;, 0, 10, new ProxyRef&lt;int&gt;(() =&gt; _intValue, o =&gt; _intValue = o), integerBuilder =&gt; integerBuilder
+            .SetHintText(&quot;Testing&quot;))
+        .AddFloatingInteger(&quot;prop_3&quot;, &quot;Floating Integer&quot;, 0, 10, new ProxyRef&lt;float&gt;(() =&gt; _floatValue, o =&gt; _floatValue = o), floatingBuilder =&gt; floatingBuilder
+            .SetRequireRestart(true)
+            .SetHintText(&quot;Test&quot;)))
+    .CreateGroup(&quot;Testing 3&quot;, groupBuilder =&gt; groupBuilder
+        .AddText(&quot;prop_4&quot;, &quot;Test&quot;, new ProxyRef&lt;string&gt;(() =&gt; _stringValue, o =&gt; _stringValue = o), null))
+    .CreatePreset(&quot;Test&quot;, presetBuilder =&gt; presetBuilder
+        .SetPropertyValue(&quot;prop_1&quot;, true)
+        .SetPropertyValue(&quot;prop_2&quot;, 2)
+        .SetPropertyValue(&quot;prop_3&quot;, 1.5F)
+        .SetPropertyValue(&quot;prop_4&quot;, &quot;HueHueHue&quot;));
+
+var globalSettings = builder.BuildAsGlobal();
+globalSettings.Register();
+globalSettings.Unregister();
+
+// Register only when a campaign was already loaded!
+var perCampaignSettings = builder.BuildAsPerCampaign();
+perCampaignSettings.Register();
+perCampaignSettings.Unregister();
+
+// Register only when a campaign was already loaded!
+var perSaveSettings = builder.BuildAsPerSave();
+perSaveSettings.Register();
+perSaveSettings.Unregister();
+</code></pre>
+<h2 id="translating-mcm">Translating MCM</h2>
+<p>Just create a module and include in the module folder root folders <code>ModuleData/Languages</code> and include the translations of the following files:</p>
+<ul>
+<li><a href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Publish/_Module/ModuleData/Languages/EN/sta_strings.xml">sta_strings.xml</a></li>
+</ul>
+<p>The game will load them automatically!</p>
+<h2 id="migrating-from-v4">Migrating from v4</h2>
+<ul>
+<li>Check <a href="mcmv5-migrating-from-mcmv4.html">this page</a>!</li>
+</ul>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Settings.Instance is available <em>after</em> <code>OnSubModuleLoad</code>, so the earliest you can use it is inside <code>OnBeforeInitialModuleScreenSetAsRoot</code></li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/docs/articles/MCMv5/mcmv5.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          © 2020-2024 Aragas
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

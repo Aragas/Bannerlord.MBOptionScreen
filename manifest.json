@@ -1,0 +1,2894 @@
+{
+  "source_base_path": "/home/runner/work/Bannerlord.MBOptionScreen/Bannerlord.MBOptionScreen/docs",
+  "xrefmap": "xrefmap.yml",
+  "files": [
+    {
+      "type": "Resource",
+      "output": {
+        "resource": {
+          "relative_path": "index.json"
+        }
+      }
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "CNAME",
+      "output": {
+        "resource": {
+          "relative_path": "CNAME"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Attributes.BaseSettingPropertyAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Attributes.BaseSettingPropertyAttribute.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Attributes.BaseSettingPropertyAttribute",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Attributes.SettingPropertyGroupAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Attributes.SettingPropertyGroupAttribute.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Attributes.SettingPropertyGroupAttribute",
+      "Summary": "<p sourcefile=\"api/MCM.Abstractions.Attributes.SettingPropertyGroupAttribute.yml\" sourcestartlinenumber=\"1\">Tells the settings menu that this setting property should be in a group. All settings will automatically be grouped together if they have a SettingPropertyGroupAttribute with the same GroupName.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Attributes.v1.SettingPropertyAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Attributes.v1.SettingPropertyAttribute.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Attributes.v1.SettingPropertyAttribute",
+      "Summary": "<p sourcefile=\"api/MCM.Abstractions.Attributes.v1.SettingPropertyAttribute.yml\" sourcestartlinenumber=\"1\">Tells the Settings system that this property should be used for the settings menu.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Attributes.v1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Attributes.v1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Attributes.v1",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Attributes.v2.SettingPropertyBoolAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Attributes.v2.SettingPropertyBoolAttribute.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Attributes.v2.SettingPropertyBoolAttribute",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Attributes.v2.SettingPropertyButtonAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Attributes.v2.SettingPropertyButtonAttribute.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Attributes.v2.SettingPropertyButtonAttribute",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Attributes.v2.SettingPropertyDropdownAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Attributes.v2.SettingPropertyDropdownAttribute.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Attributes.v2.SettingPropertyDropdownAttribute",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Attributes.v2.SettingPropertyFloatingIntegerAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Attributes.v2.SettingPropertyFloatingIntegerAttribute.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Attributes.v2.SettingPropertyFloatingIntegerAttribute",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Attributes.v2.SettingPropertyIntegerAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Attributes.v2.SettingPropertyIntegerAttribute.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Attributes.v2.SettingPropertyIntegerAttribute",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Attributes.v2.SettingPropertyTextAttribute.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Attributes.v2.SettingPropertyTextAttribute.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Attributes.v2.SettingPropertyTextAttribute",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Attributes.v2.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Attributes.v2.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Attributes.v2",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Attributes.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Attributes.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Attributes",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.BaseSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.BaseSettings.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.BaseSettings",
+      "Summary": "<p sourcefile=\"api/MCM.Abstractions.Base.BaseSettings.yml\" sourcestartlinenumber=\"1\">Base model for MCM settings</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.Global.AttributeGlobalSettings-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.Global.AttributeGlobalSettings-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.Global.AttributeGlobalSettings<T>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.Global.BaseFluentGlobalSettingsWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.Global.BaseFluentGlobalSettingsWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.Global.BaseFluentGlobalSettingsWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.Global.BaseGlobalSettingsWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.Global.BaseGlobalSettingsWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.Global.BaseGlobalSettingsWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.Global.EmptyGlobalSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.Global.EmptyGlobalSettings.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.Global.EmptyGlobalSettings",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.Global.ExternalGlobalSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.Global.ExternalGlobalSettings.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.Global.ExternalGlobalSettings",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.Global.FluentGlobalSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.Global.FluentGlobalSettings.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.Global.FluentGlobalSettings",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.Global.GlobalSettings-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.Global.GlobalSettings-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.Global.GlobalSettings<T>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.Global.GlobalSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.Global.GlobalSettings.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.Global.GlobalSettings",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.Global.SettingsWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.Global.SettingsWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.Global.SettingsWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.Global.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.Global.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.Global",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.IFluentSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.IFluentSettings.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.IFluentSettings",
+      "Summary": "<p sourcefile=\"api/MCM.Abstractions.Base.IFluentSettings.yml\" sourcestartlinenumber=\"1\">Interface that declares that the settings a fluent dynamic settings</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.PerCampaign.AttributePerCampaignSettings-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.PerCampaign.AttributePerCampaignSettings-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.PerCampaign.AttributePerCampaignSettings<T>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.PerCampaign.BasePerCampaignSettingsWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.PerCampaign.BasePerCampaignSettingsWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.PerCampaign.BasePerCampaignSettingsWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.PerCampaign.EmptyPerCampaignSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.PerCampaign.EmptyPerCampaignSettings.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.PerCampaign.EmptyPerCampaignSettings",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.PerCampaign.ExternalPerCampaignSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.PerCampaign.ExternalPerCampaignSettings.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.PerCampaign.ExternalPerCampaignSettings",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.PerCampaign.FluentPerCampaignSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.PerCampaign.FluentPerCampaignSettings.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.PerCampaign.FluentPerCampaignSettings",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.PerCampaign.PerCampaignSettings-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.PerCampaign.PerCampaignSettings-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.PerCampaign.PerCampaignSettings<T>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.PerCampaign.PerCampaignSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.PerCampaign.PerCampaignSettings.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.PerCampaign.PerCampaignSettings",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.PerCampaign.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.PerCampaign.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.PerCampaign",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.PerSave.AttributePerSaveSettings-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.PerSave.AttributePerSaveSettings-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.PerSave.AttributePerSaveSettings<T>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.PerSave.BasePerSaveSettingsWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.PerSave.BasePerSaveSettingsWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.PerSave.BasePerSaveSettingsWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.PerSave.EmptyPerSaveSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.PerSave.EmptyPerSaveSettings.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.PerSave.EmptyPerSaveSettings",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.PerSave.ExternalPerSaveSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.PerSave.ExternalPerSaveSettings.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.PerSave.ExternalPerSaveSettings",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.PerSave.FluentPerSaveSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.PerSave.FluentPerSaveSettings.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.PerSave.FluentPerSaveSettings",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.PerSave.PerSaveSettings-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.PerSave.PerSaveSettings-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.PerSave.PerSaveSettings<T>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.PerSave.PerSaveSettings.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.PerSave.PerSaveSettings.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.PerSave.PerSaveSettings",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.PerSave.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.PerSave.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base.PerSave",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Base.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Base.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Base",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.BaseSettingsExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.BaseSettingsExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.BaseSettingsExtensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.BaseSettingsProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.BaseSettingsProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.BaseSettingsProvider",
+      "Summary": "<p sourcefile=\"api/MCM.Abstractions.BaseSettingsProvider.yml\" sourcestartlinenumber=\"1\">The interface that is responsible for providing and manipulating settings\nfor the end user - modder</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.ExternalSettingsProviderInvalidateCacheType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.ExternalSettingsProviderInvalidateCacheType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.ExternalSettingsProviderInvalidateCacheType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.FluentBuilder.BaseSettingsBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.FluentBuilder.BaseSettingsBuilder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.FluentBuilder.BaseSettingsBuilder",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.FluentBuilder.ISettingsBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.FluentBuilder.ISettingsBuilder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.FluentBuilder.ISettingsBuilder",
+      "Summary": "<p sourcefile=\"api/MCM.Abstractions.FluentBuilder.ISettingsBuilder.yml\" sourcestartlinenumber=\"1\">An interface that defines the necessary members for implementing a settings builder.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.FluentBuilder.ISettingsBuilderFactory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.FluentBuilder.ISettingsBuilderFactory.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.FluentBuilder.ISettingsBuilderFactory",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.FluentBuilder.ISettingsPresetBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.FluentBuilder.ISettingsPresetBuilder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.FluentBuilder.ISettingsPresetBuilder",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.FluentBuilder.ISettingsPropertyBuilder-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.FluentBuilder.ISettingsPropertyBuilder-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.FluentBuilder.ISettingsPropertyBuilder<TSettingsPropertyBuilder>",
+      "Summary": "<p sourcefile=\"api/MCM.Abstractions.FluentBuilder.ISettingsPropertyBuilder-1.yml\" sourcestartlinenumber=\"1\">An interface that defines the necessary members for implementing a settings property builder.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.FluentBuilder.ISettingsPropertyBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.FluentBuilder.ISettingsPropertyBuilder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.FluentBuilder.ISettingsPropertyBuilder",
+      "Summary": "<p sourcefile=\"api/MCM.Abstractions.FluentBuilder.ISettingsPropertyBuilder.yml\" sourcestartlinenumber=\"1\">An interface that defines the necessary members for implementing a settings property builder.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder",
+      "Summary": "<p sourcefile=\"api/MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.yml\" sourcestartlinenumber=\"1\">An interface that defines the necessary members for implementing a settings property group builder.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyBoolBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyBoolBuilder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyBoolBuilder",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyButtonBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyButtonBuilder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyButtonBuilder",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyDropdownBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyDropdownBuilder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyDropdownBuilder",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyFloatingIntegerBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyFloatingIntegerBuilder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyFloatingIntegerBuilder",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyGroupToggleBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyGroupToggleBuilder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyGroupToggleBuilder",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyIntegerBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyIntegerBuilder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyIntegerBuilder",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyTextBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyTextBuilder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyTextBuilder",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.FluentBuilder.Models.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.FluentBuilder.Models.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.FluentBuilder.Models",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.FluentBuilder.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.FluentBuilder.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.FluentBuilder",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.GameFeatures.GameDirectory.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.GameFeatures.GameDirectory.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.GameFeatures.GameDirectory",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.GameFeatures.GameFile.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.GameFeatures.GameFile.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.GameFeatures.GameFile",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.GameFeatures.ICampaignIdProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.GameFeatures.ICampaignIdProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.GameFeatures.ICampaignIdProvider",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.GameFeatures.IFileSystemProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.GameFeatures.IFileSystemProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.GameFeatures.IFileSystemProvider",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.GameFeatures.IGameEventListener.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.GameFeatures.IGameEventListener.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.GameFeatures.IGameEventListener",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.GameFeatures.IPerSaveSettingsProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.GameFeatures.IPerSaveSettingsProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.GameFeatures.IPerSaveSettingsProvider",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.GameFeatures.PlatformDirectoryType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.GameFeatures.PlatformDirectoryType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.GameFeatures.PlatformDirectoryType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.GameFeatures.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.GameFeatures.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.GameFeatures",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Global.IFluentGlobalSettingsContainer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Global.IFluentGlobalSettingsContainer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Global.IFluentGlobalSettingsContainer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Global.IGlobalSettingsContainer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Global.IGlobalSettingsContainer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Global.IGlobalSettingsContainer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Global.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Global.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Global",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.IExternalSettingsProvider.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.IExternalSettingsProvider.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.IExternalSettingsProvider",
+      "Summary": "<p sourcefile=\"api/MCM.Abstractions.IExternalSettingsProvider.yml\" sourcestartlinenumber=\"1\">Used to add foreign Options API's that MCM will be able to use.\nMost likely will be used to ease backwards compatibility ports of older MCM API's so we'll be able to reuse more code.\nThis is a higher level alternative to using <xref href=\"MCM.Abstractions.ISettingsContainer\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.IExternalSettingsProviderCanInvalidateCache.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.IExternalSettingsProviderCanInvalidateCache.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.IExternalSettingsProviderCanInvalidateCache",
+      "Summary": "<p sourcefile=\"api/MCM.Abstractions.IExternalSettingsProviderCanInvalidateCache.yml\" sourcestartlinenumber=\"1\">Used to add foreign Options API's that MCM will be able to use.\nMost likely will be used to ease backwards compatibility ports of older MCM API's so we'll be able to reuse more code.\nThis is a higher level alternative to using <xref href=\"MCM.Abstractions.ISettingsContainer\" data-throw-if-not-resolved=\"false\"></xref>.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.IPropertyDefinitionBase.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.IPropertyDefinitionBase.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.IPropertyDefinitionBase",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.IPropertyDefinitionBool.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.IPropertyDefinitionBool.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.IPropertyDefinitionBool",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.IPropertyDefinitionButton.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.IPropertyDefinitionButton.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.IPropertyDefinitionButton",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.IPropertyDefinitionDropdown.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.IPropertyDefinitionDropdown.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.IPropertyDefinitionDropdown",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.IPropertyDefinitionGroupToggle.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.IPropertyDefinitionGroupToggle.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.IPropertyDefinitionGroupToggle",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.IPropertyDefinitionText.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.IPropertyDefinitionText.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.IPropertyDefinitionText",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.IPropertyDefinitionWithActionFormat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.IPropertyDefinitionWithActionFormat.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.IPropertyDefinitionWithActionFormat",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.IPropertyDefinitionWithCustomFormatter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.IPropertyDefinitionWithCustomFormatter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.IPropertyDefinitionWithCustomFormatter",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.IPropertyDefinitionWithEditableMinMax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.IPropertyDefinitionWithEditableMinMax.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.IPropertyDefinitionWithEditableMinMax",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.IPropertyDefinitionWithFormat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.IPropertyDefinitionWithFormat.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.IPropertyDefinitionWithFormat",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.IPropertyDefinitionWithId.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.IPropertyDefinitionWithId.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.IPropertyDefinitionWithId",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.IPropertyDefinitionWithMinMax.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.IPropertyDefinitionWithMinMax.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.IPropertyDefinitionWithMinMax",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.IPropertyGroupDefinition.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.IPropertyGroupDefinition.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.IPropertyGroupDefinition",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.ISettingsContainer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.ISettingsContainer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.ISettingsContainer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.ISettingsContainerCanInvalidateCache.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.ISettingsContainerCanInvalidateCache.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.ISettingsContainerCanInvalidateCache",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.ISettingsContainerCanOverride.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.ISettingsContainerCanOverride.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.ISettingsContainerCanOverride",
+      "Summary": "<p sourcefile=\"api/MCM.Abstractions.ISettingsContainerCanOverride.yml\" sourcestartlinenumber=\"1\">Interface that declares that the <xref href=\"MCM.Abstractions.ISettingsContainer\" data-throw-if-not-resolved=\"false\"></xref> can override its settings</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.ISettingsContainerCanReset.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.ISettingsContainerCanReset.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.ISettingsContainerCanReset",
+      "Summary": "<p sourcefile=\"api/MCM.Abstractions.ISettingsContainerCanReset.yml\" sourcestartlinenumber=\"1\">Interface that declares that the <xref href=\"MCM.Abstractions.ISettingsContainer\" data-throw-if-not-resolved=\"false\"></xref> can reset its settings</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.ISettingsContainerHasSettingsDefinitions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.ISettingsContainerHasSettingsDefinitions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.ISettingsContainerHasSettingsDefinitions",
+      "Summary": "<p sourcefile=\"api/MCM.Abstractions.ISettingsContainerHasSettingsDefinitions.yml\" sourcestartlinenumber=\"1\">Interface that declares that the <xref href=\"MCM.Abstractions.ISettingsContainer\" data-throw-if-not-resolved=\"false\"></xref> provides <xref href=\"MCM.Abstractions.SettingsDefinition\" data-throw-if-not-resolved=\"false\"></xref></p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.ISettingsContainerHasSettingsPack.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.ISettingsContainerHasSettingsPack.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.ISettingsContainerHasSettingsPack",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.ISettingsContainerHasUnavailable.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.ISettingsContainerHasUnavailable.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.ISettingsContainerHasUnavailable",
+      "Summary": "<p sourcefile=\"api/MCM.Abstractions.ISettingsContainerHasUnavailable.yml\" sourcestartlinenumber=\"1\">Interface that lists unavailable settings in the global menu</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.ISettingsContainerPresets.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.ISettingsContainerPresets.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.ISettingsContainerPresets",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.ISettingsFormat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.ISettingsFormat.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.ISettingsFormat",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.ISettingsPreset.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.ISettingsPreset.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.ISettingsPreset",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.ISettingsPropertyDefinition.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.ISettingsPropertyDefinition.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.ISettingsPropertyDefinition",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.MemorySettingsFormat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.MemorySettingsFormat.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.MemorySettingsFormat",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.MemorySettingsPreset.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.MemorySettingsPreset.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.MemorySettingsPreset",
+      "Summary": "<p sourcefile=\"api/MCM.Abstractions.MemorySettingsPreset.yml\" sourcestartlinenumber=\"1\">A readonly non serializable preset</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.NoneSettingsFormat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.NoneSettingsFormat.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.NoneSettingsFormat",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.PerCampaign.IFluentPerCampaignSettingsContainer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.PerCampaign.IFluentPerCampaignSettingsContainer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.PerCampaign.IFluentPerCampaignSettingsContainer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.PerCampaign.IPerCampaignSettingsContainer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.PerCampaign.IPerCampaignSettingsContainer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.PerCampaign.IPerCampaignSettingsContainer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.PerCampaign.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.PerCampaign.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.PerCampaign",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.PerSave.IFluentPerSaveSettingsContainer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.PerSave.IFluentPerSaveSettingsContainer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.PerSave.IFluentPerSaveSettingsContainer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.PerSave.IPerSaveSettingsContainer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.PerSave.IPerSaveSettingsContainer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.PerSave.IPerSaveSettingsContainer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.PerSave.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.PerSave.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.PerSave",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Properties.IAttributeSettingsPropertyDiscoverer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Properties.IAttributeSettingsPropertyDiscoverer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Properties.IAttributeSettingsPropertyDiscoverer",
+      "Summary": "<p sourcefile=\"api/MCM.Abstractions.Properties.IAttributeSettingsPropertyDiscoverer.yml\" sourcestartlinenumber=\"1\">So it can be overriden by an external library</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Properties.IFluentSettingsPropertyDiscoverer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Properties.IFluentSettingsPropertyDiscoverer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Properties.IFluentSettingsPropertyDiscoverer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Properties.ISettingsPropertyDiscoverer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Properties.ISettingsPropertyDiscoverer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Properties.ISettingsPropertyDiscoverer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Properties.NoneSettingsPropertyDiscoverer.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Properties.NoneSettingsPropertyDiscoverer.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Properties.NoneSettingsPropertyDiscoverer",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Properties.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Properties.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Properties",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.ServiceCollectionExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.ServiceCollectionExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.ServiceCollectionExtensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.SettingSnapshot.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.SettingSnapshot.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.SettingSnapshot",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.SettingType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.SettingType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.SettingType",
+      "Summary": "<p sourcefile=\"api/MCM.Abstractions.SettingType.yml\" sourcestartlinenumber=\"1\">Defines the different types of settings that can be used.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.SettingsDefinition.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.SettingsDefinition.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.SettingsDefinition",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.SettingsPresetWrapper-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.SettingsPresetWrapper-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.SettingsPresetWrapper<TSetting>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.SettingsPropertyDefinition.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.SettingsPropertyDefinition.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.SettingsPropertyDefinition",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.SettingsPropertyGroupDefinition.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.SettingsPropertyGroupDefinition.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.SettingsPropertyGroupDefinition",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.SettingsProviderWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.SettingsProviderWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.SettingsProviderWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.SettingsUtils.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.SettingsUtils.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.SettingsUtils",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.UnavailableSetting.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.UnavailableSetting.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.UnavailableSetting",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.UnavailableSettingType.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.UnavailableSettingType.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.UnavailableSettingType",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Wrapper.AttributePropertyDefinitionGroupToggleWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Wrapper.AttributePropertyDefinitionGroupToggleWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Wrapper.AttributePropertyDefinitionGroupToggleWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Wrapper.BasePropertyDefinitionWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Wrapper.BasePropertyDefinitionWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Wrapper.BasePropertyDefinitionWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Wrapper.PropertyDefinitionBoolWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Wrapper.PropertyDefinitionBoolWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Wrapper.PropertyDefinitionBoolWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Wrapper.PropertyDefinitionButtonWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Wrapper.PropertyDefinitionButtonWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Wrapper.PropertyDefinitionButtonWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Wrapper.PropertyDefinitionDropdownWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Wrapper.PropertyDefinitionDropdownWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Wrapper.PropertyDefinitionDropdownWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Wrapper.PropertyDefinitionGroupToggleWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Wrapper.PropertyDefinitionGroupToggleWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Wrapper.PropertyDefinitionGroupToggleWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Wrapper.PropertyDefinitionTextWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Wrapper.PropertyDefinitionTextWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Wrapper.PropertyDefinitionTextWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Wrapper.PropertyDefinitionWithActionFormatWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Wrapper.PropertyDefinitionWithActionFormatWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Wrapper.PropertyDefinitionWithActionFormatWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Wrapper.PropertyDefinitionWithCustomFormatterWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Wrapper.PropertyDefinitionWithCustomFormatterWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Wrapper.PropertyDefinitionWithCustomFormatterWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Wrapper.PropertyDefinitionWithEditableMinMaxWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Wrapper.PropertyDefinitionWithEditableMinMaxWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Wrapper.PropertyDefinitionWithEditableMinMaxWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Wrapper.PropertyDefinitionWithFormatWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Wrapper.PropertyDefinitionWithFormatWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Wrapper.PropertyDefinitionWithFormatWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Wrapper.PropertyDefinitionWithIdWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Wrapper.PropertyDefinitionWithIdWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Wrapper.PropertyDefinitionWithIdWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Wrapper.PropertyDefinitionWithMinMaxWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Wrapper.PropertyDefinitionWithMinMaxWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Wrapper.PropertyDefinitionWithMinMaxWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Wrapper.PropertyGroupDefinitionWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Wrapper.PropertyGroupDefinitionWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Wrapper.PropertyGroupDefinitionWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Wrapper.SettingsDefinitionWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Wrapper.SettingsDefinitionWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Wrapper.SettingsDefinitionWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Wrapper.SettingsPropertyDefinitionWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Wrapper.SettingsPropertyDefinitionWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Wrapper.SettingsPropertyDefinitionWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Wrapper.SettingsPropertyGroupDefinitionWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Wrapper.SettingsPropertyGroupDefinitionWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Wrapper.SettingsPropertyGroupDefinitionWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Wrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Wrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Wrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Xml.PropertyBaseXmlModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Xml.PropertyBaseXmlModel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Xml.PropertyBaseXmlModel",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Xml.PropertyBoolXmlModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Xml.PropertyBoolXmlModel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Xml.PropertyBoolXmlModel",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Xml.PropertyDropdownXmlModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Xml.PropertyDropdownXmlModel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Xml.PropertyDropdownXmlModel",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Xml.PropertyFloatingIntegerXmlModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Xml.PropertyFloatingIntegerXmlModel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Xml.PropertyFloatingIntegerXmlModel",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Xml.PropertyGroupXmlModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Xml.PropertyGroupXmlModel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Xml.PropertyGroupXmlModel",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Xml.PropertyIntegerXmlModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Xml.PropertyIntegerXmlModel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Xml.PropertyIntegerXmlModel",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Xml.PropertyTextXmlModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Xml.PropertyTextXmlModel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Xml.PropertyTextXmlModel",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Xml.SettingsXmlModel.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Xml.SettingsXmlModel.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Xml.SettingsXmlModel",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.Xml.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.Xml.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions.Xml",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Abstractions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Abstractions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Abstractions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Common.Constants.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Common.Constants.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Common.Constants",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Common.Dropdown-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Common.Dropdown-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Common.Dropdown<T>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Common.IRef.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Common.IRef.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Common.IRef",
+      "Summary": "<p sourcefile=\"api/MCM.Common.IRef.yml\" sourcestartlinenumber=\"1\">An interface that provides access to some value for MCM to get/set.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Common.IWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Common.IWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Common.IWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Common.LocalizationUtils.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Common.LocalizationUtils.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Common.LocalizationUtils",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Common.MCMException.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Common.MCMException.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Common.MCMException",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Common.PropertyRef.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Common.PropertyRef.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Common.PropertyRef",
+      "Summary": "<p sourcefile=\"api/MCM.Common.PropertyRef.yml\" sourcestartlinenumber=\"1\">Wraps a class property for MCM to get/set its value</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Common.ProxyRef-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Common.ProxyRef-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Common.ProxyRef<T>",
+      "Summary": "<p sourcefile=\"api/MCM.Common.ProxyRef-1.yml\" sourcestartlinenumber=\"1\">A broader wrapper. Uses functions for getting/setting the value</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Common.RefWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Common.RefWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Common.RefWrapper",
+      "Summary": "<p sourcefile=\"api/MCM.Common.RefWrapper.yml\" sourcestartlinenumber=\"1\">Wrapper around any type that implements <xref href=\"MCM.Common.IRef\" data-throw-if-not-resolved=\"false\"></xref>.\nWe don't use casting because it might not be safe.</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Common.SelectedIndexWrapper.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Common.SelectedIndexWrapper.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Common.SelectedIndexWrapper",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Common.StorageRef-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Common.StorageRef-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Common.StorageRef<T>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Common.StorageRef.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Common.StorageRef.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Common.StorageRef",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Common.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Common.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Common",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Implementation.BaseJsonSettingsFormat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Implementation.BaseJsonSettingsFormat.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Implementation.BaseJsonSettingsFormat",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Implementation.BaseSettingsContainer-1.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Implementation.BaseSettingsContainer-1.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Implementation.BaseSettingsContainer<TSettings>",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Implementation.BaseSettingsJsonConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Implementation.BaseSettingsJsonConverter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Implementation.BaseSettingsJsonConverter",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Implementation.DropdownJsonConverter.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Implementation.DropdownJsonConverter.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Implementation.DropdownJsonConverter",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Implementation.JsonSettingsFormat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Implementation.JsonSettingsFormat.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Implementation.JsonSettingsFormat",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Implementation.JsonSettingsPreset.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Implementation.JsonSettingsPreset.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Implementation.JsonSettingsPreset",
+      "Summary": "<p sourcefile=\"api/MCM.Implementation.JsonSettingsPreset.yml\" sourcestartlinenumber=\"1\">A persistent preset that can be created at runtime</p>\n"
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Implementation.XmlSettingsFormat.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Implementation.XmlSettingsFormat.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Implementation.XmlSettingsFormat",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Implementation.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Implementation.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Implementation",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Internal.Extensions.ServiceCollectionExtensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Internal.Extensions.ServiceCollectionExtensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Internal.Extensions.ServiceCollectionExtensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.Internal.Extensions.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.Internal.Extensions.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.Internal.Extensions",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.MCMSubModule.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.MCMSubModule.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.MCMSubModule",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.SettingsProviderCampaignBehavior.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.SettingsProviderCampaignBehavior.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.SettingsProviderCampaignBehavior",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.SettingsProviderMissionBehavior.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.SettingsProviderMissionBehavior.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM.SettingsProviderMissionBehavior",
+      "Summary": null
+    },
+    {
+      "type": "ManagedReference",
+      "source_relative_path": "api/MCM.yml",
+      "output": {
+        ".html": {
+          "relative_path": "api/MCM.html"
+        }
+      },
+      "version": "",
+      "Uid": null,
+      "IsMRef": true,
+      "Title": "MCM",
+      "Summary": null
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "api/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "api/toc.json"
+        },
+        ".html": {
+          "relative_path": "api/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/GitHub Actions/environment-variables-used.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/GitHub Actions/environment-variables-used.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/GitHub Actions/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "articles/GitHub Actions/toc.json"
+        },
+        ".html": {
+          "relative_path": "articles/GitHub Actions/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MCMv2/Installation/editing-submodule.xml.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MCMv2/Installation/editing-submodule.xml.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MCMv2/Installation/installation.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MCMv2/Installation/installation.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MCMv2/Installation/settings-definition-example.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MCMv2/Installation/settings-definition-example.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/MCMv2/Installation/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "articles/MCMv2/Installation/toc.json"
+        },
+        ".html": {
+          "relative_path": "articles/MCMv2/Installation/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MCMv2/attributes.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MCMv2/attributes.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MCMv2/comparing-to-modlib.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MCMv2/comparing-to-modlib.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MCMv2/migrating-to-v2.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MCMv2/migrating-to-v2.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MCMv2/project-example.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MCMv2/project-example.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/MCMv2/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "articles/MCMv2/toc.json"
+        },
+        ".html": {
+          "relative_path": "articles/MCMv2/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MCMv3/mcmv3-attributes.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MCMv3/mcmv3-attributes.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MCMv3/mcmv3-fluent-builder.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MCMv3/mcmv3-fluent-builder.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MCMv3/mcmv3-soft-dependency.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MCMv3/mcmv3-soft-dependency.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MCMv3/mcmv3.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MCMv3/mcmv3.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/MCMv3/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "articles/MCMv3/toc.json"
+        },
+        ".html": {
+          "relative_path": "articles/MCMv3/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MCMv4/mcmv4-attributes.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MCMv4/mcmv4-attributes.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MCMv4/mcmv4-fluent-builder.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MCMv4/mcmv4-fluent-builder.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MCMv4/mcmv4-migrating-from-mcmv3.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MCMv4/mcmv4-migrating-from-mcmv3.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MCMv4/mcmv4-soft-dependency.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MCMv4/mcmv4-soft-dependency.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MCMv4/mcmv4.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MCMv4/mcmv4.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/MCMv4/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "articles/MCMv4/toc.json"
+        },
+        ".html": {
+          "relative_path": "articles/MCMv4/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MCMv5/mcmv5-attributes.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MCMv5/mcmv5-attributes.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MCMv5/mcmv5-fluent-builder.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MCMv5/mcmv5-fluent-builder.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MCMv5/mcmv5-migrating-from-mcmv4.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MCMv5/mcmv5-migrating-from-mcmv4.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MCMv5/mcmv5-persistent-presets.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MCMv5/mcmv5-persistent-presets.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MCMv5/mcmv5-soft-dependency.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MCMv5/mcmv5-soft-dependency.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/MCMv5/mcmv5.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/MCMv5/mcmv5.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/MCMv5/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "articles/MCMv5/toc.json"
+        },
+        ".html": {
+          "relative_path": "articles/MCMv5/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/contributors.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/contributors.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "articles/index.md",
+      "output": {
+        ".html": {
+          "relative_path": "articles/index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "articles/toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "articles/toc.json"
+        },
+        ".html": {
+          "relative_path": "articles/toc.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Resource",
+      "source_relative_path": "images/MCM-48.svg",
+      "output": {
+        "resource": {
+          "relative_path": "images/MCM-48.svg"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Conceptual",
+      "source_relative_path": "index.md",
+      "output": {
+        ".html": {
+          "relative_path": "index.html"
+        }
+      },
+      "version": ""
+    },
+    {
+      "type": "Toc",
+      "source_relative_path": "toc.yml",
+      "output": {
+        ".json": {
+          "relative_path": "toc.json"
+        },
+        ".html": {
+          "relative_path": "toc.html"
+        }
+      },
+      "version": ""
+    }
+  ],
+  "groups": [
+    {
+      "xrefmap": "xrefmap.yml"
+    }
+  ]
+}

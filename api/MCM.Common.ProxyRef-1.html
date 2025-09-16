@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class ProxyRef&lt;T&gt; | MCM Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class ProxyRef&lt;T&gt; | MCM Documentation ">
+      
+      <meta name="description" content="A broader wrapper. Uses functions for getting/setting the value">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Aragas/Bannerlord.MBOptionScreen/new/dev/apiSpec/new?filename=MCM_Common_ProxyRef_1.md&amp;value=---%0Auid%3A%20MCM.Common.ProxyRef%601%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/MCM-48.svg" alt="MCM">
+            MCM
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="MCM.Common.ProxyRef`1">
+
+
+
+  <h1 id="MCM_Common_ProxyRef_1" data-uid="MCM.Common.ProxyRef`1" class="text-break">
+Class ProxyRef&lt;T&gt;  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Common/Ref/ProxyRef.cs/#L16"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="MCM.html">MCM</a>.<a class="xref" href="MCM.Common.html">Common</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MCMv5.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>A broader wrapper. Uses functions for getting/setting the value</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class ProxyRef&lt;T&gt; : IRef, INotifyPropertyChanged, IEquatable&lt;ProxyRef&lt;T&gt;&gt;</code></pre>
+  </div>
+
+
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>T</code></dt>
+    <dd></dd>
+  </dl>
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">ProxyRef&lt;T&gt;</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="MCM.Common.IRef.html">IRef</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.iequatable-1">IEquatable</a>&lt;<a class="xref" href="MCM.Common.ProxyRef-1.html">ProxyRef</a>&lt;T&gt;&gt;</div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="MCM_Common_ProxyRef_1__ctor_" data-uid="MCM.Common.ProxyRef`1.#ctor*"></a>
+
+  <h3 id="MCM_Common_ProxyRef_1__ctor_System_Func__0__System_Action__0__" data-uid="MCM.Common.ProxyRef`1.#ctor(System.Func{`0},System.Action{`0})">
+  ProxyRef(Func&lt;T&gt;, Action&lt;T&gt;?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Common/Ref/ProxyRef.cs/#L43"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ProxyRef(Func&lt;T&gt; getter, Action&lt;T&gt;? setter)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>getter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.func-1">Func</a>&lt;T&gt;</dt>
+    <dd></dd>
+    <dt><code>setter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;T&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="MCM_Common_ProxyRef_1_Type_" data-uid="MCM.Common.ProxyRef`1.Type*"></a>
+
+  <h3 id="MCM_Common_ProxyRef_1_Type" data-uid="MCM.Common.ProxyRef`1.Type">
+  Type
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Common/Ref/ProxyRef.cs/#L27"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Underlying type of the value</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Type Type { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="MCM_Common_ProxyRef_1_Value_" data-uid="MCM.Common.ProxyRef`1.Value*"></a>
+
+  <h3 id="MCM_Common_ProxyRef_1_Value" data-uid="MCM.Common.ProxyRef`1.Value">
+  Value
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Common/Ref/ProxyRef.cs/#L30"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public object? Value { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="MCM_Common_ProxyRef_1_Equals_" data-uid="MCM.Common.ProxyRef`1.Equals*"></a>
+
+  <h3 id="MCM_Common_ProxyRef_1_Equals_MCM_Common_ProxyRef__0__" data-uid="MCM.Common.ProxyRef`1.Equals(MCM.Common.ProxyRef{`0})">
+  Equals(ProxyRef&lt;T&gt;?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Common/Ref/ProxyRef.cs/#L53"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool Equals(ProxyRef&lt;T&gt;? other)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>other</code> <a class="xref" href="MCM.Common.ProxyRef-1.html">ProxyRef</a>&lt;T&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Common_ProxyRef_1_Equals_" data-uid="MCM.Common.ProxyRef`1.Equals*"></a>
+
+  <h3 id="MCM_Common_ProxyRef_1_Equals_System_Object_" data-uid="MCM.Common.ProxyRef`1.Equals(System.Object)">
+  Equals(object?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Common/Ref/ProxyRef.cs/#L60"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override bool Equals(object? obj)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>obj</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Common_ProxyRef_1_GetHashCode_" data-uid="MCM.Common.ProxyRef`1.GetHashCode*"></a>
+
+  <h3 id="MCM_Common_ProxyRef_1_GetHashCode" data-uid="MCM.Common.ProxyRef`1.GetHashCode">
+  GetHashCode()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Common/Ref/ProxyRef.cs/#L68"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public override int GetHashCode()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Common_ProxyRef_1_OnPropertyChanged_" data-uid="MCM.Common.ProxyRef`1.OnPropertyChanged*"></a>
+
+  <h3 id="MCM_Common_ProxyRef_1_OnPropertyChanged_System_String_" data-uid="MCM.Common.ProxyRef`1.OnPropertyChanged(System.String)">
+  OnPropertyChanged(string?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Common/Ref/ProxyRef.cs/#L49"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">protected virtual void OnPropertyChanged(string? propertyName = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>propertyName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="events">Events
+</h2>
+
+
+
+  <h3 id="MCM_Common_ProxyRef_1_PropertyChanged" data-uid="MCM.Common.ProxyRef`1.PropertyChanged">
+  PropertyChanged
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Common/Ref/ProxyRef.cs/#L21"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public event PropertyChangedEventHandler? PropertyChanged</code></pre>
+  </div>
+
+
+
+
+
+
+  <h4 class="section">Event Type</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventhandler">PropertyChangedEventHandler</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+  <h2 class="section" id="operators">Operators
+</h2>
+
+
+  <a id="MCM_Common_ProxyRef_1_op_Equality_" data-uid="MCM.Common.ProxyRef`1.op_Equality*"></a>
+
+  <h3 id="MCM_Common_ProxyRef_1_op_Equality_MCM_Common_ProxyRef__0__MCM_Common_ProxyRef__0__" data-uid="MCM.Common.ProxyRef`1.op_Equality(MCM.Common.ProxyRef{`0},MCM.Common.ProxyRef{`0})">
+  operator ==(ProxyRef&lt;T&gt;?, ProxyRef&lt;T&gt;?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Common/Ref/ProxyRef.cs/#L76"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator ==(ProxyRef&lt;T&gt;? left, ProxyRef&lt;T&gt;? right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="MCM.Common.ProxyRef-1.html">ProxyRef</a>&lt;T&gt;</dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="MCM.Common.ProxyRef-1.html">ProxyRef</a>&lt;T&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Common_ProxyRef_1_op_Inequality_" data-uid="MCM.Common.ProxyRef`1.op_Inequality*"></a>
+
+  <h3 id="MCM_Common_ProxyRef_1_op_Inequality_MCM_Common_ProxyRef__0__MCM_Common_ProxyRef__0__" data-uid="MCM.Common.ProxyRef`1.op_Inequality(MCM.Common.ProxyRef{`0},MCM.Common.ProxyRef{`0})">
+  operator !=(ProxyRef&lt;T&gt;?, ProxyRef&lt;T&gt;?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Common/Ref/ProxyRef.cs/#L77"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool operator !=(ProxyRef&lt;T&gt;? left, ProxyRef&lt;T&gt;? right)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>left</code> <a class="xref" href="MCM.Common.ProxyRef-1.html">ProxyRef</a>&lt;T&gt;</dt>
+    <dd></dd>
+    <dt><code>right</code> <a class="xref" href="MCM.Common.ProxyRef-1.html">ProxyRef</a>&lt;T&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Common/Ref/ProxyRef.cs/#L16" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          © 2020-2024 Aragas
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

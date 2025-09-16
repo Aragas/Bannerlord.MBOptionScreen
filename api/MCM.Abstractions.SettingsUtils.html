@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class SettingsUtils | MCM Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class SettingsUtils | MCM Documentation ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Aragas/Bannerlord.MBOptionScreen/new/dev/apiSpec/new?filename=MCM_Abstractions_SettingsUtils.md&amp;value=---%0Auid%3A%20MCM.Abstractions.SettingsUtils%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/MCM-48.svg" alt="MCM">
+            MCM
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="MCM.Abstractions.SettingsUtils">
+
+
+
+  <h1 id="MCM_Abstractions_SettingsUtils" data-uid="MCM.Abstractions.SettingsUtils" class="text-break">
+Class SettingsUtils  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L22"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="MCM.html">MCM</a>.<a class="xref" href="MCM.Abstractions.html">Abstractions</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MCMv5.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"></div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class SettingsUtils</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">SettingsUtils</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="MCM_Abstractions_SettingsUtils_CheckIsValid_" data-uid="MCM.Abstractions.SettingsUtils.CheckIsValid*"></a>
+
+  <h3 id="MCM_Abstractions_SettingsUtils_CheckIsValid_MCM_Abstractions_ISettingsPropertyDefinition_System_Object_" data-uid="MCM.Abstractions.SettingsUtils.CheckIsValid(MCM.Abstractions.ISettingsPropertyDefinition,System.Object)">
+  CheckIsValid(ISettingsPropertyDefinition, object?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L26"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void CheckIsValid(ISettingsPropertyDefinition prop, object? settings)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>prop</code> <a class="xref" href="MCM.Abstractions.ISettingsPropertyDefinition.html">ISettingsPropertyDefinition</a></dt>
+    <dd></dd>
+    <dt><code>settings</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_SettingsUtils_Equals_" data-uid="MCM.Abstractions.SettingsUtils.Equals*"></a>
+
+  <h3 id="MCM_Abstractions_SettingsUtils_Equals_MCM_Abstractions_Base_BaseSettings_MCM_Abstractions_Base_BaseSettings_" data-uid="MCM.Abstractions.SettingsUtils.Equals(MCM.Abstractions.Base.BaseSettings,MCM.Abstractions.Base.BaseSettings)">
+  Equals(BaseSettings, BaseSettings)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L67"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool Equals(BaseSettings settings1, BaseSettings settings2)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>settings1</code> <a class="xref" href="MCM.Abstractions.Base.BaseSettings.html">BaseSettings</a></dt>
+    <dd></dd>
+    <dt><code>settings2</code> <a class="xref" href="MCM.Abstractions.Base.BaseSettings.html">BaseSettings</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_SettingsUtils_Equals_" data-uid="MCM.Abstractions.SettingsUtils.Equals*"></a>
+
+  <h3 id="MCM_Abstractions_SettingsUtils_Equals_MCM_Abstractions_ISettingsPropertyDefinition_MCM_Abstractions_ISettingsPropertyDefinition_" data-uid="MCM.Abstractions.SettingsUtils.Equals(MCM.Abstractions.ISettingsPropertyDefinition,MCM.Abstractions.ISettingsPropertyDefinition)">
+  Equals(ISettingsPropertyDefinition?, ISettingsPropertyDefinition?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L83"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool Equals(ISettingsPropertyDefinition? currentDefinition, ISettingsPropertyDefinition? newDefinition)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>currentDefinition</code> <a class="xref" href="MCM.Abstractions.ISettingsPropertyDefinition.html">ISettingsPropertyDefinition</a></dt>
+    <dd></dd>
+    <dt><code>newDefinition</code> <a class="xref" href="MCM.Abstractions.ISettingsPropertyDefinition.html">ISettingsPropertyDefinition</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_SettingsUtils_GetAllSettingPropertyDefinitions_" data-uid="MCM.Abstractions.SettingsUtils.GetAllSettingPropertyDefinitions*"></a>
+
+  <h3 id="MCM_Abstractions_SettingsUtils_GetAllSettingPropertyDefinitions_MCM_Abstractions_SettingsPropertyGroupDefinition_" data-uid="MCM.Abstractions.SettingsUtils.GetAllSettingPropertyDefinitions(MCM.Abstractions.SettingsPropertyGroupDefinition)">
+  GetAllSettingPropertyDefinitions(SettingsPropertyGroupDefinition)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L186"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;ISettingsPropertyDefinition&gt; GetAllSettingPropertyDefinitions(SettingsPropertyGroupDefinition settingPropertyGroup1)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>settingPropertyGroup1</code> <a class="xref" href="MCM.Abstractions.SettingsPropertyGroupDefinition.html">SettingsPropertyGroupDefinition</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="MCM.Abstractions.ISettingsPropertyDefinition.html">ISettingsPropertyDefinition</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_SettingsUtils_GetAllSettingPropertyGroupDefinitions_" data-uid="MCM.Abstractions.SettingsUtils.GetAllSettingPropertyGroupDefinitions*"></a>
+
+  <h3 id="MCM_Abstractions_SettingsUtils_GetAllSettingPropertyGroupDefinitions_MCM_Abstractions_SettingsPropertyGroupDefinition_" data-uid="MCM.Abstractions.SettingsUtils.GetAllSettingPropertyGroupDefinitions(MCM.Abstractions.SettingsPropertyGroupDefinition)">
+  GetAllSettingPropertyGroupDefinitions(SettingsPropertyGroupDefinition)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L201"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;SettingsPropertyGroupDefinition&gt; GetAllSettingPropertyGroupDefinitions(SettingsPropertyGroupDefinition settingPropertyGroup)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>settingPropertyGroup</code> <a class="xref" href="MCM.Abstractions.SettingsPropertyGroupDefinition.html">SettingsPropertyGroupDefinition</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="MCM.Abstractions.SettingsPropertyGroupDefinition.html">SettingsPropertyGroupDefinition</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_SettingsUtils_GetGroupFor_" data-uid="MCM.Abstractions.SettingsUtils.GetGroupFor*"></a>
+
+  <h3 id="MCM_Abstractions_SettingsUtils_GetGroupFor_System_Char_MCM_Abstractions_ISettingsPropertyDefinition_System_Collections_Generic_ICollection_MCM_Abstractions_SettingsPropertyGroupDefinition__" data-uid="MCM.Abstractions.SettingsUtils.GetGroupFor(System.Char,MCM.Abstractions.ISettingsPropertyDefinition,System.Collections.Generic.ICollection{MCM.Abstractions.SettingsPropertyGroupDefinition})">
+  GetGroupFor(char, ISettingsPropertyDefinition, ICollection&lt;SettingsPropertyGroupDefinition&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L218"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SettingsPropertyGroupDefinition GetGroupFor(char subGroupDelimiter, ISettingsPropertyDefinition sp, ICollection&lt;SettingsPropertyGroupDefinition&gt; rootCollection)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>subGroupDelimiter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.char">char</a></dt>
+    <dd></dd>
+    <dt><code>sp</code> <a class="xref" href="MCM.Abstractions.ISettingsPropertyDefinition.html">ISettingsPropertyDefinition</a></dt>
+    <dd></dd>
+    <dt><code>rootCollection</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1">ICollection</a>&lt;<a class="xref" href="MCM.Abstractions.SettingsPropertyGroupDefinition.html">SettingsPropertyGroupDefinition</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MCM.Abstractions.SettingsPropertyGroupDefinition.html">SettingsPropertyGroupDefinition</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_SettingsUtils_GetGroupForRecursive_" data-uid="MCM.Abstractions.SettingsUtils.GetGroupForRecursive*"></a>
+
+  <h3 id="MCM_Abstractions_SettingsUtils_GetGroupForRecursive_System_Char_System_String_MCM_Abstractions_SettingsPropertyGroupDefinition_MCM_Abstractions_ISettingsPropertyDefinition_" data-uid="MCM.Abstractions.SettingsUtils.GetGroupForRecursive(System.Char,System.String,MCM.Abstractions.SettingsPropertyGroupDefinition,MCM.Abstractions.ISettingsPropertyDefinition)">
+  GetGroupForRecursive(char, string, SettingsPropertyGroupDefinition, ISettingsPropertyDefinition)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L249"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static SettingsPropertyGroupDefinition GetGroupForRecursive(char subGroupDelimiter, string groupName, SettingsPropertyGroupDefinition sgp, ISettingsPropertyDefinition sp)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>subGroupDelimiter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.char">char</a></dt>
+    <dd></dd>
+    <dt><code>groupName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>sgp</code> <a class="xref" href="MCM.Abstractions.SettingsPropertyGroupDefinition.html">SettingsPropertyGroupDefinition</a></dt>
+    <dd></dd>
+    <dt><code>sp</code> <a class="xref" href="MCM.Abstractions.ISettingsPropertyDefinition.html">ISettingsPropertyDefinition</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MCM.Abstractions.SettingsPropertyGroupDefinition.html">SettingsPropertyGroupDefinition</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_SettingsUtils_GetPropertyDefinitionWrappers_" data-uid="MCM.Abstractions.SettingsUtils.GetPropertyDefinitionWrappers*"></a>
+
+  <h3 id="MCM_Abstractions_SettingsUtils_GetPropertyDefinitionWrappers_System_Collections_Generic_IReadOnlyCollection_System_Object__" data-uid="MCM.Abstractions.SettingsUtils.GetPropertyDefinitionWrappers(System.Collections.Generic.IReadOnlyCollection{System.Object})">
+  GetPropertyDefinitionWrappers(IReadOnlyCollection&lt;object&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L293"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;IPropertyDefinitionBase&gt; GetPropertyDefinitionWrappers(IReadOnlyCollection&lt;object&gt; properties)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>properties</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlycollection-1">IReadOnlyCollection</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="MCM.Abstractions.IPropertyDefinitionBase.html">IPropertyDefinitionBase</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_SettingsUtils_GetPropertyDefinitionWrappers_" data-uid="MCM.Abstractions.SettingsUtils.GetPropertyDefinitionWrappers*"></a>
+
+  <h3 id="MCM_Abstractions_SettingsUtils_GetPropertyDefinitionWrappers_System_Object_" data-uid="MCM.Abstractions.SettingsUtils.GetPropertyDefinitionWrappers(System.Object)">
+  GetPropertyDefinitionWrappers(object)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L291"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;IPropertyDefinitionBase&gt; GetPropertyDefinitionWrappers(object property)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>property</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="MCM.Abstractions.IPropertyDefinitionBase.html">IPropertyDefinitionBase</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_SettingsUtils_GetSettingsPropertyGroups_" data-uid="MCM.Abstractions.SettingsUtils.GetSettingsPropertyGroups*"></a>
+
+  <h3 id="MCM_Abstractions_SettingsUtils_GetSettingsPropertyGroups_System_Char_System_Collections_Generic_IEnumerable_MCM_Abstractions_ISettingsPropertyDefinition__" data-uid="MCM.Abstractions.SettingsUtils.GetSettingsPropertyGroups(System.Char,System.Collections.Generic.IEnumerable{MCM.Abstractions.ISettingsPropertyDefinition})">
+  GetSettingsPropertyGroups(char, IEnumerable&lt;ISettingsPropertyDefinition&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L208"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static List&lt;SettingsPropertyGroupDefinition&gt; GetSettingsPropertyGroups(char subGroupDelimiter, IEnumerable&lt;ISettingsPropertyDefinition&gt; settingsPropertyDefinitions)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>subGroupDelimiter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.char">char</a></dt>
+    <dd></dd>
+    <dt><code>settingsPropertyDefinitions</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="MCM.Abstractions.ISettingsPropertyDefinition.html">ISettingsPropertyDefinition</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1">List</a>&lt;<a class="xref" href="MCM.Abstractions.SettingsPropertyGroupDefinition.html">SettingsPropertyGroupDefinition</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_SettingsUtils_GetTopGroupName_" data-uid="MCM.Abstractions.SettingsUtils.GetTopGroupName*"></a>
+
+  <h3 id="MCM_Abstractions_SettingsUtils_GetTopGroupName_System_Char_System_String_System_String__" data-uid="MCM.Abstractions.SettingsUtils.GetTopGroupName(System.Char,System.String,System.String@)">
+  GetTopGroupName(char, string, out string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L282"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static string GetTopGroupName(char subGroupDelimiter, string groupName, out string truncatedGroupName)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>subGroupDelimiter</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.char">char</a></dt>
+    <dd></dd>
+    <dt><code>groupName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>truncatedGroupName</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_SettingsUtils_IsForCheckboxDropdown_" data-uid="MCM.Abstractions.SettingsUtils.IsForCheckboxDropdown*"></a>
+
+  <h3 id="MCM_Abstractions_SettingsUtils_IsForCheckboxDropdown_System_Object_" data-uid="MCM.Abstractions.SettingsUtils.IsForCheckboxDropdown(System.Object)">
+  IsForCheckboxDropdown(object?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L184"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsForCheckboxDropdown(object? obj)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>obj</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_SettingsUtils_IsForCheckboxDropdown_" data-uid="MCM.Abstractions.SettingsUtils.IsForCheckboxDropdown*"></a>
+
+  <h3 id="MCM_Abstractions_SettingsUtils_IsForCheckboxDropdown_System_Type_" data-uid="MCM.Abstractions.SettingsUtils.IsForCheckboxDropdown(System.Type)">
+  IsForCheckboxDropdown(Type)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L180"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsForCheckboxDropdown(Type type)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_SettingsUtils_IsForGenericDropdown_" data-uid="MCM.Abstractions.SettingsUtils.IsForGenericDropdown*"></a>
+
+  <h3 id="MCM_Abstractions_SettingsUtils_IsForGenericDropdown_System_Type_" data-uid="MCM.Abstractions.SettingsUtils.IsForGenericDropdown(System.Type)">
+  IsForGenericDropdown(Type)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L170"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsForGenericDropdown(Type type)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_SettingsUtils_IsForTextDropdown_" data-uid="MCM.Abstractions.SettingsUtils.IsForTextDropdown*"></a>
+
+  <h3 id="MCM_Abstractions_SettingsUtils_IsForTextDropdown_System_Object_" data-uid="MCM.Abstractions.SettingsUtils.IsForTextDropdown(System.Object)">
+  IsForTextDropdown(object?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L183"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsForTextDropdown(object? obj)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>obj</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_SettingsUtils_IsForTextDropdown_" data-uid="MCM.Abstractions.SettingsUtils.IsForTextDropdown*"></a>
+
+  <h3 id="MCM_Abstractions_SettingsUtils_IsForTextDropdown_System_Type_" data-uid="MCM.Abstractions.SettingsUtils.IsForTextDropdown(System.Type)">
+  IsForTextDropdown(Type)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L177"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool IsForTextDropdown(Type type)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>type</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.type">Type</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_SettingsUtils_OverrideSettings_" data-uid="MCM.Abstractions.SettingsUtils.OverrideSettings*"></a>
+
+  <h3 id="MCM_Abstractions_SettingsUtils_OverrideSettings_MCM_Abstractions_Base_BaseSettings_MCM_Abstractions_Base_BaseSettings_" data-uid="MCM.Abstractions.SettingsUtils.OverrideSettings(MCM.Abstractions.Base.BaseSettings,MCM.Abstractions.Base.BaseSettings)">
+  OverrideSettings(BaseSettings, BaseSettings)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L61"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void OverrideSettings(BaseSettings settings, BaseSettings overrideSettings)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>settings</code> <a class="xref" href="MCM.Abstractions.Base.BaseSettings.html">BaseSettings</a></dt>
+    <dd></dd>
+    <dt><code>overrideSettings</code> <a class="xref" href="MCM.Abstractions.Base.BaseSettings.html">BaseSettings</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_SettingsUtils_OverrideValues_" data-uid="MCM.Abstractions.SettingsUtils.OverrideValues*"></a>
+
+  <h3 id="MCM_Abstractions_SettingsUtils_OverrideValues_MCM_Abstractions_Base_BaseSettings_MCM_Abstractions_Base_BaseSettings_" data-uid="MCM.Abstractions.SettingsUtils.OverrideValues(MCM.Abstractions.Base.BaseSettings,MCM.Abstractions.Base.BaseSettings)">
+  OverrideValues(BaseSettings, BaseSettings)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L120"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void OverrideValues(BaseSettings current, BaseSettings @new)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>current</code> <a class="xref" href="MCM.Abstractions.Base.BaseSettings.html">BaseSettings</a></dt>
+    <dd></dd>
+    <dt><code>new</code> <a class="xref" href="MCM.Abstractions.Base.BaseSettings.html">BaseSettings</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_SettingsUtils_OverrideValues_" data-uid="MCM.Abstractions.SettingsUtils.OverrideValues*"></a>
+
+  <h3 id="MCM_Abstractions_SettingsUtils_OverrideValues_MCM_Abstractions_ISettingsPropertyDefinition_MCM_Abstractions_ISettingsPropertyDefinition_" data-uid="MCM.Abstractions.SettingsUtils.OverrideValues(MCM.Abstractions.ISettingsPropertyDefinition,MCM.Abstractions.ISettingsPropertyDefinition)">
+  OverrideValues(ISettingsPropertyDefinition, ISettingsPropertyDefinition)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L161"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void OverrideValues(ISettingsPropertyDefinition current, ISettingsPropertyDefinition @new)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>current</code> <a class="xref" href="MCM.Abstractions.ISettingsPropertyDefinition.html">ISettingsPropertyDefinition</a></dt>
+    <dd></dd>
+    <dt><code>new</code> <a class="xref" href="MCM.Abstractions.ISettingsPropertyDefinition.html">ISettingsPropertyDefinition</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_SettingsUtils_OverrideValues_" data-uid="MCM.Abstractions.SettingsUtils.OverrideValues*"></a>
+
+  <h3 id="MCM_Abstractions_SettingsUtils_OverrideValues_MCM_Abstractions_SettingsPropertyGroupDefinition_MCM_Abstractions_SettingsPropertyGroupDefinition_" data-uid="MCM.Abstractions.SettingsUtils.OverrideValues(MCM.Abstractions.SettingsPropertyGroupDefinition,MCM.Abstractions.SettingsPropertyGroupDefinition)">
+  OverrideValues(SettingsPropertyGroupDefinition, SettingsPropertyGroupDefinition)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L135"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void OverrideValues(SettingsPropertyGroupDefinition current, SettingsPropertyGroupDefinition @new)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>current</code> <a class="xref" href="MCM.Abstractions.SettingsPropertyGroupDefinition.html">SettingsPropertyGroupDefinition</a></dt>
+    <dd></dd>
+    <dt><code>new</code> <a class="xref" href="MCM.Abstractions.SettingsPropertyGroupDefinition.html">SettingsPropertyGroupDefinition</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_SettingsUtils_ResetSettings_" data-uid="MCM.Abstractions.SettingsUtils.ResetSettings*"></a>
+
+  <h3 id="MCM_Abstractions_SettingsUtils_ResetSettings_MCM_Abstractions_Base_BaseSettings_" data-uid="MCM.Abstractions.SettingsUtils.ResetSettings(MCM.Abstractions.Base.BaseSettings)">
+  ResetSettings(BaseSettings)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L53"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static void ResetSettings(BaseSettings settings)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>settings</code> <a class="xref" href="MCM.Abstractions.Base.BaseSettings.html">BaseSettings</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Utils/SettingsUtils.cs/#L22" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          © 2020-2024 Aragas
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

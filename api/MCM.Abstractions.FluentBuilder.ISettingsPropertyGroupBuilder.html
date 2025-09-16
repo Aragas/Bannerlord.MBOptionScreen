@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Interface ISettingsPropertyGroupBuilder | MCM Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Interface ISettingsPropertyGroupBuilder | MCM Documentation ">
+      
+      <meta name="description" content="An interface that defines the necessary members for implementing a settings property group builder.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Aragas/Bannerlord.MBOptionScreen/new/dev/apiSpec/new?filename=MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder.md&amp;value=---%0Auid%3A%20MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../images/MCM-48.svg" alt="MCM">
+            MCM
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder">
+
+
+
+  <h1 id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder" class="text-break">
+Interface ISettingsPropertyGroupBuilder  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/FluentBuilder/ISettingsPropertyGroupBuilder.cs/#L15"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="MCM.html">MCM</a>.<a class="xref" href="MCM.Abstractions.html">Abstractions</a>.<a class="xref" href="MCM.Abstractions.FluentBuilder.html">FluentBuilder</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MCMv5.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>An interface that defines the necessary members for implementing a settings property group builder.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public interface ISettingsPropertyGroupBuilder</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder_Properties_" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.Properties*"></a>
+
+  <h3 id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder_Properties" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.Properties">
+  Properties
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/FluentBuilder/ISettingsPropertyGroupBuilder.cs/#L22"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The actual properties stored in the builder.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">Dictionary&lt;string, ISettingsPropertyBuilder&gt; Properties { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="MCM.Abstractions.FluentBuilder.ISettingsPropertyBuilder.html">ISettingsPropertyBuilder</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder_AddBool_" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.AddBool*"></a>
+
+  <h3 id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder_AddBool_System_String_System_String_MCM_Common_IRef_System_Action_MCM_Abstractions_FluentBuilder_Models_ISettingsPropertyBoolBuilder__" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.AddBool(System.String,System.String,MCM.Common.IRef,System.Action{MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyBoolBuilder})">
+  AddBool(string, string, IRef, Action&lt;ISettingsPropertyBoolBuilder&gt;?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/FluentBuilder/ISettingsPropertyGroupBuilder.cs/#L46"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a Bool property.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ISettingsPropertyGroupBuilder AddBool(string id, string name, IRef @ref, Action&lt;ISettingsPropertyBoolBuilder&gt;? builder)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>id</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Internal ID that will be used for serialization.</p>
+</dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Will be shown at the setting screen.</p>
+</dd>
+    <dt><code>ref</code> <a class="xref" href="MCM.Common.IRef.html">IRef</a></dt>
+    <dd><p>Reference to the value used by the property.</p>
+</dd>
+    <dt><code>builder</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyBoolBuilder.html">ISettingsPropertyBoolBuilder</a>&gt;</dt>
+    <dd><p>Settings property builder.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.html">ISettingsPropertyGroupBuilder</a></dt>
+    <dd><p>The settings property group builder.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder_AddButton_" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.AddButton*"></a>
+
+  <h3 id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder_AddButton_System_String_System_String_MCM_Common_IRef_System_String_System_Action_MCM_Abstractions_FluentBuilder_Models_ISettingsPropertyButtonBuilder__" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.AddButton(System.String,System.String,MCM.Common.IRef,System.String,System.Action{MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyButtonBuilder})">
+  AddButton(string, string, IRef, string, Action&lt;ISettingsPropertyButtonBuilder&gt;?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/FluentBuilder/ISettingsPropertyGroupBuilder.cs/#L97"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates an Button property.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ISettingsPropertyGroupBuilder AddButton(string id, string name, IRef @ref, string content, Action&lt;ISettingsPropertyButtonBuilder&gt;? builder)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>id</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Internal ID that will be used for serialization.</p>
+</dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Will be shown at the setting screen.</p>
+</dd>
+    <dt><code>ref</code> <a class="xref" href="MCM.Common.IRef.html">IRef</a></dt>
+    <dd><p>Reference to the value used by the property.</p>
+</dd>
+    <dt><code>content</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Button content.</p>
+</dd>
+    <dt><code>builder</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyButtonBuilder.html">ISettingsPropertyButtonBuilder</a>&gt;</dt>
+    <dd><p>Settings property builder.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.html">ISettingsPropertyGroupBuilder</a></dt>
+    <dd><p>The settings property group builder.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder_AddCustom_" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.AddCustom*"></a>
+
+  <h3 id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder_AddCustom__1_MCM_Abstractions_FluentBuilder_ISettingsPropertyBuilder___0__" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.AddCustom``1(MCM.Abstractions.FluentBuilder.ISettingsPropertyBuilder{``0})">
+  AddCustom&lt;TSettingsPropertyBuilder&gt;(ISettingsPropertyBuilder&lt;TSettingsPropertyBuilder&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/FluentBuilder/ISettingsPropertyGroupBuilder.cs/#L107"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Adds a custom property.
+The custom property should implement one of the interfaces defined in MCM.Abstractions.Settings.Definitions namespace.
+Currently there is no way of defining a custom UI Control.
+One of the possible fixes would be to use UIExtender library.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ISettingsPropertyGroupBuilder AddCustom&lt;TSettingsPropertyBuilder&gt;(ISettingsPropertyBuilder&lt;TSettingsPropertyBuilder&gt; builder) where TSettingsPropertyBuilder : ISettingsPropertyBuilder</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>builder</code> <a class="xref" href="MCM.Abstractions.FluentBuilder.ISettingsPropertyBuilder-1.html">ISettingsPropertyBuilder</a>&lt;TSettingsPropertyBuilder&gt;</dt>
+    <dd><p>Settings property builder.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.html">ISettingsPropertyGroupBuilder</a></dt>
+    <dd><p>The settings property group builder.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Type Parameters</h4>
+  <dl class="parameters">
+    <dt><code>TSettingsPropertyBuilder</code></dt>
+    <dd><p>A derived class of <a class="xref" href="MCM.Abstractions.FluentBuilder.ISettingsPropertyBuilder.html">ISettingsPropertyBuilder</a>.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder_AddDropdown_" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.AddDropdown*"></a>
+
+  <h3 id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder_AddDropdown_System_String_System_String_System_Int32_MCM_Common_IRef_System_Action_MCM_Abstractions_FluentBuilder_Models_ISettingsPropertyDropdownBuilder__" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.AddDropdown(System.String,System.String,System.Int32,MCM.Common.IRef,System.Action{MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyDropdownBuilder})">
+  AddDropdown(string, string, int, IRef, Action&lt;ISettingsPropertyDropdownBuilder&gt;?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/FluentBuilder/ISettingsPropertyGroupBuilder.cs/#L56"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a Dropdown property.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ISettingsPropertyGroupBuilder AddDropdown(string id, string name, int selectedIndex, IRef @ref, Action&lt;ISettingsPropertyDropdownBuilder&gt;? builder)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>id</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Internal ID that will be used for serialization.</p>
+</dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Will be shown at the setting screen.</p>
+</dd>
+    <dt><code>selectedIndex</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>See <a class="xref" href="MCM.Abstractions.IPropertyDefinitionDropdown.html#MCM_Abstractions_IPropertyDefinitionDropdown_SelectedIndex">SelectedIndex</a>.</p>
+</dd>
+    <dt><code>ref</code> <a class="xref" href="MCM.Common.IRef.html">IRef</a></dt>
+    <dd><p>Reference to the value used by the property.</p>
+</dd>
+    <dt><code>builder</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyDropdownBuilder.html">ISettingsPropertyDropdownBuilder</a>&gt;</dt>
+    <dd><p>Settings property builder.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.html">ISettingsPropertyGroupBuilder</a></dt>
+    <dd><p>The settings property group builder.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder_AddFloatingInteger_" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.AddFloatingInteger*"></a>
+
+  <h3 id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder_AddFloatingInteger_System_String_System_String_System_Single_System_Single_MCM_Common_IRef_System_Action_MCM_Abstractions_FluentBuilder_Models_ISettingsPropertyFloatingIntegerBuilder__" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.AddFloatingInteger(System.String,System.String,System.Single,System.Single,MCM.Common.IRef,System.Action{MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyFloatingIntegerBuilder})">
+  AddFloatingInteger(string, string, float, float, IRef, Action&lt;ISettingsPropertyFloatingIntegerBuilder&gt;?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/FluentBuilder/ISettingsPropertyGroupBuilder.cs/#L78"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates an Float Slider property.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ISettingsPropertyGroupBuilder AddFloatingInteger(string id, string name, float minValue, float maxValue, IRef @ref, Action&lt;ISettingsPropertyFloatingIntegerBuilder&gt;? builder)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>id</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Internal ID that will be used for serialization.</p>
+</dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Will be shown at the setting screen.</p>
+</dd>
+    <dt><code>minValue</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd><p>See <a class="xref" href="MCM.Abstractions.IPropertyDefinitionWithMinMax.html#MCM_Abstractions_IPropertyDefinitionWithMinMax_MinValue">MinValue</a>.</p>
+</dd>
+    <dt><code>maxValue</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.single">float</a></dt>
+    <dd><p>See <a class="xref" href="MCM.Abstractions.IPropertyDefinitionWithMinMax.html#MCM_Abstractions_IPropertyDefinitionWithMinMax_MaxValue">MaxValue</a>.</p>
+</dd>
+    <dt><code>ref</code> <a class="xref" href="MCM.Common.IRef.html">IRef</a></dt>
+    <dd><p>Reference to the value used by the property.</p>
+</dd>
+    <dt><code>builder</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyFloatingIntegerBuilder.html">ISettingsPropertyFloatingIntegerBuilder</a>&gt;</dt>
+    <dd><p>Settings property builder.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.html">ISettingsPropertyGroupBuilder</a></dt>
+    <dd><p>The settings property group builder.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder_AddInteger_" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.AddInteger*"></a>
+
+  <h3 id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder_AddInteger_System_String_System_String_System_Int32_System_Int32_MCM_Common_IRef_System_Action_MCM_Abstractions_FluentBuilder_Models_ISettingsPropertyIntegerBuilder__" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.AddInteger(System.String,System.String,System.Int32,System.Int32,MCM.Common.IRef,System.Action{MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyIntegerBuilder})">
+  AddInteger(string, string, int, int, IRef, Action&lt;ISettingsPropertyIntegerBuilder&gt;?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/FluentBuilder/ISettingsPropertyGroupBuilder.cs/#L67"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates an Integer Slider property.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ISettingsPropertyGroupBuilder AddInteger(string id, string name, int minValue, int maxValue, IRef @ref, Action&lt;ISettingsPropertyIntegerBuilder&gt;? builder)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>id</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Internal ID that will be used for serialization.</p>
+</dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Will be shown at the setting screen.</p>
+</dd>
+    <dt><code>minValue</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p><a class="xref" href="MCM.Abstractions.IPropertyDefinitionWithMinMax.html#MCM_Abstractions_IPropertyDefinitionWithMinMax_MinValue">MinValue</a>.</p>
+</dd>
+    <dt><code>maxValue</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p><a class="xref" href="MCM.Abstractions.IPropertyDefinitionWithMinMax.html#MCM_Abstractions_IPropertyDefinitionWithMinMax_MaxValue">MaxValue</a>.</p>
+</dd>
+    <dt><code>ref</code> <a class="xref" href="MCM.Common.IRef.html">IRef</a></dt>
+    <dd><p>Reference to the value used by the property.</p>
+</dd>
+    <dt><code>builder</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyIntegerBuilder.html">ISettingsPropertyIntegerBuilder</a>&gt;</dt>
+    <dd><p>Settings property builder.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.html">ISettingsPropertyGroupBuilder</a></dt>
+    <dd><p>The settings property group builder.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder_AddText_" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.AddText*"></a>
+
+  <h3 id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder_AddText_System_String_System_String_MCM_Common_IRef_System_Action_MCM_Abstractions_FluentBuilder_Models_ISettingsPropertyTextBuilder__" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.AddText(System.String,System.String,MCM.Common.IRef,System.Action{MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyTextBuilder})">
+  AddText(string, string, IRef, Action&lt;ISettingsPropertyTextBuilder&gt;?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/FluentBuilder/ISettingsPropertyGroupBuilder.cs/#L87"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates an TextBox property.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ISettingsPropertyGroupBuilder AddText(string id, string name, IRef @ref, Action&lt;ISettingsPropertyTextBuilder&gt;? builder)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>id</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Internal ID that will be used for serialization.</p>
+</dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Will be shown at the setting screen.</p>
+</dd>
+    <dt><code>ref</code> <a class="xref" href="MCM.Common.IRef.html">IRef</a></dt>
+    <dd><p>Reference to the value used by the property.</p>
+</dd>
+    <dt><code>builder</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyTextBuilder.html">ISettingsPropertyTextBuilder</a>&gt;</dt>
+    <dd><p>Settings property builder.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.html">ISettingsPropertyGroupBuilder</a></dt>
+    <dd><p>The settings property group builder.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder_AddToggle_" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.AddToggle*"></a>
+
+  <h3 id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder_AddToggle_System_String_System_String_MCM_Common_IRef_System_Action_MCM_Abstractions_FluentBuilder_Models_ISettingsPropertyGroupToggleBuilder__" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.AddToggle(System.String,System.String,MCM.Common.IRef,System.Action{MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyGroupToggleBuilder})">
+  AddToggle(string, string, IRef, Action&lt;ISettingsPropertyGroupToggleBuilder&gt;?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/FluentBuilder/ISettingsPropertyGroupBuilder.cs/#L37"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Creates a Toggle(bool) property.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ISettingsPropertyGroupBuilder AddToggle(string id, string name, IRef @ref, Action&lt;ISettingsPropertyGroupToggleBuilder&gt;? builder)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>id</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Internal ID that will be used for serialization.</p>
+</dd>
+    <dt><code>name</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd><p>Will be shown at the setting screen.</p>
+</dd>
+    <dt><code>ref</code> <a class="xref" href="MCM.Common.IRef.html">IRef</a></dt>
+    <dd><p>Reference to the value used by the property.</p>
+</dd>
+    <dt><code>builder</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action-1">Action</a>&lt;<a class="xref" href="MCM.Abstractions.FluentBuilder.Models.ISettingsPropertyGroupToggleBuilder.html">ISettingsPropertyGroupToggleBuilder</a>&gt;</dt>
+    <dd><p>Settings property builder.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.html">ISettingsPropertyGroupBuilder</a></dt>
+    <dd><p>The settings property group builder.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder_GetPropertyGroupDefinition_" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.GetPropertyGroupDefinition*"></a>
+
+  <h3 id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder_GetPropertyGroupDefinition" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.GetPropertyGroupDefinition">
+  GetPropertyGroupDefinition()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/FluentBuilder/ISettingsPropertyGroupBuilder.cs/#L114"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Gets this property group definition.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">IPropertyGroupDefinition GetPropertyGroupDefinition()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MCM.Abstractions.IPropertyGroupDefinition.html">IPropertyGroupDefinition</a></dt>
+    <dd><p>A property group definition.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder_SetGroupOrder_" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.SetGroupOrder*"></a>
+
+  <h3 id="MCM_Abstractions_FluentBuilder_ISettingsPropertyGroupBuilder_SetGroupOrder_System_Int32_" data-uid="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.SetGroupOrder(System.Int32)">
+  SetGroupOrder(int)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/FluentBuilder/ISettingsPropertyGroupBuilder.cs/#L27"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">ISettingsPropertyGroupBuilder SetGroupOrder(int value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>value</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd><p>The value.</p>
+</dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MCM.Abstractions.FluentBuilder.ISettingsPropertyGroupBuilder.html">ISettingsPropertyGroupBuilder</a></dt>
+    <dd><p>The settings property group builder.</p>
+</dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/FluentBuilder/ISettingsPropertyGroupBuilder.cs/#L15" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          © 2020-2024 Aragas
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

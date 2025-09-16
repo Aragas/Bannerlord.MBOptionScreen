@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title> | MCM Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=" | MCM Documentation ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/docs/articles/MCMv2/comparing-to-modlib.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/MCM-48.svg" alt="MCM">
+            MCM
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<h2 id="modularity">Modularity</h2>
+<p>One of the main features of <code>Bannerlord.MBOptionScreen</code> is modularity or 'versioning'.<br>
+Every component was abstracted, so that they could be easily replaced if the game updates.</p>
+<h4 id="what-does-it-mean-for-modders">What does it mean for modders?</h4>
+<p>It doesn't matter that you haven't updated <code>Bannerlord.MBOptionScreen</code> to the latest version. As long as any loaded Module in the game uses a newer version of it, the implementations inside it will be used globally.<br>
+Each new implementation of a component will be written with backwards compatibility, so if some really old mod was installed together with a fresh one, <code>Bannerlord.MBOptionScreen</code> will not break and will provide options for both mods.</p>
+<h4 id="what-does-it-mean-for-users">What does it mean for users?</h4>
+<p>If some mod was broken because of an old version of <code>Bannerlord.MBOptionScreen</code>, installing a newer version of it as a standalone module will fix it without the need of replacing anything in the original mod.</p>
+<h2 id="idempotency">Idempotency</h2>
+<p><code>Bannerlord.MBOptionScreen</code> ensures that it will be initialized only once, no matter how much modules reference it or includes it within them. And only the latest implementations that are compatible with the game version will be used.</p>
+<h2 id="easy-to-use">Easy to use</h2>
+<ul>
+<li><code>Bannerlord.MBOptionScreen</code> does not require anything from the modder except of the implementation of a <code>SettingsBase</code> class.<br>
+It will discover every implementation of a <code>SettingsBase</code> itself, via reflection and initiate it.</li>
+<li>You also don't need to include any additional .xml files like brushes and prefabs. They are embed into the assembly and will inject themselves into the game during the initialization phase.</li>
+</ul>
+<h2 id="in-game-option">In-game option</h2>
+<p>The mod add an entry to the in-game escape menu to access the <code>Mod Options</code> menu inside the campaign!</p>
+<h2 id="backwards-compatibility">Backwards-compatibility</h2>
+<p><code>Bannerlord.MBOptionScreen</code> supports settings from <code>ModLib</code>.<br>
+By default, the original <code>ModLib</code> menu option is replaced with <code>Bannerlord.MBOptionScreen</code>. This can be disabled in options.<br>
+It also provides a stub ModLib.dll file to make <code>Bannerlord.MBOptionScreen</code> work even if <code>ModLib</code> is not present.</p>
+<h2 id="localization">Localization</h2>
+<p>Supports TW's way of localizing text.</p>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/docs/articles/MCMv2/comparing-to-modlib.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          © 2020-2024 Aragas
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

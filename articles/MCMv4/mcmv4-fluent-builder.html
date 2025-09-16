@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title> | MCM Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content=" | MCM Documentation ">
+      
+      
+      <link rel="icon" href="../../favicon.ico">
+      <link rel="stylesheet" href="../../public/docfx.min.css">
+      <link rel="stylesheet" href="../../public/main.css">
+      <meta name="docfx:navrel" content="../../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/docs/articles/MCMv4/mcmv4-fluent-builder.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../../index.html">
+            <img id="logo" class="svg" src="../../images/MCM-48.svg" alt="MCM">
+            MCM
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+
+<h2 id="overview">Overview</h2>
+<p>Fluent Builder gives the ability to create Settings at runtime.<br>
+This can be useful for mod specific sections that should not be displayed if the mod is not loaded.</p>
+<p><strong>MCM</strong> provides the builder interface <a class="xref" href="../../api/MCM.Abstractions.FluentBuilder.ISettingsBuilder.html">ISettingsBuilder</a> and a default implementation @&quot;MCM.Abstractions.FluentBuilder.Implementation.DefaultSettingsBuilder?text=DefaultSettingsBuilder&quot;.</p>
+<p>Any property is set by a <code>Set%PropertyName%</code> method.</p>
+<p><code>CreateGroup</code> creates a property group where you can define your properties. The default Group name is 'Misc'. Use teh action delegate to configure the property group.</p>
+<p><code>AddBool</code> creates a Bool property.<br>
+<code>AddInteger</code> creates an Integer Slider property.<br>
+<code>AddFloatingInteger</code> creates an Float Slider property.<br>
+<code>AddText</code> creates an Textbox property.<br>
+<code>AddDropdown</code> creates a Dropdown property.<br>
+<code>AddButton</code> creates a Button property.<br>
+<code>AddCustom</code> can add a custom property. The custom property should implement one of the interfaces defined in @&quot;MCM.Abstractions.Settings.Definitions&quot; namespace. Currently there is no way of defining a custom UI Control. One of the possible fixes would be to use UIExtender library.</p>
+<p><code>CreatePreset</code> creates a new Preset.<br>
+<code>SetPropertyValue</code> sets an existing property value.</p>
+<p><code>BuildAsGlobal</code> returns a Global setting instance. Use <code>Register</code> and <code>Unregister</code> for MCM to use it.<br>
+<code>BuildAsPerCharacter</code> returns a PerCharacter setting  instance. Use <code>Register</code> and <code>Unregister</code> for MCM to use it. The registered settings will be cleared before and after player joins the campaign, so do the register thing when the campaign was already joined in.</p>
+<h2 id="example">Example</h2>
+<ul>
+<li><a href="https://github.com/Aragas/TrainingTweak/blob/fba9bb60cdbd5ff61418f4cea30c625b01cd71de/TroopTraining/Settings.cs">TrainingTweak</a> - mimics the standard MCM Global Settings flow.</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/docs/articles/MCMv4/mcmv4-fluent-builder.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          © 2020-2024 Aragas
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
