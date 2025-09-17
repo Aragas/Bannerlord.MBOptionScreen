@@ -5,7 +5,7 @@
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
     
-    <Version>5.11.1</Version>
+    <Version>5.11.2</Version>
     
     <HarmonyVersion>2.2.2</HarmonyVersion>
     <ButterLibVersion>2.10.0</ButterLibVersion>
