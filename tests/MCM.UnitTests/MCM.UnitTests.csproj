@@ -8,7 +8,6 @@
     <IsPackable>false</IsPackable>
     <IsTestProject>true</IsTestProject>
     <PlatformTarget>x64</PlatformTarget>
-    <LangVersion>11</LangVersion>
     <RootNamespace>MCM.Tests</RootNamespace>
   </PropertyGroup>
 
@@ -20,7 +19,7 @@
 
     <PackageReference Include="Bannerlord.ButterLib" Version="$(ButterLibVersion)" />
     <PackageReference Include="Bannerlord.UIExtenderEx" Version="$(UIExtenderExVersion)" />
-    <PackageReference Include="Bannerlord.Lib.Harmony" Version="$(HarmonyVersion)" />
+    <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="System.Numerics.Vectors" Version="4.5.0" />
   </ItemGroup>

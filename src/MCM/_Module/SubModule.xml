@@ -33,21 +33,5 @@
     </DependedModuleMetadatas>
   <!-- Community Metadata -->
   <SubModules>
-    <!--Abstraction -->
-    <SubModule>
-      <Name value="MCMv5" />
-      <DLLName value="MCMv5.dll" />
-      <SubModuleClassType value="MCM.MCMSubModule" />
-      <Assemblies/>
-      <Tags />
-    </SubModule>
-    <!--Builtin SubModule -->
-    <SubModule>
-      <Name value="MCMv5 Basic Implementation" />
-      <DLLName value="MCMv5.dll" />
-      <SubModuleClassType value="MCM.Internal.MCMImplementationSubModule" />
-      <Assemblies/>
-      <Tags />
-    </SubModule>
   </SubModules>
 </Module>
