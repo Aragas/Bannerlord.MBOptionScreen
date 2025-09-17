@@ -353,3 +353,4 @@ MigrationBackup/
 .ionide/
 
 /docfx
+/bannerlord/*
