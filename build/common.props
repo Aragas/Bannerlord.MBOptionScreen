@@ -2,7 +2,11 @@
 <Project>
 
   <PropertyGroup>
-    <Version>5.11.0</Version>
+    <LangVersion>preview</LangVersion>
+    <Nullable>enable</Nullable>
+    
+    <Version>5.11.1</Version>
+    
     <HarmonyVersion>2.2.2</HarmonyVersion>
     <ButterLibVersion>2.10.0</ButterLibVersion>
     <UIExtenderExVersion>2.12.0</UIExtenderExVersion>

@@ -1,4 +1,10 @@
 ---------------------------------------------------------------------------------------------------
+Version: 5.11.1
+Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.0
+* BETA RELEASE
+* Added support for v1.3.0
+* Moved the UI Module back to the main module (v5.11.0)
+---------------------------------------------------------------------------------------------------
 Version: 5.11.0
 Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.0
 * BETA RELEASE

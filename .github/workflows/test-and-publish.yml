@@ -33,7 +33,7 @@ env:
   TEST_FILTERS: "+[MCMv*]* -[MCM*.*Tests]* -[MCMv*]MCM.LightInject* -[*]System.Diagnostics.CodeAnalysis* -[*]BUTR.DependencyInjection* -[*]Bannerlord.BUTR.Shared* -[*]HarmonyLib.BUTR*"
 
 jobs:
-  test:
+  build-test:
     name: Test Module
     runs-on: windows-latest
     steps:
@@ -47,6 +47,22 @@ jobs:
         beta-version: ${{vars.GAME_VERSION_BETA}}
         stable-directory: 'bannerlord-stable'
         beta-directory: 'bannerlord-beta'
+      
+      # ignore Stable_Release and treat it as Release
+    - name: Build MCM Full (Release)
+      if: ${{ github.ref == 'refs/heads/master' }}
+      run: >-
+        mkdir bannerlord;
+        dotnet build src-ui/MCM.UI/MCM.UI.csproj --configuration Stable_Release -p:GameFolder="$PWD/bannerlord" -p:ExtendedBuild=true;
+      shell: pwsh
+      
+    - name: Build MCM Stable/Beta (Release)
+      if: ${{ github.ref != 'refs/heads/master' }}
+      run: >-
+        mkdir bannerlord;
+        dotnet build src-ui/MCM.UI/MCM.UI.csproj --configuration Beta_Release -p:GameFolder="$PWD/bannerlord" -p:ExtendedBuild=false;
+        dotnet build src-ui/MCM.UI/MCM.UI.csproj --configuration Stable_Release -p:GameFolder="$PWD/bannerlord" -p:ExtendedBuild=false;
+      shell: pwsh
 
     - name: Build MCM Test
       run: >-
@@ -94,24 +110,22 @@ jobs:
         file: coveragereport/Cobertura.xml
         fail_ci_if_error: true
 
-  build-module:
+    - name: Upload Bannerlord folder
+      if: ${{ github.ref == 'refs/heads/master' }}
+      uses: actions/upload-artifact@v4
+      with:
+        name: bannerlord
+        path: ./bannerlord/
+
+  changelog-module:
     if: ${{ github.ref == 'refs/heads/master' }}
-    needs: ["test"]
-    name: Build Module
+    name: Generate Module Changelog
     runs-on: ubuntu-latest
     steps:
     - name: Setup
       uses: butr/actions-common-setup@v2
       with:
         github-token: ${{secrets.GITHUB_TOKEN}}
-
-    # ignore Stable_Release and treat it as Release
-    - name: Build MCM (Release)
-      run: >-
-        mkdir bannerlord;
-        dotnet build src/MCM/MCM.csproj --configuration Release -p:GameFolder="$PWD/bannerlord";
-        dotnet build src-ui/MCM.UI/MCM.UI.csproj --configuration Stable_Release -p:GameFolder="$PWD/bannerlord" -p:ExtendedBuild=true;
-      shell: pwsh
 
     - name: Install and Run ChangelogParser
       id: changelog
@@ -125,18 +139,11 @@ jobs:
         desc="${desc//$'\r'/'%0D'}"
         echo "::set-output name=mod_description::$desc"
 
-    - name: Upload Bannerlord folder
-      if: ${{ github.ref == 'refs/heads/master' }}
-      uses: actions/upload-artifact@v4
-      with:
-        name: bannerlord
-        path: ./bannerlord/
-
 ###########################
 #        NUGET/GPR        #
 ###########################
   publish-on-nuget:
-    needs: ["build-module"]
+    needs: ["build-test", "changelog-module"]
     uses: BUTR/workflows/.github/workflows/release-nuget.yml@master
     with:
       project_path: src/MCM/MCM.csproj
@@ -147,7 +154,7 @@ jobs:
 #        NUGET/GPR        #
 ###########################
   publish-on-nuget-source:
-    needs: ["build-module"]
+    needs: ["build-test", "changelog-module"]
     uses: BUTR/workflows/.github/workflows/release-nuget.yml@master
     with:
       project_path: src/MCM.Source/MCM.Source.csproj
@@ -158,14 +165,14 @@ jobs:
 #        NEXUSMODS        #
 ###########################
   publish-on-nexusmods:
-    needs: ["build-module"]
+    needs: ["build-test", "changelog-module"]
     uses: BUTR/workflows/.github/workflows/release-nexusmods.yml@master
     with:
       nexusmods_game_id: mountandblade2bannerlord
       nexusmods_mod_id: 612
       mod_filename: Mod Configuration Menu
-      mod_version: ${{ needs.build-module.outputs.mod_version }}
-      mod_description: ${{ needs.build-module.outputs.mod_description }}
+      mod_version: ${{ needs.changelog-module.outputs.mod_version }}
+      mod_description: ${{ needs.changelog-module.outputs.mod_description }}
       artifact_name: bannerlord
     secrets:
       NEXUSMODS_APIKEY: ${{ secrets.NEXUSMODS_APIKEY }}
@@ -175,12 +182,12 @@ jobs:
 #          STEAM          #
 ###########################
   publish-on-steam:
-    needs: ["build-module"]
+    needs: ["build-test", "changelog-module"]
     uses: BUTR/workflows/.github/workflows/release-steam.yml@master
     with:
       workshop_id: 2859238197
       mod_id: Bannerlord.MBOptionScreen
-      mod_description: ${{ needs.build-module.outputs.mod_description }}
+      mod_description: ${{ needs.changelog-module.outputs.mod_description }}
       artifact_name: bannerlord
     secrets:
       STEAM_LOGIN: ${{ secrets.STEAM_WORKSHOP_LOGIN }}
@@ -191,10 +198,10 @@ jobs:
 #         GITHUB          #
 ###########################
   publish-on-github:
-    needs: ["build-module"]
+    needs: ["build-test", "changelog-module"]
     uses: BUTR/workflows/.github/workflows/release-github.yml@master
     with:
       mod_id: Bannerlord.MBOptionScreen
-      mod_version: ${{ needs.build-module.outputs.mod_version }}
-      mod_description: ${{ needs.build-module.outputs.mod_description }}
+      mod_version: ${{ needs.changelog-module.outputs.mod_version }}
+      mod_description: ${{ needs.changelog-module.outputs.mod_description }}
       artifact_name: bannerlord

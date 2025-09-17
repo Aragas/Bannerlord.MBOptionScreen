@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Harmony.Extensions" Version="$(HarmonyExtensionsVersion)" PrivateAssets="all" />
-    <PackageReference Include="Bannerlord.Lib.Harmony" Version="$(HarmonyVersion)" IncludeAssets="compile" />
+    <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" IncludeAssets="compile" />
   </ItemGroup>
 
   <ItemGroup>

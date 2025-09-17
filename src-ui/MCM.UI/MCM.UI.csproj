@@ -2,7 +2,6 @@
 <Project Sdk="Bannerlord.BUTRModule.Sdk/1.1.0.128">
 
   <PropertyGroup>
-    <LangVersion>preview</LangVersion>
     <Authors>Aragas, mipen</Authors>
     <RootNamespace>MCM.UI</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -11,8 +10,8 @@
 
   <!--Module Creation-->
   <PropertyGroup>
-    <ModuleId>Bannerlord.MBOptionScreen.UI</ModuleId>
-    <ModuleName>Mod Configuration Menu v5 UI</ModuleName>
+    <ModuleId>Bannerlord.MBOptionScreen</ModuleId>
+    <ModuleName>Mod Configuration Menu v5</ModuleName>
     <ModuleUrl>https://www.nexusmods.com/mountandblade2bannerlord/mods/612</ModuleUrl>
   </PropertyGroup>
   <!--Module Creation-->
@@ -55,8 +54,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="MCMv4.Custom.ScreenTests" />
-    <InternalsVisibleTo Include="MCM.Tests" />
+    <InternalsVisibleTo Include="MCM.UnitTests" />
   </ItemGroup>
 
   <!--Windows Forms-->
@@ -78,7 +76,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\MCM\MCM.csproj" Private="false" />
+    <ProjectReference Include="..\..\src\MCM\MCM.csproj" />
     <ProjectReference Include="..\MCM.UI.Adapter.MCMv5\MCM.UI.Adapter.MCMv5.csproj" />
   </ItemGroup>
 
