@@ -50,18 +50,20 @@ jobs:
       
       # ignore Stable_Release and treat it as Release
     - name: Build MCM Full (Release)
-      if: >
-        github.ref == 'refs/heads/master' ||
-        (github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'master')
+      if: ${{ (
+        (github.event_name == 'push' && github.ref == 'refs/heads/master') ||
+        ((github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && github.base_ref == 'master')
+        ) }}
       run: >-
         mkdir bannerlord;
         dotnet build src-ui/MCM.UI/MCM.UI.csproj --configuration Stable_Release -p:GameFolder="$PWD/bannerlord" -p:ExtendedBuild=true;
       shell: pwsh
       
     - name: Build MCM Stable/Beta (Release)
-      if: >
-        !(github.ref == 'refs/heads/master' ||
-          (github.event_name == 'pull_request' && github.event.pull_request.base.ref == 'master'))
+      if: ${{ !(
+        (github.event_name == 'push' && github.ref == 'refs/heads/master') ||
+        ((github.event_name == 'pull_request' || github.event_name == 'pull_request_target') && github.base_ref == 'master')
+        ) }}
       run: >-
         mkdir bannerlord;
         dotnet build src-ui/MCM.UI/MCM.UI.csproj --configuration Beta_Release -p:GameFolder="$PWD/bannerlord" -p:ExtendedBuild=false;
