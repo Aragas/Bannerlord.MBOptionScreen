@@ -5,11 +5,11 @@
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
     
-    <Version>5.11.2</Version>
+    <Version>5.11.3</Version>
     
     <HarmonyVersion>2.2.2</HarmonyVersion>
-    <ButterLibVersion>2.10.0</ButterLibVersion>
-    <UIExtenderExVersion>2.12.0</UIExtenderExVersion>
+    <ButterLibVersion>2.10.2</ButterLibVersion>
+    <UIExtenderExVersion>2.13.1</UIExtenderExVersion>
     <BUTRSharedVersion>3.0.0.142</BUTRSharedVersion>
     <BUTRDependencyInjectionVersion>2.0.0.52</BUTRDependencyInjectionVersion>
     <BUTRModuleManagerVersion>5.0.221</BUTRModuleManagerVersion>

@@ -34,7 +34,7 @@ namespace MCM.UI.Patches
             var spriteCategoryMCM = UIResourceManager.SpriteData.SpriteCategories.TryGetValue("ui_mcm", out var spriteCategoryMCMVal)
                 ? spriteCategoryMCMVal
                 : null;
-#if v130
+#if v134 || v135 || v136
             spriteCategoryMCM?.Load(UIResourceManager.ResourceContext, UIResourceManager.ResourceDepot);
 #elif v100 || v101 || v102 || v103 || v110 || v111 || v112 || v113 || v114 || v115 || v116 || v120 || v121 || v122 || v123 || v124 || v125 || v126 || v127 || v128 || v129 || v1210 || v1211 || v1212
             spriteCategoryMCM?.Load(UIResourceManager.ResourceContext, UIResourceManager.UIResourceDepot);
