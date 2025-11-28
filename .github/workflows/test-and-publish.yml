@@ -162,7 +162,6 @@ jobs:
   publish-on-nuget:
     needs: ["build-test", "changelog-module"]
     uses: BUTR/workflows/.github/workflows/release-nuget.yml@master
-    if: false
     with:
       project_path: src/MCM/MCM.csproj
     secrets:
@@ -174,7 +173,6 @@ jobs:
   publish-on-nuget-source:
     needs: ["build-test", "changelog-module"]
     uses: BUTR/workflows/.github/workflows/release-nuget.yml@master
-    if: false
     with:
       project_path: src/MCM.Source/MCM.Source.csproj
     secrets:
@@ -186,7 +184,6 @@ jobs:
   publish-on-nexusmods:
     needs: ["build-test", "changelog-module"]
     uses: BUTR/workflows/.github/workflows/release-nexusmods.yml@master
-    if: false
     with:
       nexusmods_game_id: mountandblade2bannerlord
       nexusmods_mod_id: 612
@@ -204,7 +201,6 @@ jobs:
   publish-on-steam:
     needs: ["build-test", "changelog-module"]
     uses: BUTR/workflows/.github/workflows/release-steam.yml@master
-    if: false
     with:
       workshop_id: 2859238197
       mod_id: Bannerlord.MBOptionScreen
