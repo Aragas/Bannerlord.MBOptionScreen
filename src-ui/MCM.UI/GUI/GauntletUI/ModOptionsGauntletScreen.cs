@@ -19,7 +19,7 @@ namespace MCM.UI.GUI.GauntletUI
         private readonly ILogger<ModOptionsGauntletScreen> _logger;
 
         private GauntletLayer? _gauntletLayer;
-#if v134 || v135 || v136
+#if v134 || v135 || v136 || v137 || v138 || v139 || v1310 || v1311 || v1312 || v1313 || v1314 || v1315 || v140 || v141
         private GauntletMovieIdentifier? _gauntletMovie;
 #elif v100 || v101 || v102 || v103 || v110 || v111 || v112 || v113 || v114 || v115 || v116 || v120 || v121 || v122 || v123 || v124 || v125 || v126 || v127 || v128 || v129 || v1210 || v1211 || v1212
         private IGauntletMovie? _gauntletMovie;
@@ -39,7 +39,7 @@ namespace MCM.UI.GUI.GauntletUI
             base.OnInitialize();
             var spriteData = UIResourceManager.SpriteData;
             var resourceContext = UIResourceManager.ResourceContext;
-#if v134 || v135 || v136
+#if v134 || v135 || v136 || v137 || v138 || v139 || v1310 || v1311 || v1312 || v1313 || v1314 || v1315 || v140 || v141
             var uiresourceDepot = UIResourceManager.ResourceDepot;
 #elif v100 || v101 || v102 || v103 || v110 || v111 || v112 || v113 || v114 || v115 || v116 || v120 || v121 || v122 || v123 || v124 || v125 || v126 || v127 || v128 || v129 || v1210 || v1211 || v1212
             var uiresourceDepot = UIResourceManager.UIResourceDepot;
@@ -49,7 +49,7 @@ namespace MCM.UI.GUI.GauntletUI
             _spriteCategoryMCM = spriteData.SpriteCategories.TryGetValue("ui_mcm", out var spriteCategoryMCMVal) ? spriteCategoryMCMVal : null;
             _spriteCategoryMCM?.Load(resourceContext, uiresourceDepot);
             _dataSource = new ModOptionsVM();
-#if v134 || v135 || v136
+#if v134 || v135 || v136 || v137 || v138 || v139 || v1310 || v1311 || v1312 || v1313 || v1314 || v1315 || v140 || v141
             _gauntletLayer = new GauntletLayer("GauntletLayer", 4000);
 #elif v100 || v101 || v102 || v103 || v110 || v111 || v112 || v113 || v114 || v115 || v116 || v120 || v121 || v122 || v123 || v124 || v125 || v126 || v127 || v128 || v129 || v1210 || v1211 || v1212
             _gauntletLayer = new GauntletLayer(4000, "GauntletLayer");
