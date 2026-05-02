@@ -1,6 +1,7 @@
-﻿using BUTR.DependencyInjection;
+using BUTR.DependencyInjection;
 using BUTR.DependencyInjection.Extensions;
 using BUTR.DependencyInjection.Logger;
+using global::LightInject;
 
 using MCM.Abstractions;
 using MCM.Abstractions.Properties;
