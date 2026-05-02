@@ -55,7 +55,6 @@ namespace MCM.LightInject
             return this;
         }
 
-
         /// <inheritdoc />
         public IGenericServiceContainer RegisterScoped<TService>() where TService : class
         {
@@ -98,7 +97,6 @@ namespace MCM.LightInject
             return this;
         }
 
-
         /// <inheritdoc />
         public IGenericServiceContainer RegisterTransient<TService>() where TService : class
         {
@@ -140,7 +138,6 @@ namespace MCM.LightInject
             _serviceContainer.RegisterTransient(serviceType, _ => factory());
             return this;
         }
-
 
         /// <inheritdoc />
         public IGenericServiceProvider Build()

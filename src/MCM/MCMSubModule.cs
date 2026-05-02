@@ -106,7 +106,6 @@ namespace MCM
             }
         }
 
-
         public override void OnCampaignStart(Game game, object starterObject)
         {
             base.OnCampaignStart(game, starterObject);
