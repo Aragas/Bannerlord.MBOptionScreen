@@ -12,6 +12,7 @@ using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
 
+using LightInjectServiceContainerImpl = MCM.LightInject.ServiceContainer;
 using ServiceCollectionExtensions = BUTR.DependencyInjection.Extensions.ServiceCollectionExtensions;
 
 namespace MCM
@@ -28,7 +29,7 @@ namespace MCM
     {
         private static IBUTRLogger<MCMSubModule> Logger = new DefaultBUTRLogger<MCMSubModule>();
 
-        private static readonly ServiceContainer LightInjectServiceContainer = new(options =>
+        private static readonly LightInjectServiceContainerImpl LightInjectServiceContainer = new(options =>
         {
             options.EnableCurrentScope = false;
         });
