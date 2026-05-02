@@ -6,6 +6,7 @@
     <RootNamespace>MCM.UI</RootNamespace>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <ExtendedBuild>false</ExtendedBuild>
+    <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
   <!--Module Creation-->
@@ -79,5 +80,14 @@
     <ProjectReference Include="..\..\src\MCM\MCM.csproj" />
     <ProjectReference Include="..\MCM.UI.Adapter.MCMv5\MCM.UI.Adapter.MCMv5.csproj" />
   </ItemGroup>
+
+  <Target Name="CopyLightInjectRuntime" AfterTargets="Build">
+    <PropertyGroup>
+      <_LightInjectRuntime>$(NuGetPackageRoot)lightinject\$(LightInjectVersion)\lib\netstandard2.0\LightInject.dll</_LightInjectRuntime>
+      <_ModuleBinDir>$(GameFolder)\Modules\$(ModuleId)\bin\Win64_Shipping_Client\</_ModuleBinDir>
+    </PropertyGroup>
+    <Copy SourceFiles="$(_LightInjectRuntime)" DestinationFolder="$(TargetDir)" SkipUnchangedFiles="true" Condition="Exists('$(_LightInjectRuntime)')" />
+    <Copy SourceFiles="$(_LightInjectRuntime)" DestinationFolder="$(_ModuleBinDir)" SkipUnchangedFiles="true" Condition="Exists('$(_LightInjectRuntime)') AND Exists('$(_ModuleBinDir)')" />
+  </Target>
 
 </Project>
