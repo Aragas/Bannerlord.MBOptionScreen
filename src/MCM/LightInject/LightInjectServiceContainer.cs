@@ -1,5 +1,6 @@
-﻿using BUTR.DependencyInjection;
+using BUTR.DependencyInjection;
 using BUTR.DependencyInjection.Logger;
+using global::LightInject;
 
 using System;
 using System.Linq;
@@ -54,7 +55,6 @@ namespace MCM.LightInject
             return this;
         }
 
-
         /// <inheritdoc />
         public IGenericServiceContainer RegisterScoped<TService>() where TService : class
         {
@@ -97,7 +97,6 @@ namespace MCM.LightInject
             return this;
         }
 
-
         /// <inheritdoc />
         public IGenericServiceContainer RegisterTransient<TService>() where TService : class
         {
@@ -139,7 +138,6 @@ namespace MCM.LightInject
             _serviceContainer.RegisterTransient(serviceType, _ => factory());
             return this;
         }
-
 
         /// <inheritdoc />
         public IGenericServiceProvider Build()

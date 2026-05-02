@@ -1,4 +1,5 @@
-﻿using BUTR.DependencyInjection;
+using BUTR.DependencyInjection;
+using global::LightInject;
 
 namespace MCM.LightInject
 {

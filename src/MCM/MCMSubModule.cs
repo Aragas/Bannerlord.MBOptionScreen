@@ -1,6 +1,7 @@
-﻿using BUTR.DependencyInjection;
+using BUTR.DependencyInjection;
 using BUTR.DependencyInjection.Extensions;
 using BUTR.DependencyInjection.Logger;
+using global::LightInject;
 
 using MCM.Abstractions;
 using MCM.Abstractions.Properties;
@@ -11,6 +12,7 @@ using TaleWorlds.CampaignSystem;
 using TaleWorlds.Core;
 using TaleWorlds.MountAndBlade;
 
+using LightInjectServiceContainerImpl = MCM.LightInject.ServiceContainer;
 using ServiceCollectionExtensions = BUTR.DependencyInjection.Extensions.ServiceCollectionExtensions;
 
 namespace MCM
@@ -27,7 +29,7 @@ namespace MCM
     {
         private static IBUTRLogger<MCMSubModule> Logger = new DefaultBUTRLogger<MCMSubModule>();
 
-        private static readonly ServiceContainer LightInjectServiceContainer = new(options =>
+        private static readonly LightInjectServiceContainerImpl LightInjectServiceContainer = new(options =>
         {
             options.EnableCurrentScope = false;
         });
@@ -104,7 +106,6 @@ namespace MCM
                 ServiceCollectionExtensions.ServiceContainer = new WithHistoryGenericServiceContainer(serviceContainer);
             }
         }
-
 
         public override void OnCampaignStart(Game game, object starterObject)
         {
