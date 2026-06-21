@@ -33,7 +33,7 @@
                         <Widget Id="ClipRect" WidthSizePolicy="StretchToParent" HeightSizePolicy="CoverChildren" ClipContents="true" MaxHeight="355">
                           <Children>
 
-                            <ListPanel Id="PrimaryUsageSelectorList" DataSource="{ItemList}" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="330" HorizontalAlignment="Center" LayoutImp.LayoutMethod="VerticalBottomToTop">
+                            <ListPanel Id="PrimaryUsageSelectorList" DataSource="{ItemList}" WidthSizePolicy="Fixed" HeightSizePolicy="CoverChildren" SuggestedWidth="330" HorizontalAlignment="Center" LayoutImp.LayoutMethod="VerticalTopToBottom">
                               <ItemTemplate>
                                 <ListPanel HeightSizePolicy="Fixed" WidthSizePolicy="StretchToParent" SuggestedHeight="50" VerticalAlignment="Bottom" HorizontalAlignment="Center" LayoutImp.LayoutMethod="HorizontalLeftToRight" UpdateChildrenStates="true" IsEnabled="@CanBeSelected" >
                                   <Children>

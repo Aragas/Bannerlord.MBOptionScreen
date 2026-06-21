@@ -1,7 +1,7 @@
 ﻿<Prefab>
   <Window>
 
-    <ListPanel HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" LayoutImp.LayoutMethod="VerticalBottomToTop" VerticalAlignment="Top"
+    <ListPanel HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" LayoutImp.LayoutMethod="VerticalTopToBottom" VerticalAlignment="Top"
                HorizontalAlignment="Left" UpdateChildrenStates="true" IsVisible="@IsGroupVisible">
       <Children>
 
@@ -55,7 +55,7 @@
 
         <!-- SettingProperties List -->
         <ListPanel DataSource="{SettingProperties}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" MarginLeft="10" MarginRight="10"
-                   LayoutImp.LayoutMethod="VerticalBottomToTop" HorizontalAlignment="Left" MarginTop="10">
+                   LayoutImp.LayoutMethod="VerticalTopToBottom" HorizontalAlignment="Left" MarginTop="10">
           <ItemTemplate>
             <SettingsPropertyView />
           </ItemTemplate>
@@ -63,7 +63,7 @@
 
         <!-- Subgroups List -->
         <ListPanel DataSource="{SettingPropertyGroups}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent" MarginLeft="25" MarginRight="25"
-                   LayoutImp.LayoutMethod="VerticalBottomToTop" HorizontalAlignment="Left">
+                   LayoutImp.LayoutMethod="VerticalTopToBottom" HorizontalAlignment="Left">
           <ItemTemplate>
             <SettingsPropertyGroupView />
           </ItemTemplate>
