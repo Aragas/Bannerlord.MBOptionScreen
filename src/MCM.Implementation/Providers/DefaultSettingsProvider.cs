@@ -33,13 +33,13 @@ namespace MCM.Implementation
             _logger = logger;
 
             var globalSettingsContainers = (GenericServiceProvider.GetService<IEnumerable<IGlobalSettingsContainer>>() ??
-                                            Enumerable.Empty<IGlobalSettingsContainer>()).ToList();
+                                            []).ToList();
             var perSaveSettingsContainers = (GenericServiceProvider.GetService<IEnumerable<IPerSaveSettingsContainer>>() ??
-                                             Enumerable.Empty<IPerSaveSettingsContainer>()).ToList();
+                                             []).ToList();
             var perCampaignSettingsContainers = (GenericServiceProvider.GetService<IEnumerable<IPerCampaignSettingsContainer>>() ??
-                                             Enumerable.Empty<IPerCampaignSettingsContainer>()).ToList();
+                                                 []).ToList();
             var externalSettingsProviders = (GenericServiceProvider.GetService<IEnumerable<IExternalSettingsProvider>>() ??
-                                             Enumerable.Empty<IExternalSettingsProvider>()).ToList();
+                                             []).ToList();
 
             foreach (var globalSettingsContainer in globalSettingsContainers)
             {
@@ -48,6 +48,7 @@ namespace MCM.Implementation
 
                 logger.LogInformation($"Found Global container {globalSettingsContainer.GetType()} ({globalSettingsContainer.SettingsDefinitions.Count()})");
             }
+
             foreach (var perSaveSettingsContainer in perSaveSettingsContainers)
             {
                 if (perSaveSettingsContainer is ISettingsContainerCanInvalidateCache canInvalidateCache)
@@ -55,6 +56,7 @@ namespace MCM.Implementation
 
                 logger.LogInformation($"Found PerSave container {perSaveSettingsContainer.GetType()} ({perSaveSettingsContainer.SettingsDefinitions.Count()})");
             }
+
             foreach (var perCampaignSettingsContainer in perCampaignSettingsContainers)
             {
                 if (perCampaignSettingsContainer is ISettingsContainerCanInvalidateCache canInvalidateCache)
@@ -62,6 +64,7 @@ namespace MCM.Implementation
 
                 logger.LogInformation($"Found Campaign container {perCampaignSettingsContainer.GetType()} ({perCampaignSettingsContainer.SettingsDefinitions.Count()})");
             }
+
             foreach (var externalSettingsProvider in externalSettingsProviders)
             {
                 if (externalSettingsProvider is IExternalSettingsProviderCanInvalidateCache canInvalidateCache)
@@ -104,6 +107,7 @@ namespace MCM.Implementation
                     return settings;
                 }
             }
+
             foreach (var settingsProvider in _externalSettingsProviders)
             {
                 if (settingsProvider.GetSettings(id) is { } settings)
@@ -111,6 +115,7 @@ namespace MCM.Implementation
                     return settings;
                 }
             }
+
             _logger.LogWarning($"GetSettings {id} returned null");
             return null;
         }
@@ -150,6 +155,7 @@ namespace MCM.Implementation
                     yield return preset;
                 }
             }
+
             foreach (var settingsProvider in _externalSettingsProviders)
             {
                 foreach (var preset in settingsProvider.GetPresets(id))

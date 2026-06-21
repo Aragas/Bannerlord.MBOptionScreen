@@ -28,7 +28,7 @@ namespace MCM.Implementation
         where TSettings : BaseSettings
     {
         protected virtual GameDirectory RootFolder { get; } =
-            GenericServiceProvider.GetService<IFileSystemProvider>()?.GetModSettingsDirectory() ?? new GameDirectory(PlatformDirectoryType.User, "Configs\\ModSettings\\");
+            GenericServiceProvider.GetService<IFileSystemProvider>()?.GetModSettingsDirectory() ?? new GameDirectory(PlatformDirectoryType.User, @"Configs\ModSettings\");
         protected virtual Dictionary<string, TSettings> LoadedSettings { get; } = new();
 
         /// <inheritdoc/>
@@ -48,7 +48,7 @@ namespace MCM.Implementation
             var folderDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, settings.FolderName);
             var directory = string.IsNullOrEmpty(settings.SubFolder) ? folderDirectory : fileSystemProvider.GetOrCreateDirectory(folderDirectory, settings.SubFolder);
 
-            var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
+            var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? [];
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == settings.FormatType));
             settingsFormat?.Load(settings, directory, settings.Id);
             settings.OnPropertyChanged(BaseSettings.LoadingComplete);
@@ -68,7 +68,7 @@ namespace MCM.Implementation
             var folderDirectory = fileSystemProvider.GetOrCreateDirectory(RootFolder, settings.FolderName);
             var directory = string.IsNullOrEmpty(settings.SubFolder) ? folderDirectory : fileSystemProvider.GetOrCreateDirectory(folderDirectory, settings.SubFolder);
 
-            var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
+            var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? [];
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == settings.FormatType));
             settingsFormat?.Save(settings, directory, settings.Id);
 

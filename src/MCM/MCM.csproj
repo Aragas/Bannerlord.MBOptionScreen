@@ -3,11 +3,10 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Authors>Aragas, mipen</Authors>
     <AssemblyName>MCMv5</AssemblyName>
+    <Authors>Aragas, mipen</Authors>
     <Configurations>Debug;Release</Configurations>
     <DefineConstants>$(DefineConstants);BUTRDEPENDENCYINJECTION_PUBLIC;BANNERLORDMCM_PUBLIC;BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE;BANNERLORDMCM_NOT_SOURCE</DefineConstants>
-    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <!--NuGet Package-->
@@ -25,7 +24,7 @@
   <!--NuGet Package-->
 
   <ItemGroup>
-    <PackageReference Include="Bannerlord.Lib.Harmony" Version="$(HarmonyVersion)" IncludeAssets="compile" />
+    <PackageReference Include="Lib.Harmony" Version="$(HarmonyVersion)" IncludeAssets="compile" />
     <PackageReference Include="Bannerlord.ReferenceAssemblies.Core" Version="$(GameVersion).*-*" PrivateAssets="all" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" PrivateAssets="all" IncludeAssets="compile" />
 
@@ -37,7 +36,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <InternalsVisibleTo Include="MCM.Tests" />
+    <InternalsVisibleTo Include="MCM.UnitTests" />
   </ItemGroup>
 
   <ItemGroup>

@@ -38,7 +38,7 @@ namespace MCM.Implementation.Global
 
             /*
             var directoryPath = Path.Combine(RootFolder, settings.FolderName, settings.SubFolder);
-            var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? Enumerable.Empty<ISettingsFormat>();
+            var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? [];
             var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == settings.FormatType));
             settingsFormat?.Save(settings, directoryPath, settings.Id);
             */

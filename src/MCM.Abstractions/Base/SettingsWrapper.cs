@@ -96,7 +96,7 @@ namespace MCM.Abstractions.Base.Global
             _methodOnPropertyChangedDelegate?.Invoke(propertyName);
 
         public override IEnumerable<ISettingsPreset> GetBuiltInPresets() =>
-            _methodGetBuiltInPresetsDelegate?.Invoke()?.Cast<object>().Select(CreatePreset).OfType<ISettingsPreset>() ?? Enumerable.Empty<ISettingsPreset>();
+            _methodGetBuiltInPresetsDelegate?.Invoke()?.Cast<object>().Select(CreatePreset).OfType<ISettingsPreset>() ?? [];
 
         public override BaseSettings CreateNew() => Create(_methodCreateNewDelegate?.Invoke());
         public override BaseSettings CopyAsNew() => Create(_methodCopyAsNewDelegate?.Invoke());

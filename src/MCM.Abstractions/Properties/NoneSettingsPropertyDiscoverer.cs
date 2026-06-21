@@ -14,6 +14,6 @@ namespace MCM.Abstractions.Properties
     {
         public IEnumerable<string> DiscoveryTypes { get; } = new[] { "none" };
 
-        public IEnumerable<ISettingsPropertyDefinition> GetProperties(BaseSettings settings) => Enumerable.Empty<ISettingsPropertyDefinition>();
+        public IEnumerable<ISettingsPropertyDefinition> GetProperties(BaseSettings settings) => [];
     }
 }

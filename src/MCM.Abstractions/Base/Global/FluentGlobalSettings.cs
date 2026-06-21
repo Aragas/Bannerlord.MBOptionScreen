@@ -59,7 +59,7 @@ namespace MCM.Abstractions.Base.Global
 
         public void Register()
         {
-            var containers = GenericServiceProvider.GetService<IEnumerable<IFluentGlobalSettingsContainer>>() ?? Enumerable.Empty<IFluentGlobalSettingsContainer>();
+            var containers = GenericServiceProvider.GetService<IEnumerable<IFluentGlobalSettingsContainer>>() ?? [];
             foreach (var container in containers)
             {
                 container?.Register(this);
@@ -67,7 +67,7 @@ namespace MCM.Abstractions.Base.Global
         }
         public void Unregister()
         {
-            var containers = GenericServiceProvider.GetService<IEnumerable<IFluentGlobalSettingsContainer>>() ?? Enumerable.Empty<IFluentGlobalSettingsContainer>();
+            var containers = GenericServiceProvider.GetService<IEnumerable<IFluentGlobalSettingsContainer>>() ?? [];
             foreach (var container in containers)
             {
                 container?.Unregister(this);

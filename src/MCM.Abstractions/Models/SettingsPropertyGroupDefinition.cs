@@ -33,8 +33,8 @@ namespace MCM.Abstractions
 
         protected readonly string _groupNameRaw;
         protected readonly string _groupNameOverrideRaw = string.Empty;
-        protected readonly List<SettingsPropertyGroupDefinition> subGroups = new();
-        protected readonly List<ISettingsPropertyDefinition> settingProperties = new();
+        protected readonly List<SettingsPropertyGroupDefinition> subGroups = [];
+        protected readonly List<ISettingsPropertyDefinition> settingProperties = [];
 
         protected char SubGroupDelimiter { get; set; }
         public SettingsPropertyGroupDefinition? Parent { get; set; }

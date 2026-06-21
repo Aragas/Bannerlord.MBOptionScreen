@@ -25,6 +25,7 @@ namespace MCM.Common
 
         /// <inheritdoc/>
         public Type Type => typeof(T);
+
         /// <inheritdoc/>
         public object? Value
         {

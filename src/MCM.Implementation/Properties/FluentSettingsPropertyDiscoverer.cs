@@ -22,7 +22,7 @@ namespace MCM.Implementation
         public IEnumerable<ISettingsPropertyDefinition> GetProperties(BaseSettings settings)
         {
             var settingPropertyGroups = _getSettingPropertyGroups?.Invoke(settings)
-                .Select(x => new SettingsPropertyGroupDefinitionWrapper(x)).Cast<SettingsPropertyGroupDefinition>().ToList() ?? new List<SettingsPropertyGroupDefinition>();
+                .Select(x => new SettingsPropertyGroupDefinitionWrapper(x)).Cast<SettingsPropertyGroupDefinition>().ToList() ?? [];
 
             return settingPropertyGroups.SelectMany(SettingsUtils.GetAllSettingPropertyDefinitions);
         }

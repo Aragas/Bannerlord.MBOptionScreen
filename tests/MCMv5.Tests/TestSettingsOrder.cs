@@ -79,3 +79,4 @@ namespace MCMv5.Tests
         public bool SubGroup_E { get; set; } = true;
     }
 }
+

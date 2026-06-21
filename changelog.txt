@@ -1,7 +1,48 @@
 ---------------------------------------------------------------------------------------------------
+Version: 5.12.1
+Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x,v1.4.x
+* Fixed mod list was upside down
+---------------------------------------------------------------------------------------------------
+Version: 5.12.0
+Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x,v1.4.x
+* Fixed display order of items
+---------------------------------------------------------------------------------------------------
+Version: 5.11.4
+Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x,v1.4.x
+* Beta support
+---------------------------------------------------------------------------------------------------
+Version: 5.11.3
+Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x
+* Added support for v1.3.4, v1.3.5, v1.3.6
+---------------------------------------------------------------------------------------------------
+Version: 5.11.2
+Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.0
+* BETA RELEASE
+* Added support for v1.3.0
+* Fixed FileSystem API issues
+---------------------------------------------------------------------------------------------------
+Version: 5.11.1
+Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.0
+* BETA RELEASE
+* Added support for v1.3.0
+* Moved the UI Module back to the main module (v5.11.0)
+---------------------------------------------------------------------------------------------------
+Version: 5.11.0
+Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.0
+* BETA RELEASE
+* Added support for v1.3.0
+* Added UI as a separate module
+---------------------------------------------------------------------------------------------------
+Version: 5.10.1
+Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4,v1.1.5,v1.1.6,v1.2.x
+* Reverted Settings instance cache and cache invalidation
+---------------------------------------------------------------------------------------------------
 Version: 5.10.0
 Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4,v1.1.5,v1.1.6,v1.2.x
 * Added Settings instance cache and cache invalidation
+* Fixed campaign settings not using the campaign id
+* Fixed redundant folder creation in the root settings folder
+* Fixed Fluent Campaign settings stored in the root settings folder
 ---------------------------------------------------------------------------------------------------
 Version: 5.9.2
 Game Versions: v1.0.0,v1.0.1,v1.0.2,v1.0.3,v1.1.0,v1.1.1,v1.1.2,v1.1.3,v1.1.4,v1.1.5,v1.1.6,v1.2.7

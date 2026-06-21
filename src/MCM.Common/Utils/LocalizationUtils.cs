@@ -19,7 +19,7 @@ namespace MCM.Common
         {
             private delegate object TextObjectCtorDelegate(string rawText, Dictionary<string, object>? attributes = null);
             private static readonly TextObjectCtorDelegate? _textObjectCtor =
-                AccessTools2.GetDeclaredConstructorDelegate<TextObjectCtorDelegate>("TaleWorlds.Localization.TextObject", new[] { typeof(string), typeof(Dictionary<string, object>) });
+                AccessTools2.GetDeclaredConstructorDelegate<TextObjectCtorDelegate>("TaleWorlds.Localization.TextObject", [typeof(string), typeof(Dictionary<string, object>)]);
 
             private delegate string? ToStringDelegate(object instance);
             private static readonly ToStringDelegate? _toString =

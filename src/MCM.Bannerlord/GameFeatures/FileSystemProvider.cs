@@ -1,4 +1,7 @@
-﻿using MCM.Abstractions.GameFeatures;
+﻿using HarmonyLib;
+using HarmonyLib.BUTR.Extensions;
+
+using MCM.Abstractions.GameFeatures;
 using MCM.Internal.Extensions;
 
 using System;
@@ -17,6 +20,52 @@ namespace MCM.Internal.GameFeatures
 #endif
     internal sealed class FileSystemProvider : IFileSystemProvider
     {
+        private static class PlatformFileHelperUtils
+        {
+            private delegate TWPlatformFilePath[] V1Delegate(object instance, TWPlatformDirectoryPath path, string searchPattern);
+            private delegate TWPlatformFilePath[] V2Delegate(object instance, TWPlatformDirectoryPath path, string searchPattern, int searchOption);
+
+            private static readonly object _sync = new();
+            private static Type? CapturedType;
+            private static V1Delegate? V1;
+            private static V2Delegate? V2;
+
+            private static void ReCheck(Type type)
+            {
+                if (CapturedType == type) return;
+
+                lock (_sync)
+                {
+                    if (CapturedType == type) return;
+
+                    V1 = null;
+                    V2 = null;
+
+                    foreach (var methodInfo in AccessTools.GetDeclaredMethods(type).Where(x => x.Name == "GetFiles"))
+                    {
+                        var @params = methodInfo.GetParameters();
+                        if (@params.Length == 2)
+                            V1 = AccessTools2.GetDelegate<V1Delegate>(methodInfo);
+                        if (@params.Length == 3)
+                            V2 = AccessTools2.GetDelegate<V2Delegate>(methodInfo);
+                    }
+
+                    CapturedType = type;
+                }
+            }
+        
+            public static TWPlatformFilePath[] GetFiles(object instance, TWPlatformDirectoryPath path, string searchPattern)
+            {
+                ReCheck(instance.GetType());
+                
+                if (V1 is not null)
+                    return V1(instance, path, searchPattern);
+                if (V2 is not null)
+                    return V2(instance, path, searchPattern, 0);
+                return [];
+            }
+        }
+        
         private static string EnsureDirectoryEndsInSeparator(string directory) => directory.EndsWith("\\") ? directory : directory + "\\";
 
         private IPlatformFileHelper PlatformFileHelper => TaleWorlds.Library.Common.PlatformFileHelper;
@@ -44,7 +93,7 @@ namespace MCM.Internal.GameFeatures
 
         public GameFile[] GetFiles(GameDirectory directory, string searchPattern)
         {
-            return PlatformFileHelper.GetFiles(new TWPlatformDirectoryPath((PlatformFileType) directory.Type, directory.Path), searchPattern)
+            return PlatformFileHelperUtils.GetFiles(PlatformFileHelper, new TWPlatformDirectoryPath((PlatformFileType) directory.Type, directory.Path), searchPattern)
                 .Select(x => new GameFile(directory, x.FileName))
                 .ToArray();
         }
@@ -60,7 +109,7 @@ namespace MCM.Internal.GameFeatures
             var file = new TWPlatformFilePath(new TWPlatformDirectoryPath((PlatformFileType) directory.Type, directory.Path), fileName);
             if (!PlatformFileHelper.FileExists(file))
             {
-                PlatformFileHelper.SaveFile(file, Array.Empty<byte>());
+                PlatformFileHelper.SaveFile(file, []);
             }
             return new GameFile(directory, fileName);
         }
