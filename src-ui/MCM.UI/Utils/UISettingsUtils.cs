@@ -1,7 +1,5 @@
 ﻿using Bannerlord.ModuleManager;
 
-using ComparerExtensions;
-
 using MCM.Abstractions;
 using MCM.Abstractions.Base;
 using MCM.Common;
@@ -21,20 +19,49 @@ namespace MCM.UI.Utils
 {
     internal static class UISettingsUtils
     {
+        // Shared, stateless comparator for alphanumeric (natural) name ordering.
+        private static readonly AlphanumComparatorFast AlphanumComparator = new();
+
         // The final tie-break on the unique Id/GroupNameRaw makes these comparers a *total* order.
         // Without it, items that share an Order (and resolve to the same display name) compare equal,
         // and the unstable MBBindingList.Sort reshuffles them on every refresh - so groups/properties
         // would flip order each time the menu was reopened or Reset was pressed.
-        public static readonly IComparer<SettingsPropertyVM> SettingsPropertyVMComparer = KeyComparer<SettingsPropertyVM>
-            .OrderBy(x => x.SettingPropertyDefinition.Order)
-            .ThenBy(x => new TextObject(x.SettingPropertyDefinition.DisplayName).ToString(), new AlphanumComparatorFast())
-            .ThenBy(x => x.SettingPropertyDefinition.Id, StringComparer.Ordinal);
+        public static readonly IComparer<SettingsPropertyVM> SettingsPropertyVMComparer = Comparer<SettingsPropertyVM>.Create((x, y) =>
+        {
+            var xDef = x.SettingPropertyDefinition;
+            var yDef = y.SettingPropertyDefinition;
 
-        public static readonly IComparer<SettingsPropertyGroupVM> SettingsPropertyGroupVMComparer = KeyComparer<SettingsPropertyGroupVM>
-            .OrderByDescending(x => x.SettingPropertyGroupDefinition.GroupNameRaw == SettingsPropertyGroupDefinition.DefaultGroupName)
-            .ThenBy(x => x.SettingPropertyGroupDefinition.Order)
-            .ThenBy(x => new TextObject(x.SettingPropertyGroupDefinition.GroupName).ToString(), new AlphanumComparatorFast())
-            .ThenBy(x => x.SettingPropertyGroupDefinition.GroupNameRaw, StringComparer.Ordinal);
+            var byOrder = xDef.Order.CompareTo(yDef.Order);
+            if (byOrder != 0) return byOrder;
+
+            var byName = AlphanumComparator.Compare(ResolveName(xDef.DisplayName), ResolveName(yDef.DisplayName));
+            if (byName != 0) return byName;
+
+            return string.CompareOrdinal(xDef.Id, yDef.Id);
+        });
+
+        public static readonly IComparer<SettingsPropertyGroupVM> SettingsPropertyGroupVMComparer = Comparer<SettingsPropertyGroupVM>.Create((x, y) =>
+        {
+            var xDef = x.SettingPropertyGroupDefinition;
+            var yDef = y.SettingPropertyGroupDefinition;
+
+            // Default group first (true sorts before false).
+            var byDefault = IsDefaultGroup(yDef).CompareTo(IsDefaultGroup(xDef));
+            if (byDefault != 0) return byDefault;
+
+            var byOrder = xDef.Order.CompareTo(yDef.Order);
+            if (byOrder != 0) return byOrder;
+
+            var byName = AlphanumComparator.Compare(ResolveName(xDef.GroupName), ResolveName(yDef.GroupName));
+            if (byName != 0) return byName;
+
+            return string.CompareOrdinal(xDef.GroupNameRaw, yDef.GroupNameRaw);
+        });
+
+        private static bool IsDefaultGroup(SettingsPropertyGroupDefinition group) =>
+            group.GroupNameRaw == SettingsPropertyGroupDefinition.DefaultGroupName;
+
+        private static string ResolveName(string name) => new TextObject(name).ToString();
 
         /// <summary>
         /// Mimics the same method in SettingsUtils, but it registers every action in URS

@@ -2,8 +2,6 @@
 
 using BUTR.DependencyInjection;
 
-using ComparerExtensions;
-
 using MCM.Abstractions;
 using MCM.Abstractions.Base;
 using MCM.Abstractions.GameFeatures;
@@ -36,6 +34,19 @@ namespace MCM.UI.GUI.ViewModels
 {
     internal sealed class ModOptionsVM : ViewModel
     {
+        private static readonly AlphanumComparatorFast NameComparer = new();
+
+        // Regular mods first (alphabetically), then MCM's own entries and its test settings at the
+        // bottom. Ascending order maps directly to the top-to-bottom ListPanel layout.
+        private static readonly IComparer<SettingsEntryVM> ModSettingsListComparer = Comparer<SettingsEntryVM>.Create((x, y) =>
+        {
+            var byCategory = IsMcmEntry(x).CompareTo(IsMcmEntry(y));
+            return byCategory != 0 ? byCategory : NameComparer.Compare(x.DisplayName, y.DisplayName);
+        });
+
+        private static bool IsMcmEntry(SettingsEntryVM entry) =>
+            entry.Id.StartsWith("MCM") || entry.Id.StartsWith("Testing") || entry.Id.StartsWith("ModLib");
+
         private readonly ILogger<ModOptionsVM> _logger;
 
         private string _titleLabel = string.Empty;
@@ -204,13 +215,7 @@ namespace MCM.UI.GUI.ViewModels
                         //foreach (var unavailableSetting in BaseSettingsProvider.Instance?.GetUnavailableSettings() ?? [])
                         //    ModSettingsList.Add(new SettingsEntryVM(unavailableSetting, ExecuteSelect));
 
-                        // Yea, I imported a whole library that converts LINQ style order to IComparer
-                        // because I wasn't able to recreate the logic via IComparer. TODO: Fix that
-                        ModSettingsList.Sort(KeyComparer<SettingsEntryVM>
-                            .OrderByDescending(x => x.Id.StartsWith("MCM") ||
-                                                    x.Id.StartsWith("Testing") ||
-                                                    x.Id.StartsWith("ModLib"))
-                            .ThenByDescending(x => x.DisplayName, new AlphanumComparatorFast()));
+                        ModSettingsList.Sort(ModSettingsListComparer);
                     }
                 }
                 catch (Exception e)
