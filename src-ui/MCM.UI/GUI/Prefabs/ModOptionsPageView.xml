@@ -74,7 +74,7 @@
                     SuggestedWidth="1270" HorizontalAlignment="Right" VerticalAlignment="Top" MarginRight="10" MarginBottom="50">
               <Children>
 
-                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" LayoutImp.LayoutMethod="VerticalBottomToTop">
+                <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" LayoutImp.LayoutMethod="VerticalTopToBottom">
                   <Children>
                     <!-- Title Section -->
                     <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="80" LayoutImp.LayoutMethod="HorizontalLeftToRight"
@@ -151,7 +151,7 @@
                     </Widget>
 
                     <!-- Setting Hint Information Section -->
-                    <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="100" VerticalAlignment="Bottom" LayoutImp.LayoutMethod="VerticalBottomToTop" MarginTop="1">
+                    <ListPanel WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="100" VerticalAlignment="Bottom" LayoutImp.LayoutMethod="VerticalTopToBottom" MarginTop="1">
                       <Children>
 
                         <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="Fixed" SuggestedHeight="2"  VerticalAlignment="Top" Brush="MCM.Divider.Yellow" MarginLeft="15" MarginRight="15" MarginBottom="2"/>
