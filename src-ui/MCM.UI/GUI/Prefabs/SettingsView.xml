@@ -4,7 +4,7 @@
       <Children>
 
         <ListPanel Id="SettingPropertiesList" DataSource="{SettingPropertyGroups}" HeightSizePolicy="CoverChildren" WidthSizePolicy="StretchToParent"
-                   LayoutImp.LayoutMethod="VerticalBottomToTop" VerticalAlignment="Top">
+                   LayoutImp.LayoutMethod="VerticalTopToBottom" VerticalAlignment="Top">
           <ItemTemplate>
             <SettingsPropertyGroupView />
           </ItemTemplate>
