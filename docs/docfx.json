@@ -15,7 +15,7 @@
     "xref": [
       "https://learn.microsoft.com/en-us/dotnet/.xrefmap.json",
       "xrefs/Newtonsoft.Json-xrefmap.yml",
-      "https://butr.github.io/Bannerlord.ReferenceAssemblies.Documentation/xrefmap.yml",
+      "xrefs/bannerlord-api-xrefmap.yml",
       "https://butr.github.io/Bannerlord.ButterLib/xrefmap.yml",
       "https://butr.github.io/Bannerlord.UIExtenderEx/xrefmap.yml"
     ],
@@ -28,7 +28,6 @@
     "dest": "_site",
     "globalMetadata": {
       "_enableSearch": "true",
-      "_appLogoPath": "images/MCM-48.svg",
       "_appName": "MCM",
       "_appTitle": "MCM Documentation",
       "_appFooter": "© 2020-2024 Aragas"
