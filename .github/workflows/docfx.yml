@@ -66,6 +66,14 @@ jobs:
         SITE: https://bannerlordapi.butr.link
       shell: bash
 
+    - name: Bump the footer copyright year
+      # docfx.json keeps the footer text; CI moves its end year to the year the
+      # site is built, so a deploy never shows a stale range.
+      run: |
+        sed -i -E "s/(\"_appFooter\": \"© 2020-)[0-9]{4}/\1$(date -u +%Y)/" docs/docfx.json
+        grep -q "© 2020-$(date -u +%Y) " docs/docfx.json || { echo "::error::_appFooter year not updated"; exit 1; }
+      shell: bash
+
     - name: Run DocFX
       run: >-
         Copy-Item "README.md" -Destination "docs/index.md";
@@ -81,6 +89,23 @@ jobs:
         -e '1a baseUrl: https://mcm.bannerlord.aragas.org/'
         -e '/^  (commentId|fullName|nameWithType): /d'
         docs/_site/xrefmap.yml
+      shell: bash
+
+    - name: Post-process 404 page
+      # GitHub Pages serves 404.html for a missing URL at any depth, but DocFX
+      # writes every link in it relative to the site root, where the page was
+      # built. A <base> fixes the stylesheets, scripts and links. The navbar and
+      # TOC are fetched against window.location.href instead, so those two
+      # metas need absolute paths. Fail if DocFX output changed and an edit
+      # did not apply, rather than publishing a 404 page without navigation.
+      run: |
+        f=docs/_site/404.html
+        sed -i -E \
+          -e 's#<meta charset="utf-8">#&<base href="/">#' \
+          -e 's#(<meta name="docfx:(nav|toc)rel" content=")toc\.html">#\1/toc.html">#' \
+          "$f"
+        grep -q '<base href="/">' "$f" || { echo "::error::no <base> in $f"; exit 1; }
+        [ "$(grep -c 'content="/toc.html"' "$f")" -eq 2 ] || { echo "::error::nav/toc metas in $f not rewritten"; exit 1; }
       shell: bash
 
     - name: Deploy DocFX
