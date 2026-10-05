@@ -1,0 +1,8 @@
+/* The BUTR logo in the navbar. The modern template puts no size rule on #logo and
+   uses whatever the SVG declares. 36px keeps the navbar at the 59px the template
+   lays out for (its anchors scroll to a 60px margin); the width follows. */
+#logo {
+  height: 36px;
+  width: auto;
+  margin-right: .5rem;
+}
