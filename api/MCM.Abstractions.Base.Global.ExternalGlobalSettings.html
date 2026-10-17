@@ -1,0 +1,737 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class ExternalGlobalSettings | MCM Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class ExternalGlobalSettings | MCM Documentation ">
+      
+      <meta name="description" content="Global settings declared in XML () instead of code. MCM creates them for every &amp;lt;Settings&amp;gt; block found in the SubModule.xml of a loaded module, so a mod gets a settings page without referencing MCM. The declaring file is also the store: saving writes the current values back into it as Value attributes (), where the mod reads them.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Aragas/Bannerlord.MBOptionScreen/new/dev/apiSpec/new?filename=MCM_Abstractions_Base_Global_ExternalGlobalSettings.md&amp;value=---%0Auid%3A%20MCM.Abstractions.Base.Global.ExternalGlobalSettings%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="MCM">
+            MCM
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings">
+
+
+
+  <h1 id="MCM_Abstractions_Base_Global_ExternalGlobalSettings" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings" class="text-break">
+Class ExternalGlobalSettings  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Base/Global/ExternalGlobalSettings.cs/#L27"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="MCM.html">MCM</a>.<a class="xref" href="MCM.Abstractions.html">Abstractions</a>.<a class="xref" href="MCM.Abstractions.Base.html">Base</a>.<a class="xref" href="MCM.Abstractions.Base.Global.html">Global</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MCMv5.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Global settings declared in XML (<a class="xref" href="MCM.Abstractions.Xml.SettingsXmlModel.html">SettingsXmlModel</a>) instead of code.
+MCM creates them for every <code>&lt;Settings&gt;</code> block found in the <code>SubModule.xml</code> of a loaded module,
+so a mod gets a settings page without referencing MCM. The declaring file is also the store: saving writes
+the current values back into it as <code>Value</code> attributes (<a class="xref" href="MCM.Abstractions.Base.Global.ExternalGlobalSettings.html#MCM_Abstractions_Base_Global_ExternalGlobalSettings_SaveToFile">SaveToFile()</a>), where the mod reads them.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public sealed class ExternalGlobalSettings : FluentGlobalSettings, INotifyPropertyChanged, IFluentSettings</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><a class="xref" href="MCM.Abstractions.Base.BaseSettings.html">BaseSettings</a></div>
+      <div><a class="xref" href="MCM.Abstractions.Base.Global.GlobalSettings.html">GlobalSettings</a></div>
+      <div><a class="xref" href="MCM.Abstractions.Base.Global.FluentGlobalSettings.html">FluentGlobalSettings</a></div>
+      <div><span class="xref">ExternalGlobalSettings</span></div>
+    </dd>
+  </dl>
+
+  <dl class="typelist implements">
+    <dt>Implements</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.inotifypropertychanged">INotifyPropertyChanged</a></div>
+      <div><a class="xref" href="MCM.Abstractions.Base.IFluentSettings.html">IFluentSettings</a></div>
+    </dd>
+  </dl>
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="MCM.Abstractions.Base.Global.FluentGlobalSettings.html#MCM_Abstractions_Base_Global_FluentGlobalSettings_Id">FluentGlobalSettings.Id</a>
+    </div>
+    <div>
+      <a class="xref" href="MCM.Abstractions.Base.Global.FluentGlobalSettings.html#MCM_Abstractions_Base_Global_FluentGlobalSettings_DisplayName">FluentGlobalSettings.DisplayName</a>
+    </div>
+    <div>
+      <a class="xref" href="MCM.Abstractions.Base.Global.FluentGlobalSettings.html#MCM_Abstractions_Base_Global_FluentGlobalSettings_FolderName">FluentGlobalSettings.FolderName</a>
+    </div>
+    <div>
+      <a class="xref" href="MCM.Abstractions.Base.Global.FluentGlobalSettings.html#MCM_Abstractions_Base_Global_FluentGlobalSettings_SubFolder">FluentGlobalSettings.SubFolder</a>
+    </div>
+    <div>
+      <a class="xref" href="MCM.Abstractions.Base.Global.FluentGlobalSettings.html#MCM_Abstractions_Base_Global_FluentGlobalSettings_FormatType">FluentGlobalSettings.FormatType</a>
+    </div>
+    <div>
+      <a class="xref" href="MCM.Abstractions.Base.Global.FluentGlobalSettings.html#MCM_Abstractions_Base_Global_FluentGlobalSettings_DiscoveryType">FluentGlobalSettings.DiscoveryType</a>
+    </div>
+    <div>
+      <a class="xref" href="MCM.Abstractions.Base.Global.FluentGlobalSettings.html#MCM_Abstractions_Base_Global_FluentGlobalSettings_UIVersion">FluentGlobalSettings.UIVersion</a>
+    </div>
+    <div>
+      <a class="xref" href="MCM.Abstractions.Base.Global.FluentGlobalSettings.html#MCM_Abstractions_Base_Global_FluentGlobalSettings_SubGroupDelimiter">FluentGlobalSettings.SubGroupDelimiter</a>
+    </div>
+    <div>
+      <a class="xref" href="MCM.Abstractions.Base.Global.FluentGlobalSettings.html#MCM_Abstractions_Base_Global_FluentGlobalSettings_PropertyChanged">FluentGlobalSettings.PropertyChanged</a>
+    </div>
+    <div>
+      <a class="xref" href="MCM.Abstractions.Base.Global.FluentGlobalSettings.html#MCM_Abstractions_Base_Global_FluentGlobalSettings_SettingPropertyGroups">FluentGlobalSettings.SettingPropertyGroups</a>
+    </div>
+    <div>
+      <a class="xref" href="MCM.Abstractions.Base.Global.FluentGlobalSettings.html#MCM_Abstractions_Base_Global_FluentGlobalSettings_Register">FluentGlobalSettings.Register()</a>
+    </div>
+    <div>
+      <a class="xref" href="MCM.Abstractions.Base.Global.FluentGlobalSettings.html#MCM_Abstractions_Base_Global_FluentGlobalSettings_Unregister">FluentGlobalSettings.Unregister()</a>
+    </div>
+    <div>
+      <a class="xref" href="MCM.Abstractions.Base.Global.FluentGlobalSettings.html#MCM_Abstractions_Base_Global_FluentGlobalSettings_CreateNew">FluentGlobalSettings.CreateNew()</a>
+    </div>
+    <div>
+      <a class="xref" href="MCM.Abstractions.Base.Global.FluentGlobalSettings.html#MCM_Abstractions_Base_Global_FluentGlobalSettings_GetBuiltInPresets">FluentGlobalSettings.GetBuiltInPresets()</a>
+    </div>
+    <div>
+      <a class="xref" href="MCM.Abstractions.Base.BaseSettings.html#MCM_Abstractions_Base_BaseSettings_SaveTriggered">BaseSettings.SaveTriggered</a>
+    </div>
+    <div>
+      <a class="xref" href="MCM.Abstractions.Base.BaseSettings.html#MCM_Abstractions_Base_BaseSettings_LoadingComplete">BaseSettings.LoadingComplete</a>
+    </div>
+    <div>
+      <a class="xref" href="MCM.Abstractions.Base.BaseSettings.html#MCM_Abstractions_Base_BaseSettings_DefaultPresetId">BaseSettings.DefaultPresetId</a>
+    </div>
+    <div>
+      <a class="xref" href="MCM.Abstractions.Base.BaseSettings.html#MCM_Abstractions_Base_BaseSettings_DefaultPresetName">BaseSettings.DefaultPresetName</a>
+    </div>
+    <div>
+      <a class="xref" href="MCM.Abstractions.Base.BaseSettings.html#MCM_Abstractions_Base_BaseSettings_OnPropertyChanged_System_String_">BaseSettings.OnPropertyChanged(string)</a>
+    </div>
+    <div>
+      <a class="xref" href="MCM.Abstractions.Base.BaseSettings.html#MCM_Abstractions_Base_BaseSettings_CopyAsNew">BaseSettings.CopyAsNew()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+  <dl class="typelist extensionMethods">
+    <dt>Extension Methods</dt>
+    <dd>
+  <div>
+      <a class="xref" href="MCM.Abstractions.BaseSettingsExtensions.html#MCM_Abstractions_BaseSettingsExtensions_GetAllSettingPropertyDefinitions_MCM_Abstractions_Base_BaseSettings_">BaseSettingsExtensions.GetAllSettingPropertyDefinitions(BaseSettings)</a>
+  </div>
+  <div>
+      <a class="xref" href="MCM.Abstractions.BaseSettingsExtensions.html#MCM_Abstractions_BaseSettingsExtensions_GetAllSettingPropertyGroupDefinitions_MCM_Abstractions_Base_BaseSettings_">BaseSettingsExtensions.GetAllSettingPropertyGroupDefinitions(BaseSettings)</a>
+  </div>
+  <div>
+      <a class="xref" href="MCM.Abstractions.BaseSettingsExtensions.html#MCM_Abstractions_BaseSettingsExtensions_GetExternalPresets_MCM_Abstractions_Base_BaseSettings_">BaseSettingsExtensions.GetExternalPresets(BaseSettings)</a>
+  </div>
+  <div>
+      <a class="xref" href="MCM.Abstractions.BaseSettingsExtensions.html#MCM_Abstractions_BaseSettingsExtensions_GetSettingPropertyGroups_MCM_Abstractions_Base_BaseSettings_">BaseSettingsExtensions.GetSettingPropertyGroups(BaseSettings)</a>
+  </div>
+  <div>
+      <a class="xref" href="MCM.Abstractions.BaseSettingsExtensions.html#MCM_Abstractions_BaseSettingsExtensions_GetUnsortedSettingPropertyGroups_MCM_Abstractions_Base_BaseSettings_">BaseSettingsExtensions.GetUnsortedSettingPropertyGroups(BaseSettings)</a>
+  </div>
+  </dd></dl>
+
+
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_DeclarationFormatType" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.DeclarationFormatType">
+  DeclarationFormatType
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Base/Global/ExternalGlobalSettings.cs/#L65"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The format type of settings stored in their declaring XML file. No <a class="xref" href="MCM.Abstractions.ISettingsFormat.html">ISettingsFormat</a> handles it,
+the container saves through <a class="xref" href="MCM.Abstractions.Base.Global.ExternalGlobalSettings.html#MCM_Abstractions_Base_Global_ExternalGlobalSettings_SaveToFile">SaveToFile()</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const string DeclarationFormatType = &quot;xml-declaration&quot;</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_FilePath_" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.FilePath*"></a>
+
+  <h3 id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_FilePath" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.FilePath">
+  FilePath
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Base/Global/ExternalGlobalSettings.cs/#L70"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The file the settings were declared in and are saved to: a standalone settings file or a module's <code>SubModule.xml</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public string FilePath { get; init; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_Create_" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.Create*"></a>
+
+  <h3 id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_Create_MCM_Abstractions_Xml_SettingsXmlModel_System_String_System_ComponentModel_PropertyChangedEventHandler_" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.Create(MCM.Abstractions.Xml.SettingsXmlModel,System.String,System.ComponentModel.PropertyChangedEventHandler)">
+  Create(SettingsXmlModel, string, PropertyChangedEventHandler?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Base/Global/ExternalGlobalSettings.cs/#L101"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Builds the settings from a parsed model. Properties start at their current value, nested groups become
+sub groups, the declared defaults become the default preset, and every <code>&lt;Preset&gt;</code> a built-in preset.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ExternalGlobalSettings Create(SettingsXmlModel model, string sourcePath, PropertyChangedEventHandler? propertyChanged = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>model</code> <a class="xref" href="MCM.Abstractions.Xml.SettingsXmlModel.html">SettingsXmlModel</a></dt>
+    <dd></dd>
+    <dt><code>sourcePath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>propertyChanged</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventhandler">PropertyChangedEventHandler</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MCM.Abstractions.Base.Global.ExternalGlobalSettings.html">ExternalGlobalSettings</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_CreateDefaultValue_" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.CreateDefaultValue*"></a>
+
+  <h3 id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_CreateDefaultValue_MCM_Abstractions_Xml_PropertyBaseXmlModel_" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.CreateDefaultValue(MCM.Abstractions.Xml.PropertyBaseXmlModel)">
+  CreateDefaultValue(PropertyBaseXmlModel)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Base/Global/ExternalGlobalSettings.cs/#L176"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The declared default of the property, as the value object its reference takes.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static object CreateDefaultValue(PropertyBaseXmlModel model)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>model</code> <a class="xref" href="MCM.Abstractions.Xml.PropertyBaseXmlModel.html">PropertyBaseXmlModel</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_CreateFromDocument_" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.CreateFromDocument*"></a>
+
+  <h3 id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_CreateFromDocument_System_Xml_XmlDocument_System_String_System_ComponentModel_PropertyChangedEventHandler_" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.CreateFromDocument(System.Xml.XmlDocument,System.String,System.ComponentModel.PropertyChangedEventHandler)">
+  CreateFromDocument(XmlDocument, string, PropertyChangedEventHandler?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Base/Global/ExternalGlobalSettings.cs/#L88"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads every <code>&lt;Settings&gt;</code> block of a loaded document. <code class="paramref">sourcePath</code> is kept as <a class="xref" href="MCM.Abstractions.Base.Global.ExternalGlobalSettings.html#MCM_Abstractions_Base_Global_ExternalGlobalSettings_FilePath">FilePath</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;ExternalGlobalSettings&gt; CreateFromDocument(XmlDocument document, string sourcePath, PropertyChangedEventHandler? propertyChanged = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>document</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.xml.xmldocument">XmlDocument</a></dt>
+    <dd></dd>
+    <dt><code>sourcePath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>propertyChanged</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventhandler">PropertyChangedEventHandler</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="MCM.Abstractions.Base.Global.ExternalGlobalSettings.html">ExternalGlobalSettings</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_CreateFromFile_" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.CreateFromFile*"></a>
+
+  <h3 id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_CreateFromFile_System_String_System_ComponentModel_PropertyChangedEventHandler_" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.CreateFromFile(System.String,System.ComponentModel.PropertyChangedEventHandler)">
+  CreateFromFile(string, PropertyChangedEventHandler?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Base/Global/ExternalGlobalSettings.cs/#L82"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads every <code>&lt;Settings&gt;</code> block of an XML file. The file is either a standalone settings file
+whose root is <code>&lt;Settings&gt;</code>, or a <code>SubModule.xml</code> whose <code>&lt;Module&gt;</code> root holds the blocks.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IEnumerable&lt;ExternalGlobalSettings&gt; CreateFromFile(string filePath, PropertyChangedEventHandler? propertyChanged = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>filePath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>propertyChanged</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventhandler">PropertyChangedEventHandler</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="MCM.Abstractions.Base.Global.ExternalGlobalSettings.html">ExternalGlobalSettings</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_CreateFromXml_" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.CreateFromXml*"></a>
+
+  <h3 id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_CreateFromXml_System_Xml_XmlNode_System_String_System_ComponentModel_PropertyChangedEventHandler_" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.CreateFromXml(System.Xml.XmlNode,System.String,System.ComponentModel.PropertyChangedEventHandler)">
+  CreateFromXml(XmlNode, string, PropertyChangedEventHandler?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Base/Global/ExternalGlobalSettings.cs/#L94"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads one <code>&lt;Settings&gt;</code> element. Returns null when the element has no <code>Id</code>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ExternalGlobalSettings? CreateFromXml(XmlNode settingsNode, string sourcePath, PropertyChangedEventHandler? propertyChanged = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>settingsNode</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.xml.xmlnode">XmlNode</a></dt>
+    <dd></dd>
+    <dt><code>sourcePath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>propertyChanged</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventhandler">PropertyChangedEventHandler</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MCM.Abstractions.Base.Global.ExternalGlobalSettings.html">ExternalGlobalSettings</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_CreateFromXmlFile_" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.CreateFromXmlFile*"></a>
+
+  <h3 id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_CreateFromXmlFile_System_String_System_ComponentModel_PropertyChangedEventHandler_" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.CreateFromXmlFile(System.String,System.ComponentModel.PropertyChangedEventHandler)">
+  CreateFromXmlFile(string, PropertyChangedEventHandler?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Base/Global/ExternalGlobalSettings.cs/#L75"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Reads the first <code>&lt;Settings&gt;</code> block of an XML file. See <a class="xref" href="MCM.Abstractions.Base.Global.ExternalGlobalSettings.html#MCM_Abstractions_Base_Global_ExternalGlobalSettings_CreateFromFile_System_String_System_ComponentModel_PropertyChangedEventHandler_">CreateFromFile(string, PropertyChangedEventHandler?)</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static ExternalGlobalSettings? CreateFromXmlFile(string filePath, PropertyChangedEventHandler? propertyChanged = null)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>filePath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>propertyChanged</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.componentmodel.propertychangedeventhandler">PropertyChangedEventHandler</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MCM.Abstractions.Base.Global.ExternalGlobalSettings.html">ExternalGlobalSettings</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_CreateReference_" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.CreateReference*"></a>
+
+  <h3 id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_CreateReference_MCM_Abstractions_Xml_PropertyBaseXmlModel_" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.CreateReference(MCM.Abstractions.Xml.PropertyBaseXmlModel)">
+  CreateReference(PropertyBaseXmlModel)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Base/Global/ExternalGlobalSettings.cs/#L163"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>A reference holding the current value of the property. Its type decides the <a class="xref" href="MCM.Abstractions.SettingType.html">SettingType</a>.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static IRef CreateReference(PropertyBaseXmlModel model)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>model</code> <a class="xref" href="MCM.Abstractions.Xml.PropertyBaseXmlModel.html">PropertyBaseXmlModel</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="MCM.Common.IRef.html">IRef</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_FormatValue_" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.FormatValue*"></a>
+
+  <h3 id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_FormatValue_MCM_Abstractions_ISettingsPropertyDefinition_" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.FormatValue(MCM.Abstractions.ISettingsPropertyDefinition)">
+  FormatValue(ISettingsPropertyDefinition)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Base/Global/ExternalGlobalSettings.cs/#L189"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The text a <code>Value</code> or <code>Default</code> attribute takes for the property's current value.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static string FormatValue(ISettingsPropertyDefinition property)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>property</code> <a class="xref" href="MCM.Abstractions.ISettingsPropertyDefinition.html">ISettingsPropertyDefinition</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_SaveToFile_" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.SaveToFile*"></a>
+
+  <h3 id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_SaveToFile" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.SaveToFile">
+  SaveToFile()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Base/Global/ExternalGlobalSettings.cs/#L145"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Writes the current values into <a class="xref" href="MCM.Abstractions.Base.Global.ExternalGlobalSettings.html#MCM_Abstractions_Base_Global_ExternalGlobalSettings_FilePath">FilePath</a> as <code>Value</code> attributes. Returns false when the
+file cannot be read or written or no longer holds the block; the values then live for this session only.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public bool SaveToFile()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_TryParseValue_" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.TryParseValue*"></a>
+
+  <h3 id="MCM_Abstractions_Base_Global_ExternalGlobalSettings_TryParseValue_MCM_Abstractions_ISettingsPropertyDefinition_System_String_System_Object__" data-uid="MCM.Abstractions.Base.Global.ExternalGlobalSettings.TryParseValue(MCM.Abstractions.ISettingsPropertyDefinition,System.String,System.Object@)">
+  TryParseValue(ISettingsPropertyDefinition, string, out object?)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Base/Global/ExternalGlobalSettings.cs/#L203"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Parses a value written the way a <code>Default</code> attribute is written. A dropdown takes the option index.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TryParseValue(ISettingsPropertyDefinition property, string raw, out object? value)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>property</code> <a class="xref" href="MCM.Abstractions.ISettingsPropertyDefinition.html">ISettingsPropertyDefinition</a></dt>
+    <dd></dd>
+    <dt><code>raw</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>value</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+<hr><div class="last-modified"><p>This page was last modified at 10/17/2026 18:11:59 +03:00 (UTC).</p><details><summary style="display: list-item;">Commit Message</summary><div><pre><code>Author:    Vitalii Mikhailov
+Commit:    4c11f9b0c8db5363fd147c4f156b8d8151ad53b0
+</code></pre><pre><code>* Mods can declare their settings in their SubModule.xml, which MCM will render if installed.
+
+* A warning is logged when two mods declare settings with the same id
+* Updated to UIExtenderEx v3
+* Fixed controller tab switching in the options screen landing on the wrong page next to Mod Options
+* Fixed Cancel in the options screen undoing MCM changes before the game ask...</code></pre></div></details></div></article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Base/Global/ExternalGlobalSettings.cs/#L27" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          © 2020-2026 Aragas
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

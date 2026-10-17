@@ -1,0 +1,391 @@
+﻿<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class SettingsXmlWriter | MCM Documentation </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class SettingsXmlWriter | MCM Documentation ">
+      
+      <meta name="description" content="Writes current values back into the file a &amp;lt;Settings&amp;gt; block was declared in, as Value attributes on the property elements. Only those attributes change: the file is edited as text, not re-serialized, so comments, quotes, attribute layout, line endings, encoding and byte order mark stay as they are.">
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Aragas/Bannerlord.MBOptionScreen/new/dev/apiSpec/new?filename=MCM_Abstractions_Xml_SettingsXmlWriter.md&amp;value=---%0Auid%3A%20MCM.Abstractions.Xml.SettingsXmlWriter%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="MCM">
+            MCM
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="MCM.Abstractions.Xml.SettingsXmlWriter">
+
+
+
+  <h1 id="MCM_Abstractions_Xml_SettingsXmlWriter" data-uid="MCM.Abstractions.Xml.SettingsXmlWriter" class="text-break">
+Class SettingsXmlWriter  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Definitions/Xml/SettingsXmlWriter.cs/#L22"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="MCM.html">MCM</a>.<a class="xref" href="MCM.Abstractions.html">Abstractions</a>.<a class="xref" href="MCM.Abstractions.Xml.html">Xml</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>MCMv5.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"><p>Writes current values back into the file a <code>&lt;Settings&gt;</code> block was declared in, as <code>Value</code>
+attributes on the property elements. Only those attributes change: the file is edited as text, not
+re-serialized, so comments, quotes, attribute layout, line endings, encoding and byte order mark stay as they are.</p>
+</div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static class SettingsXmlWriter</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">SettingsXmlWriter</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="MCM_Abstractions_Xml_SettingsXmlWriter_FindDeclaration_" data-uid="MCM.Abstractions.Xml.SettingsXmlWriter.FindDeclaration*"></a>
+
+  <h3 id="MCM_Abstractions_Xml_SettingsXmlWriter_FindDeclaration_System_Xml_XmlDocument_System_String_" data-uid="MCM.Abstractions.Xml.SettingsXmlWriter.FindDeclaration(System.Xml.XmlDocument,System.String)">
+  FindDeclaration(XmlDocument, string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Definitions/Xml/SettingsXmlWriter.cs/#L115"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Finds the <code>&lt;Settings&gt;</code> block with the id, resolving a missing <code>Id</code> attribute to the module id
+the way <a class="xref" href="MCM.Abstractions.Xml.SettingsXmlModel.html#MCM_Abstractions_Xml_SettingsXmlModel_FromDocument_System_Xml_XmlDocument_">FromDocument(XmlDocument)</a> does.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static XmlElement? FindDeclaration(XmlDocument document, string settingsId)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>document</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.xml.xmldocument">XmlDocument</a></dt>
+    <dd></dd>
+    <dt><code>settingsId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.xml.xmlelement">XmlElement</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_Xml_SettingsXmlWriter_GetPropertyElements_" data-uid="MCM.Abstractions.Xml.SettingsXmlWriter.GetPropertyElements*"></a>
+
+  <h3 id="MCM_Abstractions_Xml_SettingsXmlWriter_GetPropertyElements_System_Xml_XmlElement_" data-uid="MCM.Abstractions.Xml.SettingsXmlWriter.GetPropertyElements(System.Xml.XmlElement)">
+  GetPropertyElements(XmlElement)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Definitions/Xml/SettingsXmlWriter.cs/#L129"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>The property elements of a declaration by property id, nested groups included.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static Dictionary&lt;string, XmlElement&gt; GetPropertyElements(XmlElement declaration)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>declaration</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.xml.xmlelement">XmlElement</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2">Dictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.xml.xmlelement">XmlElement</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_Xml_SettingsXmlWriter_Load_" data-uid="MCM.Abstractions.Xml.SettingsXmlWriter.Load*"></a>
+
+  <h3 id="MCM_Abstractions_Xml_SettingsXmlWriter_Load_System_String_" data-uid="MCM.Abstractions.Xml.SettingsXmlWriter.Load(System.String)">
+  Load(string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Definitions/Xml/SettingsXmlWriter.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Loads the file with its whitespace preserved.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static XmlDocument Load(string filePath)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>filePath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.xml.xmldocument">XmlDocument</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_Xml_SettingsXmlWriter_SetValues_" data-uid="MCM.Abstractions.Xml.SettingsXmlWriter.SetValues*"></a>
+
+  <h3 id="MCM_Abstractions_Xml_SettingsXmlWriter_SetValues_System_String_System_String_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair_System_String_System_String___" data-uid="MCM.Abstractions.Xml.SettingsXmlWriter.SetValues(System.String,System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}})">
+  SetValues(string, string, IEnumerable&lt;KeyValuePair&lt;string, string&gt;&gt;)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Definitions/Xml/SettingsXmlWriter.cs/#L54"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p>Sets the <code>Value</code> attribute of every listed property of the block in the file. Values are the text a
+<code>Default</code> attribute takes; a dropdown takes the option index. Ids without a matching property element are
+ignored. Returns false when the block is not in the file. The file is written in place, so links a mod
+manager deployed stay intact, and only when a value changed.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool SetValues(string filePath, string settingsId, IEnumerable&lt;KeyValuePair&lt;string, string&gt;&gt; values)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>filePath</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>settingsId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>values</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.keyvaluepair-2">KeyValuePair</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="MCM_Abstractions_Xml_SettingsXmlWriter_TrySetValues_" data-uid="MCM.Abstractions.Xml.SettingsXmlWriter.TrySetValues*"></a>
+
+  <h3 id="MCM_Abstractions_Xml_SettingsXmlWriter_TrySetValues_System_String_System_String_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair_System_String_System_String___System_String__" data-uid="MCM.Abstractions.Xml.SettingsXmlWriter.TrySetValues(System.String,System.String,System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{System.String,System.String}},System.String@)">
+  TrySetValues(string, string, IEnumerable&lt;KeyValuePair&lt;string, string&gt;&gt;, out string)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Definitions/Xml/SettingsXmlWriter.cs/#L76"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"><p><a class="xref" href="MCM.Abstractions.Xml.SettingsXmlWriter.html#MCM_Abstractions_Xml_SettingsXmlWriter_SetValues_System_String_System_String_System_Collections_Generic_IEnumerable_System_Collections_Generic_KeyValuePair_System_String_System_String___">SetValues(string, string, IEnumerable&lt;KeyValuePair&lt;string, string&gt;&gt;)</a> on the text of a document.</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static bool TrySetValues(string xml, string settingsId, IEnumerable&lt;KeyValuePair&lt;string, string&gt;&gt; values, out string result)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>xml</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>settingsId</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+    <dt><code>values</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1">IEnumerable</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.keyvaluepair-2">KeyValuePair</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>, <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a>&gt;&gt;</dt>
+    <dd></dd>
+    <dt><code>result</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.string">string</a></dt>
+    <dd></dd>
+  </dl>
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.boolean">bool</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+<hr><div class="last-modified"><p>This page was last modified at 10/17/2026 18:11:59 +03:00 (UTC).</p><details><summary style="display: list-item;">Commit Message</summary><div><pre><code>Author:    Vitalii Mikhailov
+Commit:    4c11f9b0c8db5363fd147c4f156b8d8151ad53b0
+</code></pre><pre><code>* Mods can declare their settings in their SubModule.xml, which MCM will render if installed.
+
+* A warning is logged when two mods declare settings with the same id
+* Updated to UIExtenderEx v3
+* Fixed controller tab switching in the options screen landing on the wrong page next to Mod Options
+* Fixed Cancel in the options screen undoing MCM changes before the game ask...</code></pre></div></details></div></article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Aragas/Bannerlord.MBOptionScreen/blob/dev/src/MCM.Abstractions/Definitions/Xml/SettingsXmlWriter.cs/#L22" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          © 2020-2026 Aragas
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
