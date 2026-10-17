@@ -1,4 +1,3 @@
-﻿using BUTR.DependencyInjection;
 using BUTR.DependencyInjection.Logger;
 
 using MCM.Abstractions;
@@ -6,146 +5,72 @@ using MCM.Abstractions.Base;
 using MCM.Abstractions.Base.Global;
 using MCM.Abstractions.Global;
 
-using System.Collections.Generic;
-using System.Linq;
-
 namespace MCM.Implementation.Global
 {
+    /// <summary>
+    /// Holds <see cref="ExternalGlobalSettings"/>, the settings declared in XML. Their values already come from the
+    /// declaring file, and saving writes them back into it, so no <c>ModSettings</c> file is involved.
+    /// Presets and snapshots work as for every other global settings.
+    /// </summary>
 #if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
     [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
 #endif
-    internal sealed class ExternalGlobalSettingsContainer : IFluentGlobalSettingsContainer
+    internal sealed class ExternalGlobalSettingsContainer : BaseSettingsContainer<ExternalGlobalSettings>, IFluentGlobalSettingsContainer
     {
-        private Dictionary<string, ExternalGlobalSettings> LoadedSettings { get; } = new();
-
-        /// <inheritdoc/>
-        public IEnumerable<SettingsDefinition> SettingsDefinitions =>
-            LoadedSettings.Values.Select(s => new SettingsDefinition(s.Id, s.DisplayName, s.GetSettingPropertyGroups()));
+        private readonly IBUTRLogger _logger;
 
         public ExternalGlobalSettingsContainer(IBUTRLogger<ExternalGlobalSettingsContainer> logger)
         {
-
+            _logger = logger;
         }
 
         /// <inheritdoc/>
-        public BaseSettings? GetSettings(string id) => LoadedSettings.TryGetValue(id, out var result) ? result : null;
+        protected override void RegisterSettings(ExternalGlobalSettings? settings)
+        {
+            if (settings is null || LoadedSettings.ContainsKey(settings.Id))
+                return;
+
+            LoadedSettings.Add(settings.Id, settings);
+            settings.OnPropertyChanged(BaseSettings.LoadingComplete);
+        }
 
         /// <inheritdoc/>
-        public bool SaveSettings(BaseSettings settings)
+        public override bool SaveSettings(BaseSettings settings)
         {
-            if (settings is not ExternalGlobalSettings || !LoadedSettings.ContainsKey(settings.Id))
+            if (settings is not ExternalGlobalSettings externalGlobalSettings || !LoadedSettings.ContainsKey(settings.Id))
                 return false;
 
-            /*
-            var directoryPath = Path.Combine(RootFolder, settings.FolderName, settings.SubFolder);
-            var settingsFormats = GenericServiceProvider.GetService<IEnumerable<ISettingsFormat>>() ?? [];
-            var settingsFormat = settingsFormats.FirstOrDefault(x => x.FormatTypes.Any(y => y == settings.FormatType));
-            settingsFormat?.Save(settings, directoryPath, settings.Id);
-            */
+            if (!externalGlobalSettings.SaveToFile())
+                _logger.LogWarning($"Settings '{settings.Id}' could not be written to '{externalGlobalSettings.FilePath}', the values apply for this session only");
 
             settings.OnPropertyChanged(BaseSettings.SaveTriggered);
             return true;
         }
 
+        // CreateNew, and with it CopyAsNew, is sealed in FluentGlobalSettings and returns a plain FluentGlobalSettings,
+        // so a copy of the registered settings is accepted by its id
         /// <inheritdoc/>
-        public bool OverrideSettings(BaseSettings settings)
+        public override bool OverrideSettings(BaseSettings settings)
         {
-            if (settings is not ExternalGlobalSettings || !LoadedSettings.ContainsKey(settings.Id))
+            if (settings is not FluentGlobalSettings || !LoadedSettings.TryGetValue(settings.Id, out var loadedSettings))
                 return false;
 
-            SettingsUtils.OverrideSettings(LoadedSettings[settings.Id], settings);
+            SettingsUtils.OverrideSettings(loadedSettings, settings);
             return true;
-        }
-        /// <inheritdoc/>
-        public bool ResetSettings(BaseSettings settings)
-        {
-            if (settings is not ExternalGlobalSettings || !LoadedSettings.ContainsKey(settings.Id))
-                return false;
-
-            SettingsUtils.ResetSettings(LoadedSettings[settings.Id]);
-            return true;
-        }
-
-        /// <inheritdoc />
-        public IEnumerable<ISettingsPreset> GetPresets(string settingsId)
-        {
-            yield break;
-            /*
-            if (!LoadedSettings.TryGetValue(settingsId, out var settings))
-                yield break;
-
-            var directoryPath = new DirectoryInfo(Path.Combine(RootFolder, settings.FolderName, settings.SubFolder, "Presets"));
-            directoryPath.Create();
-            foreach (var filePath in directoryPath.GetFiles("*.json", SearchOption.TopDirectoryOnly))
-            {
-                if (JsonSettingsPreset.FromFile(settings, filePath.FullName) is { } preset)
-                    yield return preset;
-            }
-            */
         }
 
         /// <inheritdoc />
         public void Register(FluentGlobalSettings settings)
         {
-            if (settings is not ExternalGlobalSettings externalGlobalSettings)
-                return;
-
-            LoadedSettings.Add(externalGlobalSettings.Id, externalGlobalSettings);
-            settings.OnPropertyChanged(BaseSettings.LoadingComplete);
+            if (settings is ExternalGlobalSettings externalGlobalSettings)
+                RegisterSettings(externalGlobalSettings);
         }
 
         /// <inheritdoc />
         public void Unregister(FluentGlobalSettings settings)
         {
-            if (settings is not ExternalGlobalSettings externalGlobalSettings)
-                return;
-
-            if (LoadedSettings.ContainsKey(externalGlobalSettings.Id))
+            if (settings is ExternalGlobalSettings externalGlobalSettings)
                 LoadedSettings.Remove(externalGlobalSettings.Id);
-        }
-
-        /// <inheritdoc />
-        public bool SavePresets(ISettingsPreset preset)
-        {
-            if (!LoadedSettings.TryGetValue(preset.SettingsId, out var settings))
-                return false;
-
-            return preset.SavePreset(settings);
-        }
-
-        /// <inheritdoc />
-        public IEnumerable<SettingSnapshot> SaveAvailableSnapshots()
-        {
-            var jsonFormat = GenericServiceProvider.GetService<JsonSettingsFormat>();
-            if (jsonFormat is null) yield break;
-
-            foreach (var setting in LoadedSettings.Values)
-            {
-                var json = jsonFormat.SaveJson(setting);
-                var folderName = !string.IsNullOrEmpty(setting.FolderName) ? $"{setting.FolderName}/" : string.Empty;
-                var subFolderName = !string.IsNullOrEmpty(setting.SubFolder) ? $"{setting.SubFolder}/" : string.Empty;
-                var path = $"{folderName}{subFolderName}{setting.Id}.json";
-                yield return new(path, json);
-            }
-        }
-
-        /// <inheritdoc />
-        public IEnumerable<BaseSettings> LoadAvailableSnapshots(IEnumerable<SettingSnapshot> snapshots)
-        {
-            var jsonFormat = GenericServiceProvider.GetService<JsonSettingsFormat>();
-            if (jsonFormat is null) yield break;
-
-            var snapshotDict = snapshots.ToDictionary(x => x.Path, x => x.JsonContent);
-            foreach (var setting in LoadedSettings.Values)
-            {
-                var folderName = !string.IsNullOrEmpty(setting.FolderName) ? $"{setting.FolderName}/" : string.Empty;
-                var subFolderName = !string.IsNullOrEmpty(setting.SubFolder) ? $"{setting.SubFolder}/" : string.Empty;
-                var path = $"{folderName}{subFolderName}{setting.Id}.json";
-                if (snapshotDict.TryGetValue(path, out var json))
-                {
-                    yield return jsonFormat.LoadFromJson(setting.CreateNew(), json);
-                }
-            }
         }
     }
 }

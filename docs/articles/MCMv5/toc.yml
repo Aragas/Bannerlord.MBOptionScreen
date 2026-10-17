@@ -4,6 +4,8 @@
   href: mcmv5-attributes.md
 - name: MCMv5 Fluent Builder
   href: mcmv5-fluent-builder.md
+- name: MCMv5 Settings in SubModule.xml
+  href: mcmv5-submodule-xml-settings.md
 - name: New Features - Persistent Presets
   href: mcmv5-persistent-presets.md
 - name: Migrating from MCMv4

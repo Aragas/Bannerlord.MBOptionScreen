@@ -54,8 +54,11 @@ namespace MCM.Abstractions
         {
             if (settings is IWrapper wrapper && Activator.CreateInstance(wrapper.Object?.GetType()) is { } copy && Activator.CreateInstance(wrapper.GetType(), copy) is BaseSettings copyWrapped)
                 OverrideSettings(settings, copyWrapped);
-            else if (Activator.CreateInstance(settings.GetType()) is BaseSettings copySettings)
+            else if (settings.GetType().GetConstructor(Type.EmptyTypes) is not null && Activator.CreateInstance(settings.GetType()) is BaseSettings copySettings)
                 OverrideSettings(settings, copySettings);
+            // Fluent and XML declared settings have no parameterless constructor, their defaults live in the default preset
+            else if (settings.GetBuiltInPresets().FirstOrDefault(x => x.Id == BaseSettings.DefaultPresetId) is { } defaultPreset)
+                OverrideSettings(settings, defaultPreset.LoadPreset());
         }
 
         public static void OverrideSettings(BaseSettings settings, BaseSettings overrideSettings)

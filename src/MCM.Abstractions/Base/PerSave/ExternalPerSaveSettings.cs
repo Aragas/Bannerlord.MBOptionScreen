@@ -1,5 +1,4 @@
-﻿using MCM.Abstractions.FluentBuilder;
-using MCM.Abstractions.Utils;
+using MCM.Abstractions.FluentBuilder;
 using MCM.Abstractions.Xml;
 using MCM.Common;
 
@@ -8,9 +7,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Xml;
 
 namespace MCM.Abstractions.Base.PerSave
 {
+    /// <summary>
+    /// Per save settings declared in XML (<see cref="SettingsXmlModel"/>). The caller supplies the value
+    /// references, the XML supplies the layout.
+    /// </summary>
 #if !BANNERLORDMCM_INCLUDE_IN_CODE_COVERAGE
     [global::System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage, global::System.Diagnostics.DebuggerNonUserCode]
 #endif
@@ -21,29 +25,32 @@ namespace MCM.Abstractions.Base.PerSave
 # endif
     sealed class ExternalPerSaveSettings : FluentPerSaveSettings
     {
+        /// <summary>
+        /// Reads the first <c>&lt;Settings&gt;</c> block of the stream, a standalone settings file or a <c>SubModule.xml</c>.
+        /// </summary>
+        /// <param name="assignRefDelegate">Creates the reference a property reads and writes. See <see cref="Global.ExternalGlobalSettings.CreateReference"/> for one holding the declared default.</param>
         public static ExternalPerSaveSettings? CreateFromXmlStream(Stream xmlStream, Func<IPropertyDefinitionBase, IRef> assignRefDelegate, PropertyChangedEventHandler? propertyChanged = null)
         {
-            if (SerializationUtils.DeserializeXml<SettingsXmlModel>(xmlStream) is not { } settingsXmlModel)
-                return null;
+            var document = new XmlDocument();
+            document.Load(xmlStream);
+            return SettingsXmlModel.FromDocument(document).FirstOrDefault() is { } model ? Create(model, assignRefDelegate, propertyChanged) : null;
+        }
 
-            var subGroupDelimiter = settingsXmlModel.SubGroupDelimiter[0];
-
-            var props = settingsXmlModel.Groups
-                .SelectMany(g => g.Properties.Select(p =>
-                    new SettingsPropertyDefinition(SettingsUtils.GetPropertyDefinitionWrappers(p), g, assignRefDelegate(p), subGroupDelimiter)))
-                .Concat(settingsXmlModel.Properties.Select(p =>
-                    new SettingsPropertyDefinition(SettingsUtils.GetPropertyDefinitionWrappers(p), SettingsPropertyGroupDefinition.DefaultGroup, assignRefDelegate(p), subGroupDelimiter)));
-            var propGroups = SettingsUtils.GetSettingsPropertyGroups(subGroupDelimiter, props);
+        public static ExternalPerSaveSettings Create(SettingsXmlModel model, Func<IPropertyDefinitionBase, IRef> assignRefDelegate, PropertyChangedEventHandler? propertyChanged = null)
+        {
+            var delimiter = model.SubGroupDelimiterChar;
+            var properties = model.GetGroupedProperties()
+                .Select(x => new SettingsPropertyDefinition(SettingsUtils.GetPropertyDefinitionWrappers(x.Property), x.Group, assignRefDelegate(x.Property), delimiter));
 
             return new ExternalPerSaveSettings(
-                settingsXmlModel.Id,
-                settingsXmlModel.DisplayName,
-                settingsXmlModel.FolderName,
-                settingsXmlModel.SubFolder,
-                settingsXmlModel.UIVersion,
-                subGroupDelimiter,
+                model.Id,
+                model.DisplayName,
+                string.Empty,
+                string.Empty,
+                model.UIVersion,
+                delimiter,
                 propertyChanged,
-                propGroups,
+                SettingsUtils.GetSettingsPropertyGroups(delimiter, properties),
                 new List<ISettingsPresetBuilder>());
         }
 

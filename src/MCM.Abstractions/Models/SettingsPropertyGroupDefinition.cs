@@ -48,6 +48,8 @@ namespace MCM.Abstractions
 
                 var localizedParentGroup = LocalizationUtils.Localize(Parent._groupNameRaw);
                 var localizedGroupName = LocalizationUtils.Localize(_groupNameRaw);
+                if (string.IsNullOrEmpty(localizedParentGroup))
+                    return localizedGroupName.TrimStart(SubGroupDelimiter);
                 return localizedGroupName.Replace(localizedParentGroup, string.Empty).TrimStart(SubGroupDelimiter);
             }
         }

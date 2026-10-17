@@ -1,4 +1,16 @@
 ---------------------------------------------------------------------------------------------------
+Version: 5.13.0
+Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x,v1.4.x,v1.5.x
+* Mods can declare their settings in their SubModule.xml, which MCM will render if installed.
+* A warning is logged when two mods declare settings with the same id
+* Updated to UIExtenderEx v3
+* Fixed controller tab switching in the options screen landing on the wrong page next to Mod Options
+* Fixed Cancel in the options screen undoing MCM changes before the game asked to confirm, which left the Mod Options page broken when answering No
+* Fixed MCM cancelling twice when the options screen was closed
+* Fixed the dropdown scrollbar track colour and a misspelled alignment in the mod list
+* Fixed Bannerlord.MCM.Source not compiling unless every dependency was referenced by hand, and its LightInject types landing in the consuming mod's namespace
+* Fixed Bannerlord.MCM.Source content files showing in the Solution Explorer
+---------------------------------------------------------------------------------------------------
 Version: 5.12.3
 Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x,v1.4.x,v1.5.x
 * Update for v1.4.8 and v1.5.1

@@ -1,12 +1,14 @@
 ﻿using Bannerlord.UIExtenderEx.Attributes;
 using Bannerlord.UIExtenderEx.Prefabs2;
 
+using JetBrains.Annotations;
+
 using System.Collections.Generic;
 using System.Xml;
 
 namespace MCM.UI.UIExtenderEx
 {
-    [PrefabExtension("Options", "descendant::ListPanel[@Id='TabToggleList']/Children/OptionsTabToggle[5]", "Options")]
+    [PrefabExtension("Options", "descendant::ListPanel[@Id='TabToggleList']/Children/OptionsTabToggle[5]")]
     internal sealed class OptionsPrefabExtension1 : PrefabExtensionInsertPatch
     {
         public override InsertType Type => InsertType.Prepend;
@@ -18,11 +20,11 @@ namespace MCM.UI.UIExtenderEx
             _xmlDocument.LoadXml("<OptionsTabToggle DataSource=\"{ModOptions}\" PositionYOffset=\"2\" Parameter.ButtonBrush=\"Header.Tab.Center\" Parameter.TabName=\"ModOptionsPage\" />");
         }
 
-        [PrefabExtensionXmlNode]
+        [PrefabExtensionXmlNode, UsedImplicitly]
         public XmlNode GetPrefabExtension() => _xmlDocument;
     }
 
-    [PrefabExtension("Options", "descendant::TabControl[@Id='TabControl']/Children/*[5]", "Options")]
+    [PrefabExtension("Options", "descendant::TabControl[@Id='TabControl']/Children/*[5]")]
     internal sealed class OptionsPrefabExtension2 : PrefabExtensionInsertPatch
     {
         public override InsertType Type => InsertType.Prepend;
@@ -34,13 +36,13 @@ namespace MCM.UI.UIExtenderEx
             _xmlDocument.LoadXml("<ModOptionsPageView Id=\"ModOptionsPage\" DataSource=\"{ModOptions}\" />");
         }
 
-        [PrefabExtensionXmlDocument]
-        public XmlDocument GetPrefabExtension() => _xmlDocument;
+        [PrefabExtensionXmlNode, UsedImplicitly]
+        public XmlNode GetPrefabExtension() => _xmlDocument;
     }
 
-    [PrefabExtension("Options", "descendant::Widget[@Id='DescriptionsRightPanel']", "Options")]
+    [PrefabExtension("Options", "descendant::Widget[@Id='DescriptionsRightPanel']")]
     internal sealed class OptionsPrefabExtension3 : PrefabExtensionSetAttributePatch
     {
-        public override List<Attribute> Attributes => [new Attribute("SuggestedWidth", "@DescriptionWidth")];
+        public override List<Attribute> Attributes => [new("SuggestedWidth", "@DescriptionWidth")];
     }
 }

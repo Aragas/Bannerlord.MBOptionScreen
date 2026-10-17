@@ -5,11 +5,14 @@
     <LangVersion>preview</LangVersion>
     <Nullable>enable</Nullable>
     
-    <Version>5.12.3</Version>
+    <Version>5.13.0</Version>
     
     <HarmonyVersion>2.2.2</HarmonyVersion>
     <ButterLibVersion>2.11.1</ButterLibVersion>
-    <UIExtenderExVersion>2.13.3</UIExtenderExVersion>
+    <UIExtenderExVersion>3.0.0</UIExtenderExVersion>
+    <UIExtenderExAnalyzersVersion>3.0.3.9</UIExtenderExAnalyzersVersion>
+    <!--UI data of every game version for the UIExtenderEx analyzers, not compiled against, so not tied to GameVersion-->
+    <BannerlordReferenceAssembliesGUIVersion>2026.10.9.129</BannerlordReferenceAssembliesGUIVersion>
     <BUTRSharedVersion>3.0.0.142</BUTRSharedVersion>
     <BUTRDependencyInjectionVersion>2.0.0.52</BUTRDependencyInjectionVersion>
     <BUTRModuleManagerVersion>5.0.221</BUTRModuleManagerVersion>

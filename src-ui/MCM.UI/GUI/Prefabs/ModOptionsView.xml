@@ -41,8 +41,8 @@
                     <!-- ListPanel/Widget InnerPanel needs LayoutImp.LayoutMethod. Search for LayoutMethod in dnSpy for options. Size policies need to be CoverChildren -->
                     <!-- ListPanel Items needs ItemTemplate containing the screen to be used for each item. Size policies need to be CoverChildren.
                          DataSource property must be assigned using the {} braces. Example: DataSource="{DataSourcePropertyName}" -->
-                    <ScrollablePanel Id="ModElementsScrollablePanel" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlightment="Left" VerticalAlignment="Bottom"
-                                     AutoHideScrollBars="true" ClipRect="ModsListClipRect" InnerPanel="ModsListClipRect\ModList" VerticalScrollbar="..\ModsScrollbar\Scrollbar" MouseScrollAxis="Vertical">
+                    <ScrollablePanel Id="ModElementsScrollablePanel" WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                                     AutoHideScrollBars="true" ClipRect="ModsListClipRect" InnerPanel="ModsListClipRect\ModList" VerticalScrollbar="..\ModsScrollbar\Scrollbar">
                       <Children>
 
                         <!--Left Panel-->
