@@ -125,6 +125,9 @@ jobs:
     if: ${{ github.ref == 'refs/heads/master' }}
     name: Generate Module Changelog
     runs-on: ubuntu-latest
+    outputs:
+      mod_version: ${{ steps.changelog.outputs.mod_version }}
+      mod_description: ${{ steps.changelog.outputs.mod_description }}
     steps:
     - name: Setup
       uses: butr/actions-common-setup@v2
@@ -135,42 +138,86 @@ jobs:
       id: changelog
       run: |
         dotnet tool install -g Bannerlord.ChangelogParser
-        vers="$(bannerlord_changelog_parser latestversion -f "$PWD/changelog.txt")"
-        echo "::set-output name=mod_version::$vers"
-        desc="$(bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt")"
-        desc="${desc//'%'/'%25'}"
-        desc="${desc//$'\n'/'%0A'}"
-        desc="${desc//$'\r'/'%0D'}"
-        echo "::set-output name=mod_description::$desc"
+
+        EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+
+        echo "mod_version=$(bannerlord_changelog_parser latestversion -f "$PWD/changelog.txt")" >> $GITHUB_OUTPUT
+
+        echo "mod_description<<$EOF" >> $GITHUB_OUTPUT
+        echo "$(bannerlord_changelog_parser fulldescription -f "$PWD/changelog.txt")" >> $GITHUB_OUTPUT
+        echo "$EOF" >> $GITHUB_OUTPUT
+      shell: bash
+
+###########################
+#          SIGN           #
+###########################
+  # Signs our DLLs in the bannerlord artifact with the Certum certificate, replacing it with the signed one.
+  # Aragas/code-signing's config.json lists which
+  sign:
+    if: ${{ github.ref == 'refs/heads/master' }}
+    needs: ["build-test", "changelog-module"]
+    uses: BUTR/workflows/.github/workflows/sign-certum.yml@master
+    with:
+      artifact_name: bannerlord
+    secrets:
+      CODE_SIGNING_CLIENT_ID: ${{ secrets.CODE_SIGNING_CLIENT_ID }}
+      CODE_SIGNING_PRIVATE_KEY: ${{ secrets.CODE_SIGNING_PRIVATE_KEY }}
 
 ###########################
 #        NUGET/GPR        #
 ###########################
-  publish-on-nuget:
-    name: Publish ${{ matrix.name }} on NuGet/GPR
+  # Both packages travel in one artifact, code-signing signs it under the name config.json lists
+  pack-nuget:
+    name: Pack NuGet
     needs: ["build-test", "changelog-module"]
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false # one package failing to push should not cancel the other
-      matrix:
-        include:
-          - name: MCM
-            project_path: src/MCM/MCM.csproj
-          - name: MCM.Source
-            project_path: src/MCM.Source/MCM.Source.csproj
-    permissions:
-      id-token: write # the OIDC token for nuget.org
-      contents: read
-      packages: write # the push to GitHub Packages
     steps:
       - name: Setup
         uses: butr/actions-common-setup@v2
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
 
-      - name: Pack
-        run: dotnet pack ${{ matrix.project_path }} --configuration Release -o "./packages"
+      - name: Pack MCM
+        run: dotnet pack src/MCM/MCM.csproj --configuration Release -o "./packages"
         shell: pwsh
+
+      - name: Pack MCM.Source
+        run: dotnet pack src/MCM.Source/MCM.Source.csproj --configuration Release -o "./packages"
+        shell: pwsh
+
+      # The packages and their symbol packages travel to the signing and the push
+      - name: Upload the packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuget
+          path: ./packages/
+          if-no-files-found: error
+
+  # Signs MCMv5.dll inside the packages with the Certum certificate
+  sign-nuget:
+    needs: ["pack-nuget"]
+    uses: BUTR/workflows/.github/workflows/sign-certum.yml@master
+    with:
+      artifact_name: nuget
+    secrets:
+      CODE_SIGNING_CLIENT_ID: ${{ secrets.CODE_SIGNING_CLIENT_ID }}
+      CODE_SIGNING_PRIVATE_KEY: ${{ secrets.CODE_SIGNING_PRIVATE_KEY }}
+
+  # Pushed from this workflow, so the nuget.org trusted publishing policy for test-and-publish.yml still applies
+  publish-on-nuget:
+    name: Publish on NuGet/GPR
+    needs: ["sign-nuget"]
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write # the OIDC token for nuget.org
+      contents: read
+      packages: write # the push to GitHub Packages
+    steps:
+      - name: Download the signed packages
+        uses: actions/download-artifact@v4
+        with:
+          name: nuget
+          path: ./packages
 
       # Right before the push: the key it returns is valid for an hour
       - name: NuGet login (OIDC)
@@ -179,14 +226,20 @@ jobs:
         with:
           user: Aragas
 
+      # nuget.org only accepts a package signature from a certificate registered there, it gets the packages with
+      # the signed binaries but without one
       - name: Push to NuGet
         run: dotnet nuget push "./packages/*.nupkg" --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
         shell: pwsh
 
+      # GPR gets the package-signed copies the signing added
       # Not -v: it prints the Authorization header, the token in base64, which the log masking does not catch
       - name: Push to GPR
         run: |
-             for f in ./packages/*.nupkg
+             shopt -s nullglob
+             packages=(./packages/package-signed/*.nupkg)
+             if [ ${#packages[@]} -eq 0 ]; then echo "No package-signed packages found"; exit 1; fi
+             for f in "${packages[@]}"
              do
                curl -sS -X PUT -u "vslee:${{ secrets.GITHUB_TOKEN }}" -F package=@$f https://nuget.pkg.github.com/BUTR/
              done
@@ -195,7 +248,7 @@ jobs:
 #        NEXUSMODS        #
 ###########################
   publish-on-nexusmods:
-    needs: ["build-test", "changelog-module"]
+    needs: ["build-test", "changelog-module", "sign"]
     uses: BUTR/workflows/.github/workflows/release-nexusmods.yml@master
     with:
       nexusmods_game_id: mountandblade2bannerlord
@@ -212,7 +265,7 @@ jobs:
 #          STEAM          #
 ###########################
   publish-on-steam:
-    needs: ["build-test", "changelog-module"]
+    needs: ["build-test", "changelog-module", "sign"]
     uses: BUTR/workflows/.github/workflows/release-steam.yml@master
     with:
       workshop_id: 2859238197
@@ -228,7 +281,7 @@ jobs:
 #         GITHUB          #
 ###########################
   publish-on-github:
-    needs: ["build-test", "changelog-module"]
+    needs: ["build-test", "changelog-module", "sign"]
     uses: BUTR/workflows/.github/workflows/release-github.yml@master
     with:
       mod_id: Bannerlord.MBOptionScreen

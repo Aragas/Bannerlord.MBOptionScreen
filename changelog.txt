@@ -1,4 +1,8 @@
 ---------------------------------------------------------------------------------------------------
+Version: 5.13.1
+Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x,v1.4.x,v1.5.x
+* Added code signing
+---------------------------------------------------------------------------------------------------
 Version: 5.13.0
 Game Versions: v1.0.x,v1.1.x,v1.2.x,v1.3.x,v1.4.x,v1.5.x
 * Mods can declare their settings in their SubModule.xml, which MCM will render if installed.
