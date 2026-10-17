@@ -1,5 +1,6 @@
 ﻿using BUTR.DependencyInjection;
 using BUTR.DependencyInjection.Extensions;
+using BUTR.DependencyInjection.Logger;
 
 using MCM.Abstractions;
 using MCM.Abstractions.GameFeatures;
@@ -45,6 +46,7 @@ namespace MCM.Internal
         public event Action? GameEnded;
 
         private bool ServiceRegistrationWasCalled { get; set; }
+        private bool OnBeforeInitialModuleScreenSetAsRootWasCalled { get; set; }
 
         public void OnServiceRegistration()
         {
@@ -97,21 +99,15 @@ namespace MCM.Internal
         {
             base.OnBeforeInitialModuleScreenSetAsRoot();
 
-            /*
-            var logger = GenericServiceProvider.GetService<IBUTRLogger<MCMImplementationSubModule>>() ?? new DefaultBUTRLogger<MCMImplementationSubModule>();
-            if (ModuleInfoHelper.GetModuleByType(typeof(MCMImplementationSubModule)) is { } module)
+            // Called again every time the main menu is shown
+            if (!OnBeforeInitialModuleScreenSetAsRootWasCalled)
             {
-                foreach (var file in Directory.GetFiles(module.Path, "*.xml", SearchOption.TopDirectoryOnly))
-                {
-                    var externalGlobalSettings = ExternalGlobalSettings.CreateFromXmlFile(file);
-                    if (externalGlobalSettings is null) continue;
+                OnBeforeInitialModuleScreenSetAsRootWasCalled = true;
 
-                    logger.LogTrace($"Registering settings {externalGlobalSettings.GetType()}.");
-                    externalGlobalSettings.Register();
-                }
+                // MCMSubModule has built the service provider by now, so the containers accept registrations
+                var logger = GenericServiceProvider.GetService<IBUTRLogger<MCMImplementationSubModule>>() ?? new DefaultBUTRLogger<MCMImplementationSubModule>();
+                ModuleXmlSettingsLoader.RegisterDeclaredSettings(logger);
             }
-            */
-
         }
 
         protected override void OnGameStart(Game game, IGameStarter gameStarterObject)

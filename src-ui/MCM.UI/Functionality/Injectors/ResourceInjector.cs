@@ -21,12 +21,25 @@ namespace MCM.UI.Functionality.Injectors
         // top-to-bottom.
         private static readonly bool SwapVerticalLayoutMethod = ComputeSwapVerticalLayoutMethod();
 
+        // FloatInputTextWidget.EnableClamp exists from game v1.2.0 on; older games drop the attribute. It is set here
+        // instead of in the prefabs, so the UIExtenderEx analyzers, which check the prefabs against every supported
+        // version, find no attribute missing in some of them. Every FloatInputTextWidget of MCM clamps.
+        // SettingsPropertyVM clamps the stored value on every version either way, the widget also corrects the typed text
+        private static readonly bool EnableFloatInputClamp = ComputeEnableFloatInputClamp();
+
         private static bool ComputeSwapVerticalLayoutMethod()
         {
             // Anything older than v1.4.0 uses the pre-rewrite (inverted) StackLayout and needs
             // the swap. If the version cannot be determined, assume the modern (>= v1.4.0) layout.
             return ApplicationVersionHelper.GameVersion() is { } version &&
                    (version.Major < 1 || (version.Major == 1 && version.Minor < 4));
+        }
+
+        private static bool ComputeEnableFloatInputClamp()
+        {
+            // If the version cannot be determined, assume a game that has the attribute
+            return ApplicationVersionHelper.GameVersion() is not { } version ||
+                   version.Major > 1 || (version.Major == 1 && version.Minor >= 2);
         }
 
         protected static XmlDocument Load(string embedPath)
@@ -39,6 +52,9 @@ namespace MCM.UI.Functionality.Injectors
 
             if (SwapVerticalLayoutMethod && doc.DocumentElement is not null)
                 SwapVerticalLayoutMethods(doc.DocumentElement);
+
+            if (EnableFloatInputClamp && doc.DocumentElement is not null)
+                SetFloatInputClamp(doc.DocumentElement);
 
             return doc;
         }
@@ -61,6 +77,15 @@ namespace MCM.UI.Functionality.Injectors
 
             foreach (XmlNode child in node.ChildNodes)
                 SwapVerticalLayoutMethods(child);
+        }
+
+        private static void SetFloatInputClamp(XmlNode node)
+        {
+            if (node is XmlElement { Name: "FloatInputTextWidget" } element && !element.HasAttribute("EnableClamp"))
+                element.SetAttribute("EnableClamp", "true");
+
+            foreach (XmlNode child in node.ChildNodes)
+                SetFloatInputClamp(child);
         }
 
         public abstract void Inject();

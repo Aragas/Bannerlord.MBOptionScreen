@@ -14,7 +14,7 @@
 
         <FloatInputTextWidget HeightSizePolicy="StretchToParent" WidthSizePolicy="Fixed" SuggestedWidth="150" MarginLeft="50" VerticalAlignment="Center" HorizontalAlignment="Right"
                               Brush="MCM.Input.TextBox.Text" Command.HoverEnd="OnEditBoxHoverEnd"
-                              FloatText="@FloatValue" MaxFloat="@MaxFloat" MinFloat="@MinFloat" EnableClamp="true"
+                              FloatText="@FloatValue" MaxFloat="@MaxFloat" MinFloat="@MinFloat"
                               IsEnabled="@IsEnabled" IsVisible="@IsFloatVisible" ClipContents="false" UpdateChildrenStates="true" DoNotPassEventsToChildren="true">
           <Children>
             <BrushWidget WidthSizePolicy="StretchToParent" HeightSizePolicy="StretchToParent" Brush="MCM.Input.TextBox.Input" ClipContents="false"/>

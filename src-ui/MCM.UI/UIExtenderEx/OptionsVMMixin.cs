@@ -1,173 +1,88 @@
-﻿using Bannerlord.UIExtenderEx.Attributes;
+using Bannerlord.UIExtenderEx.Attributes;
 using Bannerlord.UIExtenderEx.ViewModels;
 
-using HarmonyLib;
-using HarmonyLib.BUTR.Extensions;
+using JetBrains.Annotations;
 
 using MCM.UI.GUI.ViewModels;
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
+using System.Runtime.CompilerServices;
 
 using TaleWorlds.Library;
 using TaleWorlds.MountAndBlade.ViewModelCollection.GameOptions;
 
 namespace MCM.UI.UIExtenderEx
 {
-    [ViewModelMixin]
+    [ViewModelMixin(nameof(OptionsVM.RefreshValues))]
     internal sealed class OptionsVMMixin : BaseViewModelMixin<OptionsVM>
     {
-        private delegate void ExecuteDoneDelegate(OptionsVM instance);
-        private delegate void ExecuteCancelDelegate(OptionsVM instance);
+        [BUTRUnsafeAccessor(BUTRAccessorKind.Field, Name = "_categories")]
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        private static ref List<ViewModel> Categories(OptionsVM _) => throw new NotImplementedException();
 
-        private static readonly ExecuteDoneDelegate? ExecuteDoneMethod =
-            AccessTools2.GetDelegate<ExecuteDoneDelegate>(typeof(OptionsVM), "ExecuteDone");
-        private static readonly ExecuteCancelDelegate? ExecuteCancelMethod =
-            AccessTools2.GetDelegate<ExecuteCancelDelegate>(typeof(OptionsVM), "ExecuteCancel");
+        // DataSource="{ModOptions}" on the inserted tab toggle and page
+        [DataSourceProperty, UsedImplicitly]
+        public ModOptionsVM ModOptions { get; } = new();
 
-        private static readonly AccessTools.FieldRef<OptionsVM, List<ViewModel>>? _categories =
-            AccessTools2.FieldRefAccess<OptionsVM, List<ViewModel>>("_categories");
-
-        static OptionsVMMixin()
-        {
-            var harmony = new Harmony("bannerlord.mcm.ui.optionsvm");
-
-            harmony.CreateReversePatcher(
-                AccessTools2.Method(typeof(OptionsVM), "ExecuteCloseOptions"),
-                new HarmonyMethod(SymbolExtensions2.GetMethodInfo((OptionsVM x) => OriginalExecuteCloseOptions(x)))).Patch();
-
-            harmony.Patch(
-                AccessTools2.Method(typeof(OptionsVM), "ExecuteCloseOptions"),
-                postfix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((OptionsVM x) => ExecuteCloseOptionsPostfix(x)), 300));
-
-            harmony.Patch(
-                AccessTools2.Method(typeof(OptionsVM), "RefreshValues"),
-                postfix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((OptionsVM x) => RefreshValuesPostfix(x)), 300));
-
-            harmony.Patch(
-                AccessTools2.PropertySetter(typeof(OptionsVM), "CategoryIndex"),
-                postfix: new HarmonyMethod(SymbolExtensions2.GetMethodInfo((OptionsVM x) => SetSelectedCategoryPostfix(x)), 300));
-        }
-
-        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
-        private static void ExecuteCloseOptionsPostfix(OptionsVM __instance)
-        {
-            if (__instance.GetPropertyValue("MCMMixin") is WeakReference<OptionsVMMixin> weakReference && weakReference.TryGetTarget(out var mixin))
-            {
-                mixin?.ExecuteCloseOptions();
-            }
-        }
-        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
-        private static void RefreshValuesPostfix(OptionsVM __instance)
-        {
-            if (__instance.GetPropertyValue("ModOptions") is ModOptionsVM modOptions)
-            {
-                modOptions.RefreshValues();
-            }
-        }
-        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
-        [SuppressMessage("ReSharper", "InconsistentNaming")]
-        private static void SetSelectedCategoryPostfix(OptionsVM __instance)
-        {
-            if (__instance.GetPropertyValue("MCMMixin") is WeakReference<OptionsVMMixin> weakReference && weakReference.TryGetTarget(out var mixin))
-            {
-                mixin.ModOptionsSelected = __instance.CategoryIndex == 4;
-            }
-        }
-
-        [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "For ReSharper")]
-        [SuppressMessage("ReSharper", "UnusedParameter.Local")]
-        private static void OriginalExecuteCloseOptions(OptionsVM instance) => throw new NotImplementedException("It's a stub");
-
-        private readonly ModOptionsVM _modOptions = new();
-        private bool _modOptionsSelected;
-        private int _descriptionWidth = 650;
-
-        [DataSourceProperty]
-        public WeakReference<OptionsVMMixin> MCMMixin => new(this);
-
-        [DataSourceProperty]
-        public ModOptionsVM ModOptions => _modOptions;
-
-        [DataSourceProperty]
+        // SuggestedWidth="@DescriptionWidth" on the game's DescriptionsRightPanel
+        [DataSourceProperty, UsedImplicitly]
         public int DescriptionWidth
         {
-            get => _descriptionWidth;
-            private set => SetField(ref _descriptionWidth, value, nameof(DescriptionWidth));
-        }
-
-        [DataSourceProperty]
-        public bool ModOptionsSelected
-        {
-            get => _modOptionsSelected;
-            set
-            {
-                if (!SetField(ref _modOptionsSelected, value, nameof(ModOptionsSelected))) return;
-                _modOptions.IsDisabled = !value;
-                _modOptionsSelected = value;
-                DescriptionWidth = ModOptionsSelected ? 0 : 650;
-            }
-        }
+            get;
+            private set => SetField(ref field, value, nameof(DescriptionWidth));
+        } = 650;
 
         public OptionsVMMixin(OptionsVM vm) : base(vm)
         {
-            vm.PropertyChanged += OptionsVM_PropertyChanged;
-            var list = _categories?.Invoke(vm) ?? [];
-            list.Insert(5, _modOptions);
+            // At the index the MCM tab has on screen: OptionsPrefabExtension1/2 put it before the fifth tab, GameKey.
+            // GetActiveCategory and the controller's tab switching index _categories by CategoryIndex
+            Categories(vm).Insert(4, ModOptions);
         }
 
-        private void OptionsVM_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        // After OptionsVM.RefreshValues. OptionsVM calls it from its constructor, so the first call arrives once this
+        // constructor has finished
+        public override void OnRefresh() => ModOptions.RefreshValues();
+
+        // Every notification OptionsVM raises, typed or not. CategoryIndex is raised through the typed overload, which a
+        // PropertyChanged handler never heard; that is why this used to be a Harmony postfix on its setter
+        protected override void OnViewModelPropertyChanged(string propertyName)
         {
-            _modOptions.OnPropertyChanged(e.PropertyName);
+            if (propertyName != nameof(OptionsVM.CategoryIndex) || ViewModel is not { } vm)
+                return;
+
+            var selected = vm.CategoryIndex == 4;
+            ModOptions.IsDisabled = !selected;
+            DescriptionWidth = selected ? 0 : 650;
         }
 
-        public override void OnFinalize()
+        // The overrides apply to every caller: the buttons, the hotkeys, the game's own code.
+        // OptionsVM.ExecuteDone and ExecuteCancel both end in CloseScreen, which calls ExecuteCloseOptions, so MCM leaves
+        // the screen in ExecuteCloseOptions only, once, whichever way the screen is closed
+
+        // Set once Done saved MCM's changes, so the close that follows does not undo them
+        private bool _modOptionsSaved;
+
+        // MCM saves before the game applies its own options. ExecuteDoneInternal calls original once saved, or, when a
+        // changed setting needs a restart, asks first and does nothing when declined
+        [BUTRViewModelOverride(nameof(OptionsVM.ExecuteDone)), UsedImplicitly]
+        private void ExecuteDone(Action original) => ModOptions.ExecuteDoneInternal(false, () =>
         {
-            if (ViewModel is not null)
-                ViewModel.PropertyChanged -= OptionsVM_PropertyChanged;
+            _modOptionsSaved = true;
+            original();
+        });
 
-            base.OnFinalize();
-        }
+        // No override of ExecuteCancel: the game asks for confirmation when its own options changed and closes through
+        // ExecuteCloseOptions once confirmed. Overriding it undid MCM's changes before the question was answered, and
+        // answering No left the screen open with MCM finalized
 
-        [DataSourceMethod]
-        public void ExecuteCloseOptions()
+        [BUTRViewModelOverride(nameof(OptionsVM.ExecuteCloseOptions)), UsedImplicitly]
+        private void ExecuteCloseOptions(Action original)
         {
-            ModOptions.ExecuteCancelInternal(false);
-            if (ViewModel is not null)
-            {
-                try
-                {
-                    OriginalExecuteCloseOptions(ViewModel);
-                }
-                // For some reason it throws a null exception, but ignoring it seems to be fine for now.
-                catch { }
-            }
-
-            OnFinalize();
-        }
-
-        [DataSourceMethod]
-        public void ExecuteDone()
-        {
-            ModOptions.ExecuteDoneInternal(false, () =>
-            {
-                if (ViewModel is not null)
-                    ExecuteDoneMethod?.Invoke(ViewModel);
-            });
-        }
-
-        [DataSourceMethod]
-        public void ExecuteCancel()
-        {
-            ModOptions.ExecuteCancelInternal(false, () =>
-            {
-                if (ViewModel is not null)
-                    ExecuteCancelMethod?.Invoke(ViewModel);
-            });
+            if (_modOptionsSaved)
+                original();
+            else
+                ModOptions.ExecuteCancelInternal(false, original);
         }
     }
 }

@@ -160,23 +160,49 @@ jobs:
 #        NUGET/GPR        #
 ###########################
   publish-on-nuget:
+    name: Publish ${{ matrix.name }} on NuGet/GPR
     needs: ["build-test", "changelog-module"]
-    uses: BUTR/workflows/.github/workflows/release-nuget.yml@master
-    with:
-      project_path: src/MCM/MCM.csproj
-    secrets:
-      NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # one package failing to push should not cancel the other
+      matrix:
+        include:
+          - name: MCM
+            project_path: src/MCM/MCM.csproj
+          - name: MCM.Source
+            project_path: src/MCM.Source/MCM.Source.csproj
+    permissions:
+      id-token: write # the OIDC token for nuget.org
+      contents: read
+      packages: write # the push to GitHub Packages
+    steps:
+      - name: Setup
+        uses: butr/actions-common-setup@v2
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
 
-###########################
-#        NUGET/GPR        #
-###########################
-  publish-on-nuget-source:
-    needs: ["build-test", "changelog-module"]
-    uses: BUTR/workflows/.github/workflows/release-nuget.yml@master
-    with:
-      project_path: src/MCM.Source/MCM.Source.csproj
-    secrets:
-      NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+      - name: Pack
+        run: dotnet pack ${{ matrix.project_path }} --configuration Release -o "./packages"
+        shell: pwsh
+
+      # Right before the push: the key it returns is valid for an hour
+      - name: NuGet login (OIDC)
+        id: login
+        uses: NuGet/login@v1
+        with:
+          user: Aragas
+
+      - name: Push to NuGet
+        run: dotnet nuget push "./packages/*.nupkg" --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate
+        shell: pwsh
+
+      # Not -v: it prints the Authorization header, the token in base64, which the log masking does not catch
+      - name: Push to GPR
+        run: |
+             for f in ./packages/*.nupkg
+             do
+               curl -sS -X PUT -u "vslee:${{ secrets.GITHUB_TOKEN }}" -F package=@$f https://nuget.pkg.github.com/BUTR/
+             done
 
 ###########################
 #        NEXUSMODS        #
